@@ -6,8 +6,8 @@
 
 A Go package for defining and validating OCPP 1.6 message structures.
 
-A protocol-neutral Go package for defining and validating **OCPP 1.6J messages** — request and confirmation types as
-defined in the official [Open Charge Alliance specification](https://www.openchargealliance.org/).
+A protocol-neutral Go package for defining and validating **OCPP 1.6J messages**
+— request and confirmation types as defined in the official [Open Charge Alliance specification](https://www.openchargealliance.org/).
 
 This package is ideal for use in both **Charge Point (CP)** and **Central System (CSMS)** implementations, and is
 designed to be consumed by external tools, proxies, or full CSMS solutions.
