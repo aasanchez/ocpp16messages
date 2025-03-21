@@ -5,6 +5,8 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
 [![Go Reference](https://pkg.go.dev/badge/github.com/aasanchez/ocpp16_messages.svg)](https://pkg.go.dev/github.com/aasanchez/ocpp16_messages)
 
+## DO NOT USE IN PRODUCTION, STILL UNDER DEVELOPMENT
+
 A Go package for defining and validating OCPP 1.6 message structures.
 
 A protocol-neutral Go package for defining and validating **OCPP 1.6 messages**
