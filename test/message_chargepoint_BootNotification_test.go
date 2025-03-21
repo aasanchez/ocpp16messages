@@ -3,7 +3,7 @@
 //
 // These tests validate BootNotificationReq and BootNotificationConf message types
 // against the OCPP 1.6J specification using the validators package.
-package message_chargepoint_BootNotification_test
+package test
 
 import (
 	"testing"
@@ -181,10 +181,4 @@ func TestBootNotificationConf(t *testing.T) {
 			}
 		})
 	}
-}
-
-// ptr returns a pointer to the given value.
-// Useful for creating optional fields in test structs.
-func ptr[T any](v T) *T {
-	return &v
 }
