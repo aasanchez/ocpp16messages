@@ -1,7 +1,3 @@
-// Package test provides external test coverage for OCPP 1.6 message validation logic.
-//
-// These tests validate AuthorizeReq and AuthorizeConf message types
-// against the OCPP 1.6J specification using the validators package.
 package test
 
 import (

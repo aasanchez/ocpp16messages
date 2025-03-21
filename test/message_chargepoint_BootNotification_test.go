@@ -1,8 +1,3 @@
-// Package message_chargepoint_BootNotification_test provides external test coverage
-// for OCPP 1.6 message validation logic.
-//
-// These tests validate BootNotificationReq and BootNotificationConf message types
-// against the OCPP 1.6J specification using the validators package.
 package test
 
 import (
@@ -15,8 +10,6 @@ import (
 	"github.com/aasanchez/ocpp16_messages/validators"
 )
 
-// TestBootNotificationReq validates BootNotificationReq message structure and constraints.
-// It tests required fields, optional fields, and edge cases (e.g., max length, nil pointers).
 func TestBootNotificationReq(t *testing.T) {
 	tests := []struct {
 		name    string
@@ -113,7 +106,6 @@ func TestBootNotificationReq(t *testing.T) {
 	}
 }
 
-// TestBootNotificationConf validates BootNotificationConf messages for valid enum and interval values.
 func TestBootNotificationConf(t *testing.T) {
 	tests := []struct {
 		name    string

@@ -1,6 +1,5 @@
 package enums
 
-// AuthorizationStatus defines possible outcomes of an authorization attempt.
 type AuthorizationStatus string
 
 const (
@@ -11,7 +10,6 @@ const (
 	AuthorizationConcurrentTx AuthorizationStatus = "ConcurrentTx"
 )
 
-// IsValid returns true if the status is one of the allowed AuthorizationStatus values.
 func (s AuthorizationStatus) IsValid() bool {
 	switch s {
 	case AuthorizationAccepted, AuthorizationBlocked, AuthorizationExpired,
