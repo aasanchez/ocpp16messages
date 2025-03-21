@@ -8,7 +8,7 @@ import (
 )
 
 type AuthorizeReq struct {
-	IdTag models.CiString20Type `json:"idTag"`
+	IdToken models.IdToken `json:"idTag"`
 }
 
 type AuthorizeConf struct {

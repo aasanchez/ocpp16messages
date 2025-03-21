@@ -18,7 +18,9 @@ func main() {
 
 	// Example Authorize Request from the Charge Point
 	req := chargePoint.AuthorizeReq{
-		IdTag: models.CiString20Type("ABC123456"),
+		IdToken: models.IdToken{
+			IdTag: models.CiString20Type("ABC123456"),
+		},
 	}
 	exitOnError(validators.ValidateAuthorizeReq(req), "AuthorizeReq validation failed")
 	log.Println("✅ Valid Authorize request")

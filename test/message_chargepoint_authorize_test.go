@@ -18,16 +18,22 @@ func TestAuthorizeReq(t *testing.T) {
 	}{
 		{
 			name: "Valid IdTag",
-			req:  chargePoint.AuthorizeReq{IdTag: models.CiString20Type("ABC123")},
+			req: chargePoint.AuthorizeReq{
+				IdToken: models.IdToken{IdTag: models.CiString20Type("ABC123")},
+			},
 		},
 		{
-			name:    "Empty IdTag",
-			req:     chargePoint.AuthorizeReq{IdTag: models.CiString20Type("")},
+			name: "Empty IdTag",
+			req: chargePoint.AuthorizeReq{
+				IdToken: models.IdToken{IdTag: models.CiString20Type("")},
+			},
 			wantErr: true,
 		},
 		{
-			name:    "IdTag exceeds 20 characters",
-			req:     chargePoint.AuthorizeReq{IdTag: models.CiString20Type("123456789012345678901")},
+			name: "IdTag exceeds 20 characters",
+			req: chargePoint.AuthorizeReq{
+				IdToken: models.IdToken{IdTag: models.CiString20Type("123456789012345678901")},
+			},
 			wantErr: true,
 		},
 	}

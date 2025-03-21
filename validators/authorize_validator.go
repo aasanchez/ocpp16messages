@@ -7,8 +7,8 @@ import (
 )
 
 func ValidateAuthorizeReq(req chargePoint.AuthorizeReq) error {
-	if err := req.IdTag.Validate(); err != nil {
-		return fmt.Errorf("IdTag: %w", err)
+	if err := req.IdToken.Validate(); err != nil {
+		return fmt.Errorf("IdToken: %w", err)
 	}
 	return nil
 }
