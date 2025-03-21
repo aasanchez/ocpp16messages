@@ -1,8 +1,9 @@
-// Package test provides external test coverage for OCPP 1.6 message validation logic.
+// Package message_chargepoint_BootNotification_test provides external test coverage
+// for OCPP 1.6 message validation logic.
 //
 // These tests validate BootNotificationReq and BootNotificationConf message types
 // against the OCPP 1.6J specification using the validators package.
-package test
+package message_chargepoint_BootNotification_test
 
 import (
 	"testing"
