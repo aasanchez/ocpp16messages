@@ -108,6 +108,10 @@ func TestBootNotificationReq(t *testing.T) {
 	}
 }
 
+func ptr[T any](v T) *T {
+	return &v
+}
+
 func TestBootNotificationConf(t *testing.T) {
 	tests := []struct {
 		name    string
