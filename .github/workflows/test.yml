@@ -1,0 +1,45 @@
+name: Run OCPP16 Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: Run unit tests with coverage
+        run: |
+          mkdir -p .testresults
+          go test ./test -coverprofile=.testresults/coverage.out -v
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: .testresults/coverage.out
+
+      - name: Check minimum coverage threshold
+        run: |
+          go tool cover -func=.testresults/coverage.out
+          threshold=85.0
+          actual=$(go tool cover -func=.testresults/coverage.out | grep total | awk '{print substr($3, 1, length($3)-1)}')
+          echo "Total coverage: $actual%"
+          awk -v a=$actual -v t=$threshold 'BEGIN {exit (a < t) ? 1 : 0}'
+
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: .testresults/coverage.out
+  
