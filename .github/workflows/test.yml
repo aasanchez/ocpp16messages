@@ -16,12 +16,12 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.21'
+          go-version: '1.24'
 
       - name: Run unit tests with coverage
         run: |
           mkdir -p .testresults
-          go test ./test -coverprofile=.testresults/coverage.out -v
+          go test -coverpkg=./models,./validators,./messages/... ./test -coverprofile=.testresults/coverage.out -v
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
@@ -36,6 +36,7 @@ jobs:
           actual=$(go tool cover -func=.testresults/coverage.out | grep total | awk '{print substr($3, 1, length($3)-1)}')
           echo "Total coverage: $actual%"
           awk -v a=$actual -v t=$threshold 'BEGIN {exit (a < t) ? 1 : 0}'
+          cat .testresults/coverage.out
 
       - name: Upload to Codecov
         uses: codecov/codecov-action@v5
