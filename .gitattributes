@@ -1,0 +1,24 @@
+# Normalize line endings
+*.sum text       eol=lf
+*.mod text       eol=lf
+*.go text        eol=lf
+*.sh text        eol=lf
+*.bat text       eol=lf
+*.md text        eol=lf
+*.txt text       eol=lf
+*.yaml text      eol=lf
+*.yml text       eol=lf
+*.json text      eol=lf
+
+vendor/**        linguist-vendored
+*.pb.go          linguist-generated
+
+.gitignore                export-ignore
+.editorconfig             export-ignore
+.gitattributes            export-ignore
+.github                   export-ignore
+codecov.yml               export-ignore
+golangci.yml              export-ignore
+Makefile                  export-ignore
+sonar-project.properties  export-ignore
+**/benchmarks/            export-ignore
