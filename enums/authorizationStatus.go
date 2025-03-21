@@ -12,8 +12,7 @@ const (
 
 func (s AuthorizationStatus) IsValid() bool {
 	switch s {
-	case AuthorizationAccepted, AuthorizationBlocked, AuthorizationExpired,
-		AuthorizationInvalid, AuthorizationConcurrentTx:
+	case AuthorizationAccepted, AuthorizationBlocked, AuthorizationExpired, AuthorizationInvalid, AuthorizationConcurrentTx:
 		return true
 	default:
 		return false
