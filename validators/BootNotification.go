@@ -1,4 +1,4 @@
-package models
+package validators
 
 import (
 	"fmt"
@@ -6,7 +6,6 @@ import (
 	"github.com/aasanchez/ocpp16_messages/messages/chargePoint"
 )
 
-// ValidateBootNotificationReq validates BootNotification.req
 func ValidateBootNotificationReq(req chargePoint.BootNotificationReq) error {
 	if err := req.ChargePointModel.Validate(); err != nil {
 		return err
@@ -52,7 +51,6 @@ func ValidateBootNotificationReq(req chargePoint.BootNotificationReq) error {
 	return nil
 }
 
-// ValidateBootNotificationConf validates BootNotification.conf
 func ValidateBootNotificationConf(conf chargePoint.BootNotificationConf) error {
 	if !conf.Status.IsValid() {
 		return fmt.Errorf("invalid BootNotification status: %s", conf.Status)

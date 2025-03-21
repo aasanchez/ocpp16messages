@@ -7,7 +7,7 @@ import (
 	"github.com/aasanchez/ocpp16_messages/models"
 )
 
-// BootNotificationReq corresponds to BootNotification.req (Charge Point → Central System)
+// BootNotificationRequest represents a CP -> CSMS boot message
 type BootNotificationReq struct {
 	ChargePointModel        models.CiString20Type  `json:"chargePointModel"`
 	ChargePointVendor       models.CiString20Type  `json:"chargePointVendor"`
@@ -20,9 +20,9 @@ type BootNotificationReq struct {
 	MeterType               *models.CiString25Type `json:"meterType,omitempty"`
 }
 
-// BootNotificationConf corresponds to BootNotification.conf (Central System → Charge Point)
+// BootNotificationConf represents a CSMS -> CP response
 type BootNotificationConf struct {
 	CurrentTime time.Time                `json:"currentTime"`
 	Interval    int                      `json:"interval"`
-	Status      enums.RegistrationStatus `json:"status"` // Accepted, Pending, Rejected
+	Status      enums.RegistrationStatus `json:"status"`
 }
