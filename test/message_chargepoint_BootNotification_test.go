@@ -22,7 +22,6 @@ func TestBootNotificationReq(t *testing.T) {
 				ChargePointModel:  models.CiString20Type("ModelX"),
 				ChargePointVendor: models.CiString20Type("VendorY"),
 			},
-			wantErr: false,
 		},
 		{
 			name: "Missing ChargePointModel",
@@ -39,7 +38,7 @@ func TestBootNotificationReq(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "Empty model",
+			name: "Empty ChargePointModel",
 			req: chargePoint.BootNotificationReq{
 				ChargePointModel:  models.CiString20Type(""),
 				ChargePointVendor: models.CiString20Type("VendorY"),
@@ -47,7 +46,7 @@ func TestBootNotificationReq(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "Model exceeds 20 characters",
+			name: "ChargePointModel exceeds max length",
 			req: chargePoint.BootNotificationReq{
 				ChargePointModel:  models.CiString20Type("123456789012345678901"),
 				ChargePointVendor: models.CiString20Type("VendorY"),
@@ -59,27 +58,26 @@ func TestBootNotificationReq(t *testing.T) {
 			req: chargePoint.BootNotificationReq{
 				ChargePointModel:        "ModelX",
 				ChargePointVendor:       "VendorY",
-				ChargeBoxSerialNumber:   ptr(models.CiString25Type("CB123456789")),
-				ChargePointSerialNumber: ptr(models.CiString25Type("CP123456789")),
-				FirmwareVersion:         ptr(models.CiString50Type("FW1.2.3")),
-				Iccid:                   ptr(models.CiString20Type("ICCID123456")),
-				Imsi:                    ptr(models.CiString20Type("IMSI987654")),
-				MeterSerialNumber:       ptr(models.CiString25Type("MSN0001")),
-				MeterType:               ptr(models.CiString25Type("MTYPE-A")),
+				ChargeBoxSerialNumber:   ptr(models.CiString25Type("CB123")),
+				ChargePointSerialNumber: ptr(models.CiString25Type("CPSN-001")),
+				FirmwareVersion:         ptr(models.CiString50Type("1.2.3")),
+				Iccid:                   ptr(models.CiString20Type("ICCID9876")),
+				Imsi:                    ptr(models.CiString20Type("IMSI5555")),
+				MeterSerialNumber:       ptr(models.CiString25Type("MSN-007")),
+				MeterType:               ptr(models.CiString25Type("TYPE-A")),
 			},
-			wantErr: false,
 		},
 		{
 			name: "FirmwareVersion too long",
 			req: chargePoint.BootNotificationReq{
 				ChargePointModel:  "ModelX",
 				ChargePointVendor: "VendorY",
-				FirmwareVersion:   ptr(models.CiString50Type("123456789012345678901234567890123456789012345678901")),
+				FirmwareVersion:   ptr(models.CiString50Type("123456789012345678901234567890123456789012345678901")), // 51 chars
 			},
 			wantErr: true,
 		},
 		{
-			name: "Optional field too long: MeterSerialNumber",
+			name: "MeterSerialNumber too long",
 			req: chargePoint.BootNotificationReq{
 				ChargePointModel:  "ModelX",
 				ChargePointVendor: "VendorY",
@@ -88,7 +86,7 @@ func TestBootNotificationReq(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "Optional field empty: Iccid",
+			name: "Iccid is empty string",
 			req: chargePoint.BootNotificationReq{
 				ChargePointModel:  "ModelX",
 				ChargePointVendor: "VendorY",
@@ -102,14 +100,10 @@ func TestBootNotificationReq(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			err := validators.ValidateBootNotificationReq(tt.req)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("ValidateBootNotificationReq() error = %v, wantErr = %v", err, tt.wantErr)
+				t.Errorf("ValidateBootNotificationReq() = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}
-}
-
-func ptr[T any](v T) *T {
-	return &v
 }
 
 func TestBootNotificationConf(t *testing.T) {
@@ -125,7 +119,6 @@ func TestBootNotificationConf(t *testing.T) {
 				CurrentTime: time.Now(),
 				Interval:    30,
 			},
-			wantErr: false,
 		},
 		{
 			name: "Valid Pending",
@@ -134,7 +127,6 @@ func TestBootNotificationConf(t *testing.T) {
 				CurrentTime: time.Now(),
 				Interval:    10,
 			},
-			wantErr: false,
 		},
 		{
 			name: "Valid Rejected",
@@ -143,12 +135,11 @@ func TestBootNotificationConf(t *testing.T) {
 				CurrentTime: time.Now(),
 				Interval:    15,
 			},
-			wantErr: false,
 		},
 		{
 			name: "Invalid status",
 			conf: chargePoint.BootNotificationConf{
-				Status:      enums.RegistrationStatus("Unknown"),
+				Status:      enums.RegistrationStatus("InvalidStatus"),
 				CurrentTime: time.Now(),
 				Interval:    10,
 			},
@@ -168,7 +159,7 @@ func TestBootNotificationConf(t *testing.T) {
 			conf: chargePoint.BootNotificationConf{
 				Status:      enums.RegistrationAccepted,
 				CurrentTime: time.Now(),
-				Interval:    -10,
+				Interval:    -1,
 			},
 			wantErr: true,
 		},
@@ -178,8 +169,13 @@ func TestBootNotificationConf(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			err := validators.ValidateBootNotificationConf(tt.conf)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("ValidateBootNotificationConf() error = %v, wantErr = %v", err, tt.wantErr)
+				t.Errorf("ValidateBootNotificationConf() = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}
+}
+
+// ptr is a generic helper to create pointers of any type.
+func ptr[T any](v T) *T {
+	return &v
 }
