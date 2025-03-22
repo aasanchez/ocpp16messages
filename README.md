@@ -29,19 +29,19 @@ go get github.com/aasanchez/ocpp16_messages
 package main
 
 import (
-	"log"
-	"github.com/aasanchez/ocpp16_messages/core"
+    "log"
+    "github.com/aasanchez/ocpp16_messages/core"
 )
 
 func main() {
-	raw := []byte(`[2,"01221201194032","Authorize",{"idTag":"D0431F35"}]`)
+    raw := []byte(`[2,"01221201194032","Authorize",{"idTag":"D0431F35"}]`)
 
-	result, err := core.ValidateRawMessage(raw)
-	if err != nil {
-		log.Fatalf("❌ Invalid message: %v", err)
-	}
+    result, err := core.ValidateRawMessage(raw)
+    if err != nil {
+        log.Fatalf("❌ Invalid message: %v", err)
+    }
 
-	log.Printf("✅ Valid message. Action: %s | ID: %s", result.Action, result.UniqueID)
+    log.Printf("✅ Valid message. Action: %s | ID: %s", result.Action, result.UniqueID)
 }
 ```
 
@@ -85,7 +85,7 @@ You can register custom validators or hooks via the `core` plugin registry:
 ```go
 core.RegisterValidator("MyCustomAction", myValidator)
 core.SetPreValidationHook(func(action string, payload any) {
-	log.Printf("🔎 About to validate action %s", action)
+    log.Printf("🔎 About to validate action %s", action)
 })
 ```
 
