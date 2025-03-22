@@ -40,6 +40,31 @@ jobs:
           echo "Total coverage: $total%"
           awk -v total=$total -v threshold=$threshold 'BEGIN {exit (total+0 < threshold)}'
 
+          - name: Run performance benchmarks
+          run: |
+            mkdir -p .benchmark
+            go test -bench=. -benchmem ./benchmark > .benchmark/results.txt
+
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results
+          path: .benchmark/results.txt
+
+          - name: Run CPU profile benchmark
+          run: |
+            mkdir -p .pprof
+            go test -bench=ValidateMessage -cpuprofile=.pprof/cpu.prof ./benchmark
+
+      - name: Run memory profile benchmark
+        run: go test -bench=. -memprofile=.pprof/mem.prof ./benchmark
+
+      - name: Upload pprof profiles
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-profiles
+          path: .pprof
+
   release:
     name: Create GitHub Release
     needs: test
