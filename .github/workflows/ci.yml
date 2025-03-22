@@ -51,8 +51,8 @@ jobs:
           name: benchmark-results
           path: .benchmark/results.txt
 
-          - name: Run CPU profile benchmark
-          run: |
+      - name: Run CPU profile benchmark
+        run: |
             mkdir -p .pprof
             go test -bench=ValidateMessage -cpuprofile=.pprof/cpu.prof ./benchmark
 
