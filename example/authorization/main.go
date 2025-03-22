@@ -14,7 +14,7 @@ func main() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	// Example 1: Validate Authorize.req (CALL)
-	call := []byte(`[2, "01221201194032", "Authorize", {"idTag":"D0431F35"}]`)
+	call := []byte(`[2,"01221201194032","Authorize",{"idTag":"D0431F35"}]`)
 	reqResult, err := ocpp16_messages.ValidateMessage(call)
 	exitOnError(err, "Authorize.req validation failed")
 
