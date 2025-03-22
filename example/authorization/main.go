@@ -1,49 +1,48 @@
-// Command authorize_example demonstrates how to construct and validate
+// Command authorize_roundtrip demonstrates how to parse and validate both
 // Authorize.req and Authorize.conf messages using the ocpp16_messages package.
 package main
 
 import (
+	"fmt"
 	"log"
-	"os"
-	"time"
 
-	"github.com/aasanchez/ocpp16_messages/enums"
-	"github.com/aasanchez/ocpp16_messages/messages/chargePoint"
-	"github.com/aasanchez/ocpp16_messages/models"
-	"github.com/aasanchez/ocpp16_messages/validators"
+	"github.com/aasanchez/ocpp16_messages"
+	"github.com/aasanchez/ocpp16_messages/authorize"
 )
 
 func main() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
-	// Example Authorize Request from the Charge Point
-	req := chargePoint.AuthorizeReq{
-		IdToken: models.IdToken{
-			IdTag: models.CiString20Type("ABC123456"),
-		},
-	}
-	exitOnError(validators.ValidateAuthorizeReq(req), "AuthorizeReq validation failed")
-	log.Println("✅ Valid Authorize request")
+	// Example 1: Validate Authorize.req (CALL)
+	call := []byte(`[2, "01221201194032", "Authorize", {"idTag":"D0431F35"}]`)
+	reqResult, err := ocpp16_messages.ValidateMessage(call)
+	exitOnError(err, "Authorize.req validation failed")
 
-	// Example Authorize Confirmation from the CSMS
-	parent := models.CiString20Type("Parent001")
-	expiry := time.Now().Add(2 * time.Hour)
-
-	conf := chargePoint.AuthorizeConf{
-		IdTagInfo: chargePoint.IdTagInfo{
-			Status:      enums.AuthorizationAccepted,
-			ExpiryDate:  &expiry,
-			ParentIdTag: &parent,
-		},
+	if req, ok := reqResult.Payload.(authorize.AuthorizeReq); ok {
+		fmt.Println("✅ Authorize.req is valid:")
+		fmt.Printf("  Unique ID : %s\n", reqResult.UniqueID)
+		fmt.Printf("  IdTag     : %s\n", req.IdTag)
+	} else {
+		log.Fatalf("❌ Payload is not AuthorizeReq")
 	}
-	exitOnError(validators.ValidateAuthorizeConf(conf), "AuthorizeConf validation failed")
-	log.Println("✅ Valid Authorize confirmation")
+
+	// Example 2: Validate Authorize.conf (CALLRESULT)
+	conf := []byte(`[3, "01221201194032", {"idTagInfo":{"status":"Accepted"}}]`)
+	confResult, err := ocpp16_messages.ValidateMessage(conf)
+	exitOnError(err, "Authorize.conf validation failed")
+
+	if res, ok := confResult.Payload.(authorize.AuthorizeConf); ok {
+		fmt.Println("✅ Authorize.conf is valid:")
+		fmt.Printf("  Unique ID : %s\n", confResult.UniqueID)
+		fmt.Printf("  Status    : %s\n", res.IdTagInfo.Status)
+	} else {
+		log.Fatalf("❌ Payload is not AuthorizeConf")
+	}
 }
 
-// exitOnError logs the error and exits the program if err is not nil.
+// exitOnError logs the error and exits if one occurs
 func exitOnError(err error, context string) {
 	if err != nil {
-		log.Printf("❌ %s: %v\n", context, err)
-		os.Exit(1)
+		log.Fatalf("❌ %s: %v", context, err)
 	}
 }
