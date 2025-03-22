@@ -3,30 +3,40 @@ name: CI
 on:
   push:
     branches: [ main ]
-    tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ main ]
 
 jobs:
-  test:
-    name: Lint, Build & Test
+  build:
+    name: Go 1.24 • Lint • Test • Benchmark
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Go
+      - name: Set up Go 1.24
         uses: actions/setup-go@v5
         with:
-          go-version: '1.21'
+          go-version: '1.24'
 
-      - name: Run tests with coverage
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y graphviz
+
+      - name: Lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: v1.55.2
+
+      - name: Build
+        run: go build ./...
+
+      - name: Test with coverage
         run: |
           mkdir -p .testresults
           go test ./... -coverpkg=./core,./authorize -coverprofile=.testresults/coverage.out -v
 
-      - name: Upload coverage to Codecov
+      - name: Upload test coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
           files: .testresults/coverage.out
@@ -40,10 +50,18 @@ jobs:
           echo "Total coverage: $total%"
           awk -v total=$total -v threshold=$threshold 'BEGIN {exit (total+0 < threshold)}'
 
-          - name: Run performance benchmarks
-          run: |
-            mkdir -p .benchmark
-            go test -bench=. -benchmem ./benchmark > .benchmark/results.txt
+      - name: Run benchmarks
+        run: |
+          mkdir -p .benchmark
+          go test -bench=. -benchmem ./benchmark > .benchmark/results.txt
+
+      - name: Run CPU & memory profiling
+        run: |
+          mkdir -p .pprof
+          go test -bench=ValidateMessage -cpuprofile=.pprof/cpu.prof ./benchmark
+          go test -bench=. -memprofile=.pprof/mem.prof ./benchmark
+          go tool pprof -svg .pprof/cpu.prof > .pprof/cpu.svg || true
+          go tool pprof -svg .pprof/mem.prof > .pprof/mem.svg || true
 
       - name: Upload benchmark results
         uses: actions/upload-artifact@v4
@@ -51,31 +69,8 @@ jobs:
           name: benchmark-results
           path: .benchmark/results.txt
 
-      - name: Run CPU profile benchmark
-        run: |
-            mkdir -p .pprof
-            go test -bench=ValidateMessage -cpuprofile=.pprof/cpu.prof ./benchmark
-
-      - name: Run memory profile benchmark
-        run: go test -bench=. -memprofile=.pprof/mem.prof ./benchmark
-
-      - name: Upload pprof profiles
+      - name: Upload profiling data
         uses: actions/upload-artifact@v4
         with:
           name: benchmark-profiles
           path: .pprof
-
-  release:
-    name: Create GitHub Release
-    needs: test
-    if: startsWith(github.ref, 'refs/tags/')
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Create release
-        uses: softprops/action-gh-release@v1
-        with:
-          generate_release_notes: true
