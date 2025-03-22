@@ -7,10 +7,11 @@ import (
 
 // ParsedMessage represents a parsed raw OCPP message array.
 type ParsedMessage struct {
-	MessageTypeID int    // 2 (CALL), 3 (CALLRESULT), 4 (CALLERROR)
-	UniqueID      string // Message ID
-	Action        string // For CALL (messageTypeId 2)
-	Payload       json.RawMessage
+	MessageTypeID int // 2 (CALL), 3 (CALLRESULT), 4 (CALLERROR)
+	UniqueID      string
+	Action        string
+	Payload       json.RawMessage // Original JSON payload
+	Decoded       any             // Optional decoded object (populated by plugin or validator)
 }
 
 // ParseMessage parses a raw OCPP 1.6J JSON message array into ParsedMessage.

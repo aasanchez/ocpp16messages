@@ -69,6 +69,8 @@ func ValidateRawMessage(raw []byte) (*ParsedMessage, error) {
 		return nil, err
 	}
 
-	result.Payload = decodedPayload
+	// Attach decoded payload separately
+	result.Payload = result.Payload // keep raw for compatibility
+	result.Decoded = decodedPayload // new field
 	return result, nil
 }
