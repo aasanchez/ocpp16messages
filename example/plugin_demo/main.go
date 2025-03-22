@@ -1,0 +1,1 @@
+// example plugin_demo main.go
