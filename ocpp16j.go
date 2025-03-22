@@ -1,5 +1,3 @@
-// Package ocpp16_messages provides utilities to validate and decode OCPP 1.6J messages.
-// It is designed to be transport-agnostic and focuses on schema-level validation of message structure.
 package ocpp16_messages
 
 import (
@@ -7,147 +5,135 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/aasanchez/ocpp16_messages/authorize"
 	"github.com/aasanchez/ocpp16_messages/core"
 )
 
-// MessageType represents the OCPP MessageTypeId.
+// MessageType represents the type of an OCPP 1.6 message.
 type MessageType int
 
 const (
-	Call       MessageType = 2 // Client-to-server request
-	CallResult MessageType = 3 // Server-to-client response
-	CallError  MessageType = 4 // Server-to-client error
+	CALL       MessageType = 2
+	CALLRESULT MessageType = 3
+	CALLERROR  MessageType = 4
 )
 
-// RawMessage represents a parsed OCPP message envelope after decoding.
-type RawMessage struct {
-	MessageType MessageType // 2, 3, or 4
-	UniqueID    string      // Unique identifier for the message
-	Action      string      // The OCPP action (e.g. "Authorize") – only used in CALL messages
-	Payload     interface{} // The decoded message payload (e.g. AuthorizeReq or AuthorizeConf)
+// RawOCPPMessage represents a parsed OCPP message in generic format.
+type RawOCPPMessage struct {
+	TypeID   MessageType
+	UniqueID string
+	Action   string
+	Payload  any
 }
 
-// ValidateMessage takes a raw OCPP JSON message (as []byte), parses it,
-// validates the structure, and returns a decoded RawMessage or an error.
-//
-// This function only handles messages with MessageTypeId 2 (CALL) and 3 (CALLRESULT).
-// MessageTypeId 4 (CALLERROR) is parsed but not validated.
-func ValidateMessage(input []byte) (*RawMessage, error) {
-	// First, unmarshal the raw JSON array
-	var arr []json.RawMessage
-	if err := json.Unmarshal(input, &arr); err != nil {
+// ValidateMessage parses and validates an OCPP 1.6 JSON message.
+// It ensures the structure and payload conform to the expected format for the message type.
+func ValidateMessage(raw []byte) (*RawOCPPMessage, error) {
+	var data []json.RawMessage
+	if err := json.Unmarshal(raw, &data); err != nil {
 		return nil, fmt.Errorf("invalid OCPP message format: %w", err)
 	}
 
-	if len(arr) < 3 {
-		return nil, errors.New("invalid message: must contain at least 3 elements")
+	if len(data) < 3 {
+		return nil, errors.New("invalid OCPP message: not enough fields")
 	}
 
-	var msgTypeID int
-	if err := json.Unmarshal(arr[0], &msgTypeID); err != nil {
-		return nil, errors.New("invalid message type ID")
+	var typeID int
+	if err := json.Unmarshal(data[0], &typeID); err != nil {
+		return nil, fmt.Errorf("invalid MessageTypeId: %w", err)
 	}
 
-	switch msgTypeID {
-	case int(Call):
-		return validateCall(arr)
-	case int(CallResult):
-		return validateCallResult(arr)
-	case int(CallError):
-		// CALLERROR is not validated but parsed
-		var uid, code, desc string
-		var details map[string]interface{}
-		if len(arr) < 4 {
-			return nil, errors.New("invalid CALLERROR message format")
-		}
-		_ = json.Unmarshal(arr[1], &uid)
-		if err := json.Unmarshal(arr[2], &code); err != nil {
-			return nil, errors.New("CALLERROR: invalid errorCode field, must be string")
-		}
-		_ = json.Unmarshal(arr[3], &desc)
-		_ = json.Unmarshal(arr[4], &details)
-		return &RawMessage{
-			MessageType: CallError,
-			UniqueID:    uid,
-			Action:      code, // Action here holds the error code
-			Payload:     desc,
-		}, nil
+	switch MessageType(typeID) {
+	case CALL:
+		return handleCall(data)
+	case CALLRESULT:
+		return handleCallResult(data)
+	case CALLERROR:
+		return handleCallError(data)
 	default:
-		return nil, fmt.Errorf("unsupported MessageTypeId: %d", msgTypeID)
+		return nil, fmt.Errorf("unsupported MessageTypeId: %d", typeID)
 	}
 }
 
-// validateCall processes a MessageTypeId 2 (CALL) message
-func validateCall(arr []json.RawMessage) (*RawMessage, error) {
-	if len(arr) != 4 {
-		return nil, errors.New("CALL message must contain 4 elements")
+func handleCall(data []json.RawMessage) (*RawOCPPMessage, error) {
+	if len(data) < 4 {
+		return nil, errors.New("CALL message must have at least 4 elements")
 	}
 
-	var uid, action string
-	if err := json.Unmarshal(arr[1], &uid); err != nil {
-		return nil, errors.New("invalid UniqueID in CALL message")
+	var uniqueID, action string
+	if err := json.Unmarshal(data[1], &uniqueID); err != nil {
+		return nil, fmt.Errorf("invalid UniqueId: %w", err)
 	}
-	if err := json.Unmarshal(arr[2], &action); err != nil {
-		return nil, errors.New("invalid Action in CALL message")
+	if err := json.Unmarshal(data[2], &action); err != nil {
+		return nil, fmt.Errorf("invalid Action: %w", err)
 	}
 
-	switch action {
-	case "Authorize":
-		var payload authorize.AuthorizeReq
-		if err := json.Unmarshal(arr[3], &payload); err != nil {
-			return nil, fmt.Errorf("invalid Authorize.req payload: %w", err)
-		}
-		if err := authorize.ValidateAuthorizeReq(payload); err != nil {
-			return nil, fmt.Errorf("Authorize.req validation failed: %w", err)
-		}
-		return &RawMessage{
-			MessageType: Call,
-			UniqueID:    uid,
-			Action:      action,
-			Payload:     payload,
-		}, nil
-	default:
-		// Try plugin registry
-		if validator, ok := core.GetRegisteredValidator(action); ok {
-			result, err := validator(arr[3])
-			if err != nil {
-				return nil, fmt.Errorf("%s.req plugin validation failed: %w", action, err)
-			}
-			return &RawMessage{
-				MessageType: Call,
-				UniqueID:    uid,
-				Action:      action,
-				Payload:     result,
-			}, nil
-		}
-		return nil, fmt.Errorf("unsupported action: %s", action)
+	// Lookup registered validator
+	validator, ok := core.GetRegisteredValidator(action)
+	if !ok {
+		return nil, fmt.Errorf("no validator registered for action: %s", action)
 	}
+
+	// Decode payload into registered struct
+	payload, err := core.DecodePayload(action, data[3])
+	if err != nil {
+		return nil, fmt.Errorf("failed to decode payload: %w", err)
+	}
+
+	// Validate the decoded message
+	if err := validator.ValidateMessage(payload); err != nil {
+		return nil, fmt.Errorf("payload validation failed: %w", err)
+	}
+
+	return &RawOCPPMessage{
+		TypeID:   CALL,
+		UniqueID: uniqueID,
+		Action:   action,
+		Payload:  payload,
+	}, nil
 }
 
-// validateCallResult processes a MessageTypeId 3 (CALLRESULT) message
-func validateCallResult(arr []json.RawMessage) (*RawMessage, error) {
-	if len(arr) != 3 {
-		return nil, errors.New("CALLRESULT message must contain 3 elements")
+func handleCallResult(data []json.RawMessage) (*RawOCPPMessage, error) {
+	if len(data) < 3 {
+		return nil, errors.New("CALLRESULT message must have 3 elements")
 	}
 
-	var uid string
-	if err := json.Unmarshal(arr[1], &uid); err != nil {
-		return nil, errors.New("invalid UniqueID in CALLRESULT")
+	var uniqueID string
+	if err := json.Unmarshal(data[1], &uniqueID); err != nil {
+		return nil, fmt.Errorf("invalid UniqueId: %w", err)
 	}
 
-	// Currently only supports AuthorizeConf — future messages can be registered via plugin
-	var payload authorize.AuthorizeConf
-	if err := json.Unmarshal(arr[2], &payload); err != nil {
-		return nil, fmt.Errorf("invalid Authorize.conf payload: %w", err)
+	var payload any
+	if err := json.Unmarshal(data[2], &payload); err != nil {
+		return nil, fmt.Errorf("invalid CALLRESULT payload: %w", err)
 	}
-	if err := authorize.ValidateAuthorizeConf(payload); err != nil {
-		return nil, fmt.Errorf("Authorize.conf validation failed: %w", err)
+
+	return &RawOCPPMessage{
+		TypeID:   CALLRESULT,
+		UniqueID: uniqueID,
+		Payload:  payload,
+	}, nil
+}
+
+func handleCallError(data []json.RawMessage) (*RawOCPPMessage, error) {
+	if len(data) < 4 {
+		return nil, errors.New("CALLERROR message must have 4 elements")
 	}
-	return &RawMessage{
-		MessageType: CallResult,
-		UniqueID:    uid,
-		Action:      "Authorize",
-		Payload:     payload,
+
+	var uniqueID, errorCode, errorDescription string
+	if err := json.Unmarshal(data[1], &uniqueID); err != nil {
+		return nil, fmt.Errorf("invalid UniqueId: %w", err)
+	}
+	if err := json.Unmarshal(data[2], &errorCode); err != nil {
+		return nil, fmt.Errorf("invalid ErrorCode: %w", err)
+	}
+	if err := json.Unmarshal(data[3], &errorDescription); err != nil {
+		return nil, fmt.Errorf("invalid ErrorDescription: %w", err)
+	}
+
+	return &RawOCPPMessage{
+		TypeID:   CALLERROR,
+		UniqueID: uniqueID,
+		Action:   errorCode, // Overloaded to carry errorCode
+		Payload:  errorDescription,
 	}, nil
 }

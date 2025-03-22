@@ -1,8 +1,3 @@
-// Package core provides extension points and plugin infrastructure for the
-// ocpp16_messages package.
-//
-// This file allows external tools to register custom message validators or
-// hook into the validation lifecycle for metrics, debugging, or customization.
 package core
 
 import (
@@ -11,70 +6,69 @@ import (
 	"sync"
 )
 
-// MessageValidator defines a function signature for validating custom OCPP messages.
-// The function receives a raw JSON payload (extracted from the CALL message),
-// and must return a decoded, validated struct or an error.
-type MessageValidator func(payload json.RawMessage) (interface{}, error)
-
-// ValidationHook allows external tools to observe the success or failure
-// of a validation process, for metrics, tracing, or debugging purposes.
-type ValidationHook interface {
-	OnValidationSuccess(action string, msgType int)
-	OnValidationFailure(action string, msgType int, err error)
-}
-
 var (
-	registryMu       sync.RWMutex
-	customValidators = make(map[string]MessageValidator)
-	validationHook   ValidationHook
+	registryLock         sync.RWMutex
+	registeredValidators = make(map[string]MessageValidator)
+
+	preValidationHook  func(action string, payload any)
+	postValidationHook func(action string, payload any, err error)
 )
 
-// RegisterValidator adds a new custom message validator for the given action name.
-// If a validator already exists for the action, this will overwrite it.
-//
-// Use this to support vendor-specific extensions or future OCPP messages.
+// MessageValidator defines the interface for a plugin validator.
+type MessageValidator interface {
+	ValidateMessage(raw json.RawMessage) (any, error)
+}
+
+// RegisterValidator registers a plugin validator for a specific action.
 func RegisterValidator(action string, validator MessageValidator) {
-	registryMu.Lock()
-	defer registryMu.Unlock()
-	customValidators[action] = validator
+	registryLock.Lock()
+	defer registryLock.Unlock()
+	registeredValidators[action] = validator
 }
 
-// GetRegisteredValidator looks up a registered validator for the given action.
-// Returns the validator and true if found, otherwise nil and false.
-func GetRegisteredValidator(action string) (MessageValidator, bool) {
-	registryMu.RLock()
-	defer registryMu.RUnlock()
-	v, ok := customValidators[action]
-	return v, ok
+// GetRegisteredValidator returns a registered validator for a given action.
+func GetRegisteredValidator(action string) MessageValidator {
+	registryLock.RLock()
+	defer registryLock.RUnlock()
+	return registeredValidators[action]
 }
 
-// SetValidationHook sets a global hook for observing validation outcomes.
-// Only one hook is supported at a time (last set wins).
-func SetValidationHook(hook ValidationHook) {
-	registryMu.Lock()
-	defer registryMu.Unlock()
-	validationHook = hook
+// SetPreValidationHook sets a hook called before message validation.
+func SetPreValidationHook(hook func(action string, payload any)) {
+	preValidationHook = hook
 }
 
-// NotifyValidationSuccess emits a success event to the registered validation hook.
-func NotifyValidationSuccess(action string, msgType int) {
-	registryMu.RLock()
-	defer registryMu.RUnlock()
-	if validationHook != nil {
-		validationHook.OnValidationSuccess(action, msgType)
+// SetPostValidationHook sets a hook called after message validation.
+func SetPostValidationHook(hook func(action string, payload any, err error)) {
+	postValidationHook = hook
+}
+
+// ValidateRawMessage parses and validates the OCPP message.
+func ValidateRawMessage(raw []byte) (*ParsedMessage, error) {
+	result, err := ParseMessage(raw)
+	if err != nil {
+		return nil, err
 	}
-}
 
-// NotifyValidationFailure emits a failure event to the registered validation hook.
-func NotifyValidationFailure(action string, msgType int, err error) {
-	registryMu.RLock()
-	defer registryMu.RUnlock()
-	if validationHook != nil {
-		validationHook.OnValidationFailure(action, msgType, err)
+	validator := GetRegisteredValidator(result.Action)
+	if validator == nil {
+		return nil, fmt.Errorf("no validator registered for action: %s", result.Action)
 	}
-}
 
-// NewFieldError creates a formatted error with field context.
-func NewFieldError(field string, message string) error {
-	return fmt.Errorf("%s: %s", field, message)
+	if preValidationHook != nil {
+		preValidationHook(result.Action, result.Payload)
+	}
+
+	decodedPayload, err := validator.ValidateMessage(result.Payload)
+
+	if postValidationHook != nil {
+		postValidationHook(result.Action, result.Payload, err)
+	}
+
+	if err != nil {
+		return nil, err
+	}
+
+	result.Payload = decodedPayload
+	return result, nil
 }

@@ -44,28 +44,3 @@ jobs:
           threshold=20.0
           echo "Total coverage: $total%"
           awk -v total=$total -v threshold=$threshold 'BEGIN {exit (total+0 < threshold)}'
-
-      - name: Run benchmarks
-        run: |
-          mkdir -p .benchmark
-          go test -bench=. -benchmem ./benchmark > .benchmark/results.txt
-
-      - name: Run CPU & memory profiling
-        run: |
-          mkdir -p .pprof
-          go test -bench=ValidateMessage -cpuprofile=.pprof/cpu.prof ./benchmark
-          go test -bench=. -memprofile=.pprof/mem.prof ./benchmark
-          go tool pprof -svg .pprof/cpu.prof > .pprof/cpu.svg || true
-          go tool pprof -svg .pprof/mem.prof > .pprof/mem.svg || true
-
-      - name: Upload benchmark results
-        uses: actions/upload-artifact@v4
-        with:
-          name: benchmark-results
-          path: .benchmark/results.txt
-
-      - name: Upload profiling data
-        uses: actions/upload-artifact@v4
-        with:
-          name: benchmark-profiles
-          path: .pprof
