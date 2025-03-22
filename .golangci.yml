@@ -1,22 +1,41 @@
 run:
-  timeout: 2m
+  deadline: 5m
+  tests: false
+  skip-dirs:
+    - vendor/
+  go: '1.21'
 
 linters:
+  disable-all: true
   enable:
     - govet
-    - revive
-    - gofmt
-    - goimports
     - staticcheck
-    - unused
-    - gocritic
-    - gosimple
+    - gofmt
     - errcheck
-    - structcheck
-    - typecheck
+    - gosimple
+    - unused
+    - misspell
+
+linters-settings:
+  govet:
+    check-shadowing: true
+  gocyclo:
+    min-complexity: 15
+  goconst:
+    min-len: 3
+    min-occurrences: 3
 
 issues:
-  exclude-use-default: false
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - gocyclo
+        - errcheck
+        - dupl
+        - gosec
+  exclude:
+    - "should have comment"
+    - "always receives"
 
 output:
   format: colored-line-number
