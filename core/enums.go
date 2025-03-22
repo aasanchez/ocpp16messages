@@ -5,6 +5,15 @@ package core
 // AuthorizationStatus represents the possible values for IdTagInfo.status in Authorize.conf.
 type AuthorizationStatus string
 
+// MessageType represents the OCPP 1.6 message types.
+type MessageType int
+
+const (
+	CALL       MessageType = 2
+	CALLRESULT MessageType = 3
+	CALLERROR  MessageType = 4
+)
+
 const (
 	// AuthorizationAccepted indicates that the idTag is valid for charging.
 	AuthorizationAccepted AuthorizationStatus = "Accepted"
