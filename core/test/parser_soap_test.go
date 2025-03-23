@@ -73,3 +73,45 @@ func TestParseSOAPMessage_InvalidXML(t *testing.T) {
 		t.Error("expected error for invalid XML")
 	}
 }
+
+func TestParseSOAPMessage_InvalidXMLDecoder(t *testing.T) {
+	// Create a reader that will fail on Read
+	invalidReader := &bytes.Buffer{}
+	invalidReader.Write([]byte{0xFF, 0xFE}) // Invalid UTF-8 sequence
+	_, err := core.ParseSOAPMessage(invalidReader)
+	if err == nil {
+		t.Error("expected error for invalid XML decoder")
+	}
+}
+
+func TestParseSOAPMessage_InvalidXMLToken(t *testing.T) {
+	// Create XML with invalid token
+	xml := `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+		<soap:Header>
+			<Action>Authorize</Action>
+		</soap:Header>
+		<soap:Body>
+			<![CDATA[Invalid CDATA content]]>
+		</soap:Body>
+	</soap:Envelope>`
+	_, err := core.ParseSOAPMessage(bytes.NewReader([]byte(xml)))
+	if err == nil {
+		t.Error("expected error for invalid XML token")
+	}
+}
+
+func TestParseSOAPMessage_InvalidXMLAttribute(t *testing.T) {
+	// Create XML with invalid attribute
+	xml := `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+		<soap:Header>
+			<Action>Authorize</Action>
+		</soap:Header>
+		<soap:Body>
+			<test attr="invalid" attr="duplicate">content</test>
+		</soap:Body>
+	</soap:Envelope>`
+	_, err := core.ParseSOAPMessage(bytes.NewReader([]byte(xml)))
+	if err == nil {
+		t.Error("expected error for invalid XML attribute")
+	}
+}
