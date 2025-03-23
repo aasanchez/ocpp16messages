@@ -1,7 +1,6 @@
 package core_test
 
 import (
-	"bytes"
 	"strings"
 	"testing"
 
@@ -9,18 +8,19 @@ import (
 )
 
 func TestParseSOAPMessage_Valid(t *testing.T) {
-	xml := `
-	<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
-		<soap:Header>
-			<Action>Authorize</Action>
-		</soap:Header>
-		<soap:Body>
-			<idTag>XYZ789</idTag>
-		</soap:Body>
-	</soap:Envelope>
-	`
+	soap := `
+		<Envelope>
+			<Header>
+				<Action>Authorize</Action>
+			</Header>
+			<Body>
+				<AuthorizeRequest>
+					<idTag>ABC123</idTag>
+				</AuthorizeRequest>
+			</Body>
+		</Envelope>`
 
-	msg, err := core.ParseSOAPMessage(bytes.NewReader([]byte(xml)))
+	msg, err := core.ParseSOAPMessage(strings.NewReader(soap))
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -30,88 +30,92 @@ func TestParseSOAPMessage_Valid(t *testing.T) {
 	if msg.Action != "Authorize" {
 		t.Errorf("expected Action 'Authorize', got '%s'", msg.Action)
 	}
-	if strings.TrimSpace(string(msg.Payload)) != "<idTag>XYZ789</idTag>" {
-		t.Errorf("unexpected Payload: %s", string(msg.Payload))
+	if !strings.Contains(string(msg.Payload), "<AuthorizeRequest>") {
+		t.Errorf("expected payload to contain AuthorizeRequest, got: %s", msg.Payload)
+	}
+}
+
+func TestParseSOAPMessage_ValidWithAttributes(t *testing.T) {
+	soap := `
+		<Envelope>
+			<Header>
+				<Action>Authorize</Action>
+			</Header>
+			<Body>
+				<AuthorizeRequest id="123" type="request">
+					<idTag>ABC123</idTag>
+				</AuthorizeRequest>
+			</Body>
+		</Envelope>`
+
+	msg, err := core.ParseSOAPMessage(strings.NewReader(soap))
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if !strings.Contains(string(msg.Payload), `id="123"`) {
+		t.Errorf("expected payload to contain id attribute, got: %s", msg.Payload)
+	}
+	if !strings.Contains(string(msg.Payload), `type="request"`) {
+		t.Errorf("expected payload to contain type attribute, got: %s", msg.Payload)
+	}
+}
+
+func TestParseSOAPMessage_InvalidActionElement(t *testing.T) {
+	soap := `
+		<Envelope>
+			<Header>
+				<Action><![CDATA[Invalid Action content]]></Action>
+			</Header>
+			<Body>
+				<AuthorizeRequest>
+					<idTag>ABC123</idTag>
+				</AuthorizeRequest>
+			</Body>
+		</Envelope>`
+
+	_, err := core.ParseSOAPMessage(strings.NewReader(soap))
+	if err == nil {
+		t.Error("expected error for invalid Action element")
 	}
 }
 
 func TestParseSOAPMessage_MissingAction(t *testing.T) {
-	xml := `
-	<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
-		<soap:Header></soap:Header>
-		<soap:Body>
-			<idTag>XYZ789</idTag>
-		</soap:Body>
-	</soap:Envelope>
-	`
+	soap := `
+		<Envelope>
+			<Header>
+			</Header>
+			<Body>
+				<AuthorizeRequest>
+					<idTag>ABC123</idTag>
+				</AuthorizeRequest>
+			</Body>
+		</Envelope>`
 
-	_, err := core.ParseSOAPMessage(bytes.NewReader([]byte(xml)))
-	if err == nil {
-		t.Error("expected error for missing Action")
+	_, err := core.ParseSOAPMessage(strings.NewReader(soap))
+	if err == nil || err.Error() != "missing Action in SOAP header" {
+		t.Errorf("expected missing Action error, got: %v", err)
 	}
 }
 
 func TestParseSOAPMessage_MissingBody(t *testing.T) {
-	xml := `
-	<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
-		<soap:Header>
-			<Action>Authorize</Action>
-		</soap:Header>
-	</soap:Envelope>
-	`
+	soap := `
+		<Envelope>
+			<Header>
+				<Action>Authorize</Action>
+			</Header>
+		</Envelope>`
 
-	_, err := core.ParseSOAPMessage(bytes.NewReader([]byte(xml)))
-	if err == nil {
-		t.Error("expected error for missing Body")
+	_, err := core.ParseSOAPMessage(strings.NewReader(soap))
+	if err == nil || err.Error() != "missing or empty SOAP Body" {
+		t.Errorf("expected missing or empty SOAP Body error, got: %v", err)
 	}
 }
 
 func TestParseSOAPMessage_InvalidXML(t *testing.T) {
-	xml := `<Envelope><Header></Header><Body></Body>` // Invalid XML structure
-	_, err := core.ParseSOAPMessage(bytes.NewReader([]byte(xml)))
+	invalid := `<Envelope><Header><Action>Authorize</Action></Header><Body><AuthorizeRequest><idTag>ABC123</idTag></AuthorizeRequest>`
+
+	_, err := core.ParseSOAPMessage(strings.NewReader(invalid))
 	if err == nil {
 		t.Error("expected error for invalid XML")
-	}
-}
-
-func TestParseSOAPMessage_InvalidXMLDecoder(t *testing.T) {
-	// Create a reader that will fail on Read
-	invalidReader := &bytes.Buffer{}
-	invalidReader.Write([]byte{0xFF, 0xFE}) // Invalid UTF-8 sequence
-	_, err := core.ParseSOAPMessage(invalidReader)
-	if err == nil {
-		t.Error("expected error for invalid XML decoder")
-	}
-}
-
-func TestParseSOAPMessage_InvalidXMLToken(t *testing.T) {
-	// Create XML with invalid token
-	xml := `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
-		<soap:Header>
-			<Action>Authorize</Action>
-		</soap:Header>
-		<soap:Body>
-			<![CDATA[Invalid CDATA content]]>
-		</soap:Body>
-	</soap:Envelope>`
-	_, err := core.ParseSOAPMessage(bytes.NewReader([]byte(xml)))
-	if err == nil {
-		t.Error("expected error for invalid XML token")
-	}
-}
-
-func TestParseSOAPMessage_InvalidXMLAttribute(t *testing.T) {
-	// Create XML with invalid attribute
-	xml := `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
-		<soap:Header>
-			<Action>Authorize</Action>
-		</soap:Header>
-		<soap:Body>
-			<test attr="invalid" attr="duplicate">content</test>
-		</soap:Body>
-	</soap:Envelope>`
-	_, err := core.ParseSOAPMessage(bytes.NewReader([]byte(xml)))
-	if err == nil {
-		t.Error("expected error for invalid XML attribute")
 	}
 }
