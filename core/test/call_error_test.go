@@ -63,3 +63,27 @@ func TestValidateCallError_InvalidJSONDetails(t *testing.T) {
 		t.Error("expected JSON marshal error")
 	}
 }
+
+func TestValidateCallError_MissingUniqueID(t *testing.T) {
+	msg := []any{4, "", "Code", "Description", map[string]any{}}
+	_, err := core.ValidateCallError(msg)
+	if err == nil {
+		t.Error("expected error for missing UniqueID")
+	}
+}
+
+func TestValidateCallError_MissingErrorCode(t *testing.T) {
+	msg := []any{4, "id", "", "Description", map[string]any{}}
+	_, err := core.ValidateCallError(msg)
+	if err == nil {
+		t.Error("expected error for missing ErrorCode")
+	}
+}
+
+func TestValidateCallError_MissingErrorDescription(t *testing.T) {
+	msg := []any{4, "id", "Code", "", map[string]any{}}
+	_, err := core.ValidateCallError(msg)
+	if err == nil {
+		t.Error("expected error for missing ErrorDescription")
+	}
+}
