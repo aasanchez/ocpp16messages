@@ -131,6 +131,14 @@ func TestParseJSONMessage_CALLRESULT_WrongNumberOfElements(t *testing.T) {
 	}
 }
 
+func TestParseJSONMessage_CALLRESULT_TooManyElements(t *testing.T) {
+	raw := []byte(`[3, "123", {"status": "Accepted"}, "extra"]`)
+	_, err := core.ParseJSONMessage(raw)
+	if err == nil || err.Error() != "CALLRESULT message must have 3 elements" {
+		t.Errorf("expected error for too long CALLRESULT, got: %v", err)
+	}
+}
+
 func TestParseJSONMessage_CALLERROR_TooShort(t *testing.T) {
 	raw := []byte(`[4, "id", "code", "desc"]`)
 	_, err := core.ParseJSONMessage(raw)
@@ -155,12 +163,11 @@ func TestParseJSONMessage_CALLERROR_InvalidDescription(t *testing.T) {
 	}
 }
 
-// ✅ This is the missing case that ensures 100% coverage
 func TestParseJSONMessage_CALLERROR_NonStringDescription(t *testing.T) {
-	raw := []byte(`[4, "id123", "SomeError", {"unexpected": "object"}, {}]`)
+	raw := []byte(`[4, "id", "SomeError", {"unexpected": "object"}, {}]`)
 	_, err := core.ParseJSONMessage(raw)
 	if err == nil || err.Error() != "invalid errorDescription" {
-		t.Errorf("expected error for invalid errorDescription, got: %v", err)
+		t.Errorf("expected error for non-string errorDescription, got: %v", err)
 	}
 }
 
