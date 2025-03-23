@@ -115,27 +115,43 @@ func TestParseJSONMessage_CALL_MissingFields(t *testing.T) {
 	}
 }
 
-func TestParseJSONMessage_CALLERROR_InvalidCode(t *testing.T) {
-	raw := []byte(`[4, "id", {}, "desc", {}]`)
+func TestParseJSONMessage_CALL_WrongNumberOfElements(t *testing.T) {
+	raw := []byte(`[2, "123", "Authorize"]`) // Only 3 elements
 	_, err := core.ParseJSONMessage(raw)
-	if err == nil {
-		t.Error("expected error for invalid errorCode")
+	if err == nil || err.Error() != "CALL message must have 4 elements" {
+		t.Errorf("expected error for CALL message with wrong number of elements, got: %v", err)
 	}
 }
 
-func TestParseJSONMessage_CALLERROR_InvalidDescription(t *testing.T) {
-	raw := []byte(`[4, "id", "code", {}, {}]`)
+func TestParseJSONMessage_CALLRESULT_WrongNumberOfElements(t *testing.T) {
+	raw := []byte(`[3, "123"]`) // Only 2 elements
 	_, err := core.ParseJSONMessage(raw)
-	if err == nil {
-		t.Error("expected error for invalid errorDescription")
+	if err == nil || err.Error() != "CALLRESULT message must have 3 elements" {
+		t.Errorf("expected error for CALLRESULT message with wrong number of elements, got: %v", err)
 	}
 }
 
 func TestParseJSONMessage_CALLERROR_TooShort(t *testing.T) {
-	raw := []byte(`[4, "id", "code", "desc"]`)
+	raw := []byte(`[4, "id", "code", "desc"]`) // Only 4 elements
 	_, err := core.ParseJSONMessage(raw)
 	if err == nil {
 		t.Error("expected error for too short CALLERROR message")
+	}
+}
+
+func TestParseJSONMessage_CALLERROR_InvalidCode(t *testing.T) {
+	raw := []byte(`[4, "id", 123, "desc", {}]`) // errorCode is not string
+	_, err := core.ParseJSONMessage(raw)
+	if err == nil || err.Error() != "invalid errorCode" {
+		t.Errorf("expected error for invalid errorCode, got: %v", err)
+	}
+}
+
+func TestParseJSONMessage_CALLERROR_InvalidDescription(t *testing.T) {
+	raw := []byte(`[4, "id", "code", 123, {}]`) // errorDescription is not string
+	_, err := core.ParseJSONMessage(raw)
+	if err == nil || err.Error() != "invalid errorDescription" {
+		t.Errorf("expected error for invalid errorDescription, got: %v", err)
 	}
 }
 
