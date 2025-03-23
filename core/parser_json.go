@@ -45,7 +45,7 @@ func ParseJSONMessage(data []byte) (*ParsedMessage, error) {
 
 	switch typeID {
 	case CALL:
-		if len(raw) < 4 {
+		if len(raw) != 4 {
 			return nil, errors.New("CALL message must have 4 elements")
 		}
 		var action string
@@ -56,13 +56,13 @@ func ParseJSONMessage(data []byte) (*ParsedMessage, error) {
 		msg.Payload = raw[3]
 
 	case CALLRESULT:
-		if len(raw) < 3 {
+		if len(raw) != 3 {
 			return nil, errors.New("CALLRESULT message must have 3 elements")
 		}
 		msg.Payload = raw[2]
 
 	case CALLERROR:
-		if len(raw) < 5 {
+		if len(raw) != 5 {
 			return nil, errors.New("CALLERROR message must have 5 elements")
 		}
 		if err := json.Unmarshal(raw[2], &msg.ErrorCode); err != nil {

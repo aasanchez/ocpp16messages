@@ -139,11 +139,14 @@ func TestParseJSONMessage_CALLERROR_TooShort(t *testing.T) {
 	}
 }
 
-func TestParseJSONMessage_UnsupportedType(t *testing.T) {
-	raw := []byte(`[99, "id", "unknown"]`)
-	_, err := core.ParseJSONMessage(raw)
-	if err == nil {
-		t.Error("expected error for unsupported message type")
+func TestParseJSONMessage_UnsupportedMessageType(t *testing.T) {
+	raw := []byte(`[99, "uid", "x", {}]`)
+	msg, err := core.ParseJSONMessage(raw)
+	if err == nil || err.Error() != "unsupported message type ID: 99" {
+		t.Errorf("expected unsupported message type error, got: %v", err)
+	}
+	if msg != nil {
+		t.Errorf("expected msg to be nil, got: %+v", msg)
 	}
 }
 
