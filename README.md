@@ -1,21 +1,23 @@
-# OCPP 1.6 Message Validator & Parser Library
+# ocpp16_messages
 
-This Go package provides a robust, extensible, and idiomatic toolkit for decoding, validating, and extending Open Charge Point Protocol (OCPP) 1.6J messages. It is designed to be protocol-agnostic and can be used with both JSON and SOAP representations of OCPP messages.
-
----
-
-## ✨ Features
-
-- ✅ Full decoding and validation support for the `Authorize.req` and `Authorize.conf` messages.
-- 🧩 Plugin system for custom message types, validators, and validation hooks.
-- 📈 Benchmark and profiling suite for analyzing performance.
-- 🧪 High test coverage across all components (target: 100%).
-- 📚 Fully documented with GoDoc-compatible comments.
-- 🛠 Forward-compatible layout for future OCPP 1.6J messages.
+A high-performance and idiomatic Go package for handling Open Charge Point Protocol (OCPP) 1.6 messages in both JSON and SOAP formats.
 
 ---
 
-## 📦 Installation
+## ✅ Features
+
+- 🔁 Full parsing and validation of OCPP 1.6J (JSON) and 1.6S (SOAP) message formats.
+- 📦 Modular message design (e.g., `authorize`, `bootnotification`, etc.)
+- 🧩 Plugin-style validator system for extensibility.
+- 🧪 100% test coverage with strong focus on performance.
+- 📊 Benchmarking and profiling suite.
+- 🧵 Thread-safe validation logic.
+- 🧰 Rich set of reusable core types (e.g., `CiString`, `IdToken`, `StatusEnum`).
+- 🔌 Examples for JSON and SOAP usage in `example/authorize/json/` and `example/authorize/soap/`.
+
+---
+
+## 🏁 Getting Started
 
 ```bash
 go get github.com/aasanchez/ocpp16_messages
@@ -23,107 +25,64 @@ go get github.com/aasanchez/ocpp16_messages
 
 ---
 
-## 🚀 Quick Start
+## 🧪 Run Tests & Benchmarks
 
-```go
-package main
-
-import (
-    "log"
-    "github.com/aasanchez/ocpp16_messages/core"
-)
-
-func main() {
-    raw := []byte(`[2,"01221201194032","Authorize",{"idTag":"D0431F35"}]`)
-
-    result, err := core.ValidateRawMessage(raw)
-    if err != nil {
-        log.Fatalf("❌ Invalid message: %v", err)
-    }
-
-    log.Printf("✅ Valid message. Action: %s | ID: %s", result.Action, result.UniqueID)
-}
-```
-
----
-
-## 📁 Project Structure
-
-```
-ocpp16_messages/
-├── authorize/          # Authorize.req and Authorize.conf structs and validation
-├── core/               # Shared core types, plugin registry, enums, utils
-├── benchmark/          # Benchmark & profiling tests
-├── example/            # Example usage demos (authorization & plugin usage)
-├── test/               # Full test suite (unit, integration, plugins)
-├── ocpp16j.go          # Central entrypoint to validate OCPP messages
-├── go.mod, go.sum      # Module dependencies
-└── README.md           # You are here!
-```
-
----
-
-## 🧪 Testing
+### Run all tests
 
 ```bash
-go test ./... -v
+make test
 ```
 
-Generate coverage:
-
-```bash
-go test -coverprofile=coverage.out ./...
-go tool cover -func=coverage.out
-```
-
----
-
-## 🧩 Plugin Support
-
-You can register custom validators or hooks via the `core` plugin registry:
-
-```go
-core.RegisterValidator("MyCustomAction", myValidator)
-core.SetPreValidationHook(func(action string, payload any) {
-    log.Printf("🔎 About to validate action %s", action)
-})
-```
-
-See [`example/plugin_demo`](example/plugin_demo/main.go) for more.
-
----
-
-## 📊 Benchmarking & Profiling
-
-Run detailed performance benchmarks:
+### Run benchmarks
 
 ```bash
 go test -bench=. -benchmem ./benchmark
 ```
 
-Generate profiling data:
+---
 
-```bash
-go test -bench=ValidateMessage -cpuprofile cpu.prof ./benchmark
-go tool pprof -http=:8080 cpu.prof
+## 📂 Project Structure
+
+```text
+ocpp16_messages/
+├── authorize/                  # Implementation of the Authorize.req and Authorize.conf messages
+├── core/                       # Shared types, validators, plugins, enums, parsers
+├── benchmark/                  # Benchmarks for JSON & SOAP performance analysis
+├── example/authorize/json/     # Example for Authorize using JSON
+├── example/authorize/soap/     # Example for Authorize using SOAP
+├── test/                       # Full coverage test suite
+├── ocpp16_messages.go          # Entrypoint to parse, route, and validate OCPP 1.6 messages
+├── go.mod / go.sum             # Go module files
+└── README.md                   # This file
 ```
+
+---
+
+## 🔌 Plugin Support
+
+Custom validators can be registered via the plugin system:
+
+```go
+core.RegisterValidator("CustomAction", CustomValidator{})
+```
+
+Validation hooks can be set for observability:
+
+```go
+core.SetPreValidationHook(func(action string, raw json.RawMessage) {
+    fmt.Println("Raw received:", action)
+})
+```
+
+---
+
+## 🔍 Versioning
+
+- Current version: **v0.1.0**
+- Next steps: implement BootNotification message and SOAP header validation.
 
 ---
 
 ## 📄 License
 
-[MIT License](LICENSE)
-
----
-
-## 🙌 Contributing
-
-Contributions are welcome! Open issues, suggest ideas, or send pull requests. For major changes, please open a discussion first to propose what you’d like to change.
-
----
-
-## 📚 Documentation
-
-GoDoc: [pkg.go.dev/github.com/aasanchez/ocpp16_messages](https://pkg.go.dev/github.com/aasanchez/ocpp16_messages)
-
-Each internal package includes its own `README.md` with detailed purpose and scope.
+MIT License © Alexis Sanchez
