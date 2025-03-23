@@ -1,5 +1,3 @@
-// Command main demonstrates how to decode and validate an Authorize.req and Authorize.conf
-// message using the ocpp16_messages package.
 package main
 
 import (
@@ -12,38 +10,40 @@ import (
 )
 
 func main() {
-	log.SetFlags(log.LstdFlags | log.Lshortfile)
-
-	// Example raw CALL message for Authorize.req
 	raw := []byte(`[2,"01221201194032","Authorize",{"idTag":"D0431F35"}]`)
 
-	result, err := core.ValidateRawMessage(raw)
+	// Parse and validate the raw OCPP message
+	msg, err := core.ValidateRawMessage(raw)
 	if err != nil {
-		log.Fatalf("❌ Failed to validate Authorize.req: %v", err)
+		log.Fatalf("❌ Failed to parse OCPP message: %v", err)
 	}
 
-	req, ok := result.Payload.(authorize.AuthorizeReq)
+	// Validate the message
+	if err := core.ValidateMessage(msg.Action, msg.Payload); err != nil {
+		log.Fatalf("❌ Validation error: %v", err)
+	}
+
+	// Check the decoded payload type
+	req, ok := msg.DecodedPayload.(authorize.AuthorizeReq)
 	if !ok {
 		log.Fatalf("❌ Payload is not an AuthorizeReq")
 	}
 
 	fmt.Println("✅ Valid Authorize.req message")
-	fmt.Printf("  Unique ID : %s\n", result.UniqueID)
-	fmt.Printf("  Action    : %s\n", result.Action)
-	fmt.Printf("  IdTag     : %s\n", req.IdTag)
+	fmt.Printf("  ID     : %s\n", msg.ID)
+	fmt.Printf("  idTag  : %s\n", req.IdTag)
 
-	// Example Authorize.conf response
-	conf := authorize.AuthorizeConf{
+	// Build a response
+	resp := authorize.Conf{
 		IdTagInfo: authorize.IdTagInfo{
-			Status: authorize.AuthorizationAccepted,
+			Status: core.AuthorizationAccepted,
 		},
 	}
 
-	if err := authorize.ValidateAuthorizeConf(conf); err != nil {
-		log.Fatalf("❌ Invalid Authorize.conf: %v", err)
+	// Marshal the response
+	encoded, err := json.Marshal(resp)
+	if err != nil {
+		log.Fatalf("❌ Failed to marshal response: %v", err)
 	}
-
-	output, _ := json.MarshalIndent(conf, "", "  ")
-	fmt.Println("✅ Valid Authorize.conf message:")
-	fmt.Println(string(output))
+	fmt.Printf("✅ Encoded Authorize.conf: %s\n", string(encoded))
 }

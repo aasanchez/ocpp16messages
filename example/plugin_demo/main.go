@@ -15,16 +15,13 @@ type CustomAuthorizeReq struct {
 }
 
 // CustomValidator implements the core.MessageValidator interface for a custom action.
-type CustomValidator struct{}
-
-// ValidateMessage validates a custom message format for the action "CustomAuthorize".
-func (v CustomValidator) ValidateMessage(raw json.RawMessage) (any, error) {
+func CustomValidator(payload json.RawMessage) (interface{}, error) {
 	var msg CustomAuthorizeReq
-	if err := json.Unmarshal(raw, &msg); err != nil {
+	if err := json.Unmarshal(payload, &msg); err != nil {
 		return nil, fmt.Errorf("invalid JSON: %w", err)
 	}
 	if msg.Token == "" {
-		return nil, core.NewFieldError("token", "cannot be empty")
+		return nil, core.NewFieldError("token", fmt.Errorf("required"))
 	}
 	return msg, nil
 }
@@ -33,15 +30,11 @@ func main() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	// Register custom validator for action "CustomAuthorize"
-	core.RegisterValidator("CustomAuthorize", CustomValidator{})
+	core.RegisterValidator("CustomAuthorize", CustomValidator)
 
-	// Optionally, set hooks to log pre/post validation activity
-	core.SetPreValidationHook(func(action string, payload any) {
-		log.Printf("🔍 Pre-validation hook: Action=%s Payload=%v", action, payload)
-	})
-	core.SetPostValidationHook(func(action string, result any, err error) {
-		log.Printf("✅ Post-validation hook: Action=%s Success=%v Error=%v", action, err == nil, err)
-	})
+	// Set up validation hook
+	hook := &ValidationHook{}
+	core.SetValidationHook(hook)
 
 	raw := []byte(`[2,"20240322112233","CustomAuthorize",{"token":"xyz-123"}]`)
 
@@ -52,6 +45,17 @@ func main() {
 
 	log.Println("✅ CustomAuthorize message validated")
 	log.Printf("Action   : %s", result.Action)
-	log.Printf("UniqueID : %s", result.UniqueID)
-	log.Printf("Payload  : %+v", result.Payload)
+	log.Printf("UniqueID : %s", result.ID)
+	log.Printf("Payload  : %+v", result.DecodedPayload)
+}
+
+// ValidationHook implements core.ValidationHook interface
+type ValidationHook struct{}
+
+func (h *ValidationHook) OnValidationSuccess(action string, msgType int) {
+	log.Printf("✅ Validation success: Action=%s Type=%d", action, msgType)
+}
+
+func (h *ValidationHook) OnValidationFailure(action string, msgType int, err error) {
+	log.Printf("❌ Validation failure: Action=%s Type=%d Error=%v", action, msgType, err)
 }

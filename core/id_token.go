@@ -1,18 +1,34 @@
-// Package core defines shared data structures and validation logic used across OCPP 1.6 message types.
 package core
 
-// IdToken represents an identification token used in the Authorize.req message.
-// It wraps a CiString20Type and enforces OCPP 1.6 constraints.
+import (
+	"fmt"
+)
+
+// IdToken represents the identifier used by the charge point to authorize a user.
+// It wraps a CiString20Type, which restricts the token to a maximum of 20 characters.
 type IdToken struct {
-	// IdTag is a case-insensitive string identifier, max 20 characters.
+	// IdTag is the unique identifier for the user or vehicle.
 	IdTag CiString20Type `json:"idTag"`
 }
 
-// Validate checks whether the IdToken is valid according to the OCPP 1.6 specification.
-// It ensures the IdTag field is not empty and does not exceed the maximum allowed length.
+// Validate checks whether the IdToken meets OCPP 1.6J requirements.
 func (t IdToken) Validate() error {
 	if err := t.IdTag.Validate(); err != nil {
-		return NewFieldError("idTag", err)
+		return NewFieldError("idTag", fmt.Errorf("invalid IdToken: %w", err))
 	}
 	return nil
+}
+
+// String returns the IdTag value as string.
+func (t IdToken) String() string {
+	return string(t.IdTag)
+}
+
+// NewIdToken creates and validates a new IdToken instance from a string.
+func NewIdToken(id string) (IdToken, error) {
+	tag := CiString20Type(id)
+	if err := tag.Validate(); err != nil {
+		return IdToken{}, NewFieldError("idTag", err)
+	}
+	return IdToken{IdTag: tag}, nil
 }

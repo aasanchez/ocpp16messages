@@ -2,29 +2,27 @@ package test
 
 import (
 	"errors"
+	"strings"
 	"testing"
 
 	"github.com/aasanchez/ocpp16_messages/core"
 )
 
 func TestNewFieldError(t *testing.T) {
-	err := core.NewFieldError("idTag", "cannot be empty")
-	var ferr *core.FieldError
+	err := errors.New("cannot be empty")
 
-	if !errors.As(err, &ferr) {
-		t.Errorf("Expected FieldError type, got %T", err)
+	fieldErr := core.NewFieldError("fieldName", err)
+
+	if fieldErr == nil {
+		t.Fatal("expected FieldError, got nil")
 	}
 
-	expected := "idTag: cannot be empty"
-	if err.Error() != expected {
-		t.Errorf("Expected error %q, got %q", expected, err.Error())
+	expectedMsg := "invalid field 'fieldName': cannot be empty"
+	if fieldErr.Error() != expectedMsg {
+		t.Errorf("unexpected error message.\nExpected: %s\nGot     : %s", expectedMsg, fieldErr.Error())
 	}
 
-	if ferr.Field != "idTag" {
-		t.Errorf("Expected field 'idTag', got %s", ferr.Field)
-	}
-
-	if ferr.Reason != "cannot be empty" {
-		t.Errorf("Expected reason 'cannot be empty', got %s", ferr.Reason)
+	if !strings.Contains(fieldErr.Error(), "fieldName") {
+		t.Errorf("error message does not contain field name")
 	}
 }

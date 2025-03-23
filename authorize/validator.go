@@ -1,42 +1,61 @@
-// Package authorize provides validation logic for Authorize.req and Authorize.conf messages.
 package authorize
 
 import (
+	"encoding/json"
 	"fmt"
-	"time"
 
 	"github.com/aasanchez/ocpp16_messages/core"
 )
 
-// ValidateReq checks if the Authorize.req message complies with the OCPP 1.6J specification.
-//
-// This includes checking the validity of the IdTag field.
-func ValidateReq(req Req) error {
-	if err := req.IdTag.Validate(); err != nil {
-		return core.NewFieldError("idTag", err)
-	}
-	return nil
+// AuthorizeReq represents an Authorize request message.
+type AuthorizeReq struct {
+	IdTag core.IdToken `json:"idTag"`
 }
 
-// ValidateConf checks if the Authorize.conf message complies with the OCPP 1.6J specification.
-//
-// This includes validating the status, and optionally expiryDate and parentIdTag if present.
-func ValidateConf(conf Conf) error {
-	if !conf.IdTagInfo.Status.IsValid() {
-		return core.NewFieldError("status", fmt.Errorf("invalid status: %s", conf.IdTagInfo.Status))
+// validateAuthorizeReq performs structural validation of the AuthorizeReq message.
+func validateAuthorizeReq(raw json.RawMessage) (interface{}, error) {
+	var req AuthorizeReq
+	if err := json.Unmarshal(raw, &req); err != nil {
+		return nil, core.NewFieldError("idTag", fmt.Errorf("invalid JSON structure: %w", err))
 	}
 
-	if conf.IdTagInfo.ExpiryDate != nil {
-		if conf.IdTagInfo.ExpiryDate.Before(time.Now().Add(-365 * 24 * time.Hour)) {
-			return core.NewFieldError("expiryDate", fmt.Errorf("date appears to be in the past"))
-		}
+	if req.IdTag.IdTag == "" {
+		return nil, core.NewFieldError("idTag", fmt.Errorf("required"))
+	}
+
+	if err := req.IdTag.Validate(); err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// validateAuthorizeConf performs structural validation of the AuthorizeConf message.
+func validateAuthorizeConf(raw json.RawMessage) (interface{}, error) {
+	var conf Conf
+	if err := json.Unmarshal(raw, &conf); err != nil {
+		return nil, core.NewFieldError("idTagInfo", fmt.Errorf("invalid JSON structure: %w", err))
+	}
+
+	if conf.IdTagInfo.Status == "" {
+		return nil, core.NewFieldError("idTagInfo.status", fmt.Errorf("required"))
+	}
+
+	if !conf.IdTagInfo.Status.IsValid() {
+		return nil, core.NewFieldError("idTagInfo.status", fmt.Errorf("invalid status value"))
 	}
 
 	if conf.IdTagInfo.ParentIdTag != nil {
-		if err := conf.IdTagInfo.ParentIdTag.Validate(); err != nil {
-			return core.NewFieldError("parentIdTag", err)
+		if err := (*conf.IdTagInfo.ParentIdTag).Validate(); err != nil {
+			return nil, core.NewFieldError("idTagInfo.parentIdTag", err)
 		}
 	}
 
-	return nil
+	return conf, nil
+}
+
+// init registers the validators for AuthorizeReq and AuthorizeConf to the core registry.
+func init() {
+	core.RegisterValidator("Authorize", validateAuthorizeReq)
+	core.RegisterValidator("AuthorizeResponse", validateAuthorizeConf)
 }

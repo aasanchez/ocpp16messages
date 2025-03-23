@@ -8,64 +8,92 @@ import (
 	"github.com/aasanchez/ocpp16_messages/core"
 )
 
-// FakeValidator is a mock implementation of MessageValidator.
-type FakeValidator struct {
-	shouldFail bool
-	payload    any
-}
-
-func (fv *FakeValidator) ValidateMessage(raw json.RawMessage) (any, error) {
-	if fv.shouldFail {
-		return nil, errors.New("validation failed")
+// FakeValidator returns a validator function for testing purposes.
+func FakeValidator(shouldFail bool) core.MessageValidator {
+	return func(payload json.RawMessage) (interface{}, error) {
+		if shouldFail {
+			return nil, core.NewFieldError("test", errors.New("invalid field"))
+		}
+		return nil, nil
 	}
-	return fv.payload, nil
 }
 
 func TestPlugin_RegisterAndValidate(t *testing.T) {
-	core.RegisterValidator("TestAction", &FakeValidator{payload: "valid"})
+	core.RegisterValidator("CustomAction", FakeValidator(false))
 
-	payload := json.RawMessage(`"test"`)
-	result, err := core.ValidateRawMessage(payload)
+	msg := &core.Message{
+		Action:  "CustomAction",
+		Payload: json.RawMessage(`{"test": "value"}`),
+	}
+
+	err := core.ValidateMessage(msg.Action, msg.Payload)
 	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
-	if result.Action != "TestAction" {
-		t.Errorf("unexpected action: %s", result.Action)
-	}
-	if result.Payload != "valid" {
-		t.Errorf("unexpected payload: %v", result.Payload)
+		t.Errorf("expected no error, got %v", err)
 	}
 }
 
 func TestPlugin_UnknownType(t *testing.T) {
-	payload := json.RawMessage(`[2, "id", "UnknownAction", {}]`)
-	_, err := core.ValidateRawMessage(payload)
-	if err == nil || err.Error() != "no validator registered for action: UnknownAction" {
-		t.Errorf("expected unknown action error, got: %v", err)
+	msg := &core.Message{
+		Action:  "UnknownAction",
+		Payload: json.RawMessage(`{}`),
+	}
+
+	err := core.ValidateMessage(msg.Action, msg.Payload)
+	if err == nil {
+		t.Error("expected error for unknown validator, got nil")
 	}
 }
 
-func TestPlugin_PreAndPostHooks(t *testing.T) {
-	var preCalled, postCalled bool
+func TestPlugin_ValidationHooks(t *testing.T) {
+	var successCalled, failureCalled bool
 
-	core.SetPreValidationHook(func(action string, payload any) {
-		preCalled = true
+	core.SetValidationHook(&testHook{
+		onSuccess: func(action string, msgType int) {
+			successCalled = true
+		},
+		onFailure: func(action string, msgType int, err error) {
+			failureCalled = true
+		},
 	})
-	core.SetPostValidationHook(func(action string, payload any, err error) {
-		postCalled = true
-	})
 
-	core.RegisterValidator("HookTest", &FakeValidator{payload: "hooked"})
-
-	payload := json.RawMessage(`[2, "id", "HookTest", "data"]`)
-	_, err := core.ValidateRawMessage(payload)
+	// Test success case
+	core.RegisterValidator("HookAction", FakeValidator(false))
+	msg := &core.Message{
+		Action:  "HookAction",
+		Payload: json.RawMessage(`{}`),
+	}
+	err := core.ValidateMessage(msg.Action, msg.Payload)
 	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
+		t.Errorf("expected no error, got %v", err)
 	}
-	if !preCalled {
-		t.Error("expected pre-validation hook to be called")
+	if !successCalled {
+		t.Error("expected success hook to be called")
 	}
-	if !postCalled {
-		t.Error("expected post-validation hook to be called")
+
+	// Test failure case
+	core.RegisterValidator("HookAction", FakeValidator(true))
+	err = core.ValidateMessage(msg.Action, msg.Payload)
+	if err == nil {
+		t.Error("expected error, got nil")
+	}
+	if !failureCalled {
+		t.Error("expected failure hook to be called")
+	}
+}
+
+type testHook struct {
+	onSuccess func(action string, msgType int)
+	onFailure func(action string, msgType int, err error)
+}
+
+func (h *testHook) OnValidationSuccess(action string, msgType int) {
+	if h.onSuccess != nil {
+		h.onSuccess(action, msgType)
+	}
+}
+
+func (h *testHook) OnValidationFailure(action string, msgType int, err error) {
+	if h.onFailure != nil {
+		h.onFailure(action, msgType, err)
 	}
 }

@@ -1,37 +1,35 @@
-// Package core contains common enumerations used across multiple OCPP 1.6 message types.
-// These enums are aligned with the OCPP 1.6J specification.
+// Package core provides the core types and validation infrastructure for OCPP 1.6J messages.
 package core
 
-// AuthorizationStatus represents the possible values for IdTagInfo.status in Authorize.conf.
-type AuthorizationStatus string
-
-// MessageType represents the OCPP 1.6 message types.
+// MessageType represents the type of OCPP message.
 type MessageType int
 
 const (
-	CALL       MessageType = 2
-	CALLRESULT MessageType = 3
-	CALLERROR  MessageType = 4
+	// Call represents a request message [2, "id", "action", {...}]
+	Call MessageType = 2
+	// CallResult represents a response message [3, "id", {...}]
+	CallResult MessageType = 3
+	// CallError represents an error message [4, "id", "errorCode", "errorDescription", {...}]
+	CallError MessageType = 4
 )
 
+// AuthorizationStatus represents the possible authorization status values.
+type AuthorizationStatus string
+
 const (
-	// AuthorizationAccepted indicates that the idTag is valid for charging.
+	// AuthorizationAccepted indicates the authorization was accepted
 	AuthorizationAccepted AuthorizationStatus = "Accepted"
-
-	// AuthorizationBlocked indicates that the idTag is valid but has been blocked.
+	// AuthorizationBlocked indicates the authorization was blocked
 	AuthorizationBlocked AuthorizationStatus = "Blocked"
-
-	// AuthorizationExpired indicates that the idTag has expired and is no longer valid.
+	// AuthorizationExpired indicates the authorization has expired
 	AuthorizationExpired AuthorizationStatus = "Expired"
-
-	// AuthorizationInvalid indicates that the idTag is not recognized.
+	// AuthorizationInvalid indicates the authorization was invalid
 	AuthorizationInvalid AuthorizationStatus = "Invalid"
-
-	// AuthorizationConcurrentTx indicates that the idTag is valid, but charging is not allowed due to an active transaction.
+	// AuthorizationConcurrentTx indicates concurrent transaction
 	AuthorizationConcurrentTx AuthorizationStatus = "ConcurrentTx"
 )
 
-// IsValid returns true if the AuthorizationStatus value is a recognized constant.
+// IsValid checks if the AuthorizationStatus is a valid value as per the OCPP specification.
 func (s AuthorizationStatus) IsValid() bool {
 	switch s {
 	case AuthorizationAccepted,

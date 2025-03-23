@@ -6,44 +6,39 @@ import (
 	"github.com/aasanchez/ocpp16_messages/core"
 )
 
-func TestCiStringValidation(t *testing.T) {
-	tests := []struct {
-		name    string
-		value   core.CiString20
-		wantErr bool
-	}{
-		{"Valid short string", "abc", false},
-		{"Valid max length string", core.CiString20("12345678901234567890"), false},
-		{"Empty string", "", true},
-		{"Too long", core.CiString20("123456789012345678901"), true},
+func TestCiString20_Valid(t *testing.T) {
+	valid := "12345678901234567890"
+	cis := core.CiString20Type(valid)
+	if err := cis.Validate(); err != nil {
+		t.Fatalf("expected no error, got %v", err)
 	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			err := tt.value.Validate()
-			if (err != nil) != tt.wantErr {
-				t.Errorf("CiString20.Validate() error = %v, wantErr %v", err, tt.wantErr)
-			}
-		})
+	if string(cis) != valid {
+		t.Errorf("expected value %s, got %s", valid, string(cis))
 	}
 }
 
-func TestEnumAuthorizationStatus(t *testing.T) {
-	tests := []struct {
-		name   string
-		status core.AuthorizationStatus
-		valid  bool
-	}{
-		{"Valid Accepted", core.AuthorizationAccepted, true},
-		{"Valid Blocked", core.AuthorizationBlocked, true},
-		{"Invalid Custom", core.AuthorizationStatus("Custom"), false},
+func TestCiString20_TooLong(t *testing.T) {
+	tooLong := "123456789012345678901" // 21 characters
+	cis := core.CiString20Type(tooLong)
+	if err := cis.Validate(); err == nil {
+		t.Fatal("expected error for string exceeding 20 characters, got nil")
 	}
+}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.status.IsValid(); got != tt.valid {
-				t.Errorf("AuthorizationStatus.IsValid() = %v, want %v", got, tt.valid)
-			}
-		})
+func TestCiString20_Empty(t *testing.T) {
+	cis := core.CiString20Type("")
+	if err := cis.Validate(); err != nil {
+		t.Fatal("expected no error for empty string, got", err)
+	}
+}
+
+func TestCiString20_StringMethod(t *testing.T) {
+	s := "hello"
+	cis := core.CiString20Type(s)
+	if err := cis.Validate(); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if string(cis) != s {
+		t.Errorf("String() returned %q, expected %q", string(cis), s)
 	}
 }

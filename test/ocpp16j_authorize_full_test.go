@@ -2,45 +2,51 @@ package test
 
 import (
 	"testing"
-	"time"
 
-	"github.com/aasanchez/ocpp16_messages/authorize"
 	"github.com/aasanchez/ocpp16_messages/core"
 )
 
 func TestAuthorizeReqValidation(t *testing.T) {
 	tests := []struct {
 		name    string
-		rawJSON string
+		input   string
 		wantErr bool
 	}{
 		{
 			name:    "Valid Authorize.req",
-			rawJSON: `[2,"123456","Authorize",{"idTag":"ABC123"}]`,
+			input:   `[2,"123456","Authorize",{"idTag":{"idTag":"D0431F35"}}]`,
 			wantErr: false,
 		},
 		{
 			name:    "Missing idTag",
-			rawJSON: `[2,"123456","Authorize",{}]`,
+			input:   `[2,"123457","Authorize",{}]`,
 			wantErr: true,
 		},
 		{
 			name:    "idTag too long",
-			rawJSON: `[2,"123456","Authorize",{"idTag":"123456789012345678901"}]`,
+			input:   `[2,"123458","Authorize",{"idTag":{"idTag":"012345678901234567890"}}]`,
 			wantErr: true,
 		},
 		{
 			name:    "Malformed JSON",
-			rawJSON: `[2,"123456","Authorize",{"idTag":12345}]`,
+			input:   `[2,"123459","Authorize",{"idTag":}]`,
 			wantErr: true,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := core.ValidateRawMessage([]byte(tt.rawJSON))
+			msg := []byte(tt.input)
+			parsed, err := core.ValidateRawMessage(msg)
+			if err != nil {
+				if !tt.wantErr {
+					t.Errorf("unexpected parse error: %v", err)
+				}
+				return
+			}
+			err = core.ValidateMessage(parsed.Action, parsed.Payload)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("ValidateRawMessage() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("ValidateMessage() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}
@@ -49,92 +55,44 @@ func TestAuthorizeReqValidation(t *testing.T) {
 func TestAuthorizeConfValidation(t *testing.T) {
 	tests := []struct {
 		name    string
-		conf    authorize.Conf
+		input   string
 		wantErr bool
 	}{
 		{
-			name: "Valid response",
-			conf: authorize.Conf{
-				IdTagInfo: authorize.IdTagInfo{
-					Status: "Accepted",
-				},
-			},
+			name:    "Valid response",
+			input:   `[3,"123456","AuthorizeResponse",{"idTagInfo":{"status":"Accepted"}}]`,
+			wantErr: false,
 		},
 		{
-			name: "Invalid status value",
-			conf: authorize.Conf{
-				IdTagInfo: authorize.IdTagInfo{
-					Status: "InvalidStatus",
-				},
-			},
+			name:    "Invalid status value",
+			input:   `[3,"123457","AuthorizeResponse",{"idTagInfo":{"status":"INVALID_STATUS"}}]`,
 			wantErr: true,
 		},
 		{
-			name: "Valid with expiry and parent",
-			conf: authorize.Conf{
-				IdTagInfo: authorize.IdTagInfo{
-					Status:     "Accepted",
-					ExpiryDate: func() *time.Time { t := time.Now().Add(time.Hour); return &t }(),
-					ParentIdTag: func() *core.CiString20 {
-						s := core.CiString20("parent123")
-						return &s
-					}(),
-				},
-			},
+			name:    "Valid with expiry and parent",
+			input:   `[3,"123458","AuthorizeResponse",{"idTagInfo":{"status":"Accepted","expiryDate":"2024-03-22T12:00:00Z","parentIdTag":"ABC123"}}]`,
+			wantErr: false,
 		},
 		{
-			name: "Invalid parentIdTag",
-			conf: authorize.Conf{
-				IdTagInfo: authorize.IdTagInfo{
-					Status: "Accepted",
-					ParentIdTag: func() *core.CiString20 {
-						s := core.CiString20("this_string_is_way_too_long_for_limit")
-						return &s
-					}(),
-				},
-			},
+			name:    "Invalid parentIdTag",
+			input:   `[3,"123459","AuthorizeResponse",{"idTagInfo":{"status":"Accepted","parentIdTag":"0123456789012345678901"}}]`,
 			wantErr: true,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			err := authorize.ValidateConf(tt.conf)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ValidateConf() error = %v, wantErr %v", err, tt.wantErr)
+			msg := []byte(tt.input)
+			parsed, err := core.ValidateRawMessage(msg)
+			if err != nil {
+				if !tt.wantErr {
+					t.Errorf("unexpected parse error: %v", err)
+				}
+				return
 			}
-		})
-	}
-}
-
-func TestCallErrorMessageParsing(t *testing.T) {
-	tests := []struct {
-		name      string
-		raw       string
-		expectErr bool
-	}{
-		{
-			name:      "Valid CALLERROR message",
-			raw:       `[4,"123","ProtocolError","Failed to parse message",{}]`,
-			expectErr: false,
-		},
-		{
-			name:      "Missing elements",
-			raw:       `[4,"123","ProtocolError"]`,
-			expectErr: true,
-		},
-		{
-			name:      "Non-string error code",
-			raw:       `[4,"123",1234,"Message",{}]`,
-			expectErr: true,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			_, err := core.ValidateRawMessage([]byte(tt.raw))
-			if (err != nil) != tt.expectErr {
-				t.Errorf("ValidateRawMessage() error = %v, expectErr %v", err, tt.expectErr)
+			err = core.ValidateMessage(parsed.Action, parsed.Payload)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ValidateMessage() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}

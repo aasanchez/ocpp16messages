@@ -6,16 +6,18 @@ import (
 	"fmt"
 )
 
-// ParsedMessage represents a parsed OCPP message with type, unique ID, action, and payload.
-type ParsedMessage struct {
-	TypeID   MessageType     // 2 = CALL, 3 = CALLRESULT, 4 = CALLERROR
-	UniqueID string          // Message identifier
-	Action   string          // Only for CALL messages
-	Payload  json.RawMessage // Message body, decoded separately
+// Message represents a parsed OCPP message.
+type Message struct {
+	Type           MessageType
+	ID             string
+	Action         string
+	Payload        json.RawMessage
+	DecodedPayload interface{}
+	Raw            []byte
 }
 
-// ParseMessage parses a raw OCPP message into its appropriate type.
-func ParseMessage(raw []byte) (*Message, error) {
+// ValidateRawMessage parses and validates a raw OCPP message.
+func ValidateRawMessage(raw []byte) (*Message, error) {
 	var msgType MessageType
 	var id string
 	var action string

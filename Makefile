@@ -9,6 +9,7 @@ help:  ## Display this help
 ##@ Test
 .PHONY: test
 test: ## is used to run the test suite of the application
+	@go clean -testcache
 	@go test ./... -v    
 
 .PHONY: bench
