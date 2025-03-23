@@ -15,8 +15,8 @@ func TestFieldError_ErrorOutput(t *testing.T) {
 }
 
 func TestFieldError_ImplementsErrorInterface(t *testing.T) {
-	var err error = core.NewFieldError("status", "invalid value")
-	if err == nil {
+	err := core.NewFieldError("status", "invalid value")
+	if err.Error() == "" {
 		t.Fatal("FieldError does not implement the error interface")
 	}
 }
