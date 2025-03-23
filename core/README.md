@@ -1,92 +1,71 @@
-# Core Package
+# `core` Package
 
-The `core` package provides shared types, constants, utilities, and parsers that are fundamental for handling Open Charge Point Protocol (OCPP) 1.6 messages in both JSON and SOAP formats. This package is designed to be agnostic to specific OCPP message types and instead focuses on providing foundational building blocks that other sub-packages (like `authorize`) rely on.
-
----
-
-## 📦 Responsibilities
-
-- Define OCPP message types and their constants (`CALL`, `CALLRESULT`, `CALLERROR`).
-- Provide reusable data types such as `CiString20`, `IdToken`, and their validators.
-- Parse and validate raw OCPP messages from JSON (`parser_json.go`) and, optionally, SOAP in the future.
-- Define and handle errors consistently using custom error types such as `FieldError`.
-- Handle CALLERROR message structure and validation.
+The `core` package provides shared data types, utilities, and parsing logic used across all OCPP 1.6 message types. It is designed to support **both JSON and SOAP** message serialization formats, with a clear separation of responsibilities.
 
 ---
 
-## 📁 Files Overview
+## ✨ Responsibilities
 
-| File             | Description                                                                         |
-|------------------|-------------------------------------------------------------------------------------|
-| `call_error.go`  | Validates and constructs CALLERROR messages.                                        |
-| `ci_string.go`   | Implements CiString types (e.g., `CiString20`) with length validation.              |
-| `enums.go`       | Contains shared enums like `MessageType` used throughout OCPP message handling.     |
-| `errors.go`      | Custom error handling, including `FieldError` for validation errors.                |
-| `id_token.go`    | Contains the `IdToken` type with support for strict validation.                     |
-| `parser_json.go` | Parses JSON-formatted OCPP messages and extracts structured message data.           |
-| `validator.go`   | Provides the message validator registry and plugin hooks for extensible validation. |
-| `plugin.go`      | Allows third-party registration of custom validators and validation hooks.          |
-| `doc.go`         | Package-level documentation for compatibility with pkg.go.dev.                      |
-| `test/`          | Contains unit tests for each of the above components.                               |
+- **Message Type Constants**  
+  Defines the OCPP message types (`CALL`, `CALLRESULT`, `CALLERROR`) and their numeric representations.
+
+- **Common Type Definitions**  
+  Includes reusable types such as `CiString20`, `IdTag`, and `AuthorizationStatus`.
+
+- **Parsing Logic**  
+  - `parser_json.go`: Handles parsing of OCPP messages in JSON format.
+  - `parser_soap.go`: Handles minimal parsing of OCPP SOAP envelopes for routing and validation.
+
+- **Error Modeling**  
+  Implements standardized error reporting (`FieldError`) and validation helpers.
+
+- **CALLERROR Message Support**  
+  Full definition and validation logic for OCPP CALLERROR messages (JSON only).
+
+---
+
+## 📂 File Overview
+
+| File             | Purpose                                                       |
+|------------------|---------------------------------------------------------------|
+| `call_error.go`  | JSON structure and validation for CALLERROR messages          |
+| `ci_string.go`   | CiString-based types (`CiString20`, etc.)                     |
+| `enums.go`       | Enum definitions (`MessageType`, `AuthorizationStatus`, etc.) |
+| `errors.go`      | Field-level validation errors and utilities                   |
+| `id_token.go`    | Shared `IdTag` structure and constraints                      |
+| `parser_json.go` | Parsing of JSON OCPP messages into structured form            |
+| `parser_soap.go` | SOAP envelope parsing for routing (no full XML binding)       |
+| `doc.go`         | Package documentation for GoDoc and pkg.go.dev                |
 
 ---
 
 ## 🧪 Testing
 
-All core components are tested in isolation using Go's standard `testing` package. The tests are organized in `core/test` to separate concerns and improve clarity.
+All test files live under:
 
-To run tests:
-
-```bash
-go test ./core/test -v
+```text
+core/test/
 ```
 
-Code coverage is targeted to be 100% for this package.
+Tests use **only the Go standard library** and aim for **100% coverage**.
 
 ---
 
-## 🔧 Example Usage
+## 🧼 Design Principles
 
-### Parsing a JSON OCPP CALL message:
-
-```go
-import "github.com/aasanchez/ocpp16_messages/core"
-
-raw := []byte(`[2, "abc123", "Authorize", {"idTag": "ABC123"}]`)
-msg, err := core.ParseJSONMessage(raw)
-if err != nil {
-    log.Fatal(err)
-}
-
-fmt.Println("Parsed message action:", msg.Action)
-```
-
-### Validating a CALLERROR message:
-
-```go
-msg := []any{
-    4,
-    "id123",
-    "ProtocolError",
-    "Unsupported operation",
-    map[string]any{"field": "value"},
-}
-
-validated, err := core.ValidateCallError(msg)
-if err != nil {
-    log.Fatal("CALLERROR validation failed:", err)
-}
-```
+- ✅ Clear boundaries between JSON and SOAP logic
+- ✅ No external dependencies
+- ✅ Idiomatic Go (GoDoc comments, standard error patterns, type safety)
+- ✅ Reusable and pluggable for different OCPP message implementations
 
 ---
 
-## 🧩 Design Notes
+## 🔄 Extensibility
 
-- This package only uses Go’s standard library. No third-party dependencies are introduced for portability, minimalism, and auditability.
-- SOAP support is planned and will be included in separate files (e.g., `parser_soap.go`) to preserve separation of concerns.
+This package is designed to be **imported** and reused by specific OCPP message packages (e.g., `authorize`) and is agnostic to the application layer (e.g., charger, CSMS, proxy).
 
----
+For future extensions:
 
-## 📝 License
-
-MIT © Alexis Sanchez, 2025
+- Add new enum values to `enums.go`
+- Introduce new `CiString`-based constraints in `ci_string.go`
+- Add parsing logic if new message types or protocols are supported
