@@ -126,7 +126,7 @@ func TestParseJSONMessage_CALL_WrongNumberOfElements(t *testing.T) {
 func TestParseJSONMessage_CALLRESULT_WrongNumberOfElements(t *testing.T) {
 	raw := []byte(`[3, "123"]`)
 	_, err := core.ParseJSONMessage(raw)
-	if err == nil || err.Error() != "CALLRESULT message must have 3 elements" {
+	if err == nil || err.Error() != "invalid OCPP message: must have at least 3 elements" {
 		t.Errorf("expected error for CALLRESULT message with wrong number of elements, got: %v", err)
 	}
 }
