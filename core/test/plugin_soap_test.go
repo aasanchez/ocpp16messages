@@ -89,3 +89,19 @@ func TestSOAPHooks(t *testing.T) {
 		t.Error("expected post-validation hook to be called")
 	}
 }
+
+func TestPostSOAPHookOnMissingValidator(t *testing.T) {
+	called := false
+
+	core.SetPostSOAPValidationHook(func(action string, result any, err error) {
+		if action == "MissingAction" && err != nil {
+			called = true
+		}
+	})
+
+	_, _ = core.ValidateRawSOAP("MissingAction", []byte(`<nope/>`))
+
+	if !called {
+		t.Error("expected post SOAP hook to be called on missing validator")
+	}
+}
