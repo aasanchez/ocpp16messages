@@ -1,4 +1,6 @@
-package core
+package types
+
+import "github.com/aasanchez/ocpp16_messages/core"
 
 // IdTag represents a unique identifier for a user or charging session.
 //
@@ -11,7 +13,7 @@ type IdTag struct {
 func NewIdTag(value string) (*IdTag, error) {
 	cs := CiString20(value)
 	if !cs.IsValid() {
-		return nil, NewFieldError("idTag", "idTag exceeds 20 characters")
+		return nil, core.NewFieldError("idTag", "idTag exceeds 20 characters")
 	}
 	return &IdTag{cs}, nil
 }

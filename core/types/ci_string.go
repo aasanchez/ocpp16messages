@@ -1,6 +1,6 @@
 // Package core provides shared types, constants, and utilities used across multiple OCPP 1.6 message types.
 // This file defines CiString types with length constraints, as specified in the OCPP 1.6J specification.
-package core
+package types
 
 import (
 	"fmt"
