@@ -1,13 +1,11 @@
-package core_test
+package core
 
 import (
 	"testing"
-
-	"github.com/aasanchez/ocpp16_messages/core"
 )
 
 func TestNewIdTag_Valid(t *testing.T) {
-	idTag, err := core.NewIdTag("valid-id-tag")
+	idTag, err := NewIdTag("valid-id-tag")
 	if err != nil {
 		t.Fatalf("expected no error, got %v", err)
 	}
@@ -18,14 +16,14 @@ func TestNewIdTag_Valid(t *testing.T) {
 
 func TestNewIdTag_TooLong(t *testing.T) {
 	longValue := "this-id-tag-is-way-too-long-for-ocpp"
-	_, err := core.NewIdTag(longValue)
+	_, err := NewIdTag(longValue)
 	if err == nil {
 		t.Fatal("expected error for too long idTag, got nil")
 	}
 }
 
 func TestIdTag_String_NilReceiver(t *testing.T) {
-	var idTag *core.IdTag
+	var idTag *IdTag
 	if idTag.String() != "" {
 		t.Errorf("expected empty string from nil receiver, got %q", idTag.String())
 	}

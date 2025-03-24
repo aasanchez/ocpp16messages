@@ -1,9 +1,7 @@
-package core_test
+package core
 
 import (
 	"testing"
-
-	"github.com/aasanchez/ocpp16_messages/core"
 )
 
 func TestValidateCallError_Valid(t *testing.T) {
@@ -15,7 +13,7 @@ func TestValidateCallError_Valid(t *testing.T) {
 		map[string]any{"detail": "info"},
 	}
 
-	result, err := core.ValidateCallError(msg)
+	result, err := ValidateCallError(msg)
 	if err != nil {
 		t.Errorf("unexpected error: %v", err)
 	}
@@ -34,7 +32,7 @@ func TestValidateCallError_InvalidType(t *testing.T) {
 		map[string]any{},
 	}
 
-	_, err := core.ValidateCallError(msg)
+	_, err := ValidateCallError(msg)
 	if err == nil {
 		t.Error("expected error for wrong MessageTypeId")
 	}
@@ -43,7 +41,7 @@ func TestValidateCallError_InvalidType(t *testing.T) {
 func TestValidateCallError_MissingFields(t *testing.T) {
 	msg := []any{4, "id", "Error"}
 
-	_, err := core.ValidateCallError(msg)
+	_, err := ValidateCallError(msg)
 	if err == nil {
 		t.Error("expected error for missing elements")
 	}
@@ -58,7 +56,7 @@ func TestValidateCallError_InvalidJSONDetails(t *testing.T) {
 		func() {}, // Not JSON serializable
 	}
 
-	_, err := core.ValidateCallError(msg)
+	_, err := ValidateCallError(msg)
 	if err == nil {
 		t.Error("expected JSON marshal error")
 	}
@@ -66,7 +64,7 @@ func TestValidateCallError_InvalidJSONDetails(t *testing.T) {
 
 func TestValidateCallError_MissingUniqueID(t *testing.T) {
 	msg := []any{4, "", "Code", "Description", map[string]any{}}
-	_, err := core.ValidateCallError(msg)
+	_, err := ValidateCallError(msg)
 	if err == nil {
 		t.Error("expected error for missing UniqueID")
 	}
@@ -74,7 +72,7 @@ func TestValidateCallError_MissingUniqueID(t *testing.T) {
 
 func TestValidateCallError_MissingErrorCode(t *testing.T) {
 	msg := []any{4, "id", "", "Description", map[string]any{}}
-	_, err := core.ValidateCallError(msg)
+	_, err := ValidateCallError(msg)
 	if err == nil {
 		t.Error("expected error for missing ErrorCode")
 	}
@@ -82,7 +80,7 @@ func TestValidateCallError_MissingErrorCode(t *testing.T) {
 
 func TestValidateCallError_MissingErrorDescription(t *testing.T) {
 	msg := []any{4, "id", "Code", "", map[string]any{}}
-	_, err := core.ValidateCallError(msg)
+	_, err := ValidateCallError(msg)
 	if err == nil {
 		t.Error("expected error for missing ErrorDescription")
 	}
