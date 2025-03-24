@@ -60,11 +60,11 @@ func TestParseSOAPMessage_ValidWithAttributes(t *testing.T) {
 	}
 }
 
-func TestParseSOAPMessage_InvalidActionElement(t *testing.T) {
+func TestParseSOAPMessage_InvalidActionFormat(t *testing.T) {
 	soap := `
 		<Envelope>
 			<Header>
-				<Action><![CDATA[Invalid Action content]]></Action>
+				<Action>Authorize!</Action>
 			</Header>
 			<Body>
 				<AuthorizeRequest>
@@ -74,27 +74,8 @@ func TestParseSOAPMessage_InvalidActionElement(t *testing.T) {
 		</Envelope>`
 
 	_, err := core.ParseSOAPMessage(strings.NewReader(soap))
-	if err == nil {
-		t.Error("expected error for invalid Action element")
-	}
-}
-
-func TestParseSOAPMessage_InvalidActionElementWithInvalidUTF8(t *testing.T) {
-	soap := `
-		<Envelope>
-			<Header>
-				<Action>Invalid UTF-8: ` + string([]byte{0xFF, 0xFE, 0xFD}) + `</Action>
-			</Header>
-			<Body>
-				<AuthorizeRequest>
-					<idTag>ABC123</idTag>
-				</AuthorizeRequest>
-			</Body>
-		</Envelope>`
-
-	_, err := core.ParseSOAPMessage(strings.NewReader(soap))
-	if err == nil {
-		t.Error("expected error for invalid UTF-8 in Action element")
+	if err == nil || err.Error() != "invalid Action format" {
+		t.Errorf("expected invalid Action format error, got: %v", err)
 	}
 }
 
@@ -116,6 +97,25 @@ func TestParseSOAPMessage_InvalidActionElementWithNestedContent(t *testing.T) {
 	_, err := core.ParseSOAPMessage(strings.NewReader(soap))
 	if err == nil {
 		t.Error("expected error for invalid Action element with nested content")
+	}
+}
+
+func TestParseSOAPMessage_InvalidActionElementWithInvalidUTF8(t *testing.T) {
+	soap := `
+		<Envelope>
+			<Header>
+				<Action>Invalid UTF-8: ` + string([]byte{0xFF, 0xFE, 0xFD}) + `</Action>
+			</Header>
+			<Body>
+				<AuthorizeRequest>
+					<idTag>ABC123</idTag>
+				</AuthorizeRequest>
+			</Body>
+		</Envelope>`
+
+	_, err := core.ParseSOAPMessage(strings.NewReader(soap))
+	if err == nil {
+		t.Error("expected error for invalid UTF-8 in Action element")
 	}
 }
 

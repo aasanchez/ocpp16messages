@@ -4,6 +4,7 @@ import (
 	"encoding/xml"
 	"errors"
 	"io"
+	"regexp"
 	"strings"
 )
 
@@ -12,6 +13,14 @@ type ParsedSOAPMessage struct {
 	TypeID  MessageType // Always CALL for SOAP requests
 	Action  string
 	Payload []byte
+}
+
+// Regex pattern for valid Action values (alphanumeric, underscore, dash)
+var validActionPattern = regexp.MustCompile(`^[A-Za-z0-9_-]+$`)
+
+// isValidAction checks if the Action value matches the expected format.
+func isValidAction(action string) bool {
+	return validActionPattern.MatchString(action)
 }
 
 // ParseSOAPMessage parses a SOAP XML message and extracts the Action and Payload.
@@ -50,7 +59,11 @@ func ParseSOAPMessage(r io.Reader) (*ParsedSOAPMessage, error) {
 				if err := decoder.DecodeElement(&value, &el); err != nil {
 					return nil, err
 				}
-				action = strings.TrimSpace(value)
+				value = strings.TrimSpace(value)
+				if !isValidAction(value) {
+					return nil, errors.New("invalid Action format")
+				}
+				action = value
 				inHeader = false
 			case inBody && depth == 0:
 				// capture the inner payload XML
