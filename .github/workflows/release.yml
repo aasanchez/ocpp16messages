@@ -7,15 +7,19 @@ on:
 
 jobs:
   create-release:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Download debian package
+        uses: actions/download-artifact@v4
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
