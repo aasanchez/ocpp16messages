@@ -26,6 +26,7 @@
 README.md           export-ignore
 Makefile            export-ignore
 examples/           export-ignore
+.sonarlint/         export-ignore
 
 # Linguist rules for GitHub stats
 vendor/**           linguist-vendored
