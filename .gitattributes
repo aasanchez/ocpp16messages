@@ -1,0 +1,32 @@
+# Normalize line endings
+*.sum text          eol=lf
+*.mod text          eol=lf
+*.go text           eol=lf
+*.sh text           eol=lf
+*.bat text          eol=lf
+*.md text           eol=lf
+*.txt text          eol=lf
+*.yaml text         eol=lf
+*.yml text          eol=lf
+*.json text         eol=lf
+
+# Exclude dev environment configs from export (tarballs / zip)
+.devcontainer/      export-ignore
+.vscode/            export-ignore
+
+# Exclude CI/CD and meta files from export
+.github/            export-ignore
+.gitignore          export-ignore
+.gitattributes      export-ignore
+.editorconfig       export-ignore
+*_test.go           export-ignore
+*_benchmark_test.go export-ignore
+
+# Exclude documentation and examples from binary distribution
+README.md           export-ignore
+Makefile            export-ignore
+examples/           export-ignore
+
+# Linguist rules for GitHub stats
+vendor/**           linguist-vendored
+*.pb.go             linguist-generated
