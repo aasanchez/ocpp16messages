@@ -3,6 +3,8 @@ package core
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/aasanchez/ocpp16_messages/core/types"
 )
 
 func TestParseJSONMessage_ValidCALL(t *testing.T) {
@@ -11,7 +13,7 @@ func TestParseJSONMessage_ValidCALL(t *testing.T) {
 	if err != nil {
 		t.Fatalf(errUnexpected, err) // Directly pass the formatted error
 	}
-	if msg.TypeID != CALL {
+	if msg.TypeID != types.CALL {
 		t.Errorf("expected TypeID CALL, got %v", msg.TypeID)
 	}
 	if msg.UniqueID != "12345" {
@@ -31,7 +33,7 @@ func TestParseJSONMessage_ValidCALLRESULT(t *testing.T) {
 	if err != nil {
 		t.Fatalf(errUnexpected, err) // Directly pass the formatted error
 	}
-	if msg.TypeID != CALLRESULT {
+	if msg.TypeID != types.CALLRESULT {
 		t.Errorf("expected TypeID CALLRESULT, got %v", msg.TypeID)
 	}
 	if msg.UniqueID != "67890" {
@@ -48,7 +50,7 @@ func TestParseJSONMessage_ValidCALLERROR(t *testing.T) {
 	if err != nil {
 		t.Fatalf(errUnexpected, err) // Directly pass the formatted error
 	}
-	if msg.TypeID != CALLERROR {
+	if msg.TypeID != types.CALLERROR {
 		t.Errorf("expected TypeID CALLERROR, got %v", msg.TypeID)
 	}
 	if msg.UniqueID != "99999" {

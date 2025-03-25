@@ -1,4 +1,4 @@
-package core
+package types
 
 // MessageType represents the three standard OCPP 1.6 message types.
 //

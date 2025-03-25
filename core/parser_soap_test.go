@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16_messages/core"
+	"github.com/aasanchez/ocpp16_messages/core/types"
 )
 
 func TestParseSOAPMessage_Valid(t *testing.T) {
@@ -24,7 +25,7 @@ func TestParseSOAPMessage_Valid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if msg.TypeID != core.CALL {
+	if msg.TypeID != types.CALL {
 		t.Errorf("expected TypeID CALL, got %v", msg.TypeID)
 	}
 	if msg.Action != "Authorize" {

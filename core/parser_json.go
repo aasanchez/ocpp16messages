@@ -4,11 +4,13 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+
+	"github.com/aasanchez/ocpp16_messages/core/types"
 )
 
 // ParsedMessage is a general structure representing an OCPP message.
 type ParsedMessage struct {
-	TypeID           MessageType // 2: CALL, 3: CALLRESULT, 4: CALLERROR
+	TypeID           types.MessageType // 2: CALL, 3: CALLRESULT, 4: CALLERROR
 	UniqueID         string
 	Action           string          // for CALL
 	Payload          json.RawMessage // for CALL and CALLRESULT
@@ -42,11 +44,11 @@ func ParseJSONMessage(data []byte) (*ParsedMessage, error) {
 	}
 
 	switch typeID {
-	case CALL:
+	case types.CALL:
 		return parseCallMessage(raw, msg)
-	case CALLRESULT:
+	case types.CALLRESULT:
 		return parseCallResultMessage(raw, msg)
-	case CALLERROR:
+	case types.CALLERROR:
 		return parseCallErrorMessage(raw, msg)
 	default:
 		return nil, fmt.Errorf("unsupported message type ID: %d", typeID)
@@ -63,8 +65,8 @@ func parseRawMessage(data []byte) ([]json.RawMessage, error) {
 }
 
 // extractTypeAndID extracts the message type ID and unique ID.
-func extractTypeAndID(raw []json.RawMessage) (MessageType, string, error) {
-	var typeID MessageType
+func extractTypeAndID(raw []json.RawMessage) (types.MessageType, string, error) {
+	var typeID types.MessageType
 	if err := json.Unmarshal(raw[0], &typeID); err != nil {
 		return 0, "", fmt.Errorf(errUnexpected, err)
 	}

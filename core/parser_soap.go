@@ -6,11 +6,13 @@ import (
 	"io"
 	"regexp"
 	"strings"
+
+	"github.com/aasanchez/ocpp16_messages/core/types"
 )
 
 // ParsedSOAPMessage represents a parsed SOAP message with essential fields.
 type ParsedSOAPMessage struct {
-	TypeID  MessageType // Always CALL for SOAP requests
+	TypeID  types.MessageType // Always CALL for SOAP requests
 	Action  string
 	Payload []byte
 }
@@ -71,7 +73,7 @@ func ParseSOAPMessage(r io.Reader) (*ParsedSOAPMessage, error) {
 	payload := []byte(innerXML.String())
 
 	return &ParsedSOAPMessage{
-		TypeID:  CALL, // SOAP messages are treated as CALL type
+		TypeID:  types.CALL, // SOAP messages are treated as CALL type
 		Action:  action,
 		Payload: payload,
 	}, nil

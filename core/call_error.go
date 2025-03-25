@@ -29,7 +29,7 @@ func ValidateCallError(msg []any) (*CallErrorMessage, error) {
 
 	// Validate MessageTypeId
 	messageType, ok := msg[0].(int)
-	if !ok || MessageType(messageType) != CALLERROR {
+	if !ok || types.MessageType(messageType) != types.CALLERROR {
 		return nil, types.NewFieldError("MessageTypeId", "must be 4 for CALLERROR")
 	}
 
@@ -54,7 +54,7 @@ func ValidateCallError(msg []any) (*CallErrorMessage, error) {
 	}
 
 	return &CallErrorMessage{
-		MessageTypeId:    int(CALLERROR),
+		MessageTypeId:    int(types.CALLERROR),
 		UniqueID:         uniqueID,
 		ErrorCode:        errorCode,
 		ErrorDescription: errorDescription,
