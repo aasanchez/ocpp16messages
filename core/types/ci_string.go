@@ -1,5 +1,3 @@
-// Package types provides shared types, constants, and utilities used across multiple OCPP 1.6 message types.
-// This file defines CiString types with length constraints, as specified in the OCPP 1.6J specification.
 package types
 
 import (
@@ -12,30 +10,45 @@ type CiString interface {
 	String() string
 }
 
+// ===== Helpers =====
+
+func validateLength(fieldName string, value string, maxLen int) error {
+	if len(value) > maxLen {
+		return fmt.Errorf("%s exceeds %d characters: %q", fieldName, maxLen, value)
+	}
+	return nil
+}
+
+func marshalCiString(fieldName string, value string, maxLen int) ([]byte, error) {
+	if err := validateLength(fieldName, value, maxLen); err != nil {
+		return nil, err
+	}
+	return []byte(value), nil
+}
+
+func unmarshalCiString(fieldName string, data []byte, maxLen int) (string, error) {
+	value := string(data)
+	if err := validateLength(fieldName, value, maxLen); err != nil {
+		return "", err
+	}
+	return value, nil
+}
+
 // ===== CiString20 =====
 
 type CiString20 string
 
-func (s CiString20) IsValid() bool {
-	return len(s) <= 20
-}
-
-func (s CiString20) String() string {
-	return string(s)
-}
-
+func (s CiString20) IsValid() bool  { return len(s) <= 20 }
+func (s CiString20) String() string { return string(s) }
 func (s CiString20) MarshalText() ([]byte, error) {
-	if !s.IsValid() {
-		return nil, fmt.Errorf("CiString20 exceeds 20 characters: %q", s)
-	}
-	return []byte(s), nil
+	return marshalCiString("CiString20", string(s), 20)
 }
-
 func (s *CiString20) UnmarshalText(data []byte) error {
-	if len(data) > 20 {
-		return fmt.Errorf("CiString20 exceeds 20 characters: %q", string(data))
+	str, err := unmarshalCiString("CiString20", data, 20)
+	if err != nil {
+		return err
 	}
-	*s = CiString20(data)
+	*s = CiString20(str)
 	return nil
 }
 
@@ -43,26 +56,17 @@ func (s *CiString20) UnmarshalText(data []byte) error {
 
 type CiString25 string
 
-func (s CiString25) IsValid() bool {
-	return len(s) <= 25
-}
-
-func (s CiString25) String() string {
-	return string(s)
-}
-
+func (s CiString25) IsValid() bool  { return len(s) <= 25 }
+func (s CiString25) String() string { return string(s) }
 func (s CiString25) MarshalText() ([]byte, error) {
-	if !s.IsValid() {
-		return nil, fmt.Errorf("CiString25 exceeds 25 characters: %q", s)
-	}
-	return []byte(s), nil
+	return marshalCiString("CiString25", string(s), 25)
 }
-
 func (s *CiString25) UnmarshalText(data []byte) error {
-	if len(data) > 25 {
-		return fmt.Errorf("CiString25 exceeds 25 characters: %q", string(data))
+	str, err := unmarshalCiString("CiString25", data, 25)
+	if err != nil {
+		return err
 	}
-	*s = CiString25(data)
+	*s = CiString25(str)
 	return nil
 }
 
@@ -70,26 +74,17 @@ func (s *CiString25) UnmarshalText(data []byte) error {
 
 type CiString50 string
 
-func (s CiString50) IsValid() bool {
-	return len(s) <= 50
-}
-
-func (s CiString50) String() string {
-	return string(s)
-}
-
+func (s CiString50) IsValid() bool  { return len(s) <= 50 }
+func (s CiString50) String() string { return string(s) }
 func (s CiString50) MarshalText() ([]byte, error) {
-	if !s.IsValid() {
-		return nil, fmt.Errorf("CiString50 exceeds 50 characters: %q", s)
-	}
-	return []byte(s), nil
+	return marshalCiString("CiString50", string(s), 50)
 }
-
 func (s *CiString50) UnmarshalText(data []byte) error {
-	if len(data) > 50 {
-		return fmt.Errorf("CiString50 exceeds 50 characters: %q", string(data))
+	str, err := unmarshalCiString("CiString50", data, 50)
+	if err != nil {
+		return err
 	}
-	*s = CiString50(data)
+	*s = CiString50(str)
 	return nil
 }
 
@@ -97,26 +92,17 @@ func (s *CiString50) UnmarshalText(data []byte) error {
 
 type CiString255 string
 
-func (s CiString255) IsValid() bool {
-	return len(s) <= 255
-}
-
-func (s CiString255) String() string {
-	return string(s)
-}
-
+func (s CiString255) IsValid() bool  { return len(s) <= 255 }
+func (s CiString255) String() string { return string(s) }
 func (s CiString255) MarshalText() ([]byte, error) {
-	if !s.IsValid() {
-		return nil, fmt.Errorf("CiString255 exceeds 255 characters: %q", s)
-	}
-	return []byte(s), nil
+	return marshalCiString("CiString255", string(s), 255)
 }
-
 func (s *CiString255) UnmarshalText(data []byte) error {
-	if len(data) > 255 {
-		return fmt.Errorf("CiString255 exceeds 255 characters: %q", string(data))
+	str, err := unmarshalCiString("CiString255", data, 255)
+	if err != nil {
+		return err
 	}
-	*s = CiString255(data)
+	*s = CiString255(str)
 	return nil
 }
 
@@ -124,25 +110,16 @@ func (s *CiString255) UnmarshalText(data []byte) error {
 
 type CiString500 string
 
-func (s CiString500) IsValid() bool {
-	return len(s) <= 500
-}
-
-func (s CiString500) String() string {
-	return string(s)
-}
-
+func (s CiString500) IsValid() bool  { return len(s) <= 500 }
+func (s CiString500) String() string { return string(s) }
 func (s CiString500) MarshalText() ([]byte, error) {
-	if !s.IsValid() {
-		return nil, fmt.Errorf("CiString500 exceeds 500 characters: %q", s)
-	}
-	return []byte(s), nil
+	return marshalCiString("CiString500", string(s), 500)
 }
-
 func (s *CiString500) UnmarshalText(data []byte) error {
-	if len(data) > 500 {
-		return fmt.Errorf("CiString500 exceeds 500 characters: %q", string(data))
+	str, err := unmarshalCiString("CiString500", data, 500)
+	if err != nil {
+		return err
 	}
-	*s = CiString500(data)
+	*s = CiString500(str)
 	return nil
 }
