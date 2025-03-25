@@ -1,11 +1,9 @@
-package core_test
+package plugin
 
 import (
 	"bytes"
 	"errors"
 	"testing"
-
-	"github.com/aasanchez/ocpp16_messages/core"
 )
 
 type mockSOAPValidator struct {
@@ -24,9 +22,9 @@ func TestRegisterAndGetSOAPValidator(t *testing.T) {
 	action := "Authorize"
 	validator := &mockSOAPValidator{}
 
-	core.RegisterSOAPValidator(action, validator)
+	RegisterSOAPValidator(action, validator)
 
-	got, ok := core.GetSOAPValidator(action)
+	got, ok := GetSOAPValidator(action)
 	if !ok {
 		t.Fatalf("expected validator to be found")
 	}
@@ -43,9 +41,9 @@ func TestRegisterAndGetSOAPValidator(t *testing.T) {
 
 func TestValidateRawSOAP_Success(t *testing.T) {
 	validator := &mockSOAPValidator{}
-	core.RegisterSOAPValidator("Authorize", validator)
+	RegisterSOAPValidator("Authorize", validator)
 
-	result, err := core.ValidateRawSOAP("Authorize", []byte(`<Authorize><idTag>abc</idTag></Authorize>`))
+	result, err := ValidateRawSOAP("Authorize", []byte(`<Authorize><idTag>abc</idTag></Authorize>`))
 	if err != nil {
 		t.Errorf("unexpected error: %v", err)
 	}
@@ -56,7 +54,7 @@ func TestValidateRawSOAP_Success(t *testing.T) {
 }
 
 func TestValidateRawSOAP_NoValidator(t *testing.T) {
-	_, err := core.ValidateRawSOAP("UnknownAction", []byte(`<Unknown/>`))
+	_, err := ValidateRawSOAP("UnknownAction", []byte(`<Unknown/>`))
 	if err == nil {
 		t.Error("expected error for unregistered validator")
 	}
@@ -65,22 +63,22 @@ func TestValidateRawSOAP_NoValidator(t *testing.T) {
 func TestSOAPHooks(t *testing.T) {
 	var preCalled, postCalled bool
 
-	core.SetPreSOAPValidationHook(func(action string, payload []byte) {
+	SetPreSOAPValidationHook(func(action string, payload []byte) {
 		if action == "HookAction" {
 			preCalled = true
 		}
 	})
 
-	core.SetPostSOAPValidationHook(func(action string, result any, err error) {
+	SetPostSOAPValidationHook(func(action string, result any, err error) {
 		if action == "HookAction" {
 			postCalled = true
 		}
 	})
 
 	validator := &mockSOAPValidator{}
-	core.RegisterSOAPValidator("HookAction", validator)
+	RegisterSOAPValidator("HookAction", validator)
 
-	_, _ = core.ValidateRawSOAP("HookAction", []byte(`<Test/>`))
+	_, _ = ValidateRawSOAP("HookAction", []byte(`<Test/>`))
 
 	if !preCalled {
 		t.Error("expected pre-validation hook to be called")
@@ -93,13 +91,13 @@ func TestSOAPHooks(t *testing.T) {
 func TestPostSOAPHookOnMissingValidator(t *testing.T) {
 	called := false
 
-	core.SetPostSOAPValidationHook(func(action string, result any, err error) {
+	SetPostSOAPValidationHook(func(action string, result any, err error) {
 		if action == "MissingAction" && err != nil {
 			called = true
 		}
 	})
 
-	_, _ = core.ValidateRawSOAP("MissingAction", []byte(`<nope/>`))
+	_, _ = ValidateRawSOAP("MissingAction", []byte(`<nope/>`))
 
 	if !called {
 		t.Error("expected post SOAP hook to be called on missing validator")

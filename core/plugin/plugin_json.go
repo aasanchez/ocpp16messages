@@ -1,6 +1,6 @@
 // Package core provides infrastructure for validating OCPP messages, including
 // support for plugin-style message validators.
-package core
+package plugin
 
 import (
 	"encoding/json"

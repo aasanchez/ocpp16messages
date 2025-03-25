@@ -1,10 +1,9 @@
-package core_test
+package core
 
 import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16_messages/core"
 	"github.com/aasanchez/ocpp16_messages/core/types"
 )
 
@@ -21,7 +20,7 @@ func TestParseSOAPMessage_Valid(t *testing.T) {
 			</Body>
 		</Envelope>`
 
-	msg, err := core.ParseSOAPMessage(strings.NewReader(soap))
+	msg, err := ParseSOAPMessage(strings.NewReader(soap))
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -49,7 +48,7 @@ func TestParseSOAPMessage_ValidWithAttributes(t *testing.T) {
 			</Body>
 		</Envelope>`
 
-	msg, err := core.ParseSOAPMessage(strings.NewReader(soap))
+	msg, err := ParseSOAPMessage(strings.NewReader(soap))
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -74,7 +73,7 @@ func TestParseSOAPMessage_InvalidActionFormat(t *testing.T) {
 			</Body>
 		</Envelope>`
 
-	_, err := core.ParseSOAPMessage(strings.NewReader(soap))
+	_, err := ParseSOAPMessage(strings.NewReader(soap))
 	if err == nil || err.Error() != "invalid Action format" {
 		t.Errorf("expected invalid Action format error, got: %v", err)
 	}
@@ -95,7 +94,7 @@ func TestParseSOAPMessage_InvalidActionElementWithNestedContent(t *testing.T) {
 			</Body>
 		</Envelope>`
 
-	_, err := core.ParseSOAPMessage(strings.NewReader(soap))
+	_, err := ParseSOAPMessage(strings.NewReader(soap))
 	if err == nil {
 		t.Error("expected error for invalid Action element with nested content")
 	}
@@ -114,7 +113,7 @@ func TestParseSOAPMessage_InvalidActionElementWithInvalidUTF8(t *testing.T) {
 			</Body>
 		</Envelope>`
 
-	_, err := core.ParseSOAPMessage(strings.NewReader(soap))
+	_, err := ParseSOAPMessage(strings.NewReader(soap))
 	if err == nil {
 		t.Error("expected error for invalid UTF-8 in Action element")
 	}
@@ -132,7 +131,7 @@ func TestParseSOAPMessage_MissingAction(t *testing.T) {
 			</Body>
 		</Envelope>`
 
-	_, err := core.ParseSOAPMessage(strings.NewReader(soap))
+	_, err := ParseSOAPMessage(strings.NewReader(soap))
 	if err == nil || err.Error() != "missing Action in SOAP header" {
 		t.Errorf("expected missing Action error, got: %v", err)
 	}
@@ -146,7 +145,7 @@ func TestParseSOAPMessage_MissingBody(t *testing.T) {
 			</Header>
 		</Envelope>`
 
-	_, err := core.ParseSOAPMessage(strings.NewReader(soap))
+	_, err := ParseSOAPMessage(strings.NewReader(soap))
 	if err == nil || err.Error() != "missing or empty SOAP Body" {
 		t.Errorf("expected missing or empty SOAP Body error, got: %v", err)
 	}
@@ -155,7 +154,7 @@ func TestParseSOAPMessage_MissingBody(t *testing.T) {
 func TestParseSOAPMessage_InvalidXML(t *testing.T) {
 	invalid := `<Envelope><Header><Action>Authorize</Action></Header><Body><AuthorizeRequest><idTag>ABC123</idTag></AuthorizeRequest>`
 
-	_, err := core.ParseSOAPMessage(strings.NewReader(invalid))
+	_, err := ParseSOAPMessage(strings.NewReader(invalid))
 	if err == nil {
 		t.Error("expected error for invalid XML")
 	}
