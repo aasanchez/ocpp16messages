@@ -21,6 +21,8 @@ type CallErrorMessage struct {
 // This function expects the message to be already unmarshaled into a []any,
 // typically from a JSON array like: [4, "uniqueId", "errorCode", "description", {}]
 func ValidateCallError(msg []any) (*CallErrorMessage, error) {
+	const NO_EMPTY_STRING = "must be a non-empty string"
+
 	if len(msg) != 5 {
 		return nil, types.NewFieldError("CALLERROR", fmt.Sprintf("expected 5 elements, got %d", len(msg)))
 	}
@@ -33,17 +35,17 @@ func ValidateCallError(msg []any) (*CallErrorMessage, error) {
 
 	uniqueID, ok := msg[1].(string)
 	if !ok || uniqueID == "" {
-		return nil, types.NewFieldError("UniqueID", "must be a non-empty string")
+		return nil, types.NewFieldError("UniqueID", NO_EMPTY_STRING)
 	}
 
 	errorCode, ok := msg[2].(string)
 	if !ok || errorCode == "" {
-		return nil, types.NewFieldError("ErrorCode", "must be a non-empty string")
+		return nil, types.NewFieldError("ErrorCode", NO_EMPTY_STRING)
 	}
 
 	errorDescription, ok := msg[3].(string)
 	if !ok || errorDescription == "" {
-		return nil, types.NewFieldError("ErrorDescription", "must be a non-empty string")
+		return nil, types.NewFieldError("ErrorDescription", NO_EMPTY_STRING)
 	}
 
 	errorDetailsBytes, err := json.Marshal(msg[4])
