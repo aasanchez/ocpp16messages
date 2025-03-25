@@ -9,7 +9,7 @@ func TestParseJSONMessage_ValidCALL(t *testing.T) {
 	raw := []byte(`[2, "12345", "Authorize", {"idTag": "ABC123"}]`)
 	msg, err := ParseJSONMessage(raw)
 	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
+		t.Fatalf(errUnexpected, err) // Directly pass the formatted error
 	}
 	if msg.TypeID != CALL {
 		t.Errorf("expected TypeID CALL, got %v", msg.TypeID)
@@ -29,7 +29,7 @@ func TestParseJSONMessage_ValidCALLRESULT(t *testing.T) {
 	raw := []byte(`[3, "67890", {"status": "Accepted"}]`)
 	msg, err := ParseJSONMessage(raw)
 	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
+		t.Fatalf(errUnexpected, err) // Directly pass the formatted error
 	}
 	if msg.TypeID != CALLRESULT {
 		t.Errorf("expected TypeID CALLRESULT, got %v", msg.TypeID)
@@ -46,7 +46,7 @@ func TestParseJSONMessage_ValidCALLERROR(t *testing.T) {
 	raw := []byte(`[4, "99999", "InternalError", "Something went wrong", {"reason": "crash"}]`)
 	msg, err := ParseJSONMessage(raw)
 	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
+		t.Fatalf(errUnexpected, err) // Directly pass the formatted error
 	}
 	if msg.TypeID != CALLERROR {
 		t.Errorf("expected TypeID CALLERROR, got %v", msg.TypeID)

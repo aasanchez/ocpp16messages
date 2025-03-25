@@ -105,12 +105,19 @@ func parseCallErrorMessage(raw []json.RawMessage, msg *ParsedMessage) (*ParsedMe
 	if len(raw) != 5 {
 		return nil, errors.New("CALLERROR message must have 5 elements")
 	}
-	if err := json.Unmarshal(raw[2], &msg.ErrorCode); err != nil {
-		return nil, fmt.Errorf(errUnexpected, err)
+
+	var errorCode string
+	if err := json.Unmarshal(raw[2], &errorCode); err != nil {
+		return nil, errors.New("invalid errorCode")
 	}
-	if err := json.Unmarshal(raw[3], &msg.ErrorDescription); err != nil {
-		return nil, fmt.Errorf(errUnexpected, err)
+	msg.ErrorCode = errorCode
+
+	var errorDescription string
+	if err := json.Unmarshal(raw[3], &errorDescription); err != nil {
+		return nil, errors.New("invalid errorDescription")
 	}
+	msg.ErrorDescription = errorDescription
+
 	msg.ErrorDetails = raw[4]
 	return msg, nil
 }
