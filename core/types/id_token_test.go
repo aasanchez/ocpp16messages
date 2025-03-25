@@ -4,15 +4,15 @@ import (
 	"testing"
 )
 
-const valid_id_tag = "valid-id-tag"
-
 func TestNewIdTag_Valid(t *testing.T) {
-	idTag, err := NewIdTag(valid_id_tag)
+	const validIdTag = "valid-id-tag"
+
+	idTag, err := NewIdTag(validIdTag)
 	if err != nil {
 		t.Fatalf("expected no error, got %v", err)
 	}
-	if idTag.String() != valid_id_tag {
-		t.Errorf("unexpected value: got %q, want %q", idTag.String(), valid_id_tag)
+	if idTag.String() != validIdTag {
+		t.Errorf("unexpected value: got %q, want %q", idTag.String(), validIdTag)
 	}
 }
 
