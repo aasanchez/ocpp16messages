@@ -80,3 +80,65 @@ jobs:
           gh release edit ${{ steps.get-tags.outputs.current_tag }} \
             --notes-file /tmp/function-changes/FUNCTION_CHANGES.md
 
+      - name: Checkout current repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install git-diff-tree
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git-diff-tree
+
+      - name: Get previous and current release tags
+        id: get-tags
+        run: |
+          # Get the latest release tag
+          CURRENT_TAG=${{ github.ref_name }}
+
+          # Find the previous release tag
+          PREVIOUS_TAG=$(git tag --sort=-creatordate | grep -A1 "^$CURRENT_TAG$" | tail -n1)
+
+          echo "Current tag: $CURRENT_TAG"
+          echo "Previous tag: $PREVIOUS_TAG"
+
+          echo "current_tag=$CURRENT_TAG" >> $GITHUB_OUTPUT
+          echo "previous_tag=$PREVIOUS_TAG" >> $GITHUB_OUTPUT
+
+      - name: Detect Changed Functions
+        run: |
+          # Install necessary tools
+          go install golang.org/x/tools/go/analysis/passes/inspect@latest
+          go install github.com/goretk/pkg/cmd/goret@latest
+
+          # Create a temporary directory for comparison
+          mkdir -p /tmp/function-changes
+
+          # Compare files between tags
+          git diff ${{ steps.get-tags.outputs.previous_tag }}..${{ steps.get-tags.outputs.current_tag }} --name-only --diff-filter=ACMR | grep '\.go$' > /tmp/changed-files.txt
+
+          # Detect functions in changed files
+          echo "## Function Changes in Release ${{ steps.get-tags.outputs.current_tag }}" > /tmp/function-changes/FUNCTION_CHANGES.md
+          echo "" >> /tmp/function-changes/FUNCTION_CHANGES.md
+
+          while read -r file; do
+            echo "### File: $file" >> /tmp/function-changes/FUNCTION_CHANGES.md
+            # Use goret to extract function information
+            goret func "$file" >> /tmp/function-changes/FUNCTION_CHANGES.md
+            echo "" >> /tmp/function-changes/FUNCTION_CHANGES.md
+          done < /tmp/changed-files.txt
+
+          # Display changes
+          cat /tmp/function-changes/FUNCTION_CHANGES.md
+
+      - name: Upload Function Changes Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: function-changes
+          path: /tmp/function-changes/FUNCTION_CHANGES.md
+          retention-days: 30
