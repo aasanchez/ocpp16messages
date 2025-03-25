@@ -3,6 +3,8 @@ package core
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/aasanchez/ocpp16_messages/core/types"
 )
 
 // CallErrorMessage represents an OCPP CALLERROR message [4, uniqueId, errorCode, errorDescription, errorDetails].
@@ -20,33 +22,33 @@ type CallErrorMessage struct {
 // typically from a JSON array like: [4, "uniqueId", "errorCode", "description", {}]
 func ValidateCallError(msg []any) (*CallErrorMessage, error) {
 	if len(msg) != 5 {
-		return nil, NewFieldError("CALLERROR", fmt.Sprintf("expected 5 elements, got %d", len(msg)))
+		return nil, types.NewFieldError("CALLERROR", fmt.Sprintf("expected 5 elements, got %d", len(msg)))
 	}
 
 	// Validate MessageTypeId
 	messageType, ok := msg[0].(int)
 	if !ok || MessageType(messageType) != CALLERROR {
-		return nil, NewFieldError("MessageTypeId", "must be 4 for CALLERROR")
+		return nil, types.NewFieldError("MessageTypeId", "must be 4 for CALLERROR")
 	}
 
 	uniqueID, ok := msg[1].(string)
 	if !ok || uniqueID == "" {
-		return nil, NewFieldError("UniqueID", "must be a non-empty string")
+		return nil, types.NewFieldError("UniqueID", "must be a non-empty string")
 	}
 
 	errorCode, ok := msg[2].(string)
 	if !ok || errorCode == "" {
-		return nil, NewFieldError("ErrorCode", "must be a non-empty string")
+		return nil, types.NewFieldError("ErrorCode", "must be a non-empty string")
 	}
 
 	errorDescription, ok := msg[3].(string)
 	if !ok || errorDescription == "" {
-		return nil, NewFieldError("ErrorDescription", "must be a non-empty string")
+		return nil, types.NewFieldError("ErrorDescription", "must be a non-empty string")
 	}
 
 	errorDetailsBytes, err := json.Marshal(msg[4])
 	if err != nil {
-		return nil, NewFieldError("ErrorDetails", "must be valid JSON object")
+		return nil, types.NewFieldError("ErrorDetails", "must be valid JSON object")
 	}
 
 	return &CallErrorMessage{
