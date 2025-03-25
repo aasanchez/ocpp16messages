@@ -17,6 +17,9 @@ type ParsedMessage struct {
 	ErrorDetails     json.RawMessage // for CALLERROR
 }
 
+// Define a constant for error formatting
+const errUnexpected = "unexpected error: %v"
+
 // ParseJSONMessage parses a raw JSON OCPP message.
 func ParseJSONMessage(data []byte) (*ParsedMessage, error) {
 	raw, err := parseRawMessage(data)
@@ -54,7 +57,7 @@ func ParseJSONMessage(data []byte) (*ParsedMessage, error) {
 func parseRawMessage(data []byte) ([]json.RawMessage, error) {
 	var raw []json.RawMessage
 	if err := json.Unmarshal(data, &raw); err != nil {
-		return nil, fmt.Errorf("invalid JSON array: %w", err)
+		return nil, fmt.Errorf(errUnexpected, err)
 	}
 	return raw, nil
 }
@@ -63,12 +66,12 @@ func parseRawMessage(data []byte) ([]json.RawMessage, error) {
 func extractTypeAndID(raw []json.RawMessage) (MessageType, string, error) {
 	var typeID MessageType
 	if err := json.Unmarshal(raw[0], &typeID); err != nil {
-		return 0, "", errors.New("invalid message type ID")
+		return 0, "", fmt.Errorf(errUnexpected, err)
 	}
 
 	var uniqueID string
 	if err := json.Unmarshal(raw[1], &uniqueID); err != nil {
-		return 0, "", errors.New("invalid unique ID")
+		return 0, "", fmt.Errorf(errUnexpected, err)
 	}
 
 	return typeID, uniqueID, nil
@@ -81,7 +84,7 @@ func parseCallMessage(raw []json.RawMessage, msg *ParsedMessage) (*ParsedMessage
 	}
 	var action string
 	if err := json.Unmarshal(raw[2], &action); err != nil {
-		return nil, errors.New("invalid action")
+		return nil, fmt.Errorf(errUnexpected, err)
 	}
 	msg.Action = action
 	msg.Payload = raw[3]
@@ -103,10 +106,10 @@ func parseCallErrorMessage(raw []json.RawMessage, msg *ParsedMessage) (*ParsedMe
 		return nil, errors.New("CALLERROR message must have 5 elements")
 	}
 	if err := json.Unmarshal(raw[2], &msg.ErrorCode); err != nil {
-		return nil, errors.New("invalid errorCode")
+		return nil, fmt.Errorf(errUnexpected, err)
 	}
 	if err := json.Unmarshal(raw[3], &msg.ErrorDescription); err != nil {
-		return nil, errors.New("invalid errorDescription")
+		return nil, fmt.Errorf(errUnexpected, err)
 	}
 	msg.ErrorDetails = raw[4]
 	return msg, nil
