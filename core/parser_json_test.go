@@ -7,9 +7,9 @@ import (
 	"github.com/aasanchez/ocpp16_messages/core/types"
 )
 
-func TestParseJSONMessage_ValidCALL(t *testing.T) {
+func TestParseJsonMessage_ValidCALL(t *testing.T) {
 	raw := []byte(`[2, "12345", "Authorize", {"idTag": "ABC123"}]`)
-	msg, err := ParseJSONMessage(raw)
+	msg, err := ParseJsonMessage(raw)
 	if err != nil {
 		t.Fatalf(errUnexpected, err) // Directly pass the formatted error
 	}
@@ -27,9 +27,9 @@ func TestParseJSONMessage_ValidCALL(t *testing.T) {
 	}
 }
 
-func TestParseJSONMessage_ValidCALLRESULT(t *testing.T) {
+func TestParseJsonMessage_ValidCALLRESULT(t *testing.T) {
 	raw := []byte(`[3, "67890", {"status": "Accepted"}]`)
-	msg, err := ParseJSONMessage(raw)
+	msg, err := ParseJsonMessage(raw)
 	if err != nil {
 		t.Fatalf(errUnexpected, err) // Directly pass the formatted error
 	}
@@ -44,9 +44,9 @@ func TestParseJSONMessage_ValidCALLRESULT(t *testing.T) {
 	}
 }
 
-func TestParseJSONMessage_ValidCALLERROR(t *testing.T) {
+func TestParseJsonMessage_ValidCALLERROR(t *testing.T) {
 	raw := []byte(`[4, "99999", "InternalError", "Something went wrong", {"reason": "crash"}]`)
-	msg, err := ParseJSONMessage(raw)
+	msg, err := ParseJsonMessage(raw)
 	if err != nil {
 		t.Fatalf(errUnexpected, err) // Directly pass the formatted error
 	}
@@ -67,113 +67,113 @@ func TestParseJSONMessage_ValidCALLERROR(t *testing.T) {
 	}
 }
 
-func TestParseJSONMessage_InvalidJSON(t *testing.T) {
+func TestParseJsonMessage_InvalidJSON(t *testing.T) {
 	raw := []byte(`not valid`)
-	_, err := ParseJSONMessage(raw)
+	_, err := ParseJsonMessage(raw)
 	if err == nil {
 		t.Error("expected error for invalid JSON")
 	}
 }
 
-func TestParseJSONMessage_TooFewElements(t *testing.T) {
+func TestParseJsonMessage_TooFewElements(t *testing.T) {
 	raw := []byte(`[2]`)
-	_, err := ParseJSONMessage(raw)
+	_, err := ParseJsonMessage(raw)
 	if err == nil {
 		t.Error("expected error for too few elements")
 	}
 }
 
-func TestParseJSONMessage_InvalidTypeID(t *testing.T) {
+func TestParseJsonMessage_InvalidTypeID(t *testing.T) {
 	raw := []byte(`["abc", "123", "Action", {}]`)
-	_, err := ParseJSONMessage(raw)
+	_, err := ParseJsonMessage(raw)
 	if err == nil {
 		t.Error("expected error for invalid message type ID")
 	}
 }
 
-func TestParseJSONMessage_InvalidUniqueID(t *testing.T) {
+func TestParseJsonMessage_InvalidUniqueID(t *testing.T) {
 	raw := []byte(`[2, {}, "Action", {}]`)
-	_, err := ParseJSONMessage(raw)
+	_, err := ParseJsonMessage(raw)
 	if err == nil {
 		t.Error("expected error for invalid unique ID")
 	}
 }
 
-func TestParseJSONMessage_CALL_InvalidAction(t *testing.T) {
+func TestParseJsonMessage_CALL_InvalidAction(t *testing.T) {
 	raw := []byte(`[2, "123", {}, {}]`)
-	_, err := ParseJSONMessage(raw)
+	_, err := ParseJsonMessage(raw)
 	if err == nil {
 		t.Error("expected error for invalid action")
 	}
 }
 
-func TestParseJSONMessage_CALL_MissingFields(t *testing.T) {
+func TestParseJsonMessage_CALL_MissingFields(t *testing.T) {
 	raw := []byte(`[2, "123"]`)
-	_, err := ParseJSONMessage(raw)
+	_, err := ParseJsonMessage(raw)
 	if err == nil {
 		t.Error("expected error for missing CALL fields")
 	}
 }
 
-func TestParseJSONMessage_CALL_WrongNumberOfElements(t *testing.T) {
+func TestParseJsonMessage_CALL_WrongNumberOfElements(t *testing.T) {
 	raw := []byte(`[2, "123", "Authorize"]`)
-	_, err := ParseJSONMessage(raw)
+	_, err := ParseJsonMessage(raw)
 	if err == nil || err.Error() != "CALL message must have 4 elements" {
 		t.Errorf("expected error for CALL message with wrong number of elements, got: %v", err)
 	}
 }
 
-func TestParseJSONMessage_CALLRESULT_WrongNumberOfElements(t *testing.T) {
+func TestParseJsonMessage_CALLRESULT_WrongNumberOfElements(t *testing.T) {
 	raw := []byte(`[3, "123"]`)
-	_, err := ParseJSONMessage(raw)
+	_, err := ParseJsonMessage(raw)
 	if err == nil || err.Error() != "invalid OCPP message: must have at least 3 elements" {
 		t.Errorf("expected error for CALLRESULT message with wrong number of elements, got: %v", err)
 	}
 }
 
-func TestParseJSONMessage_CALLRESULT_TooManyElements(t *testing.T) {
+func TestParseJsonMessage_CALLRESULT_TooManyElements(t *testing.T) {
 	raw := []byte(`[3, "123", {"status": "Accepted"}, "extra"]`)
-	_, err := ParseJSONMessage(raw)
+	_, err := ParseJsonMessage(raw)
 	if err == nil || err.Error() != "CALLRESULT message must have 3 elements" {
 		t.Errorf("expected error for too long CALLRESULT, got: %v", err)
 	}
 }
 
-func TestParseJSONMessage_CALLERROR_TooShort(t *testing.T) {
+func TestParseJsonMessage_CALLERROR_TooShort(t *testing.T) {
 	raw := []byte(`[4, "id", "code", "desc"]`)
-	_, err := ParseJSONMessage(raw)
+	_, err := ParseJsonMessage(raw)
 	if err == nil {
 		t.Error("expected error for too short CALLERROR message")
 	}
 }
 
-func TestParseJSONMessage_CALLERROR_InvalidCode(t *testing.T) {
+func TestParseJsonMessage_CALLERROR_InvalidCode(t *testing.T) {
 	raw := []byte(`[4, "id", 123, "desc", {}]`)
-	_, err := ParseJSONMessage(raw)
+	_, err := ParseJsonMessage(raw)
 	if err == nil || err.Error() != "invalid errorCode" {
 		t.Errorf("expected error for invalid errorCode, got: %v", err)
 	}
 }
 
-func TestParseJSONMessage_CALLERROR_InvalidDescription(t *testing.T) {
+func TestParseJsonMessage_CALLERROR_InvalidDescription(t *testing.T) {
 	raw := []byte(`[4, "id", "code", 123, {}]`)
-	_, err := ParseJSONMessage(raw)
+	_, err := ParseJsonMessage(raw)
 	if err == nil || err.Error() != "invalid errorDescription" {
 		t.Errorf("expected error for invalid errorDescription, got: %v", err)
 	}
 }
 
-func TestParseJSONMessage_CALLERROR_NonStringDescription(t *testing.T) {
+func TestParseJsonMessage_CALLERROR_NonStringDescription(t *testing.T) {
 	raw := []byte(`[4, "id", "SomeError", {"unexpected": "object"}, {}]`)
-	_, err := ParseJSONMessage(raw)
+	_, err := ParseJsonMessage(raw)
 	if err == nil || err.Error() != "invalid errorDescription" {
 		t.Errorf("expected error for non-string errorDescription, got: %v", err)
 	}
 }
 
-func TestParseJSONMessage_UnsupportedMessageType(t *testing.T) {
+func TestParseJsonMessage_UnsupportedMessageType(t *testing.T) {
 	raw := []byte(`[99, "uid", "x", {}]`)
-	msg, err := ParseJSONMessage(raw)
+	msg, err := ParseJsonMessage(raw)
 	if err == nil || err.Error() != "unsupported message type ID: 99" {
 		t.Errorf("expected unsupported message type error, got: %v", err)
 	}
