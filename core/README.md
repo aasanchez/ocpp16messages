@@ -12,7 +12,7 @@ message serialization formats, with a clear separation of responsibilities.
   Defines the OCPP message types (`CALL`, `CALLRESULT`, `CALLERROR`) and their
   numeric representations.
 - **Common Type Definitions**
-  Includes reusable types such as `CiString20`, `IdTag`, and `AuthorizationStatus`.
+  Includes reusable types such as `CiString20`, `IdToken`, and `AuthorizationStatus`.
 - **Parsing Logic**
   - `parser_json.go`: Handles parsing of OCPP messages in JSON format.
 - **Error Modeling**
@@ -30,7 +30,7 @@ message serialization formats, with a clear separation of responsibilities.
 | `ci_string.go`   | CiString-based types (`CiString20`, etc.)                     |
 | `enums.go`       | Enum definitions (`MessageType`, `AuthorizationStatus`, etc.) |
 | `errors.go`      | Field-level validation errors and utilities                   |
-| `id_token.go`    | Shared `IdTag` structure and constraints                      |
+| `id_token.go`    | Shared `IdToken` structure and constraints                      |
 | `parser_json.go` | Parsing of JSON OCPP messages into structured form            |
 | `doc.go`         | Package documentation for GoDoc and pkg.go.dev                |
 

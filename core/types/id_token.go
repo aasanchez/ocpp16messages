@@ -1,23 +1,23 @@
 package types
 
-// IdTag represents a unique identifier for a user or charging session.
+// IdToken represents a unique identifier for a user or charging session.
 //
 // According to the OCPP 1.6J specification, this is defined as a CiString20.
-type IdTag struct {
+type IdToken struct {
 	CiString20
 }
 
-// NewIdTag creates a new IdTag and validates its length.
-func NewIdTag(value string) (*IdTag, error) {
+// NewIdToken creates a new IdToken and validates its length.
+func NewIdToken(value string) (*IdToken, error) {
 	cs := CiString20(value)
 	if !cs.IsValid() {
-		return nil, NewFieldError("idTag", "idTag exceeds 20 characters")
+		return nil, NewFieldError("idToken", "idToken exceeds 20 characters")
 	}
-	return &IdTag{cs}, nil
+	return &IdToken{cs}, nil
 }
 
-// String returns the string value of the IdTag.
-func (id *IdTag) String() string {
+// String returns the string value of the IdToken.
+func (id *IdToken) String() string {
 	if id == nil {
 		return ""
 	}
