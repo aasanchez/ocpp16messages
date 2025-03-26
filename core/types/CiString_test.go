@@ -1,13 +1,22 @@
 package types
 
 import (
+	"math/rand"
 	"strings"
 	"testing"
 )
 
-// generateStr creates a string of the given length using the character 'X'
+const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+// generateStr creates a random alphanumeric string of the given length.
 func generateStr(length int) string {
-	return strings.Repeat("X", length)
+	var sb strings.Builder
+	sb.Grow(length)
+
+	for range make([]struct{}, length) {
+		sb.WriteByte(charset[rand.Intn(len(charset))])
+	}
+	return sb.String()
 }
 
 func TestCiString20_IsValid(t *testing.T) {
@@ -23,13 +32,14 @@ func TestCiString20_IsValid(t *testing.T) {
 }
 
 func TestCiString20_MarshalText(t *testing.T) {
-	s := CiString20(generateStr(20)) // Generates a 20-character string
+	string20 := generateStr(20)
+	s := CiString20(string20) // Generates a 20-character string
 	data, err := s.MarshalText()
 	if err != nil {
 		t.Fatalf("Expected no error, got: %v", err)
 	}
-	if string(data) != generateStr(20) {
-		t.Errorf("Expected '%s', got: %s", generateStr(20), data)
+	if string(data) != string20 {
+		t.Errorf("Expected '%s', got: %s", string20, data)
 	}
 
 	s = CiString20(generateStr(21)) // Generates a 21-character string
@@ -40,13 +50,14 @@ func TestCiString20_MarshalText(t *testing.T) {
 }
 
 func TestCiString20_UnmarshalText(t *testing.T) {
+	string20 := generateStr(20)
 	var s CiString20
-	err := s.UnmarshalText([]byte(generateStr(20))) // Generates a 20-character string
+	err := s.UnmarshalText([]byte(string20)) // Generates a 20-character string
 	if err != nil {
 		t.Fatalf("Expected no error, got: %v", err)
 	}
-	if s.String() != generateStr(20) { // Compare using the String() method
-		t.Errorf("Expected '%s', got: %q", generateStr(20), s.String())
+	if s.String() != string20 { // Compare using the String() method
+		t.Errorf("Expected '%s', got: %q", string20, s.String())
 	}
 
 	err = s.UnmarshalText([]byte(generateStr(21))) // Generates a 21-character string
@@ -68,13 +79,14 @@ func TestCiString25_IsValid(t *testing.T) {
 }
 
 func TestCiString25_MarshalText(t *testing.T) {
-	s := CiString25(generateStr(25)) // Generates a 25-character string
+	string25 := generateStr(25)
+	s := CiString25(string25) // Generates a 25-character string
 	data, err := s.MarshalText()
 	if err != nil {
 		t.Fatalf("Expected no error, got: %v", err)
 	}
-	if string(data) != generateStr(25) {
-		t.Errorf("Expected '%s', got: %s", generateStr(25), data)
+	if string(data) != string25 {
+		t.Errorf("Expected '%s', got: %s", string25, data)
 	}
 
 	s = CiString25(generateStr(26)) // Generates a 26-character string
@@ -85,13 +97,14 @@ func TestCiString25_MarshalText(t *testing.T) {
 }
 
 func TestCiString25_UnmarshalText(t *testing.T) {
+	string25 := generateStr(25)
 	var s CiString25
-	err := s.UnmarshalText([]byte(generateStr(25))) // Generates a 25-character string
+	err := s.UnmarshalText([]byte(string25)) // Generates a 25-character string
 	if err != nil {
 		t.Fatalf("Expected no error, got: %v", err)
 	}
-	if s.String() != generateStr(25) { // Compare using the String() method
-		t.Errorf("Expected '%s', got: %q", generateStr(25), s.String())
+	if s.String() != string25 { // Compare using the String() method
+		t.Errorf("Expected '%s', got: %q", string25, s.String())
 	}
 
 	err = s.UnmarshalText([]byte(generateStr(26))) // Generates a 26-character string
@@ -113,13 +126,14 @@ func TestCiString50_IsValid(t *testing.T) {
 }
 
 func TestCiString50_MarshalText(t *testing.T) {
-	s := CiString50(generateStr(50)) // Generates a 50-character string
+	string50 := generateStr(50)
+	s := CiString50(string50) // Generates a 50-character string
 	data, err := s.MarshalText()
 	if err != nil {
 		t.Fatalf("Expected no error, got: %v", err)
 	}
-	if string(data) != generateStr(50) {
-		t.Errorf("Expected '%s', got: %s", generateStr(50), data)
+	if string(data) != string50 {
+		t.Errorf("Expected '%s', got: %s", string50, data)
 	}
 
 	s = CiString50(generateStr(51)) // Generates a 51-character string
@@ -130,13 +144,14 @@ func TestCiString50_MarshalText(t *testing.T) {
 }
 
 func TestCiString50_UnmarshalText(t *testing.T) {
+	string50 := generateStr(50)
 	var s CiString50
-	err := s.UnmarshalText([]byte(generateStr(50))) // Generates a 50-character string
+	err := s.UnmarshalText([]byte(string50)) // Generates a 50-character string
 	if err != nil {
 		t.Fatalf("Expected no error, got: %v", err)
 	}
-	if s.String() != generateStr(50) { // Compare using the String() method
-		t.Errorf("Expected '%s', got: %q", generateStr(50), s.String())
+	if s.String() != string50 { // Compare using the String() method
+		t.Errorf("Expected '%s', got: %q", string50, s.String())
 	}
 
 	err = s.UnmarshalText([]byte(generateStr(51))) // Generates a 51-character string
@@ -158,13 +173,14 @@ func TestCiString255_IsValid(t *testing.T) {
 }
 
 func TestCiString255_MarshalText(t *testing.T) {
-	s := CiString255(generateStr(255)) // Generates a 255-character string
+	string255 := generateStr(255)
+	s := CiString255(string255) // Generates a 255-character string
 	data, err := s.MarshalText()
 	if err != nil {
 		t.Fatalf("Expected no error, got: %v", err)
 	}
-	if string(data) != generateStr(255) {
-		t.Errorf("Expected '%s', got: %s", generateStr(255), data)
+	if string(data) != string255 {
+		t.Errorf("Expected '%s', got: %s", string255, data)
 	}
 
 	s = CiString255(generateStr(256)) // Generates a 256-character string
@@ -175,13 +191,14 @@ func TestCiString255_MarshalText(t *testing.T) {
 }
 
 func TestCiString255_UnmarshalText(t *testing.T) {
+	string255 := generateStr(255)
 	var s CiString255
-	err := s.UnmarshalText([]byte(generateStr(255))) // Generates a 255-character string
+	err := s.UnmarshalText([]byte(string255)) // Generates a 255-character string
 	if err != nil {
 		t.Fatalf("Expected no error, got: %v", err)
 	}
-	if s.String() != generateStr(255) { // Compare using the String() method
-		t.Errorf("Expected '%s', got: %q", generateStr(255), s.String())
+	if s.String() != string255 { // Compare using the String() method
+		t.Errorf("Expected '%s', got: %q", string255, s.String())
 	}
 
 	err = s.UnmarshalText([]byte(generateStr(256))) // Generates a 256-character string
@@ -203,13 +220,14 @@ func TestCiString500_IsValid(t *testing.T) {
 }
 
 func TestCiString500_MarshalText(t *testing.T) {
-	s := CiString500(generateStr(500)) // Generates a 500-character string
+	string500 := generateStr(500)
+	s := CiString500(string500) // Generates a 500-character string
 	data, err := s.MarshalText()
 	if err != nil {
 		t.Fatalf("Expected no error, got: %v", err)
 	}
-	if string(data) != generateStr(500) {
-		t.Errorf("Expected '%s', got: %s", generateStr(500), data)
+	if string(data) != string500 {
+		t.Errorf("Expected '%s', got: %s", string500, data)
 	}
 
 	s = CiString500(generateStr(501)) // Generates a 501-character string
@@ -220,13 +238,14 @@ func TestCiString500_MarshalText(t *testing.T) {
 }
 
 func TestCiString500_UnmarshalText(t *testing.T) {
+	string500 := generateStr(500)
 	var s CiString500
-	err := s.UnmarshalText([]byte(generateStr(500))) // Generates a 500-character string
+	err := s.UnmarshalText([]byte(string500)) // Generates a 500-character string
 	if err != nil {
 		t.Fatalf("Expected no error, got: %v", err)
 	}
-	if s.String() != generateStr(500) { // Compare using the String() method
-		t.Errorf("Expected '%s', got: %q", generateStr(500), s.String())
+	if s.String() != string500 { // Compare using the String() method
+		t.Errorf("Expected '%s', got: %q", string500, s.String())
 	}
 
 	err = s.UnmarshalText([]byte(generateStr(501))) // Generates a 501-character string
