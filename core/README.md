@@ -1,24 +1,23 @@
 # `core` Package
 
 The `core` package provides shared data types, utilities, and parsing logic used
-across all OCPP 1.6 message types. It is designed to support **both JSON and SOAP**
+across all OCPP 1.6 message types. It is designed to support **JSON**
 message serialization formats, with a clear separation of responsibilities.
 
 ---
 
 ## ✨ Responsibilities
 
-- **Message Type Constants**  
+- **Message Type Constants**
   Defines the OCPP message types (`CALL`, `CALLRESULT`, `CALLERROR`) and their
   numeric representations.
-- **Common Type Definitions**  
+- **Common Type Definitions**
   Includes reusable types such as `CiString20`, `IdTag`, and `AuthorizationStatus`.
-- **Parsing Logic**  
+- **Parsing Logic**
   - `parser_json.go`: Handles parsing of OCPP messages in JSON format.
-  - `parser_soap.go`: Handles minimal parsing of OCPP SOAP envelopes for routing and validation.
-- **Error Modeling**  
+- **Error Modeling**
   Implements standardized error reporting (`FieldError`) and validation helpers.
-- **CALLERROR Message Support**  
+- **CALLERROR Message Support**
   Full definition and validation logic for OCPP CALLERROR messages (JSON only).
 
 ---
@@ -33,7 +32,6 @@ message serialization formats, with a clear separation of responsibilities.
 | `errors.go`      | Field-level validation errors and utilities                   |
 | `id_token.go`    | Shared `IdTag` structure and constraints                      |
 | `parser_json.go` | Parsing of JSON OCPP messages into structured form            |
-| `parser_soap.go` | SOAP envelope parsing for routing (no full XML binding)       |
 | `doc.go`         | Package documentation for GoDoc and pkg.go.dev                |
 
 ---
@@ -52,7 +50,6 @@ Tests use **only the Go standard library** and aim for **100% coverage**.
 
 ## 🧼 Design Principles
 
-- ✅ Clear boundaries between JSON and SOAP logic
 - ✅ No external dependencies
 - ✅ Idiomatic Go (GoDoc comments, standard error patterns, type safety)
 - ✅ Reusable and pluggable for different OCPP message implementations

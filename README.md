@@ -20,7 +20,6 @@ A high-performance and idiomatic Go package for handling Open Charge Point Proto
 - 📊 Benchmarking and profiling suite.
 - 🧵 Thread-safe validation logic.
 - 🧰 Rich set of reusable core types (e.g., `CiString`, `IdToken`, `StatusEnum`).
-- 🔌 Examples for JSON and SOAP usage in `example/authorize/json/` and `example/authorize/soap/`.
 
 ---
 
@@ -56,7 +55,6 @@ ocpp16_messages/
 ├── core/                       # Shared types, validators, plugins, enums, parsers
 ├── benchmark/                  # Benchmarks for JSON & SOAP performance analysis
 ├── example/authorize/json/     # Example for Authorize using JSON
-├── example/authorize/soap/     # Example for Authorize using SOAP
 ├── test/                       # Full coverage test suite
 ├── ocpp16_messages.go          # Entrypoint to parse, route, and validate OCPP 1.6 messages
 ├── go.mod / go.sum             # Go module files

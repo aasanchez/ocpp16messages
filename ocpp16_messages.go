@@ -5,7 +5,7 @@
 // and includes plugin-based extensibility to allow custom validators.
 //
 // Usage examples are available under the `example/authorization/json`
-// and `example/authorization/soap` directories.
+// directory.
 package ocpp16_messages
 
 // "github.com/aasanchez/ocpp16_messages/authorize"
