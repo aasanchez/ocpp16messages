@@ -8,7 +8,7 @@ import (
 
 // AuthorizeConf represents the Authorize.conf message sent by the central system to the charge point.
 type AuthorizeConf struct {
-	IdTagInfo types.IdToken `json:"idTagInfo"`
+	IdTagInfo types.IdTagInfo `json:"idTagInfo"`
 }
 
 // // Validate checks the validity of the AuthorizeConf.
