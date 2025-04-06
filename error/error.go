@@ -5,15 +5,16 @@ import (
 	"fmt"
 
 	"github.com/aasanchez/ocpp16_messages/core/types"
+	errorType "github.com/aasanchez/ocpp16_messages/error/types"
 )
 
 // CallErrorMessage represents an OCPP CALLERROR message [4, uniqueId, errorCode, errorDescription, errorDetails].
 type CallErrorMessage struct {
-	MessageTypeId    int             // Must be 4
-	UniqueID         string          // Matches the UniqueID of the request
-	ErrorCode        string          // One of the predefined or custom error codes
-	ErrorDescription string          // Human-readable message
-	ErrorDetails     json.RawMessage // Additional JSON info (optional)
+	MessageTypeId    types.MessageType
+	UniqueID         string
+	ErrorCode        errorType.ErrorCode
+	ErrorDescription string
+	ErrorDetails     json.RawMessage
 }
 
 // ValidateCallError validates the structure of a CALLERROR message.
@@ -28,9 +29,16 @@ func ValidateCallError(msg []any) (*CallErrorMessage, error) {
 	}
 
 	// Validate MessageTypeId
-	messageType, ok := msg[0].(int)
-	if !ok || types.MessageType(messageType) != types.CALLERROR {
-		return nil, types.NewFieldError("MessageTypeId", "must be 4 for CALLERROR")
+	messageTypeVal, ok := msg[0].(float64) // JSON numbers default to float64
+	if !ok {
+		return nil, types.NewFieldError("MessageTypeId", "must be a numeric value")
+	}
+	messageType := types.MessageType(int(messageTypeVal))
+	if !messageType.IsValid() {
+		return nil, types.NewFieldError("MessageTypeId", fmt.Sprintf("invalid message type: %d", messageType))
+	}
+	if messageType != types.CALLERROR {
+		return nil, types.NewFieldError("MessageTypeId", fmt.Sprintf("expected CALLERROR (%d), got %d", types.CALLERROR, messageType))
 	}
 
 	uniqueID, ok := msg[1].(string)
@@ -38,9 +46,14 @@ func ValidateCallError(msg []any) (*CallErrorMessage, error) {
 		return nil, types.NewFieldError("UniqueID", noEmptyString)
 	}
 
-	errorCode, ok := msg[2].(string)
-	if !ok || errorCode == "" {
+	errorCodeStr, ok := msg[2].(string)
+	if !ok || errorCodeStr == "" {
 		return nil, types.NewFieldError("ErrorCode", noEmptyString)
+	}
+
+	errorCode := errorType.ErrorCode(errorCodeStr)
+	if !errorCode.IsValid() {
+		return nil, types.NewFieldError("ErrorCode", fmt.Sprintf("invalid error code: %s", errorCode))
 	}
 
 	errorDescription, ok := msg[3].(string)
@@ -54,7 +67,7 @@ func ValidateCallError(msg []any) (*CallErrorMessage, error) {
 	}
 
 	return &CallErrorMessage{
-		MessageTypeId:    int(types.CALLERROR),
+		MessageTypeId:    types.CALLERROR,
 		UniqueID:         uniqueID,
 		ErrorCode:        errorCode,
 		ErrorDescription: errorDescription,
