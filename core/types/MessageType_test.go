@@ -15,3 +15,33 @@ func TestMessageTypeConstants(t *testing.T) {
 		t.Errorf("Expected CALLERROR to be 4, got %d", CALLERROR)
 	}
 }
+
+func TestMessageType_IsValid_CALL(t *testing.T) {
+	if !CALL.IsValid() {
+		t.Error("CALL should be valid")
+	}
+}
+
+func TestMessageType_IsValid_CALLRESULT(t *testing.T) {
+	if !CALLRESULT.IsValid() {
+		t.Error("CALLRESULT should be valid")
+	}
+}
+
+func TestMessageType_IsValid_CALLERROR(t *testing.T) {
+	if !CALLERROR.IsValid() {
+		t.Error("CALLERROR should be valid")
+	}
+}
+
+func TestMessageType_IsValid_InvalidLow(t *testing.T) {
+	if MessageType(0).IsValid() {
+		t.Error("0 should be invalid")
+	}
+}
+
+func TestMessageType_IsValid_InvalidHigh(t *testing.T) {
+	if MessageType(5).IsValid() {
+		t.Error("5 should be invalid")
+	}
+}

@@ -19,3 +19,13 @@ const (
 	// CALLERROR is an error response sent when a request cannot be processed.
 	CALLERROR MessageType = 4
 )
+
+// IsValid returns true if the MessageType is one of the allowed values (2, 3, or 4).
+func (m MessageType) IsValid() bool {
+	switch m {
+	case CALL, CALLRESULT, CALLERROR:
+		return true
+	default:
+		return false
+	}
+}
