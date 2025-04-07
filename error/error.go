@@ -28,11 +28,11 @@ func ValidateCallError(msg []any) (*CallErrorMessage, error) {
 	}
 
 	// Validate MessageTypeId
-	messageTypeVal, ok := msg[0].(float64) // JSON numbers default to float64
+	messageTypeVal, ok := msg[0].(int)
 	if !ok {
-		return nil, types.NewFieldError("MessageTypeId", "must be a numeric value")
+		return nil, types.NewFieldError("MessageTypeId", "must be an integer")
 	}
-	messageType := types.MessageType(int(messageTypeVal))
+	messageType := types.MessageType(messageTypeVal)
 	if !messageType.IsValid() {
 		return nil, types.NewFieldError("MessageTypeId", fmt.Sprintf("invalid message type: %d", messageType))
 	}
