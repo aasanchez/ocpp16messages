@@ -139,7 +139,7 @@ func TestParseJsonMessageCALLRESULTTooManyElements(t *testing.T) {
 	}
 }
 
-func TestParseJsonMessageCALLERROR_TooShort(t *testing.T) {
+func TestParseJsonMessageCALLERRORTooShort(t *testing.T) {
 	raw := []byte(`[4, "12345", "InternalError"]`) // Only 3 elements
 	_, err := ParseJsonMessage(raw)
 	if err == nil {
@@ -147,7 +147,7 @@ func TestParseJsonMessageCALLERROR_TooShort(t *testing.T) {
 	}
 }
 
-func TestParseJsonMessageCALLERROR_InvalidCode(t *testing.T) {
+func TestParseJsonMessageCALLERRORInvalidCode(t *testing.T) {
 	raw := []byte(`[4, "id", 123, "desc", {}]`)
 	_, err := ParseJsonMessage(raw)
 	if err == nil || err.Error() != "invalid errorCode" {
@@ -155,7 +155,7 @@ func TestParseJsonMessageCALLERROR_InvalidCode(t *testing.T) {
 	}
 }
 
-func TestParseJsonMessageCALLERROR_InvalidDescription(t *testing.T) {
+func TestParseJsonMessageCALLERRORInvalidDescription(t *testing.T) {
 	raw := []byte(`[4, "id", "code", 123, {}]`)
 	_, err := ParseJsonMessage(raw)
 	if err == nil || err.Error() != "invalid errorDescription" {
@@ -163,7 +163,7 @@ func TestParseJsonMessageCALLERROR_InvalidDescription(t *testing.T) {
 	}
 }
 
-func TestParseJsonMessageCALLERROR_NonStringDescription(t *testing.T) {
+func TestParseJsonMessageCALLERRORNonStringDescription(t *testing.T) {
 	raw := []byte(`[4, "id", "SomeError", {"unexpected": "object"}, {}]`)
 	_, err := ParseJsonMessage(raw)
 	if err == nil || err.Error() != "invalid errorDescription" {
@@ -171,7 +171,7 @@ func TestParseJsonMessageCALLERROR_NonStringDescription(t *testing.T) {
 	}
 }
 
-func TestParseJsonMessage_UnsupportedMessageType(t *testing.T) {
+func TestParseJsonUnsupportedMessageType(t *testing.T) {
 	raw := []byte(`[99, "uid", "x", {}]`)
 	msg, err := ParseJsonMessage(raw)
 	if err == nil || err.Error() != "unsupported message type ID: 99" {
