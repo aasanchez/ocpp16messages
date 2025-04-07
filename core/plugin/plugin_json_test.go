@@ -35,7 +35,7 @@ func TestRegisterAndGetValidator(t *testing.T) {
 	}
 }
 
-func TestValidateRawJSON_Success(t *testing.T) {
+func TestValidateRawJSONSuccess(t *testing.T) {
 	action := "SuccessAction"
 	RegisterValidator(action, &mockValidator{})
 
@@ -54,7 +54,7 @@ func TestValidateRawJSON_Success(t *testing.T) {
 	}
 }
 
-func TestValidateRawJSON_ValidatorError(t *testing.T) {
+func TestValidateRawJSONValidatorError(t *testing.T) {
 	action := "FailAction"
 	RegisterValidator(action, &mockValidator{shouldFail: true})
 
@@ -68,7 +68,7 @@ func TestValidateRawJSON_ValidatorError(t *testing.T) {
 	}
 }
 
-func TestValidateRawJSON_NoValidator(t *testing.T) {
+func TestValidateRawJSONNoValidator(t *testing.T) {
 	action := "UnknownAction"
 	payload := json.RawMessage(`{"test":123}`)
 
