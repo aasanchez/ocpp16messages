@@ -60,32 +60,65 @@ type ParsedMessage struct {
 	Payload     any
 }
 
+// helper function to unmarshal and validate fields
+func unmarshalField(raw json.RawMessage, v any) error {
+	return json.Unmarshal(raw, v)
+}
+
+// helper function to validate and process CALL messages
+func processCall(raw []json.RawMessage, uniqueID string) (*ParsedMessage, error) {
+	if len(raw) != 4 {
+		return nil, errors.New("CALL message must have 4 elements")
+	}
+
+	var action string
+	if err := unmarshalField(raw[2], &action); err != nil {
+		return nil, fmt.Errorf("invalid action field: %w", err)
+	}
+
+	// Check if action is implemented
+	switch action {
+	case "Authorize":
+		return nil, fmt.Errorf("no implemented action: %s", action)
+	default:
+		return nil, fmt.Errorf("unsupported action: %s", action)
+	}
+}
+
+// helper function to process CALLRESULT
+func processCallResult(raw []json.RawMessage, uniqueID string) (*ParsedMessage, error) {
+	if len(raw) != 3 {
+		return nil, errors.New("CALLRESULT must have 3 elements")
+	}
+	return &ParsedMessage{MessageType: CALLRESULT, UniqueID: uniqueID, Action: "Unknown", Payload: raw[2]}, nil
+}
+
+// helper function to process CALLERROR
+func processCallError(raw []json.RawMessage, uniqueID string) (*ParsedMessage, error) {
+	if len(raw) != 5 {
+		return nil, errors.New("CALLERROR must have 5 elements")
+	}
+
+	var action, errorCode, errorDescription string
+	if err := unmarshalField(raw[2], &action); err != nil {
+		return nil, fmt.Errorf("invalid action in CALLERROR: %w", err)
+	}
+	if err := unmarshalField(raw[3], &errorCode); err != nil {
+		return nil, fmt.Errorf("invalid errorCode in CALLERROR: %w", err)
+	}
+	if err := unmarshalField(raw[4], &errorDescription); err != nil {
+		return nil, fmt.Errorf("invalid errorDescription in CALLERROR: %w", err)
+	}
+
+	payload := map[string]string{
+		"errorCode":        errorCode,
+		"errorDescription": errorDescription,
+	}
+	return &ParsedMessage{MessageType: CALLERROR, UniqueID: uniqueID, Action: action, Payload: payload}, nil
+}
+
 // ParseAndValidate parses an incoming OCPP 1.6J JSON message array,
 // determines the message type, and validates its structure.
-//
-// The function supports the following MessageTypeId values:
-//   - CALL (2): expects 4 elements [2, UniqueID, Action, Payload]
-//   - CALLRESULT (3): expects 3 elements [3, UniqueID, Payload]
-//   - CALLERROR (4): expects 5 elements [4, UniqueID, Action, ErrorCode, ErrorDescription]
-//
-// If the message type is CALL and the action is known but not yet implemented,
-// the function will return a specific "not implemented" error.
-//
-// This function does not currently dispatch message payloads to detailed schema
-// validation routines — that is expected to be handled via plugins or extensions.
-//
-// Returns:
-//   - A ParsedMessage struct containing metadata and raw payload
-//   - An error if the message is invalid, incomplete, or contains unsupported types
-//
-// Example usage:
-//
-//	input := []byte(`[2, "12345", "Authorize", {"idTag": "ABC123"}]`)
-//	parsed, err := ParseAndValidate(input)
-//	if err != nil {
-//	    log.Fatal(err)
-//	}
-//	fmt.Printf("Received %s message with ID %s\n", parsed.Action, parsed.UniqueID)
 func ParseAndValidate(input []byte) (*ParsedMessage, error) {
 	var raw []json.RawMessage
 	if err := json.Unmarshal(input, &raw); err != nil {
@@ -98,59 +131,23 @@ func ParseAndValidate(input []byte) (*ParsedMessage, error) {
 
 	// Extract MessageTypeId
 	var messageType int
-	if err := json.Unmarshal(raw[0], &messageType); err != nil {
+	if err := unmarshalField(raw[0], &messageType); err != nil {
 		return nil, fmt.Errorf("invalid MessageTypeId: %w", err)
 	}
 
 	// Extract UniqueId
 	var uniqueID string
-	if err := json.Unmarshal(raw[1], &uniqueID); err != nil {
+	if err := unmarshalField(raw[1], &uniqueID); err != nil {
 		return nil, fmt.Errorf("invalid UniqueId: %w", err)
 	}
 
 	switch messageType {
 	case CALL:
-		if len(raw) != 4 {
-			return nil, errors.New("CALL message must have 4 elements")
-		}
-		var action string
-		if err := json.Unmarshal(raw[2], &action); err != nil {
-			return nil, fmt.Errorf("invalid action field: %w", err)
-		}
-
-		switch action {
-		case "Authorize":
-			return nil, fmt.Errorf("no implemented action: %s", action)
-		default:
-			return nil, fmt.Errorf("unsupported action: %s", action)
-		}
-
+		return processCall(raw, uniqueID)
 	case CALLRESULT:
-		if len(raw) != 3 {
-			return nil, errors.New("CALLRESULT must have 3 elements")
-		}
-		return &ParsedMessage{MessageType: CALLRESULT, UniqueID: uniqueID, Action: "Unknown", Payload: raw[2]}, nil
-
+		return processCallResult(raw, uniqueID)
 	case CALLERROR:
-		if len(raw) != 5 {
-			return nil, errors.New("CALLERROR must have 5 elements")
-		}
-		var action, errorCode, errorDescription string
-		if err := json.Unmarshal(raw[2], &action); err != nil {
-			return nil, fmt.Errorf("invalid action in CALLERROR: %w", err)
-		}
-		if err := json.Unmarshal(raw[3], &errorCode); err != nil {
-			return nil, fmt.Errorf("invalid errorCode in CALLERROR: %w", err)
-		}
-		if err := json.Unmarshal(raw[4], &errorDescription); err != nil {
-			return nil, fmt.Errorf("invalid errorDescription in CALLERROR: %w", err)
-		}
-		payload := map[string]string{
-			"errorCode":        errorCode,
-			"errorDescription": errorDescription,
-		}
-		return &ParsedMessage{MessageType: CALLERROR, UniqueID: uniqueID, Action: action, Payload: payload}, nil
-
+		return processCallError(raw, uniqueID)
 	default:
 		return nil, fmt.Errorf("unsupported MessageTypeId: %d", messageType)
 	}
