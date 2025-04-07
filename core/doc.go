@@ -1,49 +1,65 @@
-// Package core provides shared types, constants, utility functions, and validation logic
-// for working with OCPP 1.6 messages in both JSON and SOAP formats.
+// Package core provides the foundational infrastructure for working with
+// Open Charge Point Protocol (OCPP) 1.6 messages using the JSON transport format.
 //
-// This package is the foundation for higher-level message handling and includes:
+// It is designed as the internal backbone for parsing, validation, and extensibility,
+// and is reusable for building protocol-aware systems such as CSMS (Central Systems)
+// or OCPP gateways.
 //
-//   - Message parsing and validation for CALL, CALLRESULT, and CALLERROR messages
-//   - Common types such as CiStringN, enums, and error structures
-//   - Plugin support to allow validators to be registered dynamically
-//   - JSON and SOAP transport abstraction helpers (e.g., header inspection, payload routing)
+// Overview:
 //
-// Usage:
+// The core package centralizes the following capabilities:
 //
-//	core.RegisterValidator("AuthorizeReq", authorize.ValidateAuthorizeReq)
-//	core.RegisterValidator("AuthorizeConf", authorize.ValidateAuthorizeConf)
+//   - Unified message parsing for OCPP 1.6J messages (CALL, CALLRESULT, CALLERROR)
+//   - Extensible message validation via a plugin registry
+//   - Shared primitive types and strongly typed string definitions (CiString variants)
+//   - Enum definitions for standardized fields (e.g., AuthorizationStatus, ConnectorStatus)
+//   - Structured error handling and validation hooks
 //
-//	parsed, err := core.ParseMessage(rawMessage)
+// Usage Example:
+//
+//	RegisterValidator("AuthorizeReq", authorize.ValidateAuthorizeReq)
+//	RegisterValidator("AuthorizeConf", authorize.ValidateAuthorizeConf)
+//
+//	parsed, err := ParseMessage(rawMessage)
 //	if err != nil {
-//	    log.Fatal(err)
+//	    log.Fatalf("Parsing failed: %v", err)
 //	}
 //
-//	result, err := core.ValidateMessage(parsed)
+//	result, err := ValidateMessage(parsed)
+//	if err != nil {
+//	    log.Fatalf("Validation failed: %v", err)
+//	}
 //
-// Validation Hooks:
+// Hooks:
 //
-// Pre- and post-validation hooks can be registered globally:
+// Developers can inject custom logic before and after validation using hooks:
 //
-//	core.SetPreValidationHook(func(action string, payload any) {
-//	    log.Printf("Validating action: %s", action)
+//	SetPreValidationHook(func(action string, payload any) {
+//	    log.Printf("[PRE] Validating action: %s", action)
 //	})
 //
-//	core.SetPostValidationHook(func(action string, result any) {
-//	    log.Printf("Validated payload for %s: %+v", action, result)
+//	SetPostValidationHook(func(action string, result any) {
+//	    log.Printf("[POST] Validation complete for %s", action)
 //	})
 //
 // Message Types:
 //
-// The following message types are defined in the OCPP 1.6 protocol:
-//   - CALL (2)
-//   - CALLRESULT (3)
-//   - CALLERROR (4)
+// The OCPP 1.6J protocol defines three primary message types, which are recognized here:
 //
-// For SOAP support, this package offers basic header parsing and routing,
-// but leaves full WS-Security and policy enforcement to higher-level layers.
+//   - CALL       = 2  → request from charge point to central system
+//   - CALLRESULT = 3  → successful response to a CALL
+//   - CALLERROR  = 4  → error response to a CALL
 //
-// This package is used internally by the ocpp16_messages package, but can be reused
-// in other projects requiring OCPP 1.6 protocol support.
+// Relationship to Other Packages:
 //
-// Author: Alexis Sanchez <aasanchez>
+// This package is used internally by the ocpp16_messages package and intended
+// for use cases where developers need to:
+//
+//   - Inspect and route OCPP traffic
+//   - Register and execute custom validators for different message actions
+//   - Handle JSON-based OCPP 1.6 message flow with a unified API
+//
+// Author:
+//
+//	Alexis Sanchez <aasanchez>
 package core
