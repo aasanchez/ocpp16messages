@@ -1,20 +1,25 @@
 package types
 
 import (
-	"math/rand"
+	"crypto/rand"
 	"strings"
 	"testing"
 )
 
-const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-
 // generateStr creates a random alphanumeric string of the given length.
 func generateStr(length int) string {
+	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	var sb strings.Builder
 	sb.Grow(length)
 
-	for range make([]struct{}, length) {
-		sb.WriteByte(charset[rand.Intn(len(charset))])
+	byteBuf := make([]byte, length)
+	_, err := rand.Read(byteBuf)
+	if err != nil {
+		panic("failed to generate secure random string: " + err.Error())
+	}
+
+	for _, b := range byteBuf {
+		sb.WriteByte(charset[int(b)%len(charset)])
 	}
 	return sb.String()
 }
