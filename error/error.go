@@ -18,7 +18,6 @@ type CallErrorMessage struct {
 }
 
 // ValidateCallError validates the structure of a CALLERROR message.
-//
 // This function expects the message to be already unmarshaled into a []any,
 // typically from a JSON array like: [4, "uniqueId", "errorCode", "description", {}]
 func ValidateCallError(msg []any) (*CallErrorMessage, error) {
