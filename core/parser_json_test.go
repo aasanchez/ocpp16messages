@@ -140,10 +140,10 @@ func TestParseJsonMessage_CALLRESULT_TooManyElements(t *testing.T) {
 }
 
 func TestParseJsonMessage_CALLERROR_TooShort(t *testing.T) {
-	raw := []byte(`[4, "id", "code", "desc"]`)
+	raw := []byte(`[4, "12345", "InternalError"]`) // Only 3 elements
 	_, err := ParseJsonMessage(raw)
 	if err == nil {
-		t.Error("expected error for too short CALLERROR message")
+		t.Errorf("expected error for too short CALLERROR message")
 	}
 }
 

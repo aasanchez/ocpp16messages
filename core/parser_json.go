@@ -145,6 +145,9 @@ func parseCallErrorMessage(raw []json.RawMessage, msg *ParsedMessage) (*ParsedMe
 	}
 	msg.ErrorDescription = errorDescription
 
-	msg.ErrorDetails = raw[4]
+	if len(raw) > 4 {
+		msg.ErrorDetails = raw[4]
+	}
+
 	return msg, nil
 }

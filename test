@@ -1,0 +1,156 @@
+FAIL	github.com/aasanchez/ocpp16_messages [build failed]
+=== RUN   TestParseJsonMessage_ValidCALL
+--- PASS: TestParseJsonMessage_ValidCALL (0.00s)
+=== RUN   TestParseJsonMessage_ValidCALLRESULT
+--- PASS: TestParseJsonMessage_ValidCALLRESULT (0.00s)
+=== RUN   TestParseJsonMessage_ValidCALLERROR
+--- PASS: TestParseJsonMessage_ValidCALLERROR (0.00s)
+=== RUN   TestParseJsonMessage_InvalidJSON
+--- PASS: TestParseJsonMessage_InvalidJSON (0.00s)
+=== RUN   TestParseJsonMessage_TooFewElements
+--- PASS: TestParseJsonMessage_TooFewElements (0.00s)
+=== RUN   TestParseJsonMessage_InvalidTypeID
+--- PASS: TestParseJsonMessage_InvalidTypeID (0.00s)
+=== RUN   TestParseJsonMessage_InvalidUniqueID
+--- PASS: TestParseJsonMessage_InvalidUniqueID (0.00s)
+=== RUN   TestParseJsonMessage_CALL_InvalidAction
+--- PASS: TestParseJsonMessage_CALL_InvalidAction (0.00s)
+=== RUN   TestParseJsonMessage_CALL_MissingFields
+--- PASS: TestParseJsonMessage_CALL_MissingFields (0.00s)
+=== RUN   TestParseJsonMessage_CALL_WrongNumberOfElements
+--- PASS: TestParseJsonMessage_CALL_WrongNumberOfElements (0.00s)
+=== RUN   TestParseJsonMessage_CALLRESULT_WrongNumberOfElements
+--- PASS: TestParseJsonMessage_CALLRESULT_WrongNumberOfElements (0.00s)
+=== RUN   TestParseJsonMessage_CALLRESULT_TooManyElements
+--- PASS: TestParseJsonMessage_CALLRESULT_TooManyElements (0.00s)
+=== RUN   TestParseJsonMessage_CALLERROR_TooShort
+--- PASS: TestParseJsonMessage_CALLERROR_TooShort (0.00s)
+=== RUN   TestParseJsonMessage_CALLERROR_InvalidCode
+--- PASS: TestParseJsonMessage_CALLERROR_InvalidCode (0.00s)
+=== RUN   TestParseJsonMessage_CALLERROR_InvalidDescription
+--- PASS: TestParseJsonMessage_CALLERROR_InvalidDescription (0.00s)
+=== RUN   TestParseJsonMessage_CALLERROR_NonStringDescription
+--- PASS: TestParseJsonMessage_CALLERROR_NonStringDescription (0.00s)
+=== RUN   TestParseJsonMessage_UnsupportedMessageType
+--- PASS: TestParseJsonMessage_UnsupportedMessageType (0.00s)
+PASS
+ok  	github.com/aasanchez/ocpp16_messages/core	(cached)
+=== RUN   TestRegisterAndGetValidator
+--- PASS: TestRegisterAndGetValidator (0.00s)
+=== RUN   TestValidateRawJSON_Success
+--- PASS: TestValidateRawJSON_Success (0.00s)
+=== RUN   TestValidateRawJSON_ValidatorError
+--- PASS: TestValidateRawJSON_ValidatorError (0.00s)
+=== RUN   TestValidateRawJSON_NoValidator
+--- PASS: TestValidateRawJSON_NoValidator (0.00s)
+=== RUN   TestPreAndPostValidationHooks
+--- PASS: TestPreAndPostValidationHooks (0.00s)
+=== RUN   TestPostHookOnValidationFailure
+--- PASS: TestPostHookOnValidationFailure (0.00s)
+=== RUN   TestPostHookOnMissingValidator
+--- PASS: TestPostHookOnMissingValidator (0.00s)
+PASS
+ok  	github.com/aasanchez/ocpp16_messages/core/plugin	(cached)
+=== RUN   TestCiString20_IsValid
+--- PASS: TestCiString20_IsValid (0.00s)
+=== RUN   TestCiString20_MarshalText
+--- PASS: TestCiString20_MarshalText (0.00s)
+=== RUN   TestCiString20_UnmarshalText
+--- PASS: TestCiString20_UnmarshalText (0.00s)
+=== RUN   TestCiString25_IsValid
+--- PASS: TestCiString25_IsValid (0.00s)
+=== RUN   TestCiString25_MarshalText
+--- PASS: TestCiString25_MarshalText (0.00s)
+=== RUN   TestCiString25_UnmarshalText
+--- PASS: TestCiString25_UnmarshalText (0.00s)
+=== RUN   TestCiString50_IsValid
+--- PASS: TestCiString50_IsValid (0.00s)
+=== RUN   TestCiString50_MarshalText
+--- PASS: TestCiString50_MarshalText (0.00s)
+=== RUN   TestCiString50_UnmarshalText
+--- PASS: TestCiString50_UnmarshalText (0.00s)
+=== RUN   TestCiString255_IsValid
+--- PASS: TestCiString255_IsValid (0.00s)
+=== RUN   TestCiString255_MarshalText
+--- PASS: TestCiString255_MarshalText (0.00s)
+=== RUN   TestCiString255_UnmarshalText
+--- PASS: TestCiString255_UnmarshalText (0.00s)
+=== RUN   TestCiString500_IsValid
+--- PASS: TestCiString500_IsValid (0.00s)
+=== RUN   TestCiString500_MarshalText
+--- PASS: TestCiString500_MarshalText (0.00s)
+=== RUN   TestCiString500_UnmarshalText
+--- PASS: TestCiString500_UnmarshalText (0.00s)
+=== RUN   TestNewIdToken_Valid
+--- PASS: TestNewIdToken_Valid (0.00s)
+=== RUN   TestNewIdToken_TooLong
+--- PASS: TestNewIdToken_TooLong (0.00s)
+=== RUN   TestIdToken_String_NilReceiver
+--- PASS: TestIdToken_String_NilReceiver (0.00s)
+=== RUN   TestNewMecdssageID_Valid
+--- PASS: TestNewMecdssageID_Valid (0.00s)
+=== RUN   TestNewMessageID_Empty
+--- PASS: TestNewMessageID_Empty (0.00s)
+=== RUN   TestNewMessageID_TooLong
+--- PASS: TestNewMessageID_TooLong (0.00s)
+=== RUN   TestMessageTypeConstants
+--- PASS: TestMessageTypeConstants (0.00s)
+=== RUN   TestMessageType_IsValid_CALL
+--- PASS: TestMessageType_IsValid_CALL (0.00s)
+=== RUN   TestMessageType_IsValid_CALLRESULT
+--- PASS: TestMessageType_IsValid_CALLRESULT (0.00s)
+=== RUN   TestMessageType_IsValid_CALLERROR
+--- PASS: TestMessageType_IsValid_CALLERROR (0.00s)
+=== RUN   TestMessageType_IsValid_InvalidLow
+--- PASS: TestMessageType_IsValid_InvalidLow (0.00s)
+=== RUN   TestMessageType_IsValid_InvalidHigh
+--- PASS: TestMessageType_IsValid_InvalidHigh (0.00s)
+=== RUN   TestFieldError_ErrorOutput
+--- PASS: TestFieldError_ErrorOutput (0.00s)
+=== RUN   TestFieldError_ImplementsErrorInterface
+--- PASS: TestFieldError_ImplementsErrorInterface (0.00s)
+PASS
+ok  	github.com/aasanchez/ocpp16_messages/core/types	(cached)
+=== RUN   TestValidateCallError_Valid
+--- PASS: TestValidateCallError_Valid (0.00s)
+=== RUN   TestValidateCallError_InvalidType
+--- PASS: TestValidateCallError_InvalidType (0.00s)
+=== RUN   TestValidateCallError_MissingFields
+--- PASS: TestValidateCallError_MissingFields (0.00s)
+=== RUN   TestValidateCallError_InvalidJSONDetails
+--- PASS: TestValidateCallError_InvalidJSONDetails (0.00s)
+=== RUN   TestValidateCallError_MissingUniqueID
+--- PASS: TestValidateCallError_MissingUniqueID (0.00s)
+=== RUN   TestValidateCallError_MissingErrorCode
+--- PASS: TestValidateCallError_MissingErrorCode (0.00s)
+=== RUN   TestValidateCallError_MissingErrorDescription
+--- PASS: TestValidateCallError_MissingErrorDescription (0.00s)
+PASS
+ok  	github.com/aasanchez/ocpp16_messages/error	(cached)
+=== RUN   TestErrorCode_IsValid_NotSupported
+--- PASS: TestErrorCode_IsValid_NotSupported (0.00s)
+=== RUN   TestErrorCode_IsValid_InternalError
+--- PASS: TestErrorCode_IsValid_InternalError (0.00s)
+=== RUN   TestErrorCode_IsValid_ProtocolError
+--- PASS: TestErrorCode_IsValid_ProtocolError (0.00s)
+=== RUN   TestErrorCode_IsValid_SecurityError
+--- PASS: TestErrorCode_IsValid_SecurityError (0.00s)
+=== RUN   TestErrorCode_IsValid_FormationViolation
+--- PASS: TestErrorCode_IsValid_FormationViolation (0.00s)
+=== RUN   TestErrorCode_IsValid_PropertyConstraintViolation
+--- PASS: TestErrorCode_IsValid_PropertyConstraintViolation (0.00s)
+=== RUN   TestErrorCode_IsValid_OccurrenceConstraintViolation
+--- PASS: TestErrorCode_IsValid_OccurrenceConstraintViolation (0.00s)
+=== RUN   TestErrorCode_IsValid_TypeConstraintViolation
+--- PASS: TestErrorCode_IsValid_TypeConstraintViolation (0.00s)
+=== RUN   TestErrorCode_IsValid_GenericError
+--- PASS: TestErrorCode_IsValid_GenericError (0.00s)
+=== RUN   TestErrorCode_IsValid_Empty
+--- PASS: TestErrorCode_IsValid_Empty (0.00s)
+=== RUN   TestErrorCode_IsValid_UnknownValue
+--- PASS: TestErrorCode_IsValid_UnknownValue (0.00s)
+=== RUN   TestErrorCode_IsValid_Misspelled
+--- PASS: TestErrorCode_IsValid_Misspelled (0.00s)
+PASS
+ok  	github.com/aasanchez/ocpp16_messages/error/types	(cached)
+FAIL
