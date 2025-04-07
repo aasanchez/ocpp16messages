@@ -13,8 +13,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-
-	"github.com/aasanchez/ocpp16_messages/authorize"
 )
 
 // MessageTypeID values from OCPP 1.6J
@@ -67,14 +65,7 @@ func ParseAndValidate(input []byte) (*ParsedMessage, error) {
 
 		switch action {
 		case "Authorize":
-			var req authorize.AuthorizeReq
-			if err := json.Unmarshal(raw[3], &req); err != nil {
-				return nil, fmt.Errorf("invalid Authorize.req: %w", err)
-			}
-			if err := req.Validate(); err != nil {
-				return nil, fmt.Errorf("Authorize.req validation failed: %w", err)
-			}
-			return &ParsedMessage{MessageType: CALL, UniqueID: uniqueID, Action: action, Payload: req}, nil
+			return nil, fmt.Errorf("no implemented action: %s", action)
 		default:
 			return nil, fmt.Errorf("unsupported action: %s", action)
 		}
@@ -83,15 +74,7 @@ func ParseAndValidate(input []byte) (*ParsedMessage, error) {
 		if len(raw) != 3 {
 			return nil, errors.New("CALLRESULT must have 3 elements")
 		}
-		// For simplicity, assume this is Authorize.conf (should use correlation in real systems)
-		var conf authorize.AuthorizeConf
-		if err := json.Unmarshal(raw[2], &conf); err != nil {
-			return nil, fmt.Errorf("invalid Authorize.conf: %w", err)
-		}
-		if err := conf.Validate(); err != nil {
-			return nil, fmt.Errorf("Authorize.conf validation failed: %w", err)
-		}
-		return &ParsedMessage{MessageType: CALLRESULT, UniqueID: uniqueID, Action: "Authorize", Payload: conf}, nil
+		return &ParsedMessage{MessageType: CALLRESULT, UniqueID: uniqueID, Action: "Unknown", Payload: raw[2]}, nil
 
 	case CALLERROR:
 		if len(raw) != 5 {
