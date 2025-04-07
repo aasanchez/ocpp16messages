@@ -16,31 +16,31 @@ func TestMessageTypeConstants(t *testing.T) {
 	}
 }
 
-func TestMessageType_IsValid_CALL(t *testing.T) {
+func TestMessageTypeIsValidCALL(t *testing.T) {
 	if !CALL.IsValid() {
 		t.Error("CALL should be valid")
 	}
 }
 
-func TestMessageType_IsValid_CALLRESULT(t *testing.T) {
+func TestMessageTypeIsValidCALLRESULT(t *testing.T) {
 	if !CALLRESULT.IsValid() {
 		t.Error("CALLRESULT should be valid")
 	}
 }
 
-func TestMessageType_IsValid_CALLERROR(t *testing.T) {
+func TestMessageTypeIsValidCALLERROR(t *testing.T) {
 	if !CALLERROR.IsValid() {
 		t.Error("CALLERROR should be valid")
 	}
 }
 
-func TestMessageType_IsValid_InvalidLow(t *testing.T) {
+func TestMessageTypeIsValidInvalidLow(t *testing.T) {
 	if MessageType(0).IsValid() {
 		t.Error("0 should be invalid")
 	}
 }
 
-func TestMessageType_IsValid_InvalidHigh(t *testing.T) {
+func TestMessageTypeIsValidInvalidHigh(t *testing.T) {
 	if MessageType(5).IsValid() {
 		t.Error("5 should be invalid")
 	}

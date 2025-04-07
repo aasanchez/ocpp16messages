@@ -24,7 +24,7 @@ func generateStr(length int) string {
 	return sb.String()
 }
 
-func TestCiString20_IsValid(t *testing.T) {
+func TestCiString20IsValid(t *testing.T) {
 	valid := CiString20(generateStr(20)) // Generates a 20-character string
 	if !valid.IsValid() {
 		t.Errorf("Expected string %q to be valid", valid)
@@ -36,7 +36,7 @@ func TestCiString20_IsValid(t *testing.T) {
 	}
 }
 
-func TestCiString20_MarshalText(t *testing.T) {
+func TestCiString20MarshalText(t *testing.T) {
 	string20 := generateStr(20)
 	s := CiString20(string20) // Generates a 20-character string
 	data, err := s.MarshalText()
@@ -54,7 +54,7 @@ func TestCiString20_MarshalText(t *testing.T) {
 	}
 }
 
-func TestCiString20_UnmarshalText(t *testing.T) {
+func TestCiString20UnmarshalText(t *testing.T) {
 	string20 := generateStr(20)
 	var s CiString20
 	err := s.UnmarshalText([]byte(string20)) // Generates a 20-character string
@@ -71,7 +71,7 @@ func TestCiString20_UnmarshalText(t *testing.T) {
 	}
 }
 
-func TestCiString25_IsValid(t *testing.T) {
+func TestCiString25IsValid(t *testing.T) {
 	valid := CiString25(generateStr(25)) // Generates a 25-character string
 	if !valid.IsValid() {
 		t.Errorf("Expected string %q to be valid", valid)
@@ -83,7 +83,7 @@ func TestCiString25_IsValid(t *testing.T) {
 	}
 }
 
-func TestCiString25_MarshalText(t *testing.T) {
+func TestCiString25MarshalText(t *testing.T) {
 	string25 := generateStr(25)
 	s := CiString25(string25) // Generates a 25-character string
 	data, err := s.MarshalText()
@@ -101,7 +101,7 @@ func TestCiString25_MarshalText(t *testing.T) {
 	}
 }
 
-func TestCiString25_UnmarshalText(t *testing.T) {
+func TestCiString25UnmarshalText(t *testing.T) {
 	string25 := generateStr(25)
 	var s CiString25
 	err := s.UnmarshalText([]byte(string25)) // Generates a 25-character string
@@ -118,7 +118,7 @@ func TestCiString25_UnmarshalText(t *testing.T) {
 	}
 }
 
-func TestCiString50_IsValid(t *testing.T) {
+func TestCiString50IsValid(t *testing.T) {
 	valid := CiString50(generateStr(50)) // Generates a 50-character string
 	if !valid.IsValid() {
 		t.Errorf("Expected string %q to be valid", valid)
@@ -130,7 +130,7 @@ func TestCiString50_IsValid(t *testing.T) {
 	}
 }
 
-func TestCiString50_MarshalText(t *testing.T) {
+func TestCiString50MarshalText(t *testing.T) {
 	string50 := generateStr(50)
 	s := CiString50(string50) // Generates a 50-character string
 	data, err := s.MarshalText()
@@ -148,7 +148,7 @@ func TestCiString50_MarshalText(t *testing.T) {
 	}
 }
 
-func TestCiString50_UnmarshalText(t *testing.T) {
+func TestCiString50UnmarshalText(t *testing.T) {
 	string50 := generateStr(50)
 	var s CiString50
 	err := s.UnmarshalText([]byte(string50)) // Generates a 50-character string
@@ -165,7 +165,7 @@ func TestCiString50_UnmarshalText(t *testing.T) {
 	}
 }
 
-func TestCiString255_IsValid(t *testing.T) {
+func TestCiString255IsValid(t *testing.T) {
 	valid := CiString255(generateStr(255)) // Generates a 255-character string
 	if !valid.IsValid() {
 		t.Errorf("Expected string %q to be valid", valid)
@@ -177,7 +177,7 @@ func TestCiString255_IsValid(t *testing.T) {
 	}
 }
 
-func TestCiString255_MarshalText(t *testing.T) {
+func TestCiString255MarshalText(t *testing.T) {
 	string255 := generateStr(255)
 	s := CiString255(string255) // Generates a 255-character string
 	data, err := s.MarshalText()
@@ -195,7 +195,7 @@ func TestCiString255_MarshalText(t *testing.T) {
 	}
 }
 
-func TestCiString255_UnmarshalText(t *testing.T) {
+func TestCiString255UnmarshalText(t *testing.T) {
 	string255 := generateStr(255)
 	var s CiString255
 	err := s.UnmarshalText([]byte(string255)) // Generates a 255-character string
@@ -212,7 +212,7 @@ func TestCiString255_UnmarshalText(t *testing.T) {
 	}
 }
 
-func TestCiString500_IsValid(t *testing.T) {
+func TestCiString500IsValid(t *testing.T) {
 	valid := CiString500(generateStr(500)) // Generates a 500-character string
 	if !valid.IsValid() {
 		t.Errorf("Expected string %q to be valid", valid)
@@ -224,7 +224,7 @@ func TestCiString500_IsValid(t *testing.T) {
 	}
 }
 
-func TestCiString500_MarshalText(t *testing.T) {
+func TestCiString500MarshalText(t *testing.T) {
 	string500 := generateStr(500)
 	s := CiString500(string500) // Generates a 500-character string
 	data, err := s.MarshalText()
@@ -242,7 +242,7 @@ func TestCiString500_MarshalText(t *testing.T) {
 	}
 }
 
-func TestCiString500_UnmarshalText(t *testing.T) {
+func TestCiString500UnmarshalText(t *testing.T) {
 	string500 := generateStr(500)
 	var s CiString500
 	err := s.UnmarshalText([]byte(string500)) // Generates a 500-character string

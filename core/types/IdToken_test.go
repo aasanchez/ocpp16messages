@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestNewIdToken_Valid(t *testing.T) {
+func TestNewIdTokenValid(t *testing.T) {
 	const validIdToken = "valid-id-token"
 
 	idToken, err := NewIdToken(validIdToken)
@@ -16,7 +16,7 @@ func TestNewIdToken_Valid(t *testing.T) {
 	}
 }
 
-func TestNewIdToken_TooLong(t *testing.T) {
+func TestNewIdTokenTooLong(t *testing.T) {
 	longValue := "this-id-tag-is-way-too-long-for-ocpp"
 	_, err := NewIdToken(longValue)
 	if err == nil {
@@ -24,7 +24,7 @@ func TestNewIdToken_TooLong(t *testing.T) {
 	}
 }
 
-func TestIdToken_String_NilReceiver(t *testing.T) {
+func TestIdTokenStringNilReceiver(t *testing.T) {
 	var idToken *IdToken
 	if idToken.String() != "" {
 		t.Errorf("expected empty string from nil receiver, got %q", idToken.String())

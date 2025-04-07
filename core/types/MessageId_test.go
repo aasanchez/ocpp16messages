@@ -2,7 +2,7 @@ package types
 
 import "testing"
 
-func TestNewMecdssageID_Valid(t *testing.T) {
+func TestNewMecdssageIDValid(t *testing.T) {
 	validIDs := []string{
 		"1234567890",
 		"550e8400-e29b-41d4-a716-446655440000", // valid UUID
@@ -20,14 +20,14 @@ func TestNewMecdssageID_Valid(t *testing.T) {
 	}
 }
 
-func TestNewMessageID_Empty(t *testing.T) {
+func TestNewMessageIDEmpty(t *testing.T) {
 	_, err := NewMessageID("")
 	if err == nil {
 		t.Error("expected error for empty MessageID, got nil")
 	}
 }
 
-func TestNewMessageID_TooLong(t *testing.T) {
+func TestNewMessageIDTooLong(t *testing.T) {
 	tooLong := "abcdefghijklmnopqrstuvwxyz01234567890" // 37 chars
 	_, err := NewMessageID(tooLong)
 	if err == nil {

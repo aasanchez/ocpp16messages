@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestFieldError_ErrorOutput(t *testing.T) {
+func TestFieldErrorErrorOutput(t *testing.T) {
 	err := NewFieldError("idTag", "must not be empty")
 	expected := "invalid field 'idTag': must not be empty"
 	if err.Error() != expected {
@@ -12,7 +12,7 @@ func TestFieldError_ErrorOutput(t *testing.T) {
 	}
 }
 
-func TestFieldError_ImplementsErrorInterface(t *testing.T) {
+func TestFieldErrorImplementsErrorInterface(t *testing.T) {
 	err := NewFieldError("status", "invalid value")
 	if err.Error() == "" {
 		t.Fatal("FieldError does not implement the error interface")

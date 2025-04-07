@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestValidateCallError_Valid(t *testing.T) {
+func TestValidateCallErrorValid(t *testing.T) {
 	msg := []any{
 		4,
 		"12345",
@@ -23,7 +23,7 @@ func TestValidateCallError_Valid(t *testing.T) {
 	}
 }
 
-func TestValidateCallError_InvalidType(t *testing.T) {
+func TestValidateCallErrorInvalidType(t *testing.T) {
 	msg := []any{
 		3,
 		"12345",
@@ -38,7 +38,7 @@ func TestValidateCallError_InvalidType(t *testing.T) {
 	}
 }
 
-func TestValidateCallError_MissingFields(t *testing.T) {
+func TestValidateCallErrorMissingFields(t *testing.T) {
 	msg := []any{4, "id", "Error"}
 
 	_, err := ValidateCallError(msg)
@@ -47,7 +47,7 @@ func TestValidateCallError_MissingFields(t *testing.T) {
 	}
 }
 
-func TestValidateCallError_InvalidJSONDetails(t *testing.T) {
+func TestValidateCallErrorInvalidJSONDetails(t *testing.T) {
 	msg := []any{
 		4,
 		"987",
@@ -62,7 +62,7 @@ func TestValidateCallError_InvalidJSONDetails(t *testing.T) {
 	}
 }
 
-func TestValidateCallError_MissingUniqueID(t *testing.T) {
+func TestValidateCallErrorMissingUniqueID(t *testing.T) {
 	msg := []any{4, "", "Code", "Description", map[string]any{}}
 	_, err := ValidateCallError(msg)
 	if err == nil {
@@ -70,7 +70,7 @@ func TestValidateCallError_MissingUniqueID(t *testing.T) {
 	}
 }
 
-func TestValidateCallError_MissingErrorCode(t *testing.T) {
+func TestValidateCallErrorMissingErrorCode(t *testing.T) {
 	msg := []any{4, "id", "", "Description", map[string]any{}}
 	_, err := ValidateCallError(msg)
 	if err == nil {
@@ -78,7 +78,7 @@ func TestValidateCallError_MissingErrorCode(t *testing.T) {
 	}
 }
 
-func TestValidateCallError_MissingErrorDescription(t *testing.T) {
+func TestValidateCallErrorMissingErrorDescription(t *testing.T) {
 	msg := []any{4, "id", "Code", "", map[string]any{}}
 	_, err := ValidateCallError(msg)
 	if err == nil {
