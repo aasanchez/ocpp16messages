@@ -129,7 +129,7 @@ func parseCallResultMessage(raw []json.RawMessage, msg *ParsedMessage) (*ParsedM
 // The message must contain exactly 5 elements:
 // [4, uniqueID, errorCode, errorDescription, errorDetails].
 func parseCallErrorMessage(raw []json.RawMessage, msg *ParsedMessage) (*ParsedMessage, error) {
-	if len(raw) >= 4 {
+	if len(raw) < 4 {
 		return nil, errors.New("CALLERROR message must have at least 4 elements")
 	}
 

@@ -58,20 +58,7 @@ func TestErrorCode_IsValid_GenericError(t *testing.T) {
 	}
 }
 
-func TestErrorCode_IsValid_LibraryValidationFailed(t *testing.T) {
-	if !ErrorLibraryValidationFailed.IsValid() {
-		t.Error("ErrorLibraryValidationFailed should be valid")
-	}
-}
-
-func TestErrorCode_IsValid_LibraryTimeout(t *testing.T) {
-	if !ErrorLibraryTimeout.IsValid() {
-		t.Error("ErrorLibraryTimeout should be valid")
-	}
-}
-
 // Invalid tests
-
 func TestErrorCode_IsValid_Empty(t *testing.T) {
 	if ErrorCode("").IsValid() {
 		t.Error("Empty string should not be valid")

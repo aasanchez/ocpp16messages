@@ -23,8 +23,8 @@ type CallErrorMessage struct {
 func ValidateCallError(msg []any) (*CallErrorMessage, error) {
 	const noEmptyString = "must be a non-empty string"
 
-	if len(msg) != 5 {
-		return nil, types.NewFieldError("CALLERROR", fmt.Sprintf("expected 5 elements, got %d", len(msg)))
+	if len(msg) < 4 {
+		return nil, types.NewFieldError("CALLERROR", fmt.Sprintf("expected at least 4 elements, got %d", len(msg)))
 	}
 
 	// Validate MessageTypeId
