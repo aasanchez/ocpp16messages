@@ -13,10 +13,6 @@ const (
 	ErrorOccurrenceConstraintViolation ErrorCode = "OccurrenceConstraintViolation"
 	ErrorTypeConstraintViolation       ErrorCode = "TypeConstraintViolation"
 	ErrorGenericError                  ErrorCode = "GenericError"
-
-	// You can define library-specific error codes prefixed accordingly
-	ErrorLibraryValidationFailed ErrorCode = "LibraryValidationFailed"
-	ErrorLibraryTimeout          ErrorCode = "LibraryTimeout"
 )
 
 func (e ErrorCode) String() string {
@@ -27,9 +23,7 @@ func (e ErrorCode) IsValid() bool {
 	switch e {
 	case ErrorNotSupported, ErrorInternalError, ErrorProtocolError,
 		ErrorSecurityError, ErrorFormationViolation, ErrorPropertyConstraintViolation,
-		ErrorOccurrenceConstraintViolation, ErrorTypeConstraintViolation,
-		ErrorGenericError,
-		ErrorLibraryValidationFailed, ErrorLibraryTimeout:
+		ErrorOccurrenceConstraintViolation, ErrorTypeConstraintViolation, ErrorGenericError:
 		return true
 	default:
 		return false
