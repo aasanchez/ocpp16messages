@@ -117,4 +117,3 @@ func ParseAndValidate(input []byte) (*ParsedMessage, error) {
 		return nil, fmt.Errorf("unsupported MessageTypeId: %d", messageType)
 	}
 }
-d

@@ -2,7 +2,7 @@ package types
 
 import "testing"
 
-func TestNewMessageID_Valid(t *testing.T) {
+func TestNewMecdssageID_Valid(t *testing.T) {
 	validIDs := []string{
 		"1234567890",
 		"550e8400-e29b-41d4-a716-446655440000", // valid UUID
