@@ -28,9 +28,11 @@ coverage-html: test ## is used to generate the coverage report of the applicatio
 	go tool cover -html=coverage.out -o coverage.html && \
 	go tool cover -func=coverage.out && \
 	echo "Opening coverage report in Chrome..." && \
-	open -a "Google Chrome" coverage.html  # Use 'start chrome' on Windows or 'google-chrome' on Linux
+	open -a "Google Chrome" coverage.html
 
-
+.PHONY: golangci-lint
+golangci-lint:
+	@golangci-lint run ./...
 
 .PHONY: format
 format: ## is used to format the code of the application

@@ -1,0 +1,13 @@
+version: "2"
+linters:
+  default: all
+  settings:
+    varnamelen:
+      min-name-length: 1
+output:
+  formats:
+    text:
+      path: .cilint.txt
+      print-linter-name: true
+      print-issued-lines: true
+      colors: false

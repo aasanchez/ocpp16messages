@@ -24,6 +24,8 @@ README.md           export-ignore
 Makefile            export-ignore
 examples/           export-ignore
 .sonarlint/         export-ignore
+.golangci.yml       export-ignore
+*.text              export-ignore
 
 vendor/**           linguist-vendored
 *.pb.go             linguist-generated
