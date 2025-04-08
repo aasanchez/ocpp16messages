@@ -1,6 +1,5 @@
 package errorTypes
 
-// ErrorCode represents predefined OCPP 1.6J error codes for CALLERROR messages.
 type ErrorCode string
 
 const (
