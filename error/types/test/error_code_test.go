@@ -1,14 +1,14 @@
-package errorTypes_test
+package types_test
 
 import (
 	"testing"
 
-	errorTypes "github.com/aasanchez/ocpp16_messages/error/types"
+	"github.com/aasanchez/ocpp16_messages/error/types"
 )
 
 // Test for the String method
 func TestErrorCode_String_ErrorNotSupported(t *testing.T) {
-	code := errorTypes.ErrorNotSupported
+	code := types.ErrorNotSupported
 	expected := "NotSupported"
 	result := code.String()
 	if result != expected {
@@ -17,7 +17,7 @@ func TestErrorCode_String_ErrorNotSupported(t *testing.T) {
 }
 
 func TestErrorCode_String_ErrorInternalError(t *testing.T) {
-	code := errorTypes.ErrorInternalError
+	code := types.ErrorInternalError
 	expected := "InternalError"
 	result := code.String()
 	if result != expected {
@@ -26,7 +26,7 @@ func TestErrorCode_String_ErrorInternalError(t *testing.T) {
 }
 
 func TestErrorCode_String_ErrorProtocolError(t *testing.T) {
-	code := errorTypes.ErrorProtocolError
+	code := types.ErrorProtocolError
 	expected := "ProtocolError"
 	result := code.String()
 	if result != expected {
@@ -35,7 +35,7 @@ func TestErrorCode_String_ErrorProtocolError(t *testing.T) {
 }
 
 func TestErrorCode_String_ErrorSecurityError(t *testing.T) {
-	code := errorTypes.ErrorSecurityError
+	code := types.ErrorSecurityError
 	expected := "SecurityError"
 	result := code.String()
 	if result != expected {
@@ -44,7 +44,7 @@ func TestErrorCode_String_ErrorSecurityError(t *testing.T) {
 }
 
 func TestErrorCode_String_ErrorFormationViolation(t *testing.T) {
-	code := errorTypes.ErrorFormationViolation
+	code := types.ErrorFormationViolation
 	expected := "FormationViolation"
 	result := code.String()
 	if result != expected {
@@ -53,7 +53,7 @@ func TestErrorCode_String_ErrorFormationViolation(t *testing.T) {
 }
 
 func TestErrorCode_String_ErrorPropertyConstraintViolation(t *testing.T) {
-	code := errorTypes.ErrorPropertyConstraintViolation
+	code := types.ErrorPropertyConstraintViolation
 	expected := "PropertyConstraintViolation"
 	result := code.String()
 	if result != expected {
@@ -62,7 +62,7 @@ func TestErrorCode_String_ErrorPropertyConstraintViolation(t *testing.T) {
 }
 
 func TestErrorCode_String_ErrorOccurrenceConstraintViolation(t *testing.T) {
-	code := errorTypes.ErrorOccurrenceConstraintViolation
+	code := types.ErrorOccurrenceConstraintViolation
 	expected := "OccurrenceConstraintViolation"
 	result := code.String()
 	if result != expected {
@@ -71,7 +71,7 @@ func TestErrorCode_String_ErrorOccurrenceConstraintViolation(t *testing.T) {
 }
 
 func TestErrorCode_String_ErrorTypeConstraintViolation(t *testing.T) {
-	code := errorTypes.ErrorTypeConstraintViolation
+	code := types.ErrorTypeConstraintViolation
 	expected := "TypeConstraintViolation"
 	result := code.String()
 	if result != expected {
@@ -80,7 +80,7 @@ func TestErrorCode_String_ErrorTypeConstraintViolation(t *testing.T) {
 }
 
 func TestErrorCode_String_ErrorGenericError(t *testing.T) {
-	code := errorTypes.ErrorGenericError
+	code := types.ErrorGenericError
 	expected := "GenericError"
 	result := code.String()
 	if result != expected {
@@ -88,9 +88,8 @@ func TestErrorCode_String_ErrorGenericError(t *testing.T) {
 	}
 }
 
-// Test for the IsValid method
 func TestErrorCode_IsValid_ErrorNotSupported(t *testing.T) {
-	code := errorTypes.ErrorNotSupported
+	code := types.ErrorNotSupported
 	expected := true
 	result := code.IsValid()
 	if result != expected {
@@ -99,7 +98,7 @@ func TestErrorCode_IsValid_ErrorNotSupported(t *testing.T) {
 }
 
 func TestErrorCode_IsValid_ErrorInternalError(t *testing.T) {
-	code := errorTypes.ErrorInternalError
+	code := types.ErrorInternalError
 	expected := true
 	result := code.IsValid()
 	if result != expected {
@@ -108,7 +107,7 @@ func TestErrorCode_IsValid_ErrorInternalError(t *testing.T) {
 }
 
 func TestErrorCode_IsValid_ErrorProtocolError(t *testing.T) {
-	code := errorTypes.ErrorProtocolError
+	code := types.ErrorProtocolError
 	expected := true
 	result := code.IsValid()
 	if result != expected {
@@ -117,7 +116,7 @@ func TestErrorCode_IsValid_ErrorProtocolError(t *testing.T) {
 }
 
 func TestErrorCode_IsValid_ErrorSecurityError(t *testing.T) {
-	code := errorTypes.ErrorSecurityError
+	code := types.ErrorSecurityError
 	expected := true
 	result := code.IsValid()
 	if result != expected {
@@ -126,7 +125,7 @@ func TestErrorCode_IsValid_ErrorSecurityError(t *testing.T) {
 }
 
 func TestErrorCode_IsValid_ErrorFormationViolation(t *testing.T) {
-	code := errorTypes.ErrorFormationViolation
+	code := types.ErrorFormationViolation
 	expected := true
 	result := code.IsValid()
 	if result != expected {
@@ -135,7 +134,7 @@ func TestErrorCode_IsValid_ErrorFormationViolation(t *testing.T) {
 }
 
 func TestErrorCode_IsValid_ErrorPropertyConstraintViolation(t *testing.T) {
-	code := errorTypes.ErrorPropertyConstraintViolation
+	code := types.ErrorPropertyConstraintViolation
 	expected := true
 	result := code.IsValid()
 	if result != expected {
@@ -144,7 +143,7 @@ func TestErrorCode_IsValid_ErrorPropertyConstraintViolation(t *testing.T) {
 }
 
 func TestErrorCode_IsValid_ErrorOccurrenceConstraintViolation(t *testing.T) {
-	code := errorTypes.ErrorOccurrenceConstraintViolation
+	code := types.ErrorOccurrenceConstraintViolation
 	expected := true
 	result := code.IsValid()
 	if result != expected {
@@ -153,7 +152,7 @@ func TestErrorCode_IsValid_ErrorOccurrenceConstraintViolation(t *testing.T) {
 }
 
 func TestErrorCode_IsValid_ErrorTypeConstraintViolation(t *testing.T) {
-	code := errorTypes.ErrorTypeConstraintViolation
+	code := types.ErrorTypeConstraintViolation
 	expected := true
 	result := code.IsValid()
 	if result != expected {
@@ -162,7 +161,7 @@ func TestErrorCode_IsValid_ErrorTypeConstraintViolation(t *testing.T) {
 }
 
 func TestErrorCode_IsValid_ErrorGenericError(t *testing.T) {
-	code := errorTypes.ErrorGenericError
+	code := types.ErrorGenericError
 	expected := true
 	result := code.IsValid()
 	if result != expected {
@@ -171,7 +170,7 @@ func TestErrorCode_IsValid_ErrorGenericError(t *testing.T) {
 }
 
 func TestErrorCode_IsValid_InvalidErrorCode(t *testing.T) {
-	code := errorTypes.ErrorCode("InvalidErrorCode")
+	code := types.ErrorCode("InvalidErrorCode")
 	expected := false
 	result := code.IsValid()
 	if result != expected {

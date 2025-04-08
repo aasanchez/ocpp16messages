@@ -1,4 +1,4 @@
-package errorTypes
+package types
 
 type ErrorCode string
 
