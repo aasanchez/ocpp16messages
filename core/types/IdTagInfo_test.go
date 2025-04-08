@@ -1,7 +1,9 @@
-package types
+package types_test
 
 import (
 	"testing"
+
+	"github.com/aasanchez/ocpp16_messages/core/types"
 )
 
 func TestNewIdTagInfo(t *testing.T) {
@@ -9,15 +11,17 @@ func TestNewIdTagInfo(t *testing.T) {
 		name      string
 		value     string
 		expectErr bool
-		expected  *IdToken
+		expected  *types.IdToken
 		errorMsg  string
 	}{
 		{
 			name:      "Valid IdTag",
 			value:     "validIdTag123",
 			expectErr: false,
-			expected:  &IdToken{CiString20("validIdTag123")},
-			errorMsg:  "",
+			expected: &types.IdToken{
+				CiString20: types.CiString20("validIdTag123"),
+			},
+			errorMsg: "",
 		},
 		{
 			name:      "IdTag exceeds 20 characters",
@@ -30,7 +34,7 @@ func TestNewIdTagInfo(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			idTagInfo, err := NewIdTagInfo(tt.value)
+			idTagInfo, err := types.NewIdTagInfo(tt.value)
 			if tt.expectErr {
 				if err == nil {
 					t.Errorf("expected error, got nil")
@@ -51,7 +55,7 @@ func TestNewIdTagInfo(t *testing.T) {
 
 func TestIdTagInfoFields(t *testing.T) {
 	// Valid IdTagInfo instance
-	idTagInfo := IdTagInfo{
+	idTagInfo := types.IdTagInfo{
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
 		Status:      "Active",
@@ -71,7 +75,7 @@ func TestIdTagInfoFields(t *testing.T) {
 	}
 
 	// Check if the struct is properly initialized and non-empty
-	if idTagInfo == (IdTagInfo{}) {
+	if idTagInfo == (types.IdTagInfo{}) {
 		t.Error("expected IdTagInfo to be non-empty")
 	}
 }

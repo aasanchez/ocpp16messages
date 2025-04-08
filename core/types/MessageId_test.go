@@ -1,6 +1,10 @@
-package types
+package types_test
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/aasanchez/ocpp16_messages/core/types"
+)
 
 func TestNewMecdssageIDValid(t *testing.T) {
 	validIDs := []string{
@@ -10,7 +14,7 @@ func TestNewMecdssageIDValid(t *testing.T) {
 		"abcdefghijklmnopqrstuvwxyz0123456789", // 36 chars
 	}
 	for _, id := range validIDs {
-		mid, err := NewMessageID(id)
+		mid, err := types.NewMessageID(id)
 		if err != nil {
 			t.Errorf("expected valid MessageID for input %q, got error: %v", id, err)
 		}
@@ -21,7 +25,7 @@ func TestNewMecdssageIDValid(t *testing.T) {
 }
 
 func TestNewMessageIDEmpty(t *testing.T) {
-	_, err := NewMessageID("")
+	_, err := types.NewMessageID("")
 	if err == nil {
 		t.Error("expected error for empty MessageID, got nil")
 	}
@@ -29,7 +33,7 @@ func TestNewMessageIDEmpty(t *testing.T) {
 
 func TestNewMessageIDTooLong(t *testing.T) {
 	tooLong := "abcdefghijklmnopqrstuvwxyz01234567890" // 37 chars
-	_, err := NewMessageID(tooLong)
+	_, err := types.NewMessageID(tooLong)
 	if err == nil {
 		t.Error("expected error for MessageID longer than 36 characters, got nil")
 	}

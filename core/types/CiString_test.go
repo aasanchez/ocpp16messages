@@ -1,9 +1,11 @@
-package types
+package types_test
 
 import (
 	"crypto/rand"
 	"strings"
 	"testing"
+
+	"github.com/aasanchez/ocpp16_messages/core/types"
 )
 
 const (
@@ -32,12 +34,12 @@ func generateStr(length int) string {
 }
 
 func TestCiString20IsValid(t *testing.T) {
-	valid := CiString20(generateStr(20))
+	valid := types.CiString20(generateStr(20))
 	if !valid.IsValid() {
 		t.Errorf(expectedValidMsg, valid)
 	}
 
-	invalid := CiString20(generateStr(21))
+	invalid := types.CiString20(generateStr(21))
 	if invalid.IsValid() {
 		t.Errorf(expectedInvalidMsg, invalid)
 	}
@@ -45,7 +47,7 @@ func TestCiString20IsValid(t *testing.T) {
 
 func TestCiString20MarshalText(t *testing.T) {
 	string20 := generateStr(20)
-	s := CiString20(string20)
+	s := types.CiString20(string20)
 	data, err := s.MarshalText()
 	if err != nil {
 		t.Fatalf(expectedNoErrorMsg, err)
@@ -54,7 +56,7 @@ func TestCiString20MarshalText(t *testing.T) {
 		t.Errorf(expectedStringMsg, string20, data)
 	}
 
-	s = CiString20(generateStr(21))
+	s = types.CiString20(generateStr(21))
 	_, err = s.MarshalText()
 	if err == nil {
 		t.Error("Expected error for string exceeding 20 characters")
@@ -63,7 +65,7 @@ func TestCiString20MarshalText(t *testing.T) {
 
 func TestCiString20UnmarshalText(t *testing.T) {
 	string20 := generateStr(20)
-	var s CiString20
+	var s types.CiString20
 	err := s.UnmarshalText([]byte(string20))
 	if err != nil {
 		t.Fatalf(expectedNoErrorMsg, err)
@@ -79,12 +81,12 @@ func TestCiString20UnmarshalText(t *testing.T) {
 }
 
 func TestCiString25IsValid(t *testing.T) {
-	valid := CiString25(generateStr(25))
+	valid := types.CiString25(generateStr(25))
 	if !valid.IsValid() {
 		t.Errorf(expectedValidMsg, valid)
 	}
 
-	invalid := CiString25(generateStr(26))
+	invalid := types.CiString25(generateStr(26))
 	if invalid.IsValid() {
 		t.Errorf(expectedInvalidMsg, invalid)
 	}
@@ -92,7 +94,7 @@ func TestCiString25IsValid(t *testing.T) {
 
 func TestCiString25MarshalText(t *testing.T) {
 	string25 := generateStr(25)
-	s := CiString25(string25)
+	s := types.CiString25(string25)
 	data, err := s.MarshalText()
 	if err != nil {
 		t.Fatalf(expectedNoErrorMsg, err)
@@ -101,7 +103,7 @@ func TestCiString25MarshalText(t *testing.T) {
 		t.Errorf(expectedStringMsg, string25, data)
 	}
 
-	s = CiString25(generateStr(26))
+	s = types.CiString25(generateStr(26))
 	_, err = s.MarshalText()
 	if err == nil {
 		t.Error("Expected error for string exceeding 25 characters")
@@ -110,7 +112,7 @@ func TestCiString25MarshalText(t *testing.T) {
 
 func TestCiString25UnmarshalText(t *testing.T) {
 	string25 := generateStr(25)
-	var s CiString25
+	var s types.CiString25
 	err := s.UnmarshalText([]byte(string25))
 	if err != nil {
 		t.Fatalf(expectedNoErrorMsg, err)
@@ -126,12 +128,12 @@ func TestCiString25UnmarshalText(t *testing.T) {
 }
 
 func TestCiString50IsValid(t *testing.T) {
-	valid := CiString50(generateStr(50))
+	valid := types.CiString50(generateStr(50))
 	if !valid.IsValid() {
 		t.Errorf(expectedValidMsg, valid)
 	}
 
-	invalid := CiString50(generateStr(51))
+	invalid := types.CiString50(generateStr(51))
 	if invalid.IsValid() {
 		t.Errorf(expectedInvalidMsg, invalid)
 	}
@@ -139,7 +141,7 @@ func TestCiString50IsValid(t *testing.T) {
 
 func TestCiString50MarshalText(t *testing.T) {
 	string50 := generateStr(50)
-	s := CiString50(string50)
+	s := types.CiString50(string50)
 	data, err := s.MarshalText()
 	if err != nil {
 		t.Fatalf(expectedNoErrorMsg, err)
@@ -148,7 +150,7 @@ func TestCiString50MarshalText(t *testing.T) {
 		t.Errorf(expectedStringMsg, string50, data)
 	}
 
-	s = CiString50(generateStr(51))
+	s = types.CiString50(generateStr(51))
 	_, err = s.MarshalText()
 	if err == nil {
 		t.Error("Expected error for string exceeding 50 characters")
@@ -157,7 +159,7 @@ func TestCiString50MarshalText(t *testing.T) {
 
 func TestCiString50UnmarshalText(t *testing.T) {
 	string50 := generateStr(50)
-	var s CiString50
+	var s types.CiString50
 	err := s.UnmarshalText([]byte(string50))
 	if err != nil {
 		t.Fatalf(expectedNoErrorMsg, err)
@@ -173,12 +175,12 @@ func TestCiString50UnmarshalText(t *testing.T) {
 }
 
 func TestCiString255IsValid(t *testing.T) {
-	valid := CiString255(generateStr(255))
+	valid := types.CiString255(generateStr(255))
 	if !valid.IsValid() {
 		t.Errorf(expectedValidMsg, valid)
 	}
 
-	invalid := CiString255(generateStr(256))
+	invalid := types.CiString255(generateStr(256))
 	if invalid.IsValid() {
 		t.Errorf(expectedInvalidMsg, invalid)
 	}
@@ -186,7 +188,7 @@ func TestCiString255IsValid(t *testing.T) {
 
 func TestCiString255MarshalText(t *testing.T) {
 	string255 := generateStr(255)
-	s := CiString255(string255)
+	s := types.CiString255(string255)
 	data, err := s.MarshalText()
 	if err != nil {
 		t.Fatalf(expectedNoErrorMsg, err)
@@ -195,7 +197,7 @@ func TestCiString255MarshalText(t *testing.T) {
 		t.Errorf(expectedStringMsg, string255, data)
 	}
 
-	s = CiString255(generateStr(256))
+	s = types.CiString255(generateStr(256))
 	_, err = s.MarshalText()
 	if err == nil {
 		t.Error("Expected error for string exceeding 255 characters")
@@ -204,7 +206,7 @@ func TestCiString255MarshalText(t *testing.T) {
 
 func TestCiString255UnmarshalText(t *testing.T) {
 	string255 := generateStr(255)
-	var s CiString255
+	var s types.CiString255
 	err := s.UnmarshalText([]byte(string255))
 	if err != nil {
 		t.Fatalf(expectedNoErrorMsg, err)
@@ -220,12 +222,12 @@ func TestCiString255UnmarshalText(t *testing.T) {
 }
 
 func TestCiString500IsValid(t *testing.T) {
-	valid := CiString500(generateStr(500))
+	valid := types.CiString500(generateStr(500))
 	if !valid.IsValid() {
 		t.Errorf(expectedValidMsg, valid)
 	}
 
-	invalid := CiString500(generateStr(501))
+	invalid := types.CiString500(generateStr(501))
 	if invalid.IsValid() {
 		t.Errorf(expectedInvalidMsg, invalid)
 	}
@@ -233,7 +235,7 @@ func TestCiString500IsValid(t *testing.T) {
 
 func TestCiString500MarshalText(t *testing.T) {
 	string500 := generateStr(500)
-	s := CiString500(string500)
+	s := types.CiString500(string500)
 	data, err := s.MarshalText()
 	if err != nil {
 		t.Fatalf(expectedNoErrorMsg, err)
@@ -242,7 +244,7 @@ func TestCiString500MarshalText(t *testing.T) {
 		t.Errorf(expectedStringMsg, string500, data)
 	}
 
-	s = CiString500(generateStr(501))
+	s = types.CiString500(generateStr(501))
 	_, err = s.MarshalText()
 	if err == nil {
 		t.Error("Expected error for string exceeding 500 characters")
@@ -251,7 +253,7 @@ func TestCiString500MarshalText(t *testing.T) {
 
 func TestCiString500UnmarshalText(t *testing.T) {
 	string500 := generateStr(500)
-	var s CiString500
+	var s types.CiString500
 	err := s.UnmarshalText([]byte(string500))
 	if err != nil {
 		t.Fatalf(expectedNoErrorMsg, err)

@@ -1,10 +1,12 @@
-package plugin
+package plugin_test
 
 import (
 	"encoding/json"
 	"errors"
 	"reflect"
 	"testing"
+
+	"github.com/aasanchez/ocpp16_messages/core/plugin"
 )
 
 type mockValidator struct {
@@ -23,9 +25,9 @@ func (m *mockValidator) ValidateMessage(payload json.RawMessage) (any, error) {
 func TestRegisterAndGetValidator(t *testing.T) {
 	action := "TestAction"
 	validator := &mockValidator{}
-	RegisterValidator(action, validator)
+	plugin.RegisterValidator(action, validator)
 
-	retrieved, ok := GetValidator(action)
+	retrieved, ok := plugin.GetValidator(action)
 	if !ok {
 		t.Fatalf("expected validator to be registered for action %s", action)
 	}
@@ -36,10 +38,10 @@ func TestRegisterAndGetValidator(t *testing.T) {
 
 func TestValidateRawJSONSuccess(t *testing.T) {
 	action := "SuccessAction"
-	RegisterValidator(action, &mockValidator{})
+	plugin.RegisterValidator(action, &mockValidator{})
 
 	payload := json.RawMessage(`{"foo":"bar"}`)
-	result, err := ValidateRawJSON(action, payload)
+	result, err := plugin.ValidateRawJSON(action, payload)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -55,10 +57,10 @@ func TestValidateRawJSONSuccess(t *testing.T) {
 
 func TestValidateRawJSONValidatorError(t *testing.T) {
 	action := "FailAction"
-	RegisterValidator(action, &mockValidator{shouldFail: true})
+	plugin.RegisterValidator(action, &mockValidator{shouldFail: true})
 
 	payload := json.RawMessage(`{"foo":"bar"}`)
-	result, err := ValidateRawJSON(action, payload)
+	result, err := plugin.ValidateRawJSON(action, payload)
 	if err == nil {
 		t.Fatal("expected error from validator, got nil")
 	}
@@ -71,7 +73,7 @@ func TestValidateRawJSONNoValidator(t *testing.T) {
 	action := "UnknownAction"
 	payload := json.RawMessage(`{"test":123}`)
 
-	result, err := ValidateRawJSON(action, payload)
+	result, err := plugin.ValidateRawJSON(action, payload)
 	if err == nil {
 		t.Fatal("expected error due to missing validator")
 	}
@@ -94,22 +96,22 @@ func TestPreAndPostValidationHooks(t *testing.T) {
 		action          = "HookedAction"
 	)
 
-	SetPreValidationHook(func(action string, payload json.RawMessage) {
+	plugin.SetPreValidationHook(func(action string, payload json.RawMessage) {
 		preCalled = true
 		preAction = action
 		capturedPayload = payload
 	})
 
-	SetPostValidationHook(func(action string, result any, err error) {
+	plugin.SetPostValidationHook(func(action string, result any, err error) {
 		postCalled = true
 		postAction = action
 		capturedResult = result
 		capturedError = err
 	})
 
-	RegisterValidator(action, &mockValidator{})
+	plugin.RegisterValidator(action, &mockValidator{})
 
-	result, err := ValidateRawJSON(action, expectedPayload)
+	result, err := plugin.ValidateRawJSON(action, expectedPayload)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -133,14 +135,14 @@ func TestPreAndPostValidationHooks(t *testing.T) {
 
 func TestPostHookOnValidationFailure(t *testing.T) {
 	called := false
-	SetPostValidationHook(func(action string, result any, err error) {
+	plugin.SetPostValidationHook(func(action string, result any, err error) {
 		if err != nil && action == "PostFailAction" {
 			called = true
 		}
 	})
 
-	RegisterValidator("PostFailAction", &mockValidator{shouldFail: true})
-	_, _ = ValidateRawJSON("PostFailAction", json.RawMessage(`{"x":1}`))
+	plugin.RegisterValidator("PostFailAction", &mockValidator{shouldFail: true})
+	_, _ = plugin.ValidateRawJSON("PostFailAction", json.RawMessage(`{"x":1}`))
 
 	if !called {
 		t.Errorf("expected post-validation hook to be called on failure")
@@ -149,13 +151,13 @@ func TestPostHookOnValidationFailure(t *testing.T) {
 
 func TestPostHookOnMissingValidator(t *testing.T) {
 	called := false
-	SetPostValidationHook(func(action string, result any, err error) {
+	plugin.SetPostValidationHook(func(action string, result any, err error) {
 		if err != nil && action == "MissingAction" {
 			called = true
 		}
 	})
 
-	_, _ = ValidateRawJSON("MissingAction", json.RawMessage(`{}`))
+	_, _ = plugin.ValidateRawJSON("MissingAction", json.RawMessage(`{}`))
 
 	if !called {
 		t.Errorf("expected post-validation hook to be called on missing validator")

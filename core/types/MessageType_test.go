@@ -1,47 +1,49 @@
-package types
+package types_test
 
 import (
 	"testing"
+
+	"github.com/aasanchez/ocpp16_messages/core/types"
 )
 
 func TestMessageTypeConstants(t *testing.T) {
-	if CALL != 2 {
-		t.Errorf("Expected CALL to be 2, got %d", CALL)
+	if types.CALL != 2 {
+		t.Errorf("Expected CALL to be 2, got %d", types.CALL)
 	}
-	if CALLRESULT != 3 {
-		t.Errorf("Expected CALLRESULT to be 3, got %d", CALLRESULT)
+	if types.CALLRESULT != 3 {
+		t.Errorf("Expected CALLRESULT to be 3, got %d", types.CALLRESULT)
 	}
-	if CALLERROR != 4 {
-		t.Errorf("Expected CALLERROR to be 4, got %d", CALLERROR)
+	if types.CALLERROR != 4 {
+		t.Errorf("Expected CALLERROR to be 4, got %d", types.CALLERROR)
 	}
 }
 
 func TestMessageTypeIsValidCALL(t *testing.T) {
-	if !CALL.IsValid() {
+	if !types.CALL.IsValid() {
 		t.Error("CALL should be valid")
 	}
 }
 
 func TestMessageTypeIsValidCALLRESULT(t *testing.T) {
-	if !CALLRESULT.IsValid() {
+	if !types.CALLRESULT.IsValid() {
 		t.Error("CALLRESULT should be valid")
 	}
 }
 
 func TestMessageTypeIsValidCALLERROR(t *testing.T) {
-	if !CALLERROR.IsValid() {
+	if !types.CALLERROR.IsValid() {
 		t.Error("CALLERROR should be valid")
 	}
 }
 
 func TestMessageTypeIsValidInvalidLow(t *testing.T) {
-	if MessageType(0).IsValid() {
+	if types.MessageType(0).IsValid() {
 		t.Error("0 should be invalid")
 	}
 }
 
 func TestMessageTypeIsValidInvalidHigh(t *testing.T) {
-	if MessageType(5).IsValid() {
+	if types.MessageType(5).IsValid() {
 		t.Error("5 should be invalid")
 	}
 }
