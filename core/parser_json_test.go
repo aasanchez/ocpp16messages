@@ -11,7 +11,7 @@ func TestParseJsonMessageValidCALL(t *testing.T) {
 	raw := []byte(`[2, "12345", "Authorize", {"idTag": "ABC123"}]`)
 	msg, err := ParseJsonMessage(raw)
 	if err != nil {
-		t.Fatalf(errUnexpected, err) // Directly pass the formatted error
+		t.Fatalf(errUnexpected, err)
 	}
 	if msg.TypeID != types.CALL {
 		t.Errorf("expected TypeID CALL, got %v", msg.TypeID)
@@ -31,7 +31,7 @@ func TestParseJsonMessageValidCALLRESULT(t *testing.T) {
 	raw := []byte(`[3, "67890", {"status": "Accepted"}]`)
 	msg, err := ParseJsonMessage(raw)
 	if err != nil {
-		t.Fatalf(errUnexpected, err) // Directly pass the formatted error
+		t.Fatalf(errUnexpected, err)
 	}
 	if msg.TypeID != types.CALLRESULT {
 		t.Errorf("expected TypeID CALLRESULT, got %v", msg.TypeID)
@@ -48,7 +48,7 @@ func TestParseJsonMessageValidCALLERROR(t *testing.T) {
 	raw := []byte(`[4, "99999", "InternalError", "Something went wrong", {"reason": "crash"}]`)
 	msg, err := ParseJsonMessage(raw)
 	if err != nil {
-		t.Fatalf(errUnexpected, err) // Directly pass the formatted error
+		t.Fatalf(errUnexpected, err)
 	}
 	if msg.TypeID != types.CALLERROR {
 		t.Errorf("expected TypeID CALLERROR, got %v", msg.TypeID)
@@ -182,7 +182,6 @@ func TestParseJsonUnsupportedMessageType(t *testing.T) {
 	}
 }
 
-// jsonEqual compares two JSON-encoded values semantically.
 func jsonEqual(a json.RawMessage, b string) bool {
 	var objA, objB any
 	_ = json.Unmarshal(a, &objA)

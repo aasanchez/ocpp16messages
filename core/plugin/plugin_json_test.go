@@ -7,7 +7,6 @@ import (
 	"testing"
 )
 
-// mockValidator is a basic implementation of MessageValidator for testing.
 type mockValidator struct {
 	shouldFail bool
 }

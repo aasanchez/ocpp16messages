@@ -4,13 +4,10 @@ import (
 	"fmt"
 )
 
-// CiString is the interface that all CiString types implement.
 type CiString interface {
 	IsValid() bool
 	String() string
 }
-
-// ===== Helpers =====
 
 func validateLength(fieldName string, value string, maxLen int) error {
 	if len(value) > maxLen {
@@ -34,8 +31,6 @@ func unmarshalCiString(fieldName string, data []byte, maxLen int) (string, error
 	return value, nil
 }
 
-// ===== CiString20 =====
-
 type CiString20 string
 
 func (s CiString20) IsValid() bool  { return len(s) <= 20 }
@@ -51,8 +46,6 @@ func (s *CiString20) UnmarshalText(data []byte) error {
 	*s = CiString20(str)
 	return nil
 }
-
-// ===== CiString25 =====
 
 type CiString25 string
 
@@ -70,8 +63,6 @@ func (s *CiString25) UnmarshalText(data []byte) error {
 	return nil
 }
 
-// ===== CiString50 =====
-
 type CiString50 string
 
 func (s CiString50) IsValid() bool  { return len(s) <= 50 }
@@ -88,8 +79,6 @@ func (s *CiString50) UnmarshalText(data []byte) error {
 	return nil
 }
 
-// ===== CiString255 =====
-
 type CiString255 string
 
 func (s CiString255) IsValid() bool  { return len(s) <= 255 }
@@ -105,8 +94,6 @@ func (s *CiString255) UnmarshalText(data []byte) error {
 	*s = CiString255(str)
 	return nil
 }
-
-// ===== CiString500 =====
 
 type CiString500 string
 
