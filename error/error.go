@@ -8,7 +8,6 @@ import (
 	errorType "github.com/aasanchez/ocpp16_messages/error/types"
 )
 
-// CallErrorMessage represents an OCPP CALLERROR message [4, uniqueId, errorCode, errorDescription, errorDetails].
 type CallErrorMessage struct {
 	MessageTypeId    types.MessageType
 	UniqueID         string
@@ -17,9 +16,6 @@ type CallErrorMessage struct {
 	ErrorDetails     json.RawMessage
 }
 
-// ValidateCallError validates the structure of a CALLERROR message.
-// This function expects the message to be already unmarshaled into a []any,
-// typically from a JSON array like: [4, "uniqueId", "errorCode", "description", {}]
 func ValidateCallError(msg []any) (*CallErrorMessage, error) {
 	const noEmptyString = "must be a non-empty string"
 
@@ -27,7 +23,6 @@ func ValidateCallError(msg []any) (*CallErrorMessage, error) {
 		return nil, types.NewFieldError("CALLERROR", fmt.Sprintf("expected at least 4 elements, got %d", len(msg)))
 	}
 
-	// Validate MessageTypeId
 	messageTypeVal, ok := msg[0].(int)
 	if !ok {
 		return nil, types.NewFieldError("MessageTypeId", "must be an integer")
