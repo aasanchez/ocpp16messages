@@ -19,7 +19,7 @@
 // Recommended Workflow:
 //
 //  1. Use ParseAndValidate to decode an incoming JSON OCPP message.
-//  2. Examine the returned ParsedMessage, including its MessageType, UniqueID, and Payload.
+//  2. Examine the returned Message, including its MessageType, UniqueID, and Payload.
 //  3. If message validation is required, register a plugin or handle the action externally.
 package ocpp16_messages
 
@@ -43,7 +43,7 @@ const (
 	CALLERROR  = 4
 )
 
-// ParsedMessage represents a fully decoded and partially interpreted OCPP message.
+// Message represents a fully decoded and partially interpreted OCPP message.
 //
 // This structure is used as a common representation of CALL, CALLRESULT, and CALLERROR messages,
 // after being decoded from their JSON array structure.
@@ -53,7 +53,7 @@ const (
 //   - UniqueID: the correlation ID used to match requests and responses
 //   - Action: for CALL and CALLERROR types, this indicates the operation (e.g., "Authorize")
 //   - Payload: the message body or payload, unmarshaled as-is for further processing
-type ParsedMessage struct {
+type Message struct {
 	MessageType int
 	UniqueID    string
 	Action      string
@@ -66,7 +66,7 @@ func unmarshalField(raw json.RawMessage, v any) error {
 }
 
 // helper function to validate and process CALL messages
-func processCall(raw []json.RawMessage, uniqueID string) (*ParsedMessage, error) {
+func processCall(raw []json.RawMessage, uniqueID string) (*Message, error) {
 	if len(raw) != 4 {
 		return nil, errors.New("CALL message must have 4 elements")
 	}
@@ -86,15 +86,15 @@ func processCall(raw []json.RawMessage, uniqueID string) (*ParsedMessage, error)
 }
 
 // helper function to process CALLRESULT
-func processCallResult(raw []json.RawMessage, uniqueID string) (*ParsedMessage, error) {
+func processCallResult(raw []json.RawMessage, uniqueID string) (*Message, error) {
 	if len(raw) != 3 {
 		return nil, errors.New("CALLRESULT must have 3 elements")
 	}
-	return &ParsedMessage{MessageType: CALLRESULT, UniqueID: uniqueID, Action: "Unknown", Payload: raw[2]}, nil
+	return &Message{MessageType: CALLRESULT, UniqueID: uniqueID, Action: "Unknown", Payload: raw[2]}, nil
 }
 
 // helper function to process CALLERROR
-func processCallError(raw []json.RawMessage, uniqueID string) (*ParsedMessage, error) {
+func processCallError(raw []json.RawMessage, uniqueID string) (*Message, error) {
 	if len(raw) != 5 {
 		return nil, errors.New("CALLERROR must have 5 elements")
 	}
@@ -114,12 +114,12 @@ func processCallError(raw []json.RawMessage, uniqueID string) (*ParsedMessage, e
 		"errorCode":        errorCode,
 		"errorDescription": errorDescription,
 	}
-	return &ParsedMessage{MessageType: CALLERROR, UniqueID: uniqueID, Action: action, Payload: payload}, nil
+	return &Message{MessageType: CALLERROR, UniqueID: uniqueID, Action: action, Payload: payload}, nil
 }
 
 // ParseAndValidate parses an incoming OCPP 1.6J JSON message array,
 // determines the message type, and validates its structure.
-func ParseAndValidate(input []byte) (*ParsedMessage, error) {
+func ParseAndValidate(input []byte) (*Message, error) {
 	var raw []json.RawMessage
 	if err := json.Unmarshal(input, &raw); err != nil {
 		return nil, fmt.Errorf("invalid JSON array: %w", err)
