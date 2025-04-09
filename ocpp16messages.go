@@ -25,13 +25,16 @@ func unmarshalField(raw json.RawMessage, v any) error {
 
 func processCall(raw []json.RawMessage, uniqueID string) (*Message, error) {
 	if len(raw) != 4 {
-		return nil, errors.New("CALL message must have 4 elements")
+		return nil, errors.New("CALL message must have 4f elements")
 	}
 
 	var action string
 	if err := unmarshalField(raw[2], &action); err != nil {
 		return nil, fmt.Errorf("invalid action field: %w", err)
 	}
+
+	// Example usage of uniqueID
+	fmt.Printf("Processing CALL for UniqueID: %s\n", uniqueID)
 
 	switch action {
 	case "Authorize":
