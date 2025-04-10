@@ -4,6 +4,7 @@ linters:
   disable:
     - testpackage
     - gosmopolitan
+    - godot
   settings:
     depguard:
       rules:

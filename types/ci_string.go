@@ -1,6 +1,14 @@
-// Package types contain shared Open Charge Point Protocol (OCPP) 1.6J data structures used across both request and
-// response messages. It includes reusable types that enforce constraints such as maximum string length and printable
-// ASCII encoding.
+// Package types contains shared Open Charge Point Protocol (OCPP) 1.6J data structures
+// used across both request and response messages.
+//
+// This package provides strongly typed wrappers for commonly reused values with built-in
+// validation logic to enforce constraints defined in the OCPP 1.6J specification.
+// It ensures that strings conform to maximum length limits and consist exclusively of
+// printable ASCII characters. These constraints are essential for reliable communication
+// between EV charge points and Central Systems.
+//
+// The provided types serve as reusable building blocks for building OCPP-compliant
+// charging station implementations, simulators, proxies, and testing frameworks.
 package types
 
 import (
@@ -8,7 +16,8 @@ import (
 	"fmt"
 )
 
-// Constants defining the maximum allowed lengths for different CiString types.
+// Constants defining the maximum allowed lengths for different CiString variants.
+// These values are derived directly from the OCPP 1.6J specification.
 const (
 	maxLenCiString20  = 20
 	maxLenCiString25  = 25
@@ -17,23 +26,37 @@ const (
 	maxLenCiString500 = 500
 )
 
-// Predefined errors were returned during the validation of CiString values.
+// Predefined errors returned during validation of CiString values.
 var (
-	ErrExceedsMaxLength     = errors.New("value exceeds maximum allowed length")
-	ErrNonPrintableASCII    = errors.New("value contains non-printable ASCII characters")
-	ErrEmptyValueNotAllowed = errors.New("value must not be empty") // ✅ NEW static error
+	// ErrExceedsMaxLength indicates that a value exceeded the maximum allowed length
+	// for its CiString type.
+	ErrExceedsMaxLength = errors.New("value exceeds maximum allowed length")
 
+	// ErrNonPrintableASCII indicates that a value contains characters outside
+	// the printable ASCII range (decimal 32–126 inclusive).
+	ErrNonPrintableASCII = errors.New("value contains non-printable ASCII characters")
+
+	// ErrEmptyValueNotAllowed indicates that a CiString value was expected but
+	// found to be empty.
+	ErrEmptyValueNotAllowed = errors.New("value must not be empty")
 )
 
-// ciString is an internal representation of a case-insensitive string constrained by a maximum length and limited to
-// printable ASCII characters. It is not exported and is used internally by all CiStringXXType types.
+// ciString is an internal utility type representing a case-insensitive string
+// with a maximum length and a constraint to only use printable ASCII characters.
+//
+// This type is not exported and is used to implement all public CiStringXXType types.
+// It encapsulates the common validation logic used across all length-restricted strings
+// in OCPP 1.6J.
 type ciString struct {
 	Value  string
 	MaxLen int
 }
 
-// CiString creates a new ciString instance with the specified value and maximum length. It returns an error if the
-// value exceeds the max length or contains non-printable characters.
+// CiString creates and validates a new ciString instance.
+// It returns an error if the value exceeds the configured maximum length
+// or includes non-printable ASCII characters.
+//
+// Printable ASCII characters are in the inclusive range [32, 126].
 func CiString(value string, maxLen int) (ciString, error) {
 	cs := ciString{Value: value, MaxLen: maxLen}
 	if err := cs.validate(); err != nil {
@@ -43,14 +66,17 @@ func CiString(value string, maxLen int) (ciString, error) {
 	return cs, nil
 }
 
-// validate checks that the ciString value:
-//   - Does not exceed the specified maximum length.
-//   - Contains only printable ASCII characters (decimal 32 to 126).
+// validate performs internal validation of a ciString instance.
 //
-// Returns a wrapped static error in case of validation failure.
+// It ensures that:
+//   - The string is not empty.
+//   - The string does not exceed the maximum length.
+//   - All characters are printable ASCII.
+//
+// If validation fails, a wrapped error is returned to indicate the specific failure.
 func (cs ciString) validate() error {
 	if len(cs.Value) == 0 {
-		return ErrEmptyValueNotAllowed // ✅ now using a static error
+		return ErrEmptyValueNotAllowed
 	}
 
 	if len(cs.Value) > cs.MaxLen {
@@ -66,120 +92,122 @@ func (cs ciString) validate() error {
 	return nil
 }
 
-// String returns the underlying string value held in the ciString.
-func (cs ciString) String() string { return cs.Value }
+// String returns the string representation of the ciString.
+func (cs ciString) String() string {
+	return cs.Value
+}
 
-/*
-CiString20Type
-
-Generic used case insensitive string of 20 characters.
-FIELD TYPE: CiString[20]
-DESCRIPTION: String is case insensitive.
-*/
+// CiString20Type is a case-insensitive string with a maximum length of 20 characters,
+// consisting only of printable ASCII characters.
+//
+// It is used in OCPP 1.6J messages where a CiString[20] type is expected.
 type CiString20Type struct{ inner ciString }
 
-// CiString20 creates a new instance of CiString20Type, validating that the provided value does not exceed
-// 20 charactersand contains only printable ASCII characters. It returns a validated CiString20Type or an error if the
-// constraints are violated.
+// CiString20 returns a validated CiString20Type.
+//
+// Returns an error if the input exceeds 20 characters or contains invalid characters.
 func CiString20(value string) (CiString20Type, error) {
 	cs, err := CiString(value, maxLenCiString20)
 
 	return CiString20Type{cs}, err
 }
 
-// String returns the string value of the CiString20Type instance.
-func (c CiString20Type) String() string { return c.inner.String() }
+// String returns the string value of the CiString20Type.
+func (c CiString20Type) String() string {
+	return c.inner.String()
+}
 
-// Validate runs the internal validation logic on the CiString20Type instance. It ensures that the stored value still
-// conforms to the OCPP 1.6J constraints.
-func (c CiString20Type) Validate() error { return c.inner.validate() }
+// Validate re-validates the internal value of CiString20Type.
+func (c CiString20Type) Validate() error {
+	return c.inner.validate()
+}
 
-// CiString25Type
-
-// CiString25Type is an OCPP 1.6J data type representing a case-insensitive string limited to a maximum of 25 printable
-// ASCII characters. This type is commonly used for identifiers such as `idTag` in OCPP messages like Authorize.req.
+// CiString25Type is a case-insensitive string with a maximum length of 25 characters,
+// used frequently for idTags in messages like Authorize.req.
+//
+// This type enforces OCPP 1.6J constraints to ensure robust message validation.
 type CiString25Type struct{ inner ciString }
 
-// CiString25 creates a new instance of CiString25Type, validating that the provided value does not exceed
-// 25 charactersand contains only printable ASCII characters. It returns a validated CiString25Type or an error if the
-// constraints are violated.
+// CiString25 returns a validated CiString25Type instance.
 func CiString25(value string) (CiString25Type, error) {
 	cs, err := CiString(value, maxLenCiString25)
 
 	return CiString25Type{cs}, err
 }
 
-// String returns the string value of the CiString25Type instance.
-func (c CiString25Type) String() string { return c.inner.String() }
+// String returns the string value of the CiString25Type.
+func (c CiString25Type) String() string {
+	return c.inner.String()
+}
 
-// Validate runs the internal validation logic on the CiString25Type instance. It ensures that the stored value still
-// conforms to the OCPP 1.6J constraints.
-func (c CiString25Type) Validate() error { return c.inner.validate() }
+// Validate ensures the CiString25Type value remains within spec.
+func (c CiString25Type) Validate() error {
+	return c.inner.validate()
+}
 
-// CiString50Type
-
-// CiString50Type is an OCPP 1.6J data type representing a case-insensitive string limited to a maximum of 50 printable
-// ASCII characters. This type is commonly used for identifiers such as `idTag` in OCPP messages like Authorize.req.
+// CiString50Type is a case-insensitive string with a maximum length of 50 characters,
+// used in OCPP fields requiring slightly longer descriptive strings.
 type CiString50Type struct{ inner ciString }
 
-// CiString50 creates a new instance of CiString50Type, validating that the provided value does not exceed
-// 50 charactersand contains only printable ASCII characters. It returns a validated CiString50Type or an error if the
-// constraints are violated.
+// CiString50 returns a validated CiString50Type instance.
 func CiString50(value string) (CiString50Type, error) {
 	cs, err := CiString(value, maxLenCiString50)
 
 	return CiString50Type{cs}, err
 }
 
-// String returns the string value of the CiString50Type instance.
-func (c CiString50Type) String() string { return c.inner.String() }
+// String returns the string value of the CiString50Type.
+func (c CiString50Type) String() string {
+	return c.inner.String()
+}
 
-// Validate runs the internal validation logic on the CiString50Type instance. It ensures that the stored value still
-// conforms to the OCPP 1.6J constraints.
-func (c CiString50Type) Validate() error { return c.inner.validate() }
+// Validate ensures the CiString50Type value remains valid.
+func (c CiString50Type) Validate() error {
+	return c.inner.validate()
+}
 
-// CiString255Type
-
-// CiString255Type is an OCPP 1.6J data type representing a case-insensitive string limited to a maximum of 255
-// printable ASCII characters. This type is commonly used for identifiers such as `idTag` in OCPP messages like
-// Authorize.req.
+// CiString255Type is a case-insensitive string with a maximum length of 255 characters.
+//
+// It supports medium-sized string fields such as vendor identifiers or descriptions
+// within OCPP messages.
 type CiString255Type struct{ inner ciString }
 
-// CiString255 creates a new instance of CiString255Type, validating that the provided value does not exceed
-// 255 charactersand contains only printable ASCII characters. It returns a validated CiString255Type or an error if the
-// constraints are violated.
+// CiString255 returns a validated CiString255Type instance.
 func CiString255(value string) (CiString255Type, error) {
 	cs, err := CiString(value, maxLenCiString255)
 
 	return CiString255Type{cs}, err
 }
 
-// String returns the string value of the CiString255Type instance.
-func (c CiString255Type) String() string { return c.inner.String() }
+// String returns the string value of the CiString255Type.
+func (c CiString255Type) String() string {
+	return c.inner.String()
+}
 
-// Validate runs the internal validation logic on the CiString255Type instance. It ensures that the stored value still
-// conforms to the OCPP 1.6J constraints.
-func (c CiString255Type) Validate() error { return c.inner.validate() }
+// Validate ensures the CiString255Type value remains valid.
+func (c CiString255Type) Validate() error {
+	return c.inner.validate()
+}
 
-// CiString500Type
-
-// CiString500Type is an OCPP 1.6J data type representing a case-insensitive string limited to a maximum of 500
-// printable ASCII characters. This type is commonly used for identifiers such as `idTag` in OCPP messages like
-// Authorize.req.
+// CiString500Type is a case-insensitive string with a maximum length of 500 characters.
+//
+// It is suitable for longer free-text fields or extended metadata values allowed by the
+// OCPP 1.6J schema.
 type CiString500Type struct{ inner ciString }
 
-// CiString500 creates a new instance of CiString500Type, validating that the provided value does not exceed
-// 500 charactersand contains only printable ASCII characters. It returns a validated CiString500Type or an error if the
-// constraints are violated.
+// CiString500 returns a validated CiString500Type instance.
 func CiString500(value string) (CiString500Type, error) {
 	cs, err := CiString(value, maxLenCiString500)
 
 	return CiString500Type{cs}, err
 }
 
-// String returns the string value of the CiString500Type instance.
-func (c CiString500Type) String() string { return c.inner.String() }
+// String returns the string value of the CiString500Type.
+func (c CiString500Type) String() string {
+	return c.inner.String()
+}
 
-// Validate runs the internal validation logic on the CiString500Type instance. It ensures that the stored value still
-// conforms to the OCPP 1.6J constraints.
-func (c CiString500Type) Validate() error { return c.inner.validate() }
+// Validate ensures the CiString500Type value remains within spec.
+func (c CiString500Type) Validate() error {
+	return c.inner.validate()
+}
