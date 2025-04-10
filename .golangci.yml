@@ -1,6 +1,8 @@
 version: "2"
 linters:
   default: all
+  disable:
+    - testpackage
   settings:
     varnamelen:
       min-name-length: 1
