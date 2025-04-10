@@ -7,15 +7,15 @@ import (
 
 func TestCiString20Type_Valid(t *testing.T) {
 	t.Parallel()
-	cs, err := CiString20("ValidString")
+	CiString20StrValue := "ValidString"
+	CiString20Str, err := CiString20(CiString20StrValue)
 	if err != nil {
 		t.Errorf("expected no error, got %v", err)
 	}
-	expected := "ValidString"
-	if cs.String() != expected {
-		t.Errorf("expected string output, got %s", cs.String())
+	if CiString20Str.String() != CiString20StrValue {
+		t.Errorf("expected string output, got %s", CiString20Str.String())
 	}
-	err = cs.Validate()
+	err = CiString20Str.Validate()
 	if err != nil {
 		t.Errorf("expected Validate to return nil, got %v", err)
 	}
@@ -29,26 +29,27 @@ func TestCiString20Type_TooLong(t *testing.T) {
 	}
 }
 
+func TestCiString25Type_Valid(t *testing.T) {
+	t.Parallel()
+	CiString25StrValue := "ValidString"
+	CiString25Str, err := CiString25(CiString25StrValue)
+	if err != nil {
+		t.Errorf("expected no error, got %v", err)
+	}
+	if CiString25Str.String() != CiString25StrValue {
+		t.Errorf("expected string output, got %s", CiString25Str.String())
+	}
+	err = CiString25Str.Validate()
+	if err != nil {
+		t.Errorf("expected Validate to return nil, got %v", err)
+	}
+}
+
 func TestCiString25Type_NonPrintable(t *testing.T) {
 	t.Parallel()
 	_, err := CiString25("Valid\x01String")
 	if err == nil {
 		t.Errorf("expected error for non-printable ASCII")
-	}
-}
-
-func TestCiString25Type_Valid(t *testing.T) {
-	t.Parallel()
-	cs, err := CiString25("AnotherValid")
-	if err != nil {
-		t.Errorf("unexpected error: %v", err)
-	}
-	if cs.String() != "AnotherValid" {
-		t.Errorf("expected string output, got %s", cs.String())
-	}
-	err = cs.Validate()
-	if err != nil {
-		t.Errorf("expected Validate to return nil, got %v", err)
 	}
 }
 
@@ -107,7 +108,7 @@ func TestCiString500Type_TooLong(t *testing.T) {
 	}
 }
 
-func TestCiString255Type_ASCII(t *testing.T) {
+func TestCiStringType_ASCII(t *testing.T) {
 	t.Parallel()
 	var builder strings.Builder
 	for i := 32; i <= 126; i++ {
@@ -123,5 +124,55 @@ func TestCiString255Type_ASCII(t *testing.T) {
 	}
 	if err := s.Validate(); err != nil {
 		t.Errorf("expected Validate to return nil, got %v", err)
+	}
+}
+
+func TestCiStringType_ChineseCharacters(t *testing.T) {
+	t.Parallel()
+	_, err := CiString20("你好，OCPP")
+	if err == nil {
+		t.Errorf("expected error for non-ASCII input (Chinese), got nil")
+	}
+}
+
+func TestCiStringType_UkrainianCharacters(t *testing.T) {
+	t.Parallel()
+	_, err := CiString20("Привіт, OCPP")
+	if err == nil {
+		t.Errorf("expected error for non-ASCII input (Ukrainian), got nil")
+	}
+}
+
+func TestCiStringType_ArabicCharacters(t *testing.T) {
+	t.Parallel()
+	_, err := CiString20("مرحبًا OCPP")
+	if err == nil {
+		t.Errorf("expected error for non-ASCII input (Arabic), got nil")
+	}
+}
+
+func TestCiStringType_NonPrintable(t *testing.T) {
+	t.Parallel()
+	_, err := CiString20("Valid\x01String")
+	if err == nil {
+		t.Errorf("expected error for non-printable ASCII")
+	}
+}
+
+func TestCiStringType_Empty(t *testing.T) {
+	t.Parallel()
+	_, err := CiString20("")
+	if err != nil {
+		t.Errorf("unexpected error for empty string: %v", err)
+	}
+}
+
+func TestCiStringType_NullEquivalent(t *testing.T) {
+	t.Parallel()
+
+	var s string // Go does not allow null strings, but this simulates the zero-value ("null")
+	_, err := CiString20(s)
+	if err != nil {
+		t.Errorf("unexpected error for zero-value string: %v", err)
 	}
 }
