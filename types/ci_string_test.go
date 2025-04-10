@@ -30,7 +30,7 @@ func TestCiString20TypeValid(t *testing.T) {
 	err = CiString20Str.Validate()
 
 	if err != nil {
-		t.Errorf(errExpectedValidateSTR, err)
+		t.Errorf(errExpectedValidate, err)
 	}
 }
 
@@ -42,7 +42,7 @@ func TestCiString20TypeTooLong(t *testing.T) {
 	_, err := CiString20(CiString20StrValue)
 
 	if err == nil {
-		t.Errorf(errExpectedErrorTooLong)
+		t.Error(errExpectedErrorTooLong)
 	}
 }
 
@@ -63,7 +63,7 @@ func TestCiString25TypeValid(t *testing.T) {
 	err = CiString25Str.Validate()
 
 	if err != nil {
-		t.Errorf(errExpectedValidateSTR, err)
+		t.Errorf(errExpectedValidate, err)
 	}
 }
 
@@ -75,7 +75,7 @@ func TestCiString25TypeTooLong(t *testing.T) {
 	_, err := CiString25(CiString25StrValue)
 
 	if err == nil {
-		t.Errorf(errExpectedErrorTooLong)
+		t.Error(errExpectedErrorTooLong)
 	}
 }
 
@@ -96,7 +96,7 @@ func TestCiString50TypeValid(t *testing.T) {
 	err = CiString50Str.Validate()
 
 	if err != nil {
-		t.Errorf(errExpectedValidateSTR, err)
+		t.Errorf(errExpectedValidate, err)
 	}
 }
 
@@ -108,7 +108,7 @@ func TestCiString50TypeTooLong(t *testing.T) {
 	_, err := CiString50(CiString50StrValue)
 
 	if err == nil {
-		t.Errorf(errExpectedErrorTooLong)
+		t.Error(errExpectedErrorTooLong)
 	}
 }
 
@@ -129,7 +129,7 @@ func TestCiString255TypeValid(t *testing.T) {
 	err = CiString255Str.Validate()
 
 	if err != nil {
-		t.Errorf(errExpectedValidateSTR, err)
+		t.Errorf(errExpectedValidate, err)
 	}
 }
 
@@ -141,7 +141,7 @@ func TestCiString255TypeTooLong(t *testing.T) {
 	_, err := CiString255(CiString255StrValue)
 
 	if err == nil {
-		t.Errorf(errExpectedErrorTooLong)
+		t.Error(errExpectedErrorTooLong)
 	}
 }
 
@@ -162,7 +162,7 @@ func TestCiString500TypeValid(t *testing.T) {
 	err = CiString500Str.Validate()
 
 	if err != nil {
-		t.Errorf(errExpectedValidateSTR, err)
+		t.Errorf(errExpectedValidate, err)
 	}
 }
 
@@ -174,7 +174,7 @@ func TestCiString500TypeTooLong(t *testing.T) {
 	_, err := CiString500(CiString500StrValue)
 
 	if err == nil {
-		t.Errorf(errExpectedErrorTooLong)
+		t.Error(errExpectedErrorTooLong)
 	}
 }
 
@@ -199,7 +199,7 @@ func TestCiStringTypeASCII(t *testing.T) {
 	}
 
 	if err := String255.Validate(); err != nil {
-		t.Errorf(errExpectedValidateSTR, err)
+		t.Errorf(errExpectedValidate, err)
 	}
 }
 
