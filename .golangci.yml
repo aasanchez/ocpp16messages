@@ -3,6 +3,7 @@ linters:
   default: all
   disable:
     - testpackage
+    - gosmopolitan
   settings:
     varnamelen:
       min-name-length: 1
