@@ -8,7 +8,7 @@ func TestIdTokenFromString_Valid(t *testing.T) {
 	t.Parallel()
 
 	valid := "ABC1234567890123456" // 20 characters
-	token, err := IdTokenFromString(valid)
+	token, err := IdToken(valid)
 
 	if err != nil {
 		t.Errorf("expected no error, got %v", err)
@@ -27,7 +27,7 @@ func TestIdTokenFromString_TooLong(t *testing.T) {
 	t.Parallel()
 
 	toolong := "ABC1234567890123456789" // > 20 characters
-	_, err := IdTokenFromString(toolong)
+	_, err := IdToken(toolong)
 
 	if err == nil {
 		t.Errorf("expected error for over-length IdToken, got nil")
@@ -37,7 +37,7 @@ func TestIdTokenFromString_TooLong(t *testing.T) {
 func TestIdTokenFromString_NonASCII(t *testing.T) {
 	t.Parallel()
 
-	_, err := IdTokenFromString("你好世界")
+	_, err := IdToken("你好世界")
 
 	if err == nil {
 		t.Errorf("expected error for non-ASCII input, got nil")
@@ -47,8 +47,8 @@ func TestIdTokenFromString_NonASCII(t *testing.T) {
 func TestIdTokenFromString_Empty(t *testing.T) {
 	t.Parallel()
 
-	_, err := IdTokenFromString("")
-	if err != nil {
-		t.Errorf("expected no error for empty input, got %v", err)
+	_, err := IdToken("")
+	if err == nil {
+		t.Errorf("expected error for empty input, got nil")
 	}
 }

@@ -238,20 +238,20 @@ func TestCiStringType_NonPrintable(t *testing.T) {
 func TestCiStringType_Empty(t *testing.T) {
 	t.Parallel()
 
-	str, err := CiString20("")
+	_, err := CiString20("")
 
-	if err != nil {
-		t.Errorf("unexpected error for empty string(%s): %v", str, err)
+	if err == nil {
+		t.Errorf("expected error for empty string, got nil")
 	}
 }
 
 func TestCiStringType_NullEquivalent(t *testing.T) {
 	t.Parallel()
 
-	var nullString string // Go does not allow null strings, but this simulates the zero-value ("null")
+	var nullString string
 	_, err := CiString20(nullString)
 
-	if err != nil {
-		t.Errorf("unexpected error for zero-value string: %v", err)
+	if err == nil {
+		t.Errorf("expected error for zero-value string (null equivalent), got nil")
 	}
 }

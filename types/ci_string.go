@@ -47,6 +47,10 @@ func CiString(value string, maxLen int) (ciString, error) {
 //
 // Returns a wrapped static error in case of validation failure.
 func (cs ciString) validate() error {
+	if len(cs.Value) == 0 {
+		return fmt.Errorf("value must not be empty")
+	}
+
 	if len(cs.Value) > cs.MaxLen {
 		return fmt.Errorf("%w: actual length %d, max %d", ErrExceedsMaxLength, len(cs.Value), cs.MaxLen)
 	}

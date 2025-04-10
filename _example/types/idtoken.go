@@ -11,7 +11,7 @@ import (
 func main() {
 	input := "ABC1234567890XYZ7890" // valid 20-char ASCII input
 
-	idToken, err := types.IdTokenFromString(input)
+	idToken, err := types.IdToken(input)
 	if err != nil {
 		log.Fatalf("❌ Failed to create IdToken: %v", err)
 	}
