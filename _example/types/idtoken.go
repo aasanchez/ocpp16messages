@@ -18,5 +18,4 @@ func main() {
 	}
 
 	fmt.Printf("✅ Valid IdToken: %s\n", idToken.String())
-	// Now you can pass this IdToken into a request message (e.g., Authorize.req)
 }

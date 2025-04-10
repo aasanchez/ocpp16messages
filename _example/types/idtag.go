@@ -19,9 +19,4 @@ func main() {
 
 	// Use the IdTag
 	fmt.Println("✅ Validated IdTag:", idTag.String())
-
-	// Optional: validate again
-	if err := idTag.Validate(); err != nil {
-		log.Fatalf("❌ Validation failed: %v", err)
-	}
 }
