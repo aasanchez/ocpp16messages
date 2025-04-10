@@ -57,7 +57,7 @@ func TestAuthorizeRequestNonASCIIIdTag(t *testing.T) {
 	}
 }
 
-func TestAuthorizeRequestValidateFails_WithInvalidIdTag(t *testing.T) {
+func TestAuthorizeRequestValidateFailsWithInvalidIdTag(t *testing.T) {
 	t.Parallel()
 
 	req := AuthorizeRequestMessage{
