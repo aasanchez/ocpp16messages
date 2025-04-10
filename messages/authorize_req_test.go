@@ -1,4 +1,4 @@
-package authorize
+package messages
 
 import (
 	"strings"
