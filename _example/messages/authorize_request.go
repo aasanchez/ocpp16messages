@@ -2,11 +2,11 @@ package main
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"log"
 
 	"github.com/aasanchez/ocpp16messages/messages"
+	"github.com/aasanchez/ocpp16messages/types"
 )
 
 // FullMessage represents the full structure of a typical OCPP message
@@ -17,61 +17,83 @@ type FullMessage struct {
 	Payload       messages.AuthorizeRequestMessage `json:"Payload"`
 }
 
-// ValidateJSON validates if the input JSON matches the schema (e.g., idTag is required and less than 20 chars)
-func ValidateJSON(data []byte) error {
-	var msg FullMessage
-	err := json.Unmarshal(data, &msg)
-	if err != nil {
-		return fmt.Errorf("error unmarshaling JSON: %v", err)
-	}
-
-	// Validate Payload (idTag) max length constraint and required field
-	if len(msg.Payload.IdTag.String()) == 0 {
-		return errors.New("idTag is required")
-	}
-
-	if len(msg.Payload.IdTag.String()) > 20 {
-		return errors.New("idTag exceeds maximum length of 20")
-	}
-
-	// You can add more field-specific validation here if necessary.
-
-	return nil
-}
-
 func main() {
 	// Simulate receiving a full JSON message (header + payload)
-	receivedJSON := `{
+	receivedJSON := `[
 		2,
-		"12345",
+		"19223201",
 		"Authorize",
-		"Payload": {
-			"IdTag": "ABC1234567890XYZ78"
+		{
+			"idTag": "ThisIsMySuperIDTag"
 		}
-	}`
+	]`
 
-	// Step 1: Validate JSON against the schema
-	if err := ValidateJSON([]byte(receivedJSON)); err != nil {
-		log.Fatalf("Validation failed: %v", err)
-	}
-
-	// Step 2: Deserialize the full message (header + payload)
-	var fullMsg FullMessage
-	err := json.Unmarshal([]byte(receivedJSON), &fullMsg)
+	// Step 1: Deserialize the full message (header + payload)
+	var rawMsg []interface{}
+	err := json.Unmarshal([]byte(receivedJSON), &rawMsg)
 	if err != nil {
-		log.Fatalf("Error unmarshaling JSON into FullMessage: %v", err)
+		log.Fatalf("Error unmarshaling JSON: %v", err)
 	}
+
+	// Extract MessageTypeId, UniqueId, and Action
+	messageTypeId, ok := rawMsg[0].(float64)
+	if !ok {
+		log.Fatalf("Invalid MessageTypeId type")
+	}
+
+	uniqueId, ok := rawMsg[1].(string)
+	if !ok {
+		log.Fatalf("Invalid UniqueId type")
+	}
+
+	action, ok := rawMsg[2].(string)
+	if !ok {
+		log.Fatalf("Invalid Action type")
+	}
+
+	// Step 2: Deserialize the payload part (the 'idTag' field)
+	payloadJSON, err := json.Marshal(rawMsg[3])
+	if err != nil {
+		log.Fatalf("Error marshaling payload: %v", err)
+	}
+
+	// Deserialize the Payload into a map to extract 'idTag'
+	var payloadMap map[string]interface{}
+	err = json.Unmarshal(payloadJSON, &payloadMap)
+	if err != nil {
+		log.Fatalf("Error unmarshaling payload: %v", err)
+	}
+
+	// Manually extract and validate the 'idTag' field from the payload
+	idTagStr, ok := payloadMap["idTag"].(string)
+	if !ok {
+		log.Fatalf("Error: idTag field is missing or invalid")
+	}
+
+	// Create an IdTag object using the extracted string
+	idTag, err := types.NewIdTag(idTagStr)
+	if err != nil {
+		log.Fatalf("Error creating IdTag: %v", err)
+	}
+
+	// Create the AuthorizeRequestMessage with the validated IdTag
+	payload := messages.AuthorizeRequestMessage{IdTag: idTag}
 
 	// Step 3: Verify the Action and MessageTypeId (assume these are valid for simplicity)
-	fmt.Printf("Received Message Type: %d\n", fullMsg.MessageTypeId)
-	fmt.Printf("Received Action: %s\n", fullMsg.Action)
-	fmt.Printf("Received UniqueId: %s\n", fullMsg.UniqueId)
+	fmt.Printf("Received Message Type: %d\n", int(messageTypeId))
+	fmt.Printf("Received Action: %s\n", action)
+	fmt.Printf("Received UniqueId: %s\n", uniqueId)
 
 	// Step 4: Validate the payload (the AuthorizeRequestMessage)
-	if err := fullMsg.Payload.Validate(); err != nil {
+	if err := payload.Validate(); err != nil {
 		log.Fatalf("Validation failed: %v", err)
 	}
 
 	// Step 5: Handle the deserialized request (e.g., print it out)
-	fmt.Printf("Received and Validated AuthorizeRequestMessage: %s\n", fullMsg.Payload.String())
+	// This will print the formatted message with {idTag=...}
+	fmt.Printf("Received and Validated AuthorizeRequestMessage: %s\n", payload.String())
+
+	// Additional line to print just the idTag value
+	// This will now print only the idTag value, as requested
+	fmt.Printf("idTag: %s\n", payload.IdTag.String())
 }

@@ -20,7 +20,7 @@ func AuthorizeRequest(idTag string) (AuthorizeRequestMessage, error) {
 }
 
 func (r AuthorizeRequestMessage) String() string {
-	return fmt.Sprintf("AuthorizeRequestMessage{idTag=%s}", r.IdTag.String())
+	return fmt.Sprintf("{idTag=%s}", r.IdTag.String())
 }
 
 func (r AuthorizeRequestMessage) Validate() error {
