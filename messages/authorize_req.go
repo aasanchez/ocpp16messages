@@ -7,11 +7,11 @@ import (
 )
 
 type AuthorizeRequestMessage struct {
-	IdTag types.IdTag
+	IdTag types.IdTagType
 }
 
 func AuthorizeRequest(idTag string) (AuthorizeRequestMessage, error) {
-	tag, err := types.NewIdTag(idTag)
+	tag, err := types.IdTag(idTag)
 	if err != nil {
 		return AuthorizeRequestMessage{}, fmt.Errorf("failed to create AuthorizeRequestMessage: %w", err)
 	}

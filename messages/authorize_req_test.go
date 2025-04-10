@@ -61,7 +61,7 @@ func TestAuthorizeRequestValidateFailsWithInvalidIdTag(t *testing.T) {
 	t.Parallel()
 
 	req := AuthorizeRequestMessage{
-		IdTag: types.IdTag{}, // zero value is invalid
+		IdTag: types.IdTagType{}, // zero value is invalid
 	}
 
 	err := req.Validate()
