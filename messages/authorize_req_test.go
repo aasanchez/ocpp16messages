@@ -1,9 +1,10 @@
 package authorize
 
 import (
-	"errors"
 	"strings"
 	"testing"
+
+	"github.com/aasanchez/ocpp16messages/types"
 )
 
 func TestAuthorizeRequest_Valid(t *testing.T) {
@@ -29,7 +30,6 @@ func TestAuthorizeRequest_EmptyIdTag(t *testing.T) {
 	t.Parallel()
 
 	_, err := AuthorizeRequest("")
-
 	if err == nil {
 		t.Error("Expected error for empty idTag, got nil")
 	}
@@ -57,23 +57,16 @@ func TestAuthorizeRequest_NonASCIIIdTag(t *testing.T) {
 	}
 }
 
-// fakeIdTag is a mock IdTagType used to simulate validation failure
-type fakeIdTag struct{}
-
-func (fakeIdTag) String() string  { return "invalid" }
-func (fakeIdTag) Validate() error { return errors.New("mock validation failed") }
-
-func TestAuthorizeRequest_ValidateFailsWithFakeIdTag(t *testing.T) {
+func TestAuthorizeRequest_ValidateFails_WithInvalidIdTag(t *testing.T) {
 	t.Parallel()
 
 	req := AuthorizeRequestMessage{
-		IdTag: fakeIdTag{},
+		IdTag: types.IdTag{}, // zero value is invalid
 	}
 
 	err := req.Validate()
-
 	if err == nil {
-		t.Error("Expected Validate() to fail with fakeIdTag, got nil")
+		t.Error("Expected Validate() to fail for zero-value IdTag")
 	}
 }
 
@@ -81,13 +74,11 @@ func TestAuthorizeRequest_String(t *testing.T) {
 	t.Parallel()
 
 	req, err := AuthorizeRequest("TAG123456789012345")
-
 	if err != nil {
 		t.Fatalf("unexpected error creating request: %v", err)
 	}
 
 	output := req.String()
-
 	if !strings.Contains(output, "TAG123456789012345") {
 		t.Errorf("expected String() to include idTag, got: %s", output)
 	}

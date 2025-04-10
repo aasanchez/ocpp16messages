@@ -1,36 +1,26 @@
 package types
 
-// IdTagType represents a validated authorization tag used in OCPP 1.6J.
-// It provides methods for string access and validation.
-type IdTagType interface {
-	String() string
-	Validate() error
-}
-
-// idTagImpl is the unexported concrete implementation of IdTagType.
-// It wraps a validated IdTokenType internally.
-type idTagImpl struct {
+// IdTag represents a validated authorization tag used in OCPP 1.6J.
+type IdTag struct {
 	value IdTokenType
 }
 
-// IdTag constructs a new IdTagType from a raw string.
-// It delegates validation to the IdToken constructor.
-func IdTag(s string) (IdTagType, error) {
+// IdTag returns a validated IdTag from a raw string.
+func NewIdTag(s string) (IdTag, error) {
 	idToken, err := IdToken(s)
-
 	if err != nil {
-		return nil, err
+		return IdTag{}, err
 	}
 
-	return idTagImpl{value: idToken}, nil
+	return IdTag{value: idToken}, nil
 }
 
-// String returns the raw string value of the idTag.
-func (id idTagImpl) String() string {
+// String returns the raw string.
+func (id IdTag) String() string {
 	return id.value.String()
 }
 
-// Validate re-validates the underlying IdToken.
-func (id idTagImpl) Validate() error {
+// Validate re-validates the wrapped token.
+func (id IdTag) Validate() error {
 	return id.value.Validate()
 }
