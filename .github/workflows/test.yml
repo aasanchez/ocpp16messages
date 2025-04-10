@@ -16,10 +16,13 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: stable
+          cache: true  # Enable Go module caching
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v7
         with:
           version: v2.0
+          args: --timeout=5m  # Add timeout to prevent hanging
 
   test:
     name: Run Tests and Collect Coverage
@@ -33,33 +36,27 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: 1.24
+          cache: true  # Enable Go module caching
 
-      - name: Install go-junit-report
-        run: go install github.com/jstemmer/go-junit-report/v2@latest
+      - name: Install Tools
+        run: |
+          go install github.com/jstemmer/go-junit-report/v2@latest
+          go mod tidy
 
-      - name: Install Dependencies
-        run: go mod tidy
-
-      - name: Run Tests with Coverage
-        run: go test -v -coverprofile=coverage.out ./...
-
-      - name: Upload Coverage Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage.out
-        if: always()
-
-      - name: Run tests and generate JUnit report
+      - name: Run Tests with Coverage and Generate JUnit Report
         run: |
           mkdir -p test-results
-          go test -v ./... 2>&1 | go-junit-report > test-results/junit.xml
+          # Run tests once and capture both coverage and JUnit output
+          go test -v -coverprofile=coverage.out ./... 2>&1 | tee test-output.log
+          cat test-output.log | go-junit-report > test-results/junit.xml
 
-      - name: Upload test results
-        uses: actions/upload-artifact@v3
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
         with:
-          name: test-results
-          path: test-results/
+          name: test-artifacts
+          path: |
+            coverage.out
+            test-results/
         if: always()
 
       - name: Upload to Codecov
@@ -67,25 +64,22 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage.out
+          fail_ci_if_error: false  # Avoid CI failure if Codecov upload fails
 
   e2e:
     runs-on: ubuntu-latest
-
+    needs: test  # Run e2e after tests pass
     steps:
-      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Set up Go environment
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: 1.24 # Specify the version of Go to use
+          go-version: 1.24
+          cache: true  # Enable Go module caching
 
-      # Run all .go files in _example directory recursively
-      - name: Run all Go files in _example directory
+      - name: Run examples
         run: |
-          find ./_example -type f -name "*.go" | while read file; do
-            echo "Running file: $file"
-            go run "$file"
-          done
+          find ./_example -type f -name "*.go" -print0 | xargs -0 -I{} bash -c 'echo "Running file: {}" && go run "{}" || exit 1'
+        shell: bash
