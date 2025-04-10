@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestIdTag_ValidInput(t *testing.T) {
+func TestIdTagValidInput(t *testing.T) {
 	t.Parallel()
 
 	validStr := "ABCDEFG1234567890"
@@ -23,7 +23,7 @@ func TestIdTag_ValidInput(t *testing.T) {
 	}
 }
 
-func TestIdTag_InvalidInput_Empty(t *testing.T) {
+func TestIdTagInvalidInputEmpty(t *testing.T) {
 	t.Parallel()
 
 	_, err := NewIdTag("")
@@ -33,7 +33,7 @@ func TestIdTag_InvalidInput_Empty(t *testing.T) {
 	}
 }
 
-func TestIdTag_InvalidInput_TooLong(t *testing.T) {
+func TestIdTagInvalidInputTooLong(t *testing.T) {
 	t.Parallel()
 
 	input := "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
@@ -44,7 +44,7 @@ func TestIdTag_InvalidInput_TooLong(t *testing.T) {
 	}
 }
 
-func TestIdTag_InvalidInput_NonASCII(t *testing.T) {
+func TestIdTagInvalidInputNonASCII(t *testing.T) {
 	t.Parallel()
 
 	input := "ТестТаг123456" // Cyrillic
@@ -55,7 +55,7 @@ func TestIdTag_InvalidInput_NonASCII(t *testing.T) {
 	}
 }
 
-func TestIdTag_RevalidateAfterConstruction(t *testing.T) {
+func TestIdTagRevalidateAfterConstruction(t *testing.T) {
 	t.Parallel()
 
 	input := "12345678901234567890"

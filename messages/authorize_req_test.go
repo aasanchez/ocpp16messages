@@ -7,7 +7,7 @@ import (
 	"github.com/aasanchez/ocpp16messages/types"
 )
 
-func TestAuthorizeRequest_Valid(t *testing.T) {
+func TestAuthorizeRequestValid(t *testing.T) {
 	t.Parallel()
 
 	input := "ABC1234567890XYZ78"
@@ -26,7 +26,7 @@ func TestAuthorizeRequest_Valid(t *testing.T) {
 	}
 }
 
-func TestAuthorizeRequest_EmptyIdTag(t *testing.T) {
+func TestAuthorizeRequestEmptyIdTag(t *testing.T) {
 	t.Parallel()
 
 	_, err := AuthorizeRequest("")
@@ -35,7 +35,7 @@ func TestAuthorizeRequest_EmptyIdTag(t *testing.T) {
 	}
 }
 
-func TestAuthorizeRequest_TooLongIdTag(t *testing.T) {
+func TestAuthorizeRequestTooLongIdTag(t *testing.T) {
 	t.Parallel()
 
 	input := strings.Repeat("A", 21) // >20 chars
@@ -46,7 +46,7 @@ func TestAuthorizeRequest_TooLongIdTag(t *testing.T) {
 	}
 }
 
-func TestAuthorizeRequest_NonASCIIIdTag(t *testing.T) {
+func TestAuthorizeRequestNonASCIIIdTag(t *testing.T) {
 	t.Parallel()
 
 	input := "مرحباOCPP"
@@ -57,7 +57,7 @@ func TestAuthorizeRequest_NonASCIIIdTag(t *testing.T) {
 	}
 }
 
-func TestAuthorizeRequest_ValidateFails_WithInvalidIdTag(t *testing.T) {
+func TestAuthorizeRequestValidateFails_WithInvalidIdTag(t *testing.T) {
 	t.Parallel()
 
 	req := AuthorizeRequestMessage{
@@ -70,7 +70,7 @@ func TestAuthorizeRequest_ValidateFails_WithInvalidIdTag(t *testing.T) {
 	}
 }
 
-func TestAuthorizeRequest_String(t *testing.T) {
+func TestAuthorizeRequestString(t *testing.T) {
 	t.Parallel()
 
 	req, err := AuthorizeRequest("TAG123456789012345")

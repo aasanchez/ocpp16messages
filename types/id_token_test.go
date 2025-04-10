@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestIdTokenFromString_Valid(t *testing.T) {
+func TestIdTokenFromStringValid(t *testing.T) {
 	t.Parallel()
 
 	valid := "ABC1234567890123456" // 20 characters
@@ -23,7 +23,7 @@ func TestIdTokenFromString_Valid(t *testing.T) {
 	}
 }
 
-func TestIdTokenFromString_TooLong(t *testing.T) {
+func TestIdTokenFromStringTooLong(t *testing.T) {
 	t.Parallel()
 
 	toolong := "ABC1234567890123456789" // > 20 characters
@@ -34,7 +34,7 @@ func TestIdTokenFromString_TooLong(t *testing.T) {
 	}
 }
 
-func TestIdTokenFromString_NonASCII(t *testing.T) {
+func TestIdTokenFromStringNonASCII(t *testing.T) {
 	t.Parallel()
 
 	_, err := IdToken("你好世界")
@@ -44,7 +44,7 @@ func TestIdTokenFromString_NonASCII(t *testing.T) {
 	}
 }
 
-func TestIdTokenFromString_Empty(t *testing.T) {
+func TestIdTokenFromStringEmpty(t *testing.T) {
 	t.Parallel()
 
 	_, err := IdToken("")

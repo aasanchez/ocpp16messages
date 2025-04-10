@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestCiString20Type_Valid(t *testing.T) {
+func TestCiString20TypeValid(t *testing.T) {
 	t.Parallel()
 
 	CiString20StrValue := strings.Repeat("A", 20)
@@ -26,7 +26,7 @@ func TestCiString20Type_Valid(t *testing.T) {
 	}
 }
 
-func TestCiString20Type_TooLong(t *testing.T) {
+func TestCiString20TypeTooLong(t *testing.T) {
 	t.Parallel()
 
 	CiString20StrValue := strings.Repeat("A", 21)
@@ -38,7 +38,7 @@ func TestCiString20Type_TooLong(t *testing.T) {
 	}
 }
 
-func TestCiString25Type_Valid(t *testing.T) {
+func TestCiString25TypeValid(t *testing.T) {
 	t.Parallel()
 
 	CiString25StrValue := strings.Repeat("A", 25)
@@ -59,7 +59,7 @@ func TestCiString25Type_Valid(t *testing.T) {
 	}
 }
 
-func TestCiString25Type_TooLong(t *testing.T) {
+func TestCiString25TypeTooLong(t *testing.T) {
 	t.Parallel()
 
 	CiString25StrValue := strings.Repeat("A", 26)
@@ -71,7 +71,7 @@ func TestCiString25Type_TooLong(t *testing.T) {
 	}
 }
 
-func TestCiString50Type_Valid(t *testing.T) {
+func TestCiString50TypeValid(t *testing.T) {
 	t.Parallel()
 
 	CiString50StrValue := strings.Repeat("A", 50)
@@ -92,7 +92,7 @@ func TestCiString50Type_Valid(t *testing.T) {
 	}
 }
 
-func TestCiString50Type_TooLong(t *testing.T) {
+func TestCiString50TypeTooLong(t *testing.T) {
 	t.Parallel()
 
 	CiString50StrValue := strings.Repeat("A", 51)
@@ -104,7 +104,7 @@ func TestCiString50Type_TooLong(t *testing.T) {
 	}
 }
 
-func TestCiString255Type_Valid(t *testing.T) {
+func TestCiString255TypeValid(t *testing.T) {
 	t.Parallel()
 
 	CiString255StrValue := strings.Repeat("A", 255)
@@ -125,7 +125,7 @@ func TestCiString255Type_Valid(t *testing.T) {
 	}
 }
 
-func TestCiString255Type_TooLong(t *testing.T) {
+func TestCiString255TypeTooLong(t *testing.T) {
 	t.Parallel()
 
 	CiString255StrValue := strings.Repeat("A", 256)
@@ -137,7 +137,7 @@ func TestCiString255Type_TooLong(t *testing.T) {
 	}
 }
 
-func TestCiString500Type_Valid(t *testing.T) {
+func TestCiString500TypeValid(t *testing.T) {
 	t.Parallel()
 
 	CiString500StrValue := strings.Repeat("A", 500)
@@ -158,7 +158,7 @@ func TestCiString500Type_Valid(t *testing.T) {
 	}
 }
 
-func TestCiString500Type_TooLong(t *testing.T) {
+func TestCiString500TypeTooLong(t *testing.T) {
 	t.Parallel()
 
 	CiString500StrValue := strings.Repeat("A", 501)
@@ -170,7 +170,7 @@ func TestCiString500Type_TooLong(t *testing.T) {
 	}
 }
 
-func TestCiStringType_ASCII(t *testing.T) {
+func TestCiStringTypeASCII(t *testing.T) {
 	t.Parallel()
 
 	var builder strings.Builder
@@ -195,7 +195,7 @@ func TestCiStringType_ASCII(t *testing.T) {
 	}
 }
 
-func TestCiStringType_ChineseCharacters(t *testing.T) {
+func TestCiStringTypeChineseCharacters(t *testing.T) {
 	t.Parallel()
 
 	_, err := CiString20("你好，OCPP")
@@ -205,7 +205,7 @@ func TestCiStringType_ChineseCharacters(t *testing.T) {
 	}
 }
 
-func TestCiStringType_UkrainianCharacters(t *testing.T) {
+func TestCiStringTypeUkrainianCharacters(t *testing.T) {
 	t.Parallel()
 
 	str, err := CiString20("Привіт, OCPP")
@@ -215,7 +215,7 @@ func TestCiStringType_UkrainianCharacters(t *testing.T) {
 	}
 }
 
-func TestCiStringType_ArabicCharacters(t *testing.T) {
+func TestCiStringTypeArabicCharacters(t *testing.T) {
 	t.Parallel()
 
 	str, err := CiString20("مرحبًا OCPP")
@@ -225,7 +225,7 @@ func TestCiStringType_ArabicCharacters(t *testing.T) {
 	}
 }
 
-func TestCiStringType_NonPrintable(t *testing.T) {
+func TestCiStringTypeNonPrintable(t *testing.T) {
 	t.Parallel()
 
 	str, err := CiString20("Valid\x01String")
@@ -235,7 +235,7 @@ func TestCiStringType_NonPrintable(t *testing.T) {
 	}
 }
 
-func TestCiStringType_Empty(t *testing.T) {
+func TestCiStringTypeEmpty(t *testing.T) {
 	t.Parallel()
 
 	_, err := CiString20("")
@@ -245,7 +245,7 @@ func TestCiStringType_Empty(t *testing.T) {
 	}
 }
 
-func TestCiStringType_NullEquivalent(t *testing.T) {
+func TestCiStringTypeNullEquivalent(t *testing.T) {
 	t.Parallel()
 
 	var nullString string
