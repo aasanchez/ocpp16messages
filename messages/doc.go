@@ -9,5 +9,5 @@
 //
 // This package should be imported using:
 //
-//	import "github.com/yourorg/ocpp16messages/types"
+//	import "github.com/aasanchez/ocpp16messages/types"
 package messages

@@ -22,7 +22,7 @@
 
 README.md           export-ignore
 Makefile            export-ignore
-_examples/           export-ignore
+.examples/           export-ignore
 .sonarlint/         export-ignore
 .golangci.yml       export-ignore
 *.text              export-ignore

@@ -81,5 +81,5 @@ jobs:
 
       - name: Run examples
         run: |
-          find ./_example -type f -name "*.go" -print0 | xargs -0 -I{} bash -c 'echo "Running file: {}" && go run "{}" || exit 1'
+          find ./.examples -type f -name "*.go" -print0 | xargs -0 -I{} bash -c 'echo "Running file: {}" && go run "{}" || exit 1'
         shell: bash
