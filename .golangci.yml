@@ -14,9 +14,6 @@ linters:
     revive:
       rules:
         - name: var-naming
-          severity: warning
-          disabled: false
-          exclude: [""]
           arguments:
             - ["ID"] # AllowList
 output:

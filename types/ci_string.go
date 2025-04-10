@@ -63,10 +63,13 @@ func (cs ciString) validate() error {
 // String returns the underlying string value held in the ciString.
 func (cs ciString) String() string { return cs.Value }
 
-// CiString20Type
+/*
+CiString20Type
 
-// CiString20Type is an OCPP 1.6J data type representing a case-insensitive string limited to a maximum of 20 printable
-// ASCII characters. This type is commonly used for identifiers such as `idTag` in OCPP messages like Authorize.req.
+Generic used case insensitive string of 20 characters.
+FIELD TYPE: CiString[20]
+DESCRIPTION: String is case insensitive.
+*/
 type CiString20Type struct{ inner ciString }
 
 // CiString20 creates a new instance of CiString20Type, validating that the provided value does not exceed
