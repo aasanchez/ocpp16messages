@@ -7,8 +7,7 @@ import (
 
 func TestCiString20Type_Valid(t *testing.T) {
 	t.Parallel()
-	cs,
-		err := CiString20("ValidString")
+	cs, err := CiString20("ValidString")
 	if err != nil {
 		t.Errorf("expected no error, got %v", err)
 	}

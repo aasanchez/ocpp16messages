@@ -1,4 +1,3 @@
-// Package types contains all shared OCPP 1.6 data types.
 package types
 
 import (
