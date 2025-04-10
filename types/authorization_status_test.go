@@ -2,16 +2,16 @@ package types
 
 import "testing"
 
-// Error message constants
+// Error message constants.
 const (
 	errExpectedOutput       = "expected string output, got %s"
 	errExpectedValidate     = "expected Validate to return nil, got %v"
 	errExpectedInvalid      = "expected IsValid() to return false for %v, but got true" // For invalid status checks
 	errExpectedValid        = "expected IsValid() to return true for %v, but got false" // For valid status checks
-	errExpectedInvalidNoArg = "expected IsValid() to return false, but got true"        // For cases with no specific argument
+	errExpectedInvalidNoArg = "expected IsValid() to return false, but got true"        // For cases with no specific arg
 )
 
-// Tests for valid AuthorizationStatus values
+// Tests for valid AuthorizationStatus values.
 func TestAuthorizationStatusAcceptedIsValid(t *testing.T) {
 	t.Parallel()
 
@@ -39,7 +39,7 @@ func TestAuthorizationStatusExpiredIsValid(t *testing.T) {
 	}
 }
 
-// Tests for invalid AuthorizationStatus values
+// Tests for invalid AuthorizationStatus values.
 func TestAuthorizationStatusInvalidIsValid(t *testing.T) {
 	t.Parallel()
 
@@ -73,7 +73,7 @@ func TestAuthorizationStatusEmptyStatus(t *testing.T) {
 
 	emptyStatus := AuthorizationStatus("")
 	if emptyStatus.IsValid() {
-		t.Errorf(errExpectedInvalidNoArg)
+		t.Error(errExpectedInvalidNoArg) // Use t.Error() here instead of t.Errorf
 	}
 }
 
@@ -87,7 +87,7 @@ func TestAuthorizationStatusNullEquivalent(t *testing.T) {
 	}
 }
 
-// Constant value checks
+// Constant value checks.
 func TestAuthorizationStatusAcceptedConstant(t *testing.T) {
 	t.Parallel()
 
