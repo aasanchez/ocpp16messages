@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/aasanchez/ocpp16messages/messages"
 	"github.com/aasanchez/ocpp16messages/types"
@@ -27,6 +28,8 @@ func main() {
 			"idTag": "ThisIsMySuperIDTag"
 		}
 	]`
+
+	fmt.Println(strings.Repeat("#", 120))
 
 	// Step 1: Deserialize the full message (header + payload)
 	var rawMsg []interface{}
@@ -96,4 +99,6 @@ func main() {
 	// Additional line to print just the idTag value
 	// This will now print only the idTag value, as requested
 	fmt.Printf("idTag: %s\n", payload.IdTag.String())
+
+	fmt.Println(strings.Repeat("#", 120))
 }
