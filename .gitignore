@@ -66,5 +66,5 @@ tags
 
 # End of https://www.toptal.com/developers/gitignore/api/go,visualstudiocode,vim
 
-coverage.html
+coverage.*
 golangci-lint.*

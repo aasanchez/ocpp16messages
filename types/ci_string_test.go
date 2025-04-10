@@ -180,17 +180,17 @@ func TestCiStringType_ASCII(t *testing.T) {
 	}
 
 	input := builder.String()
-	s, err := CiString255(input)
+	String255, err := CiString255(input)
 
 	if err != nil {
 		t.Errorf("expected all printable ASCII to pass validation, got %v", err)
 	}
 
-	if s.String() != input {
+	if String255.String() != input {
 		t.Errorf("unexpected output from String()")
 	}
 
-	if err := s.Validate(); err != nil {
+	if err := String255.Validate(); err != nil {
 		t.Errorf("expected Validate to return nil, got %v", err)
 	}
 }
