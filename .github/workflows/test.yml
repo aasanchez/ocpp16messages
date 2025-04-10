@@ -8,6 +8,19 @@ on:
       - 'v*'    # Trigger on tags like v1.0.0, v0.1.2, etc.
 
 jobs:
+  golangci:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v7
+        with:
+          version: v2.0
+
   test:
     name: Run Tests and Collect Coverage
     runs-on: ubuntu-latest
