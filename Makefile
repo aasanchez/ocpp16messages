@@ -37,3 +37,8 @@ golangci-lint:
 .PHONY: format
 format: ## is used to format the code of the application
 	@gofmt -d .
+
+.PHONY: examples
+examples: ## is used to format the code of the application
+	@find ./.examples -type f -name "*.go" -print0 | xargs -0 -I{} bash -c 'echo "Running file: {}" && go run "{}" || exit 1'
+
