@@ -5,6 +5,13 @@ import (
 	"testing"
 )
 
+// Define constants for repeated error messages.
+const (
+	errExpectedNoError      = "expected no error, got %v"
+	errExpectedStringOutput = "expected string output, got %s"
+	errExpectedErrorTooLong = "expected error for string too long"
+)
+
 func TestCiString20TypeValid(t *testing.T) {
 	t.Parallel()
 
@@ -12,17 +19,17 @@ func TestCiString20TypeValid(t *testing.T) {
 	CiString20Str, err := CiString20(CiString20StrValue)
 
 	if err != nil {
-		t.Errorf("expected no error, got %v", err)
+		t.Errorf(errExpectedNoError, err)
 	}
 
 	if CiString20Str.String() != CiString20StrValue {
-		t.Errorf("expected string output, got %s", CiString20Str.String())
+		t.Errorf(errExpectedStringOutput, CiString20Str.String())
 	}
 
 	err = CiString20Str.Validate()
 
 	if err != nil {
-		t.Errorf("expected Validate to return nil, got %v", err)
+		t.Errorf(errExpectedValidate, err)
 	}
 }
 
@@ -34,7 +41,7 @@ func TestCiString20TypeTooLong(t *testing.T) {
 	_, err := CiString20(CiString20StrValue)
 
 	if err == nil {
-		t.Errorf("expected error for string too long")
+		t.Errorf(errExpectedErrorTooLong)
 	}
 }
 
@@ -45,17 +52,17 @@ func TestCiString25TypeValid(t *testing.T) {
 	CiString25Str, err := CiString25(CiString25StrValue)
 
 	if err != nil {
-		t.Errorf("expected no error, got %v", err)
+		t.Errorf(errExpectedNoError, err)
 	}
 
 	if CiString25Str.String() != CiString25StrValue {
-		t.Errorf("expected string output, got %s", CiString25Str.String())
+		t.Errorf(errExpectedStringOutput, CiString25Str.String())
 	}
 
 	err = CiString25Str.Validate()
 
 	if err != nil {
-		t.Errorf("expected Validate to return nil, got %v", err)
+		t.Errorf(errExpectedValidate, err)
 	}
 }
 
@@ -67,7 +74,7 @@ func TestCiString25TypeTooLong(t *testing.T) {
 	_, err := CiString25(CiString25StrValue)
 
 	if err == nil {
-		t.Errorf("expected error for string too long")
+		t.Errorf(errExpectedErrorTooLong)
 	}
 }
 
@@ -78,17 +85,17 @@ func TestCiString50TypeValid(t *testing.T) {
 	CiString50Str, err := CiString50(CiString50StrValue)
 
 	if err != nil {
-		t.Errorf("expected no error, got %v", err)
+		t.Errorf(errExpectedNoError, err)
 	}
 
 	if CiString50Str.String() != CiString50StrValue {
-		t.Errorf("expected string output, got %s", CiString50Str.String())
+		t.Errorf(errExpectedStringOutput, CiString50Str.String())
 	}
 
 	err = CiString50Str.Validate()
 
 	if err != nil {
-		t.Errorf("expected Validate to return nil, got %v", err)
+		t.Errorf(errExpectedValidate, err)
 	}
 }
 
@@ -100,7 +107,7 @@ func TestCiString50TypeTooLong(t *testing.T) {
 	_, err := CiString50(CiString50StrValue)
 
 	if err == nil {
-		t.Errorf("expected error for string too long")
+		t.Errorf(errExpectedErrorTooLong)
 	}
 }
 
@@ -111,17 +118,17 @@ func TestCiString255TypeValid(t *testing.T) {
 	CiString255Str, err := CiString255(CiString255StrValue)
 
 	if err != nil {
-		t.Errorf("expected no error, got %v", err)
+		t.Errorf(errExpectedNoError, err)
 	}
 
 	if CiString255Str.String() != CiString255StrValue {
-		t.Errorf("expected string output, got %s", CiString255Str.String())
+		t.Errorf(errExpectedStringOutput, CiString255Str.String())
 	}
 
 	err = CiString255Str.Validate()
 
 	if err != nil {
-		t.Errorf("expected Validate to return nil, got %v", err)
+		t.Errorf(errExpectedValidate, err)
 	}
 }
 
@@ -133,7 +140,7 @@ func TestCiString255TypeTooLong(t *testing.T) {
 	_, err := CiString255(CiString255StrValue)
 
 	if err == nil {
-		t.Errorf("expected error for string too long")
+		t.Errorf(errExpectedErrorTooLong)
 	}
 }
 
@@ -144,17 +151,17 @@ func TestCiString500TypeValid(t *testing.T) {
 	CiString500Str, err := CiString500(CiString500StrValue)
 
 	if err != nil {
-		t.Errorf("expected no error, got %v", err)
+		t.Errorf(errExpectedNoError, err)
 	}
 
 	if CiString500Str.String() != CiString500StrValue {
-		t.Errorf("expected string output, got %s", CiString500Str.String())
+		t.Errorf(errExpectedStringOutput, CiString500Str.String())
 	}
 
 	err = CiString500Str.Validate()
 
 	if err != nil {
-		t.Errorf("expected Validate to return nil, got %v", err)
+		t.Errorf(errExpectedValidate, err)
 	}
 }
 
@@ -166,7 +173,7 @@ func TestCiString500TypeTooLong(t *testing.T) {
 	_, err := CiString500(CiString500StrValue)
 
 	if err == nil {
-		t.Errorf("expected error for string too long")
+		t.Errorf(errExpectedErrorTooLong)
 	}
 }
 
@@ -191,7 +198,7 @@ func TestCiStringTypeASCII(t *testing.T) {
 	}
 
 	if err := String255.Validate(); err != nil {
-		t.Errorf("expected Validate to return nil, got %v", err)
+		t.Errorf(errExpectedValidate, err)
 	}
 }
 
