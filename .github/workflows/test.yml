@@ -32,7 +32,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: 1.22
+          go-version: 1.24
 
       - name: Install Dependencies
         run: go mod tidy
@@ -51,3 +51,25 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage.out
+
+  e2e:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up Go environment
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.24 # Specify the version of Go to use
+
+      # Run all .go files in _example directory recursively
+      - name: Run all Go files in _example directory
+        run: |
+          find ./_example -type f -name "*.go" | while read file; do
+            echo "Running file: $file"
+            go run "$file"
+          done
