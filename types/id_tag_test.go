@@ -1,6 +1,7 @@
 package types
 
 import (
+	"errors"
 	"testing"
 )
 
@@ -27,7 +28,6 @@ func TestIdTag_InvalidInput_Empty(t *testing.T) {
 	t.Parallel()
 
 	_, err := IdTag("")
-	t.Logf("got error: %v", err)
 
 	if err == nil {
 		t.Error("Expected error for empty IdTag, got nil")
@@ -68,5 +68,21 @@ func TestIdTag_RevalidateAfterConstruction(t *testing.T) {
 
 	if err := idTag.Validate(); err != nil {
 		t.Errorf("Expected Validate() to pass, got error: %v", err)
+	}
+}
+
+// fakeIdTag is a test double for IdTagType that always fails validation.
+type fakeIdTag struct{}
+
+func (fakeIdTag) String() string  { return "INVALID" }
+func (fakeIdTag) Validate() error { return errors.New("forced failure") }
+
+func TestIdTag_CustomFakeValidation(t *testing.T) {
+	t.Parallel()
+
+	var idTag IdTagType = fakeIdTag{}
+
+	if err := idTag.Validate(); err == nil {
+		t.Error("Expected Validate to return an error from fakeIdTag")
 	}
 }
