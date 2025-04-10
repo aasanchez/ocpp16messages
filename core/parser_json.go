@@ -20,6 +20,15 @@ type ParsedMessage struct {
 
 const errUnexpected = "unexpected error: %v"
 
+var (
+	ErrInvalidOCPPMessage = errors.New("invalid OCPP message: must have at least 3 elements")
+	ErrInvalidCALLMessage = errors.New("CALL message must have 4 elements")
+	ErrInvalidCALLResult  = errors.New("CALLRESULT message must have 3 elements")
+	ErrInvalidCALLERROR   = errors.New("CALLERROR message must have at least 4 elements")
+	ErrInvalidErrorCode   = errors.New("invalid errorCode")
+	ErrInvalidErrorDesc   = errors.New("invalid errorDescription")
+)
+
 func ParseJsonMessage(data []byte) (*ParsedMessage, error) {
 	raw, err := parseRawMessage(data)
 	if err != nil {
@@ -27,7 +36,7 @@ func ParseJsonMessage(data []byte) (*ParsedMessage, error) {
 	}
 
 	if len(raw) < 3 {
-		return nil, errors.New("invalid OCPP message: must have at least 3 elements")
+		return nil, ErrInvalidOCPPMessage
 	}
 
 	typeID, uniqueID, err := extractTypeAndID(raw)
@@ -76,7 +85,7 @@ func extractTypeAndID(raw []json.RawMessage) (types.MessageType, string, error) 
 
 func parseCallMessage(raw []json.RawMessage, msg *ParsedMessage) (*ParsedMessage, error) {
 	if len(raw) != 4 {
-		return nil, errors.New("CALL message must have 4 elements")
+		return nil, ErrInvalidCALLMessage
 	}
 	var action string
 	if err := json.Unmarshal(raw[2], &action); err != nil {
@@ -89,7 +98,7 @@ func parseCallMessage(raw []json.RawMessage, msg *ParsedMessage) (*ParsedMessage
 
 func parseCallResultMessage(raw []json.RawMessage, msg *ParsedMessage) (*ParsedMessage, error) {
 	if len(raw) != 3 {
-		return nil, errors.New("CALLRESULT message must have 3 elements")
+		return nil, ErrInvalidCALLResult
 	}
 	msg.Payload = raw[2]
 	return msg, nil
@@ -97,18 +106,18 @@ func parseCallResultMessage(raw []json.RawMessage, msg *ParsedMessage) (*ParsedM
 
 func parseCallErrorMessage(raw []json.RawMessage, msg *ParsedMessage) (*ParsedMessage, error) {
 	if len(raw) < 4 {
-		return nil, errors.New("CALLERROR message must have at least 4 elements")
+		return nil, ErrInvalidCALLERROR
 	}
 
 	var errorCode string
 	if err := json.Unmarshal(raw[2], &errorCode); err != nil {
-		return nil, errors.New("invalid errorCode")
+		return nil, ErrInvalidErrorCode
 	}
 	msg.ErrorCode = errorCode
 
 	var errorDescription string
 	if err := json.Unmarshal(raw[3], &errorDescription); err != nil {
-		return nil, errors.New("invalid errorDescription")
+		return nil, ErrInvalidErrorDesc
 	}
 	msg.ErrorDescription = errorDescription
 
