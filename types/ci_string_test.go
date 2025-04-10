@@ -11,10 +11,12 @@ func TestCiString20Type_Valid(t *testing.T) {
 	if err != nil {
 		t.Errorf("expected no error, got %v", err)
 	}
-	if cs.String() != "ValidString" {
+	expected := "ValidString"
+	if cs.String() != expected {
 		t.Errorf("expected string output, got %s", cs.String())
 	}
-	if err := cs.Validate(); err != nil {
+	err = cs.Validate()
+	if err != nil {
 		t.Errorf("expected Validate to return nil, got %v", err)
 	}
 }
@@ -44,7 +46,8 @@ func TestCiString25Type_Valid(t *testing.T) {
 	if cs.String() != "AnotherValid" {
 		t.Errorf("expected string output, got %s", cs.String())
 	}
-	if err := cs.Validate(); err != nil {
+	err = cs.Validate()
+	if err != nil {
 		t.Errorf("expected Validate to return nil, got %v", err)
 	}
 }
@@ -59,18 +62,23 @@ func TestCiString50Type_Boundary(t *testing.T) {
 	if cs.String() != value {
 		t.Errorf("unexpected string output")
 	}
-	if err := cs.Validate(); err != nil {
+	err = cs.Validate()
+	if err != nil {
 		t.Errorf("expected Validate to return nil, got %v", err)
 	}
 }
 
 func TestCiString255Type_Validate(t *testing.T) {
 	t.Parallel()
-	s, _ := CiString255("abc")
-	if s.String() != "abc" {
-		t.Errorf("unexpected string output")
+	cs, err := CiString25("abc")
+	if err != nil {
+		t.Errorf("unexpected error: %v", err)
 	}
-	if err := s.Validate(); err != nil {
+	if cs.String() != "abc" {
+		t.Errorf("expected string output, got %s", cs.String())
+	}
+	err = cs.Validate()
+	if err != nil {
 		t.Errorf("expected Validate to return nil, got %v", err)
 	}
 }
@@ -84,7 +92,8 @@ func TestCiString500Type_Valid(t *testing.T) {
 	if s.String() != "This is a test" {
 		t.Errorf("unexpected string output")
 	}
-	if err := s.Validate(); err != nil {
+	err = s.Validate()
+	if err != nil {
 		t.Errorf("expected Validate to return nil, got %v", err)
 	}
 }
