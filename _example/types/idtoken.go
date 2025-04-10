@@ -14,14 +14,9 @@ func main() {
 	idToken, err := types.IdToken(input)
 	if err != nil {
 		log.Fatalf("❌ Failed to create IdToken: %v", err)
+		return
 	}
 
 	fmt.Printf("✅ Valid IdToken: %s\n", idToken.String())
-
-	// Optional: validate it again later
-	if err := idToken.Validate(); err != nil {
-		log.Fatalf("❌ Unexpected validation error: %v", err)
-	}
-
 	// Now you can pass this IdToken into a request message (e.g., Authorize.req)
 }

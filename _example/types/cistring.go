@@ -3,42 +3,20 @@
 package main
 
 import (
-	"log"
+	"fmt"
 
 	"github.com/aasanchez/ocpp16messages/types"
 )
 
 func main() {
-	// Valid input: 20 ASCII characters
-	input := "ABCDEFGHIJ1234567890"
+	input := `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sed nisi et diam convallis placerat. Aenean maximus dui lacinia elit pharetra, nec aliquam felis faucibus. Cras risus risus, faucibus convallis tempor ut, vehicula ut velit. Etiam eleifend lorem auctor libero convallis, ut posuere nisl pellentesque. Duis vitae elit nibh. Vivamus vitae feugiat lorem, id accumsan magna. Sed porta tortor ut sapien lacinia pharetra. `
 
-	ciString, err := types.CiString20(input)
+	cistr, err := types.CiString500(input)
 	if err != nil {
-		log.Println("❌ CiString20 validation failed:", err)
-
+		fmt.Println("❌ Error:", err)
 		return
 	}
 
-	log.Println("✅ Validated CiString20 value:", ciString.String())
-
-	// Optional: explicitly validate again later
-	if err := ciString.Validate(); err != nil {
-		log.Println("Unexpected validation error:", err)
-	}
-
-	// Invalid input: too long
-	tooLong := input + "X"
-	_, err = types.CiString20(tooLong)
-
-	if err != nil {
-		log.Println("❌ Expected error for too-long input:", err)
-	}
-
-	// Invalid input: contains non-ASCII character
-	invalid := "Hello🚗World"
-	_, err = types.CiString20(invalid)
-
-	if err != nil {
-		log.Println("❌ Expected error for non-ASCII input:", err)
-	}
+	fmt.Println("✅ Length:", len(cistr.String()))
+	fmt.Println("📦 Snippet:", cistr.String()[:30], "...")
 }
