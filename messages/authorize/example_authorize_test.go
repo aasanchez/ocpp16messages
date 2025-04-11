@@ -1,6 +1,6 @@
 //go:build example
 
-package example
+package authorize
 
 import (
 	"encoding/json"
@@ -8,7 +8,6 @@ import (
 	"log"
 	"time"
 
-	"github.com/aasanchez/ocpp16messages/messages/authorize"
 	"github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -18,7 +17,7 @@ type RequestPayload struct {
 	IdTag string `json:"idTag"`
 }
 
-type authorizeConfirmationPayload struct {
+type ConfirmationPayload struct {
 	IdTagInfo struct {
 		Status      types.AuthorizationStatus `json:"status"`
 		ExpiryDate  *string                   `json:"expiryDate,omitempty"`
@@ -26,14 +25,14 @@ type authorizeConfirmationPayload struct {
 	} `json:"idTagInfo"`
 }
 
-func main() {
+func ExampleAuthorizeWorkflow() {
 	fmt.Println("=== Full OCPP 1.6J-Compliant Authorize Workflow ===")
 
 	// --- Step 1: Build domain-level Request ---
 	idTagRaw := "ABC123456789"
 	messageID := "msg-001"
 
-	reqMsg, err := authorize.Request(idTagRaw)
+	reqMsg, err := Request(idTagRaw)
 	if err != nil {
 		log.Fatalf("failed to construct request: %v", err)
 	}
@@ -63,7 +62,7 @@ func main() {
 		log.Fatalf("failed to parse request payload: %v", err)
 	}
 
-	domainReq, err := authorize.Request(payload.IdTag)
+	domainReq, err := Request(payload.IdTag)
 	if err != nil {
 		log.Fatalf("domain validation failed: %v", err)
 	}
@@ -83,7 +82,7 @@ func main() {
 		ParentIdTag: &parent,
 	}
 
-	confMsg, err := authorize.AuthorizeConfirmation(confInfo)
+	confMsg, err := Confirmation(confInfo)
 	if err != nil {
 		log.Fatalf("failed to build response: %v", err)
 	}
@@ -93,7 +92,7 @@ func main() {
 	fmt.Println("[CSMS] Authorize.conf is valid ✅")
 
 	// --- Step 5: Convert to JSON-compliant CALLRESULT ---
-	var respPayload authorizeConfirmationPayload
+	var respPayload ConfirmationPayload
 	respPayload.IdTagInfo.Status = confMsg.IdTagInfo.Status
 
 	if confMsg.IdTagInfo.ExpiryDate != nil {
@@ -120,7 +119,7 @@ func main() {
 		log.Fatalf("failed to parse CALLRESULT: %v", err)
 	}
 
-	var resultPayload authorizeConfirmationPayload
+	var resultPayload ConfirmationPayload
 	if err := json.Unmarshal(parsedResult[2], &resultPayload); err != nil {
 		log.Fatalf("failed to parse response payload: %v", err)
 	}
@@ -143,7 +142,7 @@ func main() {
 		parsedExpiry = &ts
 	}
 
-	parsedConf := authorize.AuthorizeConfirmationMessage{
+	parsedConf := ConfirmationMessage{
 		IdTagInfo: types.IdTagInfoType{
 			Status:      resultPayload.IdTagInfo.Status,
 			ExpiryDate:  parsedExpiry,

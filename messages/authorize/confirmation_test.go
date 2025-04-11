@@ -23,7 +23,7 @@ func TestAuthorizeConfirmationValidInput(t *testing.T) {
 		ParentIdTag: &parent,
 	}
 
-	msg, err := AuthorizeConfirmation(info)
+	msg, err := Confirmation(info)
 	if err != nil {
 		t.Fatalf("unexpected error constructing AuthorizeConfirmationMessage: %v", err)
 	}
@@ -42,7 +42,7 @@ func TestAuthorizeConfirmationInvalidIdTagInfo(t *testing.T) {
 		ParentIdTag: nil,
 	}
 
-	_, err := AuthorizeConfirmation(invalidInfo)
+	_, err := Confirmation(invalidInfo)
 	if err == nil {
 		t.Error("expected error for invalid IdTagInfo, got nil")
 	}
@@ -51,7 +51,7 @@ func TestAuthorizeConfirmationInvalidIdTagInfo(t *testing.T) {
 func TestAuthorizeConfirmationValidateFailsWithInvalidData(t *testing.T) {
 	t.Parallel()
 
-	invalid := AuthorizeConfirmationMessage{
+	invalid := ConfirmationMessage{
 		IdTagInfo: types.IdTagInfoType{
 			Status:      "NotAValidStatus",
 			ExpiryDate:  nil,
@@ -80,7 +80,7 @@ func TestAuthorizeConfirmationString(t *testing.T) {
 		ParentIdTag: &parent,
 	}
 
-	msg := AuthorizeConfirmationMessage{
+	msg := ConfirmationMessage{
 		IdTagInfo: info,
 	}
 
