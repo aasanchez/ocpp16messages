@@ -55,12 +55,6 @@ const (
 // This method is typically used during decoding, validation, or integration testing
 // to ensure that the incoming status value is recognized and supported by compliant
 // software. Unknown or misspelled values are considered invalid.
-//
-// Example usage:
-//
-//	if !status.IsValid() {
-//	    return fmt.Errorf("invalid authorization status: %s", status)
-//	}
 func (s AuthorizationStatus) IsValid() bool {
 	switch s {
 	case Accepted, Blocked, Expired, Invalid, ConcurrentTx:

@@ -42,3 +42,6 @@ format: ## is used to format the code of the application
 examples: ## is used to format the code of the application
 	@find ./.examples -type f -name "*.go" -print0 | xargs -0 -I{} bash -c 'echo "Running file: {}" && go run "{}" || exit 1'
 
+.PHONY: doc
+doc: ## is used to format the code of the application
+	@godoc -http=:6060
