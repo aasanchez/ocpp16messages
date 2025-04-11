@@ -34,6 +34,22 @@ func ExampleAuthorizationStatus_inValid() {
 	// 'InProgress' is not a valid status.
 }
 
+func ExampleCiString() {
+	input := "Hello, OCPP!"
+	maxLen := 20
+
+	// Attempt to create a valid ciString
+	cs, err := types.CiString(input, maxLen)
+	if err != nil {
+		log.Fatalf("Failed to create ciString: %v", err)
+	}
+
+	fmt.Println("ciString created:", cs.String())
+
+	// Output:
+	// ciString created: Hello, OCPP!
+}
+
 func ExampleCiString20() {
 	input := strings.Repeat("A", 20)
 
@@ -64,35 +80,94 @@ func ExampleCiString20_invalid() {
 	// Error: value exceeds maximum allowed length: actual length 21, max 20
 }
 
-func ExampleIdTokenType() {
-	input := "ABC1234567890XYZ7890" // valid 20-char ASCII input
+func ExampleCiString25() {
+	input := strings.Repeat("A", 25)
 
-	idToken, err := types.IdToken(input)
+	cistr, err := types.CiString25(input)
 	if err != nil {
-		log.Fatalf("Failed to create IdToken: %v", err)
+		fmt.Println("Error:", err)
 
 		return
 	}
 
-	fmt.Printf("Valid IdToken: %s\n", idToken.String())
+	fmt.Println("Length:", len(cistr.String()))
 	// Output:
-	// Valid IdToken: ABC1234567890XYZ7890
+	// Length: 25
 }
 
-func ExampleCiString() {
-	input := "Hello, OCPP!"
-	maxLen := 20
+func ExampleCiString25_invalid() {
+	input := strings.Repeat("A", 26)
 
-	// Attempt to create a valid ciString
-	cs, err := types.CiString(input, maxLen)
+	cistr, err := types.CiString25(input)
 	if err != nil {
-		log.Fatalf("Failed to create ciString: %v", err)
+		fmt.Println("Error:", err)
+
+		return
 	}
 
-	fmt.Println("ciString created:", cs.String())
-
+	fmt.Println("Length:", len(cistr.String()))
 	// Output:
-	// ciString created: Hello, OCPP!
+	// Error: value exceeds maximum allowed length: actual length 26, max 25
+}
+
+func ExampleCiString50() {
+	input := strings.Repeat("A", 50)
+
+	cistr, err := types.CiString50(input)
+	if err != nil {
+		fmt.Println("Error:", err)
+
+		return
+	}
+
+	fmt.Println("Length:", len(cistr.String()))
+	// Output:
+	// Length: 50
+}
+
+func ExampleCiString50_invalid() {
+	input := strings.Repeat("A", 51)
+
+	cistr, err := types.CiString50(input)
+	if err != nil {
+		fmt.Println("Error:", err)
+
+		return
+	}
+
+	fmt.Println("Length:", len(cistr.String()))
+	// Output:
+	// Error: value exceeds maximum allowed length: actual length 51, max 50
+}
+
+func ExampleCiString255() {
+	input := strings.Repeat("A", 255)
+
+	cistr, err := types.CiString255(input)
+	if err != nil {
+		fmt.Println("Error:", err)
+
+		return
+	}
+
+	fmt.Println("Length:", len(cistr.String()))
+	// Output:
+	// Length: 255
+}
+
+func ExampleCiString255_invalid() {
+	input := strings.Repeat("A", 256)
+
+	cistr, err := types.CiString255(input)
+	if err != nil {
+		fmt.Println("Error:", err)
+
+		return
+	}
+
+	fmt.Println("Length:", len(cistr.String()))
+	// Output:
+	// Error: value exceeds maximum allowed length: actual length 256, max 255
 }
 
 func ExampleCiString500() {
@@ -123,4 +198,19 @@ func ExampleCiString500_invalid() {
 	fmt.Println("Length:", len(cistr.String()))
 	// Output:
 	// Error: value exceeds maximum allowed length: actual length 501, max 500
+}
+
+func ExampleIdTokenType() {
+	input := "ABC1234567890XYZ7890" // valid 20-char ASCII input
+
+	idToken, err := types.IdToken(input)
+	if err != nil {
+		log.Fatalf("Failed to create IdToken: %v", err)
+
+		return
+	}
+
+	fmt.Printf("Valid IdToken: %s\n", idToken.String())
+	// Output:
+	// Valid IdToken: ABC1234567890XYZ7890
 }
