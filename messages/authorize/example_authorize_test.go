@@ -156,4 +156,6 @@ func main() {
 	}
 
 	fmt.Println("[CP] Authorize.conf received and validated ✅")
+
+	// Output:
 }
