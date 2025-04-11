@@ -22,7 +22,7 @@ type AuthorizeRequestMessage struct {
 	//
 	// It must comply with the constraints of the OCPP 1.6J `idTag` field,
 	// defined as a CiString[20]: max 20 characters, printable ASCII only.
-	IdTag types.IdTagType
+	IdTag types.IdTokenType
 }
 
 // AuthorizeRequest constructs a new AuthorizeRequestMessage with a validated IdTag.
@@ -38,12 +38,12 @@ type AuthorizeRequestMessage struct {
 //	    log.Fatalf("invalid request: %v", err)
 //	}
 func AuthorizeRequest(idTag string) (AuthorizeRequestMessage, error) {
-	tag, err := types.IdTag(idTag)
+	tok, err := types.IdToken(idTag)
 	if err != nil {
 		return AuthorizeRequestMessage{}, fmt.Errorf("failed to create AuthorizeRequestMessage: %w", err)
 	}
 
-	return AuthorizeRequestMessage{IdTag: tag}, nil
+	return AuthorizeRequestMessage{IdTag: tok}, nil
 }
 
 // String returns a human-readable representation of the AuthorizeRequestMessage.

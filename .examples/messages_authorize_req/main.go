@@ -74,7 +74,7 @@ func main() {
 	}
 
 	// Create an IdTag object using the extracted string
-	idTag, err := types.IdTag(idTagStr)
+	idTag, err := types.IdToken(idTagStr)
 	if err != nil {
 		log.Fatalf("Error creating IdTag: %v", err)
 	}
