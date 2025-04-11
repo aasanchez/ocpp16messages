@@ -4,82 +4,75 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/types"
+	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
+	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-func TestAuthorizeRequestValid(t *testing.T) {
+func TestAuthorizeRequest_validPayload(t *testing.T) {
 	t.Parallel()
 
-	input := "ABC1234567890XYZ78"
-	req, err := Request(input)
+	input := authorizetypes.RequestPayload{IdTag: "ABC1234567890XYZ78"}
+	if err := input.Validate(); err != nil {
+		t.Fatalf("unexpected validation error: %v", err)
+	}
 
+	msg, err := Request(input)
 	if err != nil {
-		t.Fatalf("Expected no error for valid idTag, got: %v", err)
+		t.Fatalf("Request() returned unexpected error: %v", err)
 	}
 
-	if req.IdTag.String() != input {
-		t.Errorf("Expected idTag to be %q, got %q", input, req.IdTag.String())
-	}
-
-	if err := req.Validate(); err != nil {
-		t.Errorf("Expected Validate() to succeed, got error: %v", err)
+	if msg.IdTag.Value() != input.IdTag {
+		t.Errorf("expected IdTag %q, got %q", input.IdTag, msg.IdTag.Value())
 	}
 }
 
-func TestAuthorizeRequestEmptyIdTag(t *testing.T) {
+func TestAuthorizeRequest_emptyIdTag(t *testing.T) {
 	t.Parallel()
 
-	_, err := Request("")
+	input := authorizetypes.RequestPayload{IdTag: ""}
+	if err := input.Validate(); err == nil {
+		t.Error("expected validation error for empty IdTag, got nil")
+	}
+
+	_, err := Request(input)
 	if err == nil {
-		t.Error("Expected error for empty idTag, got nil")
+		t.Fatal("expected error for empty IdTag, got nil")
+	}
+
+	expected := "request -> invalid idTag -> ciString.Validate: value must not be empty"
+	if !strings.Contains(err.Error(), expected) {
+		t.Errorf(sharedtypes.ErrContainsFmt, expected, err.Error())
 	}
 }
 
-func TestAuthorizeRequestTooLongIdTag(t *testing.T) {
+func TestAuthorizeRequest_tooLongIdTag(t *testing.T) {
 	t.Parallel()
 
-	input := strings.Repeat("A", 21) // >20 chars
+	input := authorizetypes.RequestPayload{IdTag: strings.Repeat("A", 21)}
 	_, err := Request(input)
 
 	if err == nil {
-		t.Error("Expected error for too long idTag, got nil")
+		t.Fatal("expected error for IdTag > 20 characters, got nil")
+	}
+
+	expected := "request -> invalid idTag -> ciString.Validate: value exceeds maximum allowed length (got length 21, max 20)"
+	if !strings.Contains(err.Error(), expected) {
+		t.Errorf(sharedtypes.ErrContainsFmt, expected, err.Error())
 	}
 }
 
-func TestAuthorizeRequestNonASCIIIdTag(t *testing.T) {
+func TestAuthorizeRequest_nonASCIIIdTag(t *testing.T) {
 	t.Parallel()
 
-	input := "مرحباOCPP"
+	input := authorizetypes.RequestPayload{IdTag: "مرحباOCPP"}
 	_, err := Request(input)
 
 	if err == nil {
-		t.Error("Expected error for non-ASCII idTag, got nil")
-	}
-}
-
-func TestAuthorizeRequestValidateFailsWithInvalidIdTag(t *testing.T) {
-	t.Parallel()
-
-	req := RequestMessage{
-		IdTag: types.IdTokenType{}, // zero value is invalid
+		t.Fatal("expected error for non-ASCII IdTag, got nil")
 	}
 
-	err := req.Validate()
-	if err == nil {
-		t.Error("Expected Validate() to fail for zero-value IdTag")
-	}
-}
-
-func TestAuthorizeRequestString(t *testing.T) {
-	t.Parallel()
-
-	req, err := Request("TAG123456789012345")
-	if err != nil {
-		t.Fatalf("unexpected error creating request: %v", err)
-	}
-
-	output := req.String()
-	if !strings.Contains(output, "TAG123456789012345") {
-		t.Errorf("expected String() to include idTag, got: %s", output)
+	expected := "request -> invalid idTag -> ciString.Validate: value contains non-printable ASCII characters"
+	if !strings.Contains(err.Error(), expected) {
+		t.Errorf(sharedtypes.ErrContainsFmt, expected, err.Error())
 	}
 }

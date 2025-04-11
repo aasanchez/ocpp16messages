@@ -1,93 +1,125 @@
 package authorize
 
 import (
-	"fmt"
+	"strings"
 	"testing"
-	"time"
 
-	"github.com/aasanchez/ocpp16messages/types"
+	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
+	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-func TestAuthorizeConfirmationValidInput(t *testing.T) {
+const ()
+
+func TestAuthorizeConfirmation_validPayload(t *testing.T) {
 	t.Parallel()
 
-	parent, err := types.IdToken("GROUP123")
-	if err != nil {
-		t.Fatalf("unexpected error creating parentIdTag: %v", err)
-	}
+	expiry := "2025-04-12T10:03:04Z"
+	parent := "A632-E2BB0231072C"
 
-	expiry := time.Now().Add(24 * time.Hour).UTC()
-	info := types.IdTagInfoType{
-		Status:      types.Accepted,
-		ExpiryDate:  &expiry,
-		ParentIdTag: &parent,
-	}
-
-	msg, err := Confirmation(info)
-	if err != nil {
-		t.Fatalf("unexpected error constructing AuthorizeConfirmationMessage: %v", err)
-	}
-
-	if err := msg.Validate(); err != nil {
-		t.Errorf("expected message to be valid, got error: %v", err)
-	}
-}
-
-func TestAuthorizeConfirmationInvalidIdTagInfo(t *testing.T) {
-	t.Parallel()
-
-	invalidInfo := types.IdTagInfoType{
-		Status:      "InvalidStatus",
-		ExpiryDate:  nil,
-		ParentIdTag: nil,
-	}
-
-	_, err := Confirmation(invalidInfo)
-	if err == nil {
-		t.Error("expected error for invalid IdTagInfo, got nil")
-	}
-}
-
-func TestAuthorizeConfirmationValidateFailsWithInvalidData(t *testing.T) {
-	t.Parallel()
-
-	invalid := ConfirmationMessage{
-		IdTagInfo: types.IdTagInfoType{
-			Status:      "NotAValidStatus",
-			ExpiryDate:  nil,
-			ParentIdTag: nil,
+	payload := authorizetypes.ConfirmationPayload{
+		IdTagInfo: authorizetypes.IdTagInfoPayload{
+			Status:      "Accepted",
+			ExpiryDate:  &expiry,
+			ParentIdTag: &parent,
 		},
 	}
 
-	err := invalid.Validate()
-	if err == nil {
-		t.Error("expected Validate() to fail, got nil")
+	msg, err := Confirmation(payload)
+	if err != nil {
+		t.Fatalf(sharedtypes.ErrExpectedNoError, err)
+	}
+
+	val := msg.IdTagInfo.Value()
+
+	if val.Status != "Accepted" {
+		t.Errorf("unexpected status: got %s", val.Status)
+	}
+
+	if val.ExpiryDate == nil || *val.ExpiryDate != expiry {
+		t.Errorf("unexpected expiry date: got %+v", val.ExpiryDate)
+	}
+
+	if val.ParentIdTag == nil || *val.ParentIdTag != parent {
+		t.Errorf("unexpected parentIdTag: got %+v", val.ParentIdTag)
 	}
 }
 
-func TestAuthorizeConfirmationString(t *testing.T) {
+func TestAuthorizeConfirmation_invalidStatus(t *testing.T) {
 	t.Parallel()
 
-	parent, err := types.IdToken("GROUPABC")
-	if err != nil {
-		t.Fatalf("unexpected error creating parentIdTag: %v", err)
+	expiry := "2026-01-01T00:00:00Z"
+	parent := "PARENT"
+
+	payload := authorizetypes.ConfirmationPayload{
+		IdTagInfo: authorizetypes.IdTagInfoPayload{
+			Status:      "UnknownStatus",
+			ExpiryDate:  &expiry,
+			ParentIdTag: &parent,
+		},
 	}
 
-	expiry := time.Now().UTC()
-	info := types.IdTagInfoType{
-		Status:      types.Accepted,
-		ExpiryDate:  &expiry,
-		ParentIdTag: &parent,
+	_, err := Confirmation(payload)
+	if err == nil {
+		t.Fatal("expected error for invalid status, got nil")
+	}
+}
+
+func TestAuthorizeConfirmation_invalidExpiryDate(t *testing.T) {
+	t.Parallel()
+
+	invalidDate := "not-a-date"
+	parent := "PARENT1"
+
+	payload := authorizetypes.ConfirmationPayload{
+		IdTagInfo: authorizetypes.IdTagInfoPayload{
+			Status:      "Accepted",
+			ExpiryDate:  &invalidDate,
+			ParentIdTag: &parent,
+		},
 	}
 
-	msg := ConfirmationMessage{
-		IdTagInfo: info,
+	_, err := Confirmation(payload)
+	if err == nil {
+		t.Fatal("expected error for invalid expiryDate, got nil")
+	}
+}
+
+func TestAuthorizeConfirmation_invalidParentIdTag(t *testing.T) {
+	t.Parallel()
+
+	expiry := "2027-05-01T00:00:00Z"
+	invalidTag := strings.Repeat("X", 100) // invalid CiString20
+
+	payload := authorizetypes.ConfirmationPayload{
+		IdTagInfo: authorizetypes.IdTagInfoPayload{
+			Status:      "Accepted",
+			ExpiryDate:  &expiry,
+			ParentIdTag: &invalidTag,
+		},
 	}
 
-	want := fmt.Sprintf("Authorize.conf{%s}", info.String())
-	got := msg.String()
+	_, err := Confirmation(payload)
+	if err == nil {
+		t.Fatal("expected error for invalid parentIdTag, got nil")
+	}
+}
 
-	if got != want {
-		t.Errorf("unexpected String() output:\nwant: %s\ngot : %s", want, got)
+func TestAuthorizeConfirmation_payloadValidationFails_emptyStatus(t *testing.T) {
+	t.Parallel()
+
+	expiry := "2027-01-03T00:00:00Z"
+	parent := "PARENT2"
+
+	payload := authorizetypes.ConfirmationPayload{
+		IdTagInfo: authorizetypes.IdTagInfoPayload{
+			Status:      "",
+			ExpiryDate:  &expiry,
+			ParentIdTag: &parent,
+		},
+	}
+
+	_, err := Confirmation(payload)
+	if err == nil {
+		t.Fatal("expected error for empty status in payload, got nil")
 	}
 }

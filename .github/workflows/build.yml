@@ -1,0 +1,143 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - '**' # Matches all branches
+  pull_request:
+    branches:
+      - '**' # Matches all branches
+
+jobs:
+  Unittest:
+    name: Unittest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.24
+          cache: false
+
+      - run: mkdir -p reports
+
+      - name: Install Tools
+        run: |
+          go install github.com/jstemmer/go-junit-report/v2@latest
+          go install github.com/boumenot/gocover-cobertura@latest
+          go mod tidy
+
+      - name: Execute test
+        run: go test -mod=readonly -v -coverprofile=reports/coverage.out  -run '^Test' ./... >reports/coverage.txt || true
+
+      - name: Execute test of Examples
+        run: go test -mod=readonly -v -coverprofile=reports/coverage-example.out  -run '^Example' ./... >reports/coverage-example.txt || true
+
+      - run: cat reports/coverage.txt
+
+      - name: Coverage Percentage
+        run: |
+          percent=$(go tool cover -func=reports/coverage.out | tail -1 | awk -F" " '{print $NF}')
+          echo "${percent} covered"
+
+      - name: Produce Cobertura report
+        run: gocover-cobertura <reports/coverage.out >reports/cobertura.xml
+
+      - name: Produce JUnit report
+        run: go-junit-report <reports/coverage.txt >reports/xunit.xml
+
+      - name: Produce JUnit report of examples
+        run: go-junit-report <reports/coverage-example.txt >reports/xunit-example.xml
+
+      - name: Produce JSON report
+        run: go tool test2json <reports/coverage.txt >reports/coverage.json
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: reports/coverage.out
+          flags: unit
+          slug: aasanchez/ocpp16messages
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
+
+      - name: Upload coverage to Codecov of Examples
+        uses: codecov/codecov-action@v5
+        with:
+          files: reports/coverage-example.out
+          flags: examples
+          slug: aasanchez/ocpp16messages
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
+
+      - name: Upload JUnitReport to Codecov
+        uses: codecov/test-results-action@v1
+        with:
+          flags: unit
+          files: reports/xunit.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
+
+      - name: Upload JUnitReport to Codecov of Examples
+        uses: codecov/test-results-action@v1
+        with:
+          flags: examples
+          files: reports/xunit-example.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: "Go test artifacts for build ${{ github.run_number }} in ocpp16messages"
+          path: reports
+
+  golangci-lint:
+    name: Golangci-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.24
+          cache: false
+
+      - run: mkdir -p .reports
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v7
+        with:
+          version: v2.0
+          args: --config golangci.yml --timeout=5m ./...
+
+      - name: Report
+        run: cat .reports/golangci-lint.txt
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: "Golint-CI artifacts for build ${{ github.run_number }} in ocpp16messages"
+          include-hidden-files: true
+          path: .reports/
+
+  other-analysis:
+    name: Other Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.24
+          cache: false
+
+      - run: go vet ./...
+
+      - name: Install stattickcheck
+        run: |
+          go install honnef.co/go/tools/cmd/staticcheck@latest
+          go mod tidy
+
+      - run: staticcheck
