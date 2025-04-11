@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/aasanchez/ocpp16messages/messages/authorize"
 	"github.com/aasanchez/ocpp16messages/types"
@@ -54,4 +55,32 @@ func ExampleRequest() {
 	//     "idTag": "ABC123456789"
 	//   }
 	// ]
+}
+
+func ExampleCiString500_valid() {
+	input := strings.Repeat("A", 499)
+
+	cistr, err := types.CiString500(input)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	fmt.Println("Length:", len(cistr.String()))
+	// Output:
+	// Length: 499
+}
+
+func ExampleCiString500_invalid() {
+	input := strings.Repeat("A", 501)
+
+	cistr, err := types.CiString500(input)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	fmt.Println("Length:", len(cistr.String()))
+	// Output:
+	// Error: value exceeds maximum allowed length: actual length 501, max 500
 }
