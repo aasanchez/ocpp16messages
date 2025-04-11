@@ -17,12 +17,9 @@
 .gitignore          export-ignore
 .gitattributes      export-ignore
 .editorconfig       export-ignore
-*_test.go           export-ignore
-*_benchmark_test.go export-ignore
 
 README.md           export-ignore
 Makefile            export-ignore
-.examples/           export-ignore
 .sonarlint/         export-ignore
 .golangci.yml       export-ignore
 *.text              export-ignore
