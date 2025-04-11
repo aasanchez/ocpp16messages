@@ -1,6 +1,6 @@
 //go:build example
 
-package main
+package authorize_test
 
 import (
 	"encoding/json"
