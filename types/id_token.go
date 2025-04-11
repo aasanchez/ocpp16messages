@@ -32,13 +32,6 @@ type IdTokenType struct {
 //   - Is empty.
 //   - Exceeds 20 characters.
 //   - Contains non-printable or non-ASCII characters.
-//
-// Example usage:
-//
-//	token, err := types.IdToken("ABC123TOKEN")
-//	if err != nil {
-//	    return fmt.Errorf("invalid IdToken: %w", err)
-//	}
 func IdToken(s string) (IdTokenType, error) {
 	ci, err := CiString20(s)
 	if err != nil {

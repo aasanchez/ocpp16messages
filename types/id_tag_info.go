@@ -8,9 +8,9 @@ import (
 
 // Static error definitions for validation.
 var (
-	ErrInvalidAuthorizationStatus = errors.New("invalid authorization status")
-	ErrInvalidExpiryDate          = errors.New("expiryDate is present but not a valid timestamp")
-	ErrInvalidParentIdTag         = errors.New("invalid parentIdTag")
+	errInvalidAuthorizationStatus = errors.New("invalid authorization status")
+	errInvalidExpiryDate          = errors.New("expiryDate is present but not a valid timestamp")
+	errInvalidParentIdTag         = errors.New("invalid parentIdTag")
 )
 
 // IdTagInfoType represents the authorization status and related metadata returned by the Central System
@@ -18,15 +18,15 @@ var (
 //
 // This type aligns with the `idTagInfo` structure defined in the OCPP 1.6J specification, Section 5.2.
 type IdTagInfoType struct {
-	Status      AuthorizationStatus
 	ExpiryDate  *time.Time
 	ParentIdTag *IdTokenType
+	Status      AuthorizationStatus
 }
 
 // NewIdTagInfo constructs a new IdTagInfoType with a validated AuthorizationStatus.
 func IdTagInfo(status AuthorizationStatus) (IdTagInfoType, error) {
 	if !status.IsValid() {
-		return IdTagInfoType{}, fmt.Errorf("%w: %s", ErrInvalidAuthorizationStatus, status)
+		return IdTagInfoType{}, fmt.Errorf("%w: %s", errInvalidAuthorizationStatus, status)
 	}
 
 	return IdTagInfoType{
@@ -39,16 +39,16 @@ func IdTagInfo(status AuthorizationStatus) (IdTagInfoType, error) {
 // Validate checks the internal consistency of the IdTagInfoType struct.
 func (info IdTagInfoType) Validate() error {
 	if !info.Status.IsValid() {
-		return fmt.Errorf("%w: %s", ErrInvalidAuthorizationStatus, info.Status)
+		return fmt.Errorf("%w: %s", errInvalidAuthorizationStatus, info.Status)
 	}
 
 	if info.ExpiryDate != nil && info.ExpiryDate.IsZero() {
-		return ErrInvalidExpiryDate
+		return errInvalidExpiryDate
 	}
 
 	if info.ParentIdTag != nil {
 		if err := info.ParentIdTag.Validate(); err != nil {
-			return fmt.Errorf("%w: %w", ErrInvalidParentIdTag, err)
+			return fmt.Errorf("%w: %w", errInvalidParentIdTag, err)
 		}
 	}
 

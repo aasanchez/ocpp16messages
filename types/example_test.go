@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"log"
 	"strings"
+	"time"
 
 	"github.com/aasanchez/ocpp16messages/types"
 )
 
-func ExampleAuthorizationStatus() {
+func ExampleAuthorizationStatus_isValid() {
 	status := types.AuthorizationStatus("Expired")
 
 	if status.IsValid() {
@@ -21,7 +22,7 @@ func ExampleAuthorizationStatus() {
 	// 'Expired' is a valid status.
 }
 
-func ExampleAuthorizationStatus_inValid() {
+func ExampleAuthorizationStatus_isValid_inValid() {
 	status := types.AuthorizationStatus("InProgress")
 
 	if status.IsValid() {
@@ -200,17 +201,103 @@ func ExampleCiString500_invalid() {
 	// Error: value exceeds maximum allowed length: actual length 501, max 500
 }
 
-func ExampleIdTokenType() {
+func ExampleIdTagInfoType() {
+	info, err := types.IdTagInfo(types.Accepted)
+	if err != nil {
+		fmt.Println("Failed to create IdTagInfo:", err)
+
+		return
+	}
+
+	location, _ := time.LoadLocation("Europe/Madrid")
+	expiry := time.Date(2027, 4, 12, 14, 3, 4, 0, time.UTC).In(location)
+	info.ExpiryDate = &expiry
+
+	parentId, _ := types.IdToken("ABC123")
+	info.ParentIdTag = &parentId
+
+	if err := info.Validate(); err != nil {
+		fmt.Println("Validation failed:", err)
+
+		return
+	}
+
+	fmt.Println("IdTagInfo:", info.String())
+
+	// Output:
+	// IdTagInfo: {status=Accepted, expiryDate=2027-04-12T16:03:04+02:00, parentIdTag=ABC123}
+}
+
+func ExampleIdTagInfoType_onlystatus() {
+	info, err := types.IdTagInfo(types.Accepted)
+	if err != nil {
+		fmt.Println("Failed to create IdTagInfo:", err)
+
+		return
+	}
+
+	info.ExpiryDate = nil
+	info.ParentIdTag = nil
+
+	if err := info.Validate(); err != nil {
+		fmt.Println("Validation failed:", err)
+
+		return
+	}
+
+	fmt.Println("IdTagInfo:", info.String())
+
+	// Output:
+	// IdTagInfo: {status=Accepted}
+}
+
+func ExampleIdTagInfoType_withParentIdTag() {
+	info, err := types.IdTagInfo(types.Accepted)
+	if err != nil {
+		fmt.Println("Failed to create IdTagInfo:", err)
+
+		return
+	}
+
+	parentId, _ := types.IdToken("ABC123")
+	info.ParentIdTag = &parentId
+
+	info.ExpiryDate = nil
+
+	if err := info.Validate(); err != nil {
+		fmt.Println("Validation failed:", err)
+
+		return
+	}
+
+	fmt.Println("IdTagInfo:", info.String())
+
+	// Output:
+	// IdTagInfo: {status=Accepted, parentIdTag=ABC123}
+}
+
+func ExampleIdToken() {
 	input := "ABC1234567890XYZ7890" // valid 20-char ASCII input
+	idToken, _ := types.IdToken(input)
+	fmt.Printf("Valid IdToken: %s\n", idToken.String())
+
+	// Output:
+	// Valid IdToken: ABC1234567890XYZ7890
+}
+
+func ExampleIdTokenType_Validate() {
+	input := "ABC1234567890XYZ7890123123" // invalid 26-char ASCII input
 
 	idToken, err := types.IdToken(input)
+
 	if err != nil {
-		log.Fatalf("Failed to create IdToken: %v", err)
+		fmt.Printf("Failed to create IdToken: %v", err)
 
 		return
 	}
 
 	fmt.Printf("Valid IdToken: %s\n", idToken.String())
+
 	// Output:
-	// Valid IdToken: ABC1234567890XYZ7890
+	// Failed to create IdToken: value exceeds maximum allowed length: actual length 26, max 20
 }

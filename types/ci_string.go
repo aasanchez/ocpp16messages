@@ -28,17 +28,17 @@ const (
 
 // Predefined errors returned during validation of CiString values.
 var (
-	// ErrExceedsMaxLength indicates that a value exceeded the maximum allowed length
+	// errExceedsMaxLength indicates that a value exceeded the maximum allowed length
 	// for its CiString type.
-	ErrExceedsMaxLength = errors.New("value exceeds maximum allowed length")
+	errExceedsMaxLength = errors.New("value exceeds maximum allowed length")
 
-	// ErrNonPrintableASCII indicates that a value contains characters outside
+	// errNonPrintableASCII indicates that a value contains characters outside
 	// the printable ASCII range (decimal 32–126 inclusive).
-	ErrNonPrintableASCII = errors.New("value contains non-printable ASCII characters")
+	errNonPrintableASCII = errors.New("value contains non-printable ASCII characters")
 
-	// ErrEmptyValueNotAllowed indicates that a CiString value was expected but
+	// errEmptyValueNotAllowed indicates that a CiString value was expected but
 	// found to be empty.
-	ErrEmptyValueNotAllowed = errors.New("value must not be empty")
+	errEmptyValueNotAllowed = errors.New("value must not be empty")
 )
 
 // ciString is an internal utility type representing a case-insensitive string
@@ -76,16 +76,16 @@ func CiString(value string, maxLen int) (ciString, error) {
 // If validation fails, a wrapped error is returned to indicate the specific failure.
 func (cs ciString) validate() error {
 	if len(cs.Value) == 0 {
-		return ErrEmptyValueNotAllowed
+		return errEmptyValueNotAllowed
 	}
 
 	if len(cs.Value) > cs.MaxLen {
-		return fmt.Errorf("%w: actual length %d, max %d", ErrExceedsMaxLength, len(cs.Value), cs.MaxLen)
+		return fmt.Errorf("%w: actual length %d, max %d", errExceedsMaxLength, len(cs.Value), cs.MaxLen)
 	}
 
 	for _, r := range cs.Value {
 		if r < 32 || r > 126 {
-			return ErrNonPrintableASCII
+			return errNonPrintableASCII
 		}
 	}
 
