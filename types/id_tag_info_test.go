@@ -6,12 +6,14 @@ import (
 	"time"
 )
 
+const errCreateIdTagInfo = "unexpected error creating IdTagInfo: %v"
+
 func TestIdTagInfoValidMinimal(t *testing.T) {
 	t.Parallel()
 
 	info, err := IdTagInfo(Accepted)
 	if err != nil {
-		t.Fatalf("unexpected error creating IdTagInfo: %v", err)
+		t.Fatalf(errCreateIdTagInfo, err)
 	}
 
 	if err := info.Validate(); err != nil {
@@ -26,7 +28,7 @@ func TestIdTagInfoWithExpiryDate(t *testing.T) {
 
 	info, err := IdTagInfo(Accepted)
 	if err != nil {
-		t.Fatalf("unexpected error creating IdTagInfo: %v", err)
+		t.Fatalf(errCreateIdTagInfo, err)
 	}
 
 	info.ExpiryDate = &expiry
@@ -58,7 +60,7 @@ func TestIdTagInfoWithEmptyExpiryDate(t *testing.T) {
 
 	info, err := IdTagInfo(Accepted)
 	if err != nil {
-		t.Fatalf("unexpected error creating IdTagInfo: %v", err)
+		t.Fatalf(errCreateIdTagInfo, err)
 	}
 
 	info.ExpiryDate = &zeroTime
@@ -78,7 +80,7 @@ func TestIdTagInfoWithValidParentIdTag(t *testing.T) {
 
 	info, err := IdTagInfo(Accepted)
 	if err != nil {
-		t.Fatalf("unexpected error creating IdTagInfo: %v", err)
+		t.Fatalf(errCreateIdTagInfo, err)
 	}
 
 	info.ParentIdTag = &parent
