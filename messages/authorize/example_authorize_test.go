@@ -1,6 +1,6 @@
 //go:build example
 
-package main
+package example
 
 import (
 	"encoding/json"

@@ -6,16 +6,16 @@ import (
 	"log"
 	"strings"
 
-	"github.com/aasanchez/ocpp16messages/messages"
+	"github.com/aasanchez/ocpp16messages/messages/authorize"
 	"github.com/aasanchez/ocpp16messages/types"
 )
 
 // FullMessage represents the full structure of a typical OCPP message
 type FullMessage struct {
-	MessageTypeId int                              `json:"MessageTypeId"`
-	UniqueId      string                           `json:"UniqueId"`
-	Action        string                           `json:"Action"`
-	Payload       messages.AuthorizeRequestMessage `json:"Payload"`
+	MessageTypeId int                               `json:"MessageTypeId"`
+	UniqueId      string                            `json:"UniqueId"`
+	Action        string                            `json:"Action"`
+	Payload       authorize.AuthorizeRequestMessage `json:"Payload"`
 }
 
 func main() {
@@ -80,7 +80,7 @@ func main() {
 	}
 
 	// Create the AuthorizeRequestMessage with the validated IdTag
-	payload := messages.AuthorizeRequestMessage{IdTag: idTag}
+	payload := authorize.AuthorizeRequestMessage{IdTag: idTag}
 
 	// Step 3: Verify the Action and MessageTypeId (assume these are valid for simplicity)
 	fmt.Printf("Received Message Type: %d\n", int(messageTypeId))

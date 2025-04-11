@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/aasanchez/ocpp16messages/messages"
+	"github.com/aasanchez/ocpp16messages/messages/authorize"
 	"github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -49,7 +49,7 @@ func exampleBuildFromSeparateVars() {
 	}
 
 	// Build confirmation message
-	msg, err := messages.AuthorizeConfirmation(info)
+	msg, err := authorize.AuthorizeConfirmation(info)
 	if err != nil {
 		log.Fatalf("failed to build confirmation message: %v", err)
 	}
@@ -64,7 +64,7 @@ func exampleValidateStatusOnly() {
 		ParentIdTag: nil,
 	}
 
-	msg := messages.AuthorizeConfirmationMessage{IdTagInfo: info}
+	msg := authorize.AuthorizeConfirmationMessage{IdTagInfo: info}
 
 	if err := msg.Validate(); err != nil {
 		log.Fatalf("validation failed: %v", err)
@@ -82,7 +82,7 @@ func exampleValidateWithExpiry() {
 		ParentIdTag: nil,
 	}
 
-	msg := messages.AuthorizeConfirmationMessage{IdTagInfo: info}
+	msg := authorize.AuthorizeConfirmationMessage{IdTagInfo: info}
 
 	if err := msg.Validate(); err != nil {
 		log.Fatalf("validation failed: %v", err)
@@ -103,7 +103,7 @@ func exampleValidateWithParent() {
 		ParentIdTag: &parent,
 	}
 
-	msg := messages.AuthorizeConfirmationMessage{IdTagInfo: info}
+	msg := authorize.AuthorizeConfirmationMessage{IdTagInfo: info}
 
 	if err := msg.Validate(); err != nil {
 		log.Fatalf("validation failed: %v", err)
@@ -125,7 +125,7 @@ func exampleValidateFullyPopulated() {
 		ParentIdTag: &parent,
 	}
 
-	msg := messages.AuthorizeConfirmationMessage{IdTagInfo: info}
+	msg := authorize.AuthorizeConfirmationMessage{IdTagInfo: info}
 
 	if err := msg.Validate(); err != nil {
 		log.Fatalf("validation failed: %v", err)
@@ -141,7 +141,7 @@ func exampleInvalidStatusFails() {
 		ParentIdTag: nil,
 	}
 
-	msg := messages.AuthorizeConfirmationMessage{IdTagInfo: info}
+	msg := authorize.AuthorizeConfirmationMessage{IdTagInfo: info}
 
 	err := msg.Validate()
 	if err != nil {
