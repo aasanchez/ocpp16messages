@@ -6,7 +6,7 @@ import (
 	"github.com/aasanchez/ocpp16messages/types"
 )
 
-// AuthorizeRequestMessage represents the OCPP 1.6J Authorize.req message.
+// RequestMessage represents the OCPP 1.6J Authorize.req message.
 //
 // This message is sent from a Charge Point to the Central System (CSMS) to
 // request authorization for an idTag prior to starting a charging session.
@@ -17,7 +17,7 @@ import (
 //
 // Specification Reference:
 // - OCPP 1.6J, Section 5.2: Authorize.req
-type AuthorizeRequestMessage struct {
+type RequestMessage struct {
 	// IdTag is the authorization identifier being validated by the Central System.
 	//
 	// It must comply with the constraints of the OCPP 1.6J `idTag` field,
@@ -25,7 +25,7 @@ type AuthorizeRequestMessage struct {
 	IdTag types.IdTokenType
 }
 
-// AuthorizeRequest constructs a new AuthorizeRequestMessage with a validated IdTag.
+// Request constructs a new RequestMessage with a validated IdTag.
 //
 // Returns an error if the provided string is invalid (e.g. too long, empty, or
 // contains non-ASCII characters). This helper ensures that only valid messages
@@ -33,33 +33,33 @@ type AuthorizeRequestMessage struct {
 //
 // Example usage:
 //
-//	req, err := messages.AuthorizeRequest("ABC123")
+//	req, err := messages.Request("ABC123")
 //	if err != nil {
 //	    log.Fatalf("invalid request: %v", err)
 //	}
-func AuthorizeRequest(idTag string) (AuthorizeRequestMessage, error) {
+func Request(idTag string) (RequestMessage, error) {
 	tok, err := types.IdToken(idTag)
 	if err != nil {
-		return AuthorizeRequestMessage{}, fmt.Errorf("failed to create AuthorizeRequestMessage: %w", err)
+		return RequestMessage{}, fmt.Errorf("failed to create RequestMessage: %w", err)
 	}
 
-	return AuthorizeRequestMessage{IdTag: tok}, nil
+	return RequestMessage{IdTag: tok}, nil
 }
 
-// String returns a human-readable representation of the AuthorizeRequestMessage.
+// String returns a human-readable representation of the RequestMessage.
 //
 // Useful for logging, debugging, and developer tools.
-func (r AuthorizeRequestMessage) String() string {
+func (r RequestMessage) String() string {
 	return fmt.Sprintf("{idTag=%s}", r.IdTag.String())
 }
 
-// Validate performs a revalidation of the AuthorizeRequestMessage fields.
+// Validate performs a revalidation of the RequestMessage fields.
 //
 // This is typically used after deserialization or transformation to ensure the
 // message still complies with OCPP constraints before processing.
-func (r AuthorizeRequestMessage) Validate() error {
+func (r RequestMessage) Validate() error {
 	if err := r.IdTag.Validate(); err != nil {
-		return fmt.Errorf("AuthorizeRequestMessage validation failed: %w", err)
+		return fmt.Errorf("RequestMessage validation failed: %w", err)
 	}
 
 	return nil

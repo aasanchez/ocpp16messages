@@ -14,7 +14,7 @@ import (
 
 // --- Transport structs with JSON tags for OCPP 1.6J compliance ---
 
-type authorizeRequestPayload struct {
+type RequestPayload struct {
 	IdTag string `json:"idTag"`
 }
 
@@ -29,17 +29,17 @@ type authorizeConfirmationPayload struct {
 func main() {
 	fmt.Println("=== Full OCPP 1.6J-Compliant Authorize Workflow ===")
 
-	// --- Step 1: Build domain-level AuthorizeRequest ---
+	// --- Step 1: Build domain-level Request ---
 	idTagRaw := "ABC123456789"
 	messageID := "msg-001"
 
-	reqMsg, err := authorize.AuthorizeRequest(idTagRaw)
+	reqMsg, err := authorize.Request(idTagRaw)
 	if err != nil {
 		log.Fatalf("failed to construct request: %v", err)
 	}
 
 	// --- Step 2: Convert to JSON-compliant payload ---
-	reqPayload := authorizeRequestPayload{
+	reqPayload := RequestPayload{
 		IdTag: reqMsg.IdTag.String(),
 	}
 
@@ -58,12 +58,12 @@ func main() {
 		log.Fatalf("failed to parse CALL: %v", err)
 	}
 
-	var payload authorizeRequestPayload
+	var payload RequestPayload
 	if err := json.Unmarshal(receivedCall[3], &payload); err != nil {
 		log.Fatalf("failed to parse request payload: %v", err)
 	}
 
-	domainReq, err := authorize.AuthorizeRequest(payload.IdTag)
+	domainReq, err := authorize.Request(payload.IdTag)
 	if err != nil {
 		log.Fatalf("domain validation failed: %v", err)
 	}

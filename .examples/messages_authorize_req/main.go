@@ -12,10 +12,10 @@ import (
 
 // FullMessage represents the full structure of a typical OCPP message
 type FullMessage struct {
-	MessageTypeId int                               `json:"MessageTypeId"`
-	UniqueId      string                            `json:"UniqueId"`
-	Action        string                            `json:"Action"`
-	Payload       authorize.AuthorizeRequestMessage `json:"Payload"`
+	MessageTypeId int                      `json:"MessageTypeId"`
+	UniqueId      string                   `json:"UniqueId"`
+	Action        string                   `json:"Action"`
+	Payload       authorize.RequestMessage `json:"Payload"`
 }
 
 func main() {
@@ -79,22 +79,22 @@ func main() {
 		log.Fatalf("Error creating IdTag: %v", err)
 	}
 
-	// Create the AuthorizeRequestMessage with the validated IdTag
-	payload := authorize.AuthorizeRequestMessage{IdTag: idTag}
+	// Create the RequestMessage with the validated IdTag
+	payload := authorize.RequestMessage{IdTag: idTag}
 
 	// Step 3: Verify the Action and MessageTypeId (assume these are valid for simplicity)
 	fmt.Printf("Received Message Type: %d\n", int(messageTypeId))
 	fmt.Printf("Received Action: %s\n", action)
 	fmt.Printf("Received UniqueId: %s\n", uniqueId)
 
-	// Step 4: Validate the payload (the AuthorizeRequestMessage)
+	// Step 4: Validate the payload (the RequestMessage)
 	if err := payload.Validate(); err != nil {
 		log.Fatalf("Validation failed: %v", err)
 	}
 
 	// Step 5: Handle the deserialized request (e.g., print it out)
 	// This will print the formatted message with {idTag=...}
-	fmt.Printf("Received and Validated AuthorizeRequestMessage: %s\n", payload.String())
+	fmt.Printf("Received and Validated RequestMessage: %s\n", payload.String())
 
 	// Additional line to print just the idTag value
 	// This will now print only the idTag value, as requested

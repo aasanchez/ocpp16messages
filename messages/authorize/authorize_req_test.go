@@ -11,7 +11,7 @@ func TestAuthorizeRequestValid(t *testing.T) {
 	t.Parallel()
 
 	input := "ABC1234567890XYZ78"
-	req, err := AuthorizeRequest(input)
+	req, err := Request(input)
 
 	if err != nil {
 		t.Fatalf("Expected no error for valid idTag, got: %v", err)
@@ -29,7 +29,7 @@ func TestAuthorizeRequestValid(t *testing.T) {
 func TestAuthorizeRequestEmptyIdTag(t *testing.T) {
 	t.Parallel()
 
-	_, err := AuthorizeRequest("")
+	_, err := Request("")
 	if err == nil {
 		t.Error("Expected error for empty idTag, got nil")
 	}
@@ -39,7 +39,7 @@ func TestAuthorizeRequestTooLongIdTag(t *testing.T) {
 	t.Parallel()
 
 	input := strings.Repeat("A", 21) // >20 chars
-	_, err := AuthorizeRequest(input)
+	_, err := Request(input)
 
 	if err == nil {
 		t.Error("Expected error for too long idTag, got nil")
@@ -50,7 +50,7 @@ func TestAuthorizeRequestNonASCIIIdTag(t *testing.T) {
 	t.Parallel()
 
 	input := "مرحباOCPP"
-	_, err := AuthorizeRequest(input)
+	_, err := Request(input)
 
 	if err == nil {
 		t.Error("Expected error for non-ASCII idTag, got nil")
@@ -60,7 +60,7 @@ func TestAuthorizeRequestNonASCIIIdTag(t *testing.T) {
 func TestAuthorizeRequestValidateFailsWithInvalidIdTag(t *testing.T) {
 	t.Parallel()
 
-	req := AuthorizeRequestMessage{
+	req := RequestMessage{
 		IdTag: types.IdTokenType{}, // zero value is invalid
 	}
 
@@ -73,7 +73,7 @@ func TestAuthorizeRequestValidateFailsWithInvalidIdTag(t *testing.T) {
 func TestAuthorizeRequestString(t *testing.T) {
 	t.Parallel()
 
-	req, err := AuthorizeRequest("TAG123456789012345")
+	req, err := Request("TAG123456789012345")
 	if err != nil {
 		t.Fatalf("unexpected error creating request: %v", err)
 	}
