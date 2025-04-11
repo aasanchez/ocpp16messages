@@ -68,3 +68,4 @@ tags
 
 coverage.*
 golangci-lint.*
+example
