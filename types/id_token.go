@@ -19,8 +19,8 @@ package types
 //   - Case-insensitive string semantics.
 //
 // Specification Reference:
-// - OCPP 1.6J, Section 5.2: Authorize.req
-// - OCPP 1.6J, Data Types: CiString[20]
+//   - OCPP 1.6J, Section 5.2: Authorize.req
+//   - OCPP 1.6J, Data Types: CiString[20]
 type IdTokenType struct {
 	value CiString20Type
 }
