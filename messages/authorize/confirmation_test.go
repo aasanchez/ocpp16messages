@@ -1,7 +1,6 @@
 package authorize
 
 import (
-	"fmt"
 	"testing"
 	"time"
 
@@ -75,16 +74,16 @@ func TestAuthorizeConfirmationString(t *testing.T) {
 
 	expiry := time.Now().UTC()
 	info := types.IdTagInfoType{
-		Status:      types.Accepted,
 		ExpiryDate:  &expiry,
 		ParentIdTag: &parent,
+		Status:      types.Accepted,
 	}
 
 	msg := ConfirmationMessage{
 		IdTagInfo: info,
 	}
 
-	want := fmt.Sprint(info.String())
+	want := info.String()
 	got := msg.String()
 
 	if got != want {
