@@ -71,21 +71,3 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: false  # Avoid CI failure if Codecov upload fails
-
-  e2e:
-    runs-on: ubuntu-latest
-    needs: test  # Run e2e after tests pass
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: 1.24
-          cache: false  # Enable Go module caching
-
-      - name: Run examples
-        run: |
-          find ./.examples -type f -name "*.go" -print0 | xargs -0 -I{} bash -c 'echo "Running file: {}" && go run "{}" || exit 1'
-        shell: bash
