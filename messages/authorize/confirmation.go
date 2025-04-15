@@ -55,5 +55,5 @@ func (m ConfirmationMessage) Validate() error {
 //
 // Useful for debugging, logging, or visual inspection during development and testing.
 func (m ConfirmationMessage) String() string {
-	return fmt.Sprintf("Authorize.conf{%s}", m.IdTagInfo.String())
+	return m.IdTagInfo.String()
 }

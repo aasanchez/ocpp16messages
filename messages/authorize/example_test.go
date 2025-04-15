@@ -66,7 +66,7 @@ func ExampleRequest() {
 
 func ExampleConfirmation() {
 	status := types.Accepted
-	location, _ := time.LoadLocation("Europe/Madrid")
+	location, _ := time.LoadLocation("America/Caracas")
 	expiry := time.Date(2027, 4, 12, 14, 3, 4, 0, time.UTC).In(location)
 	parent, err := types.IdToken("PARENT1234")
 
@@ -75,9 +75,9 @@ func ExampleConfirmation() {
 	}
 
 	idTagInfo := types.IdTagInfoType{
-		Status:      status,
 		ExpiryDate:  &expiry,
 		ParentIdTag: &parent,
+		Status:      status,
 	}
 
 	authorizeMsg, err := authorize.Confirmation(idTagInfo)
@@ -85,16 +85,16 @@ func ExampleConfirmation() {
 		log.Fatalf("failed to build confirmation message: %v", err)
 	}
 
-	fmt.Printf("Built Authorize.conf: %s\n", authorizeMsg.String())
+	fmt.Printf("Authorize.conf: %s\n", authorizeMsg.String())
 	// Output:
-	// Built Authorize.conf
+	// Authorize.conf: {status=Accepted, expiryDate=2027-04-12T10:03:04-04:00, parentIdTag=PARENT1234}
 }
 
 func ExampleConfirmation_onlyStatus() {
 	idTagInfo := types.IdTagInfoType{
-		Status:      types.Accepted,
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
+		Status:      types.Accepted,
 	}
 
 	authorizeMsg := authorize.ConfirmationMessage{IdTagInfo: idTagInfo}
@@ -109,24 +109,23 @@ func ExampleConfirmation_onlyStatus() {
 }
 
 func ExampleConfirmation_statusWithExpireDate() {
-	location, _ := time.LoadLocation("Europe/Madrid")
-	expiry := time.Date(2027, 4, 12, 14, 3, 4, 0, time.UTC).In(location)
+	expiry := time.Date(2027, 4, 12, 14, 3, 4, 0, time.UTC)
 
-	info := types.IdTagInfoType{
-		Status:      types.Accepted,
+	idTagInfo := types.IdTagInfoType{
 		ExpiryDate:  &expiry,
 		ParentIdTag: nil,
+		Status:      types.Accepted,
 	}
 
-	msg := authorize.ConfirmationMessage{IdTagInfo: info}
+	msg := authorize.ConfirmationMessage{IdTagInfo: idTagInfo}
 
 	if err := msg.Validate(); err != nil {
 		log.Fatalf("validation failed: %v", err)
 	}
 
-	fmt.Println("Validation passed (with expiryDate)")
+	fmt.Print(msg)
 	// Output:
-	// Validation passed (with expiryDate)
+	// {status=Accepted, expiryDate=2027-04-12T14:03:04Z}
 }
 
 func ExampleConfirmation_statusWithParentIdTag() {
@@ -136,9 +135,9 @@ func ExampleConfirmation_statusWithParentIdTag() {
 	}
 
 	info := types.IdTagInfoType{
-		Status:      types.Accepted,
 		ExpiryDate:  nil,
 		ParentIdTag: &parent,
+		Status:      types.Accepted,
 	}
 
 	msg := authorize.ConfirmationMessage{IdTagInfo: info}
@@ -194,7 +193,7 @@ func ExampleConfirmation_failValidation() {
 		log.Fatal("Expected validation to fail, but it passed")
 	}
 	// Output:
-	// Expected validation failure
+	// Expected validation failure: ConfirmationMessage validation failed: invalid authorization status: InvalidStatus
 }
 
 func ExampleRequest_build() {
@@ -258,5 +257,9 @@ func ExampleRequest_build() {
 
 	fmt.Printf("idTag: %s\n", payload.IdTag.String())
 	// Output:
-	// idTag
+	// Received Message Type: 2
+	// Received Action: Authorize
+	// Received UniqueId: 19223201
+	// Received and Validated RequestMessage: {idTag=ThisIsMySuperIDTag}
+	// idTag: ThisIsMySuperIDTag
 }

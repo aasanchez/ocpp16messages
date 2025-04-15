@@ -84,7 +84,7 @@ func TestAuthorizeConfirmationString(t *testing.T) {
 		IdTagInfo: info,
 	}
 
-	want := fmt.Sprintf("Authorize.conf{%s}", info.String())
+	want := fmt.Sprint(info.String())
 	got := msg.String()
 
 	if got != want {
