@@ -66,6 +66,11 @@ func CiString(value string, maxLen int) (ciString, error) {
 	return cs, nil
 }
 
+// String returns the string representation of the ciString.
+func (cs ciString) String() string {
+	return cs.Value
+}
+
 // validate performs internal validation of a ciString instance.
 //
 // It ensures that:
@@ -90,11 +95,6 @@ func (cs ciString) validate() error {
 	}
 
 	return nil
-}
-
-// String returns the string representation of the ciString.
-func (cs ciString) String() string {
-	return cs.Value
 }
 
 // CiString20Type is a case-insensitive string with a maximum length of 20 characters,

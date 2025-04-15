@@ -38,10 +38,8 @@ golangci-lint:
 format: ## is used to format the code of the application
 	@gofmt -d .
 
-.PHONY: examples
-examples: ## is used to format the code of the application
-	@find ./.examples -type f -name "*.go" -print0 | xargs -0 -I{} bash -c 'echo "Running file: {}" && go run "{}" || exit 1'
-
-.PHONY: doc
 doc: ## is used to format the code of the application
-	@godoc -http=:6060
+	@echo "Starting godoc on http://localhost:6060 ..."
+	@nohup godoc -http=:6060 > /dev/null 2>&1 &
+	@sleep 1
+	@open -a "Google Chrome" http://localhost:6060/pkg/github.com/aasanchez/ocpp16messages/
