@@ -9,7 +9,7 @@ help:  ## Display this help
 ##@ Basic
 .PHONY: test
 test: ## is used to run the test suite of the application
-	@go test ./...
+	@go clean -testcache; go test ./...
 
 .PHONY: test-verbose
 test-verbose: ## is used to run the test suite of the application in verbose mode
@@ -17,7 +17,7 @@ test-verbose: ## is used to run the test suite of the application in verbose mod
 
 .PHONY: coverage
 coverage: test ## is used to generate the coverage report of the application
-	@go clean -testcache; go test ./... -coverprofile=coverage.out; go tool cover -func=coverage.out
+	@go clean -testcache; go test ./... -coverprofile=.reports/coverage.out; go tool cover -func=.reports/coverage.out
 
 .PHONY: coverage-html
 coverage-html: test ## is used to generate the coverage report of the application
@@ -30,9 +30,16 @@ coverage-html: test ## is used to generate the coverage report of the applicatio
 	echo "Opening coverage report in Chrome..." && \
 	open -a "Google Chrome" coverage.html
 
-.PHONY: golangci-lint
-golangci-lint:
-	@golangci-lint run ./...
+.PHONY: lint
+lint:
+	@rm -rf .reports/*
+	@go test ./... -json > .reports/test-report.out || true
+	@go clean -testcache; go test ./... -coverprofile=.reports/coverage.out || true
+	@golangci-lint run ./... || true
+#	@go vet -json >.reports/govet.json
+#	@staticcheck
+#	@sonar-scanner
+
 
 .PHONY: format
 format: ## is used to format the code of the application

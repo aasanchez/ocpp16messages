@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/go,visualstudiocode,vim
-# Edit at https://www.toptal.com/developers/gitignore?templates=go,visualstudiocode,vim
+# Created by https://www.toptal.com/developers/gitignore/api/go,vim,visualstudiocode,sonar,sonarqube
+# Edit at https://www.toptal.com/developers/gitignore?templates=go,vim,visualstudiocode,sonar,sonarqube
 
 ### Go ###
 # If you prefer the allow list template instead of the deny list, see community template:
@@ -23,6 +23,22 @@
 
 # Go workspace file
 go.work
+
+### Sonar ###
+#Sonar generated dir
+/.sonar/
+
+### SonarQube ###
+# SonarQube ignore files.
+# https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner
+# Sonar Scanner working directories
+.sonar/
+.sonarqube/
+.scannerwork/
+
+# http://www.sonarlint.org/commandline/
+# SonarLint working directories, configuration files (including credentials)
+.sonarlint/
 
 ### Vim ###
 # Swap
@@ -64,8 +80,5 @@ tags
 .history
 .ionide
 
-# End of https://www.toptal.com/developers/gitignore/api/go,visualstudiocode,vim
-
-coverage.*
-golangci-lint.*
-example
+# End of https://www.toptal.com/developers/gitignore/api/go,vim,visualstudiocode,sonar,sonarqube
+.reports/
