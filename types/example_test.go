@@ -22,7 +22,7 @@ func ExampleAuthorizationStatus_isValid() {
 	// 'Expired' is a valid status.
 }
 
-func ExampleAuthorizationStatus_isValid_inValid() {
+func ExampleAuthorizationStatus_invalid() {
 	status := types.AuthorizationStatus("InProgress")
 
 	if status.IsValid() {
@@ -285,7 +285,7 @@ func ExampleIdToken() {
 	// Valid IdToken: ABC1234567890XYZ7890
 }
 
-func ExampleIdTokenType_Validate() {
+func ExampleIdTokenType_invalid() {
 	input := "ABC1234567890XYZ7890123123" // invalid 26-char ASCII input
 
 	idToken, err := types.IdToken(input)
