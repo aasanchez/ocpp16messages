@@ -40,7 +40,7 @@ type RequestMessage struct {
 func Request(idTag string) (RequestMessage, error) {
 	tok, err := types.IdToken(idTag)
 	if err != nil {
-		return RequestMessage{}, fmt.Errorf("failed to create RequestMessage: %w", err)
+		return RequestMessage{}, fmt.Errorf("failed to create Authorize.req message, problem with idTag: %s: %w", idTag, err)
 	}
 
 	return RequestMessage{IdTag: tok}, nil

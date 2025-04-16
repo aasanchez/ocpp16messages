@@ -20,7 +20,9 @@ linters:
 output:
   formats:
     text:
-      path: golangci-lint.txt
+      path: .reports/golangci-lint.txt
       print-linter-name: true
       print-issued-lines: true
       colors: false
+    json:
+      path: .reports/golangci-lint.json
