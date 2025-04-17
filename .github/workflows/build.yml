@@ -1,0 +1,166 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - '**' # Matches all branches
+  pull_request:
+    branches:
+      - '**' # Matches all branches
+
+jobs:
+  golangci-lint:
+    name: Golangci-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.24
+          cache: false
+
+      - name: Create reports directory
+        run: if [ ! -d .reports ]; then mkdir -p .reports; fi
+
+      - name: Install Tools
+        run: go mod tidy
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v7
+        with:
+          version: v2.0
+          args: --timeout=5m  # Add timeout to prevent hanging
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-reports
+          path: |
+            .reports/
+        if: always()
+
+  go-test:
+    name: Go Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.24
+          cache: false
+
+      - name: Create reports directory
+        run: if [ ! -d .reports ]; then mkdir -p .reports; fi
+
+      - name: Install Tools
+        run: go mod tidy
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-reports
+          path: |
+            .reports/
+        if: always()
+
+  go-coverage:
+    name: Go Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.24
+          cache: false
+
+      - name: Create reports directory
+        run: if [ ! -d .reports ]; then mkdir -p .reports; fi
+
+      - name: Install Tools
+        run: go mod tidy
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-reports
+          path: |
+            .reports/
+        if: always()
+
+  go-vet:
+    name: go vet
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.24
+          cache: false
+
+      - name: Create reports directory
+        run: if [ ! -d .reports ]; then mkdir -p .reports; fi
+
+      - name: Install Tools
+        run: go mod tidy
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-reports
+          path: |
+            .reports/
+        if: always()
+
+  staticcheck:
+    name: staticcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.24
+          cache: false
+
+      - name: Create reports directory
+        run: if [ ! -d .reports ]; then mkdir -p .reports; fi
+
+      - name: Install Tools
+        run: go mod tidy
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-reports
+          path: |
+            .reports/
+        if: always()
+
+  sonar-scanner:
+    name: sonar-scanner
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.24
+          cache: false
+
+      - name: Create reports directory
+        run: if [ ! -d .reports ]; then mkdir -p .reports; fi
+
+      - name: Install Tools
+        run: go mod tidy
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-reports
+          path: |
+            .reports/
+        if: always()
