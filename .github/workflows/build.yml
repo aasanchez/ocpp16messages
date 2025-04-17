@@ -85,7 +85,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: reports/coverage
+          name: reports-coverage
           retention-days: 7
           include-hidden-files: true
           path: |
@@ -112,7 +112,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: reports/go-vet
+          name: reports-go-vet
           retention-days: 7
           include-hidden-files: true
           path: |
@@ -145,7 +145,7 @@ jobs:
   #     - name: Upload Artifacts
   #       uses: actions/upload-artifact@v4
   #       with:
-  #         name: reports/lint
+  #         name: reports-lint
   #         path: |
   #           .reports/
   #       if: always()
@@ -172,7 +172,7 @@ jobs:
   #     - name: Upload Artifacts
   #       uses: actions/upload-artifact@v4
   #       with:
-  #         name: reports/sonar
+  #         name: reports-sonar
   #         path: |
   #           .reports/
   #       if: always()
