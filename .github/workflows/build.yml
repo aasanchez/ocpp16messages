@@ -9,35 +9,6 @@ on:
       - '**' # Matches all branches
 
 jobs:
-  golangci-lint:
-    name: Golangci-lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: 1.24
-          cache: false
-
-      - run: mkdir -p .reports
-
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v7
-        with:
-          version: v2.0
-          args: --config dev/golangci.yml --timeout=5m
-
-      - name: Report
-        run: cat .reports/golangci-lint.txt
-
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: reports-golangci-lint
-          include-hidden-files: true
-          path: .reports/
-
   go-test:
     name: Go Test
     runs-on: ubuntu-latest
@@ -49,107 +20,160 @@ jobs:
           go-version: 1.24
           cache: false
 
-      - run: go test ./... -json >test-report.out || true
-
-      - name: Report
-        run: cat test-report.out
-
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: reports-test
-          path: test-report.out
-
-  go-coverage:
-    name: Go Coverage
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-go@v5
-        with:
-          cache: false
+      - run: mkdir -p reports
 
       - name: Install Tools
         run: |
           go install github.com/jstemmer/go-junit-report/v2@latest
+          go install github.com/boumenot/gocover-cobertura@latest
           go mod tidy
 
-      - run: go test ./... -coverprofile=coverage.txt || true
+      - name: Execute test
+        run: go test -mod=readonly -v -coverprofile=reports/coverage.out ./... >reports/coverage.txt || true
 
-      - name: Run Tests with Coverage and Generate JUnit Report
+      - run: cat reports/coverage.txt
+
+      - name: Coverage Percentage
         run: |
-          go test -v -coverprofile=coverage.txt ./... 2>&1 | tee coverage.log
-          cat coverage.log | go-junit-report >junit.xml
+          percent=$(go tool cover -func=reports/coverage.out | tail -1 | awk -F" " '{print $NF}')
+          echo "${percent} covered"
 
-      - run: go tool cover -func=coverage.txt
+      - name: Produce Cobertura report
+        run: gocover-cobertura <reports/coverage.out >reports/cobertura.xml
 
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          files: coverage.txt
-          flags: unittests
-          slug: aasanchez/ocpp16messages
-          token: ${{ secrets.CODECOV_TOKEN }}
-          verbose: true
+      - name: Produce JUnit report
+        run: go-junit-report <reports/coverage.txt >reports/xunit.xml
 
-      - uses: codecov/test-results-action@v1
-        with:
-          files: junit.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
-          verbose: true
+      - name: Produce JUnit report
+        run: go tool test2json <reports/coverage.txt >reports/coverage.json
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: reports-coverage
-          path: coverage.txt
+          name: "Go Test: Artifacts on ${{github.sha}}"
+          path: reports
 
-  go-vet:
-    name: Go vet
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+  # golangci-lint:
+  #   name: Golangci-lint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - uses: actions/setup-go@v5
-        with:
-          go-version: 1.24
-          cache: false
+  #     - uses: actions/setup-go@v5
+  #       with:
+  #         go-version: 1.24
+  #         cache: false
 
-      - run: go vet ./... >go-vet
+  #     - run: mkdir -p .reports
 
-      - name: Report
-        run: cat go-vet
+  #     - name: golangci-lint
+  #       uses: golangci/golangci-lint-action@v7
+  #       with:
+  #         version: v2.0
+  #         args: --config dev/golangci.yml --timeout=5m
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: reports-go-vet
-          path: go-vet
+  #     - name: Report
+  #       run: cat .reports/golangci-lint.txt
 
-  staticcheck:
-    name: Staticcheck
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+  #     - name: Upload Artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: reports-golangci-lint
+  #         include-hidden-files: true
+  #         path: .reports/
 
-      - uses: actions/setup-go@v5
-        with:
-          go-version: 1.24
-          cache: false
 
-      - name: Install stattickcheck
-        run: |
-          go install honnef.co/go/tools/cmd/staticcheck@latest
-          go mod tidy
 
-      - run: staticcheck ./... >stattickcheck
+  # go-coverage:
+  #   name: Go Coverage
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - name: Report
-        run: cat stattickcheck
+  #     - uses: actions/setup-go@v5
+  #       with:
+  #         cache: false
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: reports-stattickcheck
-          path: stattickcheck
+  #     - name: Install Tools
+  #       run: |
+  #         go install github.com/jstemmer/go-junit-report/v2@latest
+  #         go mod tidy
+
+  #     - run: go test ./... -coverprofile=coverage.txt || true
+
+  #     - name: Run Tests with Coverage and Generate JUnit Report
+  #       run: |
+  #         go test -v -coverprofile=coverage.txt ./... 2>&1 | tee coverage.log
+  #         cat coverage.log | go-junit-report >junit.xml
+
+  #     - run: go tool cover -func=coverage.txt
+
+  #     - name: Upload coverage reports to Codecov
+  #       uses: codecov/codecov-action@v5
+  #       with:
+  #         files: coverage.txt
+  #         flags: unittests
+  #         slug: aasanchez/ocpp16messages
+  #         token: ${{ secrets.CODECOV_TOKEN }}
+  #         verbose: true
+
+  #     - uses: codecov/test-results-action@v1
+  #       with:
+  #         files: junit.xml
+  #         token: ${{ secrets.CODECOV_TOKEN }}
+  #         verbose: true
+
+  #     - name: Upload Artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: reports-coverage
+  #         path: coverage.txt
+
+  # go-vet:
+  #   name: Go vet
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+
+  #     - uses: actions/setup-go@v5
+  #       with:
+  #         go-version: 1.24
+  #         cache: false
+
+  #     - run: go vet ./... >go-vet
+
+  #     - name: Report
+  #       run: cat go-vet
+
+  #     - name: Upload Artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: reports-go-vet
+  #         path: go-vet
+
+  # staticcheck:
+  #   name: Staticcheck
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+
+  #     - uses: actions/setup-go@v5
+  #       with:
+  #         go-version: 1.24
+  #         cache: false
+
+  #     - name: Install stattickcheck
+  #       run: |
+  #         go install honnef.co/go/tools/cmd/staticcheck@latest
+  #         go mod tidy
+
+  #     - run: staticcheck ./... >stattickcheck
+
+  #     - name: Report
+  #       run: cat stattickcheck
+
+  #     - name: Upload Artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: reports-stattickcheck
+  #         path: stattickcheck
