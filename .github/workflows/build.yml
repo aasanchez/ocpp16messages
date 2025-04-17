@@ -120,7 +120,7 @@ jobs:
         if: always()
 
   staticcheck:
-    name: staticcheck
+    name: Staticcheck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
