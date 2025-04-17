@@ -119,36 +119,41 @@ jobs:
             .reports/
         if: always()
 
-  # staticcheck:
-  #   name: staticcheck
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 1
+  staticcheck:
+    name: staticcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
-  #     - uses: actions/setup-go@v5
-  #       with:
-  #         go-version: 1.24
-  #         cache: false
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.24
+          cache: false
 
-  #     - name: Create reports directory
-  #       run: mkdir -p .reports
+      - name: Create reports directory
+        run: mkdir -p .reports
 
-  #     - name: Install Tools
-  #       run: go mod tidy
+      - name: Install Tools
+        run: go mod tidy
 
-  #     # - uses: dominikh/staticcheck-action@v1.2.0
-  #     #   with:
-  #     #     version: "2022.1.1"
+      - name: Install stattickcheck
+        run: |
+          go install honnef.co/go/tools/cmd/staticcheck@latest
+          go mod tidy
 
-  #     - name: Upload Artifacts
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: reports-lint
-  #         path: |
-  #           .reports/
-  #       if: always()
+      - run: staticcheck ./...
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports-lint
+          retention-days: 7
+          include-hidden-files: true
+          path: |
+            .reports/
+        if: always()
 
   # sonar-scanner:
   #   name: sonar-scanner
