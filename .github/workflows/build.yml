@@ -68,7 +68,17 @@ jobs:
         with:
           cache: false
 
-      - run: go clean -testcache; go test ./... -coverprofile=coverage.txt || true
+      - name: Install Tools
+        run: |
+          go install github.com/jstemmer/go-junit-report/v2@latest
+          go mod tidy
+
+      - run: go test ./... -coverprofile=coverage.txt || true
+
+      - name: Run Tests with Coverage and Generate JUnit Report
+        run: |
+          go test -v -coverprofile=.reports/coverage.txt ./... 2>&1 | tee .reports/coverage.log
+          cat .reports/coverage.log | go-junit-report >.reports/junit.xml
 
       - run: go tool cover -func=coverage.txt
 
@@ -78,6 +88,12 @@ jobs:
           files: coverage.txt
           flags: unittests
           slug: aasanchez/ocpp16messages
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
+
+      - uses: codecov/test-results-action@v1
+        with:
+          files: .reports/junit.xml
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true
 
