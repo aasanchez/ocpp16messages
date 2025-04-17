@@ -1,0 +1,47 @@
+codecov:
+  require_ci_to_pass: true
+  notify:
+    after_n_builds: 2
+
+coverage:
+  status:
+    project:
+      default:
+        target: auto  # Let Codecov determine baseline automatically
+        threshold: 1% # Allow small drops without failing
+        base: auto
+        if_not_found: success
+    patch:
+      default:
+        target: 80%   # Expect good coverage on new code
+        threshold: 0%
+        if_not_found: success
+
+  ignore:
+    - "**/mocks/**"
+    - "**/tests/**"
+    - "**/vendor/**"
+    - "**/*.pb.go"   # Ignore generated protobuf files
+
+comment:
+  layout: "reach, diff, flags, files"
+  behavior: default
+  require_changes: true  # Don't comment if coverage hasn't changed
+
+parsers:
+  gcov:
+    branch_detection:
+      conditional: true
+      loop: true
+      method: true
+      macro: false
+
+flags:
+  unit:
+    paths:
+      - ./...
+    carryforward: true
+
+github_checks:
+  annotations: true
+

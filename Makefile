@@ -20,15 +20,8 @@ coverage: test ## is used to generate the coverage report of the application
 	@go clean -testcache; go test ./... -coverprofile=.reports/coverage.out; go tool cover -func=.reports/coverage.out
 
 .PHONY: coverage-html
-coverage-html: test ## is used to generate the coverage report of the application
-	@go clean -testcache && \
-	echo "Running tests..." && \
-	go test ./... -coverprofile=coverage.out && \
-	echo "Generating coverage report..." && \
-	go tool cover -html=coverage.out -o coverage.html && \
-	go tool cover -func=coverage.out && \
-	echo "Opening coverage report in Chrome..." && \
-	open -a "Google Chrome" coverage.html
+coverage-html: coverage ## is used to generate the coverage report of the application
+	@open -a "Google Chrome" .reports/coverage.html
 
 .PHONY: lint
 lint:
@@ -36,9 +29,13 @@ lint:
 	@go test ./... -json > .reports/test-report.out || true
 	@go clean -testcache; go test ./... -coverprofile=.reports/coverage.out || true
 	@golangci-lint run ./... || true
-#	@go vet -json >.reports/govet.json
-#	@staticcheck
-#	@sonar-scanner
+	@go vet ./... >.reports/govet.json
+	@staticcheck ./... >.reports/stattickcheck
+
+
+.PHONY: sonar
+sonar: lint
+	@sonar-scanner
 
 
 .PHONY: format

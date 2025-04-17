@@ -20,24 +20,21 @@ jobs:
           go-version: 1.24
           cache: false
 
-      - run: mkdir -p .reports;
-
-      - run: go mod tidy
-
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v7
         with:
           version: v2.0
           args: --timeout=5m  # Add timeout to prevent hanging
 
+      - name: Report
+        run: cat .reports/golangci-lint.txt
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: reports-golangci-lint
-          retention-days: 7
           include-hidden-files: true
           path: .reports/
-        if: always()
 
   go-test:
     name: Go Test
@@ -50,20 +47,16 @@ jobs:
           go-version: 1.24
           cache: false
 
-      - run: mkdir -p .reports
+      - run: go test ./... -json >test-report.out || true
 
-      - run: go mod tidy
-
-      - run: go test ./... -json > .reports/test-report.out || true
+      - name: Report
+        run: cat test-report.out
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: reports-test
-          retention-days: 7
-          include-hidden-files: true
-          path: .reports/
-        if: always()
+          path: test-report.out
 
   go-coverage:
     name: Go Coverage
@@ -73,27 +66,29 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: 1.24
           cache: false
 
-      - run: mkdir -p .reports
+      - run: go clean -testcache; go test ./... -coverprofile=coverage.txt || true
 
-      - run: go mod tidy
+      - run: go tool cover -func=coverage.txt
 
-      - run: go clean -testcache; go test ./... -coverprofile=.reports/coverage.out || true
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: coverage.txt
+          flags: unittests
+          slug: aasanchez/ocpp16messages
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: reports-coverage
-          retention-days: 7
-          include-hidden-files: true
-          path: |
-            .reports/
-        if: always()
+          path: coverage.txt
 
   go-vet:
-    name: go vet
+    name: Go vet
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -103,21 +98,16 @@ jobs:
           go-version: 1.24
           cache: false
 
-      - run: mkdir -p .reports
+      - run: go vet ./... >go-vet
 
-      - run: go mod tidy
-
-      - run: go vet -json >.reports/govet.json
+      - name: Report
+        run: cat go-vet
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: reports-go-vet
-          retention-days: 7
-          include-hidden-files: true
-          path: |
-            .reports/
-        if: always()
+          path: go-vet
 
   staticcheck:
     name: Staticcheck
@@ -130,26 +120,21 @@ jobs:
           go-version: 1.24
           cache: false
 
-      - run: mkdir -p .reports
-
-      - run: go mod tidy
-
       - name: Install stattickcheck
         run: |
           go install honnef.co/go/tools/cmd/staticcheck@latest
           go mod tidy
 
-      - run: staticcheck ./... >.reports/stattickcheck
+      - run: staticcheck ./... >stattickcheck
+
+      - name: Report
+        run: cat stattickcheck
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: reports-lint
-          retention-days: 7
-          include-hidden-files: true
-          path: |
-            .reports/
-        if: always()
+          name: reports-stattickcheck
+          path: stattickcheck
 
   # sonar-scanner:
   #   name: sonar-scanner
