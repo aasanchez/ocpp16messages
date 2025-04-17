@@ -21,7 +21,7 @@ jobs:
           cache: false
 
       - name: Create reports directory
-        run: if [ ! -d .reports ]; then mkdir -p .reports; fi
+        run: mkdir -p .reports;
 
       - name: Install Tools
         run: go mod tidy
@@ -35,7 +35,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: lint-reports
+          name: reports/golangci-lint
           path: |
             .reports/
         if: always()
@@ -54,7 +54,7 @@ jobs:
           cache: false
 
       - name: Create reports directory
-        run: if [ ! -d .reports ]; then mkdir -p .reports; fi
+        run: mkdir -p .reports
 
       - name: Install Tools
         run: go mod tidy
@@ -65,7 +65,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: lint-reports
+          name: reports/test
           path: |
             .reports/
         if: always()
@@ -84,7 +84,7 @@ jobs:
           cache: false
 
       - name: Create reports directory
-        run: if [ ! -d .reports ]; then mkdir -p .reports; fi
+        run: mkdir -p .reports
 
       - name: Install Tools
         run: go mod tidy
@@ -95,7 +95,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: lint-reports
+          name: reports/coverage
           path: |
             .reports/
         if: always()
@@ -114,7 +114,7 @@ jobs:
           cache: false
 
       - name: Create reports directory
-        run: if [ ! -d .reports ]; then mkdir -p .reports; fi
+        run: mkdir -p .reports
 
       - name: Install Tools
         run: go mod tidy
@@ -125,7 +125,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: lint-reports
+          name: reports/go-vet
           path: |
             .reports/
         if: always()
@@ -144,7 +144,7 @@ jobs:
           cache: false
 
       - name: Create reports directory
-        run: if [ ! -d .reports ]; then mkdir -p .reports; fi
+        run: mkdir -p .reports
 
       - name: Install Tools
         run: go mod tidy
@@ -156,7 +156,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: lint-reports
+          name: reports/lint
           path: |
             .reports/
         if: always()
@@ -175,7 +175,7 @@ jobs:
           cache: false
 
       - name: Create reports directory
-        run: if [ ! -d .reports ]; then mkdir -p .reports; fi
+        run: mkdir -p .reports
 
       - name: Install Tools
         run: go mod tidy
@@ -183,7 +183,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: lint-reports
+          name: reports/sonar
           path: |
             .reports/
         if: always()
