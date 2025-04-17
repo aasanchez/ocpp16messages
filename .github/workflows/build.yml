@@ -20,6 +20,8 @@ jobs:
           go-version: 1.24
           cache: false
 
+      - run: mkdir -p .reports
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v7
         with:
@@ -77,8 +79,8 @@ jobs:
 
       - name: Run Tests with Coverage and Generate JUnit Report
         run: |
-          go test -v -coverprofile=.reports/coverage.txt ./... 2>&1 | tee .reports/coverage.log
-          cat .reports/coverage.log | go-junit-report >.reports/junit.xml
+          go test -v -coverprofile=coverage.txt ./... 2>&1 | tee coverage.log
+          cat coverage.log | go-junit-report >junit.xml
 
       - run: go tool cover -func=coverage.txt
 
@@ -93,7 +95,7 @@ jobs:
 
       - uses: codecov/test-results-action@v1
         with:
-          files: .reports/junit.xml
+          files: junit.xml
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true
 
@@ -151,30 +153,3 @@ jobs:
         with:
           name: reports-stattickcheck
           path: stattickcheck
-
-  # sonar-scanner:
-  #   name: sonar-scanner
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 1
-
-  #     - uses: actions/setup-go@v5
-  #       with:
-  #         go-version: 1.24
-  #         cache: false
-
-  #     - name: Create reports directory
-  #       run: mkdir -p .reports
-
-  #     - name: Install Tools
-  #       run: go mod tidy
-
-  #     - name: Upload Artifacts
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: reports-sonar
-  #         path: |
-  #           .reports/
-  #       if: always()
