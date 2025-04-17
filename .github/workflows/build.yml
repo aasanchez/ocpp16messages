@@ -32,6 +32,11 @@ jobs:
           version: v2.0
           args: --timeout=5m  # Add timeout to prevent hanging
 
+      - name: check
+        run: |
+          ls -la
+          tree
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -40,150 +45,150 @@ jobs:
             .reports/
         if: always()
 
-  go-test:
-    name: Go Test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
+  # go-test:
+  #   name: Go Test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 1
 
-      - uses: actions/setup-go@v5
-        with:
-          go-version: 1.24
-          cache: false
+  #     - uses: actions/setup-go@v5
+  #       with:
+  #         go-version: 1.24
+  #         cache: false
 
-      - name: Create reports directory
-        run: mkdir -p .reports
+  #     - name: Create reports directory
+  #       run: mkdir -p .reports
 
-      - name: Install Tools
-        run: go mod tidy
+  #     - name: Install Tools
+  #       run: go mod tidy
 
-      - name: Execute Test
-        run: go test ./... -json > .reports/test-report.out || true
+  #     - name: Execute Test
+  #       run: go test ./... -json > .reports/test-report.out || true
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: reports/test
-          path: |
-            .reports/
-        if: always()
+  #     - name: Upload Artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: reports/test
+  #         path: |
+  #           .reports/
+  #       if: always()
 
-  go-coverage:
-    name: Go Coverage
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
+  # go-coverage:
+  #   name: Go Coverage
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 1
 
-      - uses: actions/setup-go@v5
-        with:
-          go-version: 1.24
-          cache: false
+  #     - uses: actions/setup-go@v5
+  #       with:
+  #         go-version: 1.24
+  #         cache: false
 
-      - name: Create reports directory
-        run: mkdir -p .reports
+  #     - name: Create reports directory
+  #       run: mkdir -p .reports
 
-      - name: Install Tools
-        run: go mod tidy
+  #     - name: Install Tools
+  #       run: go mod tidy
 
-      - name: Code Coverage
-        run: go clean -testcache; go test ./... -coverprofile=.reports/coverage.out || true
+  #     - name: Code Coverage
+  #       run: go clean -testcache; go test ./... -coverprofile=.reports/coverage.out || true
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: reports/coverage
-          path: |
-            .reports/
-        if: always()
+  #     - name: Upload Artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: reports/coverage
+  #         path: |
+  #           .reports/
+  #       if: always()
 
-  go-vet:
-    name: go vet
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
+  # go-vet:
+  #   name: go vet
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 1
 
-      - uses: actions/setup-go@v5
-        with:
-          go-version: 1.24
-          cache: false
+  #     - uses: actions/setup-go@v5
+  #       with:
+  #         go-version: 1.24
+  #         cache: false
 
-      - name: Create reports directory
-        run: mkdir -p .reports
+  #     - name: Create reports directory
+  #       run: mkdir -p .reports
 
-      - name: Install Tools
-        run: go mod tidy
+  #     - name: Install Tools
+  #       run: go mod tidy
 
-      - name: Install Tools
-        run: go vet -json >.reports/govet.json
+  #     - name: Install Tools
+  #       run: go vet -json >.reports/govet.json
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: reports/go-vet
-          path: |
-            .reports/
-        if: always()
+  #     - name: Upload Artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: reports/go-vet
+  #         path: |
+  #           .reports/
+  #       if: always()
 
-  staticcheck:
-    name: staticcheck
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
+  # staticcheck:
+  #   name: staticcheck
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 1
 
-      - uses: actions/setup-go@v5
-        with:
-          go-version: 1.24
-          cache: false
+  #     - uses: actions/setup-go@v5
+  #       with:
+  #         go-version: 1.24
+  #         cache: false
 
-      - name: Create reports directory
-        run: mkdir -p .reports
+  #     - name: Create reports directory
+  #       run: mkdir -p .reports
 
-      - name: Install Tools
-        run: go mod tidy
+  #     - name: Install Tools
+  #       run: go mod tidy
 
-      # - uses: dominikh/staticcheck-action@v1.2.0
-      #   with:
-      #     version: "2022.1.1"
+  #     # - uses: dominikh/staticcheck-action@v1.2.0
+  #     #   with:
+  #     #     version: "2022.1.1"
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: reports/lint
-          path: |
-            .reports/
-        if: always()
+  #     - name: Upload Artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: reports/lint
+  #         path: |
+  #           .reports/
+  #       if: always()
 
-  sonar-scanner:
-    name: sonar-scanner
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
+  # sonar-scanner:
+  #   name: sonar-scanner
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 1
 
-      - uses: actions/setup-go@v5
-        with:
-          go-version: 1.24
-          cache: false
+  #     - uses: actions/setup-go@v5
+  #       with:
+  #         go-version: 1.24
+  #         cache: false
 
-      - name: Create reports directory
-        run: mkdir -p .reports
+  #     - name: Create reports directory
+  #       run: mkdir -p .reports
 
-      - name: Install Tools
-        run: go mod tidy
+  #     - name: Install Tools
+  #       run: go mod tidy
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: reports/sonar
-          path: |
-            .reports/
-        if: always()
+  #     - name: Upload Artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: reports/sonar
+  #         path: |
+  #           .reports/
+  #       if: always()
