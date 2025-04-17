@@ -32,7 +32,6 @@ lint:
 	@go vet ./... >.reports/govet.json
 	@staticcheck ./... >.reports/stattickcheck
 
-
 .PHONY: sonar
 sonar: lint
 	@sonar-scanner

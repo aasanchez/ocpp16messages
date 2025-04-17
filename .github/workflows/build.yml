@@ -26,7 +26,7 @@ jobs:
         uses: golangci/golangci-lint-action@v7
         with:
           version: v2.0
-          args: --timeout=5m  # Add timeout to prevent hanging
+          args: --config dev/golangci.yml --timeout=5m
 
       - name: Report
         run: cat .reports/golangci-lint.txt
