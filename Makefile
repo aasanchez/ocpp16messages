@@ -22,9 +22,12 @@ test: ## is used to run the test suite of the application
 	@mkdir -p .reports
 
 	@echo "Running tests with coverage..."
-	@go test -mod=readonly -v -coverprofile=.reports/coverage.out ./... > .reports/coverage.txt
+	@go test -mod=readonly -v -coverprofile=.reports/coverage.out  -run '^Test' ./... > .reports/coverage.txt
 
-	@echo -e "\n--- \033[32mCoverage Percentage\033[0m:"
+	@echo "Running tests with coverage..."
+	@go test -mod=readonly -v -coverprofile=.reports/coverage-example.out  -run '^Example' ./... > .reports/coverage-example.txt
+
+	@echo "\n--- \033[32mCoverage Percentage\033[0m:"
 	@go tool cover -func=.reports/coverage.out | tail -1 | awk -F" " '{print $$NF}'
 
 	@echo "Produce Cobertura report..."
@@ -37,7 +40,8 @@ test: ## is used to run the test suite of the application
 	@go tool test2json < .reports/coverage.txt > .reports/coverage.json
 
 .PHONY: coverage-html
-coverage-html: coverage ## is used to generate the coverage report of the application
+coverage-html: ## is used to generate the coverage report of the application
+	@go tool cover -html=.reports/coverage.out -o .reports/coverage.html
 	@open -a "Google Chrome" .reports/coverage.html
 
 .PHONY: lint

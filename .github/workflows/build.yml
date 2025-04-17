@@ -32,7 +32,7 @@ jobs:
         run: go test -mod=readonly -v -coverprofile=reports/coverage.out  -run '^Test' ./... >reports/coverage.txt || true
 
       - name: Execute test (Only Examples)
-        run: go test -mod=readonly -v -coverprofile=reports/coverage.out  -run '^Example' ./... >reports/coverage-example.txt || true
+        run: go test -mod=readonly -v -coverprofile=reports/coverage-example.out  -run '^Example' ./... >reports/coverage-example.txt || true
 
       - run: cat reports/coverage.txt
 
@@ -47,7 +47,7 @@ jobs:
       - name: Produce JUnit report
         run: go-junit-report <reports/coverage.txt >reports/xunit.xml
 
-      - name: Produce JUnit report
+      - name: Produce JUnit report of examples
         run: go-junit-report <reports/coverage-example.txt >reports/xunit-example.xml
 
       - name: Produce JUnit report
