@@ -40,7 +40,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: reports/golangci-lint
+          name: reports-golangci-lint
           retention-days: 7
           include-hidden-files: true
           path: .reports/
@@ -71,7 +71,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: reports/test
+          name: reports-test
           retention-days: 7
           include-hidden-files: true
           path: .reports/
