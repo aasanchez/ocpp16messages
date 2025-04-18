@@ -33,12 +33,12 @@ lint:
 	@rm -rf .reports/*
 	@go test ./... -json > .reports/test-report.out || true
 	@go clean -testcache; go test ./... -coverprofile=.reports/coverage.out || true
-	@golangci-lint run ./... --config dev/golangci.yml || true
+	@golangci-lint run ./... || true
 	@go vet ./... >.reports/govet.json
 	@staticcheck ./... >.reports/stattickcheck
 
 .PHONY: sonar
-sonar: lint
+sonar: test lint
 	@sonar-scanner
 
 .PHONY: format
