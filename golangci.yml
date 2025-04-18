@@ -3,7 +3,6 @@ linters:
   default: all
   disable:
     - testpackage
-    - gosmopolitan
     - godot
   settings:
     depguard:
@@ -20,9 +19,9 @@ linters:
 output:
   formats:
     text:
-      path: ../.reports/golangci-lint.txt
+      path: .reports/golangci-lint.txt
       print-linter-name: true
       print-issued-lines: true
       colors: false
     json:
-      path: ../.reports/golangci-lint.json
+      path: .reports/golangci-lint.json

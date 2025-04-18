@@ -10,13 +10,14 @@
 *.yml text       eol=lf
 *.json text      eol=lf
 
-.github/         export-ignore
-
-.editorconfig    export-ignore
-.gitattributes   export-ignore
-.gitignore       export-ignore
-dev/             export-ignore
-Makefile         export-ignore
-
 vendor/**        linguist-vendored
 *.pb.go          linguist-generated
+
+.editorconfig             export-ignore
+.gitattributes            export-ignore
+.github                   export-ignore
+codecov.yml               export-ignore
+golangci.yml              export-ignore
+Makefile                  export-ignore
+README.md                 export-ignore
+sonar-project.properties  export-ignore
