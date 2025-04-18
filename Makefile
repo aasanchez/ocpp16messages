@@ -9,38 +9,22 @@ help:  ## Display this help
 ##@ Basic
 .PHONY: test
 test: ## is used to run the test suite of the application
-	@echo "Cleaning reports..."
-	@rm -rf .reports
-	@if ! command -v go-junit-report >/dev/null; then \
-		echo "Installing go-junit-report..."; \
-		go install github.com/jstemmer/go-junit-report@latest; \
-	fi
-	@if ! command -v gocover-cobertura >/dev/null; then \
-		echo "Installing gocover-cobertura..."; \
-		go install github.com/boumenot/gocover-cobertura@latest; \
-	fi
-	@mkdir -p .reports
-
-	@echo "Running tests with coverage..."
+	@rm -rf .reports && mkdir -p .reports
 	@go test -mod=readonly -v -coverprofile=.reports/coverage.out  -run '^Test' ./... > .reports/coverage.txt
-
-	@echo "Running tests with coverage..."
-	@go test -mod=readonly -v -coverprofile=.reports/coverage-example.out  -run '^Example' ./... > .reports/coverage-example.txt
-
 	@echo "\n--- \033[32mCoverage Percentage\033[0m:"
 	@go tool cover -func=.reports/coverage.out | tail -1 | awk -F" " '{print $$NF}'
 
-	@echo "Produce Cobertura report..."
-	@gocover-cobertura < .reports/coverage.out > .reports/cobertura.xml
-
-	@echo "Produce JUnit report..."
-	@go-junit-report < .reports/coverage.txt > .reports/xunit.xml
-
-	@echo "Produce JSON report..."
-	@go tool test2json < .reports/coverage.txt > .reports/coverage.json
+##@ Basic
+.PHONY: test-full
+test-full: ## is used to run the test suite of the application
+	@rm -rf .reports && mkdir -p .reports
+	@go test -mod=readonly -v ./... >.reports/test.txt || true
+	@go test -mod=readonly -v -coverprofile=.reports/coverage.out ./... > .reports/coverage.txt
+	@echo "\n--- \033[32mCoverage Percentage\033[0m:"
+	@go tool cover -func=.reports/coverage.out | tail -1 | awk -F" " '{print $$NF}'
 
 .PHONY: coverage-html
-coverage-html: ## is used to generate the coverage report of the application
+coverage-html: test ## is used to generate the coverage report of the application
 	@go tool cover -html=.reports/coverage.out -o .reports/coverage.html
 	@open -a "Google Chrome" .reports/coverage.html
 
@@ -56,7 +40,6 @@ lint:
 .PHONY: sonar
 sonar: lint
 	@sonar-scanner
-
 
 .PHONY: format
 format: ## is used to format the code of the application
