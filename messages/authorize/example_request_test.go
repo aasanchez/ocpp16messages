@@ -14,14 +14,6 @@ func testReqIdTag() string {
 	return idtag
 }
 
-// func testReqConfirmationFields() (string, string, string) {
-// 	status := "Accepted"
-// 	expiry := "2027-04-12T10:03:04-04:00"
-// 	parent := "A632-E2BB0231072C"
-
-// 	return status, expiry, parent
-// }
-
 func ExampleRequest() {
 	idTag := testReqIdTag()
 

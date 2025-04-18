@@ -118,3 +118,43 @@ func ExampleConfirmation_parse() {
 	// Output:
 	// Authorize.conf: {status=Accepted, expiryDate=2027-04-12T10:03:04-04:00, parentIdTag=B85A-50CBE9678EC6}
 }
+
+func ExampleConfirmationMessage_Validate() {
+	info := types.IdTagInfoType{
+		Status:      types.Accepted,
+		ExpiryDate:  nil,
+		ParentIdTag: nil,
+	}
+
+	msg := authorize.ConfirmationMessage{IdTagInfo: info}
+
+	err := msg.Validate()
+	if err != nil {
+		fmt.Printf("Expected validation failure: %v\n", err)
+	} else {
+		fmt.Print("Expected validation to fail, but it passed")
+	}
+
+	// Output:
+	// Expected validation to fail, but it passed
+}
+
+func ExampleConfirmationMessage_Validate_invalid() {
+	info := types.IdTagInfoType{
+		Status:      "InvalidStatus",
+		ExpiryDate:  nil,
+		ParentIdTag: nil,
+	}
+
+	msg := authorize.ConfirmationMessage{IdTagInfo: info}
+
+	err := msg.Validate()
+	if err != nil {
+		fmt.Printf("Expected validation failure: %v\n", err)
+	} else {
+		log.Fatal("Expected validation to fail, but it passed")
+	}
+
+	// Output:
+	// Expected validation failure: ConfirmationMessage validation failed: invalid authorization status: InvalidStatus
+}
