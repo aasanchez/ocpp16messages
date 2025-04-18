@@ -90,7 +90,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: "Go test artifacts for commit ${{ github.sha }} in ${{ github.repository }}"
+          name: "Go test artifacts for commit ${{ github.run_number }} in ocpp16messages"
           path: reports
 
   golangci-lint:
@@ -118,7 +118,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: "Golint-CI artifacts for commit ${{ github.sha }} in ${{ github.repository }}"
+          name: "Golint-CI artifacts for commit ${{ github.run_number }} in ocpp16messages"
           include-hidden-files: true
           path: .reports/
 
@@ -141,7 +141,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: "go vet artifacts for commit ${{ github.sha }} in ${{ github.repository }}"
+          name: "go vet artifacts for commit ${{ github.run_number }} in ocpp16messages"
           path: govet.txt
 
   # staticcheck:
