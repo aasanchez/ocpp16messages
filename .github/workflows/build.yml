@@ -90,106 +90,59 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: "Go Test Artifacts on ${{github.sha}}"
+          name: "Go test artifacts for commit ${{ github.sha }} in ${{ github.repository }}"
           path: reports
 
-  # golangci-lint:
-  #   name: Golangci-lint
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
+  golangci-lint:
+    name: Golangci-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - uses: actions/setup-go@v5
-  #       with:
-  #         go-version: 1.24
-  #         cache: false
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.24
+          cache: false
 
-  #     - run: mkdir -p .reports
+      - run: mkdir -p .reports
 
-  #     - name: golangci-lint
-  #       uses: golangci/golangci-lint-action@v7
-  #       with:
-  #         version: v2.0
-  #         args: --config dev/golangci.yml --timeout=5m
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v7
+        with:
+          version: v2.0
+          args: --config dev/golangci.yml --timeout=5m
 
-  #     - name: Report
-  #       run: cat .reports/golangci-lint.txt
+      - name: Report
+        run: cat .reports/golangci-lint.txt
 
-  #     - name: Upload Artifacts
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: reports-golangci-lint
-  #         include-hidden-files: true
-  #         path: .reports/
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: "Golint-CI artifacts for commit ${{ github.sha }} in ${{ github.repository }}"
+          include-hidden-files: true
+          path: .reports/
 
+  go-vet:
+    name: Go vet
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.24
+          cache: false
 
-  # go-coverage:
-  #   name: Go Coverage
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
+      - run: go vet ./... >govet.txt
 
-  #     - uses: actions/setup-go@v5
-  #       with:
-  #         cache: false
+      - name: Report
+        run: cat go-vet
 
-  #     - name: Install Tools
-  #       run: |
-  #         go install github.com/jstemmer/go-junit-report/v2@latest
-  #         go mod tidy
-
-  #     - run: go test ./... -coverprofile=coverage.txt || true
-
-  #     - name: Run Tests with Coverage and Generate JUnit Report
-  #       run: |
-  #         go test -v -coverprofile=coverage.txt ./... 2>&1 | tee coverage.log
-  #         cat coverage.log | go-junit-report >junit.xml
-
-  #     - run: go tool cover -func=coverage.txt
-
-  #     - name: Upload coverage reports to Codecov
-  #       uses: codecov/codecov-action@v5
-  #       with:
-  #         files: coverage.txt
-  #         flags: unit
-  #         slug: aasanchez/ocpp16messages
-  #         token: ${{ secrets.CODECOV_TOKEN }}
-  #         verbose: true
-
-  #     - uses: codecov/test-results-action@v1
-  #       with:
-  #         files: junit.xml
-  #         token: ${{ secrets.CODECOV_TOKEN }}
-  #         verbose: true
-
-  #     - name: Upload Artifacts
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: reports-coverage
-  #         path: coverage.txt
-
-  # go-vet:
-  #   name: Go vet
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-
-  #     - uses: actions/setup-go@v5
-  #       with:
-  #         go-version: 1.24
-  #         cache: false
-
-  #     - run: go vet ./... >go-vet
-
-  #     - name: Report
-  #       run: cat go-vet
-
-  #     - name: Upload Artifacts
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: reports-go-vet
-  #         path: go-vet
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: "go vet artifacts for commit ${{ github.sha }} in ${{ github.repository }}"
+          path: govet.txt
 
   # staticcheck:
   #   name: Staticcheck
