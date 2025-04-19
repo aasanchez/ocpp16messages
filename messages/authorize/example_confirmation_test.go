@@ -58,7 +58,7 @@ func ExampleConfirmation() {
 
 	fmt.Printf("Authorize.conf: %s\n", authorizeMsg.String())
 	// Output:
-	// Authorize.conf: {status=Accepted, expiryDate=2027-04-12T10:03:04-04:00, parentIdTag=A632-E2BB0231072C}
+	// Authorize.conf: {status:Accepted, expiryDate:2027-04-12T10:03:04-04:00, parentIdTag:A632-E2BB0231072C}
 }
 
 func ExampleConfirmation_parse() {
@@ -116,7 +116,7 @@ func ExampleConfirmation_parse() {
 
 	fmt.Println("Authorize.conf:", conf)
 	// Output:
-	// Authorize.conf: {status=Accepted, expiryDate=2027-04-12T10:03:04-04:00, parentIdTag=B85A-50CBE9678EC6}
+	// Authorize.conf: {status:Accepted, expiryDate:2027-04-12T10:03:04-04:00, parentIdTag:B85A-50CBE9678EC6}
 }
 
 func ExampleConfirmationMessage_Validate() {

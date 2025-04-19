@@ -57,14 +57,14 @@ func (info IdTagInfoType) Validate() error {
 
 // String returns a human-readable representation of the IdTagInfoType.
 func (info IdTagInfoType) String() string {
-	str := "{status=" + string(info.Status)
+	str := "{status:" + string(info.Status)
 
 	if info.ExpiryDate != nil {
-		str += ", expiryDate=" + info.ExpiryDate.Format(time.RFC3339)
+		str += ", expiryDate:" + info.ExpiryDate.Format(time.RFC3339)
 	}
 
 	if info.ParentIdTag != nil {
-		str += ", parentIdTag=" + info.ParentIdTag.String()
+		str += ", parentIdTag:" + info.ParentIdTag.String()
 	}
 
 	str += "}"

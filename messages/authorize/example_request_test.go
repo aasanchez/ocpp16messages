@@ -24,7 +24,7 @@ func ExampleRequest() {
 
 	fmt.Printf("Authorize.req: %s\n", authorizeReq.String())
 	// Output:
-	// Authorize.req: {idTag=B85A-50CBE9678EC6}
+	// Authorize.req: {idTag:B85A-50CBE9678EC6}
 }
 
 func ExampleRequest_parse() {
@@ -59,5 +59,5 @@ func ExampleRequest_parse() {
 
 	fmt.Println("Authorize.req:", req)
 	// Output:
-	// Authorize.req: {idTag=A632-E2BB0231072C}
+	// Authorize.req: {idTag:A632-E2BB0231072C}
 }

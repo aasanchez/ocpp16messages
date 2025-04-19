@@ -38,19 +38,19 @@ type RequestMessage struct {
 //	    log.Fatalf("invalid request: %v", err)
 //	}
 func Request(idTag string) (RequestMessage, error) {
-	tok, err := types.IdToken(idTag)
+	IdToken, err := types.IdToken(idTag)
 	if err != nil {
 		return RequestMessage{}, fmt.Errorf("failed to create Authorize.req message, problem with idTag: %s: %w", idTag, err)
 	}
 
-	return RequestMessage{IdTag: tok}, nil
+	return RequestMessage{IdTag: IdToken}, nil
 }
 
 // String returns a human-readable representation of the RequestMessage.
 //
 // Useful for logging, debugging, and developer tools.
 func (r RequestMessage) String() string {
-	return fmt.Sprintf("{idTag=%s}", r.IdTag.String())
+	return fmt.Sprintf("{idTag:%s}", r.IdTag.String())
 }
 
 // Validate performs a revalidation of the RequestMessage fields.

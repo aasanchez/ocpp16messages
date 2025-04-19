@@ -135,7 +135,7 @@ func TestIdTagInfoStringMethod(t *testing.T) {
 	}
 
 	expected := fmt.Sprintf(
-		"{status=%s, expiryDate=%s, parentIdTag=%s}",
+		"{status:%s, expiryDate:%s, parentIdTag:%s}",
 		info.Status,
 		now.Format(time.RFC3339),
 		parent.String(),

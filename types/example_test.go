@@ -225,7 +225,7 @@ func ExampleIdTagInfoType() {
 	fmt.Println("IdTagInfo:", info.String())
 
 	// Output:
-	// IdTagInfo: {status=Accepted, expiryDate=2027-04-12T16:03:04+02:00, parentIdTag=ABC123}
+	// IdTagInfo: {status:Accepted, expiryDate:2027-04-12T16:03:04+02:00, parentIdTag:ABC123}
 }
 
 func ExampleIdTagInfoType_onlystatus() {
@@ -248,7 +248,7 @@ func ExampleIdTagInfoType_onlystatus() {
 	fmt.Println("IdTagInfo:", info.String())
 
 	// Output:
-	// IdTagInfo: {status=Accepted}
+	// IdTagInfo: {status:Accepted}
 }
 
 func ExampleIdTagInfoType_withParentIdTag() {
@@ -273,7 +273,7 @@ func ExampleIdTagInfoType_withParentIdTag() {
 	fmt.Println("IdTagInfo:", info.String())
 
 	// Output:
-	// IdTagInfo: {status=Accepted, parentIdTag=ABC123}
+	// IdTagInfo: {status:Accepted, parentIdTag:ABC123}
 }
 
 func ExampleIdToken() {
