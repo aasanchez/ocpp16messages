@@ -61,6 +61,7 @@ func Request(input BootNotificationInput) (RequestMessage, error) {
 		if err != nil {
 			return RequestMessage{}, fmt.Errorf("invalid ChargeBoxSerialNumber: %w", err)
 		}
+
 		msg.ChargeBoxSerialNumber = &v
 	}
 	if input.ChargePointSerialNumber != "" {
@@ -68,6 +69,7 @@ func Request(input BootNotificationInput) (RequestMessage, error) {
 		if err != nil {
 			return RequestMessage{}, fmt.Errorf("invalid ChargePointSerialNumber: %w", err)
 		}
+
 		msg.ChargePointSerialNumber = &v
 	}
 	if input.FirmwareVersion != "" {
@@ -75,6 +77,7 @@ func Request(input BootNotificationInput) (RequestMessage, error) {
 		if err != nil {
 			return RequestMessage{}, fmt.Errorf("invalid FirmwareVersion: %w", err)
 		}
+
 		msg.FirmwareVersion = &v
 	}
 	if input.Iccid != "" {
@@ -82,6 +85,7 @@ func Request(input BootNotificationInput) (RequestMessage, error) {
 		if err != nil {
 			return RequestMessage{}, fmt.Errorf("invalid Iccid: %w", err)
 		}
+
 		msg.Iccid = &v
 	}
 	if input.Imsi != "" {
@@ -89,6 +93,7 @@ func Request(input BootNotificationInput) (RequestMessage, error) {
 		if err != nil {
 			return RequestMessage{}, fmt.Errorf("invalid Imsi: %w", err)
 		}
+
 		msg.Imsi = &v
 	}
 	if input.MeterSerialNumber != "" {
@@ -96,6 +101,7 @@ func Request(input BootNotificationInput) (RequestMessage, error) {
 		if err != nil {
 			return RequestMessage{}, fmt.Errorf("invalid MeterSerialNumber: %w", err)
 		}
+
 		msg.MeterSerialNumber = &v
 	}
 	if input.MeterType != "" {
@@ -103,6 +109,7 @@ func Request(input BootNotificationInput) (RequestMessage, error) {
 		if err != nil {
 			return RequestMessage{}, fmt.Errorf("invalid MeterType: %w", err)
 		}
+
 		msg.MeterType = &v
 	}
 
@@ -117,39 +124,47 @@ func (m RequestMessage) Validate() error {
 	if err := m.ChargePointVendor.Validate(); err != nil {
 		return fmt.Errorf("invalid ChargePointVendor: %w", err)
 	}
+
 	return nil
 }
 
 // String returns a human-readable representation of the BootNotification RequestMessage,
 // including all required and optional fields (if present).
 func (m RequestMessage) String() string {
-	s := fmt.Sprintf(
+	str := fmt.Sprintf(
 		"BootNotification.req(chargePointModel:%s, chargePointVendor:%s",
 		m.ChargePointModel, m.ChargePointVendor,
 	)
 
 	if m.ChargeBoxSerialNumber != nil {
-		s += fmt.Sprintf(", chargeBoxSerialNumber:%s", *m.ChargeBoxSerialNumber)
-	}
-	if m.ChargePointSerialNumber != nil {
-		s += fmt.Sprintf(", chargePointSerialNumber:%s", *m.ChargePointSerialNumber)
-	}
-	if m.FirmwareVersion != nil {
-		s += fmt.Sprintf(", firmwareVersion:%s", *m.FirmwareVersion)
-	}
-	if m.Iccid != nil {
-		s += fmt.Sprintf(", iccid:%s", *m.Iccid)
-	}
-	if m.Imsi != nil {
-		s += fmt.Sprintf(", imsi:%s", *m.Imsi)
-	}
-	if m.MeterSerialNumber != nil {
-		s += fmt.Sprintf(", meterSerialNumber:%s", *m.MeterSerialNumber)
-	}
-	if m.MeterType != nil {
-		s += fmt.Sprintf(", meterType:%s", *m.MeterType)
+		str += fmt.Sprintf(", chargeBoxSerialNumber:%s", *m.ChargeBoxSerialNumber)
 	}
 
-	s += ")"
-	return s
+	if m.ChargePointSerialNumber != nil {
+		str += fmt.Sprintf(", chargePointSerialNumber:%s", *m.ChargePointSerialNumber)
+	}
+
+	if m.FirmwareVersion != nil {
+		str += fmt.Sprintf(", firmwareVersion:%s", *m.FirmwareVersion)
+	}
+
+	if m.Iccid != nil {
+		str += fmt.Sprintf(", iccid:%s", *m.Iccid)
+	}
+
+	if m.Imsi != nil {
+		str += fmt.Sprintf(", imsi:%s", *m.Imsi)
+	}
+
+	if m.MeterSerialNumber != nil {
+		str += fmt.Sprintf(", meterSerialNumber:%s", *m.MeterSerialNumber)
+	}
+
+	if m.MeterType != nil {
+		str += fmt.Sprintf(", meterType:%s", *m.MeterType)
+	}
+
+	str += ")"
+
+	return str
 }

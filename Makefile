@@ -33,7 +33,7 @@ lint:
 	@rm -rf .reports/*
 	@go test ./... -json > .reports/test-report.out || true
 	@go clean -testcache; go test ./... -coverprofile=.reports/coverage.out || true
-	@golangci-lint run ./... || true
+	@golangci-lint --config golangci.yml run ./... || true
 	@go vet ./... >.reports/govet.json
 	@staticcheck ./... >.reports/stattickcheck
 

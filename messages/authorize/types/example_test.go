@@ -131,5 +131,5 @@ func ExampleIdTokenType_invalid() {
 	fmt.Printf("Valid IdToken: %s\n", idToken.String())
 
 	// Output:
-	// Failed to create IdToken: value exceeds maximum allowed length: actual length 26, max 20
+	// Failed to create IdToken: invalid IdToken: value exceeds maximum allowed length: actual length 26, max 20
 }

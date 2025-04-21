@@ -6,7 +6,11 @@
 // EV chargers and central systems.
 package authorizetypes
 
-import sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
+import (
+	"fmt"
+
+	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
+)
 
 // IdTokenType represents a validated user identifier used in OCPP 1.6J messages.
 //
@@ -37,7 +41,7 @@ type IdTokenType struct {
 func IdToken(s string) (IdTokenType, error) {
 	ci, err := sharedtypes.CiString20(s)
 	if err != nil {
-		return IdTokenType{}, err
+		return IdTokenType{}, fmt.Errorf("invalid IdToken: %w", err)
 	}
 
 	return IdTokenType{value: ci}, nil
@@ -56,5 +60,9 @@ func (id IdTokenType) String() string {
 // This is typically used when the token has been deserialized or imported
 // from an external source and needs to be rechecked for compliance.
 func (id IdTokenType) Validate() error {
-	return id.value.Validate()
+	if err := id.value.Validate(); err != nil {
+		return fmt.Errorf("IdToken validation failed: %w", err)
+	}
+
+	return nil
 }
