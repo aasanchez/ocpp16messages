@@ -41,19 +41,36 @@ type BootNotificationInput struct {
 	MeterType               string // Optional
 }
 
-func Request(input BootNotificationInput) (RequestMessage, error) {
-	model, err := sharedtypes.CiString20(input.ChargePointModel)
+func setChargePointModel(raw string) (sharedtypes.CiString20Type, error) {
+	v, err := sharedtypes.CiString20(raw)
 	if err != nil {
-		return RequestMessage{}, fmt.Errorf("invalid ChargePointModel: %w", err)
+		return sharedtypes.CiString20Type{}, fmt.Errorf("invalid ChargePointModel: %w", err)
 	}
-	vendor, err := sharedtypes.CiString20(input.ChargePointVendor)
+	return v, nil
+}
+
+func setChargePointVendor(raw string) (sharedtypes.CiString20Type, error) {
+	v, err := sharedtypes.CiString20(raw)
 	if err != nil {
-		return RequestMessage{}, fmt.Errorf("invalid ChargePointVendor: %w", err)
+		return sharedtypes.CiString20Type{}, fmt.Errorf("invalid ChargePointModel: %w", err)
+	}
+	return v, nil
+}
+
+func Request(input BootNotificationInput) (RequestMessage, error) {
+	chargePointModel, err := setChargePointModel(input.ChargePointModel)
+	if err != nil {
+		return RequestMessage{}, err
+	}
+
+	chargePointVendor, err := setChargePointVendor(input.ChargePointVendor)
+	if err != nil {
+		return RequestMessage{}, err
 	}
 
 	msg := RequestMessage{
-		ChargePointModel:  model,
-		ChargePointVendor: vendor,
+		ChargePointModel:  chargePointModel,
+		ChargePointVendor: chargePointVendor,
 	}
 
 	if input.ChargeBoxSerialNumber != "" {
@@ -64,6 +81,7 @@ func Request(input BootNotificationInput) (RequestMessage, error) {
 
 		msg.ChargeBoxSerialNumber = &v
 	}
+
 	if input.ChargePointSerialNumber != "" {
 		v, err := sharedtypes.CiString25(input.ChargePointSerialNumber)
 		if err != nil {
