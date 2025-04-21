@@ -1,4 +1,4 @@
-package types
+package authorizetypes
 
 // AuthorizationStatus defines the set of possible outcomes from an authorization attempt
 // of an EV driver's identifier (idTag) in an OCPP 1.6J-based charging infrastructure.

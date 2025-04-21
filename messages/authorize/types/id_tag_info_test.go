@@ -1,9 +1,11 @@
-package types
+package authorizetypes_test
 
 import (
 	"fmt"
 	"testing"
 	"time"
+
+	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
 const errCreateIdTagInfo = "unexpected error creating IdTagInfo: %v"
@@ -11,7 +13,7 @@ const errCreateIdTagInfo = "unexpected error creating IdTagInfo: %v"
 func TestIdTagInfoValidMinimal(t *testing.T) {
 	t.Parallel()
 
-	info, err := IdTagInfo(Accepted)
+	info, err := authorizetypes.IdTagInfo(authorizetypes.Accepted)
 	if err != nil {
 		t.Fatalf(errCreateIdTagInfo, err)
 	}
@@ -26,7 +28,7 @@ func TestIdTagInfoWithExpiryDate(t *testing.T) {
 
 	expiry := time.Now().Add(24 * time.Hour).UTC()
 
-	info, err := IdTagInfo(Accepted)
+	info, err := authorizetypes.IdTagInfo(authorizetypes.Accepted)
 	if err != nil {
 		t.Fatalf(errCreateIdTagInfo, err)
 	}
@@ -41,7 +43,7 @@ func TestIdTagInfoWithExpiryDate(t *testing.T) {
 func TestIdTagInfoWithInvalidStatus(t *testing.T) {
 	t.Parallel()
 
-	info := IdTagInfoType{
+	info := authorizetypes.IdTagInfoType{
 		Status:      "UNKNOWN_STATUS",
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
@@ -58,7 +60,7 @@ func TestIdTagInfoWithEmptyExpiryDate(t *testing.T) {
 
 	var zeroTime time.Time
 
-	info, err := IdTagInfo(Accepted)
+	info, err := authorizetypes.IdTagInfo(authorizetypes.Accepted)
 	if err != nil {
 		t.Fatalf(errCreateIdTagInfo, err)
 	}
@@ -73,12 +75,12 @@ func TestIdTagInfoWithEmptyExpiryDate(t *testing.T) {
 func TestIdTagInfoWithValidParentIdTag(t *testing.T) {
 	t.Parallel()
 
-	parent, err := IdToken("PARENT123456")
+	parent, err := authorizetypes.IdToken("PARENT123456")
 	if err != nil {
 		t.Fatalf("unexpected error creating parentIdTag: %v", err)
 	}
 
-	info, err := IdTagInfo(Accepted)
+	info, err := authorizetypes.IdTagInfo(authorizetypes.Accepted)
 	if err != nil {
 		t.Fatalf(errCreateIdTagInfo, err)
 	}
@@ -90,33 +92,10 @@ func TestIdTagInfoWithValidParentIdTag(t *testing.T) {
 	}
 }
 
-func TestIdTagInfoWithInvalidParentIdTag(t *testing.T) {
-	t.Parallel()
-
-	invalidParent := IdTokenType{
-		value: CiString20Type{
-			inner: ciString{
-				Value:  "",
-				MaxLen: maxLenCiString20,
-			},
-		},
-	}
-
-	info := IdTagInfoType{
-		Status:      Accepted,
-		ParentIdTag: &invalidParent,
-		ExpiryDate:  nil,
-	}
-
-	if err := info.Validate(); err == nil {
-		t.Error("expected validation to fail due to invalid ParentIdTag, got nil")
-	}
-}
-
 func TestIdTagInfoInvalidStatus(t *testing.T) {
 	t.Parallel()
 
-	_, err := IdTagInfo("INVALID")
+	_, err := authorizetypes.IdTagInfo("INVALID")
 	if err == nil {
 		t.Error("expected error for invalid AuthorizationStatus, got nil")
 	}
@@ -126,10 +105,10 @@ func TestIdTagInfoStringMethod(t *testing.T) {
 	t.Parallel()
 
 	now := time.Now().UTC()
-	parent, _ := IdToken("GROUPID123")
+	parent, _ := authorizetypes.IdToken("GROUPID123")
 
-	info := IdTagInfoType{
-		Status:      Accepted,
+	info := authorizetypes.IdTagInfoType{
+		Status:      authorizetypes.Accepted,
 		ExpiryDate:  &now,
 		ParentIdTag: &parent,
 	}

@@ -3,7 +3,7 @@ package authorize
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/types"
+	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
 // ConfirmationMessage represents the OCPP 1.6J Authorize.conf message.
@@ -22,14 +22,14 @@ type ConfirmationMessage struct {
 	// This field is mandatory in the Authorize.conf response. It encapsulates the authorization
 	// status (Accepted, Blocked, etc.) and may include additional fields like expiryDate
 	// or a reference to a parentIdTag.
-	IdTagInfo types.IdTagInfoType
+	IdTagInfo authorizetypes.IdTagInfoType
 }
 
 // Confirmation constructs a new ConfirmationMessage.
 //
 // It accepts a validated IdTagInfoType. If the input is invalid, an error is returned.
 // This function ensures correctness before serializing or dispatching the message.
-func Confirmation(info types.IdTagInfoType) (ConfirmationMessage, error) {
+func Confirmation(info authorizetypes.IdTagInfoType) (ConfirmationMessage, error) {
 	if err := info.Validate(); err != nil {
 		return ConfirmationMessage{}, fmt.Errorf("invalid idTagInfo: %w", err)
 	}

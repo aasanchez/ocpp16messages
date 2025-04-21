@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/types"
+	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
 func TestAuthorizeRequestValid(t *testing.T) {
@@ -61,7 +61,7 @@ func TestAuthorizeRequestValidateFailsWithInvalidIdTag(t *testing.T) {
 	t.Parallel()
 
 	req := RequestMessage{
-		IdTag: types.IdTokenType{}, // zero value is invalid
+		IdTag: authorizetypes.IdTokenType{}, // zero value is invalid
 	}
 
 	err := req.Validate()

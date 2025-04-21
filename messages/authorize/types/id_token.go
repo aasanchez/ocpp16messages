@@ -4,7 +4,9 @@
 // version 1.6J for fields such as strings, identifiers, and enums. All types include built-in
 // validation logic to ensure message integrity and protocol compliance when interacting with
 // EV chargers and central systems.
-package types
+package authorizetypes
+
+import sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 
 // IdTokenType represents a validated user identifier used in OCPP 1.6J messages.
 //
@@ -22,7 +24,7 @@ package types
 //   - OCPP 1.6J, Section 5.2: Authorize.req
 //   - OCPP 1.6J, Data Types: CiString[20]
 type IdTokenType struct {
-	value CiString20Type
+	value sharedtypes.CiString20Type
 }
 
 // IdToken constructs a new IdTokenType instance from a raw string,
@@ -33,7 +35,7 @@ type IdTokenType struct {
 //   - Exceeds 20 characters.
 //   - Contains non-printable or non-ASCII characters.
 func IdToken(s string) (IdTokenType, error) {
-	ci, err := CiString20(s)
+	ci, err := sharedtypes.CiString20(s)
 	if err != nil {
 		return IdTokenType{}, err
 	}

@@ -3,7 +3,7 @@ package authorize
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/types"
+	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
 // RequestMessage represents the OCPP 1.6J Authorize.req message.
@@ -22,7 +22,7 @@ type RequestMessage struct {
 	//
 	// It must comply with the constraints of the OCPP 1.6J `idTag` field,
 	// defined as a CiString[20]: max 20 characters, printable ASCII only.
-	IdTag types.IdTokenType
+	IdTag authorizetypes.IdTokenType
 }
 
 // Request constructs a new RequestMessage with a validated IdTag.
@@ -38,7 +38,7 @@ type RequestMessage struct {
 //	    log.Fatalf("invalid request: %v", err)
 //	}
 func Request(idTag string) (RequestMessage, error) {
-	IdToken, err := types.IdToken(idTag)
+	IdToken, err := authorizetypes.IdToken(idTag)
 	if err != nil {
 		return RequestMessage{}, fmt.Errorf("failed to create Authorize.req message, problem with idTag: %s: %w", idTag, err)
 	}

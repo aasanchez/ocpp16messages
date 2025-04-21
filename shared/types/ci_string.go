@@ -9,7 +9,7 @@
 //
 // The provided types serve as reusable building blocks for building OCPP-compliant
 // charging station implementations, simulators, proxies, and testing frameworks.
-package types
+package sharedtypes
 
 import (
 	"errors"

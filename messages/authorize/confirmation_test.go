@@ -4,20 +4,20 @@ import (
 	"testing"
 	"time"
 
-	"github.com/aasanchez/ocpp16messages/types"
+	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
 func TestAuthorizeConfirmationValidInput(t *testing.T) {
 	t.Parallel()
 
-	parent, err := types.IdToken("GROUP123")
+	parent, err := authorizetypes.IdToken("GROUP123")
 	if err != nil {
 		t.Fatalf("unexpected error creating parentIdTag: %v", err)
 	}
 
 	expiry := time.Now().Add(24 * time.Hour).UTC()
-	info := types.IdTagInfoType{
-		Status:      types.Accepted,
+	info := authorizetypes.IdTagInfoType{
+		Status:      authorizetypes.Accepted,
 		ExpiryDate:  &expiry,
 		ParentIdTag: &parent,
 	}
@@ -35,7 +35,7 @@ func TestAuthorizeConfirmationValidInput(t *testing.T) {
 func TestAuthorizeConfirmationInvalidIdTagInfo(t *testing.T) {
 	t.Parallel()
 
-	invalidInfo := types.IdTagInfoType{
+	invalidInfo := authorizetypes.IdTagInfoType{
 		Status:      "InvalidStatus",
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
@@ -51,7 +51,7 @@ func TestAuthorizeConfirmationValidateFailsWithInvalidData(t *testing.T) {
 	t.Parallel()
 
 	invalid := ConfirmationMessage{
-		IdTagInfo: types.IdTagInfoType{
+		IdTagInfo: authorizetypes.IdTagInfoType{
 			Status:      "NotAValidStatus",
 			ExpiryDate:  nil,
 			ParentIdTag: nil,
@@ -67,16 +67,16 @@ func TestAuthorizeConfirmationValidateFailsWithInvalidData(t *testing.T) {
 func TestAuthorizeConfirmationString(t *testing.T) {
 	t.Parallel()
 
-	parent, err := types.IdToken("GROUPABC")
+	parent, err := authorizetypes.IdToken("GROUPABC")
 	if err != nil {
 		t.Fatalf("unexpected error creating parentIdTag: %v", err)
 	}
 
 	expiry := time.Now().UTC()
-	info := types.IdTagInfoType{
+	info := authorizetypes.IdTagInfoType{
 		ExpiryDate:  &expiry,
 		ParentIdTag: &parent,
-		Status:      types.Accepted,
+		Status:      authorizetypes.Accepted,
 	}
 
 	msg := ConfirmationMessage{

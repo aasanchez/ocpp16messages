@@ -3,7 +3,7 @@ package bootnotification
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/types"
+	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 // RequestMessage represents the OCPP 1.6J BootNotification.req message.
@@ -14,15 +14,15 @@ import (
 // Specification Reference:
 // - OCPP 1.6J, Section 4.2: BootNotification.req
 type RequestMessage struct {
-	ChargeBoxSerialNumber   *types.CiString25Type // Optional
-	ChargePointModel        types.CiString20Type  // Required
-	ChargePointSerialNumber *types.CiString25Type // Optional
-	ChargePointVendor       types.CiString20Type  // Required
-	FirmwareVersion         *types.CiString50Type // Optional
-	Iccid                   *types.CiString20Type // Optional
-	Imsi                    *types.CiString20Type // Optional
-	MeterSerialNumber       *types.CiString25Type // Optional
-	MeterType               *types.CiString25Type // Optional
+	ChargeBoxSerialNumber   *sharedtypes.CiString25Type // Optional
+	ChargePointModel        sharedtypes.CiString20Type  // Required
+	ChargePointSerialNumber *sharedtypes.CiString25Type // Optional
+	ChargePointVendor       sharedtypes.CiString20Type  // Required
+	FirmwareVersion         *sharedtypes.CiString50Type // Optional
+	Iccid                   *sharedtypes.CiString20Type // Optional
+	Imsi                    *sharedtypes.CiString20Type // Optional
+	MeterSerialNumber       *sharedtypes.CiString25Type // Optional
+	MeterType               *sharedtypes.CiString25Type // Optional
 }
 
 // BootNotificationInput defines the raw string input for creating a BootNotification RequestMessage.
@@ -30,10 +30,10 @@ type RequestMessage struct {
 //
 // Fields marked as "Optional" may be left as an empty string.
 type BootNotificationInput struct {
-	ChargePointModel        string // Required
-	ChargePointVendor       string // Required
 	ChargeBoxSerialNumber   string // Optional
+	ChargePointModel        string // Required
 	ChargePointSerialNumber string // Optional
+	ChargePointVendor       string // Required
 	FirmwareVersion         string // Optional
 	Iccid                   string // Optional
 	Imsi                    string // Optional
@@ -42,11 +42,11 @@ type BootNotificationInput struct {
 }
 
 func Request(input BootNotificationInput) (RequestMessage, error) {
-	model, err := types.CiString20(input.ChargePointModel)
+	model, err := sharedtypes.CiString20(input.ChargePointModel)
 	if err != nil {
 		return RequestMessage{}, fmt.Errorf("invalid ChargePointModel: %w", err)
 	}
-	vendor, err := types.CiString20(input.ChargePointVendor)
+	vendor, err := sharedtypes.CiString20(input.ChargePointVendor)
 	if err != nil {
 		return RequestMessage{}, fmt.Errorf("invalid ChargePointVendor: %w", err)
 	}
@@ -57,49 +57,49 @@ func Request(input BootNotificationInput) (RequestMessage, error) {
 	}
 
 	if input.ChargeBoxSerialNumber != "" {
-		v, err := types.CiString25(input.ChargeBoxSerialNumber)
+		v, err := sharedtypes.CiString25(input.ChargeBoxSerialNumber)
 		if err != nil {
 			return RequestMessage{}, fmt.Errorf("invalid ChargeBoxSerialNumber: %w", err)
 		}
 		msg.ChargeBoxSerialNumber = &v
 	}
 	if input.ChargePointSerialNumber != "" {
-		v, err := types.CiString25(input.ChargePointSerialNumber)
+		v, err := sharedtypes.CiString25(input.ChargePointSerialNumber)
 		if err != nil {
 			return RequestMessage{}, fmt.Errorf("invalid ChargePointSerialNumber: %w", err)
 		}
 		msg.ChargePointSerialNumber = &v
 	}
 	if input.FirmwareVersion != "" {
-		v, err := types.CiString50(input.FirmwareVersion)
+		v, err := sharedtypes.CiString50(input.FirmwareVersion)
 		if err != nil {
 			return RequestMessage{}, fmt.Errorf("invalid FirmwareVersion: %w", err)
 		}
 		msg.FirmwareVersion = &v
 	}
 	if input.Iccid != "" {
-		v, err := types.CiString20(input.Iccid)
+		v, err := sharedtypes.CiString20(input.Iccid)
 		if err != nil {
 			return RequestMessage{}, fmt.Errorf("invalid Iccid: %w", err)
 		}
 		msg.Iccid = &v
 	}
 	if input.Imsi != "" {
-		v, err := types.CiString20(input.Imsi)
+		v, err := sharedtypes.CiString20(input.Imsi)
 		if err != nil {
 			return RequestMessage{}, fmt.Errorf("invalid Imsi: %w", err)
 		}
 		msg.Imsi = &v
 	}
 	if input.MeterSerialNumber != "" {
-		v, err := types.CiString25(input.MeterSerialNumber)
+		v, err := sharedtypes.CiString25(input.MeterSerialNumber)
 		if err != nil {
 			return RequestMessage{}, fmt.Errorf("invalid MeterSerialNumber: %w", err)
 		}
 		msg.MeterSerialNumber = &v
 	}
 	if input.MeterType != "" {
-		v, err := types.CiString25(input.MeterType)
+		v, err := sharedtypes.CiString25(input.MeterType)
 		if err != nil {
 			return RequestMessage{}, fmt.Errorf("invalid MeterType: %w", err)
 		}

@@ -1,4 +1,4 @@
-package types
+package sharedtypes
 
 import (
 	"strings"
@@ -9,7 +9,7 @@ import (
 const (
 	errExpectedNoError      = "expected no error, got %v"
 	errExpectedStringOutput = "expected string output, got %s"
-	errExpectedValidateSTR  = "expected Validate to return nil, got %v"
+	errExpectedValidate     = "expected Validate to return nil, got %v"
 	errExpectedErrorTooLong = "expected error for string too long"
 )
 

@@ -7,20 +7,14 @@ import (
 	"time"
 
 	"github.com/aasanchez/ocpp16messages/messages/authorize"
-	"github.com/aasanchez/ocpp16messages/types"
+	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
 type ConfirmationPayload struct {
-	Status      types.AuthorizationStatus `json:"status"`
-	ExpiryDate  *string                   `json:"expiryDate,omitempty"`
-	ParentIdTag *string                   `json:"parentIdTag,omitempty"`
+	Status      authorizetypes.AuthorizationStatus `json:"status"`
+	ExpiryDate  *string                            `json:"expiryDate,omitempty"`
+	ParentIdTag *string                            `json:"parentIdTag,omitempty"`
 }
-
-// func testConfIdTag() string {
-// 	idtag := "B85A-50CBE9678EC6"
-
-// 	return idtag
-// }
 
 func testReqConfirmationFields() (string, string, string) {
 	status := "Accepted"
@@ -33,7 +27,7 @@ func testReqConfirmationFields() (string, string, string) {
 func ExampleConfirmation() {
 	statusStr, expiryStr, parentStr := testReqConfirmationFields()
 
-	parent, err := types.IdToken(parentStr)
+	parent, err := authorizetypes.IdToken(parentStr)
 	if err != nil {
 		panic(err)
 	}
@@ -43,9 +37,9 @@ func ExampleConfirmation() {
 		panic(err)
 	}
 
-	status := types.AuthorizationStatus(statusStr)
+	status := authorizetypes.AuthorizationStatus(statusStr)
 
-	idTagInfo := types.IdTagInfoType{
+	idTagInfo := authorizetypes.IdTagInfoType{
 		ExpiryDate:  &expiry,
 		ParentIdTag: &parent,
 		Status:      status,
@@ -94,16 +88,16 @@ func ExampleConfirmation_parse() {
 
 	expiry = &time
 
-	var parent *types.IdTokenType
+	var parent *authorizetypes.IdTokenType
 
-	parentIdTag, err := types.IdToken(*payload.ParentIdTag)
+	parentIdTag, err := authorizetypes.IdToken(*payload.ParentIdTag)
 	if err != nil {
 		log.Fatalf("invalid parentIdTag: %v", err)
 	}
 
 	parent = &parentIdTag
 
-	idTagInfo := types.IdTagInfoType{
+	idTagInfo := authorizetypes.IdTagInfoType{
 		Status:      payload.Status,
 		ExpiryDate:  expiry,
 		ParentIdTag: parent,
@@ -120,8 +114,8 @@ func ExampleConfirmation_parse() {
 }
 
 func ExampleConfirmationMessage_Validate() {
-	info := types.IdTagInfoType{
-		Status:      types.Accepted,
+	info := authorizetypes.IdTagInfoType{
+		Status:      authorizetypes.Accepted,
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
 	}
@@ -140,7 +134,7 @@ func ExampleConfirmationMessage_Validate() {
 }
 
 func ExampleConfirmationMessage_Validate_invalid() {
-	info := types.IdTagInfoType{
+	info := authorizetypes.IdTagInfoType{
 		Status:      "InvalidStatus",
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
