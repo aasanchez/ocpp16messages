@@ -8,14 +8,8 @@ import (
 	"github.com/aasanchez/ocpp16messages/messages/authorize"
 )
 
-func testReqIdTag() string {
-	idtag := "B85A-50CBE9678EC6"
-
-	return idtag
-}
-
 func ExampleRequest() {
-	idTag := testReqIdTag()
+	idTag := "B85A-50CBE9678EC6"
 
 	authorizeReq, err := authorize.Request(idTag)
 	if err != nil {

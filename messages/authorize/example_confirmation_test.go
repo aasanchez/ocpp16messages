@@ -16,16 +16,10 @@ type ConfirmationPayload struct {
 	ParentIdTag *string                            `json:"parentIdTag,omitempty"`
 }
 
-func testReqConfirmationFields() (string, string, string) {
-	status := "Accepted"
-	expiry := "2027-04-12T10:03:04-04:00"
-	parent := "A632-E2BB0231072C"
-
-	return status, expiry, parent
-}
-
 func ExampleConfirmation() {
-	statusStr, expiryStr, parentStr := testReqConfirmationFields()
+	statusStr := "Accepted"
+	expiryStr := "2027-04-12T10:03:04-04:00"
+	parentStr := "A632-E2BB0231072C"
 
 	parent, err := authorizetypes.IdToken(parentStr)
 	if err != nil {
