@@ -1,14 +1,3 @@
-// Package types contains shared Open Charge Point Protocol (OCPP) 1.6J data structures
-// used across both request and response messages.
-//
-// This package provides strongly typed wrappers for commonly reused values with built-in
-// validation logic to enforce constraints defined in the OCPP 1.6J specification.
-// It ensures that strings conform to maximum length limits and consist exclusively of
-// printable ASCII characters. These constraints are essential for reliable communication
-// between EV charge points and Central Systems.
-//
-// The provided types serve as reusable building blocks for building OCPP-compliant
-// charging station implementations, simulators, proxies, and testing frameworks.
 package sharedtypes
 
 import (
@@ -41,7 +30,7 @@ var (
 	errEmptyValueNotAllowed = errors.New("value must not be empty")
 )
 
-const filepath = "ocpp16messages/shared/types/cistring"
+const filepath = "sdfsd"
 
 // ciString is an internal utility type representing a case-insensitive string
 // with a maximum length and a constraint to only use printable ASCII characters.

@@ -8,13 +8,6 @@ import (
 
 const errorbase = "ocpp16messages/bootnotification/request"
 
-// RequestMessage represents the OCPP 1.6J BootNotification.req message.
-//
-// This message is sent by a Charge Point to the Central System after it boots or reboots.
-// It contains identifying information about the Charge Point and its configuration.
-//
-// Specification Reference:
-// - OCPP 1.6J, Section 4.2: BootNotification.req
 type RequestMessage struct {
 	ChargeBoxSerialNumber   *sharedtypes.CiString25Type // Optional
 	ChargePointModel        sharedtypes.CiString20Type  // Required
@@ -27,10 +20,6 @@ type RequestMessage struct {
 	MeterType               *sharedtypes.CiString25Type // Optional
 }
 
-// BootNotificationInput defines the raw string input for creating a BootNotification RequestMessage.
-// All values are plain strings and will be validated and converted to proper types during construction.
-//
-// Fields marked as "Optional" may be left as an empty string.
 type BootNotificationInput struct {
 	ChargeBoxSerialNumber   string // Optional
 	ChargePointModel        string // Required

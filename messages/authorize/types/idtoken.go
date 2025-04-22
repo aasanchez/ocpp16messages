@@ -1,9 +1,3 @@
-// Package types defines validated OCPP 1.6J types used in message payloads.
-//
-// These types implement the strict constraints defined by the Open Charge Point Protocol (OCPP)
-// version 1.6J for fields such as strings, identifiers, and enums. All types include built-in
-// validation logic to ensure message integrity and protocol compliance when interacting with
-// EV chargers and central systems.
 package authorizetypes
 
 import (

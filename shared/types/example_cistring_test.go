@@ -11,7 +11,6 @@ func ExampleCiString() {
 	input := "Hello, OCPP!"
 	maxLen := 20
 
-	// Attempt to create a valid ciString
 	cs, err := sharedtypes.CiString(input, maxLen)
 	if err != nil {
 		fmt.Printf("Failed to create ciString: %v", err)
