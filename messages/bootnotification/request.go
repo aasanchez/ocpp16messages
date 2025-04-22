@@ -18,6 +18,118 @@ type RequestMessage struct {
 	MeterType               *sharedtypes.CiString25Type // Optional
 }
 
+func Request(input bootNotificationInput) (RequestMessage, error) {
+	chargePointModel, err := setChargePointModel(input.ChargePointModel)
+	if err != nil {
+		return RequestMessage{}, err
+	}
+
+	chargePointVendor, err := setChargePointVendor(input.ChargePointVendor)
+	if err != nil {
+		return RequestMessage{}, err
+	}
+
+	chargeBoxSerialNumber, err := setOptional(input.ChargeBoxSerialNumber, setChargeBoxSerialNumber)
+	if err != nil {
+		return RequestMessage{}, err
+	}
+
+	chargePointSerialNumber, err := setOptional(input.ChargePointSerialNumber, setChargePointSerialNumber)
+	if err != nil {
+		return RequestMessage{}, err
+	}
+
+	firmwareVersion, err := setOptional(input.FirmwareVersion, setFirmwareVersion)
+	if err != nil {
+		return RequestMessage{}, err
+	}
+
+	iccid, err := setOptional(input.Iccid, setIccid)
+	if err != nil {
+		return RequestMessage{}, err
+	}
+
+	imsi, err := setOptional(input.Imsi, setImsi)
+	if err != nil {
+		return RequestMessage{}, err
+	}
+
+	meterSerialNumber, err := setOptional(input.MeterSerialNumber, setMeterSerialNumber)
+	if err != nil {
+		return RequestMessage{}, err
+	}
+
+	meterType, err := setOptional(input.MeterType, setMeterType)
+	if err != nil {
+		return RequestMessage{}, err
+	}
+
+	msg := RequestMessage{
+		ChargeBoxSerialNumber:   chargeBoxSerialNumber,
+		ChargePointModel:        chargePointModel,
+		ChargePointSerialNumber: chargePointSerialNumber,
+		ChargePointVendor:       chargePointVendor,
+		FirmwareVersion:         firmwareVersion,
+		Iccid:                   iccid,
+		Imsi:                    imsi,
+		MeterSerialNumber:       meterSerialNumber,
+		MeterType:               meterType,
+	}
+
+	return msg, nil
+}
+
+func (m RequestMessage) Validate() error {
+	if err := m.ChargePointModel.Validate(); err != nil {
+		return fmt.Errorf("invalid ChargePointModel: %w", err)
+	}
+
+	if err := m.ChargePointVendor.Validate(); err != nil {
+		return fmt.Errorf("invalid ChargePointVendor: %w", err)
+	}
+
+	return nil
+}
+
+func (m RequestMessage) String() string {
+	str := fmt.Sprintf(
+		"BootNotification.req(chargePointModel:%s, chargePointVendor:%s",
+		m.ChargePointModel, m.ChargePointVendor,
+	)
+
+	if m.ChargeBoxSerialNumber != nil {
+		str += fmt.Sprintf(", chargeBoxSerialNumber:%s", *m.ChargeBoxSerialNumber)
+	}
+
+	if m.ChargePointSerialNumber != nil {
+		str += fmt.Sprintf(", chargePointSerialNumber:%s", *m.ChargePointSerialNumber)
+	}
+
+	if m.FirmwareVersion != nil {
+		str += fmt.Sprintf(", firmwareVersion:%s", *m.FirmwareVersion)
+	}
+
+	if m.Iccid != nil {
+		str += fmt.Sprintf(", iccid:%s", *m.Iccid)
+	}
+
+	if m.Imsi != nil {
+		str += fmt.Sprintf(", imsi:%s", *m.Imsi)
+	}
+
+	if m.MeterSerialNumber != nil {
+		str += fmt.Sprintf(", meterSerialNumber:%s", *m.MeterSerialNumber)
+	}
+
+	if m.MeterType != nil {
+		str += fmt.Sprintf(", meterType:%s", *m.MeterType)
+	}
+
+	str += ")"
+
+	return str
+}
+
 type bootNotificationInput struct {
 	ChargeBoxSerialNumber   string // Optional
 	ChargePointModel        string // Required
@@ -111,142 +223,15 @@ func setMeterType(raw string) (sharedtypes.CiString25Type, error) {
 	return meterType, nil
 }
 
-func Request(input bootNotificationInput) (RequestMessage, error) {
-	chargePointModel, err := setChargePointModel(input.ChargePointModel)
+func setOptional[T any](raw string, setter func(string) (T, error)) (*T, error) {
+	if raw == "" {
+		return (*T)(nil), nil
+	}
+
+	val, err := setter(raw)
 	if err != nil {
-		return RequestMessage{}, err
+		return nil, err
 	}
 
-	chargePointVendor, err := setChargePointVendor(input.ChargePointVendor)
-	if err != nil {
-		return RequestMessage{}, err
-	}
-
-	msg := RequestMessage{
-		ChargeBoxSerialNumber:   nil,
-		ChargePointModel:        chargePointModel,
-		ChargePointSerialNumber: nil,
-		ChargePointVendor:       chargePointVendor,
-		FirmwareVersion:         nil,
-		Iccid:                   nil,
-		Imsi:                    nil,
-		MeterSerialNumber:       nil,
-		MeterType:               nil,
-	}
-
-	if input.ChargeBoxSerialNumber != "" {
-		chargeBoxSerialNumber, err := setChargeBoxSerialNumber(input.ChargeBoxSerialNumber)
-		if err != nil {
-			return RequestMessage{}, err
-		}
-
-		msg.ChargeBoxSerialNumber = &chargeBoxSerialNumber
-	}
-
-	if input.ChargePointSerialNumber != "" {
-		chargePointSerialNumber, err := setChargePointSerialNumber(input.ChargePointSerialNumber)
-		if err != nil {
-			return RequestMessage{}, err
-		}
-
-		msg.ChargePointSerialNumber = &chargePointSerialNumber
-	}
-
-	if input.FirmwareVersion != "" {
-		firmwareVersion, err := setFirmwareVersion(input.FirmwareVersion)
-		if err != nil {
-			return RequestMessage{}, err
-		}
-
-		msg.FirmwareVersion = &firmwareVersion
-	}
-
-	if input.Iccid != "" {
-		iccid, err := setIccid(input.Iccid)
-		if err != nil {
-			return RequestMessage{}, err
-		}
-
-		msg.Iccid = &iccid
-	}
-
-	if input.Imsi != "" {
-		imsi, err := setImsi(input.Imsi)
-		if err != nil {
-			return RequestMessage{}, err
-		}
-
-		msg.Imsi = &imsi
-	}
-
-	if input.MeterSerialNumber != "" {
-		meterSerialNumber, err := setMeterSerialNumber(input.MeterSerialNumber)
-		if err != nil {
-			return RequestMessage{}, err
-		}
-
-		msg.MeterSerialNumber = &meterSerialNumber
-	}
-
-	if input.MeterType != "" {
-		meterType, err := setMeterType(input.MeterType)
-		if err != nil {
-			return RequestMessage{}, err
-		}
-
-		msg.MeterType = &meterType
-	}
-
-	return msg, nil
-}
-
-func (m RequestMessage) Validate() error {
-	if err := m.ChargePointModel.Validate(); err != nil {
-		return fmt.Errorf("invalid ChargePointModel: %w", err)
-	}
-
-	if err := m.ChargePointVendor.Validate(); err != nil {
-		return fmt.Errorf("invalid ChargePointVendor: %w", err)
-	}
-
-	return nil
-}
-
-func (m RequestMessage) String() string {
-	str := fmt.Sprintf(
-		"BootNotification.req(chargePointModel:%s, chargePointVendor:%s",
-		m.ChargePointModel, m.ChargePointVendor,
-	)
-
-	if m.ChargeBoxSerialNumber != nil {
-		str += fmt.Sprintf(", chargeBoxSerialNumber:%s", *m.ChargeBoxSerialNumber)
-	}
-
-	if m.ChargePointSerialNumber != nil {
-		str += fmt.Sprintf(", chargePointSerialNumber:%s", *m.ChargePointSerialNumber)
-	}
-
-	if m.FirmwareVersion != nil {
-		str += fmt.Sprintf(", firmwareVersion:%s", *m.FirmwareVersion)
-	}
-
-	if m.Iccid != nil {
-		str += fmt.Sprintf(", iccid:%s", *m.Iccid)
-	}
-
-	if m.Imsi != nil {
-		str += fmt.Sprintf(", imsi:%s", *m.Imsi)
-	}
-
-	if m.MeterSerialNumber != nil {
-		str += fmt.Sprintf(", meterSerialNumber:%s", *m.MeterSerialNumber)
-	}
-
-	if m.MeterType != nil {
-		str += fmt.Sprintf(", meterType:%s", *m.MeterType)
-	}
-
-	str += ")"
-
-	return str
+	return &val, nil
 }
