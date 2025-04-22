@@ -6,6 +6,8 @@ import (
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
+const errorbase = "ocpp16messages/bootnotification/request"
+
 // RequestMessage represents the OCPP 1.6J BootNotification.req message.
 //
 // This message is sent by a Charge Point to the Central System after it boots or reboots.
@@ -42,19 +44,42 @@ type BootNotificationInput struct {
 }
 
 func setChargePointModel(raw string) (sharedtypes.CiString20Type, error) {
-	v, err := sharedtypes.CiString20(raw)
+	chargePointModel, err := sharedtypes.CiString20(raw)
 	if err != nil {
-		return sharedtypes.CiString20Type{}, fmt.Errorf("invalid ChargePointModel: %w", err)
+		return sharedtypes.CiString20Type{}, fmt.Errorf(
+			"%s.setChargePointModel: invalid ChargePointModel: %w",
+			errorbase,
+			err,
+		)
 	}
-	return v, nil
+
+	return chargePointModel, nil
 }
 
 func setChargePointVendor(raw string) (sharedtypes.CiString20Type, error) {
-	v, err := sharedtypes.CiString20(raw)
+	chargePointVendor, err := sharedtypes.CiString20(raw)
 	if err != nil {
-		return sharedtypes.CiString20Type{}, fmt.Errorf("invalid ChargePointModel: %w", err)
+		return sharedtypes.CiString20Type{}, fmt.Errorf(
+			"%s.setChargePointVendor ChargePointModel: %w",
+			errorbase,
+			err,
+		)
 	}
-	return v, nil
+
+	return chargePointVendor, nil
+}
+
+func setChargeBoxSerialNumber(raw string) (sharedtypes.CiString25Type, error) {
+	chargeBoxSerialNumber, err := sharedtypes.CiString25(raw)
+	if err != nil {
+		return sharedtypes.CiString25Type{}, fmt.Errorf(
+			"%s.setChargeBoxSerialNumber ChargePointModel: %w",
+			errorbase,
+			err,
+		)
+	}
+
+	return chargeBoxSerialNumber, nil
 }
 
 func Request(input BootNotificationInput) (RequestMessage, error) {
@@ -69,66 +94,24 @@ func Request(input BootNotificationInput) (RequestMessage, error) {
 	}
 
 	msg := RequestMessage{
-		ChargePointModel:  chargePointModel,
-		ChargePointVendor: chargePointVendor,
+		ChargeBoxSerialNumber:   nil,
+		ChargePointModel:        chargePointModel,
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       chargePointVendor,
+		FirmwareVersion:         nil,
+		Iccid:                   nil,
+		Imsi:                    nil,
+		MeterSerialNumber:       nil,
+		MeterType:               nil,
 	}
 
 	if input.ChargeBoxSerialNumber != "" {
-		v, err := sharedtypes.CiString25(input.ChargeBoxSerialNumber)
+		chargeBoxSerialNumber, err := setChargeBoxSerialNumber(input.ChargeBoxSerialNumber)
 		if err != nil {
-			return RequestMessage{}, fmt.Errorf("invalid ChargeBoxSerialNumber: %w", err)
+			return RequestMessage{}, err
 		}
 
-		msg.ChargeBoxSerialNumber = &v
-	}
-
-	if input.ChargePointSerialNumber != "" {
-		v, err := sharedtypes.CiString25(input.ChargePointSerialNumber)
-		if err != nil {
-			return RequestMessage{}, fmt.Errorf("invalid ChargePointSerialNumber: %w", err)
-		}
-
-		msg.ChargePointSerialNumber = &v
-	}
-	if input.FirmwareVersion != "" {
-		v, err := sharedtypes.CiString50(input.FirmwareVersion)
-		if err != nil {
-			return RequestMessage{}, fmt.Errorf("invalid FirmwareVersion: %w", err)
-		}
-
-		msg.FirmwareVersion = &v
-	}
-	if input.Iccid != "" {
-		v, err := sharedtypes.CiString20(input.Iccid)
-		if err != nil {
-			return RequestMessage{}, fmt.Errorf("invalid Iccid: %w", err)
-		}
-
-		msg.Iccid = &v
-	}
-	if input.Imsi != "" {
-		v, err := sharedtypes.CiString20(input.Imsi)
-		if err != nil {
-			return RequestMessage{}, fmt.Errorf("invalid Imsi: %w", err)
-		}
-
-		msg.Imsi = &v
-	}
-	if input.MeterSerialNumber != "" {
-		v, err := sharedtypes.CiString25(input.MeterSerialNumber)
-		if err != nil {
-			return RequestMessage{}, fmt.Errorf("invalid MeterSerialNumber: %w", err)
-		}
-
-		msg.MeterSerialNumber = &v
-	}
-	if input.MeterType != "" {
-		v, err := sharedtypes.CiString25(input.MeterType)
-		if err != nil {
-			return RequestMessage{}, fmt.Errorf("invalid MeterType: %w", err)
-		}
-
-		msg.MeterType = &v
+		msg.ChargeBoxSerialNumber = &chargeBoxSerialNumber
 	}
 
 	return msg, nil
@@ -139,6 +122,7 @@ func (m RequestMessage) Validate() error {
 	if err := m.ChargePointModel.Validate(); err != nil {
 		return fmt.Errorf("invalid ChargePointModel: %w", err)
 	}
+
 	if err := m.ChargePointVendor.Validate(); err != nil {
 		return fmt.Errorf("invalid ChargePointVendor: %w", err)
 	}
