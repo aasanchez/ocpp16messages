@@ -200,7 +200,6 @@ func Request(input bootNotificationInput) (RequestMessage, error) {
 	return msg, nil
 }
 
-// Validate checks if the required fields in the RequestMessage are valid.
 func (m RequestMessage) Validate() error {
 	if err := m.ChargePointModel.Validate(); err != nil {
 		return fmt.Errorf("invalid ChargePointModel: %w", err)
@@ -213,8 +212,6 @@ func (m RequestMessage) Validate() error {
 	return nil
 }
 
-// String returns a human-readable representation of the BootNotification RequestMessage,
-// including all required and optional fields (if present).
 func (m RequestMessage) String() string {
 	str := fmt.Sprintf(
 		"BootNotification.req(chargePointModel:%s, chargePointVendor:%s",
