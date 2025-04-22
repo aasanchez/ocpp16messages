@@ -161,12 +161,12 @@ func setChargePointModel(raw string) (sharedtypes.CiString20Type, error) {
 }
 
 func setChargePointSerialNumber(raw string) (sharedtypes.CiString25Type, error) {
-	chargeBoxSerialNumber, err := sharedtypes.CiString25(raw)
+	chargePointSerialNumber, err := sharedtypes.CiString25(raw)
 	if err != nil {
-		return sharedtypes.CiString25Type{}, fmt.Errorf("setChargeBoxSerialNumber: %w", err)
+		return sharedtypes.CiString25Type{}, fmt.Errorf("setChargePointSerialNumber: %w", err)
 	}
 
-	return chargeBoxSerialNumber, nil
+	return chargePointSerialNumber, nil
 }
 
 func setChargePointVendor(raw string) (sharedtypes.CiString20Type, error) {
