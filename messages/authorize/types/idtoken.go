@@ -12,6 +12,8 @@ import (
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
+const filepath = "ocpp16messages/messages/authorize/types/idtoken"
+
 // IdTokenType represents a validated user identifier used in OCPP 1.6J messages.
 //
 // The `idTag` or identifier token (IdToken) is a critical part of the OCPP protocol.
@@ -41,7 +43,7 @@ type IdTokenType struct {
 func IdToken(s string) (IdTokenType, error) {
 	ci, err := sharedtypes.CiString20(s)
 	if err != nil {
-		return IdTokenType{}, fmt.Errorf("invalid IdToken: %w", err)
+		return IdTokenType{}, fmt.Errorf("%s.IdToken: invalid IdToken: %w", filepath, err)
 	}
 
 	return IdTokenType{value: ci}, nil

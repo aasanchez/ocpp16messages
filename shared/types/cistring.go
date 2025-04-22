@@ -26,6 +26,8 @@ const (
 	maxLenCiString500 = 500
 )
 
+const filepath = "ocpp16messages/shared/types/cistring"
+
 // Predefined errors returned during validation of CiString values.
 var (
 	// errExceedsMaxLength indicates that a value exceeded the maximum allowed length
@@ -85,7 +87,8 @@ func (cs ciString) validate() error {
 	}
 
 	if len(cs.Value) > cs.MaxLen {
-		return fmt.Errorf("%w: actual length %d, max %d", errExceedsMaxLength, len(cs.Value), cs.MaxLen)
+		return fmt.Errorf(
+			"%s.validate: %w: actual length %d, max %d", filepath, errExceedsMaxLength, len(cs.Value), cs.MaxLen)
 	}
 
 	for _, r := range cs.Value {

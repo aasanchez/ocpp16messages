@@ -123,7 +123,7 @@ func ExampleIdTokenType_invalid() {
 	idToken, err := authorizetypes.IdToken(input)
 
 	if err != nil {
-		fmt.Printf("Failed to create IdToken: %v", err)
+		fmt.Printf("%v", err)
 
 		return
 	}
@@ -131,5 +131,5 @@ func ExampleIdTokenType_invalid() {
 	fmt.Printf("Valid IdToken: %s\n", idToken.String())
 
 	// Output:
-	// Failed to create IdToken: invalid IdToken: value exceeds maximum allowed length: actual length 26, max 20
+	// ocpp16messages/messages/authorize/types/idtoken.IdToken: invalid IdToken: ocpp16messages/shared/types/cistring.validate: value exceeds maximum allowed length: actual length 26, max 20
 }
