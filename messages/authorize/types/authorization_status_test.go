@@ -2,7 +2,6 @@ package authorizetypes
 
 import "testing"
 
-// Error message constants.
 const (
 	errExpectedOutput       = "expected string output, got %s"
 	errExpectedValidate     = "expected Validate to return nil, got %v"
@@ -11,7 +10,6 @@ const (
 	errExpectedInvalidNoArg = "expected IsValid() to return false, but got true"        // For cases with no specific arg
 )
 
-// Tests for valid AuthorizationStatus values.
 func TestAuthorizationStatusAcceptedIsValid(t *testing.T) {
 	t.Parallel()
 
@@ -39,7 +37,6 @@ func TestAuthorizationStatusExpiredIsValid(t *testing.T) {
 	}
 }
 
-// Tests for invalid AuthorizationStatus values.
 func TestAuthorizationStatusInvalidIsValid(t *testing.T) {
 	t.Parallel()
 
@@ -80,14 +77,12 @@ func TestAuthorizationStatusEmptyStatus(t *testing.T) {
 func TestAuthorizationStatusNullEquivalent(t *testing.T) {
 	t.Parallel()
 
-	// Simulating the behavior of null (using an empty string or a special case like "null").
 	nullStatus := AuthorizationStatus("null")
 	if nullStatus.IsValid() {
 		t.Errorf(errExpectedInvalid, nullStatus)
 	}
 }
 
-// Constant value checks.
 func TestAuthorizationStatusAcceptedConstant(t *testing.T) {
 	t.Parallel()
 

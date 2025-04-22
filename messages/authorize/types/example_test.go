@@ -131,5 +131,5 @@ func ExampleIdTokenType_invalid() {
 	fmt.Printf("Valid IdToken: %s\n", idToken.String())
 
 	// Output:
-	// ocpp16messages/messages/authorize/types/idtoken.IdToken: invalid IdToken: ocpp16messages/shared/types/cistring.validate: value exceeds maximum allowed length: actual length 26, max 20
+	// IdToken: invalid IdToken, CiString.validate: value exceeds maximum allowed length actual length 26, max 20
 }

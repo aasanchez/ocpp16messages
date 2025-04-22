@@ -1,1 +1,3 @@
-package sharedtypes
+// shared / types documentation
+// here
+package types

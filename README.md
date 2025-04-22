@@ -6,5 +6,3 @@
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=bugs)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
-
-A high-performance and idiomatic Go package for handling Open Charge Point Protocol (OCPP) 1.6 messages in both JSON and SOAP formats.

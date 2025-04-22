@@ -6,24 +6,18 @@ import (
 	"time"
 )
 
-// Static error definitions for validation.
 var (
 	errInvalidAuthorizationStatus = errors.New("invalid authorization status")
 	errInvalidExpiryDate          = errors.New("expiryDate is present but not a valid timestamp")
 	errInvalidParentIdTag         = errors.New("invalid parentIdTag")
 )
 
-// IdTagInfoType represents the authorization status and related metadata returned by the Central System
-// in response to an Authorize.req message.
-//
-// This type aligns with the `idTagInfo` structure defined in the OCPP 1.6J specification, Section 5.2.
 type IdTagInfoType struct {
 	ExpiryDate  *time.Time
 	ParentIdTag *IdTokenType
 	Status      AuthorizationStatus
 }
 
-// NewIdTagInfo constructs a new IdTagInfoType with a validated AuthorizationStatus.
 func IdTagInfo(status AuthorizationStatus) (IdTagInfoType, error) {
 	if !status.IsValid() {
 		return IdTagInfoType{}, fmt.Errorf("%w: %s", errInvalidAuthorizationStatus, status)
@@ -36,7 +30,6 @@ func IdTagInfo(status AuthorizationStatus) (IdTagInfoType, error) {
 	}, nil
 }
 
-// Validate checks the internal consistency of the IdTagInfoType struct.
 func (info IdTagInfoType) Validate() error {
 	if !info.Status.IsValid() {
 		return fmt.Errorf("%w: %s", errInvalidAuthorizationStatus, info.Status)
@@ -55,7 +48,6 @@ func (info IdTagInfoType) Validate() error {
 	return nil
 }
 
-// String returns a human-readable representation of the IdTagInfoType.
 func (info IdTagInfoType) String() string {
 	str := "{status:" + string(info.Status)
 

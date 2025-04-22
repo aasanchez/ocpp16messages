@@ -45,8 +45,19 @@ sonar: test lint
 format: ## is used to format the code of the application
 	@gofmt -d .
 
-doc: ## is used to format the code of the application
-	@echo "Starting godoc on http://localhost:6060 ..."
-	@nohup godoc -http=:6060 > /dev/null 2>&1 &
-	@sleep 1
-	@open -a "Google Chrome" http://localhost:6060/pkg/github.com/aasanchez/ocpp16messages/
+pkgsite:
+	@echo "Stopping any running pkgsite processes..."
+	@pkill pkgsite || true
+
+	@echo "Cleaning Go module cache..."
+	@go clean -modcache
+	@rm -rf $$GOPATH/pkg
+
+	@echo "Tidying up modules..."
+	@go mod tidy
+
+	@echo "Starting pkgsite at http://localhost:8080 ..."
+	@nohup pkgsite > /dev/null 2>&1 &
+
+	@sleep 2
+	@open -a "Google Chrome" http://localhost:8080/github.com/aasanchez/ocpp16messages
