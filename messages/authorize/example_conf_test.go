@@ -3,7 +3,6 @@ package authorize_test
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/aasanchez/ocpp16messages/messages/authorize"
@@ -41,7 +40,7 @@ func ExampleConfirmation() {
 
 	authorizeMsg, err := authorize.Confirmation(idTagInfo)
 	if err != nil {
-		log.Fatalf("failed to build confirmation message: %v", err)
+		fmt.Printf("Error: failed to build confirmation message: %v", err)
 	}
 
 	fmt.Printf("Authorize.conf: %s\n", authorizeMsg.String())
@@ -65,19 +64,19 @@ func ExampleConfirmation_parse() {
 
 	err := json.Unmarshal([]byte(receivedJSON), &msg)
 	if err != nil {
-		log.Fatalf("invalid JSON array: %v", err)
+		fmt.Printf("Error: invalid JSON array: %v", err)
 	}
 
 	var payload ConfirmationPayload
 	if err := json.Unmarshal(msg[3], &payload); err != nil {
-		log.Fatalf("invalid payload: %v", err)
+		fmt.Printf("Error: invalid payload: %v", err)
 	}
 
 	var expiry *time.Time
 
 	time, err := time.Parse(time.RFC3339, *payload.ExpiryDate)
 	if err != nil {
-		log.Fatalf("invalid expiryDate format: %v", err)
+		fmt.Printf("Error: invalid expiryDate format: %v", err)
 	}
 
 	expiry = &time
@@ -86,7 +85,7 @@ func ExampleConfirmation_parse() {
 
 	parentIdTag, err := authorizetypes.IdToken(*payload.ParentIdTag)
 	if err != nil {
-		log.Fatalf("invalid parentIdTag: %v", err)
+		fmt.Printf("Error: invalid parentIdTag: %v", err)
 	}
 
 	parent = &parentIdTag
@@ -99,7 +98,7 @@ func ExampleConfirmation_parse() {
 
 	conf, err := authorize.Confirmation(idTagInfo)
 	if err != nil {
-		log.Fatalf("authorize.Confirmation failed: %v", err)
+		fmt.Printf("Error: authorize.Confirmation failed: %v", err)
 	}
 
 	fmt.Println("Authorize.conf:", conf)
@@ -140,7 +139,7 @@ func ExampleConfirmationMessage_Validate_invalid() {
 	if err != nil {
 		fmt.Printf("Expected validation failure: %v\n", err)
 	} else {
-		log.Fatal("Expected validation to fail, but it passed")
+		fmt.Printf("Expected validation to fail, but it passed")
 	}
 
 	// Output:

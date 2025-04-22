@@ -30,13 +30,6 @@ type RequestMessage struct {
 // Returns an error if the provided string is invalid (e.g. too long, empty, or
 // contains non-ASCII characters). This helper ensures that only valid messages
 // are created prior to serialization or transmission.
-//
-// Example usage:
-//
-//	req, err := messages.Request("ABC123")
-//	if err != nil {
-//	    log.Fatalf("invalid request: %v", err)
-//	}
 func Request(idTag string) (RequestMessage, error) {
 	IdToken, err := authorizetypes.IdToken(idTag)
 	if err != nil {

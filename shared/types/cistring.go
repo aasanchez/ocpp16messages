@@ -28,21 +28,6 @@ const (
 
 const filepath = "ocpp16messages/shared/types/cistring"
 
-// Predefined errors returned during validation of CiString values.
-var (
-	// errExceedsMaxLength indicates that a value exceeded the maximum allowed length
-	// for its CiString type.
-	errExceedsMaxLength = errors.New("value exceeds maximum allowed length")
-
-	// errNonPrintableASCII indicates that a value contains characters outside
-	// the printable ASCII range (decimal 32–126 inclusive).
-	errNonPrintableASCII = errors.New("value contains non-printable ASCII characters")
-
-	// errEmptyValueNotAllowed indicates that a CiString value was expected but
-	// found to be empty.
-	errEmptyValueNotAllowed = errors.New("value must not be empty")
-)
-
 // ciString is an internal utility type representing a case-insensitive string
 // with a maximum length and a constraint to only use printable ASCII characters.
 //
@@ -83,17 +68,20 @@ func (cs ciString) String() string {
 // If validation fails, a wrapped error is returned to indicate the specific failure.
 func (cs ciString) validate() error {
 	if len(cs.Value) == 0 {
-		return errEmptyValueNotAllowed
+		return fmt.Errorf("%s.validate: %w", filepath, errors.New("value must not be empty"))
 	}
 
 	if len(cs.Value) > cs.MaxLen {
 		return fmt.Errorf(
-			"%s.validate: %w: actual length %d, max %d", filepath, errExceedsMaxLength, len(cs.Value), cs.MaxLen)
+			"%s.validate: %w: actual length %d, max %d", filepath, errors.New("value exceeds maximum allowed length"),
+			len(cs.Value),
+			cs.MaxLen,
+		)
 	}
 
 	for _, r := range cs.Value {
 		if r < 32 || r > 126 {
-			return errNonPrintableASCII
+			return fmt.Errorf("%s.validate: %w", filepath, errors.New("value contains non-printable ASCII characters"))
 		}
 	}
 

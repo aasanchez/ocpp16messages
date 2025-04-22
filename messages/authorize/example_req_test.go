@@ -3,7 +3,6 @@ package authorize_test
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 
 	"github.com/aasanchez/ocpp16messages/messages/authorize"
 )
@@ -13,7 +12,7 @@ func ExampleRequest() {
 
 	authorizeReq, err := authorize.Request(idTag)
 	if err != nil {
-		log.Fatalf("failed to construct request: %v", err)
+		fmt.Printf("Error: failed to construct request: %v", err)
 	}
 
 	fmt.Printf("Authorize.req: %s\n", authorizeReq.String())
@@ -34,7 +33,7 @@ func ExampleRequest_parse() {
 
 	err := json.Unmarshal([]byte(raw), &msg)
 	if err != nil {
-		log.Fatalf("invalid JSON array: %v", err)
+		fmt.Printf("Error: invalid JSON array: %v", err)
 	}
 
 	var payload struct {
@@ -43,12 +42,12 @@ func ExampleRequest_parse() {
 
 	err = json.Unmarshal(msg[3], &payload)
 	if err != nil {
-		log.Fatalf("invalid payload: %v", err)
+		fmt.Printf("Error: invalid payload: %v", err)
 	}
 
 	req, err := authorize.Request(payload.IdTag)
 	if err != nil {
-		log.Fatalf("authorize.Request failed: %v", err)
+		fmt.Printf("Error: authorize.Request failed: %v", err)
 	}
 
 	fmt.Println("Authorize.req:", req)

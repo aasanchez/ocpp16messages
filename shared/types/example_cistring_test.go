@@ -2,7 +2,6 @@ package sharedtypes_test
 
 import (
 	"fmt"
-	"log"
 	"strings"
 
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
@@ -15,7 +14,7 @@ func ExampleCiString() {
 	// Attempt to create a valid ciString
 	cs, err := sharedtypes.CiString(input, maxLen)
 	if err != nil {
-		log.Fatalf("Failed to create ciString: %v", err)
+		fmt.Printf("Failed to create ciString: %v", err)
 	}
 
 	fmt.Println("ciString created:", cs.String())
