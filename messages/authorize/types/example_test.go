@@ -13,7 +13,7 @@ func ExampleAuthorizationStatus_isValid() {
 	if status.IsValid() {
 		fmt.Printf("'%s' is a valid status.\n", status)
 	} else {
-		fmt.Printf("'%s' is not a valid status.\n", status)
+		fmt.Printf("'%s' is an invalid status.\n", status)
 	}
 
 	// Output:
@@ -57,7 +57,7 @@ func ExampleIdTagInfoType() {
 	fmt.Println("IdTagInfo:", info.String())
 
 	// Output:
-	// IdTagInfo: {status:Accepted, expiryDate:2027-04-12T16:03:04+02:00, parentIdTag:ABC123}
+	// IdTagInfo(status:Accepted, expiryDate:2027-04-12T16:03:04+02:00, parentIdTag:ABC123)
 }
 
 func ExampleIdTagInfoType_onlystatus() {
@@ -77,10 +77,10 @@ func ExampleIdTagInfoType_onlystatus() {
 		return
 	}
 
-	fmt.Println("IdTagInfo:", info.String())
+	fmt.Printf("IdTagInfo(%s)", info.String())
 
 	// Output:
-	// IdTagInfo: {status:Accepted}
+	// IdTagInfo(status:Accepted)
 }
 
 func ExampleIdTagInfoType_withParentIdTag() {
@@ -102,10 +102,10 @@ func ExampleIdTagInfoType_withParentIdTag() {
 		return
 	}
 
-	fmt.Println("IdTagInfo:", info.String())
+	fmt.Printf("IdTagInfo(%s)\n", info.String())
 
 	// Output:
-	// IdTagInfo: {status:Accepted, parentIdTag:ABC123}
+	// IdTagInfo(status:Accepted, parentIdTag:ABC123)
 }
 
 func ExampleIdToken() {

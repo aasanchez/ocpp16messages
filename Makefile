@@ -10,7 +10,7 @@ help:  ## Display this help
 .PHONY: test
 test: ## is used to run the test suite of the application
 	@rm -rf .reports && mkdir -p .reports
-	@go test -mod=readonly -v -coverprofile=.reports/coverage.out  -run '^Test' ./... > .reports/coverage.txt
+	@go test -mod=readonly -v -coverprofile=.reports/coverage.out  -run '^Test' ./... > .reports/test.txt
 	@echo "\n--- \033[32mCoverage Percentage\033[0m:"
 	@go tool cover -func=.reports/coverage.out | tail -1 | awk -F" " '{print $$NF}'
 
@@ -19,7 +19,7 @@ test: ## is used to run the test suite of the application
 test-full: ## is used to run the test suite of the application
 	@rm -rf .reports && mkdir -p .reports
 	@go test -mod=readonly -v ./... >.reports/test.txt || true
-	@go test -mod=readonly -v -coverprofile=.reports/coverage.out ./... > .reports/coverage.txt
+	@go test -mod=readonly -v -coverprofile=.reports/coverage.out ./... > .reports/test.txt
 	@echo "\n--- \033[32mCoverage Percentage\033[0m:"
 	@go tool cover -func=.reports/coverage.out | tail -1 | awk -F" " '{print $$NF}'
 
@@ -48,16 +48,12 @@ format: ## is used to format the code of the application
 pkgsite:
 	@echo "Stopping any running pkgsite processes..."
 	@pkill pkgsite || true
-
 	@echo "Cleaning Go module cache..."
 	@go clean -modcache
 	@rm -rf $$GOPATH/pkg
-
 	@echo "Tidying up modules..."
 	@go mod tidy
-
 	@echo "Starting pkgsite at http://localhost:8080 ..."
 	@nohup pkgsite > /dev/null 2>&1 &
-
 	@sleep 2
 	@open -a "Google Chrome" http://localhost:8080/github.com/aasanchez/ocpp16messages

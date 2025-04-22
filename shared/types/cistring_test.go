@@ -37,7 +37,7 @@ func TestCiString20TypeValid(t *testing.T) {
 func TestCiString20TypeTooLong(t *testing.T) {
 	t.Parallel()
 
-	CiString20StrValue := strings.Repeat("A", 21)
+	CiString20StrValue := strings.Repeat("B", 21)
 
 	_, err := CiString20(CiString20StrValue)
 
@@ -49,7 +49,7 @@ func TestCiString20TypeTooLong(t *testing.T) {
 func TestCiString25TypeValid(t *testing.T) {
 	t.Parallel()
 
-	CiString25StrValue := strings.Repeat("A", 25)
+	CiString25StrValue := strings.Repeat("C", 25)
 	CiString25Str, err := CiString25(CiString25StrValue)
 
 	if err != nil {
@@ -70,7 +70,7 @@ func TestCiString25TypeValid(t *testing.T) {
 func TestCiString25TypeTooLong(t *testing.T) {
 	t.Parallel()
 
-	CiString25StrValue := strings.Repeat("A", 26)
+	CiString25StrValue := strings.Repeat("D", 26)
 
 	_, err := CiString25(CiString25StrValue)
 
@@ -82,7 +82,7 @@ func TestCiString25TypeTooLong(t *testing.T) {
 func TestCiString50TypeValid(t *testing.T) {
 	t.Parallel()
 
-	CiString50StrValue := strings.Repeat("A", 50)
+	CiString50StrValue := strings.Repeat("E", 50)
 	CiString50Str, err := CiString50(CiString50StrValue)
 
 	if err != nil {
@@ -103,7 +103,7 @@ func TestCiString50TypeValid(t *testing.T) {
 func TestCiString50TypeTooLong(t *testing.T) {
 	t.Parallel()
 
-	CiString50StrValue := strings.Repeat("A", 51)
+	CiString50StrValue := strings.Repeat("F", 51)
 
 	_, err := CiString50(CiString50StrValue)
 
@@ -115,7 +115,7 @@ func TestCiString50TypeTooLong(t *testing.T) {
 func TestCiString255TypeValid(t *testing.T) {
 	t.Parallel()
 
-	CiString255StrValue := strings.Repeat("A", 255)
+	CiString255StrValue := strings.Repeat("G", 255)
 	CiString255Str, err := CiString255(CiString255StrValue)
 
 	if err != nil {
@@ -136,7 +136,7 @@ func TestCiString255TypeValid(t *testing.T) {
 func TestCiString255TypeTooLong(t *testing.T) {
 	t.Parallel()
 
-	CiString255StrValue := strings.Repeat("A", 256)
+	CiString255StrValue := strings.Repeat("H", 256)
 
 	_, err := CiString255(CiString255StrValue)
 
@@ -148,7 +148,7 @@ func TestCiString255TypeTooLong(t *testing.T) {
 func TestCiString500TypeValid(t *testing.T) {
 	t.Parallel()
 
-	CiString500StrValue := strings.Repeat("A", 500)
+	CiString500StrValue := strings.Repeat("I", 500)
 	CiString500Str, err := CiString500(CiString500StrValue)
 
 	if err != nil {
@@ -169,7 +169,7 @@ func TestCiString500TypeValid(t *testing.T) {
 func TestCiString500TypeTooLong(t *testing.T) {
 	t.Parallel()
 
-	CiString500StrValue := strings.Repeat("A", 501)
+	CiString500StrValue := strings.Repeat("J", 501)
 
 	_, err := CiString500(CiString500StrValue)
 
