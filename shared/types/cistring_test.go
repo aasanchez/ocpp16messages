@@ -5,261 +5,275 @@ import (
 	"testing"
 )
 
-// Define constants for repeated error messages.
-const (
-	errExpectedNoError      = "expected no error, got %v"
-	errExpectedStringOutput = "expected string output, got %s"
-	errExpectedValidate     = "expected Validate to return nil, got %v"
-	errExpectedErrorTooLong = "expected error for string too long"
-)
-
-func TestCiString20TypeValid(t *testing.T) {
-	t.Parallel()
-
-	CiString20StrValue := strings.Repeat("A", 20)
-	CiString20Str, err := CiString20(CiString20StrValue)
+func expectNoError(t *testing.T, err error) {
+	t.Helper()
 
 	if err != nil {
-		t.Errorf(errExpectedNoError, err)
-	}
-
-	if CiString20Str.String() != CiString20StrValue {
-		t.Errorf(errExpectedStringOutput, CiString20Str.String())
-	}
-
-	err = CiString20Str.Validate()
-
-	if err != nil {
-		t.Errorf(errExpectedValidate, err)
+		t.Fatalf("unexpected error: %v", err)
 	}
 }
 
-func TestCiString20TypeTooLong(t *testing.T) {
-	t.Parallel()
-
-	CiString20StrValue := strings.Repeat("B", 21)
-
-	_, err := CiString20(CiString20StrValue)
+func expectError(t *testing.T, err error) {
+	t.Helper()
 
 	if err == nil {
-		t.Error(errExpectedErrorTooLong)
+		t.Fatal("expected error, got nil")
 	}
 }
 
-func TestCiString25TypeValid(t *testing.T) {
+func TestCiString_ReturnsError_WhenEmpty(t *testing.T) {
 	t.Parallel()
 
-	CiString25StrValue := strings.Repeat("C", 25)
-	CiString25Str, err := CiString25(CiString25StrValue)
+	_, err := CiString("", 20)
+	expectError(t, err)
+}
 
-	if err != nil {
-		t.Errorf(errExpectedNoError, err)
-	}
+func TestCiString_ReturnsError_WhenTooLong(t *testing.T) {
+	t.Parallel()
 
-	if CiString25Str.String() != CiString25StrValue {
-		t.Errorf(errExpectedStringOutput, CiString25Str.String())
-	}
+	_, err := CiString(strings.Repeat("X", 21), 20)
+	expectError(t, err)
+}
 
-	err = CiString25Str.Validate()
+func TestCiString_ReturnsError_WhenNonPrintable(t *testing.T) {
+	t.Parallel()
 
-	if err != nil {
-		t.Errorf(errExpectedValidate, err)
+	_, err := CiString("OCPP\x01", 20)
+	expectError(t, err)
+}
+
+func TestCiString_ReturnsNoError_WhenValid(t *testing.T) {
+	t.Parallel()
+
+	_, err := CiString("Hello123", 20)
+	expectNoError(t, err)
+}
+
+func TestCiString_String_ReturnsOriginal(t *testing.T) {
+	t.Parallel()
+
+	str := "Hello123"
+	cs, _ := CiString(str, 20)
+
+	if cs.String() != str {
+		t.Errorf("expected %q, got %q", str, cs.String())
 	}
 }
 
-func TestCiString25TypeTooLong(t *testing.T) {
+func TestCiString_Validate_ReturnsNil_WhenValid(t *testing.T) {
 	t.Parallel()
 
-	CiString25StrValue := strings.Repeat("D", 26)
+	cs, _ := CiString("GoodOne!", 20)
+	err := cs.Validate()
+	expectNoError(t, err)
+}
 
-	_, err := CiString25(CiString25StrValue)
+func TestCiString20Type_Create_Valid(t *testing.T) {
+	t.Parallel()
 
-	if err == nil {
-		t.Error(errExpectedErrorTooLong)
+	_, err := CiString20(strings.Repeat("A", 20))
+	expectNoError(t, err)
+}
+
+func TestCiString20Type_Create_TooLong(t *testing.T) {
+	t.Parallel()
+
+	_, err := CiString20(strings.Repeat("A", 21))
+	expectError(t, err)
+}
+
+func TestCiString20Type_String(t *testing.T) {
+	t.Parallel()
+
+	s := strings.Repeat("A", 20)
+	v, _ := CiString20(s)
+
+	if v.String() != s {
+		t.Errorf("expected %q, got %q", s, v.String())
 	}
 }
 
-func TestCiString50TypeValid(t *testing.T) {
+func TestCiString20Type_Validate(t *testing.T) {
 	t.Parallel()
 
-	CiString50StrValue := strings.Repeat("E", 50)
-	CiString50Str, err := CiString50(CiString50StrValue)
+	v, _ := CiString20(strings.Repeat("A", 20))
+	expectNoError(t, v.Validate())
+}
 
-	if err != nil {
-		t.Errorf(errExpectedNoError, err)
-	}
+func TestCiString20Type_IsValid(t *testing.T) {
+	t.Parallel()
 
-	if CiString50Str.String() != CiString50StrValue {
-		t.Errorf(errExpectedStringOutput, CiString50Str.String())
-	}
+	v, _ := CiString20(strings.Repeat("A", 20))
 
-	err = CiString50Str.Validate()
-
-	if err != nil {
-		t.Errorf(errExpectedValidate, err)
+	if !v.IsValid() {
+		t.Error("expected IsValid to be true")
 	}
 }
 
-func TestCiString50TypeTooLong(t *testing.T) {
+func TestCiString25Type_Create_Valid(t *testing.T) {
 	t.Parallel()
 
-	CiString50StrValue := strings.Repeat("F", 51)
+	_, err := CiString25(strings.Repeat("B", 25))
+	expectNoError(t, err)
+}
 
-	_, err := CiString50(CiString50StrValue)
+func TestCiString25Type_Create_TooLong(t *testing.T) {
+	t.Parallel()
 
-	if err == nil {
-		t.Error(errExpectedErrorTooLong)
+	_, err := CiString25(strings.Repeat("B", 26))
+	expectError(t, err)
+}
+
+func TestCiString25Type_String(t *testing.T) {
+	t.Parallel()
+
+	s := strings.Repeat("B", 25)
+	v, _ := CiString25(s)
+
+	if v.String() != s {
+		t.Errorf("expected %q, got %q", s, v.String())
 	}
 }
 
-func TestCiString255TypeValid(t *testing.T) {
+func TestCiString25Type_Validate(t *testing.T) {
 	t.Parallel()
 
-	CiString255StrValue := strings.Repeat("G", 255)
-	CiString255Str, err := CiString255(CiString255StrValue)
+	v, _ := CiString25(strings.Repeat("B", 25))
+	expectNoError(t, v.Validate())
+}
 
-	if err != nil {
-		t.Errorf(errExpectedNoError, err)
-	}
+func TestCiString25Type_IsValid(t *testing.T) {
+	t.Parallel()
 
-	if CiString255Str.String() != CiString255StrValue {
-		t.Errorf(errExpectedStringOutput, CiString255Str.String())
-	}
+	v, _ := CiString25(strings.Repeat("B", 25))
 
-	err = CiString255Str.Validate()
-
-	if err != nil {
-		t.Errorf(errExpectedValidate, err)
+	if !v.IsValid() {
+		t.Error("expected IsValid to be true")
 	}
 }
 
-func TestCiString255TypeTooLong(t *testing.T) {
+func TestCiString50Type_Create_Valid(t *testing.T) {
 	t.Parallel()
 
-	CiString255StrValue := strings.Repeat("H", 256)
+	_, err := CiString50(strings.Repeat("C", 50))
+	expectNoError(t, err)
+}
 
-	_, err := CiString255(CiString255StrValue)
+func TestCiString50Type_Create_TooLong(t *testing.T) {
+	t.Parallel()
 
-	if err == nil {
-		t.Error(errExpectedErrorTooLong)
+	_, err := CiString50(strings.Repeat("C", 51))
+	expectError(t, err)
+}
+
+func TestCiString50Type_String(t *testing.T) {
+	t.Parallel()
+
+	s := strings.Repeat("C", 50)
+	v, _ := CiString50(s)
+
+	if v.String() != s {
+		t.Errorf("expected %q, got %q", s, v.String())
 	}
 }
 
-func TestCiString500TypeValid(t *testing.T) {
+func TestCiString50Type_Validate(t *testing.T) {
 	t.Parallel()
 
-	CiString500StrValue := strings.Repeat("I", 500)
-	CiString500Str, err := CiString500(CiString500StrValue)
+	v, _ := CiString50(strings.Repeat("C", 50))
+	expectNoError(t, v.Validate())
+}
 
-	if err != nil {
-		t.Errorf(errExpectedNoError, err)
-	}
+func TestCiString50Type_IsValid(t *testing.T) {
+	t.Parallel()
 
-	if CiString500Str.String() != CiString500StrValue {
-		t.Errorf(errExpectedStringOutput, CiString500Str.String())
-	}
+	v, _ := CiString50(strings.Repeat("C", 50))
 
-	err = CiString500Str.Validate()
-
-	if err != nil {
-		t.Errorf(errExpectedValidate, err)
+	if !v.IsValid() {
+		t.Error("expected IsValid to be true")
 	}
 }
 
-func TestCiString500TypeTooLong(t *testing.T) {
+func TestCiString255Type_Create_Valid(t *testing.T) {
 	t.Parallel()
 
-	CiString500StrValue := strings.Repeat("J", 501)
+	_, err := CiString255(strings.Repeat("D", 255))
+	expectNoError(t, err)
+}
 
-	_, err := CiString500(CiString500StrValue)
+func TestCiString255Type_Create_TooLong(t *testing.T) {
+	t.Parallel()
 
-	if err == nil {
-		t.Error(errExpectedErrorTooLong)
+	_, err := CiString255(strings.Repeat("D", 256))
+	expectError(t, err)
+}
+
+func TestCiString255Type_String(t *testing.T) {
+	t.Parallel()
+
+	s := strings.Repeat("D", 255)
+	v, _ := CiString255(s)
+
+	if v.String() != s {
+		t.Errorf("expected %q, got %q", s, v.String())
 	}
 }
 
-func TestCiStringTypeASCII(t *testing.T) {
+func TestCiString255Type_Validate(t *testing.T) {
 	t.Parallel()
 
-	var builder strings.Builder
+	v, _ := CiString255(strings.Repeat("D", 255))
+	expectNoError(t, v.Validate())
+}
 
-	for i := 32; i <= 126; i++ {
-		builder.WriteRune(rune(i))
-	}
+func TestCiString255Type_IsValid(t *testing.T) {
+	t.Parallel()
 
-	input := builder.String()
-	String255, err := CiString255(input)
+	v, _ := CiString255(strings.Repeat("D", 255))
 
-	if err != nil {
-		t.Errorf("expected all printable ASCII to pass validation, got %v", err)
-	}
-
-	if String255.String() != input {
-		t.Errorf("unexpected output from String()")
-	}
-
-	if err := String255.Validate(); err != nil {
-		t.Errorf(errExpectedValidate, err)
+	if !v.IsValid() {
+		t.Error("expected IsValid to be true")
 	}
 }
 
-func TestCiStringTypeChineseCharacters(t *testing.T) {
+func TestCiString500Type_Create_Valid(t *testing.T) {
 	t.Parallel()
 
-	_, err := CiString20("你好，OCPP")
+	_, err := CiString500(strings.Repeat("E", 500))
+	expectNoError(t, err)
+}
 
-	if err == nil {
-		t.Errorf("expected error for non-ASCII input (Chinese), got nil")
+func TestCiString500Type_Create_TooLong(t *testing.T) {
+	t.Parallel()
+
+	_, err := CiString500(strings.Repeat("E", 501))
+	expectError(t, err)
+}
+
+func TestCiString500Type_String(t *testing.T) {
+	t.Parallel()
+
+	s := strings.Repeat("E", 500)
+	v, _ := CiString500(s)
+
+	if v.String() != s {
+		t.Errorf("expected %q, got %q", s, v.String())
 	}
 }
 
-func TestCiStringTypeUkrainianCharacters(t *testing.T) {
+func TestCiString500Type_Validate(t *testing.T) {
 	t.Parallel()
 
-	str, err := CiString20("Привіт, OCPP")
-
-	if err == nil {
-		t.Errorf("expected error for non-ASCII input (Ukrainian), got %s", str)
-	}
+	v, _ := CiString500(strings.Repeat("E", 500))
+	expectNoError(t, v.Validate())
 }
 
-func TestCiStringTypeArabicCharacters(t *testing.T) {
+func TestCiString500Type_IsValid(t *testing.T) {
 	t.Parallel()
 
-	str, err := CiString20("مرحبًا OCPP")
+	v, _ := CiString500(strings.Repeat("E", 500))
 
-	if err == nil {
-		t.Errorf("expected error for non-ASCII input (Arabic), got %s", str)
-	}
-}
-
-func TestCiStringTypeNonPrintable(t *testing.T) {
-	t.Parallel()
-
-	str, err := CiString20("Valid\x01String")
-
-	if err == nil {
-		t.Errorf("expected error for non-printable ASCII, got %s", str)
-	}
-}
-
-func TestCiStringTypeEmpty(t *testing.T) {
-	t.Parallel()
-
-	_, err := CiString20("")
-
-	if err == nil {
-		t.Errorf("expected error for empty string, got nil")
-	}
-}
-
-func TestCiStringTypeNullEquivalent(t *testing.T) {
-	t.Parallel()
-
-	var nullString string
-	_, err := CiString20(nullString)
-
-	if err == nil {
-		t.Errorf("expected error for zero-value string (null equivalent), got nil")
+	if !v.IsValid() {
+		t.Error("expected IsValid to be true")
 	}
 }

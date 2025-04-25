@@ -57,7 +57,7 @@ func ExampleIdTagInfoType() {
 	fmt.Println("IdTagInfo:", info.String())
 
 	// Output:
-	// IdTagInfo(status:Accepted, expiryDate:2027-04-12T16:03:04+02:00, parentIdTag:ABC123)
+	// IdTagInfo: {status:Accepted, expiryDate:2027-04-12T16:03:04+02:00, parentIdTag:ABC123}
 }
 
 func ExampleIdTagInfoType_onlystatus() {
@@ -80,7 +80,7 @@ func ExampleIdTagInfoType_onlystatus() {
 	fmt.Printf("IdTagInfo(%s)", info.String())
 
 	// Output:
-	// IdTagInfo(status:Accepted)
+	// IdTagInfo({status:Accepted})
 }
 
 func ExampleIdTagInfoType_withParentIdTag() {
@@ -105,7 +105,7 @@ func ExampleIdTagInfoType_withParentIdTag() {
 	fmt.Printf("IdTagInfo(%s)\n", info.String())
 
 	// Output:
-	// IdTagInfo(status:Accepted, parentIdTag:ABC123)
+	// IdTagInfo({status:Accepted, parentIdTag:ABC123})
 }
 
 func ExampleIdToken() {
@@ -131,5 +131,5 @@ func ExampleIdTokenType_invalid() {
 	fmt.Printf("Valid IdToken: %s\n", idToken.String())
 
 	// Output:
-	// IdToken: invalid IdToken, CiString.validate: value exceeds maximum allowed length actual length 26, max 20
+	// IdToken: invalid IdToken, ciString.Validate: value exceeds maximum allowed length: got length 26, max 20
 }

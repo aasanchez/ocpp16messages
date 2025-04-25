@@ -49,7 +49,7 @@ func ExampleCiString20_invalid() {
 
 	fmt.Println("Length:", len(cistr.String()))
 	// Output:
-	// Error: CiString.validate: value exceeds maximum allowed length actual length 21, max 20
+	// Error: ciString.Validate: value exceeds maximum allowed length: got length 21, max 20
 }
 
 func ExampleCiString25() {
@@ -79,7 +79,7 @@ func ExampleCiString25_invalid() {
 
 	fmt.Println("Length:", len(cistr.String()))
 	// Output:
-	// Error: CiString.validate: value exceeds maximum allowed length actual length 26, max 25
+	// Error: ciString.Validate: value exceeds maximum allowed length: got length 26, max 25
 }
 
 func ExampleCiString50() {
@@ -109,7 +109,7 @@ func ExampleCiString50_invalid() {
 
 	fmt.Println("Length:", len(cistr.String()))
 	// Output:
-	// Error: CiString.validate: value exceeds maximum allowed length actual length 51, max 50
+	// Error: ciString.Validate: value exceeds maximum allowed length: got length 51, max 50
 }
 
 func ExampleCiString255() {
@@ -139,7 +139,7 @@ func ExampleCiString255_invalid() {
 
 	fmt.Println("Length:", len(cistr.String()))
 	// Output:
-	// Error: CiString.validate: value exceeds maximum allowed length actual length 256, max 255
+	// Error: ciString.Validate: value exceeds maximum allowed length: got length 256, max 255
 }
 
 func ExampleCiString500() {
@@ -169,5 +169,5 @@ func ExampleCiString500_invalid() {
 
 	fmt.Println("Length:", len(cistr.String()))
 	// Output:
-	// Error: CiString.validate: value exceeds maximum allowed length actual length 501, max 500
+	// Error: ciString.Validate: value exceeds maximum allowed length: got length 501, max 500
 }

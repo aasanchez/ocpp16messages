@@ -143,5 +143,5 @@ func ExampleConfirmationMessage_Validate_invalid() {
 	}
 
 	// Output:
-	// Expected validation failure: ConfirmationMessage validation failed: invalid authorization status: InvalidStatus
+	// Expected validation failure: confirmationMessage.Validate: invalid authorization status: InvalidStatus
 }

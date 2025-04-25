@@ -12,7 +12,7 @@ type ConfirmationMessage struct {
 
 func Confirmation(info authorizetypes.IdTagInfoType) (ConfirmationMessage, error) {
 	if err := info.Validate(); err != nil {
-		return ConfirmationMessage{}, fmt.Errorf("invalid idTagInfo: %w", err)
+		return ConfirmationMessage{}, fmt.Errorf("confirmation: invalid IdTagInfo: %w", err)
 	}
 
 	return ConfirmationMessage{
@@ -22,7 +22,7 @@ func Confirmation(info authorizetypes.IdTagInfoType) (ConfirmationMessage, error
 
 func (m ConfirmationMessage) Validate() error {
 	if err := m.IdTagInfo.Validate(); err != nil {
-		return fmt.Errorf("ConfirmationMessage validation failed: %w", err)
+		return fmt.Errorf("confirmationMessage.Validate: %w", err)
 	}
 
 	return nil

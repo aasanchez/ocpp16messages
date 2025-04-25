@@ -14,7 +14,10 @@ test: ## is used to run the test suite of the application
 	@echo "\n--- \033[32mCoverage Percentage\033[0m:"
 	@go tool cover -func=.reports/coverage.out | tail -1 | awk -F" " '{print $$NF}'
 
-##@ Basic
+.PHONY: test-example
+test-example: ## is used to run the test suite of the applications
+	@go test -mod=readonly -v -coverprofile=.reports/coverage.out  -run '^Example' ./...
+
 .PHONY: test-full
 test-full: ## is used to run the test suite of the application
 	@rm -rf .reports && mkdir -p .reports
