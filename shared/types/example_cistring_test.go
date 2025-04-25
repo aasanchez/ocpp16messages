@@ -7,6 +7,11 @@ import (
 	types "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
+const (
+	msgError  = "Error:"
+	msgLength = "Length:"
+)
+
 func ExampleCiString() {
 	input := "Hello, OCPP!"
 	maxLen := 20
@@ -27,12 +32,12 @@ func ExampleCiString20() {
 
 	cistr, err := types.CiString20(input)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(msgError, err)
 
 		return
 	}
 
-	fmt.Println("Length:", len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.String()))
 	// Output:
 	// Length: 20
 }
@@ -42,12 +47,12 @@ func ExampleCiString20_invalid() {
 
 	cistr, err := types.CiString20(input)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(msgError, err)
 
 		return
 	}
 
-	fmt.Println("Length:", len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.String()))
 	// Output:
 	// Error: ciString.Validate: value exceeds maximum allowed length: got length 21, max 20
 }
@@ -57,12 +62,12 @@ func ExampleCiString25() {
 
 	cistr, err := types.CiString25(input)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(msgError, err)
 
 		return
 	}
 
-	fmt.Println("Length:", len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.String()))
 	// Output:
 	// Length: 25
 }
@@ -72,12 +77,12 @@ func ExampleCiString25_invalid() {
 
 	cistr, err := types.CiString25(input)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(msgError, err)
 
 		return
 	}
 
-	fmt.Println("Length:", len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.String()))
 	// Output:
 	// Error: ciString.Validate: value exceeds maximum allowed length: got length 26, max 25
 }
@@ -87,12 +92,12 @@ func ExampleCiString50() {
 
 	cistr, err := types.CiString50(input)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(msgError, err)
 
 		return
 	}
 
-	fmt.Println("Length:", len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.String()))
 	// Output:
 	// Length: 50
 }
@@ -102,12 +107,12 @@ func ExampleCiString50_invalid() {
 
 	cistr, err := types.CiString50(input)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(msgError, err)
 
 		return
 	}
 
-	fmt.Println("Length:", len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.String()))
 	// Output:
 	// Error: ciString.Validate: value exceeds maximum allowed length: got length 51, max 50
 }
@@ -117,12 +122,12 @@ func ExampleCiString255() {
 
 	cistr, err := types.CiString255(input)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(msgError, err)
 
 		return
 	}
 
-	fmt.Println("Length:", len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.String()))
 	// Output:
 	// Length: 255
 }
@@ -132,12 +137,12 @@ func ExampleCiString255_invalid() {
 
 	cistr, err := types.CiString255(input)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(msgError, err)
 
 		return
 	}
 
-	fmt.Println("Length:", len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.String()))
 	// Output:
 	// Error: ciString.Validate: value exceeds maximum allowed length: got length 256, max 255
 }
@@ -147,12 +152,12 @@ func ExampleCiString500() {
 
 	cistr, err := types.CiString500(input)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(msgError, err)
 
 		return
 	}
 
-	fmt.Println("Length:", len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.String()))
 	// Output:
 	// Length: 499
 }
@@ -162,12 +167,12 @@ func ExampleCiString500_invalid() {
 
 	cistr, err := types.CiString500(input)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(msgError, err)
 
 		return
 	}
 
-	fmt.Println("Length:", len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.String()))
 	// Output:
 	// Error: ciString.Validate: value exceeds maximum allowed length: got length 501, max 500
 }

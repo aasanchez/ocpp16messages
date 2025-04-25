@@ -7,6 +7,11 @@ import (
 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
+const (
+	errMsgFailedCreateIdTagInfo = "Failed to create IdTagInfo:"
+	errMsgValidationFailed      = "Validation failed:"
+)
+
 func ExampleAuthorizationStatus_isValid() {
 	status := authorizetypes.AuthorizationStatus("Expired")
 
@@ -36,7 +41,7 @@ func ExampleAuthorizationStatus_invalid() {
 func ExampleIdTagInfoType() {
 	info, err := authorizetypes.IdTagInfo(authorizetypes.Accepted)
 	if err != nil {
-		fmt.Println("Failed to create IdTagInfo:", err)
+		fmt.Println(errMsgFailedCreateIdTagInfo, err)
 
 		return
 	}
@@ -49,7 +54,7 @@ func ExampleIdTagInfoType() {
 	info.ParentIdTag = &parentId
 
 	if err := info.Validate(); err != nil {
-		fmt.Println("Validation failed:", err)
+		fmt.Println(errMsgValidationFailed, err)
 
 		return
 	}
@@ -63,7 +68,7 @@ func ExampleIdTagInfoType() {
 func ExampleIdTagInfoType_onlystatus() {
 	info, err := authorizetypes.IdTagInfo(authorizetypes.Accepted)
 	if err != nil {
-		fmt.Println("Failed to create IdTagInfo:", err)
+		fmt.Println(errMsgFailedCreateIdTagInfo, err)
 
 		return
 	}
@@ -72,7 +77,7 @@ func ExampleIdTagInfoType_onlystatus() {
 	info.ParentIdTag = nil
 
 	if err := info.Validate(); err != nil {
-		fmt.Println("Validation failed:", err)
+		fmt.Println(errMsgValidationFailed, err)
 
 		return
 	}
@@ -86,7 +91,7 @@ func ExampleIdTagInfoType_onlystatus() {
 func ExampleIdTagInfoType_withParentIdTag() {
 	info, err := authorizetypes.IdTagInfo(authorizetypes.Accepted)
 	if err != nil {
-		fmt.Println("Failed to create IdTagInfo:", err)
+		fmt.Println(errMsgFailedCreateIdTagInfo, err)
 
 		return
 	}
@@ -97,7 +102,7 @@ func ExampleIdTagInfoType_withParentIdTag() {
 	info.ExpiryDate = nil
 
 	if err := info.Validate(); err != nil {
-		fmt.Println("Validation failed:", err)
+		fmt.Println(errMsgValidationFailed, err)
 
 		return
 	}
