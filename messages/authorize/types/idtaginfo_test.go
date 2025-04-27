@@ -124,3 +124,20 @@ func TestIdTagInfoStringMethod(t *testing.T) {
 		t.Errorf("unexpected String() output:\nwant: %s\ngot : %s", expected, info.String())
 	}
 }
+
+func TestIdTagInfoTypeValidateParentIdTagInvalid(t *testing.T) {
+	t.Parallel()
+
+	invalidParent := &authorizetypes.IdTokenType{ /*fields that will fail validation*/ }
+	info := authorizetypes.IdTagInfoType{
+		Status:      authorizetypes.Accepted, // assuming valid
+		ParentIdTag: invalidParent,
+		ExpiryDate:  nil,
+	}
+
+	// IdTokenType.Validate() must return an error for invalidParent
+	err := info.Validate()
+	if err == nil {
+		t.Errorf("expected parentIdTag error, got: %v", err)
+	}
+}
