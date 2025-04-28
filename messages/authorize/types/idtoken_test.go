@@ -34,16 +34,6 @@ func TestIdTokenFromStringTooLong(t *testing.T) {
 	}
 }
 
-func TestIdTokenFromStringNonASCII(t *testing.T) {
-	t.Parallel()
-
-	_, err := IdToken("你好世界")
-
-	if err == nil {
-		t.Errorf("expected error for non-ASCII input, got nil")
-	}
-}
-
 func TestIdTokenFromStringEmpty(t *testing.T) {
 	t.Parallel()
 

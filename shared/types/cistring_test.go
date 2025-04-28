@@ -47,6 +47,13 @@ func TestCiStringReturnsErrorWhenNonPrintable(t *testing.T) {
 	expectError(t, err)
 }
 
+func TestCiStringNonASCII(t *testing.T) {
+	t.Parallel()
+
+	_, err := CiString("你好世界", 20)
+	expectError(t, err)
+}
+
 func TestCiStringReturnsNoErrorWhenValid(t *testing.T) {
 	t.Parallel()
 
