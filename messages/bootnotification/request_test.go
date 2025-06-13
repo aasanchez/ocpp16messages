@@ -44,7 +44,7 @@ func TestRequest_AllValidFields(t *testing.T) {
 		ChargePointModel:        "CPModelX",
 		ChargePointSerialNumber: "CPSN-456",
 		ChargePointVendor:       "CPVendorZ",
-		FirmwareVersion:         "1.2.3.4",
+		FirmwareVersion:         "1.2.3.4-rc",
 		Iccid:                   "8988",
 		Imsi:                    "1234567890",
 		MeterSerialNumber:       "MeterSN-001",
@@ -67,7 +67,7 @@ func TestRequest_AllValidFields(t *testing.T) {
 		{"ChargePointModel", req.ChargePointModel.String(), "CPModelX"},
 		{"ChargePointSerialNumber", req.ChargePointSerialNumber.String(), "CPSN-456"},
 		{"ChargePointVendor", req.ChargePointVendor.String(), "CPVendorZ"},
-		{"FirmwareVersion", req.FirmwareVersion.String(), "1.2.3.4"},
+		{"FirmwareVersion", req.FirmwareVersion.String(), "1.2.3.4-rc"},
 		{"Iccid", req.Iccid.String(), "8988"},
 		{"Imsi", req.Imsi.String(), "1234567890"},
 		{"MeterSerialNumber", req.MeterSerialNumber.String(), "MeterSN-001"},
@@ -382,7 +382,7 @@ func TestRequestMessage_String_AllOptionalsSet(t *testing.T) {
 		ChargePointModel:        mustCiString20("ModelX"),
 		ChargePointSerialNumber: ptr(mustCiString25("CPSN")),
 		ChargePointVendor:       mustCiString20("VendorY"),
-		FirmwareVersion:         ptr(mustCiString50("1.2.3.4")),
+		FirmwareVersion:         ptr(mustCiString50("0.2")),
 		Iccid:                   ptr(mustCiString20("ICCID")),
 		Imsi:                    ptr(mustCiString20("IMSI")),
 		MeterSerialNumber:       ptr(mustCiString25("MeterSN")),
@@ -390,7 +390,7 @@ func TestRequestMessage_String_AllOptionalsSet(t *testing.T) {
 	}
 	out := msg.String()
 
-	for _, want := range []string{"BoxSN", "ModelX", "CPSN", "VendorY", "1.2.3.4", "ICCID", "IMSI", "MeterSN", "TypeX"} {
+	for _, want := range []string{"BoxSN", "ModelX", "CPSN", "VendorY", "0.2", "ICCID", "IMSI", "MeterSN", "TypeX"} {
 		if !strings.Contains(out, want) {
 			t.Errorf("expected %q in String(), got: %s", want, out)
 		}
