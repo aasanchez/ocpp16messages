@@ -37,7 +37,7 @@ func ptr[T any](v T) *T { return &v }
 // ---- Tests ----
 
 // SonarCloud false positive: underscores allowed in Go test names
-func TestRequest_AllValidFields(t *testing.T) {
+func TestRequestAllValidFields(t *testing.T) {
 	t.Parallel()
 
 	input := bootNotificationInput{
@@ -82,7 +82,7 @@ func TestRequest_AllValidFields(t *testing.T) {
 	}
 }
 
-func TestRequest_OnlyRequiredFields(t *testing.T) {
+func TestRequestOnlyRequiredFields(t *testing.T) {
 	t.Parallel()
 
 	input := bootNotificationInput{
@@ -113,7 +113,7 @@ func TestRequest_OnlyRequiredFields(t *testing.T) {
 	}
 }
 
-func TestRequest_Errors_ChargePointModel(t *testing.T) {
+func TestRequestErrorsChargePointModel(t *testing.T) {
 	t.Parallel()
 
 	invalid := strings.Repeat("X", 21) // > 20
@@ -135,7 +135,7 @@ func TestRequest_Errors_ChargePointModel(t *testing.T) {
 	}
 }
 
-func TestRequest_Errors_ChargePointVendor(t *testing.T) {
+func TestRequestErrorsChargePointVendor(t *testing.T) {
 	t.Parallel()
 
 	invalid := strings.Repeat("X", 21)
@@ -157,7 +157,7 @@ func TestRequest_Errors_ChargePointVendor(t *testing.T) {
 	}
 }
 
-func TestRequest_Errors_ChargeBoxSerialNumber(t *testing.T) {
+func TestRequestErrorsChargeBoxSerialNumber(t *testing.T) {
 	t.Parallel()
 
 	invalid := strings.Repeat("X", 26)
@@ -179,7 +179,7 @@ func TestRequest_Errors_ChargeBoxSerialNumber(t *testing.T) {
 	}
 }
 
-func TestRequest_Errors_ChargePointSerialNumber(t *testing.T) {
+func TestRequestErrorsChargePointSerialNumber(t *testing.T) {
 	t.Parallel()
 
 	invalid := strings.Repeat("X", 26)
@@ -201,7 +201,7 @@ func TestRequest_Errors_ChargePointSerialNumber(t *testing.T) {
 	}
 }
 
-func TestRequest_Errors_FirmwareVersion(t *testing.T) {
+func TestRequestErrorsFirmwareVersion(t *testing.T) {
 	t.Parallel()
 
 	invalid := strings.Repeat("X", 51)
@@ -223,7 +223,7 @@ func TestRequest_Errors_FirmwareVersion(t *testing.T) {
 	}
 }
 
-func TestRequest_Errors_Iccid(t *testing.T) {
+func TestRequestErrorsIccid(t *testing.T) {
 	t.Parallel()
 
 	invalid := strings.Repeat("X", 21)
@@ -245,7 +245,7 @@ func TestRequest_Errors_Iccid(t *testing.T) {
 	}
 }
 
-func TestRequest_Errors_Imsi(t *testing.T) {
+func TestRequestErrorsImsi(t *testing.T) {
 	t.Parallel()
 
 	invalid := strings.Repeat("X", 21)
@@ -267,7 +267,7 @@ func TestRequest_Errors_Imsi(t *testing.T) {
 	}
 }
 
-func TestRequest_Errors_MeterSerialNumber(t *testing.T) {
+func TestRequestErrorsMeterSerialNumber(t *testing.T) {
 	t.Parallel()
 
 	invalid := strings.Repeat("X", 26)
@@ -289,7 +289,7 @@ func TestRequest_Errors_MeterSerialNumber(t *testing.T) {
 	}
 }
 
-func TestRequest_Errors_MeterType(t *testing.T) {
+func TestRequestErrorsMeterType(t *testing.T) {
 	t.Parallel()
 
 	invalid := strings.Repeat("X", 26)
@@ -311,7 +311,7 @@ func TestRequest_Errors_MeterType(t *testing.T) {
 	}
 }
 
-func TestRequestMessage_Validate_Ok(t *testing.T) {
+func TestRequestMessageValidateOk(t *testing.T) {
 	t.Parallel()
 
 	msg := RequestMessage{
@@ -331,7 +331,7 @@ func TestRequestMessage_Validate_Ok(t *testing.T) {
 	}
 }
 
-func TestRequestMessage_Validate_Error_ChargePointModel(t *testing.T) {
+func TestRequestMessageValidateErrorChargePointModel(t *testing.T) {
 	t.Parallel()
 
 	invalidModel, _ := sharedtypes.CiString20(strings.Repeat("X", 21))
@@ -353,7 +353,7 @@ func TestRequestMessage_Validate_Error_ChargePointModel(t *testing.T) {
 	}
 }
 
-func TestRequestMessage_Validate_Error_ChargePointVendor(t *testing.T) {
+func TestRequestMessageValidateErrorChargePointVendor(t *testing.T) {
 	t.Parallel()
 
 	invalidVendor, _ := sharedtypes.CiString20(strings.Repeat("X", 21))
@@ -375,7 +375,7 @@ func TestRequestMessage_Validate_Error_ChargePointVendor(t *testing.T) {
 	}
 }
 
-func TestRequestMessage_String_AllOptionalsSet(t *testing.T) {
+func TestRequestMessageStringAllOptionalsSet(t *testing.T) {
 	t.Parallel()
 
 	msg := RequestMessage{
@@ -398,7 +398,7 @@ func TestRequestMessage_String_AllOptionalsSet(t *testing.T) {
 	}
 }
 
-func TestRequestMessage_String_NoOptionalsSet(t *testing.T) {
+func TestRequestMessageStringNoOptionalsSet(t *testing.T) {
 	t.Parallel()
 
 	msg := RequestMessage{
