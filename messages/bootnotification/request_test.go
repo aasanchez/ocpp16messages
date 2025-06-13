@@ -275,8 +275,15 @@ func TestRequest_Errors_MeterType(t *testing.T) {
 
 func TestRequestMessage_Validate_Ok(t *testing.T) {
 	msg := RequestMessage{
-		ChargePointModel:  mustCiString20("validModel"),
-		ChargePointVendor: mustCiString20("validVendor"),
+		ChargeBoxSerialNumber:   nil,
+		ChargePointModel:        mustCiString20("OnlyModel"),
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       mustCiString20("OnlyVendor"),
+		FirmwareVersion:         nil,
+		Iccid:                   nil,
+		Imsi:                    nil,
+		MeterSerialNumber:       nil,
+		MeterType:               nil,
 	}
 	if err := msg.Validate(); err != nil {
 		t.Errorf("unexpected Validate() error: %v", err)
@@ -286,8 +293,15 @@ func TestRequestMessage_Validate_Ok(t *testing.T) {
 func TestRequestMessage_Validate_Error_ChargePointModel(t *testing.T) {
 	invalidModel, _ := sharedtypes.CiString20(strings.Repeat("X", 21))
 	msg := RequestMessage{
-		ChargePointModel:  invalidModel,
-		ChargePointVendor: mustCiString20("validVendor"),
+		ChargeBoxSerialNumber:   nil,
+		ChargePointModel:        invalidModel,
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       mustCiString20("validVendor"),
+		FirmwareVersion:         nil,
+		Iccid:                   nil,
+		Imsi:                    nil,
+		MeterSerialNumber:       nil,
+		MeterType:               nil,
 	}
 	err := msg.Validate()
 	if err == nil || !strings.Contains(err.Error(), "invalid ChargePointModel") {
@@ -298,8 +312,15 @@ func TestRequestMessage_Validate_Error_ChargePointModel(t *testing.T) {
 func TestRequestMessage_Validate_Error_ChargePointVendor(t *testing.T) {
 	invalidVendor, _ := sharedtypes.CiString20(strings.Repeat("X", 21))
 	msg := RequestMessage{
-		ChargePointModel:  mustCiString20("validModel"),
-		ChargePointVendor: invalidVendor,
+		ChargeBoxSerialNumber:   nil,
+		ChargePointModel:        mustCiString20("validModel"),
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       invalidVendor,
+		FirmwareVersion:         nil,
+		Iccid:                   nil,
+		Imsi:                    nil,
+		MeterSerialNumber:       nil,
+		MeterType:               nil,
 	}
 	err := msg.Validate()
 	if err == nil || !strings.Contains(err.Error(), "invalid ChargePointVendor") {
