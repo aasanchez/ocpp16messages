@@ -50,7 +50,7 @@ func TestCiStringReturnsErrorWhenNonPrintable(t *testing.T) {
 func TestCiStringNonASCII(t *testing.T) {
 	t.Parallel()
 
-	_, err := CiString("你好世界", 20)
+	_, err := CiString("你好世界", 20) //nolint:gosmopolitan // Intentional: test Unicode handling
 	expectError(t, err)
 }
 
