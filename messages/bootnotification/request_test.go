@@ -49,24 +49,43 @@ func TestRequest_AllValidFields(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	// Check all fields
-	if req.ChargeBoxSerialNumber.String() != "CBoxSN-123" ||
-		req.ChargePointModel.String() != "CPModelX" ||
-		req.ChargePointSerialNumber.String() != "CPSN-456" ||
-		req.ChargePointVendor.String() != "CPVendorZ" ||
-		req.FirmwareVersion.String() != "1.2.3.4" ||
-		req.Iccid.String() != "8988" ||
-		req.Imsi.String() != "1234567890" ||
-		req.MeterSerialNumber.String() != "MeterSN-001" ||
-		req.MeterType.String() != "SmartMeter" {
-		t.Errorf("unexpected field values in req: %+v", req)
+
+	type fieldCheck struct {
+		name     string
+		got      string
+		expected string
+	}
+
+	checks := []fieldCheck{
+		{"ChargeBoxSerialNumber", req.ChargeBoxSerialNumber.String(), "CBoxSN-123"},
+		{"ChargePointModel", req.ChargePointModel.String(), "CPModelX"},
+		{"ChargePointSerialNumber", req.ChargePointSerialNumber.String(), "CPSN-456"},
+		{"ChargePointVendor", req.ChargePointVendor.String(), "CPVendorZ"},
+		{"FirmwareVersion", req.FirmwareVersion.String(), "1.2.3.4"},
+		{"Iccid", req.Iccid.String(), "8988"},
+		{"Imsi", req.Imsi.String(), "1234567890"},
+		{"MeterSerialNumber", req.MeterSerialNumber.String(), "MeterSN-001"},
+		{"MeterType", req.MeterType.String(), "SmartMeter"},
+	}
+
+	for _, check := range checks {
+		if check.got != check.expected {
+			t.Errorf("unexpected %s: got %q, want %q", check.name, check.got, check.expected)
+		}
 	}
 }
 
 func TestRequest_OnlyRequiredFields(t *testing.T) {
 	input := bootNotificationInput{
-		ChargePointModel:  "CPModelX",
-		ChargePointVendor: "CPVendorZ",
+		ChargeBoxSerialNumber:   "",
+		ChargePointModel:        "CPModelX",
+		ChargePointSerialNumber: "",
+		ChargePointVendor:       "CPVendorZ",
+		FirmwareVersion:         "",
+		Iccid:                   "",
+		Imsi:                    "",
+		MeterSerialNumber:       "",
+		MeterType:               "",
 	}
 	req, err := Request(input)
 	if err != nil {
