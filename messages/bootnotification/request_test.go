@@ -36,6 +36,7 @@ func ptr[T any](v T) *T { return &v }
 
 // ---- Tests ----
 
+// SonarCloud false positive: underscores allowed in Go test names
 func TestRequest_AllValidFields(t *testing.T) {
 	t.Parallel()
 
