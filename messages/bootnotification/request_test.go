@@ -105,8 +105,15 @@ func TestRequest_OnlyRequiredFields(t *testing.T) {
 func TestRequest_Errors_ChargePointModel(t *testing.T) {
 	invalid := strings.Repeat("X", 21) // > 20
 	input := bootNotificationInput{
-		ChargePointModel:  invalid,
-		ChargePointVendor: "CPVendorZ",
+		ChargeBoxSerialNumber:   "",
+		ChargePointModel:        invalid,
+		ChargePointSerialNumber: "",
+		ChargePointVendor:       "CPVendorZ",
+		FirmwareVersion:         "",
+		Iccid:                   "",
+		Imsi:                    "",
+		MeterSerialNumber:       "",
+		MeterType:               "",
 	}
 	_, err := Request(input)
 	if err == nil || !strings.Contains(err.Error(), "setChargePointModel") {
@@ -117,8 +124,15 @@ func TestRequest_Errors_ChargePointModel(t *testing.T) {
 func TestRequest_Errors_ChargePointVendor(t *testing.T) {
 	invalid := strings.Repeat("X", 21)
 	input := bootNotificationInput{
-		ChargePointModel:  "CPModelX",
-		ChargePointVendor: invalid,
+		ChargeBoxSerialNumber:   "",
+		ChargePointModel:        "CPModelX",
+		ChargePointSerialNumber: "",
+		ChargePointVendor:       invalid,
+		FirmwareVersion:         "",
+		Iccid:                   "",
+		Imsi:                    "",
+		MeterSerialNumber:       "",
+		MeterType:               "",
 	}
 	_, err := Request(input)
 	if err == nil || !strings.Contains(err.Error(), "setChargePointVendor") {
@@ -129,9 +143,15 @@ func TestRequest_Errors_ChargePointVendor(t *testing.T) {
 func TestRequest_Errors_ChargeBoxSerialNumber(t *testing.T) {
 	invalid := strings.Repeat("X", 26)
 	input := bootNotificationInput{
-		ChargePointModel:      "CPModelX",
-		ChargePointVendor:     "CPVendorZ",
-		ChargeBoxSerialNumber: invalid,
+		ChargeBoxSerialNumber:   invalid,
+		ChargePointModel:        "CPModelX",
+		ChargePointSerialNumber: "",
+		ChargePointVendor:       "CPVendorZ",
+		FirmwareVersion:         "",
+		Iccid:                   "",
+		Imsi:                    "",
+		MeterSerialNumber:       "",
+		MeterType:               "",
 	}
 	_, err := Request(input)
 	if err == nil || !strings.Contains(err.Error(), "setChargeBoxSerialNumber") {
@@ -142,9 +162,15 @@ func TestRequest_Errors_ChargeBoxSerialNumber(t *testing.T) {
 func TestRequest_Errors_ChargePointSerialNumber(t *testing.T) {
 	invalid := strings.Repeat("X", 26)
 	input := bootNotificationInput{
+		ChargeBoxSerialNumber:   "",
 		ChargePointModel:        "CPModelX",
-		ChargePointVendor:       "CPVendorZ",
 		ChargePointSerialNumber: invalid,
+		ChargePointVendor:       "CPVendorZ",
+		FirmwareVersion:         "",
+		Iccid:                   "",
+		Imsi:                    "",
+		MeterSerialNumber:       "",
+		MeterType:               "",
 	}
 	_, err := Request(input)
 	if err == nil || !strings.Contains(err.Error(), "setChargePointSerialNumber") {
@@ -155,9 +181,15 @@ func TestRequest_Errors_ChargePointSerialNumber(t *testing.T) {
 func TestRequest_Errors_FirmwareVersion(t *testing.T) {
 	invalid := strings.Repeat("X", 51)
 	input := bootNotificationInput{
-		ChargePointModel:  "CPModelX",
-		ChargePointVendor: "CPVendorZ",
-		FirmwareVersion:   invalid,
+		ChargeBoxSerialNumber:   "",
+		ChargePointModel:        "CPModelX",
+		ChargePointSerialNumber: "",
+		ChargePointVendor:       "CPVendorZ",
+		FirmwareVersion:         invalid,
+		Iccid:                   "",
+		Imsi:                    "",
+		MeterSerialNumber:       "",
+		MeterType:               "",
 	}
 	_, err := Request(input)
 	if err == nil || !strings.Contains(err.Error(), "setFirmwareVersion") {
@@ -168,9 +200,15 @@ func TestRequest_Errors_FirmwareVersion(t *testing.T) {
 func TestRequest_Errors_Iccid(t *testing.T) {
 	invalid := strings.Repeat("X", 21)
 	input := bootNotificationInput{
-		ChargePointModel:  "CPModelX",
-		ChargePointVendor: "CPVendorZ",
-		Iccid:             invalid,
+		ChargeBoxSerialNumber:   "",
+		ChargePointModel:        "CPModelX",
+		ChargePointSerialNumber: "",
+		ChargePointVendor:       "CPVendorZ",
+		FirmwareVersion:         "",
+		Iccid:                   invalid,
+		Imsi:                    "",
+		MeterSerialNumber:       "",
+		MeterType:               "",
 	}
 	_, err := Request(input)
 	if err == nil || !strings.Contains(err.Error(), "setIccid") {
@@ -181,9 +219,15 @@ func TestRequest_Errors_Iccid(t *testing.T) {
 func TestRequest_Errors_Imsi(t *testing.T) {
 	invalid := strings.Repeat("X", 21)
 	input := bootNotificationInput{
-		ChargePointModel:  "CPModelX",
-		ChargePointVendor: "CPVendorZ",
-		Imsi:              invalid,
+		ChargeBoxSerialNumber:   "",
+		ChargePointModel:        "CPModelX",
+		ChargePointSerialNumber: "",
+		ChargePointVendor:       "CPVendorZ",
+		FirmwareVersion:         "",
+		Iccid:                   "",
+		Imsi:                    invalid,
+		MeterSerialNumber:       "",
+		MeterType:               "",
 	}
 	_, err := Request(input)
 	if err == nil || !strings.Contains(err.Error(), "setImsi") {
@@ -194,9 +238,15 @@ func TestRequest_Errors_Imsi(t *testing.T) {
 func TestRequest_Errors_MeterSerialNumber(t *testing.T) {
 	invalid := strings.Repeat("X", 26)
 	input := bootNotificationInput{
-		ChargePointModel:  "CPModelX",
-		ChargePointVendor: "CPVendorZ",
-		MeterSerialNumber: invalid,
+		ChargeBoxSerialNumber:   "",
+		ChargePointModel:        "CPModelX",
+		ChargePointSerialNumber: "",
+		ChargePointVendor:       "CPVendorZ",
+		FirmwareVersion:         "",
+		Iccid:                   "",
+		Imsi:                    "",
+		MeterSerialNumber:       invalid,
+		MeterType:               "",
 	}
 	_, err := Request(input)
 	if err == nil || !strings.Contains(err.Error(), "setMeterSerialNumber") {
@@ -207,9 +257,15 @@ func TestRequest_Errors_MeterSerialNumber(t *testing.T) {
 func TestRequest_Errors_MeterType(t *testing.T) {
 	invalid := strings.Repeat("X", 26)
 	input := bootNotificationInput{
-		ChargePointModel:  "CPModelX",
-		ChargePointVendor: "CPVendorZ",
-		MeterType:         invalid,
+		ChargeBoxSerialNumber:   "",
+		ChargePointModel:        "CPModelX",
+		ChargePointSerialNumber: "",
+		ChargePointVendor:       "CPVendorZ",
+		FirmwareVersion:         "",
+		Iccid:                   "",
+		Imsi:                    "",
+		MeterSerialNumber:       "",
+		MeterType:               invalid,
 	}
 	_, err := Request(input)
 	if err == nil || !strings.Contains(err.Error(), "setMeterType") {
