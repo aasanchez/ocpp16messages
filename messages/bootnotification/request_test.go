@@ -13,6 +13,7 @@ func mustCiString20(val string) sharedtypes.CiString20Type {
 	if err != nil {
 		panic(err)
 	}
+
 	return c
 }
 func mustCiString25(val string) sharedtypes.CiString25Type {
@@ -20,6 +21,7 @@ func mustCiString25(val string) sharedtypes.CiString25Type {
 	if err != nil {
 		panic(err)
 	}
+
 	return c
 }
 func mustCiString50(val string) sharedtypes.CiString50Type {
@@ -27,6 +29,7 @@ func mustCiString50(val string) sharedtypes.CiString50Type {
 	if err != nil {
 		panic(err)
 	}
+
 	return c
 }
 func ptr[T any](v T) *T { return &v }
@@ -46,6 +49,7 @@ func TestRequest_AllValidFields(t *testing.T) {
 		MeterType:               "SmartMeter",
 	}
 	req, err := Request(input)
+
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -88,9 +92,11 @@ func TestRequest_OnlyRequiredFields(t *testing.T) {
 		MeterType:               "",
 	}
 	req, err := Request(input)
+
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
+
 	if req.ChargeBoxSerialNumber != nil ||
 		req.ChargePointSerialNumber != nil ||
 		req.FirmwareVersion != nil ||
@@ -116,6 +122,7 @@ func TestRequest_Errors_ChargePointModel(t *testing.T) {
 		MeterType:               "",
 	}
 	_, err := Request(input)
+
 	if err == nil || !strings.Contains(err.Error(), "setChargePointModel") {
 		t.Errorf("expected setChargePointModel error, got %v", err)
 	}
@@ -135,6 +142,7 @@ func TestRequest_Errors_ChargePointVendor(t *testing.T) {
 		MeterType:               "",
 	}
 	_, err := Request(input)
+
 	if err == nil || !strings.Contains(err.Error(), "setChargePointVendor") {
 		t.Errorf("expected setChargePointVendor error, got %v", err)
 	}
@@ -154,6 +162,7 @@ func TestRequest_Errors_ChargeBoxSerialNumber(t *testing.T) {
 		MeterType:               "",
 	}
 	_, err := Request(input)
+
 	if err == nil || !strings.Contains(err.Error(), "setChargeBoxSerialNumber") {
 		t.Errorf("expected setChargeBoxSerialNumber error, got %v", err)
 	}
@@ -173,6 +182,7 @@ func TestRequest_Errors_ChargePointSerialNumber(t *testing.T) {
 		MeterType:               "",
 	}
 	_, err := Request(input)
+
 	if err == nil || !strings.Contains(err.Error(), "setChargePointSerialNumber") {
 		t.Errorf("expected setChargePointSerialNumber error, got %v", err)
 	}
@@ -192,6 +202,7 @@ func TestRequest_Errors_FirmwareVersion(t *testing.T) {
 		MeterType:               "",
 	}
 	_, err := Request(input)
+
 	if err == nil || !strings.Contains(err.Error(), "setFirmwareVersion") {
 		t.Errorf("expected setFirmwareVersion error, got %v", err)
 	}
@@ -211,6 +222,7 @@ func TestRequest_Errors_Iccid(t *testing.T) {
 		MeterType:               "",
 	}
 	_, err := Request(input)
+
 	if err == nil || !strings.Contains(err.Error(), "setIccid") {
 		t.Errorf("expected setIccid error, got %v", err)
 	}
@@ -230,6 +242,7 @@ func TestRequest_Errors_Imsi(t *testing.T) {
 		MeterType:               "",
 	}
 	_, err := Request(input)
+
 	if err == nil || !strings.Contains(err.Error(), "setImsi") {
 		t.Errorf("expected setImsi error, got %v", err)
 	}
@@ -249,6 +262,7 @@ func TestRequest_Errors_MeterSerialNumber(t *testing.T) {
 		MeterType:               "",
 	}
 	_, err := Request(input)
+
 	if err == nil || !strings.Contains(err.Error(), "setMeterSerialNumber") {
 		t.Errorf("expected setMeterSerialNumber error, got %v", err)
 	}
@@ -268,6 +282,7 @@ func TestRequest_Errors_MeterType(t *testing.T) {
 		MeterType:               invalid,
 	}
 	_, err := Request(input)
+
 	if err == nil || !strings.Contains(err.Error(), "setMeterType") {
 		t.Errorf("expected setMeterType error, got %v", err)
 	}
@@ -285,6 +300,7 @@ func TestRequestMessage_Validate_Ok(t *testing.T) {
 		MeterSerialNumber:       nil,
 		MeterType:               nil,
 	}
+
 	if err := msg.Validate(); err != nil {
 		t.Errorf("unexpected Validate() error: %v", err)
 	}
@@ -304,6 +320,7 @@ func TestRequestMessage_Validate_Error_ChargePointModel(t *testing.T) {
 		MeterType:               nil,
 	}
 	err := msg.Validate()
+
 	if err == nil || !strings.Contains(err.Error(), "invalid ChargePointModel") {
 		t.Errorf("expected invalid ChargePointModel error, got: %v", err)
 	}
@@ -323,6 +340,7 @@ func TestRequestMessage_Validate_Error_ChargePointVendor(t *testing.T) {
 		MeterType:               nil,
 	}
 	err := msg.Validate()
+
 	if err == nil || !strings.Contains(err.Error(), "invalid ChargePointVendor") {
 		t.Errorf("expected invalid ChargePointVendor error, got: %v", err)
 	}
@@ -341,6 +359,7 @@ func TestRequestMessage_String_AllOptionalsSet(t *testing.T) {
 		MeterType:               ptr(mustCiString25("TypeX")),
 	}
 	out := msg.String()
+
 	for _, want := range []string{"BoxSN", "ModelX", "CPSN", "VendorY", "1.2.3.4", "ICCID", "IMSI", "MeterSN", "TypeX"} {
 		if !strings.Contains(out, want) {
 			t.Errorf("expected %q in String(), got: %s", want, out)
@@ -361,6 +380,7 @@ func TestRequestMessage_String_NoOptionalsSet(t *testing.T) {
 		MeterType:               nil,
 	}
 	out := msg.String()
+
 	for _, notWant := range []string{
 		"chargeBoxSerialNumber",
 		"chargePointSerialNumber",
