@@ -37,6 +37,8 @@ func ptr[T any](v T) *T { return &v }
 // ---- Tests ----
 
 func TestRequest_AllValidFields(t *testing.T) {
+	t.Parallel()
+
 	input := bootNotificationInput{
 		ChargeBoxSerialNumber:   "CBoxSN-123",
 		ChargePointModel:        "CPModelX",
@@ -80,6 +82,8 @@ func TestRequest_AllValidFields(t *testing.T) {
 }
 
 func TestRequest_OnlyRequiredFields(t *testing.T) {
+	t.Parallel()
+
 	input := bootNotificationInput{
 		ChargeBoxSerialNumber:   "",
 		ChargePointModel:        "CPModelX",
@@ -109,6 +113,8 @@ func TestRequest_OnlyRequiredFields(t *testing.T) {
 }
 
 func TestRequest_Errors_ChargePointModel(t *testing.T) {
+	t.Parallel()
+
 	invalid := strings.Repeat("X", 21) // > 20
 	input := bootNotificationInput{
 		ChargeBoxSerialNumber:   "",
@@ -129,6 +135,8 @@ func TestRequest_Errors_ChargePointModel(t *testing.T) {
 }
 
 func TestRequest_Errors_ChargePointVendor(t *testing.T) {
+	t.Parallel()
+
 	invalid := strings.Repeat("X", 21)
 	input := bootNotificationInput{
 		ChargeBoxSerialNumber:   "",
@@ -149,6 +157,8 @@ func TestRequest_Errors_ChargePointVendor(t *testing.T) {
 }
 
 func TestRequest_Errors_ChargeBoxSerialNumber(t *testing.T) {
+	t.Parallel()
+
 	invalid := strings.Repeat("X", 26)
 	input := bootNotificationInput{
 		ChargeBoxSerialNumber:   invalid,
@@ -169,6 +179,8 @@ func TestRequest_Errors_ChargeBoxSerialNumber(t *testing.T) {
 }
 
 func TestRequest_Errors_ChargePointSerialNumber(t *testing.T) {
+	t.Parallel()
+
 	invalid := strings.Repeat("X", 26)
 	input := bootNotificationInput{
 		ChargeBoxSerialNumber:   "",
@@ -189,6 +201,8 @@ func TestRequest_Errors_ChargePointSerialNumber(t *testing.T) {
 }
 
 func TestRequest_Errors_FirmwareVersion(t *testing.T) {
+	t.Parallel()
+
 	invalid := strings.Repeat("X", 51)
 	input := bootNotificationInput{
 		ChargeBoxSerialNumber:   "",
@@ -209,6 +223,8 @@ func TestRequest_Errors_FirmwareVersion(t *testing.T) {
 }
 
 func TestRequest_Errors_Iccid(t *testing.T) {
+	t.Parallel()
+
 	invalid := strings.Repeat("X", 21)
 	input := bootNotificationInput{
 		ChargeBoxSerialNumber:   "",
@@ -229,6 +245,8 @@ func TestRequest_Errors_Iccid(t *testing.T) {
 }
 
 func TestRequest_Errors_Imsi(t *testing.T) {
+	t.Parallel()
+
 	invalid := strings.Repeat("X", 21)
 	input := bootNotificationInput{
 		ChargeBoxSerialNumber:   "",
@@ -249,6 +267,8 @@ func TestRequest_Errors_Imsi(t *testing.T) {
 }
 
 func TestRequest_Errors_MeterSerialNumber(t *testing.T) {
+	t.Parallel()
+
 	invalid := strings.Repeat("X", 26)
 	input := bootNotificationInput{
 		ChargeBoxSerialNumber:   "",
@@ -269,6 +289,8 @@ func TestRequest_Errors_MeterSerialNumber(t *testing.T) {
 }
 
 func TestRequest_Errors_MeterType(t *testing.T) {
+	t.Parallel()
+
 	invalid := strings.Repeat("X", 26)
 	input := bootNotificationInput{
 		ChargeBoxSerialNumber:   "",
@@ -289,6 +311,8 @@ func TestRequest_Errors_MeterType(t *testing.T) {
 }
 
 func TestRequestMessage_Validate_Ok(t *testing.T) {
+	t.Parallel()
+
 	msg := RequestMessage{
 		ChargeBoxSerialNumber:   nil,
 		ChargePointModel:        mustCiString20("OnlyModel"),
@@ -307,6 +331,8 @@ func TestRequestMessage_Validate_Ok(t *testing.T) {
 }
 
 func TestRequestMessage_Validate_Error_ChargePointModel(t *testing.T) {
+	t.Parallel()
+
 	invalidModel, _ := sharedtypes.CiString20(strings.Repeat("X", 21))
 	msg := RequestMessage{
 		ChargeBoxSerialNumber:   nil,
@@ -327,6 +353,8 @@ func TestRequestMessage_Validate_Error_ChargePointModel(t *testing.T) {
 }
 
 func TestRequestMessage_Validate_Error_ChargePointVendor(t *testing.T) {
+	t.Parallel()
+
 	invalidVendor, _ := sharedtypes.CiString20(strings.Repeat("X", 21))
 	msg := RequestMessage{
 		ChargeBoxSerialNumber:   nil,
@@ -347,6 +375,8 @@ func TestRequestMessage_Validate_Error_ChargePointVendor(t *testing.T) {
 }
 
 func TestRequestMessage_String_AllOptionalsSet(t *testing.T) {
+	t.Parallel()
+
 	msg := RequestMessage{
 		ChargeBoxSerialNumber:   ptr(mustCiString25("BoxSN")),
 		ChargePointModel:        mustCiString20("ModelX"),
@@ -368,6 +398,8 @@ func TestRequestMessage_String_AllOptionalsSet(t *testing.T) {
 }
 
 func TestRequestMessage_String_NoOptionalsSet(t *testing.T) {
+	t.Parallel()
+
 	msg := RequestMessage{
 		ChargeBoxSerialNumber:   nil,
 		ChargePointModel:        mustCiString20("OnlyModel"),
