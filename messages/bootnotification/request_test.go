@@ -329,8 +329,15 @@ func TestRequestMessage_String_AllOptionalsSet(t *testing.T) {
 
 func TestRequestMessage_String_NoOptionalsSet(t *testing.T) {
 	msg := RequestMessage{
-		ChargePointModel:  mustCiString20("OnlyModel"),
-		ChargePointVendor: mustCiString20("OnlyVendor"),
+		ChargeBoxSerialNumber:   nil,
+		ChargePointModel:        mustCiString20("OnlyModel"),
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       mustCiString20("OnlyVendor"),
+		FirmwareVersion:         nil,
+		Iccid:                   nil,
+		Imsi:                    nil,
+		MeterSerialNumber:       nil,
+		MeterType:               nil,
 	}
 	out := msg.String()
 	for _, notWant := range []string{
