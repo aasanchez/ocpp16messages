@@ -10,7 +10,9 @@ func TestIdTagInfo_statusOnly(t *testing.T) {
 	t.Parallel()
 
 	input := authorizetypes.IdTagInfoPayload{
-		Status: authorizetypes.Accepted,
+		Status:      authorizetypes.Accepted,
+		ExpiryDate:  nil,
+		ParentIdTag: nil,
 	}
 
 	info, err := authorizetypes.IdTagInfo(input)
@@ -23,9 +25,11 @@ func TestIdTagInfo_statusOnly(t *testing.T) {
 	if val.Status != authorizetypes.Accepted {
 		t.Errorf("expected status %q, got %q", authorizetypes.Accepted, val.Status)
 	}
+
 	if val.ExpiryDate != nil {
 		t.Errorf("expected expiryDate nil, got %v", *val.ExpiryDate)
 	}
+
 	if val.ParentIdTag != nil {
 		t.Errorf("expected parentIdTag nil, got %v", *val.ParentIdTag)
 	}
@@ -34,11 +38,12 @@ func TestIdTagInfo_statusOnly(t *testing.T) {
 func TestIdTagInfo_withExpiryDateOnly(t *testing.T) {
 	t.Parallel()
 
-	exp := "2027-04-12T10:03:04Z"
+	exp := "2023-04-12T10:03:04Z"
 
 	input := authorizetypes.IdTagInfoPayload{
-		Status:     authorizetypes.Accepted,
-		ExpiryDate: &exp,
+		Status:      authorizetypes.Accepted,
+		ExpiryDate:  &exp,
+		ParentIdTag: nil,
 	}
 
 	info, err := authorizetypes.IdTagInfo(input)
@@ -59,6 +64,7 @@ func TestIdTagInfo_withParentIdTagOnly(t *testing.T) {
 
 	input := authorizetypes.IdTagInfoPayload{
 		Status:      authorizetypes.Accepted,
+		ExpiryDate:  nil,
 		ParentIdTag: &parent,
 	}
 
@@ -76,7 +82,7 @@ func TestIdTagInfo_withParentIdTagOnly(t *testing.T) {
 func TestIdTagInfo_allFieldsPresent(t *testing.T) {
 	t.Parallel()
 
-	exp := "2027-04-12T10:03:04Z"
+	exp := "2027-04-12T10:01:04Z"
 	parent := "XYZ-987"
 
 	input := authorizetypes.IdTagInfoPayload{
@@ -95,9 +101,11 @@ func TestIdTagInfo_allFieldsPresent(t *testing.T) {
 	if val.Status != authorizetypes.Accepted {
 		t.Errorf("status mismatch: got %s", val.Status)
 	}
+
 	if val.ExpiryDate == nil || *val.ExpiryDate != exp {
 		t.Errorf("expiryDate mismatch: want %s, got %v", exp, val.ExpiryDate)
 	}
+
 	if val.ParentIdTag == nil || *val.ParentIdTag != parent {
 		t.Errorf("parentIdTag mismatch: want %s, got %v", parent, val.ParentIdTag)
 	}
@@ -106,7 +114,11 @@ func TestIdTagInfo_allFieldsPresent(t *testing.T) {
 func TestIdTagInfo_invalidStatus(t *testing.T) {
 	t.Parallel()
 
-	input := authorizetypes.IdTagInfoPayload{Status: "InvalidStatus"}
+	input := authorizetypes.IdTagInfoPayload{
+		Status:      "InvalidStatus",
+		ExpiryDate:  nil,
+		ParentIdTag: nil,
+	}
 
 	_, err := authorizetypes.IdTagInfo(input)
 	if err == nil {
@@ -120,8 +132,9 @@ func TestIdTagInfo_invalidExpiryDate(t *testing.T) {
 	bad := "not-a-date"
 
 	input := authorizetypes.IdTagInfoPayload{
-		Status:     authorizetypes.Accepted,
-		ExpiryDate: &bad,
+		Status:      authorizetypes.Accepted,
+		ExpiryDate:  &bad,
+		ParentIdTag: nil,
 	}
 
 	_, err := authorizetypes.IdTagInfo(input)
@@ -137,6 +150,7 @@ func TestIdTagInfo_invalidParentIdTag_tooLong(t *testing.T) {
 
 	input := authorizetypes.IdTagInfoPayload{
 		Status:      authorizetypes.Accepted,
+		ExpiryDate:  nil,
 		ParentIdTag: &tooLong,
 	}
 

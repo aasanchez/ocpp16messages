@@ -69,7 +69,7 @@ func BenchmarkConfirmationPayload_Value_full(b *testing.B) {
 	b.Cleanup(func() { _ = resultConfirmation })
 
 	expiry := "2027-04-12T10:03:04Z"
-	parent := "ABC123"
+	parent := "ABC1234"
 
 	payload := authorizetypes.ConfirmationPayload{
 		IdTagInfo: authorizetypes.IdTagInfoPayload{

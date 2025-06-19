@@ -39,7 +39,7 @@ func TestConfirmationPayload_withAllFields(t *testing.T) {
 	t.Parallel()
 
 	expiry := "2027-04-12T10:03:04Z"
-	parent := "ABC123"
+	parent := "ABC01234"
 
 	payload := authorizetypes.ConfirmationPayload{
 		IdTagInfo: authorizetypes.IdTagInfoPayload{
