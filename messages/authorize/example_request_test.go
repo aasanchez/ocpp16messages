@@ -53,7 +53,7 @@ func ExampleRequest_too_long_idtag() {
 
 	_, err := authorize.Request(input)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, errFormat, err)
+		fmt.Printf(errFormat, err)
 	}
 
 	// Output:
@@ -75,13 +75,13 @@ func ExampleRequest_parse() {
 
 	err := json.Unmarshal([]byte(raw), &msg)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, errInvalidJSONInput, err)
+		fmt.Printf(errInvalidJSONInput, err)
 	}
 
 	input := decodeRawIdTag(msg[3])
 	req, err := authorize.Request(input)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, errRequestFormat, err)
+		fmt.Printf(errRequestFormat, err)
 	}
 
 	fmt.Printf(outputFormat, req.IdTag.Value())
@@ -105,13 +105,13 @@ func ExampleRequest_parse_invalid() {
 
 	err := json.Unmarshal([]byte(raw), &msg)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, errInvalidJSONInput, err)
+		fmt.Printf(errInvalidJSONInput, err)
 	}
 
 	input := decodeRawIdTag(msg[3])
 	_, err = authorize.Request(input)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, errRequestFormat, err)
+		fmt.Printf(errRequestFormat, err)
 	}
 
 	// Output:
@@ -131,13 +131,13 @@ func ExampleRequest_parse_empty() {
 
 	err := json.Unmarshal([]byte(raw), &msg)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, errInvalidJSONInput, err)
+		fmt.Printf(errInvalidJSONInput, err)
 	}
 
 	input := decodeRawIdTag(msg[3])
 	_, err = authorize.Request(input)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, errRequestFormat, err)
+		fmt.Printf(errRequestFormat, err)
 	}
 
 	// Output:
@@ -159,13 +159,13 @@ func ExampleRequest_parse_idTag_empty() {
 
 	err := json.Unmarshal([]byte(raw), &msg)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, errInvalidJSONInput, err)
+		fmt.Printf(errInvalidJSONInput, err)
 	}
 
 	input := decodeRawIdTag(msg[3])
 	_, err = authorize.Request(input)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, errRequestFormat, err)
+		fmt.Printf(errRequestFormat, err)
 	}
 
 	// Output:
@@ -187,13 +187,13 @@ func ExampleRequest_parse_idTag_NotFound() {
 
 	err := json.Unmarshal([]byte(raw), &msg)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, errInvalidJSONInput, err)
+		fmt.Printf(errInvalidJSONInput, err)
 	}
 
 	input := decodeRawIdTag(msg[3])
 	_, err = authorize.Request(input)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, errRequestFormat, err)
+		fmt.Printf(errRequestFormat, err)
 	}
 
 	// Output:
@@ -209,7 +209,7 @@ func decodeRawIdTag(raw json.RawMessage) authorizetypes.RequestPayload {
 
 	err := json.Unmarshal(raw, &temp)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, errInvalidPayload, err)
+		fmt.Printf(errInvalidPayload, err)
 	}
 
 	return authorizetypes.RequestPayload{IdTag: temp.IdTag}
