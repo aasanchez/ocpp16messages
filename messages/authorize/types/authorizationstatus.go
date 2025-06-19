@@ -12,22 +12,25 @@ const (
 	ConcurrentTx = "ConcurrentTx"
 )
 
-var statusSet = map[string]struct{}{
-	Accepted:     {},
-	Blocked:      {},
-	Expired:      {},
-	Invalid:      {},
-	ConcurrentTx: {},
-}
-
 type AuthorizationStatusType struct {
 	value string
 }
 
+func getStatusSet() map[string]struct{} {
+	return map[string]struct{}{
+		Accepted:     {},
+		Blocked:      {},
+		Expired:      {},
+		Invalid:      {},
+		ConcurrentTx: {},
+	}
+}
+
 func AuthorizationStatus(input string) (AuthorizationStatusType, error) {
-	if _, exists := statusSet[input]; !exists {
+	if _, exists := getStatusSet()[input]; !exists {
 		return AuthorizationStatusType{}, fmt.Errorf("%w: %q", ErrInvalidAuthorizationStatus, input)
 	}
+
 	return AuthorizationStatusType{value: input}, nil
 }
 
