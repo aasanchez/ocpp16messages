@@ -37,6 +37,7 @@ func ExampleRequest_emptyIdTag() {
 	_, err := authorize.Request(input)
 	if err != nil {
 		fmt.Println("Error:", err)
+
 		return
 	}
 
@@ -73,12 +74,18 @@ func ExampleRequest_parse() {
 		fmt.Printf(errInvalidJSONInput, err)
 	}
 
-	var input authorizetypes.RequestPayload
-	if err := json.Unmarshal(msg[3], &input); err != nil {
+	// Use a temporary alias with json tags
+	var temp struct {
+		IdTag string `json:"idTag"`
+	}
+
+	if err := json.Unmarshal(msg[3], &temp); err != nil {
 		fmt.Printf(errInvalidPayload, err)
 	}
 
+	input := authorizetypes.RequestPayload{IdTag: temp.IdTag}
 	req, err := authorize.Request(input)
+
 	if err != nil {
 		fmt.Printf(errRequestFormat, err)
 	}
@@ -105,12 +112,17 @@ func ExampleRequest_parse_invalid() {
 		fmt.Printf(errInvalidJSONInput, err)
 	}
 
-	var input authorizetypes.RequestPayload
-	if err := json.Unmarshal(msg[3], &input); err != nil {
+	var temp struct {
+		IdTag string `json:"idTag"`
+	}
+
+	if err := json.Unmarshal(msg[3], &temp); err != nil {
 		fmt.Printf(errInvalidPayload, err)
 	}
 
+	input := authorizetypes.RequestPayload{IdTag: temp.IdTag}
 	_, err := authorize.Request(input)
+
 	if err != nil {
 		fmt.Printf(errRequestFormat, err)
 	}
@@ -133,12 +145,17 @@ func ExampleRequest_parse_empty() {
 		fmt.Printf(errInvalidJSONInput, err)
 	}
 
-	var input authorizetypes.RequestPayload
-	if err := json.Unmarshal(msg[3], &input); err != nil {
+	var temp struct {
+		IdTag string `json:"idTag"`
+	}
+
+	if err := json.Unmarshal(msg[3], &temp); err != nil {
 		fmt.Printf(errInvalidPayload, err)
 	}
 
+	input := authorizetypes.RequestPayload{IdTag: temp.IdTag}
 	_, err := authorize.Request(input)
+
 	if err != nil {
 		fmt.Printf(errRequestFormat, err)
 	}
@@ -163,12 +180,17 @@ func ExampleRequest_parse_idTag_empty() {
 		fmt.Printf(errInvalidJSONInput, err)
 	}
 
-	var input authorizetypes.RequestPayload
-	if err := json.Unmarshal(msg[3], &input); err != nil {
+	var temp struct {
+		IdTag string `json:"idTag"`
+	}
+
+	if err := json.Unmarshal(msg[3], &temp); err != nil {
 		fmt.Printf(errInvalidPayload, err)
 	}
 
+	input := authorizetypes.RequestPayload{IdTag: temp.IdTag}
 	_, err := authorize.Request(input)
+
 	if err != nil {
 		fmt.Printf(errRequestFormat, err)
 	}
@@ -193,12 +215,17 @@ func ExampleRequest_parse_idTag_NotFound() {
 		fmt.Printf(errInvalidJSONInput, err)
 	}
 
-	var input authorizetypes.RequestPayload
-	if err := json.Unmarshal(msg[3], &input); err != nil {
+	var temp struct {
+		IdTag string `json:"idTag"`
+	}
+
+	if err := json.Unmarshal(msg[3], &temp); err != nil {
 		fmt.Printf(errInvalidPayload, err)
 	}
 
+	input := authorizetypes.RequestPayload{IdTag: temp.IdTag}
 	_, err := authorize.Request(input)
+
 	if err != nil {
 		fmt.Printf(errRequestFormat, err)
 	}
