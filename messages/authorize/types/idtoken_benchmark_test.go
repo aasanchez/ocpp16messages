@@ -9,11 +9,13 @@ import (
 
 func BenchmarkIdToken_CreateValid(b *testing.B) {
 	raw := "B85A-50CBE9678EC6" // valid CiString20
-	for i := 0; i < b.N; i++ {
+
+	for range b.N {
 		ci, err := sharedtypes.CiString20(raw)
 		if err != nil {
 			b.Fatal(err)
 		}
+
 		_, err = authorizetypes.IdToken(ci)
 		if err != nil {
 			b.Fatal(err)
@@ -32,7 +34,8 @@ func BenchmarkIdToken_Value(b *testing.B) {
 	}
 
 	var val string
-	for i := 0; i < b.N; i++ {
+
+	for range b.N {
 		val = token.Value()
 	}
 	_ = val
