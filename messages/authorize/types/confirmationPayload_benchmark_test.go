@@ -6,13 +6,16 @@ import (
 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
-var resultConfirmation authorizetypes.ConfirmationPayload
-var errResult error
-
 func BenchmarkConfirmationPayload_Validate_minimal(b *testing.B) {
+	var errResult error
+
+	b.Cleanup(func() { _ = errResult })
+
 	payload := authorizetypes.ConfirmationPayload{
 		IdTagInfo: authorizetypes.IdTagInfoPayload{
-			Status: authorizetypes.Accepted,
+			Status:      authorizetypes.Accepted,
+			ExpiryDate:  nil,
+			ParentIdTag: nil,
 		},
 	}
 
@@ -22,6 +25,10 @@ func BenchmarkConfirmationPayload_Validate_minimal(b *testing.B) {
 }
 
 func BenchmarkConfirmationPayload_Validate_full(b *testing.B) {
+	var errResult error
+
+	b.Cleanup(func() { _ = errResult })
+
 	expiry := "2027-04-12T10:03:04Z"
 	parent := "ABC123"
 
@@ -39,9 +46,15 @@ func BenchmarkConfirmationPayload_Validate_full(b *testing.B) {
 }
 
 func BenchmarkConfirmationPayload_Value_minimal(b *testing.B) {
+	var resultConfirmation authorizetypes.ConfirmationPayload
+
+	b.Cleanup(func() { _ = resultConfirmation })
+
 	payload := authorizetypes.ConfirmationPayload{
 		IdTagInfo: authorizetypes.IdTagInfoPayload{
-			Status: authorizetypes.Accepted,
+			Status:      authorizetypes.Accepted,
+			ExpiryDate:  nil,
+			ParentIdTag: nil,
 		},
 	}
 
@@ -51,6 +64,10 @@ func BenchmarkConfirmationPayload_Value_minimal(b *testing.B) {
 }
 
 func BenchmarkConfirmationPayload_Value_full(b *testing.B) {
+	var resultConfirmation authorizetypes.ConfirmationPayload
+
+	b.Cleanup(func() { _ = resultConfirmation })
+
 	expiry := "2027-04-12T10:03:04Z"
 	parent := "ABC123"
 
