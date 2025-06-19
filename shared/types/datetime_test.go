@@ -7,6 +7,7 @@ import (
 
 func TestDateTime_parsesValidRFC3339(t *testing.T) {
 	t.Parallel()
+
 	input := "2026-04-12T10:03:04-04:00"
 
 	_, err := DateTime(input)
