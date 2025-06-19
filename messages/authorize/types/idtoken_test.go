@@ -2,35 +2,45 @@ package authorizetypes
 
 import (
 	"testing"
+
+	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-func Test_IdTokenFromString_Valid(t *testing.T) {
+func Test_IdTokenFromCiString_Valid(t *testing.T) {
 	t.Parallel()
 
-	valid := "ABC1234567890123456" // 20 characters
-	_, err := NewIdToken(valid)
+	validStr := "ABC1234567890123456" // 20 characters
+	ci, err := sharedtypes.CiString20(validStr)
+	if err != nil {
+		t.Fatalf("failed to construct CiString20Type: %v", err)
+	}
 
+	_, err = IdToken(ci)
 	if err != nil {
 		t.Errorf("expected no error, got %v", err)
 	}
 }
 
-func Test_IdTokenFromString_TooLong(t *testing.T) {
+func Test_IdTokenFromCiString_TooLong(t *testing.T) {
 	t.Parallel()
 
-	toolong := "ABC1234567890123456789" // > 20 characters
-	_, err := NewIdToken(toolong)
-
+	invalidStr := "ABC1234567890123456789" // 21 characters
+	_, err := sharedtypes.CiString20(invalidStr)
 	if err == nil {
-		t.Errorf("expected error for over-length IdToken, got nil")
+		t.Fatalf("expected error when creating CiString20Type from over-length string, got nil")
 	}
 }
 
-func Test_IdTokenFromString_Empty(t *testing.T) {
+func Test_IdTokenFromCiString_Empty(t *testing.T) {
 	t.Parallel()
 
-	_, err := NewIdToken("")
+	ci, err := sharedtypes.CiString20("")
 	if err == nil {
-		t.Errorf("expected error for empty input, got nil")
+		t.Fatalf("expected error when creating CiString20Type from empty string, got nil")
+	}
+
+	_, err = IdToken(ci)
+	if err != nil {
+		t.Errorf("expected no error when calling IdToken with already-invalid CiString20Type (should never reach here): %v", err)
 	}
 }

@@ -1,53 +1,78 @@
 package authorizetypes
 
 import (
-	"errors"
 	"fmt"
 
-	sharedTypes "github.com/aasanchez/ocpp16messages/shared/types"
+	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-var (
-	errInvalidAuthorizationStatus = errors.New("invalid authorization status")
-	errInvalidExpiryDate          = errors.New("invalid expiryDate")
-	errInvalidParentIdTag         = errors.New("invalid parentIdTag")
-)
-
-type IdTagInfo struct {
-	ExpiryDate  *sharedTypes.DateTimeType
-	ParentIdTag *IdToken
-	Status      AuthorizationStatusType
+type IdTagInfoPayload struct {
+	Status      string
+	ExpiryDate  *string
+	ParentIdTag *string
 }
 
-func NewIdTagInfo(rawStatus string) (IdTagInfo, error) {
-	status, err := AuthorizationStatus(rawStatus)
+type IdTagInfoType struct {
+	expiryDate  *sharedtypes.DateTimeType
+	parentIdTag *IdTokenType
+	status      AuthorizationStatusType
+}
+
+// Reusable error wrap format to comply with SonarQube rule go:S1192.
+const errWrapFormat = "%s: %w"
+
+// IdTagInfo creates a validated IdTagInfoType from raw string inputs.
+func IdTagInfo(input IdTagInfoPayload) (IdTagInfoType, error) {
+	status, err := AuthorizationStatus(input.Status)
 	if err != nil {
-		return IdTagInfo{}, fmt.Errorf("%w: %w", errInvalidAuthorizationStatus, err)
+		return IdTagInfoType{}, fmt.Errorf(errWrapFormat, "failed to parse status", err)
 	}
 
-	return IdTagInfo{
-		Status:      status,
-		ExpiryDate:  nil,
-		ParentIdTag: nil,
-	}, nil
+	info := IdTagInfoType{status: status}
+
+	if input.ExpiryDate != nil {
+		parsedDate, err := sharedtypes.DateTime(*input.ExpiryDate)
+		if err != nil {
+			return IdTagInfoType{}, fmt.Errorf(errWrapFormat, "failed to parse expiryDate", err)
+		}
+		info.expiryDate = &parsedDate
+	}
+
+	if input.ParentIdTag != nil {
+		ci, err := sharedtypes.CiString20(*input.ParentIdTag)
+		if err != nil {
+			return IdTagInfoType{}, fmt.Errorf(errWrapFormat, "failed to validate parentIdTag as CiString20", err)
+		}
+
+		idTag, _ := IdToken(ci) // IdToken is guaranteed to succeed
+		info.parentIdTag = &idTag
+	}
+
+	return info, nil
 }
 
-func (info IdTagInfo) Validate() error {
-	if err := info.Status.Validate(); err != nil {
-		return fmt.Errorf("%w: %w", errInvalidAuthorizationStatus, err)
+type IdTagInfoValue struct {
+	Status      string
+	ExpiryDate  *string
+	ParentIdTag *string
+}
+
+func (i IdTagInfoType) Value() IdTagInfoValue {
+	var expiry *string
+	if i.expiryDate != nil {
+		str := i.expiryDate.String()
+		expiry = &str
 	}
 
-	if info.ExpiryDate != nil {
-		if err := info.ExpiryDate.Validate(); err != nil {
-			return fmt.Errorf("%w: %w", errInvalidExpiryDate, err)
-		}
+	var parent *string
+	if i.parentIdTag != nil {
+		val := i.parentIdTag.Value()
+		parent = &val
 	}
 
-	if info.ParentIdTag != nil {
-		if err := info.ParentIdTag.Validate(); err != nil {
-			return fmt.Errorf("%w: %w", errInvalidParentIdTag, err)
-		}
+	return IdTagInfoValue{
+		Status:      i.status.Value(),
+		ExpiryDate:  expiry,
+		ParentIdTag: parent,
 	}
-
-	return nil
 }

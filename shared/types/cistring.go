@@ -61,59 +61,57 @@ func (cs ciString) Validate() error {
 	return nil
 }
 
-// ---- Wrapper Types ----
+// ---- CiString20 ----
 
-type CiString20Type struct{ inner ciString }
+type CiString20Type struct{ value ciString }
 
 func CiString20(value string) (CiString20Type, error) {
 	cs, err := CiString(value, maxLenCiString20)
-	return CiString20Type{inner: cs}, err
+	return CiString20Type{value: cs}, err
 }
+func (c CiString20Type) Value() string   { return c.value.Value() }
+func (c CiString20Type) Validate() error { return c.value.Validate() }
 
-func (c CiString20Type) Value() string   { return c.inner.Value() }
-func (c CiString20Type) Validate() error { return c.inner.Validate() }
-func (c CiString20Type) IsValid() bool   { return c.Validate() == nil }
+// ---- CiString25 ----
 
-type CiString25Type struct{ inner ciString }
+type CiString25Type struct{ value ciString }
 
 func CiString25(value string) (CiString25Type, error) {
 	cs, err := CiString(value, maxLenCiString25)
-	return CiString25Type{inner: cs}, err
+	return CiString25Type{value: cs}, err
 }
+func (c CiString25Type) Value() string   { return c.value.Value() }
+func (c CiString25Type) Validate() error { return c.value.Validate() }
 
-func (c CiString25Type) Value() string   { return c.inner.Value() }
-func (c CiString25Type) Validate() error { return c.inner.Validate() }
-func (c CiString25Type) IsValid() bool   { return c.Validate() == nil }
+// ---- CiString50 ----
 
-type CiString50Type struct{ inner ciString }
+type CiString50Type struct{ value ciString }
 
 func CiString50(value string) (CiString50Type, error) {
 	cs, err := CiString(value, maxLenCiString50)
-	return CiString50Type{inner: cs}, err
+	return CiString50Type{value: cs}, err
 }
+func (c CiString50Type) Value() string   { return c.value.Value() }
+func (c CiString50Type) Validate() error { return c.value.Validate() }
 
-func (c CiString50Type) Value() string   { return c.inner.Value() }
-func (c CiString50Type) Validate() error { return c.inner.Validate() }
-func (c CiString50Type) IsValid() bool   { return c.Validate() == nil }
+// ---- CiString255 ----
 
-type CiString255Type struct{ inner ciString }
+type CiString255Type struct{ value ciString }
 
 func CiString255(value string) (CiString255Type, error) {
 	cs, err := CiString(value, maxLenCiString255)
-	return CiString255Type{inner: cs}, err
+	return CiString255Type{value: cs}, err
 }
+func (c CiString255Type) Value() string   { return c.value.Value() }
+func (c CiString255Type) Validate() error { return c.value.Validate() }
 
-func (c CiString255Type) Value() string   { return c.inner.Value() }
-func (c CiString255Type) Validate() error { return c.inner.Validate() }
-func (c CiString255Type) IsValid() bool   { return c.Validate() == nil }
+// ---- CiString500 ----
 
-type CiString500Type struct{ inner ciString }
+type CiString500Type struct{ value ciString }
 
 func CiString500(value string) (CiString500Type, error) {
 	cs, err := CiString(value, maxLenCiString500)
-	return CiString500Type{inner: cs}, err
+	return CiString500Type{value: cs}, err
 }
-
-func (c CiString500Type) Value() string   { return c.inner.Value() }
-func (c CiString500Type) Validate() error { return c.inner.Validate() }
-func (c CiString500Type) IsValid() bool   { return c.Validate() == nil }
+func (c CiString500Type) Value() string   { return c.value.Value() }
+func (c CiString500Type) Validate() error { return c.value.Validate() }

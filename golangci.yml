@@ -3,7 +3,9 @@ linters:
   default: all
   disable:
     - testpackage
-    - godot
+    - lll
+    # - godot
+
   settings:
     depguard:
       rules:
@@ -16,6 +18,12 @@ linters:
         - name: var-naming
           arguments:
             - ["ID"] # AllowList
+    lll:
+      line-length: 120
+      tab-width: 1
+      exclude-patterns:
+        - "^\\s*//"
+
 output:
   formats:
     text:

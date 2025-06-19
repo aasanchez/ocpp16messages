@@ -1,11 +1,14 @@
 package authorize
 
 import (
+	"errors"
 	"strings"
 	"testing"
 
 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
+
+const errWrapMsg = "expected ErrInvalidRequestIdTag, got: %v"
 
 func TestRequest_Valid(t *testing.T) {
 	t.Parallel()
@@ -20,22 +23,26 @@ func TestRequest_Valid(t *testing.T) {
 		t.Fatalf("Request() returned unexpected error: %v", err)
 	}
 
-	if err := req.Validate(); err != nil {
-		t.Errorf("expected Validate() to succeed, got: %v", err)
+	if req.IdTag.Value() != input.IdTag {
+		t.Errorf("expected IdTag %q, got %q", input.IdTag, req.IdTag.Value())
 	}
 }
 
 func TestRequest_EmptyIdTag(t *testing.T) {
 	t.Parallel()
 
-	input := authorizetypes.RequestMessageInput{IdTag: ""}
+	input := authorizetypes.RequestPayload{IdTag: ""}
 	if err := input.Validate(); err == nil {
 		t.Error("expected validation error for empty idTag, got nil")
 	}
 
 	_, err := Request(input)
 	if err == nil {
-		t.Error("expected Request() to return error for empty idTag, got nil")
+		t.Fatal("expected Request() to return error for empty idTag, got nil")
+	}
+
+	if !errors.Is(err, ErrInvalidRequestIdTag) {
+		t.Errorf(errWrapMsg, err)
 	}
 }
 
@@ -46,7 +53,11 @@ func TestRequest_TooLongIdTag(t *testing.T) {
 	_, err := Request(input)
 
 	if err == nil {
-		t.Error("expected error for idTag longer than 20 characters, got nil")
+		t.Fatal("expected error for idTag longer than 20 characters, got nil")
+	}
+
+	if !errors.Is(err, ErrInvalidRequestIdTag) {
+		t.Errorf(errWrapMsg, err)
 	}
 }
 
@@ -57,18 +68,10 @@ func TestRequest_NonASCIIIdTag(t *testing.T) {
 	_, err := Request(input)
 
 	if err == nil {
-		t.Error("expected error for non-ASCII idTag, got nil")
-	}
-}
-
-func TestRequest_ValidateFailsWithInvalidIdTag(t *testing.T) {
-	t.Parallel()
-
-	req := RequestMessage{
-		IdTag: authorizetypes.IdToken{}, // invalid, zero-value
+		t.Fatal("expected error for non-ASCII idTag, got nil")
 	}
 
-	if err := req.Validate(); err == nil {
-		t.Error("expected Validate() to fail for invalid IdTag")
+	if !errors.Is(err, ErrInvalidRequestIdTag) {
+		t.Errorf(errWrapMsg, err)
 	}
 }

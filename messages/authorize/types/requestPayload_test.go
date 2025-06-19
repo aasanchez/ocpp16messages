@@ -1,61 +1,60 @@
-package authorizetypes
+package authorizetypes_test
 
 import (
-	"reflect"
+	"errors"
 	"testing"
+
+	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
+	types "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
-func TestRequestPayload_Validate_IdTagPresent(t *testing.T) {
+func TestRequestPayloadType_Validate_ValidIdTag(t *testing.T) {
 	t.Parallel()
 
-	payload := RequestPayload{IdTag: "SOME-ID"}
-	err := payload.Validate()
+	payload := types.RequestPayload{
+		IdTag: "A123456789B987654321", // exactly 20 chars
+	}
 
-	if err != nil {
-		t.Errorf("expected validation to pass, got error: %v", err)
+	if err := payload.Validate(); err != nil {
+		t.Errorf("expected valid idTag, got error: %v", err)
 	}
 }
 
-func TestRequestPayload_Validate_IdTagMissing(t *testing.T) {
+func TestRequestPayloadType_Validate_EmptyIdTag(t *testing.T) {
 	t.Parallel()
 
-	payload := RequestPayload{IdTag: ""}
-	err := payload.Validate()
+	payload := types.RequestPayload{IdTag: ""}
 
+	err := payload.Validate()
 	if err == nil {
-		t.Error("expected validation to fail for empty IdTag")
+		t.Fatal("expected error for empty idTag, got nil")
+	}
+
+	if !errors.Is(err, types.ErrInvalidIdTag) {
+		t.Errorf("expected ErrInvalidIdTag, got: %v", err)
 	}
 }
 
-func TestRequestPayload_Value_ReturnsCorrectString(t *testing.T) {
+func TestRequestPayloadType_Validate_TooLongIdTag(t *testing.T) {
 	t.Parallel()
 
-	payload := RequestPayload{IdTag: "VALID-123"}
-	got := payload.Value()
+	input := authorizetypes.RequestPayload{
+		IdTag: "THIS-ID-TAG-IS-TOO-LONG-FOR-CISTRING20",
+	}
 
-	if got != "VALID-123" {
-		t.Errorf("expected Value() to return 'VALID-123', got '%s'", got)
+	err := input.Validate()
+	if err == nil {
+		t.Fatal("expected error for too long idTag, got nil")
 	}
 }
 
-func TestRequestPayload_Structure_HasOnlyOneField(t *testing.T) {
+func TestRequestPayloadType_Value(t *testing.T) {
 	t.Parallel()
 
-	typ := reflect.TypeOf(RequestPayload{})
-	numFields := typ.NumField()
+	expected := "SampleIdTag"
+	payload := types.RequestPayload{IdTag: expected}
 
-	if numFields != 1 {
-		t.Errorf("expected RequestPayload to have 1 field, got %d", numFields)
-	}
-}
-
-func TestRequestPayload_FieldName_IsIdTag(t *testing.T) {
-	t.Parallel()
-
-	typ := reflect.TypeOf(RequestPayload{})
-	field := typ.Field(0)
-
-	if field.Name != "IdTag" {
-		t.Errorf("expected first field to be named 'IdTag', got '%s'", field.Name)
+	if payload.Value() != expected {
+		t.Errorf("Value() returned %q, expected %q", payload.Value(), expected)
 	}
 }

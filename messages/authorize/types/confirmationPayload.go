@@ -5,21 +5,19 @@ import (
 	"fmt"
 )
 
-var ErrMissingStatus = errors.New("missing required field: idTagInfo.Status")
+var ErrInvalidIdTagInfo = errors.New("invalid idTagInfo")
 
-type ConfirmationMessageInput struct {
-	IdTagInfo IdTagInfoInput
+type ConfirmationPayload struct {
+	IdTagInfo IdTagInfoPayload
 }
 
-type IdTagInfoInput struct {
-	Status      string
-	ExpiryDate  *string
-	ParentIdTag *string
-}
-
-func (input ConfirmationMessageInput) Validate() error {
-	if input.IdTagInfo.Status == "" {
-		return fmt.Errorf("%w", ErrMissingStatus)
+func (c ConfirmationPayload) Validate() error {
+	if c.IdTagInfo.Status == "" {
+		return fmt.Errorf("confirmation payload: %w", ErrInvalidIdTagInfo)
 	}
 	return nil
+}
+
+func (c ConfirmationPayload) Value() ConfirmationPayload {
+	return c
 }

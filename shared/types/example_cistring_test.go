@@ -12,32 +12,17 @@ const (
 	msgLength = "Length:"
 )
 
-func ExampleCiString() {
-	input := "Hello, OCPP!"
-	maxLen := 20
-
-	cs, err := types.CiString(input, maxLen)
-	if err != nil {
-		fmt.Printf("Failed to create ciString: %v\n", err)
-	}
-
-	fmt.Println("ciString created:", cs.Value())
-
-	// Output:
-	// ciString created: Hello, OCPP!
-}
-
 func ExampleCiString20() {
 	input := strings.Repeat("A", 20)
 
 	cistr, err := types.CiString20(input)
 	if err != nil {
 		fmt.Println(msgError, err)
-
 		return
 	}
 
 	fmt.Println(msgLength, len(cistr.Value()))
+
 	// Output:
 	// Length: 20
 }

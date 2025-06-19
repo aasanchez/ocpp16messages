@@ -8,16 +8,11 @@ import (
 )
 
 func ExampleDateTime_valid() {
-	raw := "2027-04-12T10:03:04-04:00"
+	input := "2027-04-12T10:03:04-04:00"
 
-	datetime, err := types.DateTime(raw)
+	datetime, err := types.DateTime(input)
 	if err != nil {
 		fmt.Printf("unexpected error: %v\n", err)
-		return
-	}
-
-	if err := datetime.Validate(); err != nil {
-		fmt.Printf("validation failed: %v\n", err)
 		return
 	}
 
@@ -29,11 +24,12 @@ func ExampleDateTime_valid() {
 }
 
 func ExampleDateTime_invalidFormat() {
-	_, err := types.DateTime("not-a-date")
+	input := "not-a-date"
+	_, err := types.DateTime(input)
 	if err != nil {
 		fmt.Println("Error:", err)
 	}
 
 	// Output:
-	// Error: parsing time "not-a-date" as "2006-01-02T15:04:05Z07:00": cannot parse "not-a-date" as "2006"
+	// Error: invalid datetime: parsing time "not-a-date" as "2006-01-02T15:04:05Z07:00": cannot parse "not-a-date" as "2006"
 }

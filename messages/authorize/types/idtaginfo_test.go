@@ -1,112 +1,147 @@
 package authorizetypes_test
 
-// import (
-// 	"testing"
+import (
+	"testing"
 
-// 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
-// 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
-// )
+	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
+)
 
-// func TestIdTagInfo_validOnlyStatus(t *testing.T) {
-// 	t.Parallel()
+func TestIdTagInfo_statusOnly(t *testing.T) {
+	t.Parallel()
 
-// 	info, err := authorizetypes.IdTagInfo("Accepted")
-// 	if err != nil {
-// 		t.Fatalf("unexpected constructor error: %v", err)
-// 	}
+	input := authorizetypes.IdTagInfoPayload{
+		Status: authorizetypes.Accepted,
+	}
 
-// 	if err := info.Validate(); err != nil {
-// 		t.Errorf("expected valid status-only IdTagInfo, got: %v", err)
-// 	}
-// }
+	info, err := authorizetypes.IdTagInfo(input)
+	if err != nil {
+		t.Fatalf("unexpected error statusOnly: %v", err)
+	}
 
-// func TestIdTagInfo_withExpiryDate(t *testing.T) {
-// 	t.Parallel()
+	val := info.Value()
 
-// 	info, err := authorizetypes.IdTagInfo("Accepted")
-// 	if err != nil {
-// 		t.Fatalf("unexpected constructor error: %v", err)
-// 	}
+	if val.Status != authorizetypes.Accepted {
+		t.Errorf("expected status %q, got %q", authorizetypes.Accepted, val.Status)
+	}
+	if val.ExpiryDate != nil {
+		t.Errorf("expected expiryDate nil, got %v", *val.ExpiryDate)
+	}
+	if val.ParentIdTag != nil {
+		t.Errorf("expected parentIdTag nil, got %v", *val.ParentIdTag)
+	}
+}
 
-// 	expiry, err := sharedtypes.DateTime("2027-04-12T14:03:04Z")
-// 	if err != nil {
-// 		t.Fatalf("failed to construct DateTimeType: %v", err)
-// 	}
+func TestIdTagInfo_withExpiryDateOnly(t *testing.T) {
+	t.Parallel()
 
-// 	info.ExpiryDate = &expiry
+	exp := "2027-04-12T10:03:04Z"
 
-// 	if err := info.Validate(); err != nil {
-// 		t.Errorf("expected valid expiryDate, got: %v", err)
-// 	}
-// }
+	input := authorizetypes.IdTagInfoPayload{
+		Status:     authorizetypes.Accepted,
+		ExpiryDate: &exp,
+	}
 
-// func TestIdTagInfo_withZeroExpiryDate_shouldFail(t *testing.T) {
-// 	t.Parallel()
+	info, err := authorizetypes.IdTagInfo(input)
+	if err != nil {
+		t.Fatalf("unexpected error withExpiryDateOnly: %v", err)
+	}
 
-// 	info, err := authorizetypes.IdTagInfo("Accepted")
-// 	if err != nil {
-// 		t.Fatalf("unexpected constructor error: %v", err)
-// 	}
+	val := info.Value()
+	if val.ExpiryDate == nil || *val.ExpiryDate != exp {
+		t.Errorf("expiryDate mismatch: want %s, got %v", exp, val.ExpiryDate)
+	}
+}
 
-// 	// Create zero-value DateTimeType explicitly
-// 	var zero sharedtypes.DateTimeType
-// 	info.ExpiryDate = &zero
+func TestIdTagInfo_withParentIdTagOnly(t *testing.T) {
+	t.Parallel()
 
-// 	if err := info.Validate(); err == nil {
-// 		t.Error("expected error for zero ExpiryDate, got nil")
-// 	}
-// }
+	parent := "ABC123"
 
-// func TestIdTagInfo_withValidParentIdTag(t *testing.T) {
-// 	t.Parallel()
+	input := authorizetypes.IdTagInfoPayload{
+		Status:      authorizetypes.Accepted,
+		ParentIdTag: &parent,
+	}
 
-// 	info, err := authorizetypes.IdTagInfo("Accepted")
-// 	if err != nil {
-// 		t.Fatalf("unexpected constructor error: %v", err)
-// 	}
+	info, err := authorizetypes.IdTagInfo(input)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
 
-// 	parent, err := authorizetypes.IdToken("PARENT123456")
-// 	if err != nil {
-// 		t.Fatalf("failed to create parentIdTag: %v", err)
-// 	}
+	val := info.Value()
+	if val.ParentIdTag == nil || *val.ParentIdTag != parent {
+		t.Errorf("parentIdTag mismatch: want %s, got %v", parent, val.ParentIdTag)
+	}
+}
 
-// 	info.ParentIdTag = &parent
+func TestIdTagInfo_allFieldsPresent(t *testing.T) {
+	t.Parallel()
 
-// 	if err := info.Validate(); err != nil {
-// 		t.Errorf("expected valid ParentIdTag, got: %v", err)
-// 	}
-// }
+	exp := "2027-04-12T10:03:04Z"
+	parent := "XYZ-987"
 
-// func TestIdTagInfo_withInvalidParentIdTag_shouldFail(t *testing.T) {
-// 	t.Parallel()
+	input := authorizetypes.IdTagInfoPayload{
+		Status:      authorizetypes.Accepted,
+		ExpiryDate:  &exp,
+		ParentIdTag: &parent,
+	}
 
-// 	info, err := authorizetypes.IdTagInfo("Accepted")
-// 	if err != nil {
-// 		t.Fatalf("unexpected constructor error: %v", err)
-// 	}
+	info, err := authorizetypes.IdTagInfo(input)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
 
-// 	info.ParentIdTag = &authorizetypes.IdTokenType{} // invalid zero value
+	val := info.Value()
 
-// 	if err := info.Validate(); err == nil {
-// 		t.Error("expected error for invalid ParentIdTag, got nil")
-// 	}
-// }
+	if val.Status != authorizetypes.Accepted {
+		t.Errorf("status mismatch: got %s", val.Status)
+	}
+	if val.ExpiryDate == nil || *val.ExpiryDate != exp {
+		t.Errorf("expiryDate mismatch: want %s, got %v", exp, val.ExpiryDate)
+	}
+	if val.ParentIdTag == nil || *val.ParentIdTag != parent {
+		t.Errorf("parentIdTag mismatch: want %s, got %v", parent, val.ParentIdTag)
+	}
+}
 
-// func TestIdTagInfo_withInvalidStatus_shouldFail(t *testing.T) {
-// 	t.Parallel()
+func TestIdTagInfo_invalidStatus(t *testing.T) {
+	t.Parallel()
 
-// 	_, err := authorizetypes.IdTagInfo("WrongStatus")
-// 	if err == nil {
-// 		t.Error("expected constructor to fail with invalid status, got nil")
-// 	}
-// }
+	input := authorizetypes.IdTagInfoPayload{Status: "InvalidStatus"}
 
-// func TestIdTagInfo_validateFailsForZeroStatus(t *testing.T) {
-// 	t.Parallel()
+	_, err := authorizetypes.IdTagInfo(input)
+	if err == nil {
+		t.Fatal("expected error for invalid status, got nil")
+	}
+}
 
-// 	info := authorizetypes.IdTagInfoType{} // zero-value struct
+func TestIdTagInfo_invalidExpiryDate(t *testing.T) {
+	t.Parallel()
 
-// 	if err := info.Validate(); err == nil {
-// 		t.Error("expected validation to fail for zero-value Status, got nil")
-// 	}
-// }
+	bad := "not-a-date"
+
+	input := authorizetypes.IdTagInfoPayload{
+		Status:     authorizetypes.Accepted,
+		ExpiryDate: &bad,
+	}
+
+	_, err := authorizetypes.IdTagInfo(input)
+	if err == nil {
+		t.Fatal("expected error for invalid expiryDate, got nil")
+	}
+}
+
+func TestIdTagInfo_invalidParentIdTag_tooLong(t *testing.T) {
+	t.Parallel()
+
+	tooLong := "TOO-LONG-ID-TAG-FOR-CISTRING20-XXXXX"
+
+	input := authorizetypes.IdTagInfoPayload{
+		Status:      authorizetypes.Accepted,
+		ParentIdTag: &tooLong,
+	}
+
+	_, err := authorizetypes.IdTagInfo(input)
+	if err == nil {
+		t.Fatal("expected error for invalid parentIdTag, got nil")
+	}
+}
