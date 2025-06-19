@@ -67,8 +67,8 @@ func TestCiStringStringReturnsOriginal(t *testing.T) {
 	str := "Hello123"
 	cs, _ := CiString(str, 20)
 
-	if cs.String() != str {
-		t.Errorf(errMsgExpectedValue, str, cs.String())
+	if cs.Value() != str {
+		t.Errorf(errMsgExpectedValue, str, cs.Value())
 	}
 }
 
@@ -100,8 +100,8 @@ func TestCiString20TypeString(t *testing.T) {
 	s := strings.Repeat("A", 20)
 	v, _ := CiString20(s)
 
-	if v.String() != s {
-		t.Errorf(errMsgExpectedValue, s, v.String())
+	if v.Value() != s {
+		t.Errorf(errMsgExpectedValue, s, v.Value())
 	}
 }
 
@@ -142,8 +142,8 @@ func TestCiString25TypeString(t *testing.T) {
 	s := strings.Repeat("B", 25)
 	v, _ := CiString25(s)
 
-	if v.String() != s {
-		t.Errorf(errMsgExpectedValue, s, v.String())
+	if v.Value() != s {
+		t.Errorf(errMsgExpectedValue, s, v.Value())
 	}
 }
 
@@ -184,8 +184,8 @@ func TestCiString50TypeString(t *testing.T) {
 	s := strings.Repeat("C", 50)
 	v, _ := CiString50(s)
 
-	if v.String() != s {
-		t.Errorf(errMsgExpectedValue, s, v.String())
+	if v.Value() != s {
+		t.Errorf(errMsgExpectedValue, s, v.Value())
 	}
 }
 
@@ -226,8 +226,8 @@ func TestCiString255TypeString(t *testing.T) {
 	s := strings.Repeat("D", 255)
 	v, _ := CiString255(s)
 
-	if v.String() != s {
-		t.Errorf(errMsgExpectedValue, s, v.String())
+	if v.Value() != s {
+		t.Errorf(errMsgExpectedValue, s, v.Value())
 	}
 }
 
@@ -268,8 +268,8 @@ func TestCiString500TypeString(t *testing.T) {
 	s := strings.Repeat("E", 500)
 	v, _ := CiString500(s)
 
-	if v.String() != s {
-		t.Errorf(errMsgExpectedValue, s, v.String())
+	if v.Value() != s {
+		t.Errorf(errMsgExpectedValue, s, v.Value())
 	}
 }
 

@@ -13,26 +13,26 @@ var (
 	errInvalidParentIdTag         = errors.New("invalid parentIdTag")
 )
 
-type IdTagInfoType struct {
+type IdTagInfo struct {
 	ExpiryDate  *sharedTypes.DateTimeType
-	ParentIdTag *IdTokenType
+	ParentIdTag *IdToken
 	Status      AuthorizationStatusType
 }
 
-func IdTagInfo(rawStatus string) (IdTagInfoType, error) {
+func NewIdTagInfo(rawStatus string) (IdTagInfo, error) {
 	status, err := AuthorizationStatus(rawStatus)
 	if err != nil {
-		return IdTagInfoType{}, fmt.Errorf("%w: %w", errInvalidAuthorizationStatus, err)
+		return IdTagInfo{}, fmt.Errorf("%w: %w", errInvalidAuthorizationStatus, err)
 	}
 
-	return IdTagInfoType{
+	return IdTagInfo{
 		Status:      status,
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
 	}, nil
 }
 
-func (info IdTagInfoType) Validate() error {
+func (info IdTagInfo) Validate() error {
 	if err := info.Status.Validate(); err != nil {
 		return fmt.Errorf("%w: %w", errInvalidAuthorizationStatus, err)
 	}

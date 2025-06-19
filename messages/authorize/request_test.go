@@ -10,7 +10,7 @@ import (
 func TestRequest_Valid(t *testing.T) {
 	t.Parallel()
 
-	input := authorizetypes.RequestMessageInput{IdTag: "ABC1234567890XYZ78"}
+	input := authorizetypes.RequestPayload{IdTag: "ABC1234567890XYZ78"}
 	if err := input.Validate(); err != nil {
 		t.Fatalf("input validation failed unexpectedly: %v", err)
 	}
@@ -42,7 +42,7 @@ func TestRequest_EmptyIdTag(t *testing.T) {
 func TestRequest_TooLongIdTag(t *testing.T) {
 	t.Parallel()
 
-	input := authorizetypes.RequestMessageInput{IdTag: strings.Repeat("A", 21)}
+	input := authorizetypes.RequestPayload{IdTag: strings.Repeat("A", 21)}
 	_, err := Request(input)
 
 	if err == nil {
@@ -53,7 +53,7 @@ func TestRequest_TooLongIdTag(t *testing.T) {
 func TestRequest_NonASCIIIdTag(t *testing.T) {
 	t.Parallel()
 
-	input := authorizetypes.RequestMessageInput{IdTag: "مرحباOCPP"}
+	input := authorizetypes.RequestPayload{IdTag: "مرحباOCPP"}
 	_, err := Request(input)
 
 	if err == nil {
@@ -65,7 +65,7 @@ func TestRequest_ValidateFailsWithInvalidIdTag(t *testing.T) {
 	t.Parallel()
 
 	req := RequestMessage{
-		IdTag: authorizetypes.IdTokenType{}, // invalid, zero-value
+		IdTag: authorizetypes.IdToken{}, // invalid, zero-value
 	}
 
 	if err := req.Validate(); err == nil {

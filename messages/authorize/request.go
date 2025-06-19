@@ -7,10 +7,10 @@ import (
 )
 
 type RequestMessage struct {
-	IdTag authorizetypes.IdTokenType
+	IdTag authorizetypes.IdToken
 }
 
-func Request(input authorizetypes.RequestMessageInput) (RequestMessage, error) {
+func Request(input authorizetypes.RequestPayload) (RequestMessage, error) {
 	idToken, err := authorizetypes.IdToken(input.IdTag)
 	if err != nil {
 		return RequestMessage{}, fmt.Errorf("failed to create Authorize.req message, problem with idTag: %s: %w", input.IdTag, err)

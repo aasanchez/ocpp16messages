@@ -21,7 +21,7 @@ func ExampleCiString() {
 		fmt.Printf("Failed to create ciString: %v\n", err)
 	}
 
-	fmt.Println("ciString created:", cs.String())
+	fmt.Println("ciString created:", cs.Value())
 
 	// Output:
 	// ciString created: Hello, OCPP!
@@ -37,7 +37,7 @@ func ExampleCiString20() {
 		return
 	}
 
-	fmt.Println(msgLength, len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.Value()))
 	// Output:
 	// Length: 20
 }
@@ -52,7 +52,7 @@ func ExampleCiString20_invalid() {
 		return
 	}
 
-	fmt.Println(msgLength, len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.Value()))
 	// Output:
 	// Error: ciString.Validate: value exceeds maximum allowed length: got length 21, max 20
 }
@@ -67,7 +67,7 @@ func ExampleCiString25() {
 		return
 	}
 
-	fmt.Println(msgLength, len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.Value()))
 	// Output:
 	// Length: 25
 }
@@ -82,7 +82,7 @@ func ExampleCiString25_invalid() {
 		return
 	}
 
-	fmt.Println(msgLength, len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.Value()))
 	// Output:
 	// Error: ciString.Validate: value exceeds maximum allowed length: got length 26, max 25
 }
@@ -97,7 +97,7 @@ func ExampleCiString50() {
 		return
 	}
 
-	fmt.Println(msgLength, len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.Value()))
 	// Output:
 	// Length: 50
 }
@@ -112,7 +112,7 @@ func ExampleCiString50_invalid() {
 		return
 	}
 
-	fmt.Println(msgLength, len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.Value()))
 	// Output:
 	// Error: ciString.Validate: value exceeds maximum allowed length: got length 51, max 50
 }
@@ -127,7 +127,7 @@ func ExampleCiString255() {
 		return
 	}
 
-	fmt.Println(msgLength, len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.Value()))
 	// Output:
 	// Length: 255
 }
@@ -142,7 +142,7 @@ func ExampleCiString255_invalid() {
 		return
 	}
 
-	fmt.Println(msgLength, len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.Value()))
 	// Output:
 	// Error: ciString.Validate: value exceeds maximum allowed length: got length 256, max 255
 }
@@ -157,7 +157,7 @@ func ExampleCiString500() {
 		return
 	}
 
-	fmt.Println(msgLength, len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.Value()))
 	// Output:
 	// Length: 499
 }
@@ -172,7 +172,7 @@ func ExampleCiString500_invalid() {
 		return
 	}
 
-	fmt.Println(msgLength, len(cistr.String()))
+	fmt.Println(msgLength, len(cistr.Value()))
 	// Output:
 	// Error: ciString.Validate: value exceeds maximum allowed length: got length 501, max 500
 }

@@ -64,7 +64,7 @@ func TestAuthorizationStatus_validateValid(t *testing.T) {
 func TestAuthorizationStatus_validateFailsForGarbage(t *testing.T) {
 	t.Parallel()
 
-	status := AuthorizationStatusType{value: "🚫Invalid"}
+	status := AuthorizationStatusType{value: "Invalid"}
 	err := status.Validate()
 
 	if err == nil {
