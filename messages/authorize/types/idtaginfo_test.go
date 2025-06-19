@@ -60,7 +60,7 @@ func TestIdTagInfo_withExpiryDateOnly(t *testing.T) {
 func TestIdTagInfo_withParentIdTagOnly(t *testing.T) {
 	t.Parallel()
 
-	parent := "ABC123"
+	parent := "ABC0101"
 
 	input := authorizetypes.IdTagInfoPayload{
 		Status:      authorizetypes.Accepted,

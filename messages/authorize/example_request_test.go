@@ -80,6 +80,7 @@ func ExampleRequest_parse() {
 
 	input := decodeRawIdTag(msg[3])
 	req, err := authorize.Request(input)
+
 	if err != nil {
 		fmt.Printf(errRequestFormat, err)
 	}
@@ -110,6 +111,7 @@ func ExampleRequest_parse_invalid() {
 
 	input := decodeRawIdTag(msg[3])
 	_, err = authorize.Request(input)
+
 	if err != nil {
 		fmt.Printf(errRequestFormat, err)
 	}
@@ -136,6 +138,7 @@ func ExampleRequest_parse_empty() {
 
 	input := decodeRawIdTag(msg[3])
 	_, err = authorize.Request(input)
+
 	if err != nil {
 		fmt.Printf(errRequestFormat, err)
 	}
@@ -164,6 +167,7 @@ func ExampleRequest_parse_idTag_empty() {
 
 	input := decodeRawIdTag(msg[3])
 	_, err = authorize.Request(input)
+
 	if err != nil {
 		fmt.Printf(errRequestFormat, err)
 	}
@@ -192,6 +196,7 @@ func ExampleRequest_parse_idTag_NotFound() {
 
 	input := decodeRawIdTag(msg[3])
 	_, err = authorize.Request(input)
+
 	if err != nil {
 		fmt.Printf(errRequestFormat, err)
 	}
@@ -207,9 +212,8 @@ func decodeRawIdTag(raw json.RawMessage) authorizetypes.RequestPayload {
 		IdTag string `json:"idTag"`
 	}
 
-	err := json.Unmarshal(raw, &temp)
-	if err != nil {
-		fmt.Printf(errInvalidPayload, err)
+	if err := json.Unmarshal(raw, &temp); err != nil {
+		_, _ = fmt.Fprintf(os.Stderr, errInvalidPayload, err) // compliant with errcheck + forbidigo
 	}
 
 	return authorizetypes.RequestPayload{IdTag: temp.IdTag}

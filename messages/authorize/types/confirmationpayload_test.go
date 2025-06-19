@@ -59,9 +59,11 @@ func TestConfirmationPayload_withAllFields(t *testing.T) {
 	if got.IdTagInfo.Status != authorizetypes.Accepted {
 		t.Errorf("status mismatch: expected %q, got %q", authorizetypes.Accepted, got.IdTagInfo.Status)
 	}
+
 	if got.IdTagInfo.ExpiryDate == nil || *got.IdTagInfo.ExpiryDate != expiry {
 		t.Errorf("expiryDate mismatch: expected %q, got %v", expiry, got.IdTagInfo.ExpiryDate)
 	}
+
 	if got.IdTagInfo.ParentIdTag == nil || *got.IdTagInfo.ParentIdTag != parent {
 		t.Errorf("parentIdTag mismatch: expected %q, got %v", parent, got.IdTagInfo.ParentIdTag)
 	}
