@@ -14,6 +14,8 @@ const (
 )
 
 func TestCiString_EmptyFails(t *testing.T) {
+	t.Parallel()
+
 	input := ""
 
 	_, err := CiString(input, 20)
@@ -23,6 +25,8 @@ func TestCiString_EmptyFails(t *testing.T) {
 }
 
 func TestCiString_TooLongFails(t *testing.T) {
+	t.Parallel()
+
 	input := strings.Repeat("A", 21)
 
 	_, err := CiString(input, 20)
@@ -32,6 +36,8 @@ func TestCiString_TooLongFails(t *testing.T) {
 }
 
 func TestCiString_NonPrintableFails(t *testing.T) {
+	t.Parallel()
+
 	input := "OCPP\x01"
 
 	_, err := CiString(input, 20)
@@ -41,6 +47,8 @@ func TestCiString_NonPrintableFails(t *testing.T) {
 }
 
 func TestCiString_ValidPasses(t *testing.T) {
+	t.Parallel()
+
 	input := "OCPP16-Test"
 
 	_, err := CiString(input, 20)
@@ -50,6 +58,8 @@ func TestCiString_ValidPasses(t *testing.T) {
 }
 
 func TestCiString_ValueReturnsRaw(t *testing.T) {
+	t.Parallel()
+
 	input := "OCPP-Valid"
 
 	cs, _ := CiString(input, 20)
@@ -59,6 +69,8 @@ func TestCiString_ValueReturnsRaw(t *testing.T) {
 }
 
 func TestCiString20Type_CreateValid(t *testing.T) {
+	t.Parallel()
+
 	input := "ABCDEFGHIJKLMNOPQRST"
 
 	_, err := CiString20(input)
@@ -68,6 +80,8 @@ func TestCiString20Type_CreateValid(t *testing.T) {
 }
 
 func TestCiString20Type_CreateTooLongFails(t *testing.T) {
+	t.Parallel()
+
 	input := strings.Repeat("X", 21)
 
 	_, err := CiString20(input)
@@ -77,6 +91,8 @@ func TestCiString20Type_CreateTooLongFails(t *testing.T) {
 }
 
 func TestCiString25Type_CreateValid(t *testing.T) {
+	t.Parallel()
+
 	input := strings.Repeat("B", 25)
 
 	_, err := CiString25(input)
@@ -86,6 +102,8 @@ func TestCiString25Type_CreateValid(t *testing.T) {
 }
 
 func TestCiString50Type_CreateValid(t *testing.T) {
+	t.Parallel()
+
 	input := strings.Repeat("C", 50)
 
 	_, err := CiString50(input)
@@ -95,6 +113,8 @@ func TestCiString50Type_CreateValid(t *testing.T) {
 }
 
 func TestCiString255Type_CreateValid(t *testing.T) {
+	t.Parallel()
+
 	input := strings.Repeat("D", 255)
 
 	_, err := CiString255(input)
@@ -104,6 +124,8 @@ func TestCiString255Type_CreateValid(t *testing.T) {
 }
 
 func TestCiString500Type_CreateValid(t *testing.T) {
+	t.Parallel()
+
 	input := strings.Repeat("E", 500)
 
 	_, err := CiString500(input)
@@ -113,6 +135,8 @@ func TestCiString500Type_CreateValid(t *testing.T) {
 }
 
 func TestCiString20Type_Value(t *testing.T) {
+	t.Parallel()
+
 	raw := strings.Repeat("A", 20)
 
 	cs, _ := CiString20(raw)
@@ -122,6 +146,8 @@ func TestCiString20Type_Value(t *testing.T) {
 }
 
 func TestCiString20Type_Validate(t *testing.T) {
+	t.Parallel()
+
 	input := "OCPP20"
 
 	cs, _ := CiString20(input)
@@ -131,6 +157,8 @@ func TestCiString20Type_Validate(t *testing.T) {
 }
 
 func TestCiString25Type_Value(t *testing.T) {
+	t.Parallel()
+
 	input := strings.Repeat("B", 25)
 
 	cs, _ := CiString25(input)
@@ -140,6 +168,8 @@ func TestCiString25Type_Value(t *testing.T) {
 }
 
 func TestCiString25Type_Validate(t *testing.T) {
+	t.Parallel()
+
 	input := "TestString"
 
 	cs, _ := CiString25(input)
@@ -149,6 +179,8 @@ func TestCiString25Type_Validate(t *testing.T) {
 }
 
 func TestCiString50Type_Value(t *testing.T) {
+	t.Parallel()
+
 	input := strings.Repeat("C", 50)
 
 	cs, _ := CiString50(input)
@@ -158,6 +190,8 @@ func TestCiString50Type_Value(t *testing.T) {
 }
 
 func TestCiString50Type_Validate(t *testing.T) {
+	t.Parallel()
+
 	cs, _ := CiString50("ShortValidString")
 	if err := cs.Validate(); err != nil {
 		t.Errorf(errExpectedValidationPass, err)
@@ -165,6 +199,8 @@ func TestCiString50Type_Validate(t *testing.T) {
 }
 
 func TestCiString255Type_Value(t *testing.T) {
+	t.Parallel()
+
 	raw := strings.Repeat("D", 255)
 	cs, _ := CiString255(raw)
 	if cs.Value() != raw {
@@ -173,6 +209,8 @@ func TestCiString255Type_Value(t *testing.T) {
 }
 
 func TestCiString255Type_Validate(t *testing.T) {
+	t.Parallel()
+
 	cs, _ := CiString255("Basic test string")
 	if err := cs.Validate(); err != nil {
 		t.Errorf(errExpectedValidationPass, err)
@@ -180,6 +218,8 @@ func TestCiString255Type_Validate(t *testing.T) {
 }
 
 func TestCiString500Type_Value(t *testing.T) {
+	t.Parallel()
+
 	raw := strings.Repeat("E", 500)
 	cs, _ := CiString500(raw)
 	if cs.Value() != raw {
@@ -188,6 +228,8 @@ func TestCiString500Type_Value(t *testing.T) {
 }
 
 func TestCiString500Type_Validate(t *testing.T) {
+	t.Parallel()
+
 	cs, _ := CiString500("This is a long string but valid for 500 length")
 	if err := cs.Validate(); err != nil {
 		t.Errorf(errExpectedValidationPass, err)

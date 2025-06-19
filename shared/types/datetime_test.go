@@ -17,6 +17,7 @@ func TestDateTime_parsesValidRFC3339(t *testing.T) {
 
 func TestDateTime_failsOnInvalidFormat(t *testing.T) {
 	t.Parallel()
+
 	input := "not-a-date"
 	_, err := DateTime(input)
 	if err == nil {
