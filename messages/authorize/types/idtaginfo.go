@@ -18,10 +18,8 @@ type IdTagInfoType struct {
 	status      AuthorizationStatusType
 }
 
-// Reusable error wrap format to comply with SonarQube rule go:S1192.
 const errWrapFormat = "%s: %w"
 
-// IdTagInfo creates a validated IdTagInfoType from raw string inputs.
 func IdTagInfo(input IdTagInfoPayload) (IdTagInfoType, error) {
 	status, err := AuthorizationStatus(input.Status)
 	if err != nil {

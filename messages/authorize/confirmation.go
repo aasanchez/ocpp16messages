@@ -1,29 +1,24 @@
 package authorize
 
-// import (
-// 	"fmt"
+import (
+	"fmt"
 
-// 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
-// )
+	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
+)
 
-// type ConfirmationMessage struct {
-// 	IdTagInfo authorizetypes.IdTagInfoType
-// }
+type ConfirmationMessage struct {
+	IdTagInfo authorizetypes.IdTagInfoType
+}
 
-// func Confirmation(info authorizetypes.IdTagInfoType) (ConfirmationMessage, error) {
-// 	if err := info.Validate(); err != nil {
-// 		return ConfirmationMessage{}, fmt.Errorf("confirmation: invalid IdTagInfo: %w", err)
-// 	}
+func Confirmation(input authorizetypes.ConfirmationPayload) (ConfirmationMessage, error) {
+	if err := input.Validate(); err != nil {
+		return ConfirmationMessage{}, fmt.Errorf("authorize.Confirmation: invalid payload: %w", err)
+	}
 
-// 	return ConfirmationMessage{
-// 		IdTagInfo: info,
-// 	}, nil
-// }
+	info, err := authorizetypes.IdTagInfo(input.IdTagInfo)
+	if err != nil {
+		return ConfirmationMessage{}, fmt.Errorf("authorize.Confirmation: invalid IdTagInfo: %w", err)
+	}
 
-// func (m ConfirmationMessage) Validate() error {
-// 	if err := m.IdTagInfo.Validate(); err != nil {
-// 		return fmt.Errorf("confirmationMessage.Validate: %w", err)
-// 	}
-
-// 	return nil
-// }
+	return ConfirmationMessage{IdTagInfo: info}, nil
+}

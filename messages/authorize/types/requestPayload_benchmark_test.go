@@ -24,6 +24,7 @@ func BenchmarkRequestPayload_Validate_empty(b *testing.B) {
 
 func BenchmarkRequestPayload_Value(b *testing.B) {
 	payload := authorizetypes.RequestPayload{IdTag: "B85A-50CBE9678EC6"}
+
 	var s string
 	for i := 0; i < b.N; i++ {
 		s = payload.Value()
