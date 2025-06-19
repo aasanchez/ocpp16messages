@@ -4,7 +4,6 @@ import (
 	"errors"
 	"testing"
 
-	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 	types "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
@@ -38,7 +37,7 @@ func TestRequestPayloadType_Validate_EmptyIdTag(t *testing.T) {
 func TestRequestPayloadType_Validate_TooLongIdTag(t *testing.T) {
 	t.Parallel()
 
-	input := authorizetypes.RequestPayload{
+	input := types.RequestPayload{
 		IdTag: "THIS-ID-TAG-IS-TOO-LONG-FOR-CISTRING20",
 	}
 
