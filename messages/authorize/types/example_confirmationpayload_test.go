@@ -9,7 +9,9 @@ import (
 func ExampleConfirmationPayload_Validate_valid() {
 	payload := types.ConfirmationPayload{
 		IdTagInfo: types.IdTagInfoPayload{
-			Status: types.Accepted,
+			Status:      types.Accepted,
+			ExpiryDate:  nil,
+			ParentIdTag: nil,
 		},
 	}
 
@@ -26,7 +28,9 @@ func ExampleConfirmationPayload_Validate_valid() {
 func ExampleConfirmationPayload_Validate_invalid() {
 	payload := types.ConfirmationPayload{
 		IdTagInfo: types.IdTagInfoPayload{
-			Status: "",
+			Status:      "",
+			ExpiryDate:  nil,
+			ParentIdTag: nil,
 		},
 	}
 
@@ -44,7 +48,9 @@ func ExampleConfirmationPayload_Validate_invalid() {
 func ExampleConfirmationPayload_Value() {
 	payload := types.ConfirmationPayload{
 		IdTagInfo: types.IdTagInfoPayload{
-			Status: types.Accepted,
+			Status:      types.Accepted,
+			ExpiryDate:  nil,
+			ParentIdTag: nil,
 		},
 	}
 
