@@ -12,7 +12,8 @@ func BenchmarkRequest_Valid(b *testing.B) {
 	}
 
 	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for range b.N {
 		_, err := Request(input)
 		if err != nil {
 			b.Fatalf("unexpected error in benchmark: %v", err)
