@@ -18,6 +18,7 @@ func ExampleCiString20() {
 	cistr, err := types.CiString20(input)
 	if err != nil {
 		fmt.Println(msgError, err)
+
 		return
 	}
 

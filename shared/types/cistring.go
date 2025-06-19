@@ -31,6 +31,7 @@ func CiString(value string, maxLen int) (ciString, error) {
 	if err := cs.Validate(); err != nil {
 		return ciString{}, err
 	}
+
 	return cs, nil
 }
 
@@ -67,6 +68,7 @@ type CiString20Type struct{ value ciString }
 
 func CiString20(value string) (CiString20Type, error) {
 	cs, err := CiString(value, maxLenCiString20)
+
 	return CiString20Type{value: cs}, err
 }
 func (c CiString20Type) Value() string   { return c.value.Value() }
@@ -78,6 +80,7 @@ type CiString25Type struct{ value ciString }
 
 func CiString25(value string) (CiString25Type, error) {
 	cs, err := CiString(value, maxLenCiString25)
+
 	return CiString25Type{value: cs}, err
 }
 func (c CiString25Type) Value() string   { return c.value.Value() }
@@ -89,6 +92,7 @@ type CiString50Type struct{ value ciString }
 
 func CiString50(value string) (CiString50Type, error) {
 	cs, err := CiString(value, maxLenCiString50)
+
 	return CiString50Type{value: cs}, err
 }
 func (c CiString50Type) Value() string   { return c.value.Value() }
@@ -100,6 +104,7 @@ type CiString255Type struct{ value ciString }
 
 func CiString255(value string) (CiString255Type, error) {
 	cs, err := CiString(value, maxLenCiString255)
+
 	return CiString255Type{value: cs}, err
 }
 func (c CiString255Type) Value() string   { return c.value.Value() }
@@ -111,6 +116,7 @@ type CiString500Type struct{ value ciString }
 
 func CiString500(value string) (CiString500Type, error) {
 	cs, err := CiString(value, maxLenCiString500)
+
 	return CiString500Type{value: cs}, err
 }
 func (c CiString500Type) Value() string   { return c.value.Value() }

@@ -12,6 +12,7 @@ func BenchmarkRequest_Valid(b *testing.B) {
 	}
 
 	b.ResetTimer()
+
 	for range b.N {
 		_, err := Request(input)
 		if err != nil {

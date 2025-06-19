@@ -203,6 +203,7 @@ func TestCiString255Type_Value(t *testing.T) {
 
 	raw := strings.Repeat("D", 255)
 	cs, _ := CiString255(raw)
+
 	if cs.Value() != raw {
 		t.Errorf(errExpectedValueMismatch, raw, cs.Value())
 	}
@@ -222,6 +223,7 @@ func TestCiString500Type_Value(t *testing.T) {
 
 	raw := strings.Repeat("E", 500)
 	cs, _ := CiString500(raw)
+
 	if cs.Value() != raw {
 		t.Errorf(errExpectedValueMismatch, raw, cs.Value())
 	}

@@ -14,6 +14,7 @@ func DateTime(input string) (DateTimeType, error) {
 	if err != nil {
 		return DateTimeType{}, fmt.Errorf("invalid datetime: %w", err)
 	}
+
 	return DateTimeType{value: t}, nil
 }
 

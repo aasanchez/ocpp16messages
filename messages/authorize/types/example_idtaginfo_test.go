@@ -16,6 +16,7 @@ func ExampleIdTagInfo_statusOnly() {
 	info, err := authorizetypes.IdTagInfo(payload)
 	if err != nil {
 		fmt.Println("Failed statusOnly:", err)
+
 		return
 	}
 
@@ -38,6 +39,7 @@ func ExampleIdTagInfo_withExpiryDate() {
 	info, err := authorizetypes.IdTagInfo(payload)
 	if err != nil {
 		fmt.Println("Failed withExpiryDate:", err)
+
 		return
 	}
 
@@ -60,6 +62,7 @@ func ExampleIdTagInfo_withParentIdTag() {
 	info, err := authorizetypes.IdTagInfo(payload)
 	if err != nil {
 		fmt.Println("Failed withParentIdTag:", err)
+
 		return
 	}
 
@@ -83,6 +86,7 @@ func ExampleIdTagInfo_withAllFields() {
 	info, err := authorizetypes.IdTagInfo(payload)
 	if err != nil {
 		fmt.Println("Failed withAllFields:", err)
+
 		return
 	}
 

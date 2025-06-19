@@ -15,6 +15,7 @@ func (c ConfirmationPayload) Validate() error {
 	if c.IdTagInfo.Status == "" {
 		return fmt.Errorf("confirmation payload: %w", ErrInvalidIdTagInfo)
 	}
+
 	return nil
 }
 

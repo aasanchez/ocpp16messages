@@ -11,6 +11,7 @@ func ExampleRequestPayload_valid() {
 
 	if err := payload.Validate(); err != nil {
 		fmt.Println("unexpected error:", err)
+
 		return
 	}
 
@@ -25,6 +26,7 @@ func ExampleRequestPayload_invalid_emptyIdTag() {
 	err := payload.Validate()
 	if err != nil {
 		fmt.Println("Validation failed:", err)
+
 		return
 	}
 

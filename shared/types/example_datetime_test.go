@@ -13,6 +13,7 @@ func ExampleDateTime_valid() {
 	datetime, err := types.DateTime(input)
 	if err != nil {
 		fmt.Printf("unexpected error: %v\n", err)
+
 		return
 	}
 
@@ -26,6 +27,7 @@ func ExampleDateTime_valid() {
 func ExampleDateTime_invalidFormat() {
 	input := "not-a-date"
 	_, err := types.DateTime(input)
+
 	if err != nil {
 		fmt.Println("Error:", err)
 	}

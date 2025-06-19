@@ -17,6 +17,7 @@ func ExampleConfirmationPayload_Validate_valid() {
 
 	if err := payload.Validate(); err != nil {
 		fmt.Println("unexpected validation error:", err)
+
 		return
 	}
 
@@ -37,6 +38,7 @@ func ExampleConfirmationPayload_Validate_invalid() {
 	err := payload.Validate()
 	if err != nil {
 		fmt.Println("Validation failed:", err)
+
 		return
 	}
 

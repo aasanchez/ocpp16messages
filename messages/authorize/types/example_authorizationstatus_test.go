@@ -10,6 +10,7 @@ func ExampleAuthorizationStatus_valid() {
 	status, err := authorizetypes.AuthorizationStatus("Accepted")
 	if err != nil {
 		fmt.Println("Error:", err)
+
 		return
 	}
 
@@ -23,6 +24,7 @@ func ExampleAuthorizationStatus_invalid() {
 	_, err := authorizetypes.AuthorizationStatus("NotARealStatus")
 	if err != nil {
 		fmt.Println("Error:", err)
+
 		return
 	}
 
