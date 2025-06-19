@@ -1,10 +1,11 @@
 name: Benchmark
 
 on:
-  schedule:
-    - cron: '0 8 * * 3' # Wednesday at 10:00am CET
   workflow_dispatch:
   pull_request_target:
+  push:
+    tags:
+      - 'v*' # Triggers on version tags like v1.0.0, v2.3.4, etc.
 
 jobs:
   benchmark:
