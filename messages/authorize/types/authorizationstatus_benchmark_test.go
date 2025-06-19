@@ -6,30 +6,39 @@ import (
 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
-var statusSink authorizetypes.AuthorizationStatusType
-var valueSink string
-
 func BenchmarkAuthorizationStatus_Create(b *testing.B) {
 	input := "Accepted"
 
+	var result authorizetypes.AuthorizationStatusType
+
 	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for range b.N {
 		status, err := authorizetypes.AuthorizationStatus(input)
 		if err != nil {
 			b.Fatalf("unexpected error: %v", err)
 		}
-		statusSink = status
+
+		result = status
 	}
+
+	_ = result
 }
 
 func BenchmarkAuthorizationStatus_Value(b *testing.B) {
 	status, err := authorizetypes.AuthorizationStatus("Accepted")
+
 	if err != nil {
 		b.Fatalf("setup failed: %v", err)
 	}
 
+	var result string
+
 	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		valueSink = status.Value()
+
+	for range b.N {
+		result = status.Value()
 	}
+
+	_ = result
 }
