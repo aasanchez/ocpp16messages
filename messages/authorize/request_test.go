@@ -1,14 +1,11 @@
 package authorize
 
 import (
-	"errors"
 	"strings"
 	"testing"
 
 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
-
-const errWrapMsg = "expected error to wrap ErrInvalidRequestIdTag, got: %v"
 
 func TestRequest_validPayload(t *testing.T) {
 	t.Parallel()
@@ -41,8 +38,9 @@ func TestRequest_emptyIdTag(t *testing.T) {
 		t.Fatal("expected error for empty IdTag, got nil")
 	}
 
-	if !errors.Is(err, ErrInvalidRequestIdTag) {
-		t.Errorf(errWrapMsg, err)
+	expected := "request: invalid idTag: ciString.Validate: value must not be empty"
+	if !strings.Contains(err.Error(), expected) {
+		t.Errorf("expected error to contain:\n%q\ngot:\n%q", expected, err.Error())
 	}
 }
 
@@ -56,22 +54,24 @@ func TestRequest_tooLongIdTag(t *testing.T) {
 		t.Fatal("expected error for IdTag > 20 characters, got nil")
 	}
 
-	if !errors.Is(err, ErrInvalidRequestIdTag) {
-		t.Errorf(errWrapMsg, err)
+	expected := "request: invalid idTag: ciString.Validate: value exceeds maximum allowed length"
+	if !strings.Contains(err.Error(), expected) {
+		t.Errorf("expected error to contain:\n%q\ngot:\n%q", expected, err.Error())
 	}
 }
 
 func TestRequest_nonASCIIIdTag(t *testing.T) {
 	t.Parallel()
 
-	input := authorizetypes.RequestPayload{IdTag: "مرحباOCPP"} // Arabic characters
+	input := authorizetypes.RequestPayload{IdTag: "مرحباOCPP"}
 	_, err := Request(input)
 
 	if err == nil {
 		t.Fatal("expected error for non-ASCII IdTag, got nil")
 	}
 
-	if !errors.Is(err, ErrInvalidRequestIdTag) {
-		t.Errorf(errWrapMsg, err)
+	expected := "request: invalid idTag: ciString.Validate: value contains non-printable ASCII characters"
+	if !strings.Contains(err.Error(), expected) {
+		t.Errorf("expected error to contain:\n%q\ngot:\n%q", expected, err.Error())
 	}
 }

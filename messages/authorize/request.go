@@ -15,12 +15,14 @@ type RequestMessage struct {
 }
 
 func Request(input authorizetypes.RequestPayload) (RequestMessage, error) {
-	ci, err := sharedtypes.CiString20(input.IdTag)
+	str, err := sharedtypes.CiString20(input.IdTag)
 	if err != nil {
-		return RequestMessage{}, fmt.Errorf("%w: %v", ErrInvalidRequestIdTag, err)
+		wrapped := fmt.Errorf("request: invalid idTag: %w", err)
+
+		return RequestMessage{}, wrapped
 	}
 
-	idToken, _ := authorizetypes.IdToken(ci)
+	idToken, _ := authorizetypes.IdToken(str)
 
 	return RequestMessage{IdTag: idToken}, nil
 }
