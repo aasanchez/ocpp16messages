@@ -22,6 +22,7 @@ func ExampleConfirmation() {
 	msg, err := authorize.Confirmation(payload)
 	if err != nil {
 		fmt.Println("Error:", err)
+
 		return
 	}
 
