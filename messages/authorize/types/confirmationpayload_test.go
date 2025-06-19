@@ -22,6 +22,7 @@ func TestConfirmationPayload_validStatusOnly(t *testing.T) {
 	}
 
 	got := payload.Value()
+
 	if got.IdTagInfo.Status != authorizetypes.Accepted {
 		t.Errorf("expected status %q, got %q", authorizetypes.Accepted, got.IdTagInfo.Status)
 	}
@@ -39,7 +40,7 @@ func TestConfirmationPayload_withAllFields(t *testing.T) {
 	t.Parallel()
 
 	expiry := "2027-04-12T10:03:04Z"
-	parent := "ABC01234"
+	parent := "ABC007"
 
 	payload := authorizetypes.ConfirmationPayload{
 		IdTagInfo: authorizetypes.IdTagInfoPayload{
@@ -59,11 +60,13 @@ func TestConfirmationPayload_withAllFields(t *testing.T) {
 		t.Errorf("status mismatch: expected %q, got %q", authorizetypes.Accepted, got.IdTagInfo.Status)
 	}
 
-	if gotDate := got.IdTagInfo.ExpiryDate; gotDate == nil || *gotDate != expiry {
-		t.Errorf("expiryDate mismatch: expected %q, got %v", expiry, gotDate)
+	gotExpiry := got.IdTagInfo.ExpiryDate
+	if gotExpiry == nil || *gotExpiry != expiry {
+		t.Errorf("expiryDate mismatch: expected %q, got %v", expiry, gotExpiry)
 	}
 
-	if gotParent := got.IdTagInfo.ParentIdTag; gotParent == nil || *gotParent != parent {
+	gotParent := got.IdTagInfo.ParentIdTag
+	if gotParent == nil || *gotParent != parent {
 		t.Errorf("parentIdTag mismatch: expected %q, got %v", parent, gotParent)
 	}
 }

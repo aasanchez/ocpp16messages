@@ -5,7 +5,7 @@ on:
   pull_request_target:
   push:
     tags:
-      - 'v*'
+      - v*
 
 jobs:
   benchmark:
@@ -34,7 +34,7 @@ jobs:
         uses: benchmark-action/github-action-benchmark@v1
         with:
           name: Go Benchmark
-          tool: 'go'
+          tool: go
           output-file-path: benchmark-output.txt
           github-token: ${{ secrets.GITHUB_TOKEN }}
           auto-push: true
