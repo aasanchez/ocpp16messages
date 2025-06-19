@@ -8,7 +8,9 @@ import (
 
 func ExampleIdTagInfo_statusOnly() {
 	payload := authorizetypes.IdTagInfoPayload{
-		Status: authorizetypes.Accepted,
+		Status:      authorizetypes.Accepted,
+		ExpiryDate:  nil,
+		ParentIdTag: nil,
 	}
 
 	info, err := authorizetypes.IdTagInfo(payload)
@@ -28,8 +30,9 @@ func ExampleIdTagInfo_withExpiryDate() {
 	exp := "2027-04-12T10:03:04Z"
 
 	payload := authorizetypes.IdTagInfoPayload{
-		Status:     authorizetypes.Accepted,
-		ExpiryDate: &exp,
+		Status:      authorizetypes.Accepted,
+		ExpiryDate:  &exp,
+		ParentIdTag: nil,
 	}
 
 	info, err := authorizetypes.IdTagInfo(payload)
@@ -50,6 +53,7 @@ func ExampleIdTagInfo_withParentIdTag() {
 
 	payload := authorizetypes.IdTagInfoPayload{
 		Status:      authorizetypes.Accepted,
+		ExpiryDate:  nil,
 		ParentIdTag: &parent,
 	}
 
