@@ -10,37 +10,33 @@ on:
 jobs:
   benchmark:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        go-version: [1.22, 1.23, 1.24] # Add more versions as needed
-    name: Go ${{ matrix.go-version }} Benchmark
+    name: Run Go Benchmarks
     permissions:
-      contents: write
+      contents: write # needed to push to gh-pages
       pull-requests: read
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Required for commit history
 
-      - name: Set up Go ${{ matrix.go-version }}
+      - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: ${{ matrix.go-version }}
+          go-version: 1.24
 
       - name: Run benchmarks
         run: |
-          mkdir -p benchmarks
-          go test -bench=. -benchmem ./... > "benchmarks/benchmark-${{ matrix.go-version }}.txt"
+          go test -bench=. -benchmem ./... > benchmark-output.txt
 
       - name: Store and compare benchmarks
         uses: benchmark-action/github-action-benchmark@v1
         with:
-          name: Go Benchmark (Go ${{ matrix.go-version }})
+          name: Go Benchmark
           tool: 'go'
-          output-file-path: "benchmarks/benchmark-${{ matrix.go-version }}.txt"
+          output-file-path: benchmark-output.txt
           github-token: ${{ secrets.GITHUB_TOKEN }}
           auto-push: true
-          benchmark-data-dir-path: "benchmark-data/${{ matrix.go-version }}"
+          benchmark-data-dir-path: benchmark-data
           gh-pages-branch: gh-pages
