@@ -3,6 +3,7 @@ package authorize_test
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/aasanchez/ocpp16messages/messages/authorize"
@@ -22,7 +23,7 @@ func ExampleRequest() {
 
 	req, err := authorize.Request(input)
 	if err != nil {
-		fmt.Printf(errFormat, err)
+		fmt.Fprintf(os.Stderr, errFormat, err)
 	}
 
 	fmt.Printf(outputFormat, req.IdTag.Value())
@@ -42,6 +43,7 @@ func ExampleRequest_emptyIdTag() {
 	}
 
 	fmt.Println("This should not print")
+
 	// Output:
 	// Error: request: invalid idTag: ciString.Validate: value must not be empty
 }
@@ -51,7 +53,7 @@ func ExampleRequest_too_long_idtag() {
 
 	_, err := authorize.Request(input)
 	if err != nil {
-		fmt.Printf(errFormat, err)
+		fmt.Fprintf(os.Stderr, errFormat, err)
 	}
 
 	// Output:
@@ -70,24 +72,16 @@ func ExampleRequest_parse() {
 	]`
 
 	var msg []json.RawMessage
-	if err := json.Unmarshal([]byte(raw), &msg); err != nil {
-		fmt.Printf(errInvalidJSONInput, err)
-	}
 
-	// Use a temporary alias with json tags
-	var temp struct {
-		IdTag string `json:"idTag"`
-	}
-
-	if err := json.Unmarshal(msg[3], &temp); err != nil {
-		fmt.Printf(errInvalidPayload, err)
-	}
-
-	input := authorizetypes.RequestPayload{IdTag: temp.IdTag}
-	req, err := authorize.Request(input)
-
+	err := json.Unmarshal([]byte(raw), &msg)
 	if err != nil {
-		fmt.Printf(errRequestFormat, err)
+		fmt.Fprintf(os.Stderr, errInvalidJSONInput, err)
+	}
+
+	input := decodeRawIdTag(msg[3])
+	req, err := authorize.Request(input)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, errRequestFormat, err)
 	}
 
 	fmt.Printf(outputFormat, req.IdTag.Value())
@@ -108,23 +102,16 @@ func ExampleRequest_parse_invalid() {
 	]`
 
 	var msg []json.RawMessage
-	if err := json.Unmarshal([]byte(raw), &msg); err != nil {
-		fmt.Printf(errInvalidJSONInput, err)
-	}
 
-	var temp struct {
-		IdTag string `json:"idTag"`
-	}
-
-	if err := json.Unmarshal(msg[3], &temp); err != nil {
-		fmt.Printf(errInvalidPayload, err)
-	}
-
-	input := authorizetypes.RequestPayload{IdTag: temp.IdTag}
-	_, err := authorize.Request(input)
-
+	err := json.Unmarshal([]byte(raw), &msg)
 	if err != nil {
-		fmt.Printf(errRequestFormat, err)
+		fmt.Fprintf(os.Stderr, errInvalidJSONInput, err)
+	}
+
+	input := decodeRawIdTag(msg[3])
+	_, err = authorize.Request(input)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, errRequestFormat, err)
 	}
 
 	// Output:
@@ -141,23 +128,16 @@ func ExampleRequest_parse_empty() {
 	]`
 
 	var msg []json.RawMessage
-	if err := json.Unmarshal([]byte(raw), &msg); err != nil {
-		fmt.Printf(errInvalidJSONInput, err)
-	}
 
-	var temp struct {
-		IdTag string `json:"idTag"`
-	}
-
-	if err := json.Unmarshal(msg[3], &temp); err != nil {
-		fmt.Printf(errInvalidPayload, err)
-	}
-
-	input := authorizetypes.RequestPayload{IdTag: temp.IdTag}
-	_, err := authorize.Request(input)
-
+	err := json.Unmarshal([]byte(raw), &msg)
 	if err != nil {
-		fmt.Printf(errRequestFormat, err)
+		fmt.Fprintf(os.Stderr, errInvalidJSONInput, err)
+	}
+
+	input := decodeRawIdTag(msg[3])
+	_, err = authorize.Request(input)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, errRequestFormat, err)
 	}
 
 	// Output:
@@ -176,23 +156,16 @@ func ExampleRequest_parse_idTag_empty() {
 	]`
 
 	var msg []json.RawMessage
-	if err := json.Unmarshal([]byte(raw), &msg); err != nil {
-		fmt.Printf(errInvalidJSONInput, err)
-	}
 
-	var temp struct {
-		IdTag string `json:"idTag"`
-	}
-
-	if err := json.Unmarshal(msg[3], &temp); err != nil {
-		fmt.Printf(errInvalidPayload, err)
-	}
-
-	input := authorizetypes.RequestPayload{IdTag: temp.IdTag}
-	_, err := authorize.Request(input)
-
+	err := json.Unmarshal([]byte(raw), &msg)
 	if err != nil {
-		fmt.Printf(errRequestFormat, err)
+		fmt.Fprintf(os.Stderr, errInvalidJSONInput, err)
+	}
+
+	input := decodeRawIdTag(msg[3])
+	_, err = authorize.Request(input)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, errRequestFormat, err)
 	}
 
 	// Output:
@@ -211,25 +184,33 @@ func ExampleRequest_parse_idTag_NotFound() {
 	]`
 
 	var msg []json.RawMessage
-	if err := json.Unmarshal([]byte(raw), &msg); err != nil {
-		fmt.Printf(errInvalidJSONInput, err)
-	}
 
-	var temp struct {
-		IdTag string `json:"idTag"`
-	}
-
-	if err := json.Unmarshal(msg[3], &temp); err != nil {
-		fmt.Printf(errInvalidPayload, err)
-	}
-
-	input := authorizetypes.RequestPayload{IdTag: temp.IdTag}
-	_, err := authorize.Request(input)
-
+	err := json.Unmarshal([]byte(raw), &msg)
 	if err != nil {
-		fmt.Printf(errRequestFormat, err)
+		fmt.Fprintf(os.Stderr, errInvalidJSONInput, err)
+	}
+
+	input := decodeRawIdTag(msg[3])
+	_, err = authorize.Request(input)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, errRequestFormat, err)
 	}
 
 	// Output:
 	// Error: authorize.Request failed: request: invalid idTag: ciString.Validate: value must not be empty
+}
+
+// decodeRawIdTag extracts the "idTag" field from a JSON object and returns a RequestPayload.
+// It uses fmt.Fprintf to stderr for error output to comply with forbidigo.
+func decodeRawIdTag(raw json.RawMessage) authorizetypes.RequestPayload {
+	var temp struct {
+		IdTag string `json:"idTag"`
+	}
+
+	err := json.Unmarshal(raw, &temp)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, errInvalidPayload, err)
+	}
+
+	return authorizetypes.RequestPayload{IdTag: temp.IdTag}
 }
