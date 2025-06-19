@@ -1,6 +1,7 @@
 package authorize
 
 import (
+	"strings"
 	"testing"
 
 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
@@ -9,7 +10,7 @@ import (
 func TestConfirmation_validPayload(t *testing.T) {
 	t.Parallel()
 
-	expiry := "2027-04-12T10:03:04Z"
+	expiry := "2025-04-12T10:03:04Z"
 	parent := "A632-E2BB0231072C"
 
 	payload := authorizetypes.ConfirmationPayload{
@@ -26,12 +27,15 @@ func TestConfirmation_validPayload(t *testing.T) {
 	}
 
 	val := msg.IdTagInfo.Value()
+
 	if val.Status != "Accepted" {
 		t.Errorf("unexpected status: got %s", val.Status)
 	}
+
 	if val.ExpiryDate == nil || *val.ExpiryDate != expiry {
 		t.Errorf("unexpected expiry date: got %+v", val.ExpiryDate)
 	}
+
 	if val.ParentIdTag == nil || *val.ParentIdTag != parent {
 		t.Errorf("unexpected parentIdTag: got %+v", val.ParentIdTag)
 	}
@@ -40,9 +44,14 @@ func TestConfirmation_validPayload(t *testing.T) {
 func TestConfirmation_invalidStatus(t *testing.T) {
 	t.Parallel()
 
+	expiry := "2026-01-01T00:00:00Z"
+	parent := "PARENT"
+
 	payload := authorizetypes.ConfirmationPayload{
 		IdTagInfo: authorizetypes.IdTagInfoPayload{
-			Status: "UnknownStatus",
+			Status:      "UnknownStatus",
+			ExpiryDate:  &expiry,
+			ParentIdTag: &parent,
 		},
 	}
 
@@ -56,10 +65,13 @@ func TestConfirmation_invalidExpiryDate(t *testing.T) {
 	t.Parallel()
 
 	invalidDate := "not-a-date"
+	parent := "PARENT1"
+
 	payload := authorizetypes.ConfirmationPayload{
 		IdTagInfo: authorizetypes.IdTagInfoPayload{
-			Status:     "Accepted",
-			ExpiryDate: &invalidDate,
+			Status:      "Accepted",
+			ExpiryDate:  &invalidDate,
+			ParentIdTag: &parent,
 		},
 	}
 
@@ -72,10 +84,13 @@ func TestConfirmation_invalidExpiryDate(t *testing.T) {
 func TestConfirmation_invalidParentIdTag(t *testing.T) {
 	t.Parallel()
 
-	invalidTag := string(make([]byte, 100)) // exceeds 20 characters, invalid CiString20
+	expiry := "2027-05-01T00:00:00Z"
+	invalidTag := strings.Repeat("X", 100) // invalid CiString20
+
 	payload := authorizetypes.ConfirmationPayload{
 		IdTagInfo: authorizetypes.IdTagInfoPayload{
 			Status:      "Accepted",
+			ExpiryDate:  &expiry,
 			ParentIdTag: &invalidTag,
 		},
 	}
@@ -89,9 +104,14 @@ func TestConfirmation_invalidParentIdTag(t *testing.T) {
 func TestConfirmation_payloadValidationFails_emptyStatus(t *testing.T) {
 	t.Parallel()
 
+	expiry := "2027-01-03T00:00:00Z"
+	parent := "PARENT2"
+
 	payload := authorizetypes.ConfirmationPayload{
 		IdTagInfo: authorizetypes.IdTagInfoPayload{
-			Status: "", // triggers input.Validate() failure
+			Status:      "",
+			ExpiryDate:  &expiry,
+			ParentIdTag: &parent,
 		},
 	}
 
