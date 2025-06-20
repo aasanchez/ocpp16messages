@@ -19,12 +19,12 @@ func BenchmarkNewDateTime_InvalidFormat(b *testing.B) {
 	invalid := "not-a-valid-time"
 
 	for range b.N {
-		_, _ = DateTime(invalid) // we're measuring performance, not correctness
+		_, _ = DateTime(invalid)
 	}
 }
 
 func BenchmarkNewDateTime_ZeroTime(b *testing.B) {
-	zero := "0001-01-01T00:00:00Z" // will parse to zero time
+	zero := "0001-01-01T00:00:00Z"
 
 	for range b.N {
 		_, _ = DateTime(zero)

@@ -8,7 +8,7 @@ import (
 
 func BenchmarkRequest_Valid(b *testing.B) {
 	input := authorizetypes.RequestPayload{
-		IdTag: "ABC1234567890XYZ78", // valid 20-char input
+		IdTag: "ABC1234567890XYZ78",
 	}
 
 	b.ResetTimer()

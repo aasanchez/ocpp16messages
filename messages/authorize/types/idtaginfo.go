@@ -6,14 +6,12 @@ import (
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-// IdTagInfoPayload represents the raw input fields for constructing IdTagInfoType.
 type IdTagInfoPayload struct {
 	Status      string
 	ExpiryDate  *string
 	ParentIdTag *string
 }
 
-// IdTagInfoType holds the validated internal representation of IdTagInfo.
 type IdTagInfoType struct {
 	expiryDate  *sharedtypes.DateTimeType
 	parentIdTag *IdTokenType
@@ -22,7 +20,6 @@ type IdTagInfoType struct {
 
 const errWrapFormat = "%s: %w"
 
-// IdTagInfo constructs a validated IdTagInfoType from the raw payload.
 func IdTagInfo(input IdTagInfoPayload) (IdTagInfoType, error) {
 	status, err := AuthorizationStatus(input.Status)
 	if err != nil {
@@ -50,22 +47,14 @@ func IdTagInfo(input IdTagInfoPayload) (IdTagInfoType, error) {
 			return IdTagInfoType{}, fmt.Errorf(errWrapFormat, "failed to validate parentIdTag as CiString20", err)
 		}
 
-		idTag, _ := IdToken(ci) // IdToken is guaranteed to succeed
+		idTag, _ := IdToken(ci)
 		info.parentIdTag = &idTag
 	}
 
 	return info, nil
 }
 
-// IdTagInfoValue is the public value object returned from IdTagInfoType.
-type IdTagInfoValue struct {
-	Status      string
-	ExpiryDate  *string
-	ParentIdTag *string
-}
-
-// Value converts the internal IdTagInfoType into its public representation.
-func (i IdTagInfoType) Value() IdTagInfoValue {
+func (i IdTagInfoType) Value() IdTagInfoPayload {
 	var expiry *string
 
 	if str := i.expiryDate; str != nil {
@@ -80,7 +69,7 @@ func (i IdTagInfoType) Value() IdTagInfoValue {
 		parent = &val
 	}
 
-	return IdTagInfoValue{
+	return IdTagInfoPayload{
 		Status:      i.status.Value(),
 		ExpiryDate:  expiry,
 		ParentIdTag: parent,

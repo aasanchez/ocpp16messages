@@ -65,7 +65,7 @@ func BenchmarkIdTagInfo_Value_Minimal(b *testing.B) {
 		b.Fatalf("unexpected error with value minimal: %v", err)
 	}
 
-	var val authorizetypes.IdTagInfoValue
+	var val authorizetypes.IdTagInfoPayload
 
 	b.ResetTimer()
 
@@ -82,7 +82,7 @@ func BenchmarkIdTagInfo_Value_Full(b *testing.B) {
 		b.Fatalf("unexpected error with value full: %v", err)
 	}
 
-	var val authorizetypes.IdTagInfoValue
+	var val authorizetypes.IdTagInfoPayload
 
 	b.ResetTimer()
 
