@@ -1,9 +1,8 @@
-package authorizetypes_test
+package authorizetypes
 
 import (
 	"testing"
 
-	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
@@ -17,7 +16,7 @@ func Test_IdTokenFromCiString_Valid(t *testing.T) {
 		t.Fatalf("failed to construct CiString20Type: %v", err)
 	}
 
-	_, err = authorizetypes.IdToken(str)
+	_, err = IdToken(str)
 	if err != nil {
 		t.Errorf("expected no error, got %v", err)
 	}
@@ -42,7 +41,7 @@ func Test_IdTokenFromCiString_Empty(t *testing.T) {
 		t.Fatalf("expected error when creating CiString20Type from empty string, got nil")
 	}
 
-	_, err = authorizetypes.IdToken(str)
+	_, err = IdToken(str)
 	if err != nil {
 		t.Errorf("expected no error when calling IdToken with already-invalid CiString20Type (should never reach here): %v", err)
 	}

@@ -1,10 +1,9 @@
-package authorize_test
+package authorize
 
 import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/messages/authorize"
 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
@@ -22,7 +21,7 @@ func TestAuthorizeConfirmation_validPayload(t *testing.T) {
 		},
 	}
 
-	msg, err := authorize.Confirmation(payload)
+	msg, err := Confirmation(payload)
 	if err != nil {
 		t.Fatalf("expected no error, got: %v", err)
 	}
@@ -56,7 +55,7 @@ func TestAuthorizeConfirmation_invalidStatus(t *testing.T) {
 		},
 	}
 
-	_, err := authorize.Confirmation(payload)
+	_, err := Confirmation(payload)
 	if err == nil {
 		t.Fatal("expected error for invalid status, got nil")
 	}
@@ -76,7 +75,7 @@ func TestAuthorizeConfirmation_invalidExpiryDate(t *testing.T) {
 		},
 	}
 
-	_, err := authorize.Confirmation(payload)
+	_, err := Confirmation(payload)
 	if err == nil {
 		t.Fatal("expected error for invalid expiryDate, got nil")
 	}
@@ -96,7 +95,7 @@ func TestAuthorizeConfirmation_invalidParentIdTag(t *testing.T) {
 		},
 	}
 
-	_, err := authorize.Confirmation(payload)
+	_, err := Confirmation(payload)
 	if err == nil {
 		t.Fatal("expected error for invalid parentIdTag, got nil")
 	}
@@ -116,7 +115,7 @@ func TestAuthorizeConfirmation_payloadValidationFails_emptyStatus(t *testing.T) 
 		},
 	}
 
-	_, err := authorize.Confirmation(payload)
+	_, err := Confirmation(payload)
 	if err == nil {
 		t.Fatal("expected error for empty status in payload, got nil")
 	}

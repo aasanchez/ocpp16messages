@@ -1,10 +1,9 @@
-package authorize_test
+package authorize
 
 import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/messages/authorize"
 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
@@ -18,7 +17,7 @@ func TestAuthorizeRequest_validPayload(t *testing.T) {
 		t.Fatalf("unexpected validation error: %v", err)
 	}
 
-	msg, err := authorize.Request(input)
+	msg, err := Request(input)
 	if err != nil {
 		t.Fatalf("Request() returned unexpected error: %v", err)
 	}
@@ -36,7 +35,7 @@ func TestAuthorizeRequest_emptyIdTag(t *testing.T) {
 		t.Error("expected validation error for empty IdTag, got nil")
 	}
 
-	_, err := authorize.Request(input)
+	_, err := Request(input)
 	if err == nil {
 		t.Fatal("expected error for empty IdTag, got nil")
 	}
@@ -51,7 +50,7 @@ func TestAuthorizeRequest_tooLongIdTag(t *testing.T) {
 	t.Parallel()
 
 	input := authorizetypes.RequestPayload{IdTag: strings.Repeat("A", 21)}
-	_, err := authorize.Request(input)
+	_, err := Request(input)
 
 	if err == nil {
 		t.Fatal("expected error for IdTag > 20 characters, got nil")
@@ -67,7 +66,7 @@ func TestAuthorizeRequest_nonASCIIIdTag(t *testing.T) {
 	t.Parallel()
 
 	input := authorizetypes.RequestPayload{IdTag: "مرحباOCPP"}
-	_, err := authorize.Request(input)
+	_, err := Request(input)
 
 	if err == nil {
 		t.Fatal("expected error for non-ASCII IdTag, got nil")
