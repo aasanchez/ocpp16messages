@@ -9,7 +9,7 @@ on:
 jobs:
   benchmark:
     runs-on: ubuntu-latest
-    name: C
+    name: Go Report Card
 
     steps:
       - name: Refresh Go Report Card
