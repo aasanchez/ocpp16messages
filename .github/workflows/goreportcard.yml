@@ -1,0 +1,15 @@
+name: Go Report Card
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    name: C
+
+    steps:
+      - name: Refresh Go Report Card
+        uses: creekorful/goreportcard-action@v1.0
