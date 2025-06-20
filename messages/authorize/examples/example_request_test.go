@@ -1,4 +1,4 @@
-package authorize_test
+package authorize
 
 import (
 	"encoding/json"
