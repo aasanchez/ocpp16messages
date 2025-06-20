@@ -40,7 +40,7 @@ func TestAuthorizeRequest_emptyIdTag(t *testing.T) {
 		t.Fatal("expected error for empty IdTag, got nil")
 	}
 
-	expected := "request: invalid idTag: ciString.Validate: value must not be empty"
+	expected := "request -> invalid idTag -> ciString.Validate -> value must not be empty"
 	if !strings.Contains(err.Error(), expected) {
 		t.Errorf(errContainsFmt, expected, err.Error())
 	}
@@ -56,7 +56,7 @@ func TestAuthorizeRequest_tooLongIdTag(t *testing.T) {
 		t.Fatal("expected error for IdTag > 20 characters, got nil")
 	}
 
-	expected := "request: invalid idTag: ciString.Validate: value exceeds maximum allowed length"
+	expected := "request -> invalid idTag -> ciString.Validate -> value exceeds maximum allowed length"
 	if !strings.Contains(err.Error(), expected) {
 		t.Errorf(errContainsFmt, expected, err.Error())
 	}
@@ -72,7 +72,7 @@ func TestAuthorizeRequest_nonASCIIIdTag(t *testing.T) {
 		t.Fatal("expected error for non-ASCII IdTag, got nil")
 	}
 
-	expected := "request: invalid idTag: ciString.Validate: value contains non-printable ASCII characters"
+	expected := "request -> invalid idTag -> ciString.Validate -> value contains non-printable ASCII characters"
 	if !strings.Contains(err.Error(), expected) {
 		t.Errorf(errContainsFmt, expected, err.Error())
 	}

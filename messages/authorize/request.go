@@ -8,7 +8,7 @@ import (
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-var ErrInvalidRequestIdTag = errors.New("request: invalid idTag")
+var ErrInvalidRequestIdTag = errors.New("request -> invalid idTag")
 
 type RequestMessage struct {
 	IdTag authorizetypes.IdTokenType
@@ -17,7 +17,7 @@ type RequestMessage struct {
 func Request(input authorizetypes.RequestPayload) (RequestMessage, error) {
 	str, err := sharedtypes.CiString20(input.IdTag)
 	if err != nil {
-		wrapped := fmt.Errorf("request: invalid idTag: %w", err)
+		wrapped := fmt.Errorf("request -> invalid idTag -> %w", err)
 
 		return RequestMessage{}, wrapped
 	}

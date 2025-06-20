@@ -3,7 +3,6 @@ package authorize
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/messages/authorize"
 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
@@ -19,7 +18,7 @@ func ExampleConfirmation() {
 		},
 	}
 
-	msg, err := authorize.Confirmation(payload)
+	msg, err := Confirmation(payload)
 	if err != nil {
 		fmt.Println("Error:", err)
 

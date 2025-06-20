@@ -43,19 +43,19 @@ func (cs ciString) Value() string {
 // Validate checks if the ciString meets length and ASCII constraints.
 func (cs ciString) Validate() error {
 	if len(cs.raw) == 0 {
-		return fmt.Errorf("ciString.Validate: %w", errEmptyValueNotAllowed)
+		return fmt.Errorf("ciString.Validate -> %w", errEmptyValueNotAllowed)
 	}
 
 	if len(cs.raw) > cs.MaxLen {
 		return fmt.Errorf(
-			"ciString.Validate: %w: got length %d, max %d",
+			"ciString.Validate -> %w -> got length %d, max %d",
 			errExceedsMaxLength, len(cs.raw), cs.MaxLen,
 		)
 	}
 
 	for _, r := range cs.raw {
 		if r < 32 || r > 126 {
-			return fmt.Errorf("ciString.Validate: %w", errNonPrintableASCII)
+			return fmt.Errorf("ciString.Validate -> %w", errNonPrintableASCII)
 		}
 	}
 

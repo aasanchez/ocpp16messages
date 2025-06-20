@@ -6,22 +6,21 @@ import (
 	"os"
 	"strings"
 
-	"github.com/aasanchez/ocpp16messages/messages/authorize"
 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
 const (
-	errFormat           = "Error: failed to construct request: %v\n"
-	errRequestFormat    = "Error: authorize.Request failed: %v\n"
-	errInvalidJSONInput = "Error: invalid JSON array: %v\n"
-	errInvalidPayload   = "Error: invalid payload: %v\n"
+	errFormat           = "Error: failed to construct request -> %v\n"
+	errRequestFormat    = "Error: Request failed -> %v\n"
+	errInvalidJSONInput = "Error: invalid JSON array -> %v\n"
+	errInvalidPayload   = "Error: invalid payload -> %v\n"
 	outputFormat        = "Authorize.req: {idTag:%s}\n"
 )
 
 func ExampleRequest() {
 	input := authorizetypes.RequestPayload{IdTag: "B85A-50CBE9678EC6"}
 
-	req, err := authorize.Request(input)
+	req, err := Request(input)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, errFormat, err)
 	}
@@ -35,7 +34,7 @@ func ExampleRequest() {
 func ExampleRequest_emptyIdTag() {
 	input := authorizetypes.RequestPayload{IdTag: ""}
 
-	_, err := authorize.Request(input)
+	_, err := Request(input)
 	if err != nil {
 		fmt.Println("Error:", err)
 
@@ -45,19 +44,19 @@ func ExampleRequest_emptyIdTag() {
 	fmt.Println("This should not print")
 
 	// Output:
-	// Error: request: invalid idTag: ciString.Validate: value must not be empty
+	// Error: request -> invalid idTag -> ciString.Validate -> value must not be empty
 }
 
 func ExampleRequest_too_long_idtag() {
 	input := authorizetypes.RequestPayload{IdTag: strings.Repeat("A", 25)}
 
-	_, err := authorize.Request(input)
+	_, err := Request(input)
 	if err != nil {
 		fmt.Printf(errFormat, err)
 	}
 
 	// Output:
-	// Error: failed to construct request: request: invalid idTag: ciString.Validate: value exceeds maximum allowed length: got length 25, max 20
+	// Error: failed to construct request -> request -> invalid idTag -> ciString.Validate -> value exceeds maximum allowed length -> got length 25, max 20
 }
 
 func ExampleRequest_parse() {
@@ -79,7 +78,7 @@ func ExampleRequest_parse() {
 	}
 
 	input := decodeRawIdTag(msg[3])
-	req, err := authorize.Request(input)
+	req, err := Request(input)
 
 	if err != nil {
 		fmt.Printf(errRequestFormat, err)
@@ -110,14 +109,14 @@ func ExampleRequest_parse_invalid() {
 	}
 
 	input := decodeRawIdTag(msg[3])
-	_, err = authorize.Request(input)
+	_, err = Request(input)
 
 	if err != nil {
 		fmt.Printf(errRequestFormat, err)
 	}
 
 	// Output:
-	// Error: authorize.Request failed: request: invalid idTag: ciString.Validate: value exceeds maximum allowed length: got length 36, max 20
+	// Error: Request failed -> request -> invalid idTag -> ciString.Validate -> value exceeds maximum allowed length -> got length 36, max 20
 }
 
 func ExampleRequest_parse_empty() {
@@ -137,14 +136,14 @@ func ExampleRequest_parse_empty() {
 	}
 
 	input := decodeRawIdTag(msg[3])
-	_, err = authorize.Request(input)
+	_, err = Request(input)
 
 	if err != nil {
 		fmt.Printf(errRequestFormat, err)
 	}
 
 	// Output:
-	// Error: authorize.Request failed: request: invalid idTag: ciString.Validate: value must not be empty
+	// Error: Request failed -> request -> invalid idTag -> ciString.Validate -> value must not be empty
 }
 
 func ExampleRequest_parse_idTag_empty() {
@@ -166,14 +165,14 @@ func ExampleRequest_parse_idTag_empty() {
 	}
 
 	input := decodeRawIdTag(msg[3])
-	_, err = authorize.Request(input)
+	_, err = Request(input)
 
 	if err != nil {
 		fmt.Printf(errRequestFormat, err)
 	}
 
 	// Output:
-	// Error: authorize.Request failed: request: invalid idTag: ciString.Validate: value must not be empty
+	// Error: Request failed -> request -> invalid idTag -> ciString.Validate -> value must not be empty
 }
 
 func ExampleRequest_parse_idTag_NotFound() {
@@ -195,14 +194,14 @@ func ExampleRequest_parse_idTag_NotFound() {
 	}
 
 	input := decodeRawIdTag(msg[3])
-	_, err = authorize.Request(input)
+	_, err = Request(input)
 
 	if err != nil {
 		fmt.Printf(errRequestFormat, err)
 	}
 
 	// Output:
-	// Error: authorize.Request failed: request: invalid idTag: ciString.Validate: value must not be empty
+	// Error: Request failed -> request -> invalid idTag -> ciString.Validate -> value must not be empty
 }
 
 // decodeRawIdTag extracts the "idTag" field from a JSON object and returns a RequestPayload.

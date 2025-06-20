@@ -16,7 +16,7 @@ func TestConfirmationPayload_validStatusOnly(t *testing.T) {
 	}
 
 	if err := payload.Validate(); err != nil {
-		t.Fatalf("expected valid payload, got error: %v", err)
+		t.Fatalf("expected valid payload, got error -> %v", err)
 	}
 
 	got := payload.Value()
@@ -49,7 +49,7 @@ func TestConfirmationPayload_withAllFields(t *testing.T) {
 	}
 
 	if err := payload.Validate(); err != nil {
-		t.Fatalf("expected valid payload, got error: %v", err)
+		t.Fatalf("expected valid payload, got error -> %v", err)
 	}
 
 	got := payload.Value()
@@ -59,11 +59,11 @@ func TestConfirmationPayload_withAllFields(t *testing.T) {
 	}
 
 	if got.IdTagInfo.ExpiryDate == nil || *got.IdTagInfo.ExpiryDate != expiry {
-		t.Errorf("expiryDate mismatch: expected %q, got %v", expiry, got.IdTagInfo.ExpiryDate)
+		t.Errorf("expiryDate mismatch -> expected %q, got %v", expiry, got.IdTagInfo.ExpiryDate)
 	}
 
 	if got.IdTagInfo.ParentIdTag == nil || *got.IdTagInfo.ParentIdTag != parent {
-		t.Errorf("parentIdTag mismatch: expected %q, got %v", parent, got.IdTagInfo.ParentIdTag)
+		t.Errorf("parentIdTag mismatch -> expected %q, got %v", parent, got.IdTagInfo.ParentIdTag)
 	}
 }
 
