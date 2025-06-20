@@ -26,17 +26,32 @@ jobs:
         with:
           go-version: 1.24
 
-      - name: Run benchmarks
+      - name: Run Authorize Benchmarks
         run: |
-          go test -bench=. -benchmem ./... > benchmark-output.txt
+          go test -bench=. -benchmem ./messages/authorize/benchmarks >authorize-benchmarks.txt
 
-      - name: Store and compare benchmarks
+      - name: Publish Authorize Benchmarks
         uses: benchmark-action/github-action-benchmark@v1
         with:
           name: Go Benchmark
           tool: go
-          output-file-path: benchmark-output.txt
+          output-file-path: authorize-benchmarks.txt
           github-token: ${{ secrets.GITHUB_TOKEN }}
           auto-push: true
-          benchmark-data-dir-path: benchmark-data
+          benchmark-data-dir-path: authorize-benchmarks
+          gh-pages-branch: gh-pages
+
+      - name: Run Authorize Types Benchmarks
+        run: |
+          go test -bench=. -benchmem ./messages/authorize/types/benchmarks >authorize-types-benchmarks.txt
+
+      - name: Publish Authorize Types Benchmarks
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          name: Go Benchmark
+          tool: go
+          output-file-path: authorize-types-benchmarks.txt
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          auto-push: true
+          benchmark-data-dir-path: authorize-types-benchmarks
           gh-pages-branch: gh-pages
