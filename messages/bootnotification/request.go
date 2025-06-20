@@ -1,22 +1,20 @@
 package bootnotification
 
-// import (
-// 	"fmt"
+import (
+	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
+)
 
-// 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
-// )
-
-// type RequestMessage struct {
-// 	ChargeBoxSerialNumber   *sharedtypes.CiString25Type // Optional
-// 	ChargePointModel        sharedtypes.CiString20Type  // Required
-// 	ChargePointSerialNumber *sharedtypes.CiString25Type // Optional
-// 	ChargePointVendor       sharedtypes.CiString20Type  // Required
-// 	FirmwareVersion         *sharedtypes.CiString50Type // Optional
-// 	Iccid                   *sharedtypes.CiString20Type // Optional
-// 	Imsi                    *sharedtypes.CiString20Type // Optional
-// 	MeterSerialNumber       *sharedtypes.CiString25Type // Optional
-// 	MeterType               *sharedtypes.CiString25Type // Optional
-// }
+type RequestMessage struct {
+	ChargeBoxSerialNumber   *sharedtypes.CiString25Type // Optional
+	ChargePointModel        sharedtypes.CiString20Type  // Required
+	ChargePointSerialNumber *sharedtypes.CiString25Type // Optional
+	ChargePointVendor       sharedtypes.CiString20Type  // Required
+	FirmwareVersion         *sharedtypes.CiString50Type // Optional
+	Iccid                   *sharedtypes.CiString20Type // Optional
+	Imsi                    *sharedtypes.CiString20Type // Optional
+	MeterSerialNumber       *sharedtypes.CiString25Type // Optional
+	MeterType               *sharedtypes.CiString25Type // Optional
+}
 
 // func Request(input bootNotificationReqInput) (RequestMessage, error) {
 // 	chargePointModel, err := setChargePointModel(input.ChargePointModel)

@@ -1,12 +1,13 @@
-package authorize
+package authorize_test
 
 import (
 	"testing"
 
+	"github.com/aasanchez/ocpp16messages/messages/authorize"
 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
-func BenchmarkRequest_Valid(b *testing.B) {
+func BenchmarkAuthorizeRequest_Valid(b *testing.B) {
 	input := authorizetypes.RequestPayload{
 		IdTag: "ABC1234567890XYZ78",
 	}
@@ -14,7 +15,7 @@ func BenchmarkRequest_Valid(b *testing.B) {
 	b.ResetTimer()
 
 	for range b.N {
-		_, err := Request(input)
+		_, err := authorize.Request(input)
 		if err != nil {
 			b.Fatalf("unexpected error in benchmark: %v", err)
 		}

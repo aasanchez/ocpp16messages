@@ -7,7 +7,7 @@ import (
 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
-func BenchmarkConfirmation_valid(b *testing.B) {
+func BenchmarkAuthorizeConfirmation_valid(b *testing.B) {
 	expiry := "2027-04-12T10:03:04Z"
 	parent := "A632-E2BB0231072C"
 
@@ -29,7 +29,7 @@ func BenchmarkConfirmation_valid(b *testing.B) {
 	}
 }
 
-func BenchmarkConfirmation_invalidStatus(b *testing.B) {
+func BenchmarkAuthorizeConfirmation_invalidStatus(b *testing.B) {
 	expiry := "2027-01-01T00:00:00Z"
 	parent := "VALID-TAG"
 
@@ -48,7 +48,7 @@ func BenchmarkConfirmation_invalidStatus(b *testing.B) {
 	}
 }
 
-func BenchmarkConfirmation_invalidExpiryDate(b *testing.B) {
+func BenchmarkAuthorizeConfirmation_invalidExpiryDate(b *testing.B) {
 	invalidDate := "invalid-date"
 	parent := "VALID-TAG"
 
@@ -67,7 +67,7 @@ func BenchmarkConfirmation_invalidExpiryDate(b *testing.B) {
 	}
 }
 
-func BenchmarkConfirmation_invalidParentIdTag(b *testing.B) {
+func BenchmarkAuthorizeConfirmation_invalidParentIdTag(b *testing.B) {
 	expiry := "2027-01-01T00:00:00Z"
 	invalid := "THIS_IS_WAY_TOO_LONG_FOR_A_CISTRING20_INPUT"
 

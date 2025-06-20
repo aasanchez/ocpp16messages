@@ -1,15 +1,16 @@
-package authorize
+package authorize_test
 
 import (
 	"strings"
 	"testing"
 
+	"github.com/aasanchez/ocpp16messages/messages/authorize"
 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
 const errContainsFmt = "expected error to contain:\n%q\ngot:\n%q"
 
-func TestRequest_validPayload(t *testing.T) {
+func TestAuthorizeRequest_validPayload(t *testing.T) {
 	t.Parallel()
 
 	input := authorizetypes.RequestPayload{IdTag: "ABC1234567890XYZ78"}
@@ -17,7 +18,7 @@ func TestRequest_validPayload(t *testing.T) {
 		t.Fatalf("unexpected validation error: %v", err)
 	}
 
-	msg, err := Request(input)
+	msg, err := authorize.Request(input)
 	if err != nil {
 		t.Fatalf("Request() returned unexpected error: %v", err)
 	}
@@ -27,7 +28,7 @@ func TestRequest_validPayload(t *testing.T) {
 	}
 }
 
-func TestRequest_emptyIdTag(t *testing.T) {
+func TestAuthorizeRequest_emptyIdTag(t *testing.T) {
 	t.Parallel()
 
 	input := authorizetypes.RequestPayload{IdTag: ""}
@@ -35,7 +36,7 @@ func TestRequest_emptyIdTag(t *testing.T) {
 		t.Error("expected validation error for empty IdTag, got nil")
 	}
 
-	_, err := Request(input)
+	_, err := authorize.Request(input)
 	if err == nil {
 		t.Fatal("expected error for empty IdTag, got nil")
 	}
@@ -46,11 +47,11 @@ func TestRequest_emptyIdTag(t *testing.T) {
 	}
 }
 
-func TestRequest_tooLongIdTag(t *testing.T) {
+func TestAuthorizeRequest_tooLongIdTag(t *testing.T) {
 	t.Parallel()
 
 	input := authorizetypes.RequestPayload{IdTag: strings.Repeat("A", 21)}
-	_, err := Request(input)
+	_, err := authorize.Request(input)
 
 	if err == nil {
 		t.Fatal("expected error for IdTag > 20 characters, got nil")
@@ -62,11 +63,11 @@ func TestRequest_tooLongIdTag(t *testing.T) {
 	}
 }
 
-func TestRequest_nonASCIIIdTag(t *testing.T) {
+func TestAuthorizeRequest_nonASCIIIdTag(t *testing.T) {
 	t.Parallel()
 
 	input := authorizetypes.RequestPayload{IdTag: "مرحباOCPP"}
-	_, err := Request(input)
+	_, err := authorize.Request(input)
 
 	if err == nil {
 		t.Fatal("expected error for non-ASCII IdTag, got nil")
