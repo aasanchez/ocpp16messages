@@ -8,7 +8,6 @@ import (
 var (
 	errMissingChargePointModel  = errors.New("missing required field: ChargePointModel")
 	errMissingChargePointVendor = errors.New("missing required field: ChargePointVendor")
-	errInvalidOptionalField     = errors.New("field must be of type *string or nil")
 )
 
 type RequestPayload struct {

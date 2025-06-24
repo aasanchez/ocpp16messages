@@ -95,9 +95,11 @@ func requiredCiString20(field, value string) (sharedtypes.CiString20Type, error)
 	if value == "" {
 		return sharedtypes.CiString20Type{}, fmt.Errorf(errFmtFieldWrapped, field, ErrEmptyValueNotAllowed)
 	}
+
 	cs, err := sharedtypes.CiString20(value)
 	if err != nil {
 		return sharedtypes.CiString20Type{}, fmt.Errorf(errFmtFieldWrapped, field, err)
 	}
+
 	return cs, nil
 }
