@@ -4,42 +4,67 @@ import (
 	"testing"
 )
 
+const (
+	errExpectedValidationFail = "expected validation error, got nil"
+	errExpectedNoValidation   = "expected no validation error, got: %v"
+)
+
 func TestRequestPayload_ValidateValidPayload(t *testing.T) {
 	t.Parallel()
+
 	payload := RequestPayload{
-		ChargePointModel:  "ACME Model X",
-		ChargePointVendor: "ACME Inc.",
+		ChargeBoxSerialNumber:   nil,
+		ChargePointModel:        "ACME Model X",
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       "ACME Inc.",
+		FirmwareVersion:         nil,
+		Iccid:                   nil,
+		Imsi:                    nil,
+		MeterSerialNumber:       nil,
+		MeterType:               nil,
 	}
 
 	if err := payload.Validate(); err != nil {
-		t.Errorf("expected no validation error, got: %v", err)
+		t.Errorf(errExpectedNoValidation, err)
 	}
 }
 
-func TestRequestPayload_ValidateInvalidPayload(t *testing.T) {
+func TestRequestPayload_ValidateFailsWhenChargePointVendorIsEmpty(t *testing.T) {
 	t.Parallel()
 
 	payload := RequestPayload{
-		ChargePointModel:  "ACME Model X",
-		ChargePointVendor: "", // Simulates "missing"
+		ChargeBoxSerialNumber:   nil,
+		ChargePointModel:        "Model X",
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       "",
+		FirmwareVersion:         nil,
+		Iccid:                   nil,
+		Imsi:                    nil,
+		MeterSerialNumber:       nil,
+		MeterType:               nil,
 	}
 
-	err := payload.Validate()
-	if err == nil {
-		t.Fatal("expected validation error for missing ChargePointVendor, got nil")
+	if err := payload.Validate(); err == nil {
+		t.Fatal(errExpectedValidationFail)
 	}
 }
 
-func TestRequestPayload_ValidateInvalidPayload2(t *testing.T) {
+func TestRequestPayload_ValidateFailsWhenChargePointModelIsEmpty(t *testing.T) {
 	t.Parallel()
 
 	payload := RequestPayload{
-		ChargePointModel:  "",
-		ChargePointVendor: "Vendor",
+		ChargeBoxSerialNumber:   nil,
+		ChargePointModel:        "",
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       "Vendor X",
+		FirmwareVersion:         nil,
+		Iccid:                   nil,
+		Imsi:                    nil,
+		MeterSerialNumber:       nil,
+		MeterType:               nil,
 	}
 
-	err := payload.Validate()
-	if err == nil {
-		t.Fatal("expected validation error for missing ChargePointVendor, got nil")
+	if err := payload.Validate(); err == nil {
+		t.Fatal(errExpectedValidationFail)
 	}
 }
