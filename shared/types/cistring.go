@@ -1,7 +1,6 @@
 package types
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -12,13 +11,6 @@ const (
 	maxLenCiString255  = 255
 	maxLenCiString500  = 500
 	errFmtFieldWrapped = "%s: %w"
-)
-
-var (
-	errExceedsMaxLength     = errors.New("value exceeds maximum allowed length")
-	errNonPrintableASCII    = errors.New("value contains non-printable ASCII characters")
-	errEmptyValueNotAllowed = errors.New("value must not be empty")
-	ErrNilCiString          = errors.New("optional ciString is nil")
 )
 
 // ciString is the internal representation of a validated ASCII string.
@@ -42,16 +34,16 @@ func (cs ciString) Value() string {
 
 func (cs ciString) Validate() error {
 	if len(cs.raw) == 0 {
-		return fmt.Errorf("ciString.Validate: %w", errEmptyValueNotAllowed)
+		return fmt.Errorf("ciString.Validate: %w", ErrEmptyValueNotAllowed)
 	}
 
 	if len(cs.raw) > cs.MaxLen {
-		return fmt.Errorf("ciString.Validate: %w (got length %d, max %d)", errExceedsMaxLength, len(cs.raw), cs.MaxLen)
+		return fmt.Errorf("ciString.Validate: %w (got length %d, max %d)", ErrExceedsMaxLength, len(cs.raw), cs.MaxLen)
 	}
 
 	for _, r := range cs.raw {
 		if r < 32 || r > 126 {
-			return fmt.Errorf("ciString.Validate: %w", errNonPrintableASCII)
+			return fmt.Errorf("ciString.Validate: %w", ErrNonPrintableASCII)
 		}
 	}
 

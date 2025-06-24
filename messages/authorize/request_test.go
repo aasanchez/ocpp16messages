@@ -5,9 +5,8 @@ import (
 	"testing"
 
 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
+	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
-
-const errContainsFmt = "expected error to contain:\n%q\ngot:\n%q"
 
 func TestAuthorizeRequest_validPayload(t *testing.T) {
 	t.Parallel()
@@ -42,7 +41,7 @@ func TestAuthorizeRequest_emptyIdTag(t *testing.T) {
 
 	expected := "request -> invalid idTag -> ciString.Validate: value must not be empty"
 	if !strings.Contains(err.Error(), expected) {
-		t.Errorf(errContainsFmt, expected, err.Error())
+		t.Errorf(sharedtypes.ErrContainsFmt, expected, err.Error())
 	}
 }
 
@@ -58,7 +57,7 @@ func TestAuthorizeRequest_tooLongIdTag(t *testing.T) {
 
 	expected := "request -> invalid idTag -> ciString.Validate: value exceeds maximum allowed length (got length 21, max 20)"
 	if !strings.Contains(err.Error(), expected) {
-		t.Errorf(errContainsFmt, expected, err.Error())
+		t.Errorf(sharedtypes.ErrContainsFmt, expected, err.Error())
 	}
 }
 
@@ -74,6 +73,6 @@ func TestAuthorizeRequest_nonASCIIIdTag(t *testing.T) {
 
 	expected := "request -> invalid idTag -> ciString.Validate: value contains non-printable ASCII characters"
 	if !strings.Contains(err.Error(), expected) {
-		t.Errorf(errContainsFmt, expected, err.Error())
+		t.Errorf(sharedtypes.ErrContainsFmt, expected, err.Error())
 	}
 }

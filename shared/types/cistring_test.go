@@ -5,21 +5,12 @@ import (
 	"testing"
 )
 
-const (
-	errExpectedError          = "expected error: %v"
-	errExpectedNonNilError    = "expected error for %s"
-	errExpectedNoError        = "unexpected error: %v"
-	errExpectedValueMismatch  = "expected Value() = %q, got %q"
-	errExpectedValidationPass = "unexpected validation error: %v"
-	errExpectedNil            = "expected nil result for nil input, got: %v"
-)
-
 func TestCiString_EmptyFails(t *testing.T) {
 	t.Parallel()
 
 	_, err := CiString("", 20)
 	if err == nil {
-		t.Errorf(errExpectedNonNilError, "empty string")
+		t.Errorf(ErrExpectedNonNilError, "empty string")
 	}
 }
 
@@ -28,7 +19,7 @@ func TestCiString_TooLongFails(t *testing.T) {
 
 	_, err := CiString(strings.Repeat("A", 21), 20)
 	if err == nil {
-		t.Errorf(errExpectedNonNilError, "too long string")
+		t.Errorf(ErrExpectedNonNilError, "too long string")
 	}
 }
 
@@ -37,7 +28,7 @@ func TestCiString_NonPrintableFails(t *testing.T) {
 
 	_, err := CiString("OCPP", 20) //nolint
 	if err == nil {
-		t.Errorf(errExpectedNonNilError, "non-printable characters")
+		t.Errorf(ErrExpectedNonNilError, "non-printable characters")
 	}
 }
 
@@ -46,7 +37,7 @@ func TestCiString_ValidPasses(t *testing.T) {
 
 	_, err := CiString("OCPP16-Test", 20)
 	if err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 }
 
@@ -57,7 +48,7 @@ func TestCiString_ValueReturnsRaw(t *testing.T) {
 	cs, _ := CiString(input, 20)
 
 	if cs.Value() != input {
-		t.Errorf(errExpectedValueMismatch, input, cs.Value())
+		t.Errorf(ErrExpectedValueMismatch, input, cs.Value())
 	}
 }
 
@@ -66,7 +57,7 @@ func TestCiString20Type_CreateValid(t *testing.T) {
 
 	_, err := CiString20("ABCDEFGHIJKLMNOPQRST")
 	if err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 }
 
@@ -75,7 +66,7 @@ func TestCiString20Type_CreateTooLongFails(t *testing.T) {
 
 	_, err := CiString20(strings.Repeat("X", 21))
 	if err == nil {
-		t.Errorf(errExpectedNonNilError, "> 20 characters")
+		t.Errorf(ErrExpectedNonNilError, "> 20 characters")
 	}
 }
 
@@ -84,11 +75,11 @@ func TestCiString20Optional_NilInputReturnsNil(t *testing.T) {
 
 	val, err := CiString20Optional("idTag", nil)
 	if err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 
 	if val != nil {
-		t.Errorf(errExpectedNil, val)
+		t.Errorf(ErrExpectedNil, val)
 	}
 }
 
@@ -115,11 +106,11 @@ func TestCiString20Optional_ValidPasses(t *testing.T) {
 	val, err := CiString20Optional("idTag", &input)
 
 	if err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 
 	if val == nil || val.Value() != input {
-		t.Errorf(errExpectedValueMismatch, input, val)
+		t.Errorf(ErrExpectedValueMismatch, input, val)
 	}
 }
 
@@ -128,7 +119,7 @@ func TestCiString25Type_CreateValid(t *testing.T) {
 
 	_, err := CiString25(strings.Repeat("B", 25))
 	if err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 }
 
@@ -138,11 +129,11 @@ func TestCiString25Optional_NilInputReturnsNil(t *testing.T) {
 	val, err := CiString25Optional("parentIdTag", nil)
 
 	if err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 
 	if val != nil {
-		t.Errorf(errExpectedNil, val)
+		t.Errorf(ErrExpectedNil, val)
 	}
 }
 
@@ -169,11 +160,11 @@ func TestCiString25Optional_ValidPasses(t *testing.T) {
 	val, err := CiString25Optional("parentIdTag", &input)
 
 	if err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 
 	if val == nil || val.Value() != input {
-		t.Errorf(errExpectedValueMismatch, input, val)
+		t.Errorf(ErrExpectedValueMismatch, input, val)
 	}
 }
 
@@ -182,7 +173,7 @@ func TestCiString50Type_CreateValid(t *testing.T) {
 
 	_, err := CiString50(strings.Repeat("C", 50))
 	if err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 }
 
@@ -191,11 +182,11 @@ func TestCiString50Optional_NilInputReturnsNil(t *testing.T) {
 
 	val, err := CiString50Optional("description", nil)
 	if err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 
 	if val != nil {
-		t.Errorf(errExpectedNil, val)
+		t.Errorf(ErrExpectedNil, val)
 	}
 }
 
@@ -222,11 +213,11 @@ func TestCiString50Optional_ValidPasses(t *testing.T) {
 	val, err := CiString50Optional("description", &input)
 
 	if err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 
 	if val == nil || val.Value() != input {
-		t.Errorf(errExpectedValueMismatch, input, val)
+		t.Errorf(ErrExpectedValueMismatch, input, val)
 	}
 }
 
@@ -235,7 +226,7 @@ func TestCiString255Type_CreateValid(t *testing.T) {
 
 	_, err := CiString255(strings.Repeat("D", 255))
 	if err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 }
 
@@ -262,7 +253,7 @@ func TestCiString255Optional_ValidPasses(t *testing.T) {
 	val, err := CiString255Optional("note", &input)
 
 	if err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 
 	if val == nil {
@@ -270,7 +261,7 @@ func TestCiString255Optional_ValidPasses(t *testing.T) {
 	}
 
 	if val.Value() != input {
-		t.Errorf(errExpectedValueMismatch, input, val.Value())
+		t.Errorf(ErrExpectedValueMismatch, input, val.Value())
 	}
 }
 
@@ -279,7 +270,7 @@ func TestCiString500Type_CreateValid(t *testing.T) {
 
 	_, err := CiString500(strings.Repeat("E", 500))
 	if err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 }
 
@@ -288,11 +279,11 @@ func TestCiString500Optional_NilInputReturnsNil(t *testing.T) {
 
 	val, err := CiString500Optional("message", nil)
 	if err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 
 	if val != nil {
-		t.Errorf(errExpectedNil, val)
+		t.Errorf(ErrExpectedNil, val)
 	}
 }
 
@@ -319,11 +310,11 @@ func TestCiString500Optional_ValidPasses(t *testing.T) {
 	val, err := CiString500Optional("message", &input)
 
 	if err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 
 	if val == nil || val.Value() != input {
-		t.Errorf(errExpectedValueMismatch, input, val)
+		t.Errorf(ErrExpectedValueMismatch, input, val)
 	}
 }
 
@@ -377,7 +368,7 @@ func TestCiString20Type_ValidatePasses(t *testing.T) {
 
 	cs, _ := CiString20("TestString20")
 	if err := cs.Validate(); err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 }
 
@@ -386,7 +377,7 @@ func TestCiString25Type_ValidatePasses(t *testing.T) {
 
 	cs, _ := CiString25("TestString25ValidDataHere")
 	if err := cs.Validate(); err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 }
 
@@ -395,7 +386,7 @@ func TestCiString50Type_ValidatePasses(t *testing.T) {
 
 	cs, _ := CiString50("This string is valid and under 50 chars")
 	if err := cs.Validate(); err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 }
 
@@ -404,7 +395,7 @@ func TestCiString255Type_ValidatePasses(t *testing.T) {
 
 	cs, _ := CiString255(strings.Repeat("A", 100))
 	if err := cs.Validate(); err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 }
 
@@ -413,7 +404,7 @@ func TestCiString500Type_ValidatePasses(t *testing.T) {
 
 	cs, _ := CiString500(strings.Repeat("B", 200))
 	if err := cs.Validate(); err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 }
 
@@ -422,10 +413,10 @@ func TestCiString255Optional_NilInputReturnsNil(t *testing.T) {
 
 	val, err := CiString255Optional("note", nil)
 	if err != nil {
-		t.Errorf(errExpectedNoError, err)
+		t.Errorf(ErrExpectedNoError, err)
 	}
 
 	if val != nil {
-		t.Errorf(errExpectedNil, val)
+		t.Errorf(ErrExpectedNil, val)
 	}
 }

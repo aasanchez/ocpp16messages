@@ -5,11 +5,10 @@ import (
 	"testing"
 
 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
+	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-const (
-	errExpectedNoError = "unexpected error: %v"
-)
+const ()
 
 func TestAuthorizeConfirmation_validPayload(t *testing.T) {
 	t.Parallel()
@@ -27,7 +26,7 @@ func TestAuthorizeConfirmation_validPayload(t *testing.T) {
 
 	msg, err := Confirmation(payload)
 	if err != nil {
-		t.Fatalf(errExpectedNoError, err)
+		t.Fatalf(sharedtypes.ErrExpectedNoError, err)
 	}
 
 	val := msg.IdTagInfo.Value()

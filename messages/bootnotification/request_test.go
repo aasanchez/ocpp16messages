@@ -6,10 +6,7 @@ import (
 	"testing"
 
 	bootnotificationtypes "github.com/aasanchez/ocpp16messages/messages/bootnotification/types"
-)
-
-const (
-	errExpectedNoError = "unexpected error: %v"
+	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 func strPtr(s string) *string {
@@ -33,7 +30,7 @@ func TestRequest_validPayload(t *testing.T) {
 
 	_, err := Request(input)
 	if err != nil {
-		t.Fatalf(errExpectedNoError, err)
+		t.Fatalf(sharedtypes.ErrExpectedNoError, err)
 	}
 }
 
@@ -53,7 +50,7 @@ func TestRequest_missingChargePointModel(t *testing.T) {
 	}
 
 	_, err := Request(input)
-	if err == nil || !errors.Is(err, ErrEmptyValueNotAllowed) {
+	if err == nil || !errors.Is(err, sharedtypes.ErrEmptyValueNotAllowed) {
 		t.Fatalf("expected ErrEmptyValueNotAllowed for ChargePointModel, got: %v", err)
 	}
 }
@@ -95,7 +92,7 @@ func TestRequest_missingChargePointVendor(t *testing.T) {
 	}
 
 	_, err := Request(input)
-	if err == nil || !errors.Is(err, ErrEmptyValueNotAllowed) {
+	if err == nil || !errors.Is(err, sharedtypes.ErrEmptyValueNotAllowed) {
 		t.Fatalf("expected ErrEmptyValueNotAllowed for ChargePointVendor, got: %v", err)
 	}
 }

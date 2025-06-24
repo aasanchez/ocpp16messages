@@ -1,11 +1,8 @@
 package authorizetypes
 
 import (
-	"errors"
 	"fmt"
 )
-
-var ErrInvalidIdTagInfo = errors.New("invalid idTagInfo")
 
 type ConfirmationPayload struct {
 	IdTagInfo IdTagInfoPayload

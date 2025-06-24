@@ -1,13 +1,10 @@
 package authorizetypes
 
 import (
-	"errors"
-
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 // ErrInvalidIdToken is returned when the input does not conform to CiString20Type constraints.
-var ErrInvalidIdToken = errors.New("invalid IdToken")
 
 type IdTokenType struct {
 	value sharedtypes.CiString20Type

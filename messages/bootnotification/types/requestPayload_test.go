@@ -2,11 +2,8 @@ package bootnotificationtypes
 
 import (
 	"testing"
-)
 
-const (
-	errExpectedValidationFail = "expected validation error, got nil"
-	errExpectedNoValidation   = "expected no validation error, got: %v"
+	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 func TestRequestPayload_ValidateValidPayload(t *testing.T) {
@@ -25,7 +22,7 @@ func TestRequestPayload_ValidateValidPayload(t *testing.T) {
 	}
 
 	if err := payload.Validate(); err != nil {
-		t.Errorf(errExpectedNoValidation, err)
+		t.Errorf(sharedtypes.ErrExpectedNoValidation, err)
 	}
 }
 
@@ -45,7 +42,7 @@ func TestRequestPayload_ValidateFailsWhenChargePointVendorIsEmpty(t *testing.T) 
 	}
 
 	if err := payload.Validate(); err == nil {
-		t.Fatal(errExpectedValidationFail)
+		t.Fatal(sharedtypes.ErrExpectedValidationFail)
 	}
 }
 
@@ -65,6 +62,6 @@ func TestRequestPayload_ValidateFailsWhenChargePointModelIsEmpty(t *testing.T) {
 	}
 
 	if err := payload.Validate(); err == nil {
-		t.Fatal(errExpectedValidationFail)
+		t.Fatal(sharedtypes.ErrExpectedValidationFail)
 	}
 }

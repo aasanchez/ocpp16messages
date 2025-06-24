@@ -3,6 +3,8 @@ package authorizetypes
 import (
 	"errors"
 	"testing"
+
+	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 func TestRequestPayloadType_Validate_ValidIdTag(t *testing.T) {
@@ -27,7 +29,7 @@ func TestRequestPayloadType_Validate_EmptyIdTag(t *testing.T) {
 		t.Fatal("expected error for empty idTag, got nil")
 	}
 
-	if !errors.Is(err, ErrInvalidIdTag) {
+	if !errors.Is(err, sharedtypes.ErrInvalidIdTag) {
 		t.Errorf("expected ErrInvalidIdTag, got: %v", err)
 	}
 }

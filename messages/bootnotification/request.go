@@ -1,16 +1,11 @@
 package bootnotification
 
 import (
-	"errors"
 	"fmt"
 
 	bootnotificationtypes "github.com/aasanchez/ocpp16messages/messages/bootnotification/types"
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
-
-const errFmtFieldWrapped = "%s: %w"
-
-var ErrEmptyValueNotAllowed = errors.New("value must not be empty")
 
 type RequestMessage struct {
 	ChargeBoxSerialNumber   *sharedtypes.CiString25Type
@@ -88,17 +83,17 @@ func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error)
 // --- Helpers ---
 
 func wrapErr(field string, err error) error {
-	return fmt.Errorf(errFmtFieldWrapped, field, err)
+	return fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, field, err)
 }
 
 func requiredCiString20(field, value string) (sharedtypes.CiString20Type, error) {
 	if value == "" {
-		return sharedtypes.CiString20Type{}, fmt.Errorf(errFmtFieldWrapped, field, ErrEmptyValueNotAllowed)
+		return sharedtypes.CiString20Type{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, field, sharedtypes.ErrEmptyValueNotAllowed)
 	}
 
 	cs, err := sharedtypes.CiString20(value)
 	if err != nil {
-		return sharedtypes.CiString20Type{}, fmt.Errorf(errFmtFieldWrapped, field, err)
+		return sharedtypes.CiString20Type{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, field, err)
 	}
 
 	return cs, nil

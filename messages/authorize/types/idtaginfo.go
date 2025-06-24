@@ -18,12 +18,10 @@ type IdTagInfoType struct {
 	status      AuthorizationStatusType
 }
 
-const errWrapFormat = "%s: %w"
-
 func IdTagInfo(input IdTagInfoPayload) (IdTagInfoType, error) {
 	status, err := AuthorizationStatus(input.Status)
 	if err != nil {
-		return IdTagInfoType{}, fmt.Errorf(errWrapFormat, "failed to parse status", err)
+		return IdTagInfoType{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, "failed to parse status", err)
 	}
 
 	info := IdTagInfoType{
@@ -35,7 +33,7 @@ func IdTagInfo(input IdTagInfoPayload) (IdTagInfoType, error) {
 	if input.ExpiryDate != nil {
 		parsedDate, err := sharedtypes.DateTime(*input.ExpiryDate)
 		if err != nil {
-			return IdTagInfoType{}, fmt.Errorf(errWrapFormat, "failed to parse expiryDate", err)
+			return IdTagInfoType{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, "failed to parse expiryDate", err)
 		}
 
 		info.expiryDate = &parsedDate
@@ -44,7 +42,7 @@ func IdTagInfo(input IdTagInfoPayload) (IdTagInfoType, error) {
 	if input.ParentIdTag != nil {
 		ci, err := sharedtypes.CiString20(*input.ParentIdTag)
 		if err != nil {
-			return IdTagInfoType{}, fmt.Errorf(errWrapFormat, "failed to validate parentIdTag as CiString20", err)
+			return IdTagInfoType{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, "failed to validate parentIdTag as CiString20", err)
 		}
 
 		idTag, _ := IdToken(ci)
