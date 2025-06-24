@@ -41,8 +41,15 @@ func TestRequest_missingChargePointModel(t *testing.T) {
 	t.Parallel()
 
 	input := bootnotificationtypes.RequestPayload{
-		ChargePointModel:  "",
-		ChargePointVendor: "VendorX",
+		ChargeBoxSerialNumber:   nil,
+		ChargePointModel:        "",
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       "VendorX",
+		FirmwareVersion:         nil,
+		Iccid:                   nil,
+		Imsi:                    nil,
+		MeterSerialNumber:       nil,
+		MeterType:               nil,
 	}
 
 	_, err := Request(input)
@@ -55,8 +62,15 @@ func TestRequest_invalidChargePointModel(t *testing.T) {
 	t.Parallel()
 
 	input := bootnotificationtypes.RequestPayload{
-		ChargePointModel:  strings.Repeat("A", 21),
-		ChargePointVendor: "VendorX",
+		ChargeBoxSerialNumber:   nil,
+		ChargePointModel:        strings.Repeat("A", 21),
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       "VendorX",
+		FirmwareVersion:         nil,
+		Iccid:                   nil,
+		Imsi:                    nil,
+		MeterSerialNumber:       nil,
+		MeterType:               nil,
 	}
 
 	_, err := Request(input)
@@ -69,8 +83,15 @@ func TestRequest_missingChargePointVendor(t *testing.T) {
 	t.Parallel()
 
 	input := bootnotificationtypes.RequestPayload{
-		ChargePointModel:  "ModelX",
-		ChargePointVendor: "",
+		ChargeBoxSerialNumber:   nil,
+		ChargePointModel:        "ModelX",
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       "",
+		FirmwareVersion:         nil,
+		Iccid:                   nil,
+		Imsi:                    nil,
+		MeterSerialNumber:       nil,
+		MeterType:               nil,
 	}
 
 	_, err := Request(input)
@@ -83,8 +104,15 @@ func TestRequest_invalidChargePointVendor(t *testing.T) {
 	t.Parallel()
 
 	input := bootnotificationtypes.RequestPayload{
-		ChargePointModel:  "ModelX",
-		ChargePointVendor: strings.Repeat("V", 21),
+		ChargeBoxSerialNumber:   nil,
+		ChargePointModel:        "ModelX",
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       strings.Repeat("V", 21),
+		FirmwareVersion:         nil,
+		Iccid:                   nil,
+		Imsi:                    nil,
+		MeterSerialNumber:       nil,
+		MeterType:               nil,
 	}
 
 	_, err := Request(input)
@@ -98,9 +126,15 @@ func TestRequest_invalidOptionalField_ChargeBoxSerialNumber(t *testing.T) {
 
 	invalid := strings.Repeat("X", 26)
 	input := bootnotificationtypes.RequestPayload{
-		ChargePointModel:      "ModelX",
-		ChargePointVendor:     "VendorX",
-		ChargeBoxSerialNumber: &invalid,
+		ChargeBoxSerialNumber:   &invalid,
+		ChargePointModel:        "ModelX",
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       "VendorX",
+		FirmwareVersion:         nil,
+		Iccid:                   nil,
+		Imsi:                    nil,
+		MeterSerialNumber:       nil,
+		MeterType:               nil,
 	}
 
 	_, err := Request(input)
@@ -114,9 +148,15 @@ func TestRequest_invalidOptionalField_ChargePointSerialNumber(t *testing.T) {
 
 	invalid := strings.Repeat("S", 26)
 	input := bootnotificationtypes.RequestPayload{
+		ChargeBoxSerialNumber:   nil,
 		ChargePointModel:        "ModelX",
-		ChargePointVendor:       "VendorX",
 		ChargePointSerialNumber: &invalid,
+		ChargePointVendor:       "VendorX",
+		FirmwareVersion:         nil,
+		Iccid:                   nil,
+		Imsi:                    nil,
+		MeterSerialNumber:       nil,
+		MeterType:               nil,
 	}
 
 	_, err := Request(input)
@@ -130,9 +170,15 @@ func TestRequest_invalidOptionalField_FirmwareVersion(t *testing.T) {
 
 	invalid := strings.Repeat("F", 51)
 	input := bootnotificationtypes.RequestPayload{
-		ChargePointModel:  "ModelX",
-		ChargePointVendor: "VendorX",
-		FirmwareVersion:   &invalid,
+		ChargeBoxSerialNumber:   nil,
+		ChargePointModel:        "ModelX",
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       "VendorX",
+		FirmwareVersion:         &invalid,
+		Iccid:                   nil,
+		Imsi:                    nil,
+		MeterSerialNumber:       nil,
+		MeterType:               nil,
 	}
 
 	_, err := Request(input)
@@ -146,9 +192,15 @@ func TestRequest_invalidOptionalField_Iccid(t *testing.T) {
 
 	invalid := strings.Repeat("1", 21)
 	input := bootnotificationtypes.RequestPayload{
-		ChargePointModel:  "ModelX",
-		ChargePointVendor: "VendorX",
-		Iccid:             &invalid,
+		ChargeBoxSerialNumber:   nil,
+		ChargePointModel:        "ModelX",
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       "VendorX",
+		FirmwareVersion:         nil,
+		Iccid:                   &invalid,
+		Imsi:                    nil,
+		MeterSerialNumber:       nil,
+		MeterType:               nil,
 	}
 
 	_, err := Request(input)
@@ -162,9 +214,15 @@ func TestRequest_invalidOptionalField_Imsi(t *testing.T) {
 
 	invalid := strings.Repeat("2", 21)
 	input := bootnotificationtypes.RequestPayload{
-		ChargePointModel:  "ModelX",
-		ChargePointVendor: "VendorX",
-		Imsi:              &invalid,
+		ChargeBoxSerialNumber:   nil,
+		ChargePointModel:        "ModelX",
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       "VendorX",
+		FirmwareVersion:         nil,
+		Iccid:                   nil,
+		Imsi:                    &invalid,
+		MeterSerialNumber:       nil,
+		MeterType:               nil,
 	}
 
 	_, err := Request(input)
@@ -178,9 +236,15 @@ func TestRequest_invalidOptionalField_MeterSerialNumber(t *testing.T) {
 
 	invalid := strings.Repeat("M", 26)
 	input := bootnotificationtypes.RequestPayload{
-		ChargePointModel:  "ModelX",
-		ChargePointVendor: "VendorX",
-		MeterSerialNumber: &invalid,
+		ChargeBoxSerialNumber:   nil,
+		ChargePointModel:        "ModelX",
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       "VendorX",
+		FirmwareVersion:         nil,
+		Iccid:                   nil,
+		Imsi:                    nil,
+		MeterSerialNumber:       &invalid,
+		MeterType:               nil,
 	}
 
 	_, err := Request(input)
@@ -194,9 +258,15 @@ func TestRequest_invalidOptionalField_MeterType(t *testing.T) {
 
 	invalid := strings.Repeat("T", 26)
 	input := bootnotificationtypes.RequestPayload{
-		ChargePointModel:  "ModelX",
-		ChargePointVendor: "VendorX",
-		MeterType:         &invalid,
+		ChargeBoxSerialNumber:   nil,
+		ChargePointModel:        "ModelX",
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       "VendorX",
+		FirmwareVersion:         nil,
+		Iccid:                   nil,
+		Imsi:                    nil,
+		MeterSerialNumber:       nil,
+		MeterType:               &invalid,
 	}
 
 	_, err := Request(input)
@@ -209,8 +279,15 @@ func TestRequest_allOptionalFieldsNil(t *testing.T) {
 	t.Parallel()
 
 	input := bootnotificationtypes.RequestPayload{
-		ChargePointModel:  "ModelX",
-		ChargePointVendor: "VendorX",
+		ChargeBoxSerialNumber:   nil,
+		ChargePointModel:        "ModelX",
+		ChargePointSerialNumber: nil,
+		ChargePointVendor:       "VendorX",
+		FirmwareVersion:         nil,
+		Iccid:                   nil,
+		Imsi:                    nil,
+		MeterSerialNumber:       nil,
+		MeterType:               nil,
 	}
 
 	_, err := Request(input)
