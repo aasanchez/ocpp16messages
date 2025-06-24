@@ -11,6 +11,7 @@ const (
 	maxLenCiString50  = 50
 	maxLenCiString255 = 255
 	maxLenCiString500 = 500
+	errFmtFieldWrapped = errFmtFieldWrapped
 )
 
 var (
@@ -72,13 +73,13 @@ func (c CiString20Type) Validate() error { return c.value.Validate() }
 
 func CiString20Optional(name string, input *string) (*CiString20Type, error) {
 	if input == nil {
-		return nil, fmt.Errorf("%s: %w", name, ErrNilCiString)
+		return nil, fmt.Errorf(errFmtFieldWrapped, name, ErrNilCiString)
 	}
 
 	val, err := CiString20(*input)
 
 	if err != nil {
-		return nil, fmt.Errorf("%s: %w", name, err)
+		return nil, fmt.Errorf(errFmtFieldWrapped, name, err)
 	}
 
 	return &val, nil
@@ -99,13 +100,13 @@ func (c CiString25Type) Validate() error { return c.value.Validate() }
 
 func CiString25Optional(name string, input *string) (*CiString25Type, error) {
 	if input == nil {
-		return nil, fmt.Errorf("%s: %w", name, ErrNilCiString)
+		return nil, fmt.Errorf(errFmtFieldWrapped, name, ErrNilCiString)
 	}
 
 	val, err := CiString25(*input)
 
 	if err != nil {
-		return nil, fmt.Errorf("%s: %w", name, err)
+		return nil, fmt.Errorf(errFmtFieldWrapped, name, err)
 	}
 
 	return &val, nil
@@ -126,13 +127,13 @@ func (c CiString50Type) Validate() error { return c.value.Validate() }
 
 func CiString50Optional(name string, input *string) (*CiString50Type, error) {
 	if input == nil {
-		return nil, fmt.Errorf("%s: %w", name, ErrNilCiString)
+		return nil, fmt.Errorf(errFmtFieldWrapped, name, ErrNilCiString)
 	}
 
 	val, err := CiString50(*input)
 
 	if err != nil {
-		return nil, fmt.Errorf("%s: %w", name, err)
+		return nil, fmt.Errorf(errFmtFieldWrapped, name, err)
 	}
 
 	return &val, nil
@@ -153,13 +154,13 @@ func (c CiString255Type) Validate() error { return c.value.Validate() }
 
 func CiString255Optional(name string, input *string) (*CiString255Type, error) {
 	if input == nil {
-		return nil, fmt.Errorf("%s: %w", name, ErrNilCiString)
+		return nil, fmt.Errorf(errFmtFieldWrapped, name, ErrNilCiString)
 	}
 
 	val, err := CiString255(*input)
 
 	if err != nil {
-		return nil, fmt.Errorf("%s: %w", name, err)
+		return nil, fmt.Errorf(errFmtFieldWrapped, name, err)
 	}
 
 	return &val, nil
@@ -180,13 +181,13 @@ func (c CiString500Type) Validate() error { return c.value.Validate() }
 
 func CiString500Optional(name string, input *string) (*CiString500Type, error) {
 	if input == nil {
-		return nil, fmt.Errorf("%s: %w", name, ErrNilCiString)
+		return nil, fmt.Errorf(errFmtFieldWrapped, name, ErrNilCiString)
 	}
 
 	val, err := CiString500(*input)
 
 	if err != nil {
-		return nil, fmt.Errorf("%s: %w", name, err)
+		return nil, fmt.Errorf(errFmtFieldWrapped, name, err)
 	}
 
 	return &val, nil
