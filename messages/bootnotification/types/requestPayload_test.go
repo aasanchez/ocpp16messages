@@ -7,8 +7,8 @@ import (
 func TestRequestPayload_ValidateValidPayload(t *testing.T) {
 	t.Parallel()
 	payload := RequestPayload{
-		ChargePointModel:        "ACME Model X",
-		ChargePointVendor:       "ACME Inc.",
+		ChargePointModel:  "ACME Model X",
+		ChargePointVendor: "ACME Inc.",
 	}
 
 	if err := payload.Validate(); err != nil {

@@ -8,6 +8,10 @@ import (
 	bootnotificationtypes "github.com/aasanchez/ocpp16messages/messages/bootnotification/types"
 )
 
+const (
+	errExpectedNoError = "unexpected error: %v"
+)
+
 func strPtr(s string) *string {
 	return &s
 }
@@ -29,7 +33,7 @@ func TestRequest_validPayload(t *testing.T) {
 
 	_, err := Request(input)
 	if err != nil {
-		t.Fatalf("expected no error, got: %v", err)
+		t.Fatalf(errExpectedNoError, err)
 	}
 }
 
@@ -94,9 +98,9 @@ func TestRequest_invalidOptionalField_ChargeBoxSerialNumber(t *testing.T) {
 
 	invalid := strings.Repeat("X", 26)
 	input := bootnotificationtypes.RequestPayload{
-		ChargePointModel:        "ModelX",
-		ChargePointVendor:       "VendorX",
-		ChargeBoxSerialNumber:   &invalid,
+		ChargePointModel:      "ModelX",
+		ChargePointVendor:     "VendorX",
+		ChargeBoxSerialNumber: &invalid,
 	}
 
 	_, err := Request(input)
@@ -174,9 +178,9 @@ func TestRequest_invalidOptionalField_MeterSerialNumber(t *testing.T) {
 
 	invalid := strings.Repeat("M", 26)
 	input := bootnotificationtypes.RequestPayload{
-		ChargePointModel:    "ModelX",
-		ChargePointVendor:   "VendorX",
-		MeterSerialNumber:   &invalid,
+		ChargePointModel:  "ModelX",
+		ChargePointVendor: "VendorX",
+		MeterSerialNumber: &invalid,
 	}
 
 	_, err := Request(input)
