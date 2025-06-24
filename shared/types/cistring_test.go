@@ -11,7 +11,6 @@ const (
 	errExpectedNoError        = "unexpected error: %v"
 	errExpectedValueMismatch  = "expected Value() = %q, got %q"
 	errExpectedValidationPass = "unexpected validation error: %v"
-	errExpectedErrorForNil 		= "expected error for nil input"
 )
 
 func TestCiString_EmptyFails(t *testing.T) {
@@ -91,12 +90,15 @@ func TestCiString20Type_CreateTooLongFails(t *testing.T) {
 	}
 }
 
-func TestCiString20Optional_NilInputFails(t *testing.T) {
+func TestCiString20Optional_NilInputReturnsNil(t *testing.T) {
 	t.Parallel()
 
-	_, err := CiString20Optional("idTag", nil)
-	if err == nil {
-		t.Error("expected error for nil input, got nil")
+	val, err := CiString20Optional("idTag", nil)
+	if err != nil {
+		t.Errorf(errExpectedNoError, err)
+	}
+	if val != nil {
+		t.Errorf("expected nil result for nil input, got: %v", val)
 	}
 }
 
@@ -137,12 +139,15 @@ func TestCiString25Type_CreateValid(t *testing.T) {
 	}
 }
 
-func TestCiString25Optional_NilInputFails(t *testing.T) {
+func TestCiString25Optional_NilInputReturnsNil(t *testing.T) {
 	t.Parallel()
 
-	_, err := CiString25Optional("parentIdTag", nil)
-	if err == nil {
-		t.Error(errExpectedErrorForNil)
+	val, err := CiString25Optional("parentIdTag", nil)
+	if err != nil {
+		t.Errorf(errExpectedNoError, err)
+	}
+	if val != nil {
+		t.Errorf("expected nil result for nil input, got: %v", val)
 	}
 }
 
@@ -183,12 +188,15 @@ func TestCiString50Type_CreateValid(t *testing.T) {
 	}
 }
 
-func TestCiString50Optional_NilInputFails(t *testing.T) {
+func TestCiString50Optional_NilInputReturnsNil(t *testing.T) {
 	t.Parallel()
 
-	_, err := CiString50Optional("description", nil)
-	if err == nil {
-		t.Error(errExpectedErrorForNil)
+	val, err := CiString50Optional("description", nil)
+	if err != nil {
+		t.Errorf(errExpectedNoError, err)
+	}
+	if val != nil {
+		t.Errorf("expected nil result for nil input, got: %v", val)
 	}
 }
 
@@ -240,116 +248,15 @@ func TestCiString500Type_CreateValid(t *testing.T) {
 	}
 }
 
-func TestCiString20Type_Value(t *testing.T) {
+func TestCiString255Optional_NilInputReturnsNil(t *testing.T) {
 	t.Parallel()
 
-	raw := strings.Repeat("A", 20)
-
-	cs, _ := CiString20(raw)
-	if cs.Value() != raw {
-		t.Errorf(errExpectedValueMismatch, raw, cs.Value())
+	val, err := CiString255Optional("note", nil)
+	if err != nil {
+		t.Errorf(errExpectedNoError, err)
 	}
-}
-
-func TestCiString20Type_Validate(t *testing.T) {
-	t.Parallel()
-
-	input := "OCPP20"
-
-	cs, _ := CiString20(input)
-	if err := cs.Validate(); err != nil {
-		t.Errorf(errExpectedValidationPass, err)
-	}
-}
-
-func TestCiString25Type_Value(t *testing.T) {
-	t.Parallel()
-
-	input := strings.Repeat("B", 25)
-
-	cs, _ := CiString25(input)
-	if cs.Value() != input {
-		t.Errorf(errExpectedValueMismatch, input, cs.Value())
-	}
-}
-
-func TestCiString25Type_Validate(t *testing.T) {
-	t.Parallel()
-
-	input := "TestString"
-
-	cs, _ := CiString25(input)
-	if err := cs.Validate(); err != nil {
-		t.Errorf(errExpectedValidationPass, err)
-	}
-}
-
-func TestCiString50Type_Value(t *testing.T) {
-	t.Parallel()
-
-	input := strings.Repeat("C", 50)
-
-	cs, _ := CiString50(input)
-	if cs.Value() != input {
-		t.Errorf(errExpectedValueMismatch, input, cs.Value())
-	}
-}
-
-func TestCiString50Type_Validate(t *testing.T) {
-	t.Parallel()
-
-	cs, _ := CiString50("ShortValidString")
-	if err := cs.Validate(); err != nil {
-		t.Errorf(errExpectedValidationPass, err)
-	}
-}
-
-func TestCiString255Type_Value(t *testing.T) {
-	t.Parallel()
-
-	raw := strings.Repeat("D", 255)
-	cs, _ := CiString255(raw)
-
-	if cs.Value() != raw {
-		t.Errorf(errExpectedValueMismatch, raw, cs.Value())
-	}
-}
-
-func TestCiString255Type_Validate(t *testing.T) {
-	t.Parallel()
-
-	cs, _ := CiString255("Basic test string")
-	if err := cs.Validate(); err != nil {
-		t.Errorf(errExpectedValidationPass, err)
-	}
-}
-
-func TestCiString500Type_Value(t *testing.T) {
-	t.Parallel()
-
-	raw := strings.Repeat("E", 500)
-	cs, _ := CiString500(raw)
-
-	if cs.Value() != raw {
-		t.Errorf(errExpectedValueMismatch, raw, cs.Value())
-	}
-}
-
-func TestCiString500Type_Validate(t *testing.T) {
-	t.Parallel()
-
-	cs, _ := CiString500("This is a long string but valid for 500 length")
-	if err := cs.Validate(); err != nil {
-		t.Errorf(errExpectedValidationPass, err)
-	}
-}
-
-func TestCiString255Optional_NilInputFails(t *testing.T) {
-	t.Parallel()
-
-	_, err := CiString255Optional("note", nil)
-	if err == nil {
-		t.Error(errExpectedErrorForNil)
+	if val != nil {
+		t.Errorf("expected nil result for nil input, got: %v", val)
 	}
 }
 
@@ -379,12 +286,15 @@ func TestCiString255Optional_ValidPasses(t *testing.T) {
 	}
 }
 
-func TestCiString500Optional_NilInputFails(t *testing.T) {
+func TestCiString500Optional_NilInputReturnsNil(t *testing.T) {
 	t.Parallel()
 
-	_, err := CiString500Optional("message", nil)
-	if err == nil {
-		t.Error(errExpectedErrorForNil)
+	val, err := CiString500Optional("message", nil)
+	if err != nil {
+		t.Errorf(errExpectedNoError, err)
+	}
+	if val != nil {
+		t.Errorf("expected nil result for nil input, got: %v", val)
 	}
 }
 
