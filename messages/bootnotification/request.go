@@ -1,11 +1,14 @@
 package bootnotification
 
 import (
+	"errors"
 	"fmt"
 
 	bootnotificationtypes "github.com/aasanchez/ocpp16messages/messages/bootnotification/types"
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
+
+var ErrEmptyValueNotAllowed = errors.New("value must not be empty")
 
 type RequestMessage struct {
 	ChargeBoxSerialNumber   *sharedtypes.CiString25Type
@@ -25,6 +28,10 @@ func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error)
 		return RequestMessage{}, fmt.Errorf("chargeBoxSerialNumber: %w", err)
 	}
 
+	if input.ChargePointModel == "" {
+		return RequestMessage{}, fmt.Errorf("chargePointModel: %w", ErrEmptyValueNotAllowed)
+	}
+
 	chargePointModel, err := sharedtypes.CiString20(input.ChargePointModel)
 	if err != nil {
 		return RequestMessage{}, fmt.Errorf("chargePointModel: %w", err)
@@ -33,6 +40,10 @@ func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error)
 	chargePointSerialNumber, err := sharedtypes.CiString25Optional("ChargePointSerialNumber", input.ChargePointSerialNumber)
 	if err != nil {
 		return RequestMessage{}, fmt.Errorf("chargePointSerialNumber: %w", err)
+	}
+
+	if input.ChargePointVendor == "" {
+		return RequestMessage{}, fmt.Errorf("ChargePointVendor: %w", ErrEmptyValueNotAllowed)
 	}
 
 	chargePointVendor, err := sharedtypes.CiString20(input.ChargePointVendor)

@@ -11,6 +11,7 @@ const (
 	errExpectedNoError        = "unexpected error: %v"
 	errExpectedValueMismatch  = "expected Value() = %q, got %q"
 	errExpectedValidationPass = "unexpected validation error: %v"
+	errExpectedErrorForNil 		= "expected error for nil input"
 )
 
 func TestCiString_EmptyFails(t *testing.T) {
@@ -141,7 +142,7 @@ func TestCiString25Optional_NilInputFails(t *testing.T) {
 
 	_, err := CiString25Optional("parentIdTag", nil)
 	if err == nil {
-		t.Error("expected error for nil input")
+		t.Error(errExpectedErrorForNil)
 	}
 }
 
@@ -187,7 +188,7 @@ func TestCiString50Optional_NilInputFails(t *testing.T) {
 
 	_, err := CiString50Optional("description", nil)
 	if err == nil {
-		t.Error("expected error for nil input")
+		t.Error(errExpectedErrorForNil)
 	}
 }
 
@@ -348,7 +349,7 @@ func TestCiString255Optional_NilInputFails(t *testing.T) {
 
 	_, err := CiString255Optional("note", nil)
 	if err == nil {
-		t.Error("expected error for nil input")
+		t.Error(errExpectedErrorForNil)
 	}
 }
 
@@ -383,7 +384,7 @@ func TestCiString500Optional_NilInputFails(t *testing.T) {
 
 	_, err := CiString500Optional("message", nil)
 	if err == nil {
-		t.Error("expected error for nil input")
+		t.Error(errExpectedErrorForNil)
 	}
 }
 
