@@ -121,7 +121,7 @@ func TestCiString20Optional_ValidPasses(t *testing.T) {
 	}
 
 	if val == nil || val.Value() != input {
-		t.Errorf("expected Value() = %q, got %v", input, val)
+		t.Errorf(errExpectedValueMismatch, input, val)
 	}
 }
 
@@ -167,7 +167,7 @@ func TestCiString25Optional_ValidPasses(t *testing.T) {
 	}
 
 	if val == nil || val.Value() != input {
-		t.Errorf("expected Value() = %q, got %v", input, val)
+		t.Errorf(errExpectedValueMismatch, input, val)
 	}
 }
 
@@ -213,7 +213,7 @@ func TestCiString50Optional_ValidPasses(t *testing.T) {
 	}
 
 	if val == nil || val.Value() != input {
-		t.Errorf("expected Value() = %q, got %v", input, val)
+		t.Errorf(errExpectedValueMismatch, input, val)
 	}
 }
 
@@ -374,7 +374,7 @@ func TestCiString255Optional_ValidPasses(t *testing.T) {
 	}
 
 	if val == nil || val.Value() != input {
-		t.Errorf("expected Value() = %q, got %v", input, val)
+		t.Errorf(errExpectedValueMismatch, input, val)
 	}
 }
 
@@ -409,6 +409,6 @@ func TestCiString500Optional_ValidPasses(t *testing.T) {
 	}
 
 	if val == nil || val.Value() != input {
-		t.Errorf("expected Value() = %q, got %v", input, val)
+		t.Errorf(errExpectedValueMismatch, input, val)
 	}
 }

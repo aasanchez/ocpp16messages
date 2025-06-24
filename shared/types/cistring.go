@@ -11,7 +11,7 @@ const (
 	maxLenCiString50  = 50
 	maxLenCiString255 = 255
 	maxLenCiString500 = 500
-	errFmtFieldWrapped = errFmtFieldWrapped
+	errFmtFieldWrapped = "%s: %w"
 )
 
 var (
