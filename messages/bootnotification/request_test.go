@@ -51,7 +51,7 @@ func TestRequest_invalidChargePointModel(t *testing.T) {
 	t.Parallel()
 
 	input := bootnotificationtypes.RequestPayload{
-		ChargePointModel:  strings.Repeat("A", 21), // > max length 20
+		ChargePointModel:  strings.Repeat("A", 21),
 		ChargePointVendor: "VendorX",
 	}
 
@@ -80,7 +80,7 @@ func TestRequest_invalidChargePointVendor(t *testing.T) {
 
 	input := bootnotificationtypes.RequestPayload{
 		ChargePointModel:  "ModelX",
-		ChargePointVendor: strings.Repeat("V", 21), // > max length 20
+		ChargePointVendor: strings.Repeat("V", 21),
 	}
 
 	_, err := Request(input)
@@ -89,10 +89,58 @@ func TestRequest_invalidChargePointVendor(t *testing.T) {
 	}
 }
 
-func TestRequest_invalidOptionalField_iccid(t *testing.T) {
+func TestRequest_invalidOptionalField_ChargeBoxSerialNumber(t *testing.T) {
 	t.Parallel()
 
-	invalid := strings.Repeat("1", 21) // Iccid is CiString20
+	invalid := strings.Repeat("X", 26)
+	input := bootnotificationtypes.RequestPayload{
+		ChargePointModel:        "ModelX",
+		ChargePointVendor:       "VendorX",
+		ChargeBoxSerialNumber:   &invalid,
+	}
+
+	_, err := Request(input)
+	if err == nil {
+		t.Fatal("expected error for invalid ChargeBoxSerialNumber, got nil")
+	}
+}
+
+func TestRequest_invalidOptionalField_ChargePointSerialNumber(t *testing.T) {
+	t.Parallel()
+
+	invalid := strings.Repeat("S", 26)
+	input := bootnotificationtypes.RequestPayload{
+		ChargePointModel:        "ModelX",
+		ChargePointVendor:       "VendorX",
+		ChargePointSerialNumber: &invalid,
+	}
+
+	_, err := Request(input)
+	if err == nil {
+		t.Fatal("expected error for invalid ChargePointSerialNumber, got nil")
+	}
+}
+
+func TestRequest_invalidOptionalField_FirmwareVersion(t *testing.T) {
+	t.Parallel()
+
+	invalid := strings.Repeat("F", 51)
+	input := bootnotificationtypes.RequestPayload{
+		ChargePointModel:  "ModelX",
+		ChargePointVendor: "VendorX",
+		FirmwareVersion:   &invalid,
+	}
+
+	_, err := Request(input)
+	if err == nil {
+		t.Fatal("expected error for invalid FirmwareVersion, got nil")
+	}
+}
+
+func TestRequest_invalidOptionalField_Iccid(t *testing.T) {
+	t.Parallel()
+
+	invalid := strings.Repeat("1", 21)
 	input := bootnotificationtypes.RequestPayload{
 		ChargePointModel:  "ModelX",
 		ChargePointVendor: "VendorX",
@@ -101,7 +149,55 @@ func TestRequest_invalidOptionalField_iccid(t *testing.T) {
 
 	_, err := Request(input)
 	if err == nil {
-		t.Fatal("expected error for invalid Iccid field, got nil")
+		t.Fatal("expected error for invalid Iccid, got nil")
+	}
+}
+
+func TestRequest_invalidOptionalField_Imsi(t *testing.T) {
+	t.Parallel()
+
+	invalid := strings.Repeat("2", 21)
+	input := bootnotificationtypes.RequestPayload{
+		ChargePointModel:  "ModelX",
+		ChargePointVendor: "VendorX",
+		Imsi:              &invalid,
+	}
+
+	_, err := Request(input)
+	if err == nil {
+		t.Fatal("expected error for invalid Imsi, got nil")
+	}
+}
+
+func TestRequest_invalidOptionalField_MeterSerialNumber(t *testing.T) {
+	t.Parallel()
+
+	invalid := strings.Repeat("M", 26)
+	input := bootnotificationtypes.RequestPayload{
+		ChargePointModel:    "ModelX",
+		ChargePointVendor:   "VendorX",
+		MeterSerialNumber:   &invalid,
+	}
+
+	_, err := Request(input)
+	if err == nil {
+		t.Fatal("expected error for invalid MeterSerialNumber, got nil")
+	}
+}
+
+func TestRequest_invalidOptionalField_MeterType(t *testing.T) {
+	t.Parallel()
+
+	invalid := strings.Repeat("T", 26)
+	input := bootnotificationtypes.RequestPayload{
+		ChargePointModel:  "ModelX",
+		ChargePointVendor: "VendorX",
+		MeterType:         &invalid,
+	}
+
+	_, err := Request(input)
+	if err == nil {
+		t.Fatal("expected error for invalid MeterType, got nil")
 	}
 }
 
@@ -111,7 +207,6 @@ func TestRequest_allOptionalFieldsNil(t *testing.T) {
 	input := bootnotificationtypes.RequestPayload{
 		ChargePointModel:  "ModelX",
 		ChargePointVendor: "VendorX",
-		// All other fields nil
 	}
 
 	_, err := Request(input)
