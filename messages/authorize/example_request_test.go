@@ -44,7 +44,7 @@ func ExampleRequest_emptyIdTag() {
 	fmt.Println("This should not print")
 
 	// Output:
-	// Error: request -> invalid idTag -> ciString.Validate -> value must not be empty
+	// Error: request -> invalid idTag -> ciString.Validate: value must not be empty
 }
 
 func ExampleRequest_too_long_idtag() {
@@ -56,7 +56,7 @@ func ExampleRequest_too_long_idtag() {
 	}
 
 	// Output:
-	// Error: failed to construct request -> request -> invalid idTag -> ciString.Validate -> value exceeds maximum allowed length -> got length 25, max 20
+	// Error: failed to construct request -> request -> invalid idTag -> ciString.Validate: value exceeds maximum allowed length (got length 25, max 20)
 }
 
 func ExampleRequest_parse() {
@@ -116,7 +116,7 @@ func ExampleRequest_parse_invalid() {
 	}
 
 	// Output:
-	// Error: Request failed -> request -> invalid idTag -> ciString.Validate -> value exceeds maximum allowed length -> got length 36, max 20
+	// Error: Request failed -> request -> invalid idTag -> ciString.Validate: value exceeds maximum allowed length (got length 36, max 20)
 }
 
 func ExampleRequest_parse_empty() {
@@ -143,7 +143,7 @@ func ExampleRequest_parse_empty() {
 	}
 
 	// Output:
-	// Error: Request failed -> request -> invalid idTag -> ciString.Validate -> value must not be empty
+	// Error: Request failed -> request -> invalid idTag -> ciString.Validate: value must not be empty
 }
 
 func ExampleRequest_parse_idTag_empty() {
@@ -172,7 +172,7 @@ func ExampleRequest_parse_idTag_empty() {
 	}
 
 	// Output:
-	// Error: Request failed -> request -> invalid idTag -> ciString.Validate -> value must not be empty
+	// Error: Request failed -> request -> invalid idTag -> ciString.Validate: value must not be empty
 }
 
 func ExampleRequest_parse_idTag_NotFound() {
@@ -201,7 +201,7 @@ func ExampleRequest_parse_idTag_NotFound() {
 	}
 
 	// Output:
-	// Error: Request failed -> request -> invalid idTag -> ciString.Validate -> value must not be empty
+	// Error: Request failed -> request -> invalid idTag -> ciString.Validate: value must not be empty
 }
 
 // decodeRawIdTag extracts the "idTag" field from a JSON object and returns a RequestPayload.

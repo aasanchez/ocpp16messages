@@ -20,7 +20,7 @@ type RequestMessage struct {
 }
 
 func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error) {
-	chargeBoxSerialNumber, err := sharedtypes.CiString25_Optional("ChargeBoxSerialNumber", input.ChargeBoxSerialNumber)
+	chargeBoxSerialNumber, err := sharedtypes.CiString25Optional("ChargeBoxSerialNumber", input.ChargeBoxSerialNumber)
 	if err != nil {
 		return RequestMessage{}, fmt.Errorf("chargeBoxSerialNumber: %w", err)
 	}
@@ -30,7 +30,7 @@ func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error)
 		return RequestMessage{}, fmt.Errorf("chargePointModel: %w", err)
 	}
 
-	chargePointSerialNumber, err := sharedtypes.CiString25_Optional("ChargePointSerialNumber", input.ChargePointSerialNumber)
+	chargePointSerialNumber, err := sharedtypes.CiString25Optional("ChargePointSerialNumber", input.ChargePointSerialNumber)
 	if err != nil {
 		return RequestMessage{}, fmt.Errorf("chargePointSerialNumber: %w", err)
 	}
@@ -40,27 +40,27 @@ func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error)
 		return RequestMessage{}, fmt.Errorf("chargePointVendor: %w", err)
 	}
 
-	firmwareVersion, err := sharedtypes.CiString50_Optional("FirmwareVersion", input.FirmwareVersion)
+	firmwareVersion, err := sharedtypes.CiString50Optional("FirmwareVersion", input.FirmwareVersion)
 	if err != nil {
 		return RequestMessage{}, fmt.Errorf("firmwareVersion: %w", err)
 	}
 
-	iccid, err := sharedtypes.CiString20_Optional("Iccid", input.Iccid)
+	iccid, err := sharedtypes.CiString20Optional("Iccid", input.Iccid)
 	if err != nil {
 		return RequestMessage{}, fmt.Errorf("iccid: %w", err)
 	}
 
-	imsi, err := sharedtypes.CiString20_Optional("Imsi", input.Imsi)
+	imsi, err := sharedtypes.CiString20Optional("Imsi", input.Imsi)
 	if err != nil {
 		return RequestMessage{}, fmt.Errorf("imsi: %w", err)
 	}
 
-	meterSerialNumber, err := sharedtypes.CiString25_Optional("MeterSerialNumber", input.MeterSerialNumber)
+	meterSerialNumber, err := sharedtypes.CiString25Optional("MeterSerialNumber", input.MeterSerialNumber)
 	if err != nil {
 		return RequestMessage{}, fmt.Errorf("meterSerialNumber: %w", err)
 	}
 
-	meterType, err := sharedtypes.CiString25_Optional("MeterType", input.MeterType)
+	meterType, err := sharedtypes.CiString25Optional("MeterType", input.MeterType)
 	if err != nil {
 		return RequestMessage{}, fmt.Errorf("meterType: %w", err)
 	}
