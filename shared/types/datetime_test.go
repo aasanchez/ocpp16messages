@@ -26,17 +26,6 @@ func TestDateTime_failsOnInvalidFormat(t *testing.T) {
 	}
 }
 
-// func TestDateTime_failsOnZeroTime(t *testing.T) {
-// 	t.Parallel()
-
-// 	// simulate bypassing parse but constructing zero value directly
-// 	// this is impossible via parsing, so we directly validate the logic
-// 	dt := DateTimeType{value: time.Time{}}
-// 	if !dt.Value().IsZero() {
-// 		t.Fatal("expected zero time from manually constructed value")
-// 	}
-// }
-
 func TestDateTime_valueReturnsCorrectTime(t *testing.T) {
 	t.Parallel()
 

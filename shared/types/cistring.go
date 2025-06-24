@@ -13,7 +13,6 @@ const (
 	errFmtFieldWrapped = "%s: %w"
 )
 
-// ciString is the internal representation of a validated ASCII string.
 type ciString struct {
 	raw    string
 	MaxLen int
