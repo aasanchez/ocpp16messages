@@ -8,61 +8,61 @@ import (
 )
 
 type RequestMessage struct {
-	ChargeBoxSerialNumber   *sharedtypes.CiString25Type // Optional
-	ChargePointModel        sharedtypes.CiString20Type  // Required
-	ChargePointSerialNumber *sharedtypes.CiString25Type // Optional
-	ChargePointVendor       sharedtypes.CiString20Type  // Required
-	FirmwareVersion         *sharedtypes.CiString50Type // Optional
-	Iccid                   *sharedtypes.CiString20Type // Optional
-	Imsi                    *sharedtypes.CiString20Type // Optional
-	MeterSerialNumber       *sharedtypes.CiString25Type // Optional
-	MeterType               *sharedtypes.CiString25Type // Optional
+	ChargeBoxSerialNumber   *sharedtypes.CiString25Type
+	ChargePointModel        sharedtypes.CiString20Type
+	ChargePointSerialNumber *sharedtypes.CiString25Type
+	ChargePointVendor       sharedtypes.CiString20Type
+	FirmwareVersion         *sharedtypes.CiString50Type
+	Iccid                   *sharedtypes.CiString20Type
+	Imsi                    *sharedtypes.CiString20Type
+	MeterSerialNumber       *sharedtypes.CiString25Type
+	MeterType               *sharedtypes.CiString25Type
 }
 
 func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error) {
 	chargeBoxSerialNumber, err := sharedtypes.CiString25_Optional("ChargeBoxSerialNumber", input.ChargeBoxSerialNumber)
 	if err != nil {
-		return RequestMessage{}, err
+		return RequestMessage{}, fmt.Errorf("chargeBoxSerialNumber: %w", err)
 	}
 
 	chargePointModel, err := sharedtypes.CiString20(input.ChargePointModel)
 	if err != nil {
-		return RequestMessage{}, fmt.Errorf("invalid ChargePointModel: %w", err)
+		return RequestMessage{}, fmt.Errorf("chargePointModel: %w", err)
 	}
 
 	chargePointSerialNumber, err := sharedtypes.CiString25_Optional("ChargePointSerialNumber", input.ChargePointSerialNumber)
 	if err != nil {
-		return RequestMessage{}, err
+		return RequestMessage{}, fmt.Errorf("chargePointSerialNumber: %w", err)
 	}
 
 	chargePointVendor, err := sharedtypes.CiString20(input.ChargePointVendor)
 	if err != nil {
-		return RequestMessage{}, fmt.Errorf("invalid ChargePointVendor: %w", err)
+		return RequestMessage{}, fmt.Errorf("chargePointVendor: %w", err)
 	}
 
 	firmwareVersion, err := sharedtypes.CiString50_Optional("FirmwareVersion", input.FirmwareVersion)
 	if err != nil {
-		return RequestMessage{}, err
+		return RequestMessage{}, fmt.Errorf("firmwareVersion: %w", err)
 	}
 
 	iccid, err := sharedtypes.CiString20_Optional("Iccid", input.Iccid)
 	if err != nil {
-		return RequestMessage{}, err
+		return RequestMessage{}, fmt.Errorf("iccid: %w", err)
 	}
 
 	imsi, err := sharedtypes.CiString20_Optional("Imsi", input.Imsi)
 	if err != nil {
-		return RequestMessage{}, err
+		return RequestMessage{}, fmt.Errorf("imsi: %w", err)
 	}
 
 	meterSerialNumber, err := sharedtypes.CiString25_Optional("MeterSerialNumber", input.MeterSerialNumber)
 	if err != nil {
-		return RequestMessage{}, err
+		return RequestMessage{}, fmt.Errorf("meterSerialNumber: %w", err)
 	}
 
 	meterType, err := sharedtypes.CiString25_Optional("MeterType", input.MeterType)
 	if err != nil {
-		return RequestMessage{}, err
+		return RequestMessage{}, fmt.Errorf("meterType: %w", err)
 	}
 
 	return RequestMessage{
@@ -77,4 +77,3 @@ func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error)
 		MeterType:               meterType,
 	}, nil
 }
-
