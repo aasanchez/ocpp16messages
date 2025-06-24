@@ -17,6 +17,7 @@ var (
 	errExceedsMaxLength     = errors.New("value exceeds maximum allowed length")
 	errNonPrintableASCII    = errors.New("value contains non-printable ASCII characters")
 	errEmptyValueNotAllowed = errors.New("value must not be empty")
+	errFmtInvalidField 			= "invalid %s: %w"
 )
 
 // ciString is the internal representation of a validated ASCII string.
@@ -73,6 +74,19 @@ func CiString20(value string) (CiString20Type, error) {
 }
 func (c CiString20Type) Value() string   { return c.value.Value() }
 func (c CiString20Type) Validate() error { return c.value.Validate() }
+func CiString20_Optional(name string, input *string) (*CiString20Type, error) {
+	if input == nil {
+		return nil, nil
+	}
+
+	val, err := CiString20(*input)
+
+	if err != nil {
+		return nil, fmt.Errorf(errFmtInvalidField, name, err)
+	}
+
+	return &val, nil
+}
 
 // ---- CiString25 ----
 
@@ -85,6 +99,19 @@ func CiString25(value string) (CiString25Type, error) {
 }
 func (c CiString25Type) Value() string   { return c.value.Value() }
 func (c CiString25Type) Validate() error { return c.value.Validate() }
+func CiString25_Optional(name string, input *string) (*CiString25Type, error) {
+	if input == nil {
+		return nil, nil
+	}
+
+	val, err := CiString25(*input)
+
+	if err != nil {
+		return nil, fmt.Errorf(errFmtInvalidField, name, err)
+	}
+
+	return &val, nil
+}
 
 // ---- CiString50 ----
 
@@ -97,6 +124,20 @@ func CiString50(value string) (CiString50Type, error) {
 }
 func (c CiString50Type) Value() string   { return c.value.Value() }
 func (c CiString50Type) Validate() error { return c.value.Validate() }
+func CiString50_Optional(name string, input *string) (*CiString50Type, error) {
+	if input == nil {
+		return nil, nil
+	}
+
+	val, err := CiString50(*input)
+
+	if err != nil {
+		return nil, fmt.Errorf(errFmtInvalidField, name, err)
+	}
+
+	return &val, nil
+}
+
 
 // ---- CiString255 ----
 
@@ -109,7 +150,19 @@ func CiString255(value string) (CiString255Type, error) {
 }
 func (c CiString255Type) Value() string   { return c.value.Value() }
 func (c CiString255Type) Validate() error { return c.value.Validate() }
+func CiString255_Optional(name string, input *string) (*CiString255Type, error) {
+	if input == nil {
+		return nil, nil
+	}
 
+	val, err := CiString255(*input)
+
+	if err != nil {
+		return nil, fmt.Errorf(errFmtInvalidField, name, err)
+	}
+
+	return &val, nil
+}
 // ---- CiString500 ----
 
 type CiString500Type struct{ value ciString }
@@ -121,3 +174,16 @@ func CiString500(value string) (CiString500Type, error) {
 }
 func (c CiString500Type) Value() string   { return c.value.Value() }
 func (c CiString500Type) Validate() error { return c.value.Validate() }
+func CiString500_Optional(name string, input *string) (*CiString500Type, error) {
+	if input == nil {
+		return nil, nil
+	}
+
+	val, err := CiString500(*input)
+
+	if err != nil {
+		return nil, fmt.Errorf(errFmtInvalidField, name, err)
+	}
+
+	return &val, nil
+}
