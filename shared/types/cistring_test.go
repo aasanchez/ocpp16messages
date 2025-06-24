@@ -104,6 +104,7 @@ func TestCiString20Optional_TooLongFails(t *testing.T) {
 
 	input := strings.Repeat("X", 21)
 	_, err := CiString20Optional("idTag", &input)
+
 	if err == nil {
 		t.Error("expected error for too long input, got nil")
 	}
@@ -114,9 +115,11 @@ func TestCiString20Optional_ValidPasses(t *testing.T) {
 
 	input := "validTag"
 	val, err := CiString20Optional("idTag", &input)
+
 	if err != nil {
-		t.Errorf("unexpected error: %v", err)
+		t.Errorf(errExpectedNoError, err)
 	}
+
 	if val == nil || val.Value() != input {
 		t.Errorf("expected Value() = %q, got %v", input, val)
 	}
@@ -147,6 +150,7 @@ func TestCiString25Optional_TooLongFails(t *testing.T) {
 
 	input := strings.Repeat("B", 26)
 	_, err := CiString25Optional("parentIdTag", &input)
+
 	if err == nil {
 		t.Error("expected error for input > 25 characters")
 	}
@@ -157,9 +161,11 @@ func TestCiString25Optional_ValidPasses(t *testing.T) {
 
 	input := "ParentTagOK"
 	val, err := CiString25Optional("parentIdTag", &input)
+
 	if err != nil {
-		t.Errorf("unexpected error: %v", err)
+		t.Errorf(errExpectedNoError, err)
 	}
+
 	if val == nil || val.Value() != input {
 		t.Errorf("expected Value() = %q, got %v", input, val)
 	}
@@ -190,6 +196,7 @@ func TestCiString50Optional_TooLongFails(t *testing.T) {
 
 	input := strings.Repeat("C", 51)
 	_, err := CiString50Optional("description", &input)
+
 	if err == nil {
 		t.Error("expected error for input > 50 characters")
 	}
@@ -200,9 +207,11 @@ func TestCiString50Optional_ValidPasses(t *testing.T) {
 
 	input := "ValidDescription50"
 	val, err := CiString50Optional("description", &input)
+
 	if err != nil {
-		t.Errorf("unexpected error: %v", err)
+		t.Errorf(errExpectedNoError, err)
 	}
+
 	if val == nil || val.Value() != input {
 		t.Errorf("expected Value() = %q, got %v", input, val)
 	}
@@ -348,6 +357,7 @@ func TestCiString255Optional_TooLongFails(t *testing.T) {
 
 	input := strings.Repeat("D", 256)
 	_, err := CiString255Optional("note", &input)
+
 	if err == nil {
 		t.Error("expected error for input > 255 characters")
 	}
@@ -358,9 +368,11 @@ func TestCiString255Optional_ValidPasses(t *testing.T) {
 
 	input := strings.Repeat("D", 128)
 	val, err := CiString255Optional("note", &input)
+
 	if err != nil {
-		t.Errorf("unexpected error: %v", err)
+		t.Errorf(errExpectedNoError, err)
 	}
+
 	if val == nil || val.Value() != input {
 		t.Errorf("expected Value() = %q, got %v", input, val)
 	}
@@ -380,6 +392,7 @@ func TestCiString500Optional_TooLongFails(t *testing.T) {
 
 	input := strings.Repeat("E", 501)
 	_, err := CiString500Optional("message", &input)
+
 	if err == nil {
 		t.Error("expected error for input > 500 characters")
 	}
@@ -390,9 +403,11 @@ func TestCiString500Optional_ValidPasses(t *testing.T) {
 
 	input := strings.Repeat("E", 300)
 	val, err := CiString500Optional("message", &input)
+
 	if err != nil {
-		t.Errorf("unexpected error: %v", err)
+		t.Errorf(errExpectedNoError, err)
 	}
+
 	if val == nil || val.Value() != input {
 		t.Errorf("expected Value() = %q, got %v", input, val)
 	}
