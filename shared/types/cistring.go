@@ -73,7 +73,7 @@ func (c CiString20Type) Validate() error { return c.value.Validate() }
 
 func CiString20Optional(name string, input *string) (*CiString20Type, error) {
 	if input == nil {
-		return nil, fmt.Errorf(errFmtFieldWrapped, name, ErrNilCiString)
+		return nil, nil
 	}
 
 	val, err := CiString20(*input)
@@ -100,7 +100,7 @@ func (c CiString25Type) Validate() error { return c.value.Validate() }
 
 func CiString25Optional(name string, input *string) (*CiString25Type, error) {
 	if input == nil {
-		return nil, fmt.Errorf(errFmtFieldWrapped, name, ErrNilCiString)
+		return nil, nil
 	}
 
 	val, err := CiString25(*input)
@@ -127,7 +127,7 @@ func (c CiString50Type) Validate() error { return c.value.Validate() }
 
 func CiString50Optional(name string, input *string) (*CiString50Type, error) {
 	if input == nil {
-		return nil, fmt.Errorf(errFmtFieldWrapped, name, ErrNilCiString)
+		return nil, nil
 	}
 
 	val, err := CiString50(*input)
@@ -154,7 +154,7 @@ func (c CiString255Type) Validate() error { return c.value.Validate() }
 
 func CiString255Optional(name string, input *string) (*CiString255Type, error) {
 	if input == nil {
-		return nil, fmt.Errorf(errFmtFieldWrapped, name, ErrNilCiString)
+		return nil, nil
 	}
 
 	val, err := CiString255(*input)
@@ -181,7 +181,7 @@ func (c CiString500Type) Validate() error { return c.value.Validate() }
 
 func CiString500Optional(name string, input *string) (*CiString500Type, error) {
 	if input == nil {
-		return nil, fmt.Errorf(errFmtFieldWrapped, name, ErrNilCiString)
+		return nil, nil
 	}
 
 	val, err := CiString500(*input)
