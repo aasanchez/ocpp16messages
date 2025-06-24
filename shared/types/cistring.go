@@ -5,11 +5,11 @@ import (
 )
 
 const (
-	maxLenCiString20   = 20
-	maxLenCiString25   = 25
-	maxLenCiString50   = 50
-	maxLenCiString255  = 255
-	maxLenCiString500  = 500
+	maxLenCiString20  = 20
+	maxLenCiString25  = 25
+	maxLenCiString50  = 50
+	maxLenCiString255 = 255
+	maxLenCiString500 = 500
 )
 
 type ciString struct {

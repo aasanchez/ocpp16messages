@@ -2,6 +2,8 @@ package authorizetypes
 
 import (
 	"fmt"
+
+	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 type ConfirmationPayload struct {
@@ -10,7 +12,7 @@ type ConfirmationPayload struct {
 
 func (c ConfirmationPayload) Validate() error {
 	if c.IdTagInfo.Status == "" {
-		return fmt.Errorf("confirmation payload: %w", ErrInvalidIdTagInfo)
+		return fmt.Errorf("confirmation payload: %w", sharedtypes.ErrInvalidIdTagInfo)
 	}
 
 	return nil
