@@ -8,6 +8,8 @@ import (
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
+const errFmtFieldWrapped = "%s: %w"
+
 var ErrEmptyValueNotAllowed = errors.New("value must not be empty")
 
 type RequestMessage struct {
@@ -23,57 +25,51 @@ type RequestMessage struct {
 }
 
 func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error) {
+	var err error
+
 	chargeBoxSerialNumber, err := sharedtypes.CiString25Optional("ChargeBoxSerialNumber", input.ChargeBoxSerialNumber)
 	if err != nil {
-		return RequestMessage{}, fmt.Errorf("chargeBoxSerialNumber: %w", err)
+		return RequestMessage{}, wrapErr("chargeBoxSerialNumber", err)
 	}
 
-	if input.ChargePointModel == "" {
-		return RequestMessage{}, fmt.Errorf("chargePointModel: %w", ErrEmptyValueNotAllowed)
-	}
-
-	chargePointModel, err := sharedtypes.CiString20(input.ChargePointModel)
+	chargePointModel, err := requiredCiString20("ChargePointModel", input.ChargePointModel)
 	if err != nil {
-		return RequestMessage{}, fmt.Errorf("chargePointModel: %w", err)
+		return RequestMessage{}, err
 	}
 
 	chargePointSerialNumber, err := sharedtypes.CiString25Optional("ChargePointSerialNumber", input.ChargePointSerialNumber)
 	if err != nil {
-		return RequestMessage{}, fmt.Errorf("chargePointSerialNumber: %w", err)
+		return RequestMessage{}, wrapErr("chargePointSerialNumber", err)
 	}
 
-	if input.ChargePointVendor == "" {
-		return RequestMessage{}, fmt.Errorf("ChargePointVendor: %w", ErrEmptyValueNotAllowed)
-	}
-
-	chargePointVendor, err := sharedtypes.CiString20(input.ChargePointVendor)
+	chargePointVendor, err := requiredCiString20("ChargePointVendor", input.ChargePointVendor)
 	if err != nil {
-		return RequestMessage{}, fmt.Errorf("chargePointVendor: %w", err)
+		return RequestMessage{}, err
 	}
 
 	firmwareVersion, err := sharedtypes.CiString50Optional("FirmwareVersion", input.FirmwareVersion)
 	if err != nil {
-		return RequestMessage{}, fmt.Errorf("firmwareVersion: %w", err)
+		return RequestMessage{}, wrapErr("firmwareVersion", err)
 	}
 
 	iccid, err := sharedtypes.CiString20Optional("Iccid", input.Iccid)
 	if err != nil {
-		return RequestMessage{}, fmt.Errorf("iccid: %w", err)
+		return RequestMessage{}, wrapErr("iccid", err)
 	}
 
 	imsi, err := sharedtypes.CiString20Optional("Imsi", input.Imsi)
 	if err != nil {
-		return RequestMessage{}, fmt.Errorf("imsi: %w", err)
+		return RequestMessage{}, wrapErr("imsi", err)
 	}
 
 	meterSerialNumber, err := sharedtypes.CiString25Optional("MeterSerialNumber", input.MeterSerialNumber)
 	if err != nil {
-		return RequestMessage{}, fmt.Errorf("meterSerialNumber: %w", err)
+		return RequestMessage{}, wrapErr("meterSerialNumber", err)
 	}
 
 	meterType, err := sharedtypes.CiString25Optional("MeterType", input.MeterType)
 	if err != nil {
-		return RequestMessage{}, fmt.Errorf("meterType: %w", err)
+		return RequestMessage{}, wrapErr("meterType", err)
 	}
 
 	return RequestMessage{
@@ -87,4 +83,21 @@ func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error)
 		MeterSerialNumber:       meterSerialNumber,
 		MeterType:               meterType,
 	}, nil
+}
+
+// --- Helpers ---
+
+func wrapErr(field string, err error) error {
+	return fmt.Errorf(errFmtFieldWrapped, field, err)
+}
+
+func requiredCiString20(field, value string) (sharedtypes.CiString20Type, error) {
+	if value == "" {
+		return sharedtypes.CiString20Type{}, fmt.Errorf(errFmtFieldWrapped, field, ErrEmptyValueNotAllowed)
+	}
+	cs, err := sharedtypes.CiString20(value)
+	if err != nil {
+		return sharedtypes.CiString20Type{}, fmt.Errorf(errFmtFieldWrapped, field, err)
+	}
+	return cs, nil
 }
