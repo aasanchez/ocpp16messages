@@ -10,7 +10,6 @@ const (
 	maxLenCiString50   = 50
 	maxLenCiString255  = 255
 	maxLenCiString500  = 500
-	errFmtFieldWrapped = "%s: %w"
 )
 
 type ciString struct {
@@ -70,7 +69,7 @@ func CiString20Optional(name string, input *string) (*CiString20Type, error) {
 	val, err := CiString20(*input)
 
 	if err != nil {
-		return nil, fmt.Errorf(errFmtFieldWrapped, name, err)
+		return nil, fmt.Errorf(ErrFmtFieldWrapped, name, err)
 	}
 
 	return &val, nil
@@ -97,7 +96,7 @@ func CiString25Optional(name string, input *string) (*CiString25Type, error) {
 	val, err := CiString25(*input)
 
 	if err != nil {
-		return nil, fmt.Errorf(errFmtFieldWrapped, name, err)
+		return nil, fmt.Errorf(ErrFmtFieldWrapped, name, err)
 	}
 
 	return &val, nil
@@ -124,7 +123,7 @@ func CiString50Optional(name string, input *string) (*CiString50Type, error) {
 	val, err := CiString50(*input)
 
 	if err != nil {
-		return nil, fmt.Errorf(errFmtFieldWrapped, name, err)
+		return nil, fmt.Errorf(ErrFmtFieldWrapped, name, err)
 	}
 
 	return &val, nil
@@ -151,7 +150,7 @@ func CiString255Optional(name string, input *string) (*CiString255Type, error) {
 	val, err := CiString255(*input)
 
 	if err != nil {
-		return nil, fmt.Errorf(errFmtFieldWrapped, name, err)
+		return nil, fmt.Errorf(ErrFmtFieldWrapped, name, err)
 	}
 
 	return &val, nil
@@ -178,7 +177,7 @@ func CiString500Optional(name string, input *string) (*CiString500Type, error) {
 	val, err := CiString500(*input)
 
 	if err != nil {
-		return nil, fmt.Errorf(errFmtFieldWrapped, name, err)
+		return nil, fmt.Errorf(ErrFmtFieldWrapped, name, err)
 	}
 
 	return &val, nil
