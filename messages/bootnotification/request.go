@@ -47,12 +47,12 @@ func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error)
 		return RequestMessage{}, wrapErr("firmwareVersion", err)
 	}
 
-	iccid, err := sharedtypes.CiString20Optional("Iccid", input.Iccid)
+	iccid, err := sharedtypes.CiString20Optional(input.Iccid)
 	if err != nil {
 		return RequestMessage{}, wrapErr("iccid", err)
 	}
 
-	imsi, err := sharedtypes.CiString20Optional("Imsi", input.Imsi)
+	imsi, err := sharedtypes.CiString20Optional(input.Imsi)
 	if err != nil {
 		return RequestMessage{}, wrapErr("imsi", err)
 	}

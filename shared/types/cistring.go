@@ -51,6 +51,8 @@ func (cs ciString) Validate() error {
 // ---- CiString20 ----
 
 type CiString20Type struct{ value ciString }
+func (c CiString20Type) Value() string   { return c.value.Value() }
+func (c CiString20Type) Validate() error { return c.value.Validate() }
 
 func CiString20(value string) (CiString20Type, error) {
 	cs, err := CiString(value, maxLenCiString20)
@@ -58,18 +60,14 @@ func CiString20(value string) (CiString20Type, error) {
 	return CiString20Type{value: cs}, err
 }
 
-func (c CiString20Type) Value() string   { return c.value.Value() }
-func (c CiString20Type) Validate() error { return c.value.Validate() }
-
-func CiString20Optional(name string, input *string) (*CiString20Type, error) {
+func CiString20Optional(input *string) (*CiString20Type, error) {
 	if input == nil {
 		return nil, nil
 	}
 
 	val, err := CiString20(*input)
-
 	if err != nil {
-		return nil, fmt.Errorf(ErrFmtFieldWrapped, name, err)
+		return nil, err
 	}
 
 	return &val, nil
@@ -79,14 +77,14 @@ func CiString20Optional(name string, input *string) (*CiString20Type, error) {
 
 type CiString25Type struct{ value ciString }
 
+func (c CiString25Type) Value() string   { return c.value.Value() }
+func (c CiString25Type) Validate() error { return c.value.Validate() }
+
 func CiString25(value string) (CiString25Type, error) {
 	cs, err := CiString(value, maxLenCiString25)
 
 	return CiString25Type{value: cs}, err
 }
-
-func (c CiString25Type) Value() string   { return c.value.Value() }
-func (c CiString25Type) Validate() error { return c.value.Validate() }
 
 func CiString25Optional(name string, input *string) (*CiString25Type, error) {
 	if input == nil {

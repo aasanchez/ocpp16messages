@@ -73,7 +73,7 @@ func TestCiString20Type_CreateTooLongFails(t *testing.T) {
 func TestCiString20Optional_NilInputReturnsNil(t *testing.T) {
 	t.Parallel()
 
-	val, err := CiString20Optional("idTag", nil)
+	val, err := CiString20Optional(nil)
 	if err != nil {
 		t.Errorf(ErrExpectedNoError, err)
 	}
@@ -83,19 +83,19 @@ func TestCiString20Optional_NilInputReturnsNil(t *testing.T) {
 	}
 }
 
-func TestCiString20Optional_ErrorIncludesFieldName(t *testing.T) {
+func TestCiString20Optional_TooLongFails(t *testing.T) {
 	t.Parallel()
 
 	input := strings.Repeat("X", 21)
-	val, err := CiString20Optional("idTag", &input)
+	val, err := CiString20Optional(&input)
 	_ = val
 
 	if err == nil {
-		t.Fatal("expected error for too long idTag input, got nil")
+		t.Fatal("expected error for too long string, got nil")
 	}
 
-	if !strings.Contains(err.Error(), "idTag") {
-		t.Errorf("expected error to include field name 'idTag', got: %v", err)
+	if !strings.Contains(err.Error(), "exceeds maximum") {
+		t.Errorf("expected error about exceeding length, got: %v", err)
 	}
 }
 
@@ -103,7 +103,7 @@ func TestCiString20Optional_ValidPasses(t *testing.T) {
 	t.Parallel()
 
 	input := "validTag"
-	val, err := CiString20Optional("idTag", &input)
+	val, err := CiString20Optional(&input)
 
 	if err != nil {
 		t.Errorf(ErrExpectedNoError, err)
