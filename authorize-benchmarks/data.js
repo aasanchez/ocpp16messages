@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1750431416977,
+  "lastUpdate": 1750861830709,
   "repoUrl": "https://github.com/aasanchez/ocpp16messages",
   "entries": {
     "Go Benchmark": [
@@ -284,6 +284,148 @@ window.BENCHMARK_DATA = {
             "value": 0,
             "unit": "allocs/op",
             "extra": "61895824 times\n4 procs"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Alexis Sánchez",
+            "username": "aasanchez",
+            "email": "aasanchez@gmail.com"
+          },
+          "committer": {
+            "name": "Alexis Sánchez",
+            "username": "aasanchez",
+            "email": "aasanchez@gmail.com"
+          },
+          "id": "1cb2bcb95adc26e49b8c1656438a61290f8db851",
+          "message": "chore(golangci.yml): replace disabled linter godot with nilnil for better configuration clarity\nchore(ci_string_test.go): update comment for linting to clarify intentional control character test",
+          "timestamp": "2025-06-25T12:23:52Z",
+          "url": "https://github.com/aasanchez/ocpp16messages/commit/1cb2bcb95adc26e49b8c1656438a61290f8db851"
+        },
+        "date": 1750861829797,
+        "tool": "go",
+        "benches": [
+          {
+            "name": "BenchmarkAuthorizeConfirmation_valid",
+            "value": 215,
+            "unit": "ns/op\t      48 B/op\t       2 allocs/op",
+            "extra": "5598908 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeConfirmation_valid - ns/op",
+            "value": 215,
+            "unit": "ns/op",
+            "extra": "5598908 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeConfirmation_valid - B/op",
+            "value": 48,
+            "unit": "B/op",
+            "extra": "5598908 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeConfirmation_valid - allocs/op",
+            "value": 2,
+            "unit": "allocs/op",
+            "extra": "5598908 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeConfirmation_invalidStatus",
+            "value": 780.2,
+            "unit": "ns/op\t     368 B/op\t       7 allocs/op",
+            "extra": "1539604 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeConfirmation_invalidStatus - ns/op",
+            "value": 780.2,
+            "unit": "ns/op",
+            "extra": "1539604 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeConfirmation_invalidStatus - B/op",
+            "value": 368,
+            "unit": "B/op",
+            "extra": "1539604 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeConfirmation_invalidStatus - allocs/op",
+            "value": 7,
+            "unit": "allocs/op",
+            "extra": "1539604 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeConfirmation_invalidExpiryDate",
+            "value": 1502,
+            "unit": "ns/op\t     952 B/op\t      19 allocs/op",
+            "extra": "729690 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeConfirmation_invalidExpiryDate - ns/op",
+            "value": 1502,
+            "unit": "ns/op",
+            "extra": "729690 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeConfirmation_invalidExpiryDate - B/op",
+            "value": 952,
+            "unit": "B/op",
+            "extra": "729690 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeConfirmation_invalidExpiryDate - allocs/op",
+            "value": 19,
+            "unit": "allocs/op",
+            "extra": "729690 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeConfirmation_invalidParentIdTag",
+            "value": 843.3,
+            "unit": "ns/op\t     504 B/op\t       7 allocs/op",
+            "extra": "1365523 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeConfirmation_invalidParentIdTag - ns/op",
+            "value": 843.3,
+            "unit": "ns/op",
+            "extra": "1365523 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeConfirmation_invalidParentIdTag - B/op",
+            "value": 504,
+            "unit": "B/op",
+            "extra": "1365523 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeConfirmation_invalidParentIdTag - allocs/op",
+            "value": 7,
+            "unit": "allocs/op",
+            "extra": "1365523 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeRequest_Valid",
+            "value": 18.97,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "63539367 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeRequest_Valid - ns/op",
+            "value": 18.97,
+            "unit": "ns/op",
+            "extra": "63539367 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeRequest_Valid - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "63539367 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeRequest_Valid - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "63539367 times\n4 procs"
           }
         ]
       }
