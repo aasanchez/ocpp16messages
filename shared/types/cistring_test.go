@@ -25,8 +25,8 @@ func TestCiString_TooLongFails(t *testing.T) {
 
 func TestCiString_NonPrintableFails(t *testing.T) {
 	t.Parallel()
-
-	_, err := CiString("OCPP", 20) //nolint
+	//lint:ignore ST1018 intentional control character to test validation of non-printable input
+	_, err := CiString("OCPP", 20) //nolint:staticcheck
 	if err == nil {
 		t.Errorf(ErrExpectedNonNilError, "non-printable characters")
 	}
