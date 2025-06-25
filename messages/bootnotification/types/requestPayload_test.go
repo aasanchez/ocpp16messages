@@ -10,15 +10,15 @@ func TestRequestPayload_ValidateValidPayload(t *testing.T) {
 	t.Parallel()
 
 	payload := RequestPayload{
-		ChargeBoxSerialNumber:   nil,
+		ChargeBoxSerialNumber:   "",
 		ChargePointModel:        "ACME Model X",
-		ChargePointSerialNumber: nil,
+		ChargePointSerialNumber: "",
 		ChargePointVendor:       "ACME Inc.",
-		FirmwareVersion:         nil,
-		Iccid:                   nil,
-		Imsi:                    nil,
-		MeterSerialNumber:       nil,
-		MeterType:               nil,
+		FirmwareVersion:         "",
+		Iccid:                   "",
+		Imsi:                    "",
+		MeterSerialNumber:       "",
+		MeterType:               "",
 	}
 
 	if err := payload.Validate(); err != nil {
@@ -30,15 +30,15 @@ func TestRequestPayload_ValidateFailsWhenChargePointVendorIsEmpty(t *testing.T) 
 	t.Parallel()
 
 	payload := RequestPayload{
-		ChargeBoxSerialNumber:   nil,
+		ChargeBoxSerialNumber:   "",
 		ChargePointModel:        "Model X",
-		ChargePointSerialNumber: nil,
+		ChargePointSerialNumber: "",
 		ChargePointVendor:       "",
-		FirmwareVersion:         nil,
-		Iccid:                   nil,
-		Imsi:                    nil,
-		MeterSerialNumber:       nil,
-		MeterType:               nil,
+		FirmwareVersion:         "",
+		Iccid:                   "",
+		Imsi:                    "",
+		MeterSerialNumber:       "",
+		MeterType:               "",
 	}
 
 	if err := payload.Validate(); err == nil {
@@ -50,15 +50,15 @@ func TestRequestPayload_ValidateFailsWhenChargePointModelIsEmpty(t *testing.T) {
 	t.Parallel()
 
 	payload := RequestPayload{
-		ChargeBoxSerialNumber:   nil,
+		ChargeBoxSerialNumber:   "",
 		ChargePointModel:        "",
-		ChargePointSerialNumber: nil,
+		ChargePointSerialNumber: "",
 		ChargePointVendor:       "Vendor X",
-		FirmwareVersion:         nil,
-		Iccid:                   nil,
-		Imsi:                    nil,
-		MeterSerialNumber:       nil,
-		MeterType:               nil,
+		FirmwareVersion:         "",
+		Iccid:                   "",
+		Imsi:                    "",
+		MeterSerialNumber:       "",
+		MeterType:               "",
 	}
 
 	if err := payload.Validate(); err == nil {

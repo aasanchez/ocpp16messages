@@ -8,21 +8,21 @@ import (
 )
 
 type RequestMessage struct {
-	ChargeBoxSerialNumber   *sharedtypes.CiString25Type
+	ChargeBoxSerialNumber   sharedtypes.CiString25Type
 	ChargePointModel        sharedtypes.CiString20Type
-	ChargePointSerialNumber *sharedtypes.CiString25Type
+	ChargePointSerialNumber sharedtypes.CiString25Type
 	ChargePointVendor       sharedtypes.CiString20Type
-	FirmwareVersion         *sharedtypes.CiString50Type
-	Iccid                   *sharedtypes.CiString20Type
-	Imsi                    *sharedtypes.CiString20Type
-	MeterSerialNumber       *sharedtypes.CiString25Type
-	MeterType               *sharedtypes.CiString25Type
+	FirmwareVersion         sharedtypes.CiString50Type
+	Iccid                   sharedtypes.CiString20Type
+	Imsi                    sharedtypes.CiString20Type
+	MeterSerialNumber       sharedtypes.CiString25Type
+	MeterType               sharedtypes.CiString25Type
 }
 
 func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error) {
 	var err error
 
-	chargeBoxSerialNumber, err := sharedtypes.CiString25Optional("ChargeBoxSerialNumber", input.ChargeBoxSerialNumber)
+	chargeBoxSerialNumber, err := sharedtypes.CiString25(input.ChargeBoxSerialNumber)
 	if err != nil {
 		return RequestMessage{}, wrapErr("chargeBoxSerialNumber", err)
 	}
@@ -32,7 +32,7 @@ func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error)
 		return RequestMessage{}, err
 	}
 
-	chargePointSerialNumber, err := sharedtypes.CiString25Optional("ChargePointSerialNumber", input.ChargePointSerialNumber)
+	chargePointSerialNumber, err := sharedtypes.CiString25(input.ChargePointSerialNumber)
 	if err != nil {
 		return RequestMessage{}, wrapErr("chargePointSerialNumber", err)
 	}
@@ -42,27 +42,27 @@ func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error)
 		return RequestMessage{}, err
 	}
 
-	firmwareVersion, err := sharedtypes.CiString50Optional("FirmwareVersion", input.FirmwareVersion)
+	firmwareVersion, err := sharedtypes.CiString50(input.FirmwareVersion)
 	if err != nil {
 		return RequestMessage{}, wrapErr("firmwareVersion", err)
 	}
 
-	iccid, err := sharedtypes.CiString20Optional(input.Iccid)
+	iccid, err := sharedtypes.CiString20(input.Iccid)
 	if err != nil {
 		return RequestMessage{}, wrapErr("iccid", err)
 	}
 
-	imsi, err := sharedtypes.CiString20Optional(input.Imsi)
+	imsi, err := sharedtypes.CiString20(input.Imsi)
 	if err != nil {
 		return RequestMessage{}, wrapErr("imsi", err)
 	}
 
-	meterSerialNumber, err := sharedtypes.CiString25Optional("MeterSerialNumber", input.MeterSerialNumber)
+	meterSerialNumber, err := sharedtypes.CiString25(input.MeterSerialNumber)
 	if err != nil {
 		return RequestMessage{}, wrapErr("meterSerialNumber", err)
 	}
 
-	meterType, err := sharedtypes.CiString25Optional("MeterType", input.MeterType)
+	meterType, err := sharedtypes.CiString25(input.MeterType)
 	if err != nil {
 		return RequestMessage{}, wrapErr("meterType", err)
 	}

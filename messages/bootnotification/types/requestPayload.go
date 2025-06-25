@@ -11,15 +11,15 @@ var (
 )
 
 type RequestPayload struct {
-	ChargeBoxSerialNumber   *string
+	ChargeBoxSerialNumber   string
 	ChargePointModel        string
-	ChargePointSerialNumber *string
+	ChargePointSerialNumber string
 	ChargePointVendor       string
-	FirmwareVersion         *string
-	Iccid                   *string
-	Imsi                    *string
-	MeterSerialNumber       *string
-	MeterType               *string
+	FirmwareVersion         string
+	Iccid                   string
+	Imsi                    string
+	MeterSerialNumber       string
+	MeterType               string
 }
 
 func (r RequestPayload) Validate() error {
