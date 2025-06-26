@@ -153,3 +153,13 @@ func TestCiString500Type_CreateAndValidate(t *testing.T) {
 		t.Errorf(ErrExpectedValueMismatch, input, ciStr.Value())
 	}
 }
+
+func TestCiString_NonPrintableCharacterFails(t *testing.T) {
+	t.Parallel()
+
+	// Using ASCII Bell character (code 7)
+	_, err := CiString("Hello\aWorld", 20)
+	if !errors.Is(err, ErrNonPrintableASCII) {
+		t.Errorf("expected ErrNonPrintableASCII, got: %v", err)
+	}
+}
