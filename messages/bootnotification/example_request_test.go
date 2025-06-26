@@ -24,6 +24,7 @@ func ExampleRequest() {
 	req, err := bootnotification.Request(input)
 	if err != nil {
 		fmt.Println("Error:", err)
+
 		return
 	}
 
