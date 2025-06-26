@@ -138,3 +138,63 @@ func TestRequest_requiredFieldsValidation_nonPrintableVendor(t *testing.T) {
 		t.Fatal("expected error for non-printable ChargePointVendor, got nil")
 	}
 }
+
+func TestRequest_invalidChargeBoxSerialNumber(t *testing.T) {
+	t.Parallel()
+
+	input := validInput()
+	input.ChargeBoxSerialNumber = strings.Repeat("X", 26)
+
+	_, err := Request(input)
+	if err == nil || !strings.Contains(err.Error(), "chargeBoxSerialNumber") {
+		t.Fatalf("expected error for invalid ChargeBoxSerialNumber, got: %v", err)
+	}
+}
+
+func TestRequest_invalidChargePointSerialNumber(t *testing.T) {
+	t.Parallel()
+
+	input := validInput()
+	input.ChargePointSerialNumber = strings.Repeat("P", 26)
+
+	_, err := Request(input)
+	if err == nil || !strings.Contains(err.Error(), "chargePointSerialNumber") {
+		t.Fatalf("expected error for invalid ChargePointSerialNumber, got: %v", err)
+	}
+}
+
+func TestRequest_invalidFirmwareVersion(t *testing.T) {
+	t.Parallel()
+
+	input := validInput()
+	input.FirmwareVersion = strings.Repeat("F", 51)
+
+	_, err := Request(input)
+	if err == nil || !strings.Contains(err.Error(), "firmwareVersion") {
+		t.Fatalf("expected error for invalid FirmwareVersion, got: %v", err)
+	}
+}
+
+func TestRequest_invalidIccid(t *testing.T) {
+	t.Parallel()
+
+	input := validInput()
+	input.Iccid = strings.Repeat("9", 21)
+
+	_, err := Request(input)
+	if err == nil || !strings.Contains(err.Error(), "iccid") {
+		t.Fatalf("expected error for invalid Iccid, got: %v", err)
+	}
+}
+
+func TestRequest_invalidImsi(t *testing.T) {
+	t.Parallel()
+
+	input := validInput()
+	input.Imsi = strings.Repeat("2", 21)
+
+	_, err := Request(input)
+	if err == nil || !strings.Contains(err.Error(), "imsi") {
+		t.Fatalf("expected error for invalid Imsi, got: %v", err)
+	}
+}
