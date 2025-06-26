@@ -51,6 +51,7 @@ func (cs ciString) Validate() error {
 // ---- CiString20 ----
 
 type CiString20Type struct{ value ciString }
+
 func (c CiString20Type) Value() string   { return c.value.Value() }
 func (c CiString20Type) Validate() error { return c.value.Validate() }
 func CiString20(value string) (CiString20Type, error) {
@@ -59,10 +60,10 @@ func CiString20(value string) (CiString20Type, error) {
 	return CiString20Type{value: cs}, err
 }
 
-
 // ---- CiString25 ----
 
 type CiString25Type struct{ value ciString }
+
 func (c CiString25Type) Value() string   { return c.value.Value() }
 func (c CiString25Type) Validate() error { return c.value.Validate() }
 func CiString25(value string) (CiString25Type, error) {
@@ -74,6 +75,7 @@ func CiString25(value string) (CiString25Type, error) {
 // ---- CiString50 ----
 
 type CiString50Type struct{ value ciString }
+
 func (c CiString50Type) Value() string   { return c.value.Value() }
 func (c CiString50Type) Validate() error { return c.value.Validate() }
 func CiString50(value string) (CiString50Type, error) {
@@ -85,6 +87,7 @@ func CiString50(value string) (CiString50Type, error) {
 // ---- CiString255 ----
 
 type CiString255Type struct{ value ciString }
+
 func (c CiString255Type) Value() string   { return c.value.Value() }
 func (c CiString255Type) Validate() error { return c.value.Validate() }
 func CiString255(value string) (CiString255Type, error) {
@@ -96,6 +99,7 @@ func CiString255(value string) (CiString255Type, error) {
 // ---- CiString500 ----
 
 type CiString500Type struct{ value ciString }
+
 func (c CiString500Type) Value() string   { return c.value.Value() }
 func (c CiString500Type) Validate() error { return c.value.Validate() }
 func CiString500(value string) (CiString500Type, error) {
