@@ -73,3 +73,69 @@ jobs:
           auto-push: true
           benchmark-data-dir-path: authorize-types-benchmarks
           gh-pages-branch: gh-pages
+
+  bootnotification-benchmarks:
+    runs-on: ubuntu-latest
+    name: Authorize Benchmarks
+    permissions:
+      contents: write
+      pull-requests: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Run Authorize Benchmarks
+        run: |
+          go test -bench=. -benchmem ./messages/bootnotification/benchmarks >bootnotification-benchmarks.txt
+
+      - name: Publish Authorize Benchmarks
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          name: Go Benchmark
+          tool: go
+          output-file-path: bootnotification-benchmarks.txt
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          auto-push: true
+          benchmark-data-dir-path: bootnotification-benchmarks
+          gh-pages-branch: gh-pages
+
+  bootnotification-types-benchmarks:
+    runs-on: ubuntu-latest
+    name: Authorize Types Benchmarks
+    permissions:
+      contents: write
+      pull-requests: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Run Authorize Types Benchmarks
+        run: |
+          go test -bench=. -benchmem ./messages/bootnotification/types/benchmarks >bootnotification-types-benchmarks.txt
+
+      - name: Publish Authorize Types Benchmarks
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          name: Go Benchmark
+          tool: go
+          output-file-path: bootnotification-types-benchmarks.txt
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          auto-push: true
+          benchmark-data-dir-path: bootnotification-types-benchmarks
+          gh-pages-branch: gh-pages
