@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1750966898166,
+  "lastUpdate": 1750967140721,
   "repoUrl": "https://github.com/aasanchez/ocpp16messages",
   "entries": {
     "Go Benchmark": [
@@ -510,6 +510,246 @@ window.BENCHMARK_DATA = {
             "value": 0,
             "unit": "allocs/op",
             "extra": "241724876 times\n4 procs"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "aasanchez@gmail.com",
+            "name": "Alexis Sánchez",
+            "username": "aasanchez"
+          },
+          "committer": {
+            "email": "aasanchez@gmail.com",
+            "name": "Alexis Sánchez",
+            "username": "aasanchez"
+          },
+          "distinct": true,
+          "id": "539507f8840894520162bf6682a76188e21925b6",
+          "message": "feat(bootnotification): add benchmarks for confirmation and payload validation, and refactor confirmation function to export it",
+          "timestamp": "2025-06-26T21:37:56+02:00",
+          "tree_id": "9d6912b70f14d6a4f091a58c5a78de0298ecf65e",
+          "url": "https://github.com/aasanchez/ocpp16messages/commit/539507f8840894520162bf6682a76188e21925b6"
+        },
+        "date": 1750967140325,
+        "tool": "go",
+        "benches": [
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_Valid",
+            "value": 3.134,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "384780784 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_Valid - ns/op",
+            "value": 3.134,
+            "unit": "ns/op",
+            "extra": "384780784 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_Valid - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "384780784 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_Valid - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "384780784 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_MissingCurrentTime",
+            "value": 162,
+            "unit": "ns/op\t      96 B/op\t       2 allocs/op",
+            "extra": "7320776 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_MissingCurrentTime - ns/op",
+            "value": 162,
+            "unit": "ns/op",
+            "extra": "7320776 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_MissingCurrentTime - B/op",
+            "value": 96,
+            "unit": "B/op",
+            "extra": "7320776 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_MissingCurrentTime - allocs/op",
+            "value": 2,
+            "unit": "allocs/op",
+            "extra": "7320776 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_MissingInterval",
+            "value": 157.3,
+            "unit": "ns/op\t      96 B/op\t       2 allocs/op",
+            "extra": "7422106 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_MissingInterval - ns/op",
+            "value": 157.3,
+            "unit": "ns/op",
+            "extra": "7422106 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_MissingInterval - B/op",
+            "value": 96,
+            "unit": "B/op",
+            "extra": "7422106 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_MissingInterval - allocs/op",
+            "value": 2,
+            "unit": "allocs/op",
+            "extra": "7422106 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_MissingStatus",
+            "value": 160.1,
+            "unit": "ns/op\t      96 B/op\t       2 allocs/op",
+            "extra": "7419804 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_MissingStatus - ns/op",
+            "value": 160.1,
+            "unit": "ns/op",
+            "extra": "7419804 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_MissingStatus - B/op",
+            "value": 96,
+            "unit": "B/op",
+            "extra": "7419804 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_MissingStatus - allocs/op",
+            "value": 2,
+            "unit": "allocs/op",
+            "extra": "7419804 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_MixedParallel",
+            "value": 70.78,
+            "unit": "ns/op\t      72 B/op\t       1 allocs/op",
+            "extra": "17701849 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_MixedParallel - ns/op",
+            "value": 70.78,
+            "unit": "ns/op",
+            "extra": "17701849 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_MixedParallel - B/op",
+            "value": 72,
+            "unit": "B/op",
+            "extra": "17701849 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_MixedParallel - allocs/op",
+            "value": 1,
+            "unit": "allocs/op",
+            "extra": "17701849 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRegistrationStatus_Accepted",
+            "value": 62.94,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "18927890 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRegistrationStatus_Accepted - ns/op",
+            "value": 62.94,
+            "unit": "ns/op",
+            "extra": "18927890 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRegistrationStatus_Accepted - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "18927890 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRegistrationStatus_Accepted - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "18927890 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRegistrationStatus_Pending",
+            "value": 63.12,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "19002144 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRegistrationStatus_Pending - ns/op",
+            "value": 63.12,
+            "unit": "ns/op",
+            "extra": "19002144 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRegistrationStatus_Pending - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "19002144 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRegistrationStatus_Pending - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "19002144 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRegistrationStatus_Rejected",
+            "value": 63.6,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "18820131 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRegistrationStatus_Rejected - ns/op",
+            "value": 63.6,
+            "unit": "ns/op",
+            "extra": "18820131 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRegistrationStatus_Rejected - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "18820131 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRegistrationStatus_Rejected - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "18820131 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Validate",
+            "value": 4.677,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "256534100 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Validate - ns/op",
+            "value": 4.677,
+            "unit": "ns/op",
+            "extra": "256534100 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Validate - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "256534100 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Validate - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "256534100 times\n4 procs"
           }
         ]
       }
