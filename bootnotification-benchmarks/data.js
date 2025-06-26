@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1750965941796,
+  "lastUpdate": 1750966896159,
   "repoUrl": "https://github.com/aasanchez/ocpp16messages",
   "entries": {
     "Go Benchmark": [
@@ -226,6 +226,76 @@ window.BENCHMARK_DATA = {
             "value": 0,
             "unit": "allocs/op",
             "extra": "5061588 times\n4 procs"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Alexis Sánchez",
+            "username": "aasanchez",
+            "email": "aasanchez@gmail.com"
+          },
+          "committer": {
+            "name": "Alexis Sánchez",
+            "username": "aasanchez",
+            "email": "aasanchez@gmail.com"
+          },
+          "id": "539507f8840894520162bf6682a76188e21925b6",
+          "message": "feat(bootnotification): add benchmarks for confirmation and payload validation, and refactor confirmation function to export it",
+          "timestamp": "2025-06-26T19:37:56Z",
+          "url": "https://github.com/aasanchez/ocpp16messages/commit/539507f8840894520162bf6682a76188e21925b6"
+        },
+        "date": 1750966893328,
+        "tool": "go",
+        "benches": [
+          {
+            "name": "BenchmarkConfirmation_Valid",
+            "value": 112,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "10739318 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmation_Valid - ns/op",
+            "value": 112,
+            "unit": "ns/op",
+            "extra": "10739318 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmation_Valid - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "10739318 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmation_Valid - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "10739318 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequest_validPayload",
+            "value": 236.9,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "5000230 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequest_validPayload - ns/op",
+            "value": 236.9,
+            "unit": "ns/op",
+            "extra": "5000230 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequest_validPayload - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "5000230 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequest_validPayload - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "5000230 times\n4 procs"
           }
         ]
       }
