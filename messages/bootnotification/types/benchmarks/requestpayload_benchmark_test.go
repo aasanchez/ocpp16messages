@@ -21,6 +21,7 @@ func BenchmarkRequestPayload_Validate(b *testing.B) {
 	}
 
 	b.ReportAllocs()
+
 	for range b.N {
 		if err := input.Validate(); err != nil {
 			b.Fatalf("unexpected validation error: %v", err)

@@ -22,6 +22,7 @@ func BenchmarkRequest_validPayload(b *testing.B) {
 	}
 
 	b.ReportAllocs()
+
 	for range b.N {
 		_, err := bootnotification.Request(input)
 		if err != nil {
