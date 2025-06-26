@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1750956526250,
+  "lastUpdate": 1750965962765,
   "repoUrl": "https://github.com/aasanchez/ocpp16messages",
   "entries": {
     "Go Benchmark": [
@@ -2658,6 +2658,386 @@ window.BENCHMARK_DATA = {
           {
             "name": "BenchmarkRequestPayload_Value - ns/op",
             "value": 0.3174,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Value - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Value - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "aasanchez",
+            "username": "aasanchez"
+          },
+          "committer": {
+            "name": "aasanchez",
+            "username": "aasanchez"
+          },
+          "id": "7ea895ca2cd6175b5f4af6b3b7089e6903bbaf02",
+          "message": "Bootnotification confirmation",
+          "timestamp": "2025-06-26T15:30:23Z",
+          "url": "https://github.com/aasanchez/ocpp16messages/pull/2/commits/7ea895ca2cd6175b5f4af6b3b7089e6903bbaf02"
+        },
+        "date": 1750965962152,
+        "tool": "go",
+        "benches": [
+          {
+            "name": "BenchmarkAuthorizationStatus_Create",
+            "value": 94.56,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "12139102 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizationStatus_Create - ns/op",
+            "value": 94.56,
+            "unit": "ns/op",
+            "extra": "12139102 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizationStatus_Create - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "12139102 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizationStatus_Create - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "12139102 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizationStatus_Value",
+            "value": 0.3142,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizationStatus_Value - ns/op",
+            "value": 0.3142,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizationStatus_Value - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizationStatus_Value - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_minimal",
+            "value": 0.3903,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_minimal - ns/op",
+            "value": 0.3903,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_minimal - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_minimal - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_full",
+            "value": 0.3909,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_full - ns/op",
+            "value": 0.3909,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_full - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Validate_full - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Value_minimal",
+            "value": 0.6274,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Value_minimal - ns/op",
+            "value": 0.6274,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Value_minimal - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Value_minimal - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Value_full",
+            "value": 0.6245,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Value_full - ns/op",
+            "value": 0.6245,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Value_full - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayload_Value_full - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo_Create_Minimal",
+            "value": 98.98,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "12059820 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo_Create_Minimal - ns/op",
+            "value": 98.98,
+            "unit": "ns/op",
+            "extra": "12059820 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo_Create_Minimal - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "12059820 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo_Create_Minimal - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "12059820 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo_Create_Full",
+            "value": 202.2,
+            "unit": "ns/op\t      48 B/op\t       2 allocs/op",
+            "extra": "5939020 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo_Create_Full - ns/op",
+            "value": 202.2,
+            "unit": "ns/op",
+            "extra": "5939020 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo_Create_Full - B/op",
+            "value": 48,
+            "unit": "B/op",
+            "extra": "5939020 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo_Create_Full - allocs/op",
+            "value": 2,
+            "unit": "allocs/op",
+            "extra": "5939020 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo_Value_Minimal",
+            "value": 2.803,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "425902299 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo_Value_Minimal - ns/op",
+            "value": 2.803,
+            "unit": "ns/op",
+            "extra": "425902299 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo_Value_Minimal - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "425902299 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo_Value_Minimal - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "425902299 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo_Value_Full",
+            "value": 104,
+            "unit": "ns/op\t      56 B/op\t       3 allocs/op",
+            "extra": "11426557 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo_Value_Full - ns/op",
+            "value": 104,
+            "unit": "ns/op",
+            "extra": "11426557 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo_Value_Full - B/op",
+            "value": 56,
+            "unit": "B/op",
+            "extra": "11426557 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo_Value_Full - allocs/op",
+            "value": 3,
+            "unit": "allocs/op",
+            "extra": "11426557 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdToken_CreateValid",
+            "value": 16.76,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "71131904 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdToken_CreateValid - ns/op",
+            "value": 16.76,
+            "unit": "ns/op",
+            "extra": "71131904 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdToken_CreateValid - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "71131904 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdToken_CreateValid - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "71131904 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdToken_Value",
+            "value": 0.3117,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdToken_Value - ns/op",
+            "value": 0.3117,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdToken_Value - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdToken_Value - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Validate_valid",
+            "value": 18.52,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "65913508 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Validate_valid - ns/op",
+            "value": 18.52,
+            "unit": "ns/op",
+            "extra": "65913508 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Validate_valid - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "65913508 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Validate_valid - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "65913508 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Validate_empty",
+            "value": 153.2,
+            "unit": "ns/op\t      64 B/op\t       2 allocs/op",
+            "extra": "7809650 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Validate_empty - ns/op",
+            "value": 153.2,
+            "unit": "ns/op",
+            "extra": "7809650 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Validate_empty - B/op",
+            "value": 64,
+            "unit": "B/op",
+            "extra": "7809650 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Validate_empty - allocs/op",
+            "value": 2,
+            "unit": "allocs/op",
+            "extra": "7809650 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Value",
+            "value": 0.312,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Value - ns/op",
+            "value": 0.312,
             "unit": "ns/op",
             "extra": "1000000000 times\n4 procs"
           },
