@@ -39,6 +39,14 @@ func ExampleRequest() {
 func ExampleRequest_invalid() {
 	input := bootnotificationtypes.RequestPayload{
 		ChargeBoxSerialNumber:   "BOX-123456",
+		ChargePointModel:        "",
+		ChargePointSerialNumber: "",
+		ChargePointVendor:       "",
+		FirmwareVersion:         "",
+		Iccid:                   "",
+		Imsi:                    "",
+		MeterSerialNumber:       "",
+		MeterType:               "",
 	}
 
 	_, err := bootnotification.Request(input)
