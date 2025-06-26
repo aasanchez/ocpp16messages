@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1750953600195,
+  "lastUpdate": 1750956498784,
   "repoUrl": "https://github.com/aasanchez/ocpp16messages",
   "entries": {
     "Go Benchmark": [
@@ -184,6 +184,50 @@ window.BENCHMARK_DATA = {
             "value": 0,
             "unit": "allocs/op",
             "extra": "256049277 times\n4 procs"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "aasanchez",
+            "username": "aasanchez"
+          },
+          "committer": {
+            "name": "aasanchez",
+            "username": "aasanchez"
+          },
+          "id": "05be3e675a08fb78edaadf0de82c21f7fde1ca72",
+          "message": "Bootnotification confirmation",
+          "timestamp": "2025-06-26T15:30:23Z",
+          "url": "https://github.com/aasanchez/ocpp16messages/pull/2/commits/05be3e675a08fb78edaadf0de82c21f7fde1ca72"
+        },
+        "date": 1750956498105,
+        "tool": "go",
+        "benches": [
+          {
+            "name": "BenchmarkRequestPayload_Validate",
+            "value": 4.845,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "255433684 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Validate - ns/op",
+            "value": 4.845,
+            "unit": "ns/op",
+            "extra": "255433684 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Validate - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "255433684 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayload_Validate - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "255433684 times\n4 procs"
           }
         ]
       }
