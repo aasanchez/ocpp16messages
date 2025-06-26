@@ -18,7 +18,7 @@ func TestConfirmation_Valid(t *testing.T) {
 	t.Parallel()
 
 	input := validPayload()
-	conf, err := confirmation(input)
+	conf, err := Confirmation(input)
 
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -43,7 +43,7 @@ func TestConfirmation_MissingCurrentTime(t *testing.T) {
 	input := validPayload()
 	input.CurrentTime = ""
 
-	_, err := confirmation(input)
+	_, err := Confirmation(input)
 	if err == nil {
 		t.Error("expected error for missing CurrentTime, got nil")
 	}
@@ -55,7 +55,7 @@ func TestConfirmation_MissingInterval(t *testing.T) {
 	input := validPayload()
 	input.Interval = ""
 
-	_, err := confirmation(input)
+	_, err := Confirmation(input)
 	if err == nil {
 		t.Error("expected error for missing Interval, got nil")
 	}
@@ -67,7 +67,7 @@ func TestConfirmation_MissingStatus(t *testing.T) {
 	input := validPayload()
 	input.Status = ""
 
-	_, err := confirmation(input)
+	_, err := Confirmation(input)
 	if err == nil {
 		t.Error("expected error for missing Status, got nil")
 	}
@@ -79,7 +79,7 @@ func TestConfirmation_InvalidDateTime(t *testing.T) {
 	input := validPayload()
 	input.CurrentTime = "notadatetime"
 
-	_, err := confirmation(input)
+	_, err := Confirmation(input)
 	if err == nil {
 		t.Error("expected failure for invalid datetime, got nil")
 	}
@@ -91,7 +91,7 @@ func TestConfirmation_InvalidInterval(t *testing.T) {
 	input := validPayload()
 	input.Interval = "notanint"
 
-	_, err := confirmation(input)
+	_, err := Confirmation(input)
 	if err == nil {
 		t.Error("expected failure for invalid interval, got nil")
 	}
@@ -103,7 +103,7 @@ func TestConfirmation_InvalidStatus(t *testing.T) {
 	input := validPayload()
 	input.Status = "notastatus"
 
-	_, err := confirmation(input)
+	_, err := Confirmation(input)
 	if err == nil {
 		t.Error("expected failure for invalid status, got nil")
 	}
