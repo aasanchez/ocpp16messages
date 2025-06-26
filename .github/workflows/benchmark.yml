@@ -8,9 +8,15 @@ on:
       - v*
 
 jobs:
-  authorize-benchmarks:
+  run-benchmarks:
     runs-on: ubuntu-latest
-    name: Authorize Benchmarks
+    strategy:
+      matrix:
+        module:
+          - authorize
+          - bootnotification
+
+    name: "${{ matrix.module }} Benchmarks"
     permissions:
       contents: write
       pull-requests: read
@@ -26,116 +32,32 @@ jobs:
         with:
           go-version: "stable"
 
-      - name: Run Authorize Benchmarks
+      - name: Run main benchmarks
         run: |
-          go test -bench=. -benchmem ./messages/authorize/benchmarks >authorize-benchmarks.txt
+          go test -bench=. -benchmem ./messages/${{ matrix.module }}/benchmarks >${{ matrix.module }}-benchmarks.txt
 
-      - name: Publish Authorize Benchmarks
+      - name: Run types benchmarks
+        run: |
+          go test -bench=. -benchmem ./messages/${{ matrix.module }}/types/benchmarks >${{ matrix.module }}-types-benchmarks.txt
+
+      - name: Publish main benchmarks
         uses: benchmark-action/github-action-benchmark@v1
         with:
-          name: Go Benchmark
+          name: Go Benchmark (${{ matrix.module }})
           tool: go
-          output-file-path: authorize-benchmarks.txt
+          output-file-path: ${{ matrix.module }}-benchmarks.txt
           github-token: ${{ secrets.GITHUB_TOKEN }}
           auto-push: true
-          benchmark-data-dir-path: authorize-benchmarks
+          benchmark-data-dir-path: ${{ matrix.module }}-benchmarks
           gh-pages-branch: gh-pages
 
-  authorize-types-benchmarks:
-    runs-on: ubuntu-latest
-    name: Authorize Types Benchmarks
-    permissions:
-      contents: write
-      pull-requests: read
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Run Authorize Types Benchmarks
-        run: |
-          go test -bench=. -benchmem ./messages/authorize/types/benchmarks >authorize-types-benchmarks.txt
-
-      - name: Publish Authorize Types Benchmarks
+      - name: Publish types benchmarks
         uses: benchmark-action/github-action-benchmark@v1
         with:
-          name: Go Benchmark
+          name: Go Benchmark (${{ matrix.module }}-types)
           tool: go
-          output-file-path: authorize-types-benchmarks.txt
+          output-file-path: ${{ matrix.module }}-types-benchmarks.txt
           github-token: ${{ secrets.GITHUB_TOKEN }}
           auto-push: true
-          benchmark-data-dir-path: authorize-types-benchmarks
-          gh-pages-branch: gh-pages
-
-  bootnotification-benchmarks:
-    runs-on: ubuntu-latest
-    name: Bootnotification Benchmarks
-    permissions:
-      contents: write
-      pull-requests: read
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Run Authorize Benchmarks
-        run: |
-          go test -bench=. -benchmem ./messages/bootnotification/benchmarks >bootnotification-benchmarks.txt
-
-      - name: Publish Authorize Benchmarks
-        uses: benchmark-action/github-action-benchmark@v1
-        with:
-          name: Go Benchmark
-          tool: go
-          output-file-path: bootnotification-benchmarks.txt
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          auto-push: true
-          benchmark-data-dir-path: bootnotification-benchmarks
-          gh-pages-branch: gh-pages
-
-  bootnotification-types-benchmarks:
-    runs-on: ubuntu-latest
-    name: Bootnotification Types Benchmarks
-    permissions:
-      contents: write
-      pull-requests: read
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Run Authorize Types Benchmarks
-        run: |
-          go test -bench=. -benchmem ./messages/bootnotification/types/benchmarks >bootnotification-types-benchmarks.txt
-
-      - name: Publish Authorize Types Benchmarks
-        uses: benchmark-action/github-action-benchmark@v1
-        with:
-          name: Go Benchmark
-          tool: go
-          output-file-path: bootnotification-types-benchmarks.txt
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          auto-push: true
-          benchmark-data-dir-path: bootnotification-types-benchmarks
+          benchmark-data-dir-path: ${{ matrix.module }}-types-benchmarks
           gh-pages-branch: gh-pages
