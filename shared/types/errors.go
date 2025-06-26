@@ -29,3 +29,4 @@ const (
 	ErrExpectedNoValidation   = "expected no validation error, got: %v"
 	ErrExpectedValueMismatch  = "expected Value() = %q, got %q"
 )
+
