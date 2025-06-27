@@ -10,7 +10,7 @@ import (
 
 type ConfirmationMessage struct {
 	CurrentTime sharedtypes.DateTimeType
-	Interval    uint64
+	Interval    uint32
 	Status      bootnotificationtypes.RegistrationStatusType
 }
 
@@ -24,10 +24,11 @@ func Confirmation(input bootnotificationtypes.ConfirmationPayload) (Confirmation
 		return ConfirmationMessage{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, "failed to parse CurrentTime", err)
 	}
 
-	interval, err := strconv.ParseUint(input.Interval, 10, 64)
+	intervalTemp, err := strconv.ParseUint(input.Interval, 10, 32)
 	if err != nil {
 		return ConfirmationMessage{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, "failed to parse Interval", err)
 	}
+	var interval uint32 = uint32(intervalTemp)
 
 	status, err := bootnotificationtypes.RegistrationStatus(input.Status)
 	if err != nil {

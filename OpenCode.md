@@ -1,3 +1,4 @@
+<!-- Do not modify this file unless explicitly requested. -->
 # OpenCode Guidelines for ocpp16messages
 
 ## Build, Lint, & Test
