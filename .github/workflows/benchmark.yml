@@ -14,8 +14,9 @@ jobs:
         module:
           - authorize
           - bootnotification
+        go-version: ["1.23.10", "1.24.4", "stable"]
 
-    name: "${{ matrix.module }} Benchmarks"
+    name: "${{ matrix.module }} Benchmarks (Go ${{ matrix.go-version }})"
     permissions:
       contents: write
       pull-requests: read
@@ -29,34 +30,36 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: "stable"
+          go-version: ${{ matrix.go-version }}
 
       - name: Run main benchmarks
         run: |
-          go test -bench=. -benchmem ./messages/${{ matrix.module }}/benchmarks >${{ matrix.module }}-benchmarks.txt
+          mkdir -p ${{ matrix.go-version }}
+          go test -bench=. -benchmem ./messages/${{ matrix.module }}/benchmarks >${{ matrix.go-version }}/${{ matrix.module }}-benchmarks.txt
 
       - name: Run types benchmarks
         run: |
-          go test -bench=. -benchmem ./messages/${{ matrix.module }}/types/benchmarks >${{ matrix.module }}-types-benchmarks.txt
+          mkdir -p ${{ matrix.go-version }}
+          go test -bench=. -benchmem ./messages/${{ matrix.module }}/types/benchmarks >${{ matrix.go-version }}/${{ matrix.module }}-types-benchmarks.txt
 
       - name: Publish main benchmarks
         uses: benchmark-action/github-action-benchmark@v1
         with:
-          name: Go Benchmark (${{ matrix.module }})
+          name: Go Benchmark (${{ matrix.module }} - Go ${{ matrix.go-version }})
           tool: go
-          output-file-path: ${{ matrix.module }}-benchmarks.txt
+          output-file-path: ${{ matrix.go-version }}/${{ matrix.module }}-benchmarks.txt
           github-token: ${{ secrets.GITHUB_TOKEN }}
           auto-push: true
-          benchmark-data-dir-path: ${{ matrix.module }}-benchmarks
+          benchmark-data-dir-path: ${{ matrix.go-version }}/${{ matrix.module }}-benchmarks
           gh-pages-branch: gh-pages
 
       - name: Publish types benchmarks
         uses: benchmark-action/github-action-benchmark@v1
         with:
-          name: Go Benchmark (${{ matrix.module }}-types)
+          name: Go Benchmark (${{ matrix.module }}-types - Go ${{ matrix.go-version }})
           tool: go
-          output-file-path: ${{ matrix.module }}-types-benchmarks.txt
+          output-file-path: ${{ matrix.go-version }}/${{ matrix.module }}-types-benchmarks.txt
           github-token: ${{ secrets.GITHUB_TOKEN }}
           auto-push: true
-          benchmark-data-dir-path: ${{ matrix.module }}-types-benchmarks
+          benchmark-data-dir-path: ${{ matrix.go-version }}/${{ matrix.module }}-types-benchmarks
           gh-pages-branch: gh-pages
