@@ -35,8 +35,8 @@ func Confirmation(input bootnotificationtypes.ConfirmationPayload) (Confirmation
 	}
 
 	return ConfirmationMessage{
-		CurrentTime:  currentTime,
-		Interval:     interval,
-		Status: 			status,
+		CurrentTime: currentTime,
+		Interval:    interval,
+		Status:      status,
 	}, nil
 }
