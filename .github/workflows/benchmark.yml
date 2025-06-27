@@ -61,6 +61,6 @@ jobs:
           tool: go
           output-file-path: ${{ matrix.go-version }}/${{ matrix.module }}-types-benchmarks.txt
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          auto-push: false
+          auto-push: true
           benchmark-data-dir-path: ${{ matrix.go-version }}/${{ matrix.module }}-types-benchmarks
           gh-pages-branch: gh-pages
