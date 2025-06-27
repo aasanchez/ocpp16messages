@@ -28,6 +28,7 @@ func Confirmation(input bootnotificationtypes.ConfirmationPayload) (Confirmation
 	if err != nil {
 		return ConfirmationMessage{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, "failed to parse Interval", err)
 	}
+
 	var interval = uint32(intervalTemp)
 
 	status, err := bootnotificationtypes.RegistrationStatus(input.Status)

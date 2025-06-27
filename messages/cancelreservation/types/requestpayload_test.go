@@ -18,6 +18,7 @@ func TestRequestPayload_Validate_OK(t *testing.T) {
 
 func TestRequestPayload_Validate_EmptyReservationId(t *testing.T) {
 	t.Parallel()
+
 	payload := RequestPayload{ReservationId: ""}
 
 	err := payload.Validate()
