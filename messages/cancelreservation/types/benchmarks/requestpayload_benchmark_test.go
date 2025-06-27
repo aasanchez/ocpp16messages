@@ -1,4 +1,4 @@
-package benchmarks
+package cancelreservationtypes_test
 
 import (
 	"testing"

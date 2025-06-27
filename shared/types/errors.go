@@ -4,11 +4,14 @@ import (
 	"errors"
 )
 
+
+
 var (
 	ErrInvalidIdTag               = errors.New("invalid idTag")
 	ErrInvalidIdToken             = errors.New("invalid IdToken")
 	ErrInvalidIdTagInfo           = errors.New("invalid idTagInfo")
 	ErrInvalidAuthorizationStatus = errors.New("invalid authorization status")
+	ErrInvalidClearCacheStatus    = errors.New("invalid clear cache status")
 	ErrInvalidRegistrationStatus  = errors.New("invalid registration status")
 	ErrMissingStatus              = errors.New("missing required field: idTagInfo.Status")
 	ErrInvalidExpiryDate          = errors.New("invalid expiryDate")
