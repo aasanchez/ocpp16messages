@@ -19,7 +19,7 @@
 - **Formatting:** Always run `gofmt`.
 - **Types/Naming:** PascalCase for exported, camelCase for unexported. Suffix "Type" for strong types (e.g., `AuthorizationStatusType`). Do not prefix interfaces with "I". Group constants logically using CamelCase.
 - **Error Handling:** Wrap errors with context; use error vars for common cases (e.g., `ErrInvalidIdTag`).
-- **Testing:** Prefer `t.Parallel()` and table-driven tests; achieve code coverage for new code.
+- **Testing:** All tests must be atomic, minimal, and simple: one test, one case. Prefer `t.Parallel()`; avoid table-driven tests unless necessary. Achieve code 100% coverage for new code.
 - **Packages:** Organize flat, semantically; use `_test` package suffix for external tests.
 - **Linting:** Pass `golangci-lint`/`staticcheck` per `golangci.yml`.
 - **Docs:** All exported APIs/types must have Go-style doc comments.

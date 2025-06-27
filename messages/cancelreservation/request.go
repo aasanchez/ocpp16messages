@@ -20,7 +20,7 @@ func Request(input cancelreservationtypes.RequestPayload) (RequestMessage, error
 	if err != nil {
 		return RequestMessage{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, "failed to parse ReservationId", err)
 	}
-	var reservationId uint32 = uint32(reservationIdTemp)
+	var reservationId = uint32(reservationIdTemp)
 
 	return RequestMessage{ReservationId: reservationId}, nil
 }
