@@ -4,22 +4,20 @@ import (
 	"errors"
 )
 
-
-
 var (
-	ErrInvalidIdTag               = errors.New("invalid idTag")
-	ErrInvalidIdToken             = errors.New("invalid IdToken")
-	ErrInvalidIdTagInfo           = errors.New("invalid idTagInfo")
-	ErrInvalidAuthorizationStatus = errors.New("invalid authorization status")
-	ErrInvalidClearCacheStatus    = errors.New("invalid clear cache status")
-	ErrInvalidRegistrationStatus  = errors.New("invalid registration status")
-	ErrMissingStatus              = errors.New("missing required field: idTagInfo.Status")
-	ErrInvalidExpiryDate          = errors.New("invalid expiryDate")
-	ErrInvalidParentIdTag         = errors.New("invalid parentIdTag")
-	ErrEmptyValueNotAllowed       = errors.New("value must not be empty")
-	ErrExceedsMaxLength           = errors.New("value exceeds maximum allowed length")
-	ErrNonPrintableASCII          = errors.New("value contains non-printable ASCII characters")
-	ErrCiStringNotSet             = errors.New("optional CiString value not set")
+	ErrInvalidIdTag                   = errors.New("invalid idTag")
+	ErrInvalidIdToken                 = errors.New("invalid IdToken")
+	ErrInvalidIdTagInfo               = errors.New("invalid idTagInfo")
+	ErrInvalidAuthorizationStatus     = errors.New("invalid authorization status")
+	ErrInvalidCancelReservationStatus = errors.New("invalid clear Cancel Reservation")
+	ErrInvalidRegistrationStatus      = errors.New("invalid registration status")
+	ErrMissingStatus                  = errors.New("missing required field: idTagInfo.Status")
+	ErrInvalidExpiryDate              = errors.New("invalid expiryDate")
+	ErrInvalidParentIdTag             = errors.New("invalid parentIdTag")
+	ErrEmptyValueNotAllowed           = errors.New("value must not be empty")
+	ErrExceedsMaxLength               = errors.New("value exceeds maximum allowed length")
+	ErrNonPrintableASCII              = errors.New("value contains non-printable ASCII characters")
+	ErrCiStringNotSet                 = errors.New("optional CiString value not set")
 )
 
 const (

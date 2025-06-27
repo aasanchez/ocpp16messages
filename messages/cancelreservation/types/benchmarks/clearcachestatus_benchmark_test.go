@@ -6,20 +6,20 @@ import (
 	cancelreservationtypes "github.com/aasanchez/ocpp16messages/messages/cancelreservation/types"
 )
 
-func BenchmarkClearCacheStatus_Accepted(b *testing.B) {
+func BenchmarkCancelReservationStatus_Accepted(b *testing.B) {
 	for range b.N {
-		_, _ = cancelreservationtypes.ClearCacheStatus(cancelreservationtypes.ClearCacheAccepted)
+		_, _ = cancelreservationtypes.CancelReservationStatus(cancelreservationtypes.CancelReservationAccepted)
 	}
 }
 
-func BenchmarkClearCacheStatus_Rejected(b *testing.B) {
+func BenchmarkCancelReservationStatus_Rejected(b *testing.B) {
 	for range b.N {
-		_, _ = cancelreservationtypes.ClearCacheStatus(cancelreservationtypes.ClearCacheRejected)
+		_, _ = cancelreservationtypes.CancelReservationStatus(cancelreservationtypes.CancelReservationRejected)
 	}
 }
 
-func BenchmarkClearCacheStatus_Invalid(b *testing.B) {
+func BenchmarkCancelReservationStatus_Invalid(b *testing.B) {
 	for range b.N {
-		_, _ = cancelreservationtypes.ClearCacheStatus("NotAStatus")
+		_, _ = cancelreservationtypes.CancelReservationStatus("NotAStatus")
 	}
 }
