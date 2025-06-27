@@ -14,7 +14,7 @@ func validPayload() bootnotificationtypes.ConfirmationPayload {
 	}
 }
 
-func TestConfirmation_Valid(t *testing.T) {
+func TestConfirmation(t *testing.T) {
 	t.Parallel()
 
 	input := validPayload()

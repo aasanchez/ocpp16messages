@@ -15,7 +15,7 @@ func validPayload() bootnotificationtypes.ConfirmationPayload {
 	}
 }
 
-func BenchmarkConfirmation_Valid(b *testing.B) {
+func BenchmarkConfirmation(b *testing.B) {
 	input := validPayload()
 	for range b.N {
 		_, err := bn.Confirmation(input)

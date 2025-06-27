@@ -7,7 +7,7 @@ import (
 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
-func BenchmarkAuthorizeRequest_Valid(b *testing.B) {
+func BenchmarkAuthorizeRequest(b *testing.B) {
 	input := authorizetypes.RequestPayload{
 		IdTag: "ABC1234567890XYZ78",
 	}

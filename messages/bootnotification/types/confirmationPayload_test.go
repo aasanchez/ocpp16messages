@@ -2,7 +2,7 @@ package bootnotificationtypes
 
 import "testing"
 
-func TestConfirmationPayload_Validate_AllFieldsValid(t *testing.T) {
+func TestConfirmationPayload_Validate_AllFields(t *testing.T) {
 	t.Parallel()
 
 	payload := ConfirmationPayload{

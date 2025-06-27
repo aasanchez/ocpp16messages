@@ -6,7 +6,7 @@ import (
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-func Test_IdTokenFromCiString_Valid(t *testing.T) {
+func Test_IdTokenFromCiString(t *testing.T) {
 	t.Parallel()
 
 	validStr := "ABC1234567890123456" // 20 characters

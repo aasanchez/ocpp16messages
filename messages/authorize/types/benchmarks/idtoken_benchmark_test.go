@@ -7,7 +7,7 @@ import (
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-func BenchmarkIdToken_CreateValid(b *testing.B) {
+func BenchmarkIdToken_Create(b *testing.B) {
 	raw := "B85A-50CBE9678EC6" // valid CiString20
 
 	for range b.N {

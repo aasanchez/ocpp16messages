@@ -8,7 +8,7 @@ import (
 
 const rfc3339Input = "2025-06-19T12:34:56Z"
 
-func BenchmarkNewDateTime_Valid(b *testing.B) {
+func BenchmarkNewDateTime(b *testing.B) {
 	for range b.N {
 		_, err := types.DateTime(rfc3339Input)
 		if err != nil {

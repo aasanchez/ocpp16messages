@@ -6,7 +6,7 @@ import (
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-func TestRegistrationStatus_Accepted_IsValid(t *testing.T) {
+func TestRegistrationStatus_Accepted(t *testing.T) {
 	t.Parallel()
 
 	registrationStatus, err := RegistrationStatus("Accepted")
@@ -19,7 +19,7 @@ func TestRegistrationStatus_Accepted_IsValid(t *testing.T) {
 	}
 }
 
-func TestRegistrationStatus_Pending_IsValid(t *testing.T) {
+func TestRegistrationStatus_Pending(t *testing.T) {
 	t.Parallel()
 
 	registrationStatus, err := RegistrationStatus("Pending")
@@ -32,7 +32,7 @@ func TestRegistrationStatus_Pending_IsValid(t *testing.T) {
 	}
 }
 
-func TestRegistrationStatus_Rejected_IsValid(t *testing.T) {
+func TestRegistrationStatus_Rejected(t *testing.T) {
 	t.Parallel()
 
 	registrationStatus, err := RegistrationStatus("Rejected")

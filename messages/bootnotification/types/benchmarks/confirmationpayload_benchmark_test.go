@@ -38,7 +38,7 @@ func invalidPayloadMissingStatus() bootnotificationtypes.ConfirmationPayload {
 	}
 }
 
-func BenchmarkConfirmationPayload_Validate_Valid(b *testing.B) {
+func BenchmarkConfirmationPayload_Validate(b *testing.B) {
 	payload := validPayload()
 	for range b.N {
 		if err := payload.Validate(); err != nil {
