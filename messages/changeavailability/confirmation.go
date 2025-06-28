@@ -3,19 +3,19 @@ package changeavailability
 import (
 	"fmt"
 
-	changeavailabilitytypes "github.com/aasanchez/ocpp16messages/messages/changeavailability/types"
+	cat "github.com/aasanchez/ocpp16messages/messages/changeavailability/types"
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 type ConfirmationMessage struct {
-	Status changeavailabilitytypes.ChangeAvailabilityStatusType
+	Status cat.ChangeAvailabilityStatusType
 }
 
-func Confirmation(input changeavailabilitytypes.ConfirmationPayload) (ConfirmationMessage, error) {
+func Confirmation(input cat.ConfirmationPayload) (ConfirmationMessage, error) {
 	if err := input.Validate(); err != nil {
 		return ConfirmationMessage{}, fmt.Errorf("changeavailability.Confirmation: invalid payload: %w", err)
 	}
-	status, err := changeavailabilitytypes.ChangeAvailabilityStatus(input.Status)
+	status, err := cat.ChangeAvailabilityStatus(input.Status)
 	if err != nil {
 		return ConfirmationMessage{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, "failed to parse Status", err)
 	}

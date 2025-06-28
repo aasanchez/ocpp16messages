@@ -4,11 +4,11 @@ import (
 	"fmt"
 
 	"github.com/aasanchez/ocpp16messages/messages/changeavailability"
-	changeavailabilitytypes "github.com/aasanchez/ocpp16messages/messages/changeavailability/types"
+	cat "github.com/aasanchez/ocpp16messages/messages/changeavailability/types"
 )
 
 func ExampleRequest() {
-	input := changeavailabilitytypes.RequestPayload{ConnectorId: "1", Type: changeavailabilitytypes.AvailabilityTypeOperative}
+	input := cat.RequestPayload{ConnectorId: "1", Type: cat.AvailabilityTypeOperative}
 	msg, err := changeavailability.Request(input)
 	if err != nil {
 		fmt.Println("Error:", err)

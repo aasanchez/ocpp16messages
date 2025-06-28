@@ -3,7 +3,7 @@ package changeavailabilitytypes
 import (
 	"fmt"
 
-	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
+	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 // ConfirmationPayload represents the payload of a ChangeAvailability confirmation message.
@@ -14,7 +14,7 @@ type ConfirmationPayload struct {
 // Validate ensures that required fields are present in the ConfirmationPayload.
 func (c ConfirmationPayload) Validate() error {
 	if c.Status == "" {
-		return fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, "missing required field: Status", sharedtypes.ErrEmptyValueNotAllowed)
+		return fmt.Errorf(st.ErrFmtFieldWrapped, "missing required field: Status", st.ErrEmptyValueNotAllowed)
 	}
 	return nil
 }

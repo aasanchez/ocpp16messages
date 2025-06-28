@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
+	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 func TestChangeAvailabilityStatus_Accepted(t *testing.T) {
@@ -36,7 +36,7 @@ func TestChangeAvailabilityStatus_Invalid(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected error, got nil")
 	}
-	if !errors.Is(err, sharedtypes.ErrInvalidChangeAvailabilityStatus) {
+	if !errors.Is(err, st.ErrInvalidChangeAvailabilityStatus) {
 		t.Errorf("error is not ErrInvalidChangeAvailabilityStatus: %v", err)
 	}
 	if !strings.Contains(err.Error(), "Invalid") {

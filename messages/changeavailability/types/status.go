@@ -3,7 +3,7 @@ package changeavailabilitytypes
 import (
 	"fmt"
 
-	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
+	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 const (
@@ -25,7 +25,7 @@ func getChangeAvailabilityStatusSet() map[string]struct{} {
 // ChangeAvailabilityStatus converts a string to ChangeAvailabilityStatusType enforcing valid values.
 func ChangeAvailabilityStatus(input string) (ChangeAvailabilityStatusType, error) {
 	if _, exists := getChangeAvailabilityStatusSet()[input]; !exists {
-		return ChangeAvailabilityStatusType{}, fmt.Errorf("%w: %q", sharedtypes.ErrInvalidChangeAvailabilityStatus, input)
+		return ChangeAvailabilityStatusType{}, fmt.Errorf("%w: %q", st.ErrInvalidChangeAvailabilityStatus, input)
 	}
 	return ChangeAvailabilityStatusType{value: input}, nil
 }
