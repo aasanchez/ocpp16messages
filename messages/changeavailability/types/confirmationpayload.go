@@ -16,5 +16,6 @@ func (c ConfirmationPayload) Validate() error {
 	if c.Status == "" {
 		return fmt.Errorf(st.ErrFmtFieldWrapped, "missing required field: Status", st.ErrEmptyValueNotAllowed)
 	}
+
 	return nil
 }

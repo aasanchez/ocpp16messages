@@ -9,12 +9,16 @@ import (
 
 func ExampleConfirmation() {
 	input := cat.ConfirmationPayload{Status: cat.ChangeAvailabilityStatusAccepted}
+
 	msg, err := changeavailability.Confirmation(input)
 	if err != nil {
 		fmt.Println("Error:", err)
+
 		return
 	}
+
 	fmt.Println("Status:", msg.Status.Value())
+
 	// Output:
 	// Status: Accepted
 }

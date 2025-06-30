@@ -9,6 +9,7 @@ import (
 
 func BenchmarkRequest_Valid(b *testing.B) {
 	input := changeavailabilitytypes.RequestPayload{ConnectorId: "1", Type: changeavailabilitytypes.AvailabilityTypeOperative}
+
 	b.ReportAllocs()
 	for range b.N {
 		_, err := changeavailability.Request(input)

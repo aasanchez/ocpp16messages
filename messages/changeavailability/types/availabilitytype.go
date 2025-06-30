@@ -27,6 +27,7 @@ func AvailabilityType(input string) (AvailabilityTypeType, error) {
 	if _, exists := getAvailabilityTypeSet()[input]; !exists {
 		return AvailabilityTypeType{}, fmt.Errorf("%w: %q", st.ErrInvalidChangeAvailabilityType, input)
 	}
+
 	return AvailabilityTypeType{value: input}, nil
 }
 

@@ -17,8 +17,10 @@ func (r RequestPayload) Validate() error {
 	if r.ConnectorId == "" {
 		return fmt.Errorf(st.ErrFmtFieldWrapped, "missing required field: ConnectorId", st.ErrEmptyValueNotAllowed)
 	}
+
 	if r.Type == "" {
 		return fmt.Errorf(st.ErrFmtFieldWrapped, "missing required field: Type", st.ErrEmptyValueNotAllowed)
 	}
+
 	return nil
 }

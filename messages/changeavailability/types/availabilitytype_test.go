@@ -10,10 +10,12 @@ import (
 
 func TestAvailabilityType_Operative(t *testing.T) {
 	t.Parallel()
+
 	result, err := AvailabilityType(AvailabilityTypeOperative)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
+
 	if result.Value() != AvailabilityTypeOperative {
 		t.Errorf("expected value %q, got %q", AvailabilityTypeOperative, result.Value())
 	}

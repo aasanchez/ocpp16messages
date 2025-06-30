@@ -27,6 +27,7 @@ func ChangeAvailabilityStatus(input string) (ChangeAvailabilityStatusType, error
 	if _, exists := getChangeAvailabilityStatusSet()[input]; !exists {
 		return ChangeAvailabilityStatusType{}, fmt.Errorf("%w: %q", st.ErrInvalidChangeAvailabilityStatus, input)
 	}
+
 	return ChangeAvailabilityStatusType{value: input}, nil
 }
 

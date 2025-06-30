@@ -22,6 +22,7 @@ func TestRequest_Valid(t *testing.T) {
 	if msg.ConnectorId != 1 {
 		t.Errorf("expected ConnectorId %d, got %d", 1, msg.ConnectorId)
 	}
+
 	if msg.Type.Value() != cat.AvailabilityTypeOperative {
 		t.Errorf("expected Type %q, got %q", cat.AvailabilityTypeOperative, msg.Type.Value())
 	}
@@ -31,6 +32,7 @@ func TestRequest_MissingFields(t *testing.T) {
 	t.Parallel()
 
 	input := cat.RequestPayload{ConnectorId: "", Type: ""}
+
 	_, err := Request(input)
 	if err == nil {
 		t.Fatal("expected error for missing required fields, got nil")

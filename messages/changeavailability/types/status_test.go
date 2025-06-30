@@ -11,9 +11,11 @@ import (
 func TestChangeAvailabilityStatus_Accepted(t *testing.T) {
 	t.Parallel()
 	result, err := ChangeAvailabilityStatus(ChangeAvailabilityStatusAccepted)
+
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
+
 	if result.Value() != ChangeAvailabilityStatusAccepted {
 		t.Errorf("expected value %q, got %q", ChangeAvailabilityStatusAccepted, result.Value())
 	}

@@ -11,10 +11,12 @@ func TestConfirmation_Valid(t *testing.T) {
 	t.Parallel()
 
 	input := cat.ConfirmationPayload{Status: cat.ChangeAvailabilityStatusAccepted}
+
 	msg, err := Confirmation(input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
+
 	if msg.Status.Value() != cat.ChangeAvailabilityStatusAccepted {
 		t.Errorf("expected Status %q, got %q", cat.ChangeAvailabilityStatusAccepted, msg.Status.Value())
 	}
