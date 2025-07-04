@@ -13,12 +13,12 @@ func BenchmarkCiString20_Create(b *testing.B) {
 	b.ReportAllocs()
 
 	for range b.N {
-		_, _ = types.CiString20(input)
+		_, _ = types.SetCiString20(input)
 	}
 }
 
 func BenchmarkCiString20_Validate(b *testing.B) {
-	cs, _ := types.CiString20(strings.Repeat("A", 20))
+	cs, _ := types.SetCiString20(strings.Repeat("A", 20))
 
 	b.ReportAllocs()
 
@@ -28,7 +28,7 @@ func BenchmarkCiString20_Validate(b *testing.B) {
 }
 
 func BenchmarkCiString20_Value(b *testing.B) {
-	cs, _ := types.CiString20(strings.Repeat("A", 20))
+	cs, _ := types.SetCiString20(strings.Repeat("A", 20))
 
 	b.ReportAllocs()
 
@@ -43,13 +43,13 @@ func BenchmarkCiString25_Create(b *testing.B) {
 	b.ReportAllocs()
 
 	for range b.N {
-		_, _ = types.CiString25(input)
+		_, _ = types.SetCiString25(input)
 	}
 }
 
 func BenchmarkCiString25_Validate(b *testing.B) {
 	input := strings.Repeat("A", 25)
-	cs, _ := types.CiString25(input)
+	cs, _ := types.SetCiString25(input)
 
 	b.ReportAllocs()
 
@@ -60,7 +60,7 @@ func BenchmarkCiString25_Validate(b *testing.B) {
 
 func BenchmarkCiString25_Value(b *testing.B) {
 	input := strings.Repeat("A", 25)
-	cs, _ := types.CiString25(input)
+	cs, _ := types.SetCiString25(input)
 
 	b.ReportAllocs()
 
@@ -75,13 +75,13 @@ func BenchmarkCiString50_Create(b *testing.B) {
 	b.ReportAllocs()
 
 	for range b.N {
-		_, _ = types.CiString50(input)
+		_, _ = types.SetCiString50(input)
 	}
 }
 
 func BenchmarkCiString50_Validate(b *testing.B) {
 	input := strings.Repeat("A", 50)
-	cs, _ := types.CiString50(input)
+	cs, _ := types.SetCiString50(input)
 
 	b.ReportAllocs()
 
@@ -92,7 +92,7 @@ func BenchmarkCiString50_Validate(b *testing.B) {
 
 func BenchmarkCiString50_Value(b *testing.B) {
 	input := strings.Repeat("A", 50)
-	cs, _ := types.CiString50(input)
+	cs, _ := types.SetCiString50(input)
 
 	b.ReportAllocs()
 
@@ -107,12 +107,12 @@ func BenchmarkCiString255_Create(b *testing.B) {
 	b.ReportAllocs()
 
 	for range b.N {
-		_, _ = types.CiString255(input)
+		_, _ = types.SetCiString255(input)
 	}
 }
 
 func BenchmarkCiString255_Validate(b *testing.B) {
-	cs, _ := types.CiString255(strings.Repeat("D", 255))
+	cs, _ := types.SetCiString255(strings.Repeat("D", 255))
 
 	b.ReportAllocs()
 
@@ -122,7 +122,7 @@ func BenchmarkCiString255_Validate(b *testing.B) {
 }
 
 func BenchmarkCiString255_Value(b *testing.B) {
-	cs, _ := types.CiString255(strings.Repeat("D", 255))
+	cs, _ := types.SetCiString255(strings.Repeat("D", 255))
 
 	b.ReportAllocs()
 
@@ -137,13 +137,13 @@ func BenchmarkCiString500_Create(b *testing.B) {
 	b.ReportAllocs()
 
 	for range b.N {
-		_, _ = types.CiString500(input)
+		_, _ = types.SetCiString500(input)
 	}
 }
 
 func BenchmarkCiString500_Validate(b *testing.B) {
 	input := strings.Repeat("A", 500)
-	cs, _ := types.CiString500(input)
+	cs, _ := types.SetCiString500(input)
 
 	b.ReportAllocs()
 
@@ -154,7 +154,7 @@ func BenchmarkCiString500_Validate(b *testing.B) {
 
 func BenchmarkCiString500_Value(b *testing.B) {
 	input := strings.Repeat("A", 500)
-	cs, _ := types.CiString500(input)
+	cs, _ := types.SetCiString500(input)
 
 	b.ReportAllocs()
 

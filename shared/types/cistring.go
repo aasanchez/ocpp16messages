@@ -14,29 +14,29 @@ const (
 
 type ciString struct {
 	raw    string
-	MaxLen int
+	maxLen int
 }
 
-func CiString(value string, maxLen int) (ciString, error) {
-	cs := ciString{raw: value, MaxLen: maxLen}
-	if err := cs.Validate(); err != nil {
+func setCiString(value string, maxLen int) (ciString, error) {
+	cs := ciString{raw: value, maxLen: maxLen}
+	if err := cs.validate(); err != nil {
 		return ciString{}, err
 	}
 
 	return cs, nil
 }
 
-func (cs ciString) Value() string {
+func (cs ciString) value() string {
 	return cs.raw
 }
 
-func (cs ciString) Validate() error {
+func (cs ciString) validate() error {
 	if len(cs.raw) == 0 {
 		return fmt.Errorf("ciString.Validate: %w", ErrEmptyValueNotAllowed)
 	}
 
-	if len(cs.raw) > cs.MaxLen {
-		return fmt.Errorf("ciString.Validate: %w (got length %d, max %d)", ErrExceedsMaxLength, len(cs.raw), cs.MaxLen)
+	if len(cs.raw) > cs.maxLen {
+		return fmt.Errorf("ciString.Validate: %w (got length %d, max %d)", ErrExceedsMaxLength, len(cs.raw), cs.maxLen)
 	}
 
 	for _, r := range cs.raw {
@@ -50,60 +50,60 @@ func (cs ciString) Validate() error {
 
 // ---- CiString20 ----
 
-type CiString20Type struct{ value ciString }
+type CiString20 struct{ value ciString }
 
-func (c CiString20Type) Value() string   { return c.value.Value() }
-func (c CiString20Type) Validate() error { return c.value.Validate() }
-func CiString20(value string) (CiString20Type, error) {
-	cs, err := CiString(value, maxLenCiString20)
+func (c CiString20) Value() string   { return c.value.value() }
+func (c CiString20) Validate() error { return c.value.validate() }
+func SetCiString20(value string) (CiString20, error) {
+	cs, err := setCiString(value, maxLenCiString20)
 
-	return CiString20Type{value: cs}, err
+	return CiString20{value: cs}, err
 }
 
 // ---- CiString25 ----
 
-type CiString25Type struct{ value ciString }
+type CiString25 struct{ value ciString }
 
-func (c CiString25Type) Value() string   { return c.value.Value() }
-func (c CiString25Type) Validate() error { return c.value.Validate() }
-func CiString25(value string) (CiString25Type, error) {
-	cs, err := CiString(value, maxLenCiString25)
+func (c CiString25) Value() string   { return c.value.value() }
+func (c CiString25) Validate() error { return c.value.validate() }
+func SetCiString25(value string) (CiString25, error) {
+	cs, err := setCiString(value, maxLenCiString25)
 
-	return CiString25Type{value: cs}, err
+	return CiString25{value: cs}, err
 }
 
 // ---- CiString50 ----
 
-type CiString50Type struct{ value ciString }
+type CiString50 struct{ value ciString }
 
-func (c CiString50Type) Value() string   { return c.value.Value() }
-func (c CiString50Type) Validate() error { return c.value.Validate() }
-func CiString50(value string) (CiString50Type, error) {
-	cs, err := CiString(value, maxLenCiString50)
+func (c CiString50) Value() string   { return c.value.value() }
+func (c CiString50) Validate() error { return c.value.validate() }
+func SetCiString50(value string) (CiString50, error) {
+	cs, err := setCiString(value, maxLenCiString50)
 
-	return CiString50Type{value: cs}, err
+	return CiString50{value: cs}, err
 }
 
 // ---- CiString255 ----
 
-type CiString255Type struct{ value ciString }
+type CiString255 struct{ value ciString }
 
-func (c CiString255Type) Value() string   { return c.value.Value() }
-func (c CiString255Type) Validate() error { return c.value.Validate() }
-func CiString255(value string) (CiString255Type, error) {
-	cs, err := CiString(value, maxLenCiString255)
+func (c CiString255) Value() string   { return c.value.value() }
+func (c CiString255) Validate() error { return c.value.validate() }
+func SetCiString255(value string) (CiString255, error) {
+	cs, err := setCiString(value, maxLenCiString255)
 
-	return CiString255Type{value: cs}, err
+	return CiString255{value: cs}, err
 }
 
 // ---- CiString500 ----
 
-type CiString500Type struct{ value ciString }
+type CiString500 struct{ value ciString }
 
-func (c CiString500Type) Value() string   { return c.value.Value() }
-func (c CiString500Type) Validate() error { return c.value.Validate() }
-func CiString500(value string) (CiString500Type, error) {
-	cs, err := CiString(value, maxLenCiString500)
+func (c CiString500) Value() string   { return c.value.value() }
+func (c CiString500) Validate() error { return c.value.validate() }
+func SetCiString500(value string) (CiString500, error) {
+	cs, err := setCiString(value, maxLenCiString500)
 
-	return CiString500Type{value: cs}, err
+	return CiString500{value: cs}, err
 }
