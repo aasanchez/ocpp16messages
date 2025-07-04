@@ -3,18 +3,18 @@ package authorizetypes_test
 import (
 	"testing"
 
-	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
+	at "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
 func BenchmarkAuthorizationStatus_Create(b *testing.B) {
 	input := "Accepted"
 
-	var result authorizetypes.AuthorizationStatusType
+	var result at.AuthorizationStatus
 
 	b.ResetTimer()
 
 	for range b.N {
-		status, err := authorizetypes.AuthorizationStatus(input)
+		status, err := at.SetAuthorizationStatus(input)
 		if err != nil {
 			b.Fatalf("unexpected error: %v", err)
 		}
@@ -26,7 +26,7 @@ func BenchmarkAuthorizationStatus_Create(b *testing.B) {
 }
 
 func BenchmarkAuthorizationStatus_Value(b *testing.B) {
-	status, err := authorizetypes.AuthorizationStatus("Accepted")
+	status, err := at.SetAuthorizationStatus("Accepted")
 
 	if err != nil {
 		b.Fatalf("setup failed: %v", err)
