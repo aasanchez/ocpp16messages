@@ -26,12 +26,12 @@ func newFullPayload() authorizetypes.IdTagInfoPayload {
 }
 
 func BenchmarkIdTagInfo_Create_Minimal(b *testing.B) {
-	var result authorizetypes.IdTagInfoType
+	var result authorizetypes.IdTagInfo
 
 	payload := newMinimalPayload()
 
 	for range b.N {
-		info, err := authorizetypes.IdTagInfo(payload)
+		info, err := authorizetypes.SetIdTagInfo(payload)
 		if err != nil {
 			b.Fatalf("unexpected error on create minimal: %v", err)
 		}
@@ -43,12 +43,12 @@ func BenchmarkIdTagInfo_Create_Minimal(b *testing.B) {
 }
 
 func BenchmarkIdTagInfo_Create_Full(b *testing.B) {
-	var result authorizetypes.IdTagInfoType
+	var result authorizetypes.IdTagInfo
 
 	payload := newFullPayload()
 
 	for range b.N {
-		info, err := authorizetypes.IdTagInfo(payload)
+		info, err := authorizetypes.SetIdTagInfo(payload)
 		if err != nil {
 			b.Fatalf("unexpected error when create full: %v", err)
 		}
@@ -60,7 +60,7 @@ func BenchmarkIdTagInfo_Create_Full(b *testing.B) {
 }
 
 func BenchmarkIdTagInfo_Value_Minimal(b *testing.B) {
-	info, err := authorizetypes.IdTagInfo(newMinimalPayload())
+	info, err := authorizetypes.SetIdTagInfo(newMinimalPayload())
 	if err != nil {
 		b.Fatalf("unexpected error with value minimal: %v", err)
 	}
@@ -77,7 +77,7 @@ func BenchmarkIdTagInfo_Value_Minimal(b *testing.B) {
 }
 
 func BenchmarkIdTagInfo_Value_Full(b *testing.B) {
-	info, err := authorizetypes.IdTagInfo(newFullPayload())
+	info, err := authorizetypes.SetIdTagInfo(newFullPayload())
 	if err != nil {
 		b.Fatalf("unexpected error with value full: %v", err)
 	}

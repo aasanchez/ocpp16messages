@@ -13,7 +13,7 @@ func ExampleIdTagInfo_statusOnly() {
 		ParentIdTag: nil,
 	}
 
-	info, err := authorizetypes.IdTagInfo(payload)
+	info, err := authorizetypes.SetIdTagInfo(payload)
 	if err != nil {
 		fmt.Println("Failed statusOnly:", err)
 
@@ -36,7 +36,7 @@ func ExampleIdTagInfo_withExpiryDate() {
 		ParentIdTag: nil,
 	}
 
-	info, err := authorizetypes.IdTagInfo(payload)
+	info, err := authorizetypes.SetIdTagInfo(payload)
 	if err != nil {
 		fmt.Println("Failed withExpiryDate:", err)
 
@@ -59,7 +59,7 @@ func ExampleIdTagInfo_withParentIdTag() {
 		ParentIdTag: &parent,
 	}
 
-	info, err := authorizetypes.IdTagInfo(payload)
+	info, err := authorizetypes.SetIdTagInfo(payload)
 	if err != nil {
 		fmt.Println("Failed withParentIdTag:", err)
 
@@ -83,7 +83,7 @@ func ExampleIdTagInfo_withAllFields() {
 		ParentIdTag: &parent,
 	}
 
-	info, err := authorizetypes.IdTagInfo(payload)
+	info, err := authorizetypes.SetIdTagInfo(payload)
 	if err != nil {
 		fmt.Println("Failed withAllFields:", err)
 

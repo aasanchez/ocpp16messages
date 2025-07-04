@@ -12,19 +12,19 @@ type IdTagInfoPayload struct {
 	ParentIdTag *string
 }
 
-type IdTagInfoType struct {
+type IdTagInfo struct {
 	expiryDate  *st.DateTime
 	parentIdTag *IdTokenType
 	status      AuthorizationStatus
 }
 
-func IdTagInfo(input IdTagInfoPayload) (IdTagInfoType, error) {
+func SetIdTagInfo(input IdTagInfoPayload) (IdTagInfo, error) {
 	status, err := SetAuthorizationStatus(input.Status)
 	if err != nil {
-		return IdTagInfoType{}, fmt.Errorf(st.ErrFmtFieldWrapped, "failed to parse status", err)
+		return IdTagInfo{}, fmt.Errorf(st.ErrFmtFieldWrapped, "failed to parse status", err)
 	}
 
-	info := IdTagInfoType{
+	info := IdTagInfo{
 		status:      status,
 		expiryDate:  nil,
 		parentIdTag: nil,
@@ -33,7 +33,7 @@ func IdTagInfo(input IdTagInfoPayload) (IdTagInfoType, error) {
 	if input.ExpiryDate != nil {
 		parsedDate, err := st.SetDateTime(*input.ExpiryDate)
 		if err != nil {
-			return IdTagInfoType{}, fmt.Errorf(st.ErrFmtFieldWrapped, "failed to parse expiryDate", err)
+			return IdTagInfo{}, fmt.Errorf(st.ErrFmtFieldWrapped, "failed to parse expiryDate", err)
 		}
 
 		info.expiryDate = &parsedDate
@@ -42,7 +42,7 @@ func IdTagInfo(input IdTagInfoPayload) (IdTagInfoType, error) {
 	if input.ParentIdTag != nil {
 		ci, err := st.SetCiString20(*input.ParentIdTag)
 		if err != nil {
-			return IdTagInfoType{}, fmt.Errorf(st.ErrFmtFieldWrapped, "failed to validate parentIdTag as CiString20", err)
+			return IdTagInfo{}, fmt.Errorf(st.ErrFmtFieldWrapped, "failed to validate parentIdTag as CiString20", err)
 		}
 
 		idTag, _ := IdToken(ci)
@@ -52,7 +52,7 @@ func IdTagInfo(input IdTagInfoPayload) (IdTagInfoType, error) {
 	return info, nil
 }
 
-func (i IdTagInfoType) Value() IdTagInfoPayload {
+func (i IdTagInfo) Value() IdTagInfoPayload {
 	var expiry *string
 
 	if str := i.expiryDate; str != nil {

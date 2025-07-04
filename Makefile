@@ -21,6 +21,9 @@ test-coverage-html: test-coverage ## Generate and open a detailed HTML coverage 
 	@go tool cover -html=.reports/coverage.out -o .reports/coverage.html
 	@open -a "Google Chrome" .reports/coverage.html
 
+test-example: ## Run documentation-based example tests to verify correctness of usage examples.
+	@go test -mod=readonly -v -coverprofile=.reports/coverage.out -run '^Example' ./...
+
 .PHONY: benchmark
 benchmark: ## Run benchmark tests to measure performance of critical operations.
 	@echo "Stopping any running pkgsite processes..."

@@ -13,7 +13,7 @@ func TestIdTagInfo_statusOnly(t *testing.T) {
 		ParentIdTag: nil,
 	}
 
-	info, err := IdTagInfo(input)
+	info, err := SetIdTagInfo(input)
 	if err != nil {
 		t.Fatalf("unexpected error statusOnly: %v", err)
 	}
@@ -44,7 +44,7 @@ func TestIdTagInfo_withExpiryDateOnly(t *testing.T) {
 		ParentIdTag: nil,
 	}
 
-	info, err := IdTagInfo(input)
+	info, err := SetIdTagInfo(input)
 	if err != nil {
 		t.Fatalf("unexpected error withExpiryDateOnly: %v", err)
 	}
@@ -66,7 +66,7 @@ func TestIdTagInfo_withParentIdTagOnly(t *testing.T) {
 		ParentIdTag: &parent,
 	}
 
-	info, err := IdTagInfo(input)
+	info, err := SetIdTagInfo(input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -89,7 +89,7 @@ func TestIdTagInfo_allFieldsPresent(t *testing.T) {
 		ParentIdTag: &parent,
 	}
 
-	info, err := IdTagInfo(input)
+	info, err := SetIdTagInfo(input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -118,7 +118,7 @@ func TestIdTagInfo_invalidStatus(t *testing.T) {
 		ParentIdTag: nil,
 	}
 
-	_, err := IdTagInfo(input)
+	_, err := SetIdTagInfo(input)
 	if err == nil {
 		t.Fatal("expected error for invalid status, got nil")
 	}
@@ -135,7 +135,7 @@ func TestIdTagInfo_invalidExpiryDate(t *testing.T) {
 		ParentIdTag: nil,
 	}
 
-	_, err := IdTagInfo(input)
+	_, err := SetIdTagInfo(input)
 	if err == nil {
 		t.Fatal("expected error for invalid expiryDate, got nil")
 	}
@@ -152,7 +152,7 @@ func TestIdTagInfo_invalidParentIdTag_tooLong(t *testing.T) {
 		ParentIdTag: &tooLong,
 	}
 
-	_, err := IdTagInfo(input)
+	_, err := SetIdTagInfo(input)
 	if err == nil {
 		t.Fatal("expected error for invalid parentIdTag, got nil")
 	}
