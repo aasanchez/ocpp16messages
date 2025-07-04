@@ -13,7 +13,7 @@ type IdTagInfoPayload struct {
 }
 
 type IdTagInfoType struct {
-	expiryDate  *st.DateTimeType
+	expiryDate  *st.DateTime
 	parentIdTag *IdTokenType
 	status      AuthorizationStatus
 }
@@ -31,7 +31,7 @@ func IdTagInfo(input IdTagInfoPayload) (IdTagInfoType, error) {
 	}
 
 	if input.ExpiryDate != nil {
-		parsedDate, err := st.DateTime(*input.ExpiryDate)
+		parsedDate, err := st.SetDateTime(*input.ExpiryDate)
 		if err != nil {
 			return IdTagInfoType{}, fmt.Errorf(st.ErrFmtFieldWrapped, "failed to parse expiryDate", err)
 		}
