@@ -86,3 +86,4 @@ tags
 .reports/
 *-benchmarks.txt
 *.zip
+.gocache
