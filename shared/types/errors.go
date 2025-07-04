@@ -25,13 +25,13 @@ var (
 )
 
 const (
-	ErrFmtFieldWrapped        = "%s: %w"
-	ErrContainsFmt            = "expected error to contain:%q got: %q"
-	ErrExpectedNoError        = "unexpected error: %v"
-	ErrExpectedError          = "expected error: %v"
-	ErrExpectedNil            = "expected nil result for nil input, got: %v"
-	ErrExpectedNonNilError    = "expected error for %s"
-	ErrExpectedValidationFail = "expected validation error, got nil"
-	ErrExpectedNoValidation   = "expected no validation error, got: %v"
-	ErrExpectedValueMismatch  = "expected Value() = %q, got %q"
+	ErrFmtFieldWrapped          = "%s: %w"
+	ErrContainsFmt              = "expected error to contain:%q got: %q"
+	ErrExpectedNoError          = "unexpected error: %v"
+	ErrExpectedError            = "expected error: %v"
+	ErrExpectedNil              = "expected nil result for nil input, got: %v"
+	ErrExpectedNonNilError      = "expected error for %s"
+	ErrExpectedValidationFail   = "expected validation error, got nil"
+	ErrExpectedNoValidation     = "expected no validation error, got: %v"
+	ErrExpectedValueMismatch    = "expected Value() = %q, got %q"
 )
