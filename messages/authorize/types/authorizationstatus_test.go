@@ -14,7 +14,7 @@ func Test_getStatusSet_containsAllConstants(t *testing.T) {
 	t.Parallel()
 
 	m := getStatusSet()
-	var keys []string
+	keys := make([]string, 0, len(m))
 
 	for k := range m {
 		keys = append(keys, k)
