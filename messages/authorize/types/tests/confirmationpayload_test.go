@@ -1,15 +1,17 @@
-package authorizetypes
+package authorizetypes_test
 
 import (
 	"testing"
+
+	at "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
 func TestConfirmationPayload_validStatusOnly(t *testing.T) {
 	t.Parallel()
 
-	payload := ConfirmationPayload{
-		IdTagInfo: IdTagInfoPayload{
-			Status:      Accepted,
+	payload := at.ConfirmationPayload{
+		IdTagInfo: at.IdTagInfoPayload{
+			Status:      "Accepted",
 			ExpiryDate:  nil,
 			ParentIdTag: nil,
 		},
@@ -21,8 +23,8 @@ func TestConfirmationPayload_validStatusOnly(t *testing.T) {
 
 	got := payload.Value()
 
-	if got.IdTagInfo.Status != Accepted {
-		t.Errorf("expected status %q, got %q", Accepted, got.IdTagInfo.Status)
+	if got.IdTagInfo.Status != at.Accepted {
+		t.Errorf("expected status %q, got %q", at.Accepted, got.IdTagInfo.Status)
 	}
 
 	if got.IdTagInfo.ExpiryDate != nil {
@@ -40,9 +42,9 @@ func TestConfirmationPayload_withAllFields(t *testing.T) {
 	expiry := "2027-04-12T10:03:04Z"
 	parent := "ABC123"
 
-	payload := ConfirmationPayload{
-		IdTagInfo: IdTagInfoPayload{
-			Status:      Accepted,
+	payload := at.ConfirmationPayload{
+		IdTagInfo: at.IdTagInfoPayload{
+			Status:      at.Accepted,
 			ExpiryDate:  &expiry,
 			ParentIdTag: &parent,
 		},
@@ -54,8 +56,8 @@ func TestConfirmationPayload_withAllFields(t *testing.T) {
 
 	got := payload.Value()
 
-	if got.IdTagInfo.Status != Accepted {
-		t.Errorf("status mismatch: expected %q, got %q", Accepted, got.IdTagInfo.Status)
+	if got.IdTagInfo.Status != at.Accepted {
+		t.Errorf("status mismatch: expected %q, got %q", at.Accepted, got.IdTagInfo.Status)
 	}
 
 	if got.IdTagInfo.ExpiryDate == nil || *got.IdTagInfo.ExpiryDate != expiry {
@@ -70,8 +72,8 @@ func TestConfirmationPayload_withAllFields(t *testing.T) {
 func TestConfirmationPayload_missingStatus(t *testing.T) {
 	t.Parallel()
 
-	payload := ConfirmationPayload{
-		IdTagInfo: IdTagInfoPayload{
+	payload := at.ConfirmationPayload{
+		IdTagInfo: at.IdTagInfoPayload{
 			Status:      "",
 			ExpiryDate:  nil,
 			ParentIdTag: nil,
