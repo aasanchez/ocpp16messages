@@ -85,4 +85,4 @@ tags
 
 .reports/
 *-benchmarks.txt
-.opencode
+*.zip
