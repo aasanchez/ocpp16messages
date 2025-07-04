@@ -8,7 +8,7 @@ import (
 
 type IdTagInfoPayload struct {
 	Status      string
-	ExpiryDate  *string
+	ExpiryDate  string
 	ParentIdTag *string
 }
 
@@ -24,46 +24,41 @@ func SetIdTagInfo(input IdTagInfoPayload) (IdTagInfo, error) {
 		return IdTagInfo{}, fmt.Errorf(st.ErrFmtFieldWrapped, "failed to parse status", err)
 	}
 
-	info := IdTagInfo{
-		status:      status,
-		expiryDate:  nil,
-		parentIdTag: nil,
-	}
-
-	if input.ExpiryDate != nil {
-		parsedDate, err := st.SetDateTime(*input.ExpiryDate)
+	var expiryDate *st.DateTime
+	if input.ExpiryDate != "" {
+		parsed, err := st.SetDateTime(input.ExpiryDate)
 		if err != nil {
 			return IdTagInfo{}, fmt.Errorf(st.ErrFmtFieldWrapped, "failed to parse expiryDate", err)
 		}
-
-		info.expiryDate = &parsedDate
+		expiryDate = parsed
 	}
 
+	var parentIdTag *IdToken
 	if input.ParentIdTag != nil {
 		ci, err := st.SetCiString20(*input.ParentIdTag)
 		if err != nil {
 			return IdTagInfo{}, fmt.Errorf(st.ErrFmtFieldWrapped, "failed to validate parentIdTag as CiString20", err)
 		}
-
-		idTag, _ := SetIdToken(ci)
-		info.parentIdTag = &idTag
+		tag, _ := SetIdToken(ci)
+		parentIdTag = &tag
 	}
 
-	return info, nil
+	return IdTagInfo{
+		status:      status,
+		expiryDate:  expiryDate,
+		parentIdTag: parentIdTag,
+	}, nil
 }
 
 func (i IdTagInfo) Value() IdTagInfoPayload {
-	var expiry *string
-
-	if str := i.expiryDate; str != nil {
-		s := str.String()
-		expiry = &s
+	var expiry string
+	if i.expiryDate != nil {
+		expiry = i.expiryDate.String()
 	}
 
 	var parent *string
-
-	if p := i.parentIdTag; p != nil {
-		val := p.Value()
+	if i.parentIdTag != nil {
+		val := i.parentIdTag.Value()
 		parent = &val
 	}
 

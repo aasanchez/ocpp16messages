@@ -8,7 +8,7 @@ func TestIdTagInfo_statusOnly(t *testing.T) {
 	t.Parallel()
 
 	input := IdTagInfoPayload{
-		Status:      Accepted,
+		Status:      "Accepted",
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
 	}

@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
-	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
+	at "github.com/aasanchez/ocpp16messages/messages/authorize/types"
+	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 const ()
@@ -16,8 +16,8 @@ func TestAuthorizeConfirmation_validPayload(t *testing.T) {
 	expiry := "2025-04-12T10:03:04Z"
 	parent := "A632-E2BB0231072C"
 
-	payload := authorizetypes.ConfirmationPayload{
-		IdTagInfo: authorizetypes.IdTagInfoPayload{
+	payload := at.ConfirmationPayload{
+		IdTagInfo: at.IdTagInfoPayload{
 			Status:      "Accepted",
 			ExpiryDate:  &expiry,
 			ParentIdTag: &parent,
@@ -26,7 +26,7 @@ func TestAuthorizeConfirmation_validPayload(t *testing.T) {
 
 	msg, err := Confirmation(payload)
 	if err != nil {
-		t.Fatalf(sharedtypes.ErrExpectedNoError, err)
+		t.Fatalf(st.ErrExpectedNoError, err)
 	}
 
 	val := msg.IdTagInfo.Value()
@@ -50,8 +50,8 @@ func TestAuthorizeConfirmation_invalidStatus(t *testing.T) {
 	expiry := "2026-01-01T00:00:00Z"
 	parent := "PARENT"
 
-	payload := authorizetypes.ConfirmationPayload{
-		IdTagInfo: authorizetypes.IdTagInfoPayload{
+	payload := at.ConfirmationPayload{
+		IdTagInfo: at.IdTagInfoPayload{
 			Status:      "UnknownStatus",
 			ExpiryDate:  &expiry,
 			ParentIdTag: &parent,
@@ -70,8 +70,8 @@ func TestAuthorizeConfirmation_invalidExpiryDate(t *testing.T) {
 	invalidDate := "not-a-date"
 	parent := "PARENT1"
 
-	payload := authorizetypes.ConfirmationPayload{
-		IdTagInfo: authorizetypes.IdTagInfoPayload{
+	payload := at.ConfirmationPayload{
+		IdTagInfo: at.IdTagInfoPayload{
 			Status:      "Accepted",
 			ExpiryDate:  &invalidDate,
 			ParentIdTag: &parent,
@@ -90,8 +90,8 @@ func TestAuthorizeConfirmation_invalidParentIdTag(t *testing.T) {
 	expiry := "2027-05-01T00:00:00Z"
 	invalidTag := strings.Repeat("X", 100) // invalid CiString20
 
-	payload := authorizetypes.ConfirmationPayload{
-		IdTagInfo: authorizetypes.IdTagInfoPayload{
+	payload := at.ConfirmationPayload{
+		IdTagInfo: at.IdTagInfoPayload{
 			Status:      "Accepted",
 			ExpiryDate:  &expiry,
 			ParentIdTag: &invalidTag,
@@ -110,8 +110,8 @@ func TestAuthorizeConfirmation_payloadValidationFails_emptyStatus(t *testing.T) 
 	expiry := "2027-01-03T00:00:00Z"
 	parent := "PARENT2"
 
-	payload := authorizetypes.ConfirmationPayload{
-		IdTagInfo: authorizetypes.IdTagInfoPayload{
+	payload := at.ConfirmationPayload{
+		IdTagInfo: at.IdTagInfoPayload{
 			Status:      "",
 			ExpiryDate:  &expiry,
 			ParentIdTag: &parent,
