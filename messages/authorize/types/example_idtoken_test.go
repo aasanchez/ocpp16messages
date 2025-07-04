@@ -15,7 +15,7 @@ func ExampleIdToken_valid() {
 		return
 	}
 
-	idToken, err := authorizetypes.IdToken(str)
+	idToken, err := authorizetypes.SetIdToken(str)
 	if err != nil {
 		fmt.Println("Error creating IdToken:", err)
 

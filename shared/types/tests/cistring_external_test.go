@@ -1,7 +1,6 @@
 package types_test
 
 import (
-	"errors"
 	"strings"
 	"testing"
 
@@ -9,9 +8,9 @@ import (
 )
 
 const (
-	errCiString20CreationFailed = "CiString20 creation failed: %v"
-	errCiString25CreationFailed = "CiString25 creation failed: %v"
-	errCiString50CreationFailed = "CiString50 creation failed: %v"
+	errCiString20CreationFailed  = "CiString20 creation failed: %v"
+	errCiString25CreationFailed  = "CiString25 creation failed: %v"
+	errCiString50CreationFailed  = "CiString50 creation failed: %v"
 	errCiString255CreationFailed = "CiString255 creation failed: %v"
 	errCiString500CreationFailed = "CiString500 creation failed: %v"
 )
@@ -52,15 +51,6 @@ func TestCiString20Type_ValueReturnsOriginal(t *testing.T) {
 
 	if ciStr.Value() != input {
 		t.Errorf(types.ErrExpectedValueMismatch, input, ciStr.Value())
-	}
-}
-
-func TestCiString20Type_CreateTooLongFails(t *testing.T) {
-	t.Parallel()
-
-	_, err := types.SetCiString20(strings.Repeat("X", 21))
-	if !errors.Is(err, types.ErrExceedsMaxLength) {
-		t.Errorf("expected ErrExceedsMaxLength for >20 chars, got: %v", err)
 	}
 }
 

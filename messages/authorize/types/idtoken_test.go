@@ -16,7 +16,7 @@ func Test_IdTokenFromCiString(t *testing.T) {
 		t.Fatalf("failed to construct CiString20Type: %v", err)
 	}
 
-	_, err = IdToken(str)
+	_, err = SetIdToken(str)
 	if err != nil {
 		t.Errorf("expected no error, got %v", err)
 	}
@@ -41,7 +41,7 @@ func Test_IdTokenFromCiString_Empty(t *testing.T) {
 		t.Fatalf("expected error when creating CiString20Type from empty string, got nil")
 	}
 
-	_, err = IdToken(str)
+	_, err = SetIdToken(str)
 	if err != nil {
 		t.Errorf("expected no error when calling IdToken with already-invalid CiString20Type (should never reach here): %v", err)
 	}

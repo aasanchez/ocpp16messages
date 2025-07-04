@@ -14,7 +14,7 @@ type IdTagInfoPayload struct {
 
 type IdTagInfo struct {
 	expiryDate  *st.DateTime
-	parentIdTag *IdTokenType
+	parentIdTag *IdToken
 	status      AuthorizationStatus
 }
 
@@ -45,7 +45,7 @@ func SetIdTagInfo(input IdTagInfoPayload) (IdTagInfo, error) {
 			return IdTagInfo{}, fmt.Errorf(st.ErrFmtFieldWrapped, "failed to validate parentIdTag as CiString20", err)
 		}
 
-		idTag, _ := IdToken(ci)
+		idTag, _ := SetIdToken(ci)
 		info.parentIdTag = &idTag
 	}
 

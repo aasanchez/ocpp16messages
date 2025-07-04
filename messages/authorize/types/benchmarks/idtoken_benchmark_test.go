@@ -16,7 +16,7 @@ func BenchmarkIdToken_Create(b *testing.B) {
 			b.Fatal(err)
 		}
 
-		_, err = authorizetypes.IdToken(str)
+		_, err = authorizetypes.SetIdToken(str)
 		if err != nil {
 			b.Fatal(err)
 		}
@@ -29,7 +29,7 @@ func BenchmarkIdToken_Value(b *testing.B) {
 		b.Fatal(err)
 	}
 
-	token, err := authorizetypes.IdToken(str)
+	token, err := authorizetypes.SetIdToken(str)
 	if err != nil {
 		b.Fatal(err)
 	}
