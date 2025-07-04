@@ -21,6 +21,7 @@ var (
 	ErrInvalidRegistrationStatus        = errors.New("invalid registration status")
 	ErrMissingStatus                    = errors.New("missing required field: idTagInfo.Status")
 	ErrNonPrintableASCII                = errors.New("value contains non-printable ASCII characters")
+	ErrNotFound 												= errors.New("not found")
 )
 
 const (

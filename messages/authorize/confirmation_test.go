@@ -4,22 +4,21 @@ import (
 	"strings"
 	"testing"
 
-	at "github.com/aasanchez/ocpp16messages/messages/authorize/types"
+	mat "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-const ()
-
 func TestAuthorizeConfirmation_validPayload(t *testing.T) {
 	t.Parallel()
+	t.Helper()
 
-	expiry := "2025-04-12T10:03:04Z"
 	parent := "A632-E2BB0231072C"
+	expectedExpiry := "2025-04-12T10:03:04Z"
 
-	payload := at.ConfirmationPayload{
-		IdTagInfo: at.IdTagInfoPayload{
+	payload := mat.ConfirmationPayload{
+		IdTagInfo: mat.IdTagInfoPayload{
 			Status:      "Accepted",
-			ExpiryDate:  &expiry,
+			ExpiryDate:  expectedExpiry,
 			ParentIdTag: &parent,
 		},
 	}
@@ -35,25 +34,24 @@ func TestAuthorizeConfirmation_validPayload(t *testing.T) {
 		t.Errorf("unexpected status: got %s", val.Status)
 	}
 
-	if val.ExpiryDate == nil || *val.ExpiryDate != expiry {
-		t.Errorf("unexpected expiry date: got %+v", val.ExpiryDate)
+	if val.ExpiryDate != expectedExpiry {
+		t.Errorf("unexpected expiry date: got %s, want %s", val.ExpiryDate, expectedExpiry)
 	}
 
 	if val.ParentIdTag == nil || *val.ParentIdTag != parent {
-		t.Errorf("unexpected parentIdTag: got %+v", val.ParentIdTag)
+		t.Errorf("unexpected parentIdTag: got %+v, want %s", val.ParentIdTag, parent)
 	}
 }
 
 func TestAuthorizeConfirmation_invalidStatus(t *testing.T) {
 	t.Parallel()
 
-	expiry := "2026-01-01T00:00:00Z"
 	parent := "PARENT"
 
-	payload := at.ConfirmationPayload{
-		IdTagInfo: at.IdTagInfoPayload{
+	payload := mat.ConfirmationPayload{
+		IdTagInfo: mat.IdTagInfoPayload{
 			Status:      "UnknownStatus",
-			ExpiryDate:  &expiry,
+			ExpiryDate:  "2026-01-01T00:00:00Z",
 			ParentIdTag: &parent,
 		},
 	}
@@ -67,13 +65,12 @@ func TestAuthorizeConfirmation_invalidStatus(t *testing.T) {
 func TestAuthorizeConfirmation_invalidExpiryDate(t *testing.T) {
 	t.Parallel()
 
-	invalidDate := "not-a-date"
 	parent := "PARENT1"
 
-	payload := at.ConfirmationPayload{
-		IdTagInfo: at.IdTagInfoPayload{
+	payload := mat.ConfirmationPayload{
+		IdTagInfo: mat.IdTagInfoPayload{
 			Status:      "Accepted",
-			ExpiryDate:  &invalidDate,
+			ExpiryDate:  "not-a-date",
 			ParentIdTag: &parent,
 		},
 	}
@@ -87,13 +84,12 @@ func TestAuthorizeConfirmation_invalidExpiryDate(t *testing.T) {
 func TestAuthorizeConfirmation_invalidParentIdTag(t *testing.T) {
 	t.Parallel()
 
-	expiry := "2027-05-01T00:00:00Z"
 	invalidTag := strings.Repeat("X", 100) // invalid CiString20
 
-	payload := at.ConfirmationPayload{
-		IdTagInfo: at.IdTagInfoPayload{
+	payload := mat.ConfirmationPayload{
+		IdTagInfo: mat.IdTagInfoPayload{
 			Status:      "Accepted",
-			ExpiryDate:  &expiry,
+			ExpiryDate:  "2027-05-01T00:00:00Z",
 			ParentIdTag: &invalidTag,
 		},
 	}
@@ -107,13 +103,12 @@ func TestAuthorizeConfirmation_invalidParentIdTag(t *testing.T) {
 func TestAuthorizeConfirmation_payloadValidationFails_emptyStatus(t *testing.T) {
 	t.Parallel()
 
-	expiry := "2027-01-03T00:00:00Z"
 	parent := "PARENT2"
 
-	payload := at.ConfirmationPayload{
-		IdTagInfo: at.IdTagInfoPayload{
+	payload := mat.ConfirmationPayload{
+		IdTagInfo: mat.IdTagInfoPayload{
 			Status:      "",
-			ExpiryDate:  &expiry,
+			ExpiryDate:  "2027-01-03T00:00:00Z",
 			ParentIdTag: &parent,
 		},
 	}

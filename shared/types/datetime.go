@@ -1,7 +1,6 @@
 package types
 
 import (
-	"errors"
 	"fmt"
 	"time"
 )
@@ -9,8 +8,6 @@ import (
 type DateTime struct {
 	value time.Time
 }
-
-var ErrNotFound = errors.New("not found")
 
 func SetDateTime(input string) (*DateTime, error) {
 	if input == "" {

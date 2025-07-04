@@ -13,7 +13,7 @@ func ExampleConfirmation() {
 	payload := authorizetypes.ConfirmationPayload{
 		IdTagInfo: authorizetypes.IdTagInfoPayload{
 			Status:      "Accepted",
-			ExpiryDate:  &expiry,
+			ExpiryDate:  expiry,
 			ParentIdTag: &parent,
 		},
 	}
@@ -28,7 +28,7 @@ func ExampleConfirmation() {
 	value := msg.IdTagInfo.Value()
 
 	fmt.Println("Status:", value.Status)
-	fmt.Println("ExpiryDate:", *value.ExpiryDate)
+	fmt.Println("ExpiryDate:", value.ExpiryDate)
 	fmt.Println("ParentIdTag:", *value.ParentIdTag)
 
 	// Output:
