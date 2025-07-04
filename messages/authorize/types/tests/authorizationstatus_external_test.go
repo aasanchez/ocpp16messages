@@ -13,6 +13,7 @@ func TestAuthorizationStatus_validAccepted(t *testing.T) {
 	if err != nil {
 		t.Fatalf("validAccepted: unexpected error: %v", err)
 	}
+
 	if status.Value() != at.Accepted {
 		t.Errorf("validAccepted: expected value %q, got %q", at.Accepted, status.Value())
 	}
@@ -25,6 +26,7 @@ func TestAuthorizationStatus_validBlocked(t *testing.T) {
 	if err != nil {
 		t.Fatalf("validBlocked: unexpected error: %v", err)
 	}
+
 	if status.Value() != at.Blocked {
 		t.Errorf("validBlocked: expected value %q, got %q", at.Blocked, status.Value())
 	}
@@ -37,6 +39,7 @@ func TestAuthorizationStatus_validExpired(t *testing.T) {
 	if err != nil {
 		t.Fatalf("validExpired: unexpected error: %v", err)
 	}
+
 	if status.Value() != at.Expired {
 		t.Errorf("validExpired: expected value %q, got %q", at.Expired, status.Value())
 	}
@@ -49,6 +52,7 @@ func TestAuthorizationStatus_validInvalid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("validInvalid: unexpected error: %v", err)
 	}
+
 	if status.Value() != at.Invalid {
 		t.Errorf("validInvalid: expected value %q, got %q", at.Invalid, status.Value())
 	}
@@ -61,6 +65,7 @@ func TestAuthorizationStatus_validConcurrentTx(t *testing.T) {
 	if err != nil {
 		t.Fatalf("validConcurrentTx: unexpected error: %v", err)
 	}
+
 	if status.Value() != at.ConcurrentTx {
 		t.Errorf("validConcurrentTx: expected value %q, got %q", at.ConcurrentTx, status.Value())
 	}
