@@ -4,7 +4,6 @@ linters:
   disable:
     - testpackage
     - lll
-    - nilnil
 
   settings:
     depguard:
