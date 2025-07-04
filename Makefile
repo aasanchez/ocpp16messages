@@ -14,19 +14,7 @@ test: ## Run all unit tests and generate a code coverage report for critical tes
 	@echo "\n--- \033[32mCoverage Percentage\033[0m:"
 	@go tool cover -func=.reports/coverage.out | tail -1 | awk -F" " '{print $$NF}'
 
-.PHONY: test-example
-test-example: ## Run documentation-based example tests to verify correctness of usage examples.
-	@go test -mod=readonly -v -coverprofile=.reports/coverage.out -run '^Example' ./...
-
-.PHONY: test-full
-test-full: ## Run all unit and example tests with coverage; continues even if some tests fail.
-	@rm -rf .reports && mkdir -p .reports
-	@go test -mod=readonly -v ./... > .reports/test.txt || true
-	@go test -mod=readonly -v -coverprofile=.reports/coverage.out ./... > .reports/test.txt
-	@echo "\n--- \033[32mCoverage Percentage\033[0m:"
-	@go tool cover -func=.reports/coverage.out | tail -1 | awk -F" " '{print $$NF}'
-
-.PHONY: coverage-html
+.PHONY: test-coverage
 coverage-html: test ## Generate and open a detailed HTML coverage report in the default browser.
 	@go tool cover -html=.reports/coverage.out -o .reports/coverage.html
 	@open -a "Google Chrome" .reports/coverage.html

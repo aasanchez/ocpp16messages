@@ -13,13 +13,15 @@ var (
 	ErrInvalidRegistrationStatus       = errors.New("invalid registration status")
 	ErrInvalidChangeAvailabilityStatus = errors.New("invalid change availability status")
 	ErrInvalidChangeAvailabilityType   = errors.New("invalid change availability type")
-	ErrMissingStatus                   = errors.New("missing required field: idTagInfo.Status")
-	ErrInvalidExpiryDate               = errors.New("invalid expiryDate")
-	ErrInvalidParentIdTag              = errors.New("invalid parentIdTag")
-	ErrEmptyValueNotAllowed            = errors.New("value must not be empty")
-	ErrExceedsMaxLength                = errors.New("value exceeds maximum allowed length")
-	ErrNonPrintableASCII               = errors.New("value contains non-printable ASCII characters")
-	ErrCiStringNotSet                  = errors.New("optional CiString value not set")
+	// ErrInvalidChangeConfigurationStatus indicates an unrecognized ChangeConfiguration status value.
+	ErrInvalidChangeConfigurationStatus = errors.New("invalid change configuration status")
+	ErrMissingStatus                    = errors.New("missing required field: idTagInfo.Status")
+	ErrInvalidExpiryDate                = errors.New("invalid expiryDate")
+	ErrInvalidParentIdTag               = errors.New("invalid parentIdTag")
+	ErrEmptyValueNotAllowed             = errors.New("value must not be empty")
+	ErrExceedsMaxLength                 = errors.New("value exceeds maximum allowed length")
+	ErrNonPrintableASCII                = errors.New("value contains non-printable ASCII characters")
+	ErrCiStringNotSet                   = errors.New("optional CiString value not set")
 )
 
 const (
