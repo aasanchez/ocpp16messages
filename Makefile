@@ -9,7 +9,9 @@ help: ## Display this help message, listing all available targets and their desc
 ##@ Testing
 test: ## Run all unit tests and generate a code coverage report for critical test paths.
 	@rm -rf .reports && mkdir -p .reports
-	@go test -mod=readonly -v -coverprofile=.reports/coverage.out -run '^Test' ./... > .reports/test.txt
+	@go test -mod=readonly -v \
+		-coverpkg=`go list -mod=readonly ./... | grep -v '/tests' | paste -sd ',' -` \
+		-coverprofile=.reports/coverage.out -run '^Test' ./... > .reports/test.txt
 
 test-coverage: test ## Generate and open a detailed HTML coverage report in the default browser.
 	@echo "\n--- \033[32mCoverage Percentage\033[0m:"
