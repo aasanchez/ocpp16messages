@@ -10,7 +10,7 @@ import (
 func ExampleDateTime_valid() {
 	input := "2027-04-12T10:03:04-04:00"
 
-	datetime, err := types.DateTime(input)
+	datetime, err := types.SetDateTime(input)
 	if err != nil {
 		fmt.Printf("unexpected error: %v\n", err)
 
@@ -26,7 +26,7 @@ func ExampleDateTime_valid() {
 
 func ExampleDateTime_invalidFormat() {
 	input := "not-a-date"
-	_, err := types.DateTime(input)
+	_, err := types.SetDateTime(input)
 
 	if err != nil {
 		fmt.Println("Error:", err)

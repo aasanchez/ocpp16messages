@@ -15,7 +15,7 @@ const (
 func ExampleCiString20() {
 	input := strings.Repeat("A", 20)
 
-	cistr, err := types.CiString20(input)
+	cistr, err := types.SetCiString20(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -31,7 +31,7 @@ func ExampleCiString20() {
 func ExampleCiString20_invalid() {
 	input := strings.Repeat("A", 21)
 
-	cistr, err := types.CiString20(input)
+	cistr, err := types.SetCiString20(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -46,7 +46,7 @@ func ExampleCiString20_invalid() {
 func ExampleCiString25() {
 	input := strings.Repeat("A", 25)
 
-	cistr, err := types.CiString25(input)
+	cistr, err := types.SetCiString25(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -61,7 +61,7 @@ func ExampleCiString25() {
 func ExampleCiString25_invalid() {
 	input := strings.Repeat("A", 26)
 
-	cistr, err := types.CiString25(input)
+	cistr, err := types.SetCiString25(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -76,7 +76,7 @@ func ExampleCiString25_invalid() {
 func ExampleCiString50() {
 	input := strings.Repeat("A", 50)
 
-	cistr, err := types.CiString50(input)
+	cistr, err := types.SetCiString50(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -91,7 +91,7 @@ func ExampleCiString50() {
 func ExampleCiString50_invalid() {
 	input := strings.Repeat("A", 51)
 
-	cistr, err := types.CiString50(input)
+	cistr, err := types.SetCiString50(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -106,7 +106,7 @@ func ExampleCiString50_invalid() {
 func ExampleCiString255() {
 	input := strings.Repeat("A", 255)
 
-	cistr, err := types.CiString255(input)
+	cistr, err := types.SetCiString255(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -121,7 +121,7 @@ func ExampleCiString255() {
 func ExampleCiString255_invalid() {
 	input := strings.Repeat("A", 256)
 
-	cistr, err := types.CiString255(input)
+	cistr, err := types.SetCiString255(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -136,7 +136,7 @@ func ExampleCiString255_invalid() {
 func ExampleCiString500() {
 	input := strings.Repeat("A", 499)
 
-	cistr, err := types.CiString500(input)
+	cistr, err := types.SetCiString500(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -151,7 +151,7 @@ func ExampleCiString500() {
 func ExampleCiString500_invalid() {
 	input := strings.Repeat("A", 501)
 
-	cistr, err := types.CiString500(input)
+	cistr, err := types.SetCiString500(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 

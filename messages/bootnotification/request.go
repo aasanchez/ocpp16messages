@@ -8,21 +8,21 @@ import (
 )
 
 type RequestMessage struct {
-	ChargeBoxSerialNumber   sharedtypes.CiString25Type
-	ChargePointModel        sharedtypes.CiString20Type
-	ChargePointSerialNumber sharedtypes.CiString25Type
-	ChargePointVendor       sharedtypes.CiString20Type
-	FirmwareVersion         sharedtypes.CiString50Type
-	Iccid                   sharedtypes.CiString20Type
-	Imsi                    sharedtypes.CiString20Type
-	MeterSerialNumber       sharedtypes.CiString25Type
-	MeterType               sharedtypes.CiString25Type
+	ChargeBoxSerialNumber   sharedtypes.CiString25
+	ChargePointModel        sharedtypes.CiString20
+	ChargePointSerialNumber sharedtypes.CiString25
+	ChargePointVendor       sharedtypes.CiString20
+	FirmwareVersion         sharedtypes.CiString50
+	Iccid                   sharedtypes.CiString20
+	Imsi                    sharedtypes.CiString20
+	MeterSerialNumber       sharedtypes.CiString25
+	MeterType               sharedtypes.CiString25
 }
 
 func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error) {
 	var err error
 
-	chargeBoxSerialNumber, err := sharedtypes.CiString25(input.ChargeBoxSerialNumber)
+	chargeBoxSerialNumber, err := sharedtypes.SetCiString25(input.ChargeBoxSerialNumber)
 	if err != nil {
 		return RequestMessage{}, wrapErr("chargeBoxSerialNumber", err)
 	}
@@ -32,7 +32,7 @@ func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error)
 		return RequestMessage{}, err
 	}
 
-	chargePointSerialNumber, err := sharedtypes.CiString25(input.ChargePointSerialNumber)
+	chargePointSerialNumber, err := sharedtypes.SetCiString25(input.ChargePointSerialNumber)
 	if err != nil {
 		return RequestMessage{}, wrapErr("chargePointSerialNumber", err)
 	}
@@ -42,27 +42,27 @@ func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error)
 		return RequestMessage{}, err
 	}
 
-	firmwareVersion, err := sharedtypes.CiString50(input.FirmwareVersion)
+	firmwareVersion, err := sharedtypes.SetCiString50(input.FirmwareVersion)
 	if err != nil {
 		return RequestMessage{}, wrapErr("firmwareVersion", err)
 	}
 
-	iccid, err := sharedtypes.CiString20(input.Iccid)
+	iccid, err := sharedtypes.SetCiString20(input.Iccid)
 	if err != nil {
 		return RequestMessage{}, wrapErr("iccid", err)
 	}
 
-	imsi, err := sharedtypes.CiString20(input.Imsi)
+	imsi, err := sharedtypes.SetCiString20(input.Imsi)
 	if err != nil {
 		return RequestMessage{}, wrapErr("imsi", err)
 	}
 
-	meterSerialNumber, err := sharedtypes.CiString25(input.MeterSerialNumber)
+	meterSerialNumber, err := sharedtypes.SetCiString25(input.MeterSerialNumber)
 	if err != nil {
 		return RequestMessage{}, wrapErr("meterSerialNumber", err)
 	}
 
-	meterType, err := sharedtypes.CiString25(input.MeterType)
+	meterType, err := sharedtypes.SetCiString25(input.MeterType)
 	if err != nil {
 		return RequestMessage{}, wrapErr("meterType", err)
 	}
@@ -86,14 +86,14 @@ func wrapErr(field string, err error) error {
 	return fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, field, err)
 }
 
-func requiredCiString20(field, value string) (sharedtypes.CiString20Type, error) {
+func requiredCiString20(field, value string) (sharedtypes.CiString20, error) {
 	if value == "" {
-		return sharedtypes.CiString20Type{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, field, sharedtypes.ErrEmptyValueNotAllowed)
+		return sharedtypes.CiString20{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, field, sharedtypes.ErrEmptyValueNotAllowed)
 	}
 
-	cs, err := sharedtypes.CiString20(value)
+	cs, err := sharedtypes.SetCiString20(value)
 	if err != nil {
-		return sharedtypes.CiString20Type{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, field, err)
+		return sharedtypes.CiString20{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, field, err)
 	}
 
 	return cs, nil

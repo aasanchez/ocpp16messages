@@ -5,23 +5,23 @@ import (
 	"time"
 )
 
-type DateTimeType struct {
+type DateTime struct {
 	value time.Time
 }
 
-func DateTime(input string) (DateTimeType, error) {
+func SetDateTime(input string) (DateTime, error) {
 	t, err := time.Parse(time.RFC3339, input)
 	if err != nil {
-		return DateTimeType{}, fmt.Errorf("invalid datetime: %w", err)
+		return DateTime{}, fmt.Errorf("invalid datetime: %w", err)
 	}
 
-	return DateTimeType{value: t}, nil
+	return DateTime{value: t}, nil
 }
 
-func (dt DateTimeType) Value() time.Time {
+func (dt DateTime) Value() time.Time {
 	return dt.value
 }
 
-func (dt DateTimeType) String() string {
+func (dt DateTime) String() string {
 	return dt.value.Format(time.RFC3339)
 }
