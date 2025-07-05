@@ -65,16 +65,12 @@ func (cs ciString) value() string {
 }
 
 // validate checks if the ciString instance conforms to the OCPP 1.6 constraints.
+// An empty string is considered valid, representing an optional value.
 //
 // It performs the following checks:
-// 1. Ensures the string is not empty.
-// 2. Validates that the string length does not exceed the specified maximum.
-// 3. Verifies that all characters are within the printable ASCII range (32-126).
+// 1. Validates that the string length does not exceed the specified maximum.
+// 2. Verifies that all characters are within the printable ASCII range (32-126).
 func (cs ciString) validate() error {
-	if len(cs.raw) == 0 {
-		return fmt.Errorf("ciString.Validate: %w", ErrEmptyValueNotAllowed)
-	}
-
 	if len(cs.raw) > cs.maxLen {
 		return fmt.Errorf("ciString.Validate: %w (got length %d, max %d)", ErrExceedsMaxLength, len(cs.raw), cs.maxLen)
 	}

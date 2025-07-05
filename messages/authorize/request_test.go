@@ -30,18 +30,17 @@ func TestAuthorizeRequest_emptyIdTag(t *testing.T) {
 	t.Parallel()
 
 	input := authorizetypes.RequestPayload{IdTag: ""}
-	if err := input.Validate(); err == nil {
-		t.Error("expected validation error for empty IdTag, got nil")
+	if err := input.Validate(); err != nil {
+		t.Fatalf("unexpected validation error for empty IdTag: %v", err)
 	}
 
-	_, err := Request(input)
-	if err == nil {
-		t.Fatal("expected error for empty IdTag, got nil")
+	msg, err := Request(input)
+	if err != nil {
+		t.Fatalf("Request() returned unexpected error for empty IdTag: %v", err)
 	}
 
-	expected := "request -> invalid idTag -> ciString.Validate: value must not be empty"
-	if !strings.Contains(err.Error(), expected) {
-		t.Errorf(sharedtypes.ErrContainsFmt, expected, err.Error())
+	if msg.IdTag.Value() != input.IdTag {
+		t.Errorf("expected IdTag %q, got %q", input.IdTag, msg.IdTag.Value())
 	}
 }
 

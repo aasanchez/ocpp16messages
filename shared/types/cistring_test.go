@@ -6,15 +6,6 @@ import (
 	"testing"
 )
 
-func TestCiString_EmptyFails(t *testing.T) {
-	t.Parallel()
-
-	_, err := setCiString("", 20)
-	if !errors.Is(err, ErrEmptyValueNotAllowed) {
-		t.Errorf("expected ErrEmptyValueNotAllowed, got: %v", err)
-	}
-}
-
 func TestCiString_TooLongFails(t *testing.T) {
 	t.Parallel()
 
@@ -27,9 +18,30 @@ func TestCiString_TooLongFails(t *testing.T) {
 func TestCiString_ValidPasses(t *testing.T) {
 	t.Parallel()
 
-	_, err := setCiString("OCPP16-Test", 20)
-	if err != nil {
-		t.Errorf(ErrExpectedNoError, err)
+	tests := []struct {
+		name  string
+		value string
+		maxLen int
+	}{
+		{
+			name:  "valid string",
+			value: "OCPP16-Test",
+			maxLen: 20,
+		},
+		{
+			name:  "empty string",
+			value: "",
+			maxLen: 20,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			_, err := setCiString(tt.value, tt.maxLen)
+			if err != nil {
+				t.Errorf(ErrExpectedNoError, err)
+			}
+		})
 	}
 }
 

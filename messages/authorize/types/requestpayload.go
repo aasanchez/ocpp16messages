@@ -11,10 +11,6 @@ type RequestPayload struct {
 }
 
 func (r RequestPayload) Validate() error {
-	if r.IdTag == "" {
-		return fmt.Errorf("request payload: %w", sharedtypes.ErrInvalidIdTag)
-	}
-
 	_, err := sharedtypes.SetCiString20Type(r.IdTag)
 	if err != nil {
 		return fmt.Errorf("request payload: %w", err)
