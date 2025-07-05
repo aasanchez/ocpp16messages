@@ -19,18 +19,18 @@ func TestCiString_ValidPasses(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
-		name  string
-		value string
+		name   string
+		value  string
 		maxLen int
 	}{
 		{
-			name:  "valid string",
-			value: "OCPP16-Test",
+			name:   "valid string",
+			value:  "OCPP16-Test",
 			maxLen: 20,
 		},
 		{
-			name:  "empty string",
-			value: "",
+			name:   "empty string",
+			value:  "",
 			maxLen: 20,
 		},
 	}
