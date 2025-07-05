@@ -15,33 +15,21 @@ func TestCiString_TooLongFails(t *testing.T) {
 	}
 }
 
-func TestCiString_ValidPasses(t *testing.T) {
+func TestCiString_ValidStringPasses(t *testing.T) {
 	t.Parallel()
 
-	tests := []struct {
-		name   string
-		value  string
-		maxLen int
-	}{
-		{
-			name:   "valid string",
-			value:  "OCPP16-Test",
-			maxLen: 20,
-		},
-		{
-			name:   "empty string",
-			value:  "",
-			maxLen: 20,
-		},
+	_, err := setCiString("OCPP16-Test", 20)
+	if err != nil {
+		t.Errorf(ErrExpectedNoError, err)
 	}
+}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			_, err := setCiString(tt.value, tt.maxLen)
-			if err != nil {
-				t.Errorf(ErrExpectedNoError, err)
-			}
-		})
+func TestCiString_EmptyStringPasses(t *testing.T) {
+	t.Parallel()
+
+	_, err := setCiString("", 20)
+	if err != nil {
+		t.Errorf(ErrExpectedNoError, err)
 	}
 }
 
