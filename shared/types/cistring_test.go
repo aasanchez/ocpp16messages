@@ -9,7 +9,7 @@ import (
 func TestCiString_EmptyFails(t *testing.T) {
 	t.Parallel()
 
-	_, err := setCiString("", 20)
+	_, err := setCiString("",1)
 	if !errors.Is(err, ErrEmptyValueNotAllowed) {
 		t.Errorf("expected ErrEmptyValueNotAllowed, got: %v", err)
 	}
