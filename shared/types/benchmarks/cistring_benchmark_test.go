@@ -38,7 +38,7 @@ func BenchmarkCiString20_Value(b *testing.B) {
 }
 
 func BenchmarkCiString25_Create(b *testing.B) {
-	input := strings.Repeat("A", 25)
+	input := strings.Repeat("B", 25)
 
 	b.ReportAllocs()
 
@@ -48,7 +48,7 @@ func BenchmarkCiString25_Create(b *testing.B) {
 }
 
 func BenchmarkCiString25_Validate(b *testing.B) {
-	input := strings.Repeat("A", 25)
+	input := strings.Repeat("B", 25)
 	cs, _ := types.SetCiString25(input)
 
 	b.ReportAllocs()
@@ -59,7 +59,7 @@ func BenchmarkCiString25_Validate(b *testing.B) {
 }
 
 func BenchmarkCiString25_Value(b *testing.B) {
-	input := strings.Repeat("A", 25)
+	input := strings.Repeat("B", 25)
 	cs, _ := types.SetCiString25(input)
 
 	b.ReportAllocs()
@@ -70,7 +70,7 @@ func BenchmarkCiString25_Value(b *testing.B) {
 }
 
 func BenchmarkCiString50_Create(b *testing.B) {
-	input := strings.Repeat("A", 50)
+	input := strings.Repeat("C", 50)
 
 	b.ReportAllocs()
 
@@ -80,7 +80,7 @@ func BenchmarkCiString50_Create(b *testing.B) {
 }
 
 func BenchmarkCiString50_Validate(b *testing.B) {
-	input := strings.Repeat("A", 50)
+	input := strings.Repeat("C", 50)
 	cs, _ := types.SetCiString50(input)
 
 	b.ReportAllocs()
@@ -91,7 +91,7 @@ func BenchmarkCiString50_Validate(b *testing.B) {
 }
 
 func BenchmarkCiString50_Value(b *testing.B) {
-	input := strings.Repeat("A", 50)
+	input := strings.Repeat("C", 50)
 	cs, _ := types.SetCiString50(input)
 
 	b.ReportAllocs()
@@ -132,7 +132,7 @@ func BenchmarkCiString255_Value(b *testing.B) {
 }
 
 func BenchmarkCiString500_Create(b *testing.B) {
-	input := strings.Repeat("A", 500)
+	input := strings.Repeat("E", 500)
 
 	b.ReportAllocs()
 
@@ -142,7 +142,7 @@ func BenchmarkCiString500_Create(b *testing.B) {
 }
 
 func BenchmarkCiString500_Validate(b *testing.B) {
-	input := strings.Repeat("A", 500)
+	input := strings.Repeat("E", 500)
 	cs, _ := types.SetCiString500(input)
 
 	b.ReportAllocs()
@@ -153,7 +153,7 @@ func BenchmarkCiString500_Validate(b *testing.B) {
 }
 
 func BenchmarkCiString500_Value(b *testing.B) {
-	input := strings.Repeat("A", 500)
+	input := strings.Repeat("E", 500)
 	cs, _ := types.SetCiString500(input)
 
 	b.ReportAllocs()
