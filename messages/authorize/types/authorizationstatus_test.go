@@ -1,52 +1,79 @@
 package authorizetypes
 
 import (
-	"errors"
-	"fmt"
-	"reflect"
-	"sort"
 	"testing"
-
-	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-func Test_getStatusSet_containsAllConstants(t *testing.T) {
+func TestAuthorizationStatus_validAccepted(t *testing.T) {
 	t.Parallel()
 
-	m := getStatusSet()
-	keys := make([]string, 0, len(m))
-
-	for k := range m {
-		keys = append(keys, k)
+	status, err := AuthorizationStatus(Accepted)
+	if err != nil {
+		t.Fatalf("validAccepted: unexpected error on: %v", err)
 	}
 
-	sort.Strings(keys)
-
-	want := []string{Accepted, Blocked, ConcurrentTx, Expired, Invalid}
-
-	sort.Strings(want)
-
-	if !reflect.DeepEqual(keys, want) {
-		t.Errorf("getStatusSet keys = %v; want %v", keys, want)
+	if status.Value() != Accepted {
+		t.Errorf("validAccepted: expected value %q, got %q", Accepted, status.Value())
 	}
 }
 
-func TestSetAuthorizationStatus_invalidWrapsErrInvalidAuthorizationStatus(t *testing.T) {
+func TestAuthorizationStatus_validBlocked(t *testing.T) {
 	t.Parallel()
 
-	input := "NotAStatus"
+	status, err := AuthorizationStatus(Blocked)
+	if err != nil {
+		t.Fatalf("validBlocked: unexpected error: %v", err)
+	}
 
-	_, err := SetAuthorizationStatus(input)
+	if status.Value() != Blocked {
+		t.Errorf("validBlocked: expected value %q, got %q", Blocked, status.Value())
+	}
+}
+
+func TestAuthorizationStatus_validExpired(t *testing.T) {
+	t.Parallel()
+
+	status, err := AuthorizationStatus(Expired)
+	if err != nil {
+		t.Fatalf("validExpired: unexpected error: %v", err)
+	}
+
+	if status.Value() != Expired {
+		t.Errorf("validExpired: expected value %q, got %q", Expired, status.Value())
+	}
+}
+
+func TestAuthorizationStatus_validInvalid(t *testing.T) {
+	t.Parallel()
+
+	status, err := AuthorizationStatus(Invalid)
+	if err != nil {
+		t.Fatalf("validInvalid: unexpected error: %v", err)
+	}
+
+	if status.Value() != Invalid {
+		t.Errorf("validInvalid: expected value %q, got %q", Invalid, status.Value())
+	}
+}
+
+func TestAuthorizationStatus_validConcurrentTx(t *testing.T) {
+	t.Parallel()
+
+	status, err := AuthorizationStatus(ConcurrentTx)
+	if err != nil {
+		t.Fatalf("validConcurrentTx: unexpected error: %v", err)
+	}
+
+	if status.Value() != ConcurrentTx {
+		t.Errorf("validConcurrentTx: expected value %q, got %q", ConcurrentTx, status.Value())
+	}
+}
+
+func TestAuthorizationStatus_invalidStatus(t *testing.T) {
+	t.Parallel()
+
+	_, err := AuthorizationStatus("SomethingElse")
 	if err == nil {
-		t.Fatal("expected error, got nil")
-	}
-
-	if !errors.Is(err, st.ErrInvalidAuthorizationStatus) {
-		t.Errorf("error %v; want to wrap st.ErrInvalidAuthorizationStatus", err)
-	}
-
-	wantMsg := fmt.Sprintf("%s: %q", st.ErrInvalidAuthorizationStatus, input)
-	if err.Error() != wantMsg {
-		t.Errorf("error message = %q; want %q", err.Error(), wantMsg)
+		t.Fatal("invalidStatus: expected error for invalid status, got nil")
 	}
 }

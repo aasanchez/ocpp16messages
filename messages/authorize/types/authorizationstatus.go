@@ -3,7 +3,7 @@ package authorizetypes
 import (
 	"fmt"
 
-	st "github.com/aasanchez/ocpp16messages/shared/types"
+	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 const (
@@ -14,7 +14,7 @@ const (
 	ConcurrentTx = "ConcurrentTx"
 )
 
-type AuthorizationStatus struct {
+type AuthorizationStatusType struct {
 	value string
 }
 
@@ -28,14 +28,14 @@ func getStatusSet() map[string]struct{} {
 	}
 }
 
-func SetAuthorizationStatus(input string) (AuthorizationStatus, error) {
+func AuthorizationStatus(input string) (AuthorizationStatusType, error) {
 	if _, exists := getStatusSet()[input]; !exists {
-		return AuthorizationStatus{}, fmt.Errorf("%w: %q", st.ErrInvalidAuthorizationStatus, input)
+		return AuthorizationStatusType{}, fmt.Errorf("%w: %q", sharedtypes.ErrInvalidAuthorizationStatus, input)
 	}
 
-	return AuthorizationStatus{value: input}, nil
+	return AuthorizationStatusType{value: input}, nil
 }
 
-func (s AuthorizationStatus) Value() string {
+func (s AuthorizationStatusType) Value() string {
 	return s.value
 }

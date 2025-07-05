@@ -2,7 +2,6 @@ package cancelreservationtypes
 
 import (
 	"fmt"
-
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 

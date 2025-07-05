@@ -9,7 +9,7 @@ import (
 )
 
 type ConfirmationMessage struct {
-	CurrentTime sharedtypes.DateTime
+	CurrentTime sharedtypes.DateTimeType
 	Interval    uint32
 	Status      bootnotificationtypes.RegistrationStatusType
 }
@@ -19,7 +19,7 @@ func Confirmation(input bootnotificationtypes.ConfirmationPayload) (Confirmation
 		return ConfirmationMessage{}, fmt.Errorf("bootnotificationtypes.Confirmation: invalid payload: %w", err)
 	}
 
-	currentTime, err := sharedtypes.SetDateTime(input.CurrentTime)
+	currentTime, err := sharedtypes.DateTime(input.CurrentTime)
 	if err != nil {
 		return ConfirmationMessage{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, "failed to parse CurrentTime", err)
 	}

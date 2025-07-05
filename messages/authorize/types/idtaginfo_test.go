@@ -8,12 +8,12 @@ func TestIdTagInfo_statusOnly(t *testing.T) {
 	t.Parallel()
 
 	input := IdTagInfoPayload{
-		Status:      "Accepted",
+		Status:      Accepted,
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
 	}
 
-	info, err := SetIdTagInfo(input)
+	info, err := IdTagInfo(input)
 	if err != nil {
 		t.Fatalf("unexpected error statusOnly: %v", err)
 	}
@@ -25,7 +25,7 @@ func TestIdTagInfo_statusOnly(t *testing.T) {
 	}
 
 	if val.ExpiryDate != nil {
-		t.Errorf("expected expiryDate nil, got %v", val.ExpiryDate)
+		t.Errorf("expected expiryDate nil, got %v", *val.ExpiryDate)
 	}
 
 	if val.ParentIdTag != nil {
@@ -40,17 +40,17 @@ func TestIdTagInfo_withExpiryDateOnly(t *testing.T) {
 
 	input := IdTagInfoPayload{
 		Status:      Accepted,
-		ExpiryDate:  exp,
+		ExpiryDate:  &exp,
 		ParentIdTag: nil,
 	}
 
-	info, err := SetIdTagInfo(input)
+	info, err := IdTagInfo(input)
 	if err != nil {
 		t.Fatalf("unexpected error withExpiryDateOnly: %v", err)
 	}
 
 	val := info.Value()
-	if val.ExpiryDate == nil || val.ExpiryDate != exp {
+	if val.ExpiryDate == nil || *val.ExpiryDate != exp {
 		t.Errorf("expiryDate mismatch: want %s, got %v", exp, val.ExpiryDate)
 	}
 }
@@ -66,7 +66,7 @@ func TestIdTagInfo_withParentIdTagOnly(t *testing.T) {
 		ParentIdTag: &parent,
 	}
 
-	info, err := SetIdTagInfo(input)
+	info, err := IdTagInfo(input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -85,11 +85,11 @@ func TestIdTagInfo_allFieldsPresent(t *testing.T) {
 
 	input := IdTagInfoPayload{
 		Status:      Accepted,
-		ExpiryDate:  exp,
+		ExpiryDate:  &exp,
 		ParentIdTag: &parent,
 	}
 
-	info, err := SetIdTagInfo(input)
+	info, err := IdTagInfo(input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -100,7 +100,7 @@ func TestIdTagInfo_allFieldsPresent(t *testing.T) {
 		t.Errorf("status mismatch: got %s", val.Status)
 	}
 
-	if val.ExpiryDate == nil || val.ExpiryDate != exp {
+	if val.ExpiryDate == nil || *val.ExpiryDate != exp {
 		t.Errorf("expiryDate mismatch: want %s, got %v", exp, val.ExpiryDate)
 	}
 
@@ -118,7 +118,7 @@ func TestIdTagInfo_invalidStatus(t *testing.T) {
 		ParentIdTag: nil,
 	}
 
-	_, err := SetIdTagInfo(input)
+	_, err := IdTagInfo(input)
 	if err == nil {
 		t.Fatal("expected error for invalid status, got nil")
 	}
@@ -131,11 +131,11 @@ func TestIdTagInfo_invalidExpiryDate(t *testing.T) {
 
 	input := IdTagInfoPayload{
 		Status:      Accepted,
-		ExpiryDate:  bad,
+		ExpiryDate:  &bad,
 		ParentIdTag: nil,
 	}
 
-	_, err := SetIdTagInfo(input)
+	_, err := IdTagInfo(input)
 	if err == nil {
 		t.Fatal("expected error for invalid expiryDate, got nil")
 	}
@@ -152,7 +152,7 @@ func TestIdTagInfo_invalidParentIdTag_tooLong(t *testing.T) {
 		ParentIdTag: &tooLong,
 	}
 
-	_, err := SetIdTagInfo(input)
+	_, err := IdTagInfo(input)
 	if err == nil {
 		t.Fatal("expected error for invalid parentIdTag, got nil")
 	}

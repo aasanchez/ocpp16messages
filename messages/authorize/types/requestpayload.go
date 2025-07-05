@@ -15,7 +15,7 @@ func (r RequestPayload) Validate() error {
 		return fmt.Errorf("request payload: %w", sharedtypes.ErrInvalidIdTag)
 	}
 
-	_, err := sharedtypes.SetCiString20(r.IdTag)
+	_, err := sharedtypes.CiString20(r.IdTag)
 	if err != nil {
 		return fmt.Errorf("request payload: %w", err)
 	}

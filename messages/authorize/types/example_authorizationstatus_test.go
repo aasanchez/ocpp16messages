@@ -3,11 +3,11 @@ package authorizetypes_test
 import (
 	"fmt"
 
-	at "github.com/aasanchez/ocpp16messages/messages/authorize/types"
+	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
 func ExampleAuthorizationStatus_valid() {
-	status, err := at.SetAuthorizationStatus("Accepted")
+	status, err := authorizetypes.AuthorizationStatus("Accepted")
 	if err != nil {
 		fmt.Println("Error:", err)
 
@@ -21,7 +21,7 @@ func ExampleAuthorizationStatus_valid() {
 }
 
 func ExampleAuthorizationStatus_invalid() {
-	_, err := at.SetAuthorizationStatus("NotARealStatus")
+	_, err := authorizetypes.AuthorizationStatus("NotARealStatus")
 	if err != nil {
 		fmt.Println("Error:", err)
 

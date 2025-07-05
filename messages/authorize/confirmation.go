@@ -7,7 +7,7 @@ import (
 )
 
 type ConfirmationMessage struct {
-	IdTagInfo authorizetypes.IdTagInfo
+	IdTagInfo authorizetypes.IdTagInfoType
 }
 
 func Confirmation(input authorizetypes.ConfirmationPayload) (ConfirmationMessage, error) {
@@ -15,7 +15,7 @@ func Confirmation(input authorizetypes.ConfirmationPayload) (ConfirmationMessage
 		return ConfirmationMessage{}, fmt.Errorf("authorize.Confirmation: invalid payload: %w", err)
 	}
 
-	info, err := authorizetypes.SetIdTagInfo(input.IdTagInfo)
+	info, err := authorizetypes.IdTagInfo(input.IdTagInfo)
 	if err != nil {
 		return ConfirmationMessage{}, fmt.Errorf("authorize.Confirmation: invalid IdTagInfo: %w", err)
 	}

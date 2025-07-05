@@ -1,7 +1,6 @@
 package types_test
 
 import (
-	"errors"
 	"fmt"
 	"time"
 
@@ -11,9 +10,10 @@ import (
 func ExampleDateTime_valid() {
 	input := "2027-04-12T10:03:04-04:00"
 
-	datetime, err := types.SetDateTime(input)
+	datetime, err := types.DateTime(input)
 	if err != nil {
 		fmt.Printf("unexpected error: %v\n", err)
+
 		return
 	}
 
@@ -26,35 +26,12 @@ func ExampleDateTime_valid() {
 
 func ExampleDateTime_invalidFormat() {
 	input := "not-a-date"
+	_, err := types.DateTime(input)
 
-	_, err := types.SetDateTime(input)
 	if err != nil {
 		fmt.Println("Error:", err)
 	}
 
 	// Output:
 	// Error: invalid datetime: parsing time "not-a-date" as "2006-01-02T15:04:05Z07:00": cannot parse "not-a-date" as "2006"
-}
-
-func ExampleDateTime_emptyString() {
-	input := ""
-
-	datetime, err := types.SetDateTime(input)
-	if errors.Is(err, types.ErrNotFound) {
-		fmt.Println("Datetime not provided")
-		return
-	}
-
-	if err != nil {
-		fmt.Printf("unexpected error: %v\n", err)
-		return
-	}
-
-	// Defensive: this should never happen in this case
-	if datetime != nil {
-		fmt.Println("Unexpected datetime:", datetime.String())
-	}
-
-	// Output:
-	// Datetime not provided
 }

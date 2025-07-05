@@ -1,25 +1,28 @@
 package authorize
 
 import (
+	"errors"
 	"fmt"
 
 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
+var ErrInvalidRequestIdTag = errors.New("request -> invalid idTag")
+
 type RequestMessage struct {
-	IdTag authorizetypes.IdToken
+	IdTag authorizetypes.IdTokenType
 }
 
 func Request(input authorizetypes.RequestPayload) (RequestMessage, error) {
-	str, err := sharedtypes.SetCiString20(input.IdTag)
+	str, err := sharedtypes.CiString20(input.IdTag)
 	if err != nil {
 		wrapped := fmt.Errorf("request -> invalid idTag -> %w", err)
 
 		return RequestMessage{}, wrapped
 	}
 
-	idToken, _ := authorizetypes.SetIdToken(str)
+	idToken, _ := authorizetypes.IdToken(str)
 
 	return RequestMessage{IdTag: idToken}, nil
 }

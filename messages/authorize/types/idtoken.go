@@ -4,14 +4,14 @@ import (
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-type IdToken struct {
-	value sharedtypes.CiString20
+type IdTokenType struct {
+	value sharedtypes.CiString20Type
 }
 
-func SetIdToken(s sharedtypes.CiString20) (IdToken, error) {
-	return IdToken{value: s}, nil
+func IdToken(s sharedtypes.CiString20Type) (IdTokenType, error) {
+	return IdTokenType{value: s}, nil
 }
 
-func (id IdToken) Value() string {
+func (id IdTokenType) Value() string {
 	return id.value.Value()
 }
