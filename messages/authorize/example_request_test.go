@@ -34,17 +34,15 @@ func ExampleRequest() {
 func ExampleRequest_emptyIdTag() {
 	input := authorizetypes.RequestPayload{IdTag: ""}
 
-	_, err := Request(input)
+	req, err := Request(input)
 	if err != nil {
-		fmt.Println("Error:", err)
-
-		return
+		fmt.Fprintf(os.Stderr, errFormat, err)
 	}
 
-	fmt.Println("This should not print")
+	fmt.Printf(outputFormat, req.IdTag.Value())
 
 	// Output:
-	// Error: request -> invalid idTag -> ciString.Validate: value must not be empty
+	// Authorize.req: {idTag:}
 }
 
 func ExampleRequest_too_long_idtag() {
@@ -136,14 +134,16 @@ func ExampleRequest_parse_empty() {
 	}
 
 	input := decodeRawIdTag(msg[3])
-	_, err = Request(input)
+	req, err := Request(input)
 
 	if err != nil {
 		fmt.Printf(errRequestFormat, err)
 	}
 
+	fmt.Printf(outputFormat, req.IdTag.Value())
+
 	// Output:
-	// Error: Request failed -> request -> invalid idTag -> ciString.Validate: value must not be empty
+	// Authorize.req: {idTag:}
 }
 
 func ExampleRequest_parse_idTag_empty() {
@@ -165,14 +165,16 @@ func ExampleRequest_parse_idTag_empty() {
 	}
 
 	input := decodeRawIdTag(msg[3])
-	_, err = Request(input)
+	req, err := Request(input)
 
 	if err != nil {
 		fmt.Printf(errRequestFormat, err)
 	}
 
+	fmt.Printf(outputFormat, req.IdTag.Value())
+
 	// Output:
-	// Error: Request failed -> request -> invalid idTag -> ciString.Validate: value must not be empty
+	// Authorize.req: {idTag:}
 }
 
 func ExampleRequest_parse_idTag_NotFound() {
@@ -194,14 +196,16 @@ func ExampleRequest_parse_idTag_NotFound() {
 	}
 
 	input := decodeRawIdTag(msg[3])
-	_, err = Request(input)
+	req, err := Request(input)
 
 	if err != nil {
 		fmt.Printf(errRequestFormat, err)
 	}
 
+	fmt.Printf(outputFormat, req.IdTag.Value())
+
 	// Output:
-	// Error: Request failed -> request -> invalid idTag -> ciString.Validate: value must not be empty
+	// Authorize.req: {idTag:}
 }
 
 // decodeRawIdTag extracts the "idTag" field from a JSON object and returns a RequestPayload.

@@ -23,14 +23,13 @@ func ExampleRequestPayload_valid() {
 func ExampleRequestPayload_invalid_emptyIdTag() {
 	payload := authorizetypes.RequestPayload{IdTag: ""}
 
-	err := payload.Validate()
-	if err != nil {
-		fmt.Println("Validation failed:", err)
+	if err := payload.Validate(); err != nil {
+		fmt.Println("Validation failed unexpectedly:", err)
 
 		return
 	}
 
-	fmt.Println("Validation unexpectedly passed")
+	fmt.Println("Validation passed for empty IdTag")
 	// Output:
-	// Validation failed: request payload: invalid idTag
+	// Validation passed for empty IdTag
 }

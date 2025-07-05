@@ -8,7 +8,7 @@ import (
 )
 
 type ConfirmationMessage struct {
-	Status      cancelreservationtypes.CancelReservationStatusType
+	Status cancelreservationtypes.CancelReservationStatusType
 }
 
 func Confirmation(input cancelreservationtypes.ConfirmationPayload) (ConfirmationMessage, error) {
@@ -22,6 +22,6 @@ func Confirmation(input cancelreservationtypes.ConfirmationPayload) (Confirmatio
 	}
 
 	return ConfirmationMessage{
-		Status:      status,
+		Status: status,
 	}, nil
 }

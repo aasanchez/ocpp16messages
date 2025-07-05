@@ -22,7 +22,7 @@ type RequestMessage struct {
 func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error) {
 	var err error
 
-	chargeBoxSerialNumber, err := sharedtypes.CiString25(input.ChargeBoxSerialNumber)
+	chargeBoxSerialNumber, err := sharedtypes.SetCiString25Type(input.ChargeBoxSerialNumber)
 	if err != nil {
 		return RequestMessage{}, wrapErr("chargeBoxSerialNumber", err)
 	}
@@ -32,7 +32,7 @@ func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error)
 		return RequestMessage{}, err
 	}
 
-	chargePointSerialNumber, err := sharedtypes.CiString25(input.ChargePointSerialNumber)
+	chargePointSerialNumber, err := sharedtypes.SetCiString25Type(input.ChargePointSerialNumber)
 	if err != nil {
 		return RequestMessage{}, wrapErr("chargePointSerialNumber", err)
 	}
@@ -42,27 +42,27 @@ func Request(input bootnotificationtypes.RequestPayload) (RequestMessage, error)
 		return RequestMessage{}, err
 	}
 
-	firmwareVersion, err := sharedtypes.CiString50(input.FirmwareVersion)
+	firmwareVersion, err := sharedtypes.SetCiString50Type(input.FirmwareVersion)
 	if err != nil {
 		return RequestMessage{}, wrapErr("firmwareVersion", err)
 	}
 
-	iccid, err := sharedtypes.CiString20(input.Iccid)
+	iccid, err := sharedtypes.SetCiString20Type(input.Iccid)
 	if err != nil {
 		return RequestMessage{}, wrapErr("iccid", err)
 	}
 
-	imsi, err := sharedtypes.CiString20(input.Imsi)
+	imsi, err := sharedtypes.SetCiString20Type(input.Imsi)
 	if err != nil {
 		return RequestMessage{}, wrapErr("imsi", err)
 	}
 
-	meterSerialNumber, err := sharedtypes.CiString25(input.MeterSerialNumber)
+	meterSerialNumber, err := sharedtypes.SetCiString25Type(input.MeterSerialNumber)
 	if err != nil {
 		return RequestMessage{}, wrapErr("meterSerialNumber", err)
 	}
 
-	meterType, err := sharedtypes.CiString25(input.MeterType)
+	meterType, err := sharedtypes.SetCiString25Type(input.MeterType)
 	if err != nil {
 		return RequestMessage{}, wrapErr("meterType", err)
 	}
@@ -91,7 +91,7 @@ func requiredCiString20(field, value string) (sharedtypes.CiString20Type, error)
 		return sharedtypes.CiString20Type{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, field, sharedtypes.ErrEmptyValueNotAllowed)
 	}
 
-	cs, err := sharedtypes.CiString20(value)
+	cs, err := sharedtypes.SetCiString20Type(value)
 	if err != nil {
 		return sharedtypes.CiString20Type{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, field, err)
 	}

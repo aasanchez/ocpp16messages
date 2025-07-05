@@ -13,7 +13,7 @@ type IdTagInfoPayload struct {
 }
 
 type IdTagInfoType struct {
-	expiryDate  *sharedtypes.DateTimeType
+	expiryDate  *sharedtypes.DateTime
 	parentIdTag *IdTokenType
 	status      AuthorizationStatusType
 }
@@ -31,7 +31,7 @@ func IdTagInfo(input IdTagInfoPayload) (IdTagInfoType, error) {
 	}
 
 	if input.ExpiryDate != nil {
-		parsedDate, err := sharedtypes.DateTime(*input.ExpiryDate)
+		parsedDate, err := sharedtypes.SetDateTime(*input.ExpiryDate)
 		if err != nil {
 			return IdTagInfoType{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, "failed to parse expiryDate", err)
 		}
@@ -40,7 +40,7 @@ func IdTagInfo(input IdTagInfoPayload) (IdTagInfoType, error) {
 	}
 
 	if input.ParentIdTag != nil {
-		ci, err := sharedtypes.CiString20(*input.ParentIdTag)
+		ci, err := sharedtypes.SetCiString20Type(*input.ParentIdTag)
 		if err != nil {
 			return IdTagInfoType{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, "failed to validate parentIdTag as CiString20", err)
 		}
