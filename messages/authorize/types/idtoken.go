@@ -5,10 +5,10 @@ import (
 )
 
 type IdTokenType struct {
-	value sharedtypes.CiString20
+	value sharedtypes.CiString20Type
 }
 
-func IdToken(s sharedtypes.CiString20) (IdTokenType, error) {
+func IdToken(s sharedtypes.CiString20Type) (IdTokenType, error) {
 	return IdTokenType{value: s}, nil
 }
 

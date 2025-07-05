@@ -8,7 +8,7 @@ import (
 )
 
 func ExampleIdToken_valid() {
-	str, err := sharedtypes.SetCiString20("ABC123456789")
+	str, err := sharedtypes.SetCiString20Type("ABC123456789")
 	if err != nil {
 		fmt.Println("Error creating CiString20:", err)
 

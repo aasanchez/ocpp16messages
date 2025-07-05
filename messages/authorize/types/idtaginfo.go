@@ -40,7 +40,7 @@ func IdTagInfo(input IdTagInfoPayload) (IdTagInfoType, error) {
 	}
 
 	if input.ParentIdTag != nil {
-		ci, err := sharedtypes.SetCiString20(*input.ParentIdTag)
+		ci, err := sharedtypes.SetCiString20Type(*input.ParentIdTag)
 		if err != nil {
 			return IdTagInfoType{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped, "failed to validate parentIdTag as CiString20", err)
 		}

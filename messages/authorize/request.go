@@ -15,7 +15,7 @@ type RequestMessage struct {
 }
 
 func Request(input authorizetypes.RequestPayload) (RequestMessage, error) {
-	str, err := sharedtypes.SetCiString20(input.IdTag)
+	str, err := sharedtypes.SetCiString20Type(input.IdTag)
 	if err != nil {
 		wrapped := fmt.Errorf("request -> invalid idTag -> %w", err)
 
