@@ -48,8 +48,6 @@ func TestCiString_ValueReturnsRaw(t *testing.T) {
 	}
 }
 
-// --- Type-specific creation + validation tests ---
-
 func TestCiString20Type_CreateAndValidate(t *testing.T) {
 	t.Parallel()
 

@@ -48,8 +48,6 @@ func (cs ciString) validate() error {
 	return nil
 }
 
-// ---- CiString20 ----
-
 type CiString20 struct{ value ciString }
 
 func (c CiString20) Value() string   { return c.value.value() }
@@ -59,8 +57,6 @@ func SetCiString20(value string) (CiString20, error) {
 
 	return CiString20{value: cs}, err
 }
-
-// ---- CiString25 ----
 
 type CiString25 struct{ value ciString }
 
@@ -72,8 +68,6 @@ func SetCiString25(value string) (CiString25, error) {
 	return CiString25{value: cs}, err
 }
 
-// ---- CiString50 ----
-
 type CiString50 struct{ value ciString }
 
 func (c CiString50) Value() string   { return c.value.value() }
@@ -84,8 +78,6 @@ func SetCiString50(value string) (CiString50, error) {
 	return CiString50{value: cs}, err
 }
 
-// ---- CiString255 ----
-
 type CiString255 struct{ value ciString }
 
 func (c CiString255) Value() string   { return c.value.value() }
@@ -95,8 +87,6 @@ func SetCiString255(value string) (CiString255, error) {
 
 	return CiString255{value: cs}, err
 }
-
-// ---- CiString500 ----
 
 type CiString500 struct{ value ciString }
 
