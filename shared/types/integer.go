@@ -17,3 +17,8 @@ func SetInteger(value string) (Integer, error) {
 
 	return Integer{value: uint32(parsedValue)}, nil
 }
+
+// Value returns the underlying uint32 value of the Integer.
+func (i Integer) Value() uint32 {
+	return i.value
+}
