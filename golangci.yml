@@ -6,17 +6,23 @@ linters:
     - lll
 
   settings:
+    revive:
+      enable-all-rules: true
+      rules:
+        - name: var-naming
+          severity: warning
+          disabled: false
+          exclude: [""]
+          arguments:
+            - ["ID"] # AllowList
+        - name: line-length-limit
+          disabled: true
     depguard:
       rules:
         main:
           allow:
             - $gostd
             - github.com/aasanchez/ocpp16messages
-    revive:
-      rules:
-        - name: var-naming
-          arguments:
-            - ["ID"]
 
 output:
   formats:
