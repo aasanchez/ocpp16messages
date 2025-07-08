@@ -23,7 +23,7 @@ func TestRequestPayload_Validate_EmptyReservationId(t *testing.T) {
 
 	err := payload.Validate()
 	if err == nil {
-		t.Fatalf("expected error, got nil")
+		t.Fatal("expected error, got nil")
 	}
 
 	if !strings.Contains(err.Error(), "missing required field: ReservationId") {

@@ -29,6 +29,6 @@ func Test_IdTokenFromCiString_TooLong(t *testing.T) {
 
 	_, err := sharedtypes.SetCiString20Type(invalidStr)
 	if err == nil {
-		t.Fatalf("expected error when creating CiString20Type from over-length string, got nil")
+		t.Fatal("expected error when creating CiString20Type from over-length string, got nil")
 	}
 }

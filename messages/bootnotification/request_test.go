@@ -63,7 +63,7 @@ func Test_wrapErr_IncludesField(t *testing.T) {
 
 	err := wrapErr("Field", sharedtypes.ErrEmptyValueNotAllowed)
 	if err == nil || !strings.Contains(err.Error(), "Field") {
-		t.Errorf("expected wrapped error to include field name")
+		t.Error("expected wrapped error to include field name")
 	}
 }
 

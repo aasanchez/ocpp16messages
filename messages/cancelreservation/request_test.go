@@ -30,7 +30,7 @@ func TestRequest_InvalidReservationId_NotANumber(t *testing.T) {
 
 	_, err := Request(input)
 	if err == nil {
-		t.Fatalf("expected error but got nil")
+		t.Fatal("expected error but got nil")
 	}
 
 	if !strings.Contains(err.Error(), "failed to parse ReservationId") {
@@ -45,7 +45,7 @@ func TestRequest_EmptyReservationId(t *testing.T) {
 
 	_, err := Request(input)
 	if err == nil {
-		t.Fatalf("expected error but got nil")
+		t.Fatal("expected error but got nil")
 	}
 
 	if !strings.Contains(err.Error(), "failed to parse ReservationId") {
