@@ -3,11 +3,11 @@ package authorizetypes_test
 import (
 	"fmt"
 
-	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
+	mat "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
 func ExampleRequestPayload_valid() {
-	payload := authorizetypes.RequestPayload{IdTag: "ABC123XYZ789"}
+	payload := mat.RequestPayload{IdTag: "ABC123XYZ789"}
 
 	if err := payload.Validate(); err != nil {
 		fmt.Println("unexpected error:", err)
@@ -21,7 +21,7 @@ func ExampleRequestPayload_valid() {
 }
 
 func ExampleRequestPayload_invalid_emptyIdTag() {
-	payload := authorizetypes.RequestPayload{IdTag: ""}
+	payload := mat.RequestPayload{IdTag: ""}
 
 	if err := payload.Validate(); err != nil {
 		fmt.Println("Validation failed unexpectedly:", err)

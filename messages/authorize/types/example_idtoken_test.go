@@ -3,19 +3,19 @@ package authorizetypes_test
 import (
 	"fmt"
 
-	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
-	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
+	mat "github.com/aasanchez/ocpp16messages/messages/authorize/types"
+	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 func ExampleIdToken_valid() {
-	str, err := sharedtypes.SetCiString20Type("ABC123456789")
+	str, err := st.SetCiString20Type("ABC123456789")
 	if err != nil {
 		fmt.Println("Error creating CiString20:", err)
 
 		return
 	}
 
-	idToken, err := authorizetypes.IdToken(str)
+	idToken, err := mat.IdToken(str)
 	if err != nil {
 		fmt.Println("Error creating IdToken:", err)
 

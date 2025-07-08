@@ -3,13 +3,13 @@ package authorizetypes_test
 import (
 	"fmt"
 
-	types "github.com/aasanchez/ocpp16messages/messages/authorize/types"
+	mat "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
 func ExampleConfirmationPayload_Validate_valid() {
-	payload := types.ConfirmationPayload{
-		IdTagInfo: types.IdTagInfoPayload{
-			Status:      types.Accepted,
+	payload := mat.ConfirmationPayload{
+		IdTagInfo: mat.IdTagInfoPayload{
+			Status:      mat.Accepted,
 			ExpiryDate:  nil,
 			ParentIdTag: nil,
 		},
@@ -27,8 +27,8 @@ func ExampleConfirmationPayload_Validate_valid() {
 }
 
 func ExampleConfirmationPayload_Validate_invalid() {
-	payload := types.ConfirmationPayload{
-		IdTagInfo: types.IdTagInfoPayload{
+	payload := mat.ConfirmationPayload{
+		IdTagInfo: mat.IdTagInfoPayload{
 			Status:      "",
 			ExpiryDate:  nil,
 			ParentIdTag: nil,
@@ -48,9 +48,9 @@ func ExampleConfirmationPayload_Validate_invalid() {
 }
 
 func ExampleConfirmationPayload_Value() {
-	payload := types.ConfirmationPayload{
-		IdTagInfo: types.IdTagInfoPayload{
-			Status:      types.Accepted,
+	payload := mat.ConfirmationPayload{
+		IdTagInfo: mat.IdTagInfoPayload{
+			Status:      mat.Accepted,
 			ExpiryDate:  nil,
 			ParentIdTag: nil,
 		},

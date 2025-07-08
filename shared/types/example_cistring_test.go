@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	types "github.com/aasanchez/ocpp16messages/shared/types"
+	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 const (
@@ -15,7 +15,7 @@ const (
 func ExampleCiString20Type() {
 	input := strings.Repeat("A", 20)
 
-	cistr, err := types.SetCiString20Type(input)
+	cistr, err := st.SetCiString20Type(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -31,7 +31,7 @@ func ExampleCiString20Type() {
 func ExampleCiString20Type_invalid() {
 	input := strings.Repeat("A", 21)
 
-	cistr, err := types.SetCiString20Type(input)
+	cistr, err := st.SetCiString20Type(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -46,7 +46,7 @@ func ExampleCiString20Type_invalid() {
 func ExampleCiString25Type() {
 	input := strings.Repeat("A", 25)
 
-	cistr, err := types.SetCiString25Type(input)
+	cistr, err := st.SetCiString25Type(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -61,7 +61,7 @@ func ExampleCiString25Type() {
 func ExampleCiString25Type_invalid() {
 	input := strings.Repeat("A", 26)
 
-	cistr, err := types.SetCiString25Type(input)
+	cistr, err := st.SetCiString25Type(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -76,7 +76,7 @@ func ExampleCiString25Type_invalid() {
 func ExampleCiString50Type() {
 	input := strings.Repeat("A", 50)
 
-	cistr, err := types.SetCiString50Type(input)
+	cistr, err := st.SetCiString50Type(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -91,7 +91,7 @@ func ExampleCiString50Type() {
 func ExampleCiString50Type_invalid() {
 	input := strings.Repeat("A", 51)
 
-	cistr, err := types.SetCiString50Type(input)
+	cistr, err := st.SetCiString50Type(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -106,7 +106,7 @@ func ExampleCiString50Type_invalid() {
 func ExampleCiString255Type() {
 	input := strings.Repeat("A", 255)
 
-	cistr, err := types.SetCiString255Type(input)
+	cistr, err := st.SetCiString255Type(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -121,7 +121,7 @@ func ExampleCiString255Type() {
 func ExampleCiString255Type_invalid() {
 	input := strings.Repeat("A", 256)
 
-	cistr, err := types.SetCiString255Type(input)
+	cistr, err := st.SetCiString255Type(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -136,7 +136,7 @@ func ExampleCiString255Type_invalid() {
 func ExampleCiString500Type() {
 	input := strings.Repeat("A", 499)
 
-	cistr, err := types.SetCiString500Type(input)
+	cistr, err := st.SetCiString500Type(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -151,7 +151,7 @@ func ExampleCiString500Type() {
 func ExampleCiString500Type_invalid() {
 	input := strings.Repeat("A", 501)
 
-	cistr, err := types.SetCiString500Type(input)
+	cistr, err := st.SetCiString500Type(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
