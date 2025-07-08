@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"time"
 
-	types "github.com/aasanchez/ocpp16messages/shared/types"
+	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 func ExampleDateTime_valid() {
 	input := "2027-04-12T10:03:04-04:00"
 
-	datetime, err := types.SetDateTime(input)
+	datetime, err := st.SetDateTime(input)
 	if err != nil {
 		fmt.Printf("unexpected error: %v\n", err)
 
@@ -26,7 +26,7 @@ func ExampleDateTime_valid() {
 
 func ExampleDateTime_invalidFormat() {
 	input := "not-a-date"
-	_, err := types.SetDateTime(input)
+	_, err := st.SetDateTime(input)
 
 	if err != nil {
 		fmt.Println("Error:", err)

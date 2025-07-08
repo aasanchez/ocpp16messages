@@ -3,17 +3,17 @@ package authorizetypes_test
 import (
 	"fmt"
 
-	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
+	mat "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 )
 
 func ExampleIdTagInfo_statusOnly() {
-	payload := authorizetypes.IdTagInfoPayload{
-		Status:      authorizetypes.Accepted,
+	payload := mat.IdTagInfoPayload{
+		Status:      mat.Accepted,
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
 	}
 
-	info, err := authorizetypes.IdTagInfo(payload)
+	info, err := mat.IdTagInfo(payload)
 	if err != nil {
 		fmt.Println("Failed statusOnly:", err)
 
@@ -30,13 +30,13 @@ func ExampleIdTagInfo_statusOnly() {
 func ExampleIdTagInfo_withExpiryDate() {
 	exp := "2027-04-12T10:03:04Z"
 
-	payload := authorizetypes.IdTagInfoPayload{
-		Status:      authorizetypes.Accepted,
+	payload := mat.IdTagInfoPayload{
+		Status:      mat.Accepted,
 		ExpiryDate:  &exp,
 		ParentIdTag: nil,
 	}
 
-	info, err := authorizetypes.IdTagInfo(payload)
+	info, err := mat.IdTagInfo(payload)
 	if err != nil {
 		fmt.Println("Failed withExpiryDate:", err)
 
@@ -53,13 +53,13 @@ func ExampleIdTagInfo_withExpiryDate() {
 func ExampleIdTagInfo_withParentIdTag() {
 	parent := "ABC123456"
 
-	payload := authorizetypes.IdTagInfoPayload{
-		Status:      authorizetypes.Accepted,
+	payload := mat.IdTagInfoPayload{
+		Status:      mat.Accepted,
 		ExpiryDate:  nil,
 		ParentIdTag: &parent,
 	}
 
-	info, err := authorizetypes.IdTagInfo(payload)
+	info, err := mat.IdTagInfo(payload)
 	if err != nil {
 		fmt.Println("Failed withParentIdTag:", err)
 
@@ -77,13 +77,13 @@ func ExampleIdTagInfo_withAllFields() {
 	exp := "2026-04-12T10:03:04Z"
 	parent := "XYZ789"
 
-	payload := authorizetypes.IdTagInfoPayload{
-		Status:      authorizetypes.Accepted,
+	payload := mat.IdTagInfoPayload{
+		Status:      mat.Accepted,
 		ExpiryDate:  &exp,
 		ParentIdTag: &parent,
 	}
 
-	info, err := authorizetypes.IdTagInfo(payload)
+	info, err := mat.IdTagInfo(payload)
 	if err != nil {
 		fmt.Println("Failed withAllFields:", err)
 

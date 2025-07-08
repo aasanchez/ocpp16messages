@@ -17,6 +17,14 @@ linters:
             - ["ID"] # AllowList
         - name: line-length-limit
           disabled: true
+        - name: add-constant
+          disabled: true
+        - name: exported
+          disabled: true
+        - name: package-comments
+          disabled: true
+        - name: cognitive-complexity
+          disabled: true
     depguard:
       rules:
         main:

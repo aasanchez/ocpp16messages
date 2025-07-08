@@ -3,20 +3,21 @@ package types_test
 import (
 	"fmt"
 
-	types "github.com/aasanchez/ocpp16messages/shared/types"
+	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 // ExampleInteger demonstrates parsing a valid integer string.
 func ExampleInteger() {
 	input := "123"
-	i, err := types.SetInteger(input)
+
+	val, err := st.SetInteger(input)
 	if err != nil {
 		fmt.Println("Error:", err)
 
 		return
 	}
 
-	fmt.Println("Value:", i.Value())
+	fmt.Println("Value:", val.Value())
 
 	// Output:
 	// Value: 123
@@ -25,8 +26,8 @@ func ExampleInteger() {
 // ExampleInteger_invalid demonstrates handling of an invalid integer string.
 func ExampleInteger_invalid() {
 	input := "abc"
-	_, err := types.SetInteger(input)
 
+	_, err := st.SetInteger(input)
 	if err != nil {
 		fmt.Println("Error:", err)
 	}
