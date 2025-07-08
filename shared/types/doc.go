@@ -34,4 +34,3 @@ package sharedtypes
 //
 // Developers should utilize the types and functions provided in this package
 // whenever an OCPP 1.6J message field corresponds to one of these common data types.
-

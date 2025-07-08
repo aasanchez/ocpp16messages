@@ -58,4 +58,3 @@ func (dt DateTime) Value() time.Time {
 func (dt DateTime) String() string {
 	return dt.value.Format(time.RFC3339)
 }
-
