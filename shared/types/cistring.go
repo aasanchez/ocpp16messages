@@ -1,6 +1,6 @@
 // Package types contains shared data types for OCPP 1.6 messages.
 // These types are used across different OCPP messages.
-package types
+package sharedtypes
 
 import (
 	"fmt"

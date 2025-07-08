@@ -1,4 +1,4 @@
-package types_test
+package sharedtypes_test
 
 import (
 	"fmt"
