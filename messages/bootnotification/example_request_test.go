@@ -15,7 +15,7 @@ func ExampleRequest() {
 		ChargePointSerialNumber: "SN-987654",
 		ChargePointVendor:       "VendorY",
 		FirmwareVersion:         "FW-1.2.3",
-		Iccid:                   "ICCID-998877",
+		Iccid:                   "ICCId-998877",
 		Imsi:                    "IMSI-776655",
 		MeterSerialNumber:       "MSN-112233",
 		MeterType:               "MeterType-A1",

@@ -15,7 +15,8 @@ func ExampleConfirmationPayload_Validate_valid() {
 		},
 	}
 
-	if err := payload.Validate(); err != nil {
+	err := payload.Validate()
+	if err != nil {
 		fmt.Println("unexpected validation error:", err)
 
 		return
@@ -44,7 +45,7 @@ func ExampleConfirmationPayload_Validate_invalid() {
 
 	fmt.Println("This should not print")
 	// Output:
-	// Validation failed: confirmation payload: invalid idTagInfo
+	// Validation failed: invalid idTagInfo
 }
 
 func ExampleConfirmationPayload_Value() {

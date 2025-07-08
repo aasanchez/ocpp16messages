@@ -15,7 +15,8 @@ func TestConfirmationPayload_validStatusOnly(t *testing.T) {
 		},
 	}
 
-	if err := payload.Validate(); err != nil {
+	err := payload.Validate()
+	if err != nil {
 		t.Fatalf("expected valid payload, got error -> %v", err)
 	}
 
@@ -48,7 +49,8 @@ func TestConfirmationPayload_withAllFields(t *testing.T) {
 		},
 	}
 
-	if err := payload.Validate(); err != nil {
+	err := payload.Validate()
+	if err != nil {
 		t.Fatalf("expected valid payload, got error -> %v", err)
 	}
 

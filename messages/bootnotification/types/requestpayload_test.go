@@ -21,7 +21,8 @@ func TestRequestPayload_ValidateValidPayload(t *testing.T) {
 		MeterType:               "",
 	}
 
-	if err := payload.Validate(); err != nil {
+	err := payload.Validate()
+	if err != nil {
 		t.Errorf(sharedtypes.ErrExpectedNoValidation, err)
 	}
 }
@@ -41,7 +42,8 @@ func TestRequestPayload_ValidateFailsWhenChargePointVendorIsEmpty(t *testing.T) 
 		MeterType:               "",
 	}
 
-	if err := payload.Validate(); err == nil {
+	err := payload.Validate()
+	if err == nil {
 		t.Fatal(sharedtypes.ErrExpectedValidationFail)
 	}
 }
@@ -61,7 +63,8 @@ func TestRequestPayload_ValidateFailsWhenChargePointModelIsEmpty(t *testing.T) {
 		MeterType:               "",
 	}
 
-	if err := payload.Validate(); err == nil {
+	err := payload.Validate()
+	if err == nil {
 		t.Fatal(sharedtypes.ErrExpectedValidationFail)
 	}
 }
