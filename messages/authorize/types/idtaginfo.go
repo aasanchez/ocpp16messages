@@ -1,3 +1,4 @@
+// Package authorizetypes provides types for the Authorize message.
 package authorizetypes
 
 import (
@@ -6,10 +7,12 @@ import (
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
+// IdTagInfoPayload is a struct that contains information about the authorization status of an IdTag.
+// See OCPP 1.6J Part 2, Section 4.1.2.2, Table 14 for details.
 type IdTagInfoPayload struct {
-	Status      string
-	ExpiryDate  *string
-	ParentIdTag *string
+	Status      string  // Status of the IdTag. (Required)
+	ExpiryDate  *string // ExpiryDate is the date and time after which the IdTag is no longer valid. (Optional)
+	ParentIdTag *string // ParentIdTag is the parent IdTag. (Optional)
 }
 
 type IdTagInfoType struct {

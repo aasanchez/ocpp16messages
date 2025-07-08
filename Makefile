@@ -34,8 +34,6 @@ benchmark: ## Run benchmark tests to measure performance of critical operations.
 .PHONY: lint
 lint: ## Run static analysis, vetting, and linting using golangci-lint and other tools.
 	@rm -rf .reports/*
-	@go test ./... -json > .reports/test-report.out || true
-	@go clean -testcache; go test ./... -coverprofile=.reports/coverage.out || true
 	@golangci-lint cache clean
 	@golangci-lint --config golangci.yml run ./... || true
 	@go vet ./... > .reports/govet.json

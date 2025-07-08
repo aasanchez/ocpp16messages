@@ -12,7 +12,9 @@ func TestAuthorizeRequest_validPayload(t *testing.T) {
 	t.Parallel()
 
 	input := authorizetypes.RequestPayload{IdTag: "ABC1234567890XYZ78"}
-	if err := input.Validate(); err != nil {
+
+	err := input.Validate()
+	if err != nil {
 		t.Fatalf("unexpected validation error: %v", err)
 	}
 
@@ -30,7 +32,9 @@ func TestAuthorizeRequest_emptyIdTag(t *testing.T) {
 	t.Parallel()
 
 	input := authorizetypes.RequestPayload{IdTag: ""}
-	if err := input.Validate(); err != nil {
+
+	err := input.Validate()
+	if err != nil {
 		t.Fatalf("unexpected validation error for empty IdTag: %v", err)
 	}
 
@@ -48,8 +52,8 @@ func TestAuthorizeRequest_tooLongIdTag(t *testing.T) {
 	t.Parallel()
 
 	input := authorizetypes.RequestPayload{IdTag: strings.Repeat("A", 21)}
-	_, err := Request(input)
 
+	_, err := Request(input)
 	if err == nil {
 		t.Fatal("expected error for IdTag > 20 characters, got nil")
 	}
@@ -64,8 +68,8 @@ func TestAuthorizeRequest_nonASCIIIdTag(t *testing.T) {
 	t.Parallel()
 
 	input := authorizetypes.RequestPayload{IdTag: "مرحباOCPP"}
-	_, err := Request(input)
 
+	_, err := Request(input)
 	if err == nil {
 		t.Fatal("expected error for non-ASCII IdTag, got nil")
 	}

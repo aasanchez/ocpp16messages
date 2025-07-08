@@ -21,7 +21,7 @@
 // from a consumer's perspective and complies with the OCPP 1.6J specification,
 // particularly concerning integer data as described in OCPP 1.6J Part 2, Appendix 3:
 // "Data Types".
-package types_test
+package sharedtypes_external_test
 
 import (
 	"testing"
@@ -37,7 +37,8 @@ func TestSetInteger_ValidInteger(t *testing.T) {
 
 	// Scenario: Provide a simple, positive numeric string.
 	// Expectation: No error should be returned.
-	if _, err := st.SetInteger("123"); err != nil {
+	_, err := st.SetInteger("123")
+	if err != nil {
 		t.Fatalf("expected no error for valid integer, got %v", err)
 	}
 }
@@ -49,7 +50,8 @@ func TestSetInteger_Zero(t *testing.T) {
 
 	// Scenario: Provide the string "0".
 	// Expectation: No error should be returned.
-	if _, err := st.SetInteger("0"); err != nil {
+	_, err := st.SetInteger("0")
+	if err != nil {
 		t.Fatalf("expected no error for zero, got %v", err)
 	}
 }
@@ -63,7 +65,8 @@ func TestSetInteger_MaxUint32(t *testing.T) {
 
 	// Scenario: Provide the string representation of `2^32 - 1`.
 	// Expectation: No error should be returned.
-	if _, err := st.SetInteger("4294967295"); err != nil {
+	_, err := st.SetInteger("4294967295")
+	if err != nil {
 		t.Fatalf("expected no error for max uint32, got %v", err)
 	}
 }
@@ -75,7 +78,9 @@ func TestSetInteger_NegativeInteger(t *testing.T) {
 
 	// Scenario: Provide a negative numeric string.
 	// Expectation: An error should be returned, as negative values are invalid for `uint32`.
-	if _, err := st.SetInteger("-1"); err == nil {
+
+	_, err := st.SetInteger("-1")
+	if err == nil {
 		t.Fatal("expected error for negative integer, got none")
 	}
 }
@@ -87,7 +92,8 @@ func TestSetInteger_NotANumber(t *testing.T) {
 
 	// Scenario: Provide a string that is not a number.
 	// Expectation: An error should be returned.
-	if _, err := st.SetInteger("abc"); err == nil {
+	_, err := st.SetInteger("abc")
+	if err == nil {
 		t.Fatal("expected error for non-numeric input, got none")
 	}
 }
@@ -100,7 +106,8 @@ func TestSetInteger_EmptyString(t *testing.T) {
 
 	// Scenario: Provide an empty string.
 	// Expectation: An error should be returned.
-	if _, err := st.SetInteger(""); err == nil {
+	_, err := st.SetInteger("")
+	if err == nil {
 		t.Fatal("expected error for empty string, got none")
 	}
 }
@@ -113,7 +120,8 @@ func TestSetInteger_TooLarge(t *testing.T) {
 
 	// Scenario: Provide a numeric string larger than `2^32 - 1`.
 	// Expectation: An error should be returned.
-	if _, err := st.SetInteger("4294967296"); err == nil {
+	_, err := st.SetInteger("4294967296")
+	if err == nil {
 		t.Fatal("expected error for value exceeding uint32 range, got none")
 	}
 }

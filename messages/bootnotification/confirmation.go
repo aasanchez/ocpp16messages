@@ -15,7 +15,8 @@ type ConfirmationMessage struct {
 }
 
 func Confirmation(input bootnotificationtypes.ConfirmationPayload) (ConfirmationMessage, error) {
-	if err := input.Validate(); err != nil {
+	err := input.Validate()
+	if err != nil {
 		return ConfirmationMessage{}, fmt.Errorf("bootnotificationtypes.Confirmation: invalid payload: %w", err)
 	}
 

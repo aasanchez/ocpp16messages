@@ -87,8 +87,8 @@ func TestCiString_ValueReturnsRaw(t *testing.T) {
 	// Scenario: Create a CiString with a known input and then retrieve its value.
 	// This ensures the internal storage and retrieval mechanism is working correctly.
 	input := "OCPP-Valid"
-	ciStr, err := setCiString(input, 20)
 
+	ciStr, err := setCiString(input, 20)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}

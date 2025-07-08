@@ -22,7 +22,7 @@
 // This blackbox testing approach complements the whitebox tests by validating the public
 // interface and ensuring that the combined internal logic (from `ciString` and `setCiString`)
 // correctly translates into compliant external behavior.
-package types
+package sharedtypes_external_test
 
 import (
 	"errors"
@@ -49,7 +49,8 @@ func TestCiString20Type_CreateAndValidate(t *testing.T) {
 		t.Fatalf("CiString20 creation failed: %v", err)
 	}
 
-	if err := ciStr.Validate(); err != nil {
+	err = ciStr.Validate()
+	if err != nil {
 		t.Errorf("CiString20 validation failed: %v", err)
 	}
 
@@ -89,7 +90,8 @@ func TestCiString25Type_CreateAndValidate(t *testing.T) {
 		t.Fatalf("CiString25 creation failed: %v", err)
 	}
 
-	if err := ciStr.Validate(); err != nil {
+	err = ciStr.Validate()
+	if err != nil {
 		t.Errorf("CiString25 validation failed: %v", err)
 	}
 
@@ -114,7 +116,8 @@ func TestCiString50Type_CreateAndValidate(t *testing.T) {
 		t.Fatalf("CiString50 creation failed: %v", err)
 	}
 
-	if err := ciStr.Validate(); err != nil {
+	err = ciStr.Validate()
+	if err != nil {
 		t.Errorf("CiString50 validation failed: %v", err)
 	}
 
@@ -139,7 +142,8 @@ func TestCiString255Type_CreateAndValidate(t *testing.T) {
 		t.Fatalf("CiString255 creation failed: %v", err)
 	}
 
-	if err := ciStr.Validate(); err != nil {
+	err = ciStr.Validate()
+	if err != nil {
 		t.Errorf("CiString255 validation failed: %v", err)
 	}
 
@@ -164,7 +168,8 @@ func TestCiString500Type_CreateAndValidate(t *testing.T) {
 		t.Fatalf("CiString500 creation failed: %v", err)
 	}
 
-	if err := ciStr.Validate(); err != nil {
+	err = ciStr.Validate()
+	if err != nil {
 		t.Errorf("CiString500 validation failed: %v", err)
 	}
 

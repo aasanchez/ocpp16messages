@@ -9,7 +9,8 @@ import (
 func ExampleRequestPayload_valid() {
 	payload := mat.RequestPayload{IdTag: "ABC123XYZ789"}
 
-	if err := payload.Validate(); err != nil {
+	err := payload.Validate()
+	if err != nil {
 		fmt.Println("unexpected error:", err)
 
 		return
@@ -23,7 +24,8 @@ func ExampleRequestPayload_valid() {
 func ExampleRequestPayload_invalid_emptyIdTag() {
 	payload := mat.RequestPayload{IdTag: ""}
 
-	if err := payload.Validate(); err != nil {
+	err := payload.Validate()
+	if err != nil {
 		fmt.Println("Validation failed unexpectedly:", err)
 
 		return

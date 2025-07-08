@@ -52,8 +52,8 @@ func ExampleDateTime_valid() {
 // from being processed in OCPP messages.
 func ExampleDateTime_invalidFormat() {
 	input := "not-a-date"
-	_, err := st.SetDateTime(input)
 
+	_, err := st.SetDateTime(input)
 	if err != nil {
 		fmt.Println("Error:", err)
 	}

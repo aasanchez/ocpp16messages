@@ -77,20 +77,22 @@ type ciString struct {
 //   ciString: An initialized `ciString` struct.
 //   error: An error if the `value` exceeds `maxLen` or contains non-printable ASCII characters.
 func setCiString(value string, maxLen int) (ciString, error) {
-	cs := ciString{raw: value, maxLen: maxLen}
-	if err := cs.validate(); err != nil {
+	cis := ciString{raw: value, maxLen: maxLen}
+
+	err := cis.validate()
+	if err != nil {
 		return ciString{}, err
 	}
 
-	return cs, nil
+	return cis, nil
 }
 
 // value returns the raw string value stored within the `ciString`.
 //
 // Returns:
 //   string: The raw string content.
-func (cs ciString) value() string {
-	return cs.raw
+func (cis ciString) value() string {
+	return cis.raw
 }
 
 // validate checks if the `ciString` instance conforms to the OCPP 1.6J constraints.
@@ -98,7 +100,7 @@ func (cs ciString) value() string {
 // An empty string is considered valid, representing an optional field that is not present.
 //
 // The validation performs the following checks:
-// 1. Length Check: Ensures the string's length does not exceed `cs.maxLen`.
+// 1. Length Check: Ensures the string's length does not exceed `cis.maxLen`.
 //    If it does, an `ErrExceedsMaxLength` error is returned.
 // 2. Character Set Check: Verifies that all characters in the string are within
 //    the printable ASCII range (ASCII values 32 to 126, inclusive).
@@ -106,12 +108,12 @@ func (cs ciString) value() string {
 //
 // Returns:
 //   error: `nil` if the string is valid, otherwise an error detailing the validation failure.
-func (cs ciString) validate() error {
-	if len(cs.raw) > cs.maxLen {
-		return fmt.Errorf("ciString.Validate: %w (got length %d, max %d)", ErrExceedsMaxLength, len(cs.raw), cs.maxLen)
+func (cis ciString) validate() error {
+	if len(cis.raw) > cis.maxLen {
+		return fmt.Errorf("ciString.Validate: %w (got length %d, max %d)", ErrExceedsMaxLength, len(cis.raw), cis.maxLen)
 	}
 
-	for _, r := range cs.raw {
+	for _, r := range cis.raw {
 		if r < 32 || r > 126 {
 			return fmt.Errorf("ciString.Validate: %w", ErrNonPrintableASCII)
 		}
@@ -347,7 +349,7 @@ func (c CiString500Type) Validate() error {
 //   CiString500Type: A new CiString500Type instance.
 //   error: An error if the input `value` is too long or contains invalid characters.
 func SetCiString500Type(value string) (CiString500Type, error) {
-	cs, err := setCiString(value, maxLenCiString500Type)
+	cis, err := setCiString(value, maxLenCiString500Type)
 
-	return CiString500Type{value: cs}, err
+	return CiString500Type{value: cis}, err
 }

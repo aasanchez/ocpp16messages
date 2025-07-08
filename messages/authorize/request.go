@@ -8,7 +8,7 @@ import (
 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-var ErrInvalidRequestIdTag = errors.New("request -> invalid idTag")
+var ErrInvalidRequestIdTag = errors.New("request -> invalid IdTag")
 
 type RequestMessage struct {
 	IdTag authorizetypes.IdTokenType

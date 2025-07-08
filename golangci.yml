@@ -1,10 +1,12 @@
 version: "2"
+max-same-issues: 100
+max-issues-per-linter: 100
 linters:
   default: all
   disable:
     - testpackage
     - lll
-
+    - wsl
   settings:
     revive:
       enable-all-rules: true

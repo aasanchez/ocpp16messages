@@ -18,8 +18,8 @@ func TestConfirmation(t *testing.T) {
 	t.Parallel()
 
 	input := validPayload()
-	conf, err := Confirmation(input)
 
+	conf, err := Confirmation(input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}

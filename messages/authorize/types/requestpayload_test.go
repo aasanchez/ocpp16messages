@@ -11,7 +11,8 @@ func TestRequestPayloadType_Validate_ValidIdTag(t *testing.T) {
 		IdTag: "A123456789B987654321", // exactly 20 chars
 	}
 
-	if err := payload.Validate(); err != nil {
+	err := payload.Validate()
+	if err != nil {
 		t.Errorf("expected valid idTag, got error: %v", err)
 	}
 }
@@ -31,7 +32,7 @@ func TestRequestPayloadType_Validate_TooLongIdTag(t *testing.T) {
 	t.Parallel()
 
 	input := RequestPayload{
-		IdTag: "THIS-ID-TAG-IS-TOO-LONG-FOR-CISTRING20",
+		IdTag: "THIS-Id-TAG-IS-TOO-LONG-FOR-CISTRING20",
 	}
 
 	err := input.Validate()

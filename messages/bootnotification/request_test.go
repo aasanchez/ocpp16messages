@@ -216,8 +216,8 @@ func TestRequest_invalidMeterType(t *testing.T) {
 
 	input := validInput()
 	input.MeterType = strings.Repeat("T", 26)
-	_, err := Request(input)
 
+	_, err := Request(input)
 	if err == nil || !strings.Contains(err.Error(), "meterType") {
 		t.Fatalf("expected error for invalid MeterType, got: %v", err)
 	}

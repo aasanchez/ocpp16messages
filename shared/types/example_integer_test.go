@@ -54,5 +54,5 @@ func ExampleInteger_invalid() {
 	}
 
 	// Output:
-	// Error: invalid integer: strconv.ParseUint: parsing "abc": invalid syntax
+	// Error: invalid Integer: strconv.ParseUint: parsing "abc": invalid syntax
 }

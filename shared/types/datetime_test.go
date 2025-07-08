@@ -91,7 +91,6 @@ func TestDateTime_String_returnsRFC3339(t *testing.T) {
 	input := "2025-12-25T15:00:00Z"
 
 	datetime, err := SetDateTime(input)
-
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
