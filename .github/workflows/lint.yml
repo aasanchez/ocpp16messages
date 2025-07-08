@@ -3,10 +3,10 @@ name: Lint
 on:
   push:
     branches:
-      - '**' # Matches all branches
+      - main
   pull_request:
     branches:
-      - '**' # Matches all branches
+      - '**'
 
 jobs:
   golangci-lint:
