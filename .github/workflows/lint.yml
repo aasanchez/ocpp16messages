@@ -1,0 +1,70 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - '**' # Matches all branches
+  pull_request:
+    branches:
+      - '**' # Matches all branches
+
+jobs:
+  golangci-lint:
+    name: Golangci-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: latest
+          cache: false
+
+      - run: mkdir -p .reports
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v8
+        with:
+          version: v2.0
+          args: --config golangci.yml --timeout=5m ./...
+
+      - name: Report
+        run: cat .reports/golangci-lint.txt
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: "Golint-CI artifacts for build ${{ github.run_number }} in ocpp16messages"
+          include-hidden-files: true
+          path: .reports/
+
+  staticcheck:
+    name: Other Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: latest
+          cache: false
+
+      - name: Install stattickcheck
+        run: |
+          go install honnef.co/go/tools/cmd/staticcheck@latest
+          go mod tidy
+
+      - run: staticcheck
+
+  vet:
+    name: Other Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: latest
+          cache: false
+
+      - run: go vet ./...
