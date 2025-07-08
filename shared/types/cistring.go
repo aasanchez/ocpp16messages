@@ -141,14 +141,18 @@ type CiString20Type struct{
 //
 // Returns:
 //   string: The string content of the CiString20Type.
-func (c CiString20Type) Value() string { return c.value.value() }
+func (c CiString20Type) Value() string {
+	return c.value.value()
+}
 
 // Validate checks if the CiString20Type instance is valid according to OCPP 1.6J rules.
 // This includes checking its length and character set.
 //
 // Returns:
 //   error: `nil` if the string is valid, otherwise an error detailing the validation failure.
-func (c CiString20Type) Validate() error { return c.value.validate() }
+func (c CiString20Type) Validate() error {
+	return c.value.validate()
+}
 
 // SetCiString20Type creates a new CiString20Type from a standard Go string.
 // This is the recommended way to instantiate a CiString20Type.
@@ -182,14 +186,18 @@ type CiString25Type struct{
 //
 // Returns:
 //   string: The string content of the CiString25Type.
-func (c CiString25Type) Value() string { return c.value.value() }
+func (c CiString25Type) Value() string {
+	return c.value.value()
+}
 
 // Validate checks if the CiString25Type instance is valid according to OCPP 1.6J rules.
 // This includes checking its length and character set.
 //
 // Returns:
 //   error: `nil` if the string is valid, otherwise an error detailing the validation failure.
-func (c CiString25Type) Validate() error { return c.value.validate() }
+func (c CiString25Type) Validate() error {
+	return c.value.validate()
+}
 
 // SetCiString25Type creates a new CiString25Type from a standard Go string.
 // This is the recommended way to instantiate a CiString25Type.
@@ -224,14 +232,18 @@ type CiString50Type struct{
 //
 // Returns:
 //   string: The string content of the CiString50Type.
-func (c CiString50Type) Value() string { return c.value.value() }
+func (c CiString50Type) Value() string {
+	return c.value.value()
+}
 
 // Validate checks if the CiString50Type instance is valid according to OCPP 1.6J rules.
 // This includes checking its length and character set.
 //
 // Returns:
 //   error: `nil` if the string is valid, otherwise an error detailing the validation failure.
-func (c CiString50Type) Validate() error { return c.value.validate() }
+func (c CiString50Type) Validate() error {
+	return c.value.validate()
+}
 
 // SetCiString50Type creates a new CiString50Type from a standard Go string.
 // This is the recommended way to instantiate a CiString50Type.
@@ -266,14 +278,18 @@ type CiString255Type struct{
 //
 // Returns:
 //   string: The string content of the CiString255Type.
-func (c CiString255Type) Value() string { return c.value.value() }
+func (c CiString255Type) Value() string {
+	return c.value.value()
+}
 
 // Validate checks if the CiString255Type instance is valid according to OCPP 1.6J rules.
 // This includes checking its length and character set.
 //
 // Returns:
 //   error: `nil` if the string is valid, otherwise an error detailing the validation failure.
-func (c CiString255Type) Validate() error { return c.value.validate() }
+func (c CiString255Type) Validate() error {
+	return c.value.validate()
+}
 
 // SetCiString255Type creates a new CiString255Type from a standard Go string.
 // This is the recommended way to instantiate a CiString255Type.
@@ -308,14 +324,18 @@ type CiString500Type struct{
 //
 // Returns:
 //   string: The string content of the CiString500Type.
-func (c CiString500Type) Value() string { return c.value.value() }
+func (c CiString500Type) Value() string {
+	return c.value.value()
+}
 
 // Validate checks if the CiString500Type instance is valid according to OCPP 1.6J rules.
 // This includes checking its length and character set.
 //
 // Returns:
 //   error: `nil` if the string is valid, otherwise an error detailing the validation failure.
-func (c CiString500Type) Validate() error { return c.value.validate() }
+func (c CiString500Type) Validate() error {
+	return c.value.validate()
+}
 
 // SetCiString500Type creates a new CiString500Type from a standard Go string.
 // This is the recommended way to instantiate a CiString500Type.
