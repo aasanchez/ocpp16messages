@@ -1,3 +1,21 @@
+// Package sharedtypes provides shared data types and utilities used throughout
+// the OCPP 1.6J protocol implementation.
+//
+// This file defines the Integer type, a wrapper around Go's native integer types,
+// intended to represent numeric fields used in various OCPP 1.6J messages
+// (e.g., transactionId, meterValue, etc.).
+//
+// While the OCPP 1.6J specification references an 'integer' type, it does not
+// explicitly define the expected size or signedness of these integers.
+// This implementation assumes that a 32-bit unsigned integer (uint32) is
+// sufficient for the protocol's current use cases.
+//
+// Wrapping the integer type in this abstraction provides future flexibility.
+// If a different integer size or encoding is required (e.g., int64), the
+// internal representation can be modified without impacting the external API.
+//
+// See OCPP 1.6J specification, Appendix 3: "Data Types", for detailed definition
+// and constraints of the Integer type.
 package sharedtypes
 
 import (
@@ -5,33 +23,36 @@ import (
 	"strconv"
 )
 
-// Integer is a custom type that represents an unsigned 32-bit integer.
-// It is used to provide type safety and to encapsulate parsing logic for integer values
-// that are part of OCPP 1.6 messages.
+// Integer represents the OCPP 1.6J Integer data type.
+//
+// This type is used for fields that require an unsigned 32-bit integer value,
+// such as `transactionId` or `meterValue` in various OCPP messages.
+//
+// In the OCPP 1.6J specification, Integer values are typically constrained
+// to be non-negative. The underlying Go type `uint32` enforces this.
+//
+// See OCPP 1.6J Part 2, Appendix 3: "Data Types" for the formal definition.
 type Integer struct {
-	value uint32 // The underlying unsigned 32-bit integer value.
+	value uint32 // value holds the unsigned 32-bit integer. (Required)
 }
 
 // SetInteger creates a new Integer type from a string representation.
-// It parses the input string as an unsigned 32-bit integer.
+//
+// This function parses the input string as an unsigned 32-bit integer.
+// It returns an error if the string cannot be parsed into a valid uint32.
+//
+// This is a constructor function for the Integer type.
 //
 // Parameters:
-//   value string - The string to be parsed into an Integer.
+//   value: The string representation of the integer. (Required)
 //
 // Returns:
-//   Integer - The created Integer type.
-//   error   - An error if the string cannot be parsed into a valid unsigned 32-bit integer.
-//
-// This function is used to convert string-based integer values, often received from
-// external sources (like JSON payloads), into a type-safe Integer for internal use.
-// It ensures that the integer conforms to the expected format and range.
-// In OCPP 1.6, integer values are typically represented as whole numbers.
-// For example, transaction IDs, meter values, or durations are often integers.
-// Refer to the OCPP 1.6 specification for specific message field definitions.
+//   Integer: A new Integer object containing the parsed value.
+//   error: An error if the input string is not a valid unsigned 32-bit integer.
 func SetInteger(value string) (Integer, error) {
 	parsedValue, err := strconv.ParseUint(value, 10, 32)
 	if err != nil {
-		return Integer{}, fmt.Errorf("invalid integer: %w", err)
+		return Integer{}, fmt.Errorf("invalid Integer: %w", err)
 	}
 
 	return Integer{value: uint32(parsedValue)}, nil
@@ -39,11 +60,10 @@ func SetInteger(value string) (Integer, error) {
 
 // Value returns the underlying uint32 value of the Integer type.
 //
-// Returns:
-//   uint32 - The unsigned 32-bit integer value.
+// This is an accessor method for the Integer type.
 //
-// This method provides access to the raw integer value for calculations or
-// when converting the Integer type back to a primitive type.
+// Returns:
+//   uint32: The unsigned 32-bit integer value.
 func (i Integer) Value() uint32 {
 	return i.value
 }
