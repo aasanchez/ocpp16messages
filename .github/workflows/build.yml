@@ -3,10 +3,10 @@ name: Build
 on:
   push:
     branches:
-      - '**' # Matches all branches
+      - main
   pull_request:
     branches:
-      - '**' # Matches all branches
+      - '**'
 
 jobs:
   Unittest:
