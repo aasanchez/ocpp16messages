@@ -28,17 +28,14 @@ jobs:
           go install github.com/boumenot/gocover-cobertura@latest
           go mod tidy
 
-      - name: Execute test
-        run: go test -mod=readonly -v -coverprofile=reports/coverage.out  -run '^Test' ./... >reports/coverage.txt || true
-
-      - name: Execute test of Examples
-        run: go test -mod=readonly -v -coverprofile=reports/coverage-example.out  -run '^Example' ./... >reports/coverage-example.txt || true
+      - name: Execute test2
+        run: go test -mod=readonly -v -coverpkg=`go list -mod=readonly ./... | grep -v '/tests' | paste -sd ',' -` -coverprofile=reports/coverage.out -run '^Test' ./... >reports/coverage.txt
 
       - run: cat reports/coverage.txt
 
       - name: Coverage Percentage
         run: |
-          percent=$(go tool cover -func=reports/coverage.out | tail -1 | awk -F" " '{print $NF}')
+          percent=$(go tool cover -func=.reports/coverage.out | tail -1 | awk -F" " '{print $$NF}')
           echo "${percent} covered"
 
       - name: Produce Cobertura report

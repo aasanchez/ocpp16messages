@@ -61,3 +61,4 @@ pkgsite: ## Start a local pkgsite server to browse Go documentation interactivel
 	@nohup pkgsite > /dev/null 2>&1 &
 	@sleep 2
 	@open -a "Google Chrome" http://localhost:8080/github.com/aasanchez/ocpp16messages
+
