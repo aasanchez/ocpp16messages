@@ -44,9 +44,6 @@ jobs:
       - name: Produce JUnit report
         run: go-junit-report <reports/coverage.txt >reports/xunit.xml
 
-      - name: Produce JUnit report of examples
-        run: go-junit-report <reports/coverage-example.txt >reports/xunit-example.xml
-
       - name: Produce JSON report
         run: go tool test2json <reports/coverage.txt >reports/coverage.json
 
@@ -59,28 +56,11 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true
 
-      - name: Upload coverage to Codecov of Examples
-        uses: codecov/codecov-action@v5
-        with:
-          files: reports/coverage-example.out
-          flags: examples
-          slug: aasanchez/ocpp16messages
-          token: ${{ secrets.CODECOV_TOKEN }}
-          verbose: true
-
       - name: Upload JUnitReport to Codecov
         uses: codecov/test-results-action@v1
         with:
           flags: unit
           files: reports/xunit.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
-          verbose: true
-
-      - name: Upload JUnitReport to Codecov of Examples
-        uses: codecov/test-results-action@v1
-        with:
-          flags: examples
-          files: reports/xunit-example.xml
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true
 
