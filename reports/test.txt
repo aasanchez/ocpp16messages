@@ -18,26 +18,26 @@
 === RUN   TestAuthorizeRequest_nonASCIIIdTag
 === PAUSE TestAuthorizeRequest_nonASCIIIdTag
 === CONT  TestAuthorizeConfirmation_validPayload
-=== CONT  TestAuthorizeRequest_validPayload
 --- PASS: TestAuthorizeConfirmation_validPayload (0.00s)
 === CONT  TestAuthorizeConfirmation_payloadValidationFails_emptyStatus
---- PASS: TestAuthorizeRequest_validPayload (0.00s)
+=== CONT  TestAuthorizeRequest_validPayload
 --- PASS: TestAuthorizeConfirmation_payloadValidationFails_emptyStatus (0.00s)
+--- PASS: TestAuthorizeRequest_validPayload (0.00s)
 === CONT  TestAuthorizeConfirmation_invalidParentIdTag
-=== CONT  TestAuthorizeConfirmation_invalidExpiryDate
 --- PASS: TestAuthorizeConfirmation_invalidParentIdTag (0.00s)
+=== CONT  TestAuthorizeConfirmation_invalidExpiryDate
 --- PASS: TestAuthorizeConfirmation_invalidExpiryDate (0.00s)
 === CONT  TestAuthorizeConfirmation_invalidStatus
-=== CONT  TestAuthorizeRequest_tooLongIdTag
 --- PASS: TestAuthorizeConfirmation_invalidStatus (0.00s)
 === CONT  TestAuthorizeRequest_emptyIdTag
-=== CONT  TestAuthorizeRequest_nonASCIIIdTag
---- PASS: TestAuthorizeRequest_tooLongIdTag (0.00s)
 --- PASS: TestAuthorizeRequest_emptyIdTag (0.00s)
+=== CONT  TestAuthorizeRequest_nonASCIIIdTag
 --- PASS: TestAuthorizeRequest_nonASCIIIdTag (0.00s)
+=== CONT  TestAuthorizeRequest_tooLongIdTag
+--- PASS: TestAuthorizeRequest_tooLongIdTag (0.00s)
 PASS
 coverage: 38.0% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
-ok  	github.com/aasanchez/ocpp16messages/messages/authorize	1.092s	coverage: 38.0% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
+ok  	github.com/aasanchez/ocpp16messages/messages/authorize	0.499s	coverage: 38.0% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
 === RUN   TestAuthorizationStatus_validAccepted
 === PAUSE TestAuthorizationStatus_validAccepted
 === RUN   TestAuthorizationStatus_validBlocked
@@ -84,51 +84,51 @@ ok  	github.com/aasanchez/ocpp16messages/messages/authorize	1.092s	coverage: 38.
 === PAUSE TestRequestPayloadType_Value
 === CONT  TestAuthorizationStatus_validAccepted
 === CONT  TestIdTagInfo_withParentIdTagOnly
+=== CONT  TestAuthorizationStatus_validBlocked
 --- PASS: TestAuthorizationStatus_validAccepted (0.00s)
 === CONT  TestIdTagInfo_withExpiryDateOnly
 --- PASS: TestIdTagInfo_withParentIdTagOnly (0.00s)
+--- PASS: TestAuthorizationStatus_validBlocked (0.00s)
 === CONT  TestIdTagInfo_statusOnly
---- PASS: TestIdTagInfo_withExpiryDateOnly (0.00s)
-=== CONT  TestIdTagInfo_invalidExpiryDate
---- PASS: TestIdTagInfo_statusOnly (0.00s)
-=== CONT  Test_IdTokenFromCiString
-=== CONT  TestConfirmationPayload_missingStatus
-=== CONT  TestIdTagInfo_invalidStatus
-=== CONT  TestConfirmationPayload_withAllFields
-=== CONT  TestRequestPayloadType_Value
-=== CONT  TestConfirmationPayload_validStatusOnly
 === CONT  TestRequestPayloadType_Validate_EmptyIdTag
+=== CONT  TestConfirmationPayload_missingStatus
+=== CONT  Test_IdTokenFromCiString
+=== CONT  TestIdTagInfo_invalidParentIdTag_tooLong
+=== CONT  TestConfirmationPayload_withAllFields
+=== CONT  TestRequestPayloadType_Validate_ValidIdTag
+=== CONT  TestIdTagInfo_invalidStatus
+=== CONT  TestConfirmationPayload_validStatusOnly
 === CONT  Test_IdTokenFromCiString_TooLong
 === CONT  TestAuthorizationStatus_invalidStatus
 === CONT  TestAuthorizationStatus_validConcurrentTx
 === CONT  TestAuthorizationStatus_validInvalid
 === CONT  TestAuthorizationStatus_validExpired
-=== CONT  TestAuthorizationStatus_validBlocked
---- PASS: Test_IdTokenFromCiString (0.00s)
---- PASS: TestIdTagInfo_invalidExpiryDate (0.00s)
---- PASS: TestConfirmationPayload_missingStatus (0.00s)
---- PASS: TestConfirmationPayload_withAllFields (0.00s)
-=== CONT  TestIdTagInfo_invalidParentIdTag_tooLong
 === CONT  TestRequestPayloadType_Validate_TooLongIdTag
+--- PASS: TestIdTagInfo_withExpiryDateOnly (0.00s)
+=== CONT  TestRequestPayloadType_Value
+=== CONT  TestIdTagInfo_invalidExpiryDate
 === CONT  TestIdTagInfo_allFieldsPresent
-=== CONT  TestRequestPayloadType_Validate_ValidIdTag
---- PASS: TestIdTagInfo_invalidStatus (0.00s)
---- PASS: TestRequestPayloadType_Value (0.00s)
---- PASS: TestConfirmationPayload_validStatusOnly (0.00s)
+--- PASS: TestIdTagInfo_statusOnly (0.00s)
 --- PASS: TestRequestPayloadType_Validate_EmptyIdTag (0.00s)
+--- PASS: TestConfirmationPayload_missingStatus (0.00s)
+--- PASS: TestIdTagInfo_invalidExpiryDate (0.00s)
+--- PASS: TestConfirmationPayload_withAllFields (0.00s)
+--- PASS: TestRequestPayloadType_Validate_ValidIdTag (0.00s)
+--- PASS: TestIdTagInfo_invalidParentIdTag_tooLong (0.00s)
+--- PASS: TestIdTagInfo_invalidStatus (0.00s)
+--- PASS: TestConfirmationPayload_validStatusOnly (0.00s)
 --- PASS: Test_IdTokenFromCiString_TooLong (0.00s)
 --- PASS: TestAuthorizationStatus_invalidStatus (0.00s)
 --- PASS: TestAuthorizationStatus_validConcurrentTx (0.00s)
 --- PASS: TestAuthorizationStatus_validInvalid (0.00s)
 --- PASS: TestAuthorizationStatus_validExpired (0.00s)
---- PASS: TestAuthorizationStatus_validBlocked (0.00s)
---- PASS: TestIdTagInfo_invalidParentIdTag_tooLong (0.00s)
 --- PASS: TestRequestPayloadType_Validate_TooLongIdTag (0.00s)
+--- PASS: TestRequestPayloadType_Value (0.00s)
 --- PASS: TestIdTagInfo_allFieldsPresent (0.00s)
---- PASS: TestRequestPayloadType_Validate_ValidIdTag (0.00s)
+--- PASS: Test_IdTokenFromCiString (0.00s)
 PASS
 coverage: 32.1% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
-ok  	github.com/aasanchez/ocpp16messages/messages/authorize/types	0.327s	coverage: 32.1% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
+ok  	github.com/aasanchez/ocpp16messages/messages/authorize/types	0.351s	coverage: 32.1% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
 === RUN   TestConfirmation
 === PAUSE TestConfirmation
 === RUN   TestConfirmation_MissingCurrentTime
@@ -182,52 +182,52 @@ ok  	github.com/aasanchez/ocpp16messages/messages/authorize/types	0.327s	coverag
 --- PASS: TestConfirmation (0.00s)
 === CONT  TestConfirmation_InvalidInterval
 --- PASS: TestConfirmation_InvalidInterval (0.00s)
-=== CONT  TestConfirmation_InvalidDateTime
---- PASS: TestRequest_requiredFieldsValidation_missingVendor (0.00s)
-=== CONT  TestConfirmation_MissingStatus
---- PASS: TestConfirmation_InvalidDateTime (0.00s)
---- PASS: TestConfirmation_MissingStatus (0.00s)
-=== CONT  TestRequest_invalidMeterSerialNumber
-=== CONT  TestConfirmation_MissingInterval
---- PASS: TestConfirmation_MissingInterval (0.00s)
-=== CONT  TestConfirmation_MissingCurrentTime
---- PASS: TestRequest_invalidMeterSerialNumber (0.00s)
-=== CONT  TestRequest_invalidFirmwareVersion
---- PASS: TestConfirmation_MissingCurrentTime (0.00s)
-=== CONT  TestRequest_requiredFieldsValidation_nonPrintableVendor
-=== CONT  TestRequest_requiredFieldsValidation_missingModel
-=== CONT  Test_requiredCiString20_MissingAndTooLong
---- PASS: TestRequest_invalidFirmwareVersion (0.00s)
---- PASS: TestRequest_requiredFieldsValidation_missingModel (0.00s)
---- PASS: TestRequest_requiredFieldsValidation_nonPrintableVendor (0.00s)
-=== CONT  TestRequest_invalidChargeBoxSerialNumber
---- PASS: Test_requiredCiString20_MissingAndTooLong (0.00s)
-=== CONT  TestRequest_requiredFieldsValidation_invalidVendor
---- PASS: TestRequest_invalidChargeBoxSerialNumber (0.00s)
---- PASS: TestRequest_requiredFieldsValidation_invalidVendor (0.00s)
-=== CONT  TestRequest_invalidMeterType
---- PASS: TestRequest_invalidMeterType (0.00s)
-=== CONT  TestRequest_validPayload
---- PASS: TestRequest_validPayload (0.00s)
-=== CONT  TestRequest_requiredFieldsValidation_nonPrintableModel
---- PASS: TestRequest_requiredFieldsValidation_nonPrintableModel (0.00s)
-=== CONT  TestConfirmation_InvalidStatus
---- PASS: TestConfirmation_InvalidStatus (0.00s)
-=== CONT  TestRequest_invalidImsi
---- PASS: TestRequest_invalidImsi (0.00s)
-=== CONT  TestRequest_invalidIccid
---- PASS: TestRequest_invalidIccid (0.00s)
 === CONT  TestRequest_invalidChargePointSerialNumber
+--- PASS: TestRequest_requiredFieldsValidation_missingVendor (0.00s)
+=== CONT  TestConfirmation_InvalidDateTime
 --- PASS: TestRequest_invalidChargePointSerialNumber (0.00s)
+--- PASS: TestConfirmation_InvalidDateTime (0.00s)
+=== CONT  TestRequest_requiredFieldsValidation_invalidVendor
+--- PASS: TestRequest_requiredFieldsValidation_invalidVendor (0.00s)
+=== CONT  TestConfirmation_MissingInterval
+=== CONT  TestRequest_invalidChargeBoxSerialNumber
+--- PASS: TestConfirmation_MissingInterval (0.00s)
 === CONT  Test_requiredCiString20_valid
+=== CONT  TestConfirmation_MissingCurrentTime
+=== CONT  TestRequest_invalidMeterSerialNumber
+=== CONT  TestRequest_invalidImsi
+=== CONT  Test_requiredCiString20_MissingAndTooLong
+=== CONT  TestRequest_invalidIccid
+=== CONT  TestRequest_invalidFirmwareVersion
+=== CONT  TestConfirmation_InvalidStatus
+=== CONT  TestRequest_requiredFieldsValidation_nonPrintableVendor
+=== CONT  TestRequest_requiredFieldsValidation_nonPrintableModel
+=== CONT  TestConfirmation_MissingStatus
+=== CONT  TestRequest_invalidMeterType
+--- PASS: TestRequest_invalidChargeBoxSerialNumber (0.00s)
 --- PASS: Test_requiredCiString20_valid (0.00s)
+--- PASS: TestConfirmation_MissingCurrentTime (0.00s)
+--- PASS: TestRequest_invalidImsi (0.00s)
+--- PASS: Test_requiredCiString20_MissingAndTooLong (0.00s)
+--- PASS: TestRequest_invalidIccid (0.00s)
+--- PASS: TestRequest_invalidMeterSerialNumber (0.00s)
+--- PASS: TestConfirmation_InvalidStatus (0.00s)
+=== CONT  TestRequest_requiredFieldsValidation_missingModel
 === CONT  Test_wrapErr_IncludesField
---- PASS: Test_wrapErr_IncludesField (0.00s)
+=== CONT  TestRequest_validPayload
 === CONT  TestRequest_requiredFieldsValidation_invalidModel
+--- PASS: TestRequest_requiredFieldsValidation_nonPrintableVendor (0.00s)
+--- PASS: TestRequest_invalidFirmwareVersion (0.00s)
+--- PASS: TestRequest_requiredFieldsValidation_nonPrintableModel (0.00s)
+--- PASS: TestConfirmation_MissingStatus (0.00s)
+--- PASS: TestRequest_invalidMeterType (0.00s)
+--- PASS: TestRequest_requiredFieldsValidation_missingModel (0.00s)
+--- PASS: Test_wrapErr_IncludesField (0.00s)
+--- PASS: TestRequest_validPayload (0.00s)
 --- PASS: TestRequest_requiredFieldsValidation_invalidModel (0.00s)
 PASS
 coverage: 46.0% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
-ok  	github.com/aasanchez/ocpp16messages/messages/bootnotification	1.248s	coverage: 46.0% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
+ok  	github.com/aasanchez/ocpp16messages/messages/bootnotification	0.664s	coverage: 46.0% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
 === RUN   TestConfirmationPayload_Validate_AllFields
 === PAUSE TestConfirmationPayload_Validate_AllFields
 === RUN   TestConfirmationPayload_Validate_MissingCurrentTime
@@ -262,14 +262,8 @@ ok  	github.com/aasanchez/ocpp16messages/messages/bootnotification	1.248s	covera
 --- PASS: TestConfirmationPayload_Validate_AllFields (0.00s)
 === CONT  TestRequestPayload_ValidateFailsWhenChargePointModelIsEmpty
 --- PASS: TestRequestPayload_ValidateFailsWhenChargePointModelIsEmpty (0.00s)
-=== CONT  TestRegistrationStatus_Empty_IsInvalid
---- PASS: TestRegistrationStatus_Empty_IsInvalid (0.00s)
 === CONT  TestRegistrationStatus_Rejected
 --- PASS: TestRegistrationStatus_Rejected (0.00s)
-=== CONT  TestRegistrationStatus_Declined_IsInvalid
---- PASS: TestRegistrationStatus_Declined_IsInvalid (0.00s)
-=== CONT  TestRegistrationStatus_LowercaseAccepted_IsInvalid
---- PASS: TestRegistrationStatus_LowercaseAccepted_IsInvalid (0.00s)
 === CONT  TestRegistrationStatus_Pending
 --- PASS: TestRegistrationStatus_Pending (0.00s)
 === CONT  TestRegistrationStatus_Accepted
@@ -277,7 +271,13 @@ ok  	github.com/aasanchez/ocpp16messages/messages/bootnotification	1.248s	covera
 === CONT  TestConfirmationPayload_Validate_MissingStatus
 --- PASS: TestConfirmationPayload_Validate_MissingStatus (0.00s)
 === CONT  TestConfirmationPayload_Validate_MissingInterval
+=== CONT  TestRegistrationStatus_Empty_IsInvalid
+=== CONT  TestRegistrationStatus_Declined_IsInvalid
+=== CONT  TestRegistrationStatus_LowercaseAccepted_IsInvalid
 --- PASS: TestConfirmationPayload_Validate_MissingInterval (0.00s)
+--- PASS: TestRegistrationStatus_Declined_IsInvalid (0.00s)
+--- PASS: TestRegistrationStatus_LowercaseAccepted_IsInvalid (0.00s)
+--- PASS: TestRegistrationStatus_Empty_IsInvalid (0.00s)
 === CONT  TestConfirmationPayload_Validate_MissingCurrentTime
 --- PASS: TestConfirmationPayload_Validate_MissingCurrentTime (0.00s)
 === CONT  TestRegistrationStatus_Unknown_IsInvalid
@@ -290,7 +290,7 @@ ok  	github.com/aasanchez/ocpp16messages/messages/bootnotification	1.248s	covera
 --- PASS: TestRegistrationStatus_Approved_IsInvalid (0.00s)
 PASS
 coverage: 9.1% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
-ok  	github.com/aasanchez/ocpp16messages/messages/bootnotification/types	0.470s	coverage: 9.1% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
+ok  	github.com/aasanchez/ocpp16messages/messages/bootnotification/types	0.814s	coverage: 9.1% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
 === RUN   TestConfirmation_Accepted
 === PAUSE TestConfirmation_Accepted
 === RUN   TestConfirmation_Rejected
@@ -306,22 +306,22 @@ ok  	github.com/aasanchez/ocpp16messages/messages/bootnotification/types	0.470s	
 === RUN   TestRequest_EmptyReservationId
 === PAUSE TestRequest_EmptyReservationId
 === CONT  TestConfirmation_Accepted
-=== CONT  TestRequest_ValidReservationId
 --- PASS: TestConfirmation_Accepted (0.00s)
-=== CONT  TestConfirmation_Rejected
---- PASS: TestConfirmation_Rejected (0.00s)
+=== CONT  TestRequest_ValidReservationId
 --- PASS: TestRequest_ValidReservationId (0.00s)
 === CONT  TestConfirmation_InvalidStatus
 --- PASS: TestConfirmation_InvalidStatus (0.00s)
+=== CONT  TestConfirmation_EmptyStatus
+--- PASS: TestConfirmation_EmptyStatus (0.00s)
+=== CONT  TestConfirmation_Rejected
+--- PASS: TestConfirmation_Rejected (0.00s)
 === CONT  TestRequest_EmptyReservationId
 --- PASS: TestRequest_EmptyReservationId (0.00s)
 === CONT  TestRequest_InvalidReservationId_NotANumber
 --- PASS: TestRequest_InvalidReservationId_NotANumber (0.00s)
-=== CONT  TestConfirmation_EmptyStatus
---- PASS: TestConfirmation_EmptyStatus (0.00s)
 PASS
 coverage: 10.7% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
-ok  	github.com/aasanchez/ocpp16messages/messages/cancelreservation	0.629s	coverage: 10.7% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
+ok  	github.com/aasanchez/ocpp16messages/messages/cancelreservation	0.968s	coverage: 10.7% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
 === RUN   TestCancelReservationStatus_Accepted
 === PAUSE TestCancelReservationStatus_Accepted
 === RUN   TestCancelReservationStatus_Rejected
@@ -337,22 +337,22 @@ ok  	github.com/aasanchez/ocpp16messages/messages/cancelreservation	0.629s	cover
 === RUN   TestRequestPayload_Validate_EmptyReservationId
 === PAUSE TestRequestPayload_Validate_EmptyReservationId
 === CONT  TestCancelReservationStatus_Accepted
-=== CONT  TestConfirmationPayload_Validate_EmptyStatus
 --- PASS: TestCancelReservationStatus_Accepted (0.00s)
+=== CONT  TestConfirmationPayload_Validate_OK
+--- PASS: TestConfirmationPayload_Validate_OK (0.00s)
+=== CONT  TestCancelReservationStatus_Invalid
+--- PASS: TestCancelReservationStatus_Invalid (0.00s)
 === CONT  TestCancelReservationStatus_Rejected
 --- PASS: TestCancelReservationStatus_Rejected (0.00s)
---- PASS: TestConfirmationPayload_Validate_EmptyStatus (0.00s)
-=== CONT  TestCancelReservationStatus_Invalid
-=== CONT  TestRequestPayload_Validate_EmptyReservationId
-=== CONT  TestConfirmationPayload_Validate_OK
 === CONT  TestRequestPayload_Validate_OK
---- PASS: TestCancelReservationStatus_Invalid (0.00s)
---- PASS: TestRequestPayload_Validate_EmptyReservationId (0.00s)
---- PASS: TestConfirmationPayload_Validate_OK (0.00s)
 --- PASS: TestRequestPayload_Validate_OK (0.00s)
+=== CONT  TestConfirmationPayload_Validate_EmptyStatus
+--- PASS: TestConfirmationPayload_Validate_EmptyStatus (0.00s)
+=== CONT  TestRequestPayload_Validate_EmptyReservationId
+--- PASS: TestRequestPayload_Validate_EmptyReservationId (0.00s)
 PASS
 coverage: 5.9% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
-ok  	github.com/aasanchez/ocpp16messages/messages/cancelreservation/types	1.406s	coverage: 5.9% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
+ok  	github.com/aasanchez/ocpp16messages/messages/cancelreservation/types	1.123s	coverage: 5.9% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
 === RUN   TestCiString_TooLongFails
 === PAUSE TestCiString_TooLongFails
 === RUN   TestCiString_ValidStringPasses
@@ -374,24 +374,24 @@ ok  	github.com/aasanchez/ocpp16messages/messages/cancelreservation/types	1.406s
 === CONT  TestCiString_TooLongFails
 === CONT  TestDateTime_parsesValidRFC3339
 --- PASS: TestCiString_TooLongFails (0.00s)
+=== CONT  TestCiString_NonPrintableCharacterFails
+--- PASS: TestCiString_NonPrintableCharacterFails (0.00s)
+=== CONT  TestCiString_ValueReturnsRaw
+--- PASS: TestCiString_ValueReturnsRaw (0.00s)
 === CONT  TestCiString_EmptyStringPasses
 --- PASS: TestCiString_EmptyStringPasses (0.00s)
 === CONT  TestCiString_ValidStringPasses
 --- PASS: TestCiString_ValidStringPasses (0.00s)
-=== CONT  TestDateTime_valueReturnsCorrectTime
-=== CONT  TestDateTime_String_returnsRFC3339
---- PASS: TestDateTime_String_returnsRFC3339 (0.00s)
-=== CONT  TestCiString_NonPrintableCharacterFails
---- PASS: TestCiString_NonPrintableCharacterFails (0.00s)
 === CONT  TestDateTime_failsOnInvalidFormat
 --- PASS: TestDateTime_failsOnInvalidFormat (0.00s)
-=== CONT  TestCiString_ValueReturnsRaw
---- PASS: TestCiString_ValueReturnsRaw (0.00s)
+=== CONT  TestDateTime_String_returnsRFC3339
+--- PASS: TestDateTime_String_returnsRFC3339 (0.00s)
+=== CONT  TestDateTime_valueReturnsCorrectTime
 --- PASS: TestDateTime_parsesValidRFC3339 (0.00s)
 --- PASS: TestDateTime_valueReturnsCorrectTime (0.00s)
 PASS
 coverage: 9.6% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
-ok  	github.com/aasanchez/ocpp16messages/shared/types	0.938s	coverage: 9.6% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
+ok  	github.com/aasanchez/ocpp16messages/shared/types	1.518s	coverage: 9.6% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
 === RUN   TestCiString20Type_CreateAndValidate
 === PAUSE TestCiString20Type_CreateAndValidate
 === RUN   TestCiString20Type_CreateTooLongFails
@@ -420,34 +420,34 @@ ok  	github.com/aasanchez/ocpp16messages/shared/types	0.938s	coverage: 9.6% of s
 === PAUSE TestSetInteger_TooLarge
 === RUN   TestInteger_Value
 === PAUSE TestInteger_Value
-=== CONT  TestInteger_Value
 === CONT  TestCiString20Type_CreateAndValidate
 --- PASS: TestCiString20Type_CreateAndValidate (0.00s)
-=== CONT  TestSetInteger_EmptyString
-=== CONT  TestSetInteger_ValidInteger
---- PASS: TestSetInteger_ValidInteger (0.00s)
-=== CONT  TestSetInteger_TooLarge
---- PASS: TestSetInteger_EmptyString (0.00s)
-=== CONT  TestSetInteger_NegativeInteger
---- PASS: TestSetInteger_TooLarge (0.00s)
-=== CONT  TestCiString500Type_CreateAndValidate
-=== CONT  TestSetInteger_MaxUint32
---- PASS: TestSetInteger_NegativeInteger (0.00s)
-=== CONT  TestCiString50Type_CreateAndValidate
---- PASS: TestSetInteger_MaxUint32 (0.00s)
---- PASS: TestCiString500Type_CreateAndValidate (0.00s)
---- PASS: TestInteger_Value (0.00s)
---- PASS: TestCiString50Type_CreateAndValidate (0.00s)
 === CONT  TestSetInteger_Zero
 --- PASS: TestSetInteger_Zero (0.00s)
-=== CONT  TestCiString255Type_CreateAndValidate
---- PASS: TestCiString255Type_CreateAndValidate (0.00s)
-=== CONT  TestCiString20Type_CreateTooLongFails
---- PASS: TestCiString20Type_CreateTooLongFails (0.00s)
 === CONT  TestSetInteger_NotANumber
---- PASS: TestSetInteger_NotANumber (0.00s)
+=== CONT  TestSetInteger_ValidInteger
+=== CONT  TestSetInteger_EmptyString
+=== CONT  TestCiString500Type_CreateAndValidate
+=== CONT  TestCiString255Type_CreateAndValidate
+=== CONT  TestCiString50Type_CreateAndValidate
 === CONT  TestCiString25Type_CreateAndValidate
+=== CONT  TestCiString20Type_CreateTooLongFails
+=== CONT  TestInteger_Value
+=== CONT  TestSetInteger_TooLarge
+=== CONT  TestSetInteger_NegativeInteger
+--- PASS: TestSetInteger_NotANumber (0.00s)
+=== CONT  TestSetInteger_MaxUint32
+--- PASS: TestSetInteger_ValidInteger (0.00s)
+--- PASS: TestSetInteger_MaxUint32 (0.00s)
+--- PASS: TestCiString500Type_CreateAndValidate (0.00s)
+--- PASS: TestCiString255Type_CreateAndValidate (0.00s)
+--- PASS: TestCiString50Type_CreateAndValidate (0.00s)
 --- PASS: TestCiString25Type_CreateAndValidate (0.00s)
+--- PASS: TestCiString20Type_CreateTooLongFails (0.00s)
+--- PASS: TestInteger_Value (0.00s)
+--- PASS: TestSetInteger_TooLarge (0.00s)
+--- PASS: TestSetInteger_NegativeInteger (0.00s)
+--- PASS: TestSetInteger_EmptyString (0.00s)
 PASS
 coverage: 19.3% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
-ok  	github.com/aasanchez/ocpp16messages/shared/types/tests	0.778s	coverage: 19.3% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
+ok  	github.com/aasanchez/ocpp16messages/shared/types/tests	1.363s	coverage: 19.3% of statements in github.com/aasanchez/ocpp16messages, github.com/aasanchez/ocpp16messages/messages/authorize, github.com/aasanchez/ocpp16messages/messages/authorize/types, github.com/aasanchez/ocpp16messages/messages/bootnotification, github.com/aasanchez/ocpp16messages/messages/bootnotification/types, github.com/aasanchez/ocpp16messages/messages/cancelreservation, github.com/aasanchez/ocpp16messages/messages/cancelreservation/types, github.com/aasanchez/ocpp16messages/shared/types
