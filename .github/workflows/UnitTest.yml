@@ -1,7 +1,9 @@
 name: Build
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - '**'
 
 jobs:
   Unittest:
@@ -17,7 +19,7 @@ jobs:
 
       - run: mkdir -p reports
 
-      - name: Execute test2
+      - name: Execute test
         run: go test -mod=readonly -v -coverpkg=`go list -mod=readonly ./... | grep -v '/tests' | paste -sd ',' -` -coverprofile=reports/coverage.out -run '^Test' ./... >reports/test.txt
 
       - run: cat reports/coverage.txt
