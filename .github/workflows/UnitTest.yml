@@ -3,6 +3,9 @@ name: Build
 on:
   push:
     branches:
+      - main
+  pull_request:
+    branches:
       - '**'
 
 jobs:
@@ -53,9 +56,6 @@ jobs:
         with:
           name: "Go test artifacts for build ${{ github.run_number }} in ocpp16messages"
           path: reports
-
-      - name: Display structure of downloaded files
-        run: ls -R
 
       - name: Produce JUnit report
         run: go-junit-report <reports/coverage.out >reports/xunit.xml
