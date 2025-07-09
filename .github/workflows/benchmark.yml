@@ -41,12 +41,6 @@ jobs:
           mkdir -p ${{ matrix.go-version }}
           go test -bench=. -run=^$ ./... -benchtime 20s -benchmem  >${{ matrix.go-version }}/benchmarks.txt
 
-      - name: Install tree
-        run: sudo apt-get update && sudo apt-get install -y tree
-
-      - name: Show directory structure
-        run: tree -a -L 3
-
       - name: Process Benchmarks on ${{ matrix.go-version }}
         uses: benchmark-action/github-action-benchmark@v1
         with:
