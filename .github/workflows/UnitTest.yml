@@ -35,8 +35,8 @@ jobs:
           path: reports
           retention-days: 3
 
-  SonarCloud:
-    name: SonarCloud
+  Codecov:
+    name: Codecov
     needs: Unittest
     runs-on: ubuntu-latest
     steps:
@@ -45,25 +45,42 @@ jobs:
           go-version: 1.24
           cache: false
 
+      - name: Install Tools
+        run: |
+          go install github.com/jstemmer/go-junit-report/v2@latest
+          go mod tidy
+
       - uses: actions/download-artifact@v4
         with:
           name: "Go test artifacts for build ${{ github.run_number }} in ocpp16messages"
+          path: reports
 
       - name: Display structure of downloaded files
         run: ls -R
 
-      # - name: Execute test
-      #   run: go test -mod=readonly -v -coverpkg=`go list -mod=readonly ./... | grep -v '/tests' | paste -sd ',' -` -coverprofile=reports/coverage.out -run '^Test' ./... >reports/test.txt
+      - name: Produce JUnit report
+        run: go-junit-report <reports/coverage.txt >reports/xunit.xml
 
-      # - name: Coverage Percentage
-      #   run: go tool cover -func=reports/coverage.out
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: reports/coverage.out
+          flags: unit
+          slug: aasanchez/ocpp16messages
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
 
-      # - name: Produce JSON report
-      #   run: go tool test2json <reports/coverage.out >reports/coverage.json
+      - name: Upload JUnitReport to Codecov
+        uses: codecov/test-results-action@v1
+        with:
+          flags: unit
+          files: reports/xunit.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
 
-      # - name: Upload Artifacts
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: "Go test artifacts for build ${{ github.run_number }} in ocpp16messages"
-      #     path: reports
-      #     retention-days: 3
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: "Go test artifacts for build ${{ github.run_number }} in ocpp16messages"
+          path: reports
+          retention-days: 3
