@@ -52,7 +52,7 @@ jobs:
       - name: Show directory structure
         run: tree -a -L 3
 
-      - name: Publish main benchmarks
+      - name: Process Benchmarks of ${{ matrix.module }}
         uses: benchmark-action/github-action-benchmark@v1
         with:
           benchmark-data-dir-path:  ${{ matrix.go-version }}/${{ matrix.module }}-benchmarks
@@ -61,26 +61,16 @@ jobs:
           github-token:             ${{ secrets.GITHUB_TOKEN }}
           summary-always:           true
           tool:                     go
-          auto-push:                false
+          auto-push:                true
 
-      - name: Show directory structure
-        run: |
-          cd ${{ matrix.go-version }} && tree -a -L 3
-
-      # - name: Upload Artifacts
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: "Benchmark of ${{ matrix.module }} on ${{ matrix.go-version }} in Build ${{ github.run_number }}"
-      #     path: ${{ matrix.go-version }}
-      #     retention-days: 1
-
-      # - name: Publish types benchmarks
-      #   uses: benchmark-action/github-action-benchmark@v1
-      #   with:
-      #     name: Go Benchmark (${{ matrix.module }}-types - Go ${{ matrix.go-version }})
-      #     tool: go
-      #     output-file-path: ${{ matrix.go-version }}/${{ matrix.module }}-types-benchmarks.txt
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     auto-push: true
-      #     benchmark-data-dir-path: ${{ matrix.go-version }}/${{ matrix.module }}-types-benchmarks
+      - name: Process Benchmarks of ${{ matrix.module }} types
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          benchmark-data-dir-path:  ${{ matrix.go-version }}/${{ matrix.module }}-types-benchmarks
+          name:                     Go Benchmark (${{ matrix.module }} - Go ${{ matrix.go-version }})
+          output-file-path:         ${{ matrix.go-version }}/${{ matrix.module }}-types-benchmarks.txt
+          github-token:             ${{ secrets.GITHUB_TOKEN }}
+          summary-always:           true
+          tool:                     go
+          auto-push:                true
 
