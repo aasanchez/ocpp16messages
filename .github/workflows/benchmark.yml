@@ -2,9 +2,6 @@ name: Benchmark
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - v*
 
 jobs:
   run-benchmarks:
@@ -13,9 +10,12 @@ jobs:
       matrix:
         module:
           - authorize
-          - bootnotification
-          - cancelreservation
-        go-version: ["1.23", "1.24", "stable"]
+          # - bootnotification
+          # - cancelreservation
+        go-version:
+          - "stable"
+          - "1.23"
+          - "1.24"
 
     name: "${{ matrix.module }} Benchmarks (Go ${{ matrix.go-version }})"
     permissions:
@@ -32,35 +32,43 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go-version }}
+          cache: false
 
       - name: Run main benchmarks
         run: |
           mkdir -p ${{ matrix.go-version }}
-          go test -bench=. -benchmem ./messages/${{ matrix.module }}/benchmarks >${{ matrix.go-version }}/${{ matrix.module }}-benchmarks.txt
+          go test -bench=. -benchmem ./messages/${{ matrix.module }}/benchmarks       >${{ matrix.go-version }}/${{ matrix.module }}-benchmarks.txt
 
       - name: Run types benchmarks
         run: |
           mkdir -p ${{ matrix.go-version }}
           go test -bench=. -benchmem ./messages/${{ matrix.module }}/types/benchmarks >${{ matrix.go-version }}/${{ matrix.module }}-types-benchmarks.txt
 
-      - name: Publish main benchmarks
-        uses: benchmark-action/github-action-benchmark@v1
-        with:
-          name: Go Benchmark (${{ matrix.module }} - Go ${{ matrix.go-version }})
-          tool: go
-          output-file-path: ${{ matrix.go-version }}/${{ matrix.module }}-benchmarks.txt
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          auto-push: false
-          benchmark-data-dir-path: ${{ matrix.go-version }}/${{ matrix.module }}-benchmarks
-          gh-pages-branch: gh-pages
+      - name: Install tree
+        run: sudo apt-get update && sudo apt-get install -y tree
 
-      - name: Publish types benchmarks
+      - name: Show directory structure
+        run: tree -a -L 3
+
+      - name: Process Benchmarks of ${{ matrix.module }}
         uses: benchmark-action/github-action-benchmark@v1
         with:
-          name: Go Benchmark (${{ matrix.module }}-types - Go ${{ matrix.go-version }})
-          tool: go
-          output-file-path: ${{ matrix.go-version }}/${{ matrix.module }}-types-benchmarks.txt
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          auto-push: true
-          benchmark-data-dir-path: ${{ matrix.go-version }}/${{ matrix.module }}-types-benchmarks
-          gh-pages-branch: gh-pages
+          benchmark-data-dir-path:  ${{ matrix.go-version }}/${{ matrix.module }}-benchmarks
+          name:                     Go Benchmark (${{ matrix.module }} - Go ${{ matrix.go-version }})
+          output-file-path:         ${{ matrix.go-version }}/${{ matrix.module }}-benchmarks.txt
+          github-token:             ${{ secrets.GITHUB_TOKEN }}
+          summary-always:           true
+          tool:                     go
+          auto-push:                true
+
+      - name: Process Benchmarks of ${{ matrix.module }} types
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          benchmark-data-dir-path:  ${{ matrix.go-version }}/${{ matrix.module }}-types-benchmarks
+          name:                     Go Benchmark (${{ matrix.module }} - Go ${{ matrix.go-version }})
+          output-file-path:         ${{ matrix.go-version }}/${{ matrix.module }}-types-benchmarks.txt
+          github-token:             ${{ secrets.GITHUB_TOKEN }}
+          summary-always:           true
+          tool:                     go
+          auto-push:                true
+
