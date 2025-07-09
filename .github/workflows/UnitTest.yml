@@ -18,15 +18,16 @@ jobs:
       - run: mkdir -p reports
 
       - name: Execute test2
-        run: go test -mod=readonly -v -coverpkg=`go list -mod=readonly ./... | grep -v '/tests' | paste -sd ',' -` -coverprofile=reports/coverage.out -run '^Test' ./... >reports/coverage.txt
+        run: go test -mod=readonly -v -coverpkg=`go list -mod=readonly ./... | grep -v '/tests' | paste -sd ',' -` -coverprofile=reports/coverage.out -run '^Test' ./... >reports/test.txt
 
       - run: cat reports/coverage.txt
 
       - name: Coverage Percentage
-        run: echo "$(go tool cover -func=.reports/coverage.out | tail -1 | awk -F" " '{print $$NF}') covered"
+        run: go tool cover -func=reports/coverage.out
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: "Go test artifacts for build ${{ github.run_number }} in ocpp16messages"
           path: reports
+          retention-days: 3

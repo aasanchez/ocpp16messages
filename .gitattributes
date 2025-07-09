@@ -14,13 +14,11 @@ vendor/**        linguist-vendored
 *.pb.go          linguist-generated
 
 .gitignore                export-ignore
-OpenCode.md               export-ignore
 .editorconfig             export-ignore
 .gitattributes            export-ignore
 .github                   export-ignore
 codecov.yml               export-ignore
 golangci.yml              export-ignore
 Makefile                  export-ignore
-README.md                 export-ignore
 sonar-project.properties  export-ignore
 **/benchmarks/            export-ignore
