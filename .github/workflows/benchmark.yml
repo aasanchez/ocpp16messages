@@ -9,9 +9,9 @@ jobs:
     strategy:
       matrix:
         go-version:
-          - "stable"
-          - "1.23"
-          - "1.24"
+          - stable
+          - 1.23
+          - 1.24
 
     name: "Benchmarks (Go ${{ matrix.go-version }})"
     permissions:
@@ -38,7 +38,7 @@ jobs:
       - name: Process Benchmarks on ${{ matrix.go-version }}
         uses: benchmark-action/github-action-benchmark@v1
         with:
-          benchmark-data-dir-path:  ${{ matrix.go-version }}/benchmarks
+          benchmark-data-dir-path:  ${{ matrix.go-version }}
           name:                     Go Benchmark on ${{ matrix.go-version }})
           output-file-path:         ${{ matrix.go-version }}/benchmarks.txt
           github-token:             ${{ secrets.GITHUB_TOKEN }}
