@@ -1,10 +1,9 @@
 name: Benchmark
 
 on:
-  workflow_dispatch:
   push:
-    tags:
-      - v*
+    branches:
+      - '**'
 
 jobs:
   run-benchmarks:
@@ -47,9 +46,6 @@ jobs:
           mkdir -p ${{ matrix.go-version }}
           go test -bench=. -benchmem ./messages/${{ matrix.module }}/types/benchmarks >${{ matrix.go-version }}/${{ matrix.module }}-types-benchmarks.txt
 
-      - name: files
-        run: ls -R
-
       - name: Install tree
         run: sudo apt-get update && sudo apt-get install -y tree
 
@@ -67,12 +63,16 @@ jobs:
           tool:                     go
           auto-push:                false
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: "Benchmark of ${{ matrix.module }} on ${{ matrix.go-version }} in Build ${{ github.run_number }}"
-          path: ${{ matrix.go-version }}
-          retention-days: 1
+      - name: Show directory structure
+        run: |
+          cd ${{ matrix.go-version }} && tree -a -L 3
+
+      # - name: Upload Artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: "Benchmark of ${{ matrix.module }} on ${{ matrix.go-version }} in Build ${{ github.run_number }}"
+      #     path: ${{ matrix.go-version }}
+      #     retention-days: 1
 
       # - name: Publish types benchmarks
       #   uses: benchmark-action/github-action-benchmark@v1
