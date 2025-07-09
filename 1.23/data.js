@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1752088471228,
+  "lastUpdate": 1752089350648,
   "repoUrl": "https://github.com/aasanchez/ocpp16messages",
   "entries": {
     "Go Benchmark on 1.23)": [
@@ -606,6 +606,316 @@ window.BENCHMARK_DATA = {
           {
             "name": "BenchmarkRequestPayloadValue - ns/op",
             "value": 0.3117,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayloadValue - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayloadValue - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Alexis Sánchez",
+            "username": "aasanchez",
+            "email": "aasanchez@gmail.com"
+          },
+          "committer": {
+            "name": "Alexis Sánchez",
+            "username": "aasanchez",
+            "email": "aasanchez@gmail.com"
+          },
+          "id": "2c1d74e41097325660c9ab51c389b5dd7e6cbcbc",
+          "message": "chore(lint.yml): rename analysis jobs for clarity and consistency in workflow configuration",
+          "timestamp": "2025-07-09T19:24:29Z",
+          "url": "https://github.com/aasanchez/ocpp16messages/commit/2c1d74e41097325660c9ab51c389b5dd7e6cbcbc"
+        },
+        "date": 1752089350379,
+        "tool": "go",
+        "benches": [
+          {
+            "name": "BenchmarkAuthorizeConfirmation",
+            "value": 97.53,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "246928638 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeConfirmation - ns/op",
+            "value": 97.53,
+            "unit": "ns/op",
+            "extra": "246928638 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeConfirmation - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "246928638 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeConfirmation - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "246928638 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeRequest",
+            "value": 18.88,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeRequest - ns/op",
+            "value": 18.88,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeRequest - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizeRequest - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizationStatus",
+            "value": 94.95,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "252803582 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizationStatus - ns/op",
+            "value": 94.95,
+            "unit": "ns/op",
+            "extra": "252803582 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizationStatus - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "252803582 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizationStatus - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "252803582 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizationStatusValue",
+            "value": 0.6227,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizationStatusValue - ns/op",
+            "value": 0.6227,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizationStatusValue - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkAuthorizationStatusValue - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayloadValidate",
+            "value": 0.3146,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayloadValidate - ns/op",
+            "value": 0.3146,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayloadValidate - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayloadValidate - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayloadValue",
+            "value": 0.3118,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayloadValue - ns/op",
+            "value": 0.3118,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayloadValue - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkConfirmationPayloadValue - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo",
+            "value": 99.14,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "241991224 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo - ns/op",
+            "value": 99.14,
+            "unit": "ns/op",
+            "extra": "241991224 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "241991224 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfo - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "241991224 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfoValue",
+            "value": 2.802,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfoValue - ns/op",
+            "value": 2.802,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfoValue - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTagInfoValue - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdToken",
+            "value": 0.3112,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdToken - ns/op",
+            "value": 0.3112,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdToken - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdToken - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTokenValue",
+            "value": 0.3117,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTokenValue - ns/op",
+            "value": 0.3117,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTokenValue - B/op",
+            "value": 0,
+            "unit": "B/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkIdTokenValue - allocs/op",
+            "value": 0,
+            "unit": "allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayloadValidate",
+            "value": 431.9,
+            "unit": "ns/op\t     240 B/op\t       4 allocs/op",
+            "extra": "56011410 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayloadValidate - ns/op",
+            "value": 431.9,
+            "unit": "ns/op",
+            "extra": "56011410 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayloadValidate - B/op",
+            "value": 240,
+            "unit": "B/op",
+            "extra": "56011410 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayloadValidate - allocs/op",
+            "value": 4,
+            "unit": "allocs/op",
+            "extra": "56011410 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayloadValue",
+            "value": 0.3113,
+            "unit": "ns/op\t       0 B/op\t       0 allocs/op",
+            "extra": "1000000000 times\n4 procs"
+          },
+          {
+            "name": "BenchmarkRequestPayloadValue - ns/op",
+            "value": 0.3113,
             "unit": "ns/op",
             "extra": "1000000000 times\n4 procs"
           },
