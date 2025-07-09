@@ -58,7 +58,7 @@ jobs:
         run: ls -R
 
       - name: Produce JUnit report
-        run: go-junit-report <reports/coverage.txt >reports/xunit.xml
+        run: go-junit-report <reports/coverage.out >reports/xunit.xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
