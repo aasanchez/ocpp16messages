@@ -29,14 +29,14 @@ jobs:
           args: --config golangci.yml --timeout=5m ./...
 
       - name: Report
-        run: cat .reports/golangci-lint.txt
+        run: cat reports/golangci-lint.txt
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: "Golint-CI artifacts for build ${{ github.run_number }} in ocpp16messages"
           include-hidden-files: true
-          path: .reports/
+          path: reports/
 
   staticcheck:
     name: Other Analysis
