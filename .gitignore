@@ -83,7 +83,7 @@ tags
 
 # End of https://www.toptal.com/developers/gitignore/api/go,vim,visualstudiocode,sonar,sonarqube
 
-.reports/
+reports/
 *-benchmarks.txt
 *.zip
 .gocache
