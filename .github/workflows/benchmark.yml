@@ -62,6 +62,7 @@ jobs:
           benchmark-data-dir-path:  ${{ matrix.go-version }}/${{ matrix.module }}-benchmarks
           name:                     Go Benchmark (${{ matrix.module }} - Go ${{ matrix.go-version }})
           output-file-path:         ${{ matrix.go-version }}/${{ matrix.module }}-benchmarks.txt
+          github-token:             ${{ secrets.GITHUB_TOKEN }}
           summary-always:           true
           tool:                     go
 
