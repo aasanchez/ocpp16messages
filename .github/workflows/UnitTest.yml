@@ -77,12 +77,30 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+
+  SonarCloud:
+    name: SonarCloud
+    needs: Codecov
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.24
+          cache: false
+
+      - uses: actions/download-artifact@v4
         with:
           name: "Go test artifacts for build ${{ github.run_number }} in ocpp16messages"
           path: reports
-          retention-days: 3
+
+      - name: Upload coverage to SonarCloud
+        uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          projectBaseDir: .
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   Reports:
     name: Test Reports
@@ -106,15 +124,12 @@ jobs:
           name: "Go test artifacts for build ${{ github.run_number }} in ocpp16messages"
           path: reports
 
-      - name: Produce JSON report
-        run: go tool test2json <reports/coverage.out >reports/coverage.json
-
       - name: Produce Cobertura report
         run: gocover-cobertura <reports/coverage.out >reports/cobertura.xml
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: "Go test artifacts for build ${{ github.run_number }} in ocpp16messages"
+          name: "Go test artifacts for build ${{ github.run_number }}-reports in ocpp16messages"
           path: reports
           retention-days: 3
