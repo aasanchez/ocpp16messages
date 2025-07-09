@@ -39,7 +39,7 @@ jobs:
           path: reports/
 
   staticcheck:
-    name: Other Analysis
+    name: staticcheck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -57,7 +57,7 @@ jobs:
       - run: staticcheck
 
   vet:
-    name: Other Analysis
+    name: go vet
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
