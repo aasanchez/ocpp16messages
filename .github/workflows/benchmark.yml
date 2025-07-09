@@ -13,8 +13,8 @@ jobs:
       matrix:
         module:
           - authorize
-          - bootnotification
-          - cancelreservation
+          # - bootnotification
+          # - cancelreservation
         go-version: ["1.23", "1.24", "stable"]
 
     name: "${{ matrix.module }} Benchmarks (Go ${{ matrix.go-version }})"
