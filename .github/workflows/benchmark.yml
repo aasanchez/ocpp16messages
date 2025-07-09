@@ -1,9 +1,7 @@
 name: Benchmark
 
 on:
-  push:
-    branches:
-      - '**'
+  workflow_dispatch:
 
 jobs:
   run-benchmarks:
@@ -16,8 +14,8 @@ jobs:
           # - cancelreservation
         go-version:
           - "stable"
-          # - "1.23"
-          # - "1.24"
+          - "1.23"
+          - "1.24"
 
     name: "${{ matrix.module }} Benchmarks (Go ${{ matrix.go-version }})"
     permissions:
