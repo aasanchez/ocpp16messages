@@ -70,10 +70,9 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: "Benchmark of ${{ matrix.module }} on ${{ matrix.go-version }} in Build:${{ github.run_number }}"
+          name: "Benchmark of ${{ matrix.module }} on ${{ matrix.go-version }} in Build ${{ github.run_number }}"
           path: ${{ matrix.go-version }}
           retention-days: 1
-
 
       # - name: Publish types benchmarks
       #   uses: benchmark-action/github-action-benchmark@v1
