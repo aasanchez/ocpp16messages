@@ -16,9 +16,9 @@ jobs:
           # - bootnotification
           # - cancelreservation
         go-version:
+          - "stable"
           # - "1.23"
           # - "1.24"
-          - "stable"
 
     name: "${{ matrix.module }} Benchmarks (Go ${{ matrix.go-version }})"
     permissions:
@@ -56,15 +56,14 @@ jobs:
       - name: Show directory structure
         run: tree -a -L 3
 
-      # - name: Publish main benchmarks
-      #   uses: benchmark-action/github-action-benchmark@v1
-      #   with:
-      #     name: Go Benchmark (${{ matrix.module }} - Go ${{ matrix.go-version }})
-      #     tool: go
-      #     output-file-path: ${{ matrix.go-version }}/${{ matrix.module }}-benchmarks.txt
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     auto-push: false
-      #     benchmark-data-dir-path: ${{ matrix.go-version }}/${{ matrix.module }}-benchmarks
+      - name: Publish main benchmarks
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          benchmark-data-dir-path:  ${{ matrix.go-version }}/${{ matrix.module }}-benchmarks
+          name:                     Go Benchmark (${{ matrix.module }} - Go ${{ matrix.go-version }})
+          output-file-path:         ${{ matrix.go-version }}/${{ matrix.module }}-benchmarks.txt
+          summary-always:           true
+          tool:                     go
 
       # - name: Publish types benchmarks
       #   uses: benchmark-action/github-action-benchmark@v1
