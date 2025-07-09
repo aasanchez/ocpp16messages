@@ -7,7 +7,7 @@ on:
 
 jobs:
   Unittest:
-    name: Unittest
+    name: Unit Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,8 +21,6 @@ jobs:
 
       - name: Execute test
         run: go test -mod=readonly -v -coverpkg=`go list -mod=readonly ./... | grep -v '/tests' | paste -sd ',' -` -coverprofile=reports/coverage.out -run '^Test' ./... >reports/test.txt
-
-      - run: cat reports/coverage.txt
 
       - name: Coverage Percentage
         run: go tool cover -func=reports/coverage.out
