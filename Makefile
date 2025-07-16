@@ -25,7 +25,6 @@ test-coverage-html: test-coverage ## Generate and open a detailed HTML coverage 
 test-example: ## Run documentation-based example tests to verify correctness of usage examples.
 	@go test -mod=readonly -v -run '^Example' ./...
 
-.PHONY: test-fuzz
 test-fuzz: ## Run fuzz tests for each Fuzz* function in all packages
 	@echo "Running fuzzing (Fuzz) on each package..."
 	@for pkg in $$(go list ./...); do \
@@ -35,20 +34,16 @@ test-fuzz: ## Run fuzz tests for each Fuzz* function in all packages
 		done; \
 	done
 
-.PHONY: test-race
 test-race: ## Run race detector across all packages.
 	@echo "Running race detector on all packages..."
 	@go list ./... | xargs -n1 -I{} go test -mod=readonly -v -timeout 30s -race {}
 
-
-.PHONY: benchmark
 benchmark: ## Run benchmark tests to measure performance of critical operations.
 	@echo "Stopping any running pkgsite processes..."
 	@go clean -modcache
 	@go test -bench=. -benchmem ./...
 
 ##@ Code Style and Static Analysis
-.PHONY: lint
 lint: ## Run static analysis, vetting, and linting using golangci-lint and other tools.
 	@rm -rf reports/*
 	@golangci-lint cache clean
@@ -56,16 +51,13 @@ lint: ## Run static analysis, vetting, and linting using golangci-lint and other
 	@go vet ./... > reports/govet.json
 	@staticcheck ./... > reports/staticcheck
 
-.PHONY: sonar
 sonar: test lint ## Run test suite and linters, then push code quality reports to SonarQube.
 	@sonar-scanner
 
-.PHONY: format
 format: ## Format Go code to maintain consistent styling across the codebase.
 	@gofmt -d .
 
 ##@ Documentation
-.PHONY: pkgsite
 pkgsite: ## Start a local pkgsite server to browse Go documentation interactively.
 	@echo "Stopping any running pkgsite processes..."
 	@pkill pkgsite || true
