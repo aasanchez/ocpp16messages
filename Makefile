@@ -38,7 +38,7 @@ test-fuzz: ## Run fuzz tests for each Fuzz* function in all packages
 .PHONY: test-race
 test-race: ## Run race detector across all packages.
 	@echo "Running race detector on all packages..."
-	@go list ./... | grep race | xargs -n1 -I{} go test -mod=readonly -v -timeout 30s -race {}
+	@go list ./... | xargs -n1 -I{} go test -mod=readonly -v -timeout 30s -race {}
 
 
 .PHONY: benchmark
