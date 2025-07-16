@@ -70,12 +70,14 @@ type ciString struct {
 // It performs initial validation based on the provided maximum length.
 //
 // Parameters:
-//   value: The string value to be encapsulated. (Required)
-//   maxLen: The maximum allowed length for the string, as per OCPP 1.6J specification. (Required)
+//
+//	value: The string value to be encapsulated. (Required)
+//	maxLen: The maximum allowed length for the string, as per OCPP 1.6J specification. (Required)
 //
 // Returns:
-//   ciString: An initialized `ciString` struct.
-//   error: An error if the `value` exceeds `maxLen` or contains non-printable ASCII characters.
+//
+//	ciString: An initialized `ciString` struct.
+//	error: An error if the `value` exceeds `maxLen` or contains non-printable ASCII characters.
 func setCiString(value string, maxLen int) (ciString, error) {
 	cis := ciString{raw: value, maxLen: maxLen}
 
@@ -90,7 +92,8 @@ func setCiString(value string, maxLen int) (ciString, error) {
 // value returns the raw string value stored within the `ciString`.
 //
 // Returns:
-//   string: The raw string content.
+//
+//	string: The raw string content.
 func (cis ciString) value() string {
 	return cis.raw
 }
@@ -100,14 +103,15 @@ func (cis ciString) value() string {
 // An empty string is considered valid, representing an optional field that is not present.
 //
 // The validation performs the following checks:
-// 1. Length Check: Ensures the string's length does not exceed `cis.maxLen`.
-//    If it does, an `ErrExceedsMaxLength` error is returned.
-// 2. Character Set Check: Verifies that all characters in the string are within
-//    the printable ASCII range (ASCII values 32 to 126, inclusive).
-//    If a non-printable character is found, an `ErrNonPrintableASCII` error is returned.
+//  1. Length Check: Ensures the string's length does not exceed `cis.maxLen`.
+//     If it does, an `ErrExceedsMaxLength` error is returned.
+//  2. Character Set Check: Verifies that all characters in the string are within
+//     the printable ASCII range (ASCII values 32 to 126, inclusive).
+//     If a non-printable character is found, an `ErrNonPrintableASCII` error is returned.
 //
 // Returns:
-//   error: `nil` if the string is valid, otherwise an error detailing the validation failure.
+//
+//	error: `nil` if the string is valid, otherwise an error detailing the validation failure.
 func (cis ciString) validate() error {
 	if len(cis.raw) > cis.maxLen {
 		return fmt.Errorf("ciString.Validate: %w (got length %d, max %d)", ErrExceedsMaxLength, len(cis.raw), cis.maxLen)
@@ -135,14 +139,15 @@ func (cis ciString) validate() error {
 //
 // Conforms to the `CiString20Type` data type definition in OCPP 1.6J Part 2,
 // Appendix 3: "Data Types".
-type CiString20Type struct{
+type CiString20Type struct {
 	value ciString // value holds the underlying ciString with max length 20. (Required)
 }
 
 // Value returns the raw string representation of the CiString20Type.
 //
 // Returns:
-//   string: The string content of the CiString20Type.
+//
+//	string: The string content of the CiString20Type.
 func (c CiString20Type) Value() string {
 	return c.value.value()
 }
@@ -151,7 +156,8 @@ func (c CiString20Type) Value() string {
 // This includes checking its length and character set.
 //
 // Returns:
-//   error: `nil` if the string is valid, otherwise an error detailing the validation failure.
+//
+//	error: `nil` if the string is valid, otherwise an error detailing the validation failure.
 func (c CiString20Type) Validate() error {
 	return c.value.validate()
 }
@@ -160,11 +166,13 @@ func (c CiString20Type) Validate() error {
 // This is the recommended way to instantiate a CiString20Type.
 //
 // Parameters:
-//   value: The string to be converted into a CiString20Type. (Required)
+//
+//	value: The string to be converted into a CiString20Type. (Required)
 //
 // Returns:
-//   CiString20Type: A new CiString20Type instance.
-//   error: An error if the input `value` is too long or contains invalid characters.
+//
+//	CiString20Type: A new CiString20Type instance.
+//	error: An error if the input `value` is too long or contains invalid characters.
 func SetCiString20Type(value string) (CiString20Type, error) {
 	cs, err := setCiString(value, maxLenCiString20Type)
 
@@ -180,14 +188,15 @@ func SetCiString20Type(value string) (CiString20Type, error) {
 //
 // Conforms to the `CiString25Type` data type definition in OCPP 1.6J Part 2,
 // Appendix 3: "Data Types".
-type CiString25Type struct{
+type CiString25Type struct {
 	value ciString // value holds the underlying ciString with max length 25. (Required)
 }
 
 // Value returns the raw string representation of the CiString25Type.
 //
 // Returns:
-//   string: The string content of the CiString25Type.
+//
+//	string: The string content of the CiString25Type.
 func (c CiString25Type) Value() string {
 	return c.value.value()
 }
@@ -196,7 +205,8 @@ func (c CiString25Type) Value() string {
 // This includes checking its length and character set.
 //
 // Returns:
-//   error: `nil` if the string is valid, otherwise an error detailing the validation failure.
+//
+//	error: `nil` if the string is valid, otherwise an error detailing the validation failure.
 func (c CiString25Type) Validate() error {
 	return c.value.validate()
 }
@@ -205,11 +215,13 @@ func (c CiString25Type) Validate() error {
 // This is the recommended way to instantiate a CiString25Type.
 //
 // Parameters:
-//   value: The string to be converted into a CiString25Type. (Required)
+//
+//	value: The string to be converted into a CiString25Type. (Required)
 //
 // Returns:
-//   CiString25Type: A new CiString25Type instance.
-//   error: An error if the input `value` is too long or contains invalid characters.
+//
+//	CiString25Type: A new CiString25Type instance.
+//	error: An error if the input `value` is too long or contains invalid characters.
 func SetCiString25Type(value string) (CiString25Type, error) {
 	cs, err := setCiString(value, maxLenCiString25Type)
 
@@ -226,14 +238,15 @@ func SetCiString25Type(value string) (CiString25Type, error) {
 //
 // Conforms to the `CiString50Type` data type definition in OCPP 1.6J Part 2,
 // Appendix 3: "Data Types".
-type CiString50Type struct{
+type CiString50Type struct {
 	value ciString // value holds the underlying ciString with max length 50. (Required)
 }
 
 // Value returns the raw string representation of the CiString50Type.
 //
 // Returns:
-//   string: The string content of the CiString50Type.
+//
+//	string: The string content of the CiString50Type.
 func (c CiString50Type) Value() string {
 	return c.value.value()
 }
@@ -242,7 +255,8 @@ func (c CiString50Type) Value() string {
 // This includes checking its length and character set.
 //
 // Returns:
-//   error: `nil` if the string is valid, otherwise an error detailing the validation failure.
+//
+//	error: `nil` if the string is valid, otherwise an error detailing the validation failure.
 func (c CiString50Type) Validate() error {
 	return c.value.validate()
 }
@@ -251,11 +265,13 @@ func (c CiString50Type) Validate() error {
 // This is the recommended way to instantiate a CiString50Type.
 //
 // Parameters:
-//   value: The string to be converted into a CiString50Type. (Required)
+//
+//	value: The string to be converted into a CiString50Type. (Required)
 //
 // Returns:
-//   CiString50Type: A new CiString50Type instance.
-//   error: An error if the input `value` is too long or contains invalid characters.
+//
+//	CiString50Type: A new CiString50Type instance.
+//	error: An error if the input `value` is too long or contains invalid characters.
 func SetCiString50Type(value string) (CiString50Type, error) {
 	cs, err := setCiString(value, maxLenCiString50Type)
 
@@ -272,14 +288,15 @@ func SetCiString50Type(value string) (CiString50Type, error) {
 //
 // Conforms to the `CiString255Type` data type definition in OCPP 1.6J Part 2,
 // Appendix 3: "Data Types".
-type CiString255Type struct{
+type CiString255Type struct {
 	value ciString // value holds the underlying ciString with max length 255. (Required)
 }
 
 // Value returns the raw string representation of the CiString255Type.
 //
 // Returns:
-//   string: The string content of the CiString255Type.
+//
+//	string: The string content of the CiString255Type.
 func (c CiString255Type) Value() string {
 	return c.value.value()
 }
@@ -288,7 +305,8 @@ func (c CiString255Type) Value() string {
 // This includes checking its length and character set.
 //
 // Returns:
-//   error: `nil` if the string is valid, otherwise an error detailing the validation failure.
+//
+//	error: `nil` if the string is valid, otherwise an error detailing the validation failure.
 func (c CiString255Type) Validate() error {
 	return c.value.validate()
 }
@@ -297,11 +315,13 @@ func (c CiString255Type) Validate() error {
 // This is the recommended way to instantiate a CiString255Type.
 //
 // Parameters:
-//   value: The string to be converted into a CiString255Type. (Required)
+//
+//	value: The string to be converted into a CiString255Type. (Required)
 //
 // Returns:
-//   CiString255Type: A new CiString255Type instance.
-//   error: An error if the input `value` is too long or contains invalid characters.
+//
+//	CiString255Type: A new CiString255Type instance.
+//	error: An error if the input `value` is too long or contains invalid characters.
 func SetCiString255Type(value string) (CiString255Type, error) {
 	cs, err := setCiString(value, maxLenCiString255Type)
 
@@ -318,14 +338,15 @@ func SetCiString255Type(value string) (CiString255Type, error) {
 //
 // Conforms to the `CiString500Type` data type definition in OCPP 1.6J Part 2,
 // Appendix 3: "Data Types".
-type CiString500Type struct{
+type CiString500Type struct {
 	value ciString // value holds the underlying ciString with max length 500. (Required)
 }
 
 // Value returns the raw string representation of the CiString500Type.
 //
 // Returns:
-//   string: The string content of the CiString500Type.
+//
+//	string: The string content of the CiString500Type.
 func (c CiString500Type) Value() string {
 	return c.value.value()
 }
@@ -334,7 +355,8 @@ func (c CiString500Type) Value() string {
 // This includes checking its length and character set.
 //
 // Returns:
-//   error: `nil` if the string is valid, otherwise an error detailing the validation failure.
+//
+//	error: `nil` if the string is valid, otherwise an error detailing the validation failure.
 func (c CiString500Type) Validate() error {
 	return c.value.validate()
 }
@@ -343,11 +365,13 @@ func (c CiString500Type) Validate() error {
 // This is the recommended way to instantiate a CiString500Type.
 //
 // Parameters:
-//   value: The string to be converted into a CiString500Type. (Required)
+//
+//	value: The string to be converted into a CiString500Type. (Required)
 //
 // Returns:
-//   CiString500Type: A new CiString500Type instance.
-//   error: An error if the input `value` is too long or contains invalid characters.
+//
+//	CiString500Type: A new CiString500Type instance.
+//	error: An error if the input `value` is too long or contains invalid characters.
 func SetCiString500Type(value string) (CiString500Type, error) {
 	cis, err := setCiString(value, maxLenCiString500Type)
 

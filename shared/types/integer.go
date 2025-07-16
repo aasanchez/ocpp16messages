@@ -44,11 +44,13 @@ type Integer struct {
 // This is a constructor function for the Integer type.
 //
 // Parameters:
-//   value: The string representation of the integer. (Required)
+//
+//	value: The string representation of the integer. (Required)
 //
 // Returns:
-//   Integer: A new Integer object containing the parsed value.
-//   error: An error if the input string is not a valid unsigned 32-bit integer.
+//
+//	Integer: A new Integer object containing the parsed value.
+//	error: An error if the input string is not a valid unsigned 32-bit integer.
 func SetInteger(value string) (Integer, error) {
 	parsedValue, err := strconv.ParseUint(value, 10, 32)
 	if err != nil {
@@ -63,7 +65,8 @@ func SetInteger(value string) (Integer, error) {
 // This is an accessor method for the Integer type.
 //
 // Returns:
-//   uint32: The unsigned 32-bit integer value.
+//
+//	uint32: The unsigned 32-bit integer value.
 func (i Integer) Value() uint32 {
 	return i.value
 }

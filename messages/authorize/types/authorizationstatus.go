@@ -41,11 +41,13 @@ func getStatusSet() map[string]struct{} {
 // It validates the input string against the predefined set of valid authorization statuses.
 //
 // Parameters:
-//   input: The string representation of the authorization status.
+//
+//	input: The string representation of the authorization status.
 //
 // Returns:
-//   AuthorizationStatusType: A new AuthorizationStatusType if the input is valid.
-//   error: An error if the input string is not a valid authorization status.
+//
+//	AuthorizationStatusType: A new AuthorizationStatusType if the input is valid.
+//	error: An error if the input string is not a valid authorization status.
 func AuthorizationStatus(input string) (AuthorizationStatusType, error) {
 	if _, exists := getStatusSet()[input]; !exists {
 		return AuthorizationStatusType{}, fmt.Errorf("%w: %q", sharedtypes.ErrInvalidAuthorizationStatus, input)

@@ -9,8 +9,8 @@ import (
 func BenchmarkConfirmationPayloadValidate(b *testing.B) {
 	payload := authorizetypes.ConfirmationPayload{
 		IdTagInfo: authorizetypes.IdTagInfoPayload{
-			Status: authorizetypes.Accepted,
-			ExpiryDate: nil,
+			Status:      authorizetypes.Accepted,
+			ExpiryDate:  nil,
 			ParentIdTag: nil,
 		},
 	}
@@ -25,8 +25,8 @@ func BenchmarkConfirmationPayloadValidate(b *testing.B) {
 func BenchmarkConfirmationPayloadValue(b *testing.B) {
 	payload := authorizetypes.ConfirmationPayload{
 		IdTagInfo: authorizetypes.IdTagInfoPayload{
-			Status: authorizetypes.Accepted,
-			ExpiryDate: nil,
+			Status:      authorizetypes.Accepted,
+			ExpiryDate:  nil,
 			ParentIdTag: nil,
 		},
 	}

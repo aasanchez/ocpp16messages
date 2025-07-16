@@ -25,11 +25,13 @@ type DateTime struct {
 // This is a constructor function for the DateTime type.
 //
 // Parameters:
-//   input: The string representation of the datetime, e.g., "2013-02-01T20:00:00.000Z". (Required)
+//
+//	input: The string representation of the datetime, e.g., "2013-02-01T20:00:00.000Z". (Required)
 //
 // Returns:
-//   DateTime: A new DateTime object containing the parsed time.
-//   error: An error if the input string is not a valid ISO 8601 datetime.
+//
+//	DateTime: A new DateTime object containing the parsed time.
+//	error: An error if the input string is not a valid ISO 8601 datetime.
 func SetDateTime(input string) (DateTime, error) {
 	t, err := time.Parse(time.RFC3339, input)
 	if err != nil {
@@ -44,7 +46,8 @@ func SetDateTime(input string) (DateTime, error) {
 // This is an accessor method for the DateTime type.
 //
 // Returns:
-//   time.Time: The parsed `time.Time` object.
+//
+//	time.Time: The parsed `time.Time` object.
 func (dt DateTime) Value() time.Time {
 	return dt.value
 }
@@ -54,7 +57,8 @@ func (dt DateTime) Value() time.Time {
 // This method formats the underlying `time.Time` value using `time.RFC3339` layout.
 //
 // Returns:
-//   string: The ISO 8601 string representation of the datetime.
+//
+//	string: The ISO 8601 string representation of the datetime.
 func (dt DateTime) String() string {
 	return dt.value.Format(time.RFC3339)
 }
