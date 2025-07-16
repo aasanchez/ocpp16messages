@@ -23,7 +23,7 @@ func BenchmarkCiString20Type_Validate(b *testing.B) {
 	}
 
 	b.ResetTimer()
-		for range b.N {
+	for range b.N {
 		if err := ciString.Validate(); err != nil {
 			b.Fatalf("unexpected error: %v", err)
 		}
@@ -31,7 +31,7 @@ func BenchmarkCiString20Type_Validate(b *testing.B) {
 }
 
 func BenchmarkSetCiString25Type(b *testing.B) {
-		for range b.N {
+	for range b.N {
 		_, err := sharedtypes.SetCiString25Type("test")
 		if err != nil {
 			b.Fatalf("unexpected error: %v", err)
@@ -46,7 +46,7 @@ func BenchmarkCiString25Type_Validate(b *testing.B) {
 	}
 
 	b.ResetTimer()
-		for range b.N {
+	for range b.N {
 		if err := ciString.Validate(); err != nil {
 			b.Fatalf("unexpected error: %v", err)
 		}
@@ -54,7 +54,7 @@ func BenchmarkCiString25Type_Validate(b *testing.B) {
 }
 
 func BenchmarkSetCiString50Type(b *testing.B) {
-		for range b.N {
+	for range b.N {
 		_, err := sharedtypes.SetCiString50Type("test")
 		if err != nil {
 			b.Fatalf("unexpected error: %v", err)
@@ -69,7 +69,7 @@ func BenchmarkCiString50Type_Validate(b *testing.B) {
 	}
 
 	b.ResetTimer()
-		for range b.N {
+	for range b.N {
 		if err := ciString.Validate(); err != nil {
 			b.Fatalf("unexpected error: %v", err)
 		}
@@ -77,7 +77,7 @@ func BenchmarkCiString50Type_Validate(b *testing.B) {
 }
 
 func BenchmarkSetCiString255Type(b *testing.B) {
-		for range b.N {
+	for range b.N {
 		_, err := sharedtypes.SetCiString255Type("test")
 		if err != nil {
 			b.Fatalf("unexpected error: %v", err)
@@ -92,7 +92,7 @@ func BenchmarkCiString255Type_Validate(b *testing.B) {
 	}
 
 	b.ResetTimer()
-		for range b.N {
+	for range b.N {
 		if err := ciString.Validate(); err != nil {
 			b.Fatalf("unexpected error: %v", err)
 		}
@@ -100,7 +100,7 @@ func BenchmarkCiString255Type_Validate(b *testing.B) {
 }
 
 func BenchmarkSetCiString500Type(b *testing.B) {
-		for range b.N {
+	for range b.N {
 		_, err := sharedtypes.SetCiString500Type("test")
 		if err != nil {
 			b.Fatalf("unexpected error: %v", err)
@@ -115,7 +115,7 @@ func BenchmarkCiString500Type_Validate(b *testing.B) {
 	}
 
 	b.ResetTimer()
-		for range b.N {
+	for range b.N {
 		if err := ciString.Validate(); err != nil {
 			b.Fatalf("unexpected error: %v", err)
 		}
@@ -127,7 +127,7 @@ func BenchmarkCiString500Type_Validate(b *testing.B) {
 func BenchmarkSetCiString20Type_Max(b *testing.B) {
 	s := strings.Repeat("a", 20)
 	b.ResetTimer()
-		for range b.N {
+	for range b.N {
 		_, err := sharedtypes.SetCiString20Type(s)
 		if err != nil {
 			b.Fatalf("unexpected error: %v", err)
@@ -143,7 +143,7 @@ func BenchmarkCiString20Type_Validate_Max(b *testing.B) {
 	}
 
 	b.ResetTimer()
-		for range b.N {
+	for range b.N {
 		if err := ciString.Validate(); err != nil {
 			b.Fatalf("unexpected error: %v", err)
 		}
@@ -153,7 +153,7 @@ func BenchmarkCiString20Type_Validate_Max(b *testing.B) {
 func BenchmarkSetCiString25Type_Max(b *testing.B) {
 	s := strings.Repeat("a", 25)
 	b.ResetTimer()
-		for range b.N {
+	for range b.N {
 		_, err := sharedtypes.SetCiString25Type(s)
 		if err != nil {
 			b.Fatalf("unexpected error: %v", err)
@@ -169,7 +169,7 @@ func BenchmarkCiString25Type_Validate_Max(b *testing.B) {
 	}
 
 	b.ResetTimer()
-		for range b.N {
+	for range b.N {
 		if err := ciString.Validate(); err != nil {
 			b.Fatalf("unexpected error: %v", err)
 		}
@@ -179,7 +179,7 @@ func BenchmarkCiString25Type_Validate_Max(b *testing.B) {
 func BenchmarkSetCiString50Type_Max(b *testing.B) {
 	s := strings.Repeat("a", 50)
 	b.ResetTimer()
-		for range b.N {
+	for range b.N {
 		_, err := sharedtypes.SetCiString50Type(s)
 		if err != nil {
 			b.Fatalf("unexpected error: %v", err)
@@ -195,7 +195,8 @@ func BenchmarkCiString50Type_Validate_Max(b *testing.B) {
 	}
 
 	b.ResetTimer()
-		for range b.N {
+
+	for range b.N {
 		if err := ciString.Validate(); err != nil {
 			b.Fatalf("unexpected error: %v", err)
 		}
@@ -205,7 +206,8 @@ func BenchmarkCiString50Type_Validate_Max(b *testing.B) {
 func BenchmarkSetCiString255Type_Max(b *testing.B) {
 	s := strings.Repeat("a", 255)
 	b.ResetTimer()
-		for range b.N {
+
+	for range b.N {
 		_, err := sharedtypes.SetCiString255Type(s)
 		if err != nil {
 			b.Fatalf("unexpected error: %v", err)
@@ -221,7 +223,8 @@ func BenchmarkCiString255Type_Validate_Max(b *testing.B) {
 	}
 
 	b.ResetTimer()
-		for range b.N {
+
+	for range b.N {
 		if err := ciString.Validate(); err != nil {
 			b.Fatalf("unexpected error: %v", err)
 		}
@@ -231,7 +234,8 @@ func BenchmarkCiString255Type_Validate_Max(b *testing.B) {
 func BenchmarkSetCiString500Type_Max(b *testing.B) {
 	s := strings.Repeat("a", 500)
 	b.ResetTimer()
-		for range b.N {
+
+	for range b.N {
 		_, err := sharedtypes.SetCiString500Type(s)
 		if err != nil {
 			b.Fatalf("unexpected error: %v", err)
@@ -247,7 +251,8 @@ func BenchmarkCiString500Type_Validate_Max(b *testing.B) {
 	}
 
 	b.ResetTimer()
-		for range b.N {
+
+	for range b.N {
 		if err := ciString.Validate(); err != nil {
 			b.Fatalf("unexpected error: %v", err)
 		}

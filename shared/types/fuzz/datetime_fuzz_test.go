@@ -33,10 +33,12 @@ func FuzzSetDateTime(f *testing.F) {
 
 		// Round-trip: format back to string and parse again
 		s := dt.String()
+
 		dt2, err := st.SetDateTime(s)
 		if err != nil {
 			t.Fatalf("round-trip parse failed: %q -> %q: %v", data, s, err)
 		}
+
 		if !dt.Value().Equal(dt2.Value()) {
 			t.Fatalf("round-trip value mismatch: %q -> %q -> %q", data, dt.String(), dt2.String())
 		}

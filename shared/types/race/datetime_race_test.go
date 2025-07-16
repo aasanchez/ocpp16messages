@@ -19,6 +19,7 @@ func TestDateTime_RaceCondition(t *testing.T) {
 	}
 
 	var wg sync.WaitGroup
+
 	numGoroutines := 10
 	wg.Add(numGoroutines)
 
@@ -30,5 +31,6 @@ func TestDateTime_RaceCondition(t *testing.T) {
 			_ = dt.String()
 		}()
 	}
+
 	wg.Wait()
 }

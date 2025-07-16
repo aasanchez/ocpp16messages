@@ -53,12 +53,14 @@ func TestCiString25Type_RaceCondition(t *testing.T) {
 	}
 
 	var wg sync.WaitGroup
+
 	numGoroutines := 10
 	wg.Add(numGoroutines)
 
 	for i := 0; i < numGoroutines; i++ {
 		go func() {
 			defer wg.Done()
+
 			_ = ciString.Value()
 			_ = ciString.Validate()
 		}()
@@ -79,12 +81,15 @@ func TestCiString50Type_RaceCondition(t *testing.T) {
 	}
 
 	var wg sync.WaitGroup
+
 	numGoroutines := 10
+
 	wg.Add(numGoroutines)
 
 	for i := 0; i < numGoroutines; i++ {
 		go func() {
 			defer wg.Done()
+
 			_ = ciString.Value()
 			_ = ciString.Validate()
 		}()
@@ -105,12 +110,14 @@ func TestCiString255Type_RaceCondition(t *testing.T) {
 	}
 
 	var wg sync.WaitGroup
+
 	numGoroutines := 10
 	wg.Add(numGoroutines)
 
 	for i := 0; i < numGoroutines; i++ {
 		go func() {
 			defer wg.Done()
+
 			_ = ciString.Value()
 			_ = ciString.Validate()
 		}()
@@ -131,12 +138,14 @@ func TestCiString500Type_RaceCondition(t *testing.T) {
 	}
 
 	var wg sync.WaitGroup
+
 	numGoroutines := 10
 	wg.Add(numGoroutines)
 
 	for i := 0; i < numGoroutines; i++ {
 		go func() {
 			defer wg.Done()
+
 			_ = ciString.Value()
 			_ = ciString.Validate()
 		}()
