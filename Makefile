@@ -1,4 +1,5 @@
 DATE := $(shell date +%Y)
+FUZZ_TIME ?= 30s
 
 ##@ Helpers
 .PHONY: help
@@ -23,6 +24,22 @@ test-coverage-html: test-coverage ## Generate and open a detailed HTML coverage 
 
 test-example: ## Run documentation-based example tests to verify correctness of usage examples.
 	@go test -mod=readonly -v -coverprofile=reports/coverage.out -run '^Example' ./...
+
+.PHONY: test-fuzz
+test-fuzz: ## Run fuzz tests for each Fuzz* function in all packages
+	@echo "Running fuzzing (Fuzz) on each package..."
+	@for pkg in $$(go list ./...); do \
+		for fuzz in $$(go test -timeout $(FUZZ_TIME) -list ^Fuzz $$pkg | grep ^Fuzz || true); do \
+			echo "Fuzzing $$fuzz in package $$pkg (for $(FUZZ_TIME))"; \
+			go test -mod=readonly -v -timeout $(FUZZ_TIME) -fuzztime=$(FUZZ_TIME) -fuzz=$$fuzz $$pkg; \
+		done; \
+	done
+
+.PHONY: test-race
+test-race: ## Run race detector across all packages.
+	@echo "Running race detector on all packages..."
+	@go list ./... | grep race | xargs -n1 -I{} go test -mod=readonly -v -timeout 30s -race {}
+
 
 .PHONY: benchmark
 benchmark: ## Run benchmark tests to measure performance of critical operations.
@@ -58,4 +75,3 @@ pkgsite: ## Start a local pkgsite server to browse Go documentation interactivel
 	@nohup pkgsite -http=:8080 . > /dev/null 2>&1 &
 	@echo "pkgsite server started. You can view the documentation at http://localhost:8080/github.com/aasanchez/ocpp16messages"
 	@open -a "Google Chrome" http://localhost:8080/github.com/aasanchez/ocpp16messages
-
