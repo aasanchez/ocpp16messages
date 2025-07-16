@@ -52,13 +52,14 @@ func (dt DateTime) Value() time.Time {
 	return dt.value
 }
 
-// String returns the ISO 8601 formatted string representation of the DateTime.
+// String returns the ISO 8601 formatted string representation of the DateTime,
+// preserving fractional seconds when present.
 //
-// This method formats the underlying `time.Time` value using `time.RFC3339` layout.
+// This method formats the underlying `time.Time` value using `time.RFC3339Nano` layout.
 //
 // Returns:
 //
 //	string: The ISO 8601 string representation of the datetime.
 func (dt DateTime) String() string {
-	return dt.value.Format(time.RFC3339)
+	return dt.value.Format(time.RFC3339Nano)
 }
