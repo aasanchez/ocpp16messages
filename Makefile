@@ -54,7 +54,7 @@ pkgsite: ## Start a local pkgsite server to browse Go documentation interactivel
 	@pkill pkgsite || true
 	@echo "Cleaning Go module cache..."
 	@go clean -modcache
-	@rm -rf $$GOPATH/pkg
+	@rm -rf $GOPATH/pkg
 	@echo "Tidying up Go modules..."
 	@go mod tidy
 	@echo "Launching pkgsite at http://localhost:8080 ..."
