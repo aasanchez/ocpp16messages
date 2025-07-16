@@ -52,13 +52,10 @@ format: ## Format Go code to maintain consistent styling across the codebase.
 pkgsite: ## Start a local pkgsite server to browse Go documentation interactively.
 	@echo "Stopping any running pkgsite processes..."
 	@pkill pkgsite || true
-	@echo "Cleaning Go module cache..."
-	@go clean -modcache
-	@rm -rf $GOPATH/pkg
 	@echo "Tidying up Go modules..."
 	@go mod tidy
-	@echo "Launching pkgsite at http://localhost:8080 ..."
-	@nohup pkgsite > /dev/null 2>&1 &
-	@sleep 2
+	@echo "Launching pkgsite in the background..."
+	@nohup pkgsite -http=:8080 . > /dev/null 2>&1 &
+	@echo "pkgsite server started. You can view the documentation at http://localhost:8080/github.com/aasanchez/ocpp16messages"
 	@open -a "Google Chrome" http://localhost:8080/github.com/aasanchez/ocpp16messages
 
