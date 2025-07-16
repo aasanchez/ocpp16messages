@@ -23,7 +23,7 @@ test-coverage-html: test-coverage ## Generate and open a detailed HTML coverage 
 	@open -a "Google Chrome" reports/coverage.html
 
 test-example: ## Run documentation-based example tests to verify correctness of usage examples.
-	@go test -mod=readonly -v -coverprofile=reports/coverage.out -run '^Example' ./...
+	@go test -mod=readonly -v -run '^Example' ./...
 
 .PHONY: test-fuzz
 test-fuzz: ## Run fuzz tests for each Fuzz* function in all packages
