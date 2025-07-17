@@ -99,7 +99,7 @@ func FuzzSetCiString25Type(f *testing.F) {
 		f.Add("a-string-that-is-just-over-25-characters")
 		f.Add("")
 		f.Add("string-with-non-printable-\r-char")
-		f.Add("string-with-€-symbol")
+		f.Add("string-with-$-symbol")
 		f.Add("\u001f")
 		f.Add("\x1f")
 	}
@@ -122,7 +122,7 @@ func FuzzSetCiString50Type(f *testing.F) {
 		f.Add("a-string-that-is-just-a-little-bit-over-50-characters-long")
 		f.Add("")
 		f.Add("string-with-non-printable-\a-char")
-		f.Add("string-with-€-symbol")
+		f.Add("string-with-#-symbol")
 		f.Add("\u001f")
 		f.Add("\x1f")
 	}
