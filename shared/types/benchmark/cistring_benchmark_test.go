@@ -158,7 +158,8 @@ func BenchmarkCiString20Type_Validate_Max(b *testing.B) {
 	b.ResetTimer()
 
 	for range b.N {
-		if err := ciString.Validate(); err != nil {
+		err = ciString.Validate()
+		if err != nil {
 			b.Fatalf("unexpected error: %v", err)
 		}
 	}
@@ -188,7 +189,8 @@ func BenchmarkCiString25Type_Validate_Max(b *testing.B) {
 	b.ResetTimer()
 
 	for range b.N {
-		if err := ciString.Validate(); err != nil {
+		err = ciString.Validate()
+		if err != nil {
 			b.Fatalf("unexpected error: %v", err)
 		}
 	}
@@ -218,7 +220,8 @@ func BenchmarkCiString50Type_Validate_Max(b *testing.B) {
 	b.ResetTimer()
 
 	for range b.N {
-		if err := ciString.Validate(); err != nil {
+		err = ciString.Validate()
+		if err != nil {
 			b.Fatalf("unexpected error: %v", err)
 		}
 	}
@@ -248,7 +251,8 @@ func BenchmarkCiString255Type_Validate_Max(b *testing.B) {
 	b.ResetTimer()
 
 	for range b.N {
-		if err := ciString.Validate(); err != nil {
+		err = ciString.Validate()
+		if err != nil {
 			b.Fatalf("unexpected error: %v", err)
 		}
 	}
@@ -278,7 +282,8 @@ func BenchmarkCiString500Type_Validate_Max(b *testing.B) {
 	b.ResetTimer()
 
 	for range b.N {
-		if err := ciString.Validate(); err != nil {
+		err = ciString.Validate()
+		if err != nil {
 			b.Fatalf("unexpected error: %v", err)
 		}
 	}

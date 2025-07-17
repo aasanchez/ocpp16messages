@@ -32,8 +32,8 @@ func fuzzCiString(f *testing.F, addSeeds func(*testing.F), setFn func(string) (c
 
 			return
 		}
-
-		if err := cs.Validate(); err != nil {
+		err = cs.Validate()
+		if  err != nil {
 			t.Fatalf("Validate() returned error for input %q: %v", data, err)
 		}
 
@@ -41,7 +41,8 @@ func fuzzCiString(f *testing.F, addSeeds func(*testing.F), setFn func(string) (c
 			t.Fatalf("round-trip failed: input %q, got %q", data, got)
 		}
 
-		if err := cs.Validate(); err != nil {
+		err = cs.Validate()
+		if err != nil {
 			t.Fatalf("second Validate() returned error for input %q: %v", data, err)
 		}
 
@@ -163,7 +164,8 @@ func FuzzSetCiString500Type(f *testing.F) {
 			return
 		}
 
-		if err := cs.Validate(); err != nil {
+		err = cs.Validate()
+		if err != nil {
 			t.Fatalf("Validate() returned error for input %q: %v", data, err)
 		}
 
@@ -171,7 +173,8 @@ func FuzzSetCiString500Type(f *testing.F) {
 			t.Fatalf("round-trip failed: input %q, got %q", data, got)
 		}
 
-		if err := cs.Validate(); err != nil {
+		err = cs.Validate()
+		if err != nil {
 			t.Fatalf("second Validate() returned error for input %q: %v", data, err)
 		}
 
