@@ -28,7 +28,7 @@ import (
 // (ISO 8601) formatted string into a `DateTime` object.
 // This is crucial for handling date-time fields in OCPP 1.6J messages, such as
 // `currentTime` in BootNotification.req (Table 1) or `expiryDate` in IdTagInfo (Table 14).
-func ExampleDateTime_valid() {
+func ExampleDateTime() {
 	input := "2027-04-12T10:03:04-04:00"
 
 	datetime, err := st.SetDateTime(input)
