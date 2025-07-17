@@ -1,3 +1,4 @@
+// Package cancelreservation
 package cancelreservationtypes
 
 import (

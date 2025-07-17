@@ -21,12 +21,10 @@ linters:
           disabled: true
         - name: add-constant
           disabled: true
-        - name: exported
-          disabled: true
-        - name: package-comments
-          disabled: true
+        # - name: exported
+        #   disabled: true
         - name: cognitive-complexity
-          disabled: true
+          arguments: [15]
     depguard:
       rules:
         main:

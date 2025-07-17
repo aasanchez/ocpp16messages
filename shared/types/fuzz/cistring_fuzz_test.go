@@ -155,49 +155,16 @@ func FuzzSetCiString255Type(f *testing.F) {
 // It fuzzes the function by providing various random string data and checks
 // for round-trip consistency and validation invariants.
 func FuzzSetCiString500Type(f *testing.F) {
-	// Add seed values to guide the fuzzer.
-	f.Add("a-valid-string")
-	f.Add("a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long")
-	f.Add("")
-	f.Add("string-with-non-printable-char\t")
-	f.Add("\u007f")
-	f.Add("\x1f")
-
-	f.Fuzz(func(t *testing.T, data string) {
-		if !utf8.ValidString(data) {
-			return
-		}
-
-		cistring, err := st.SetCiString500Type(data)
-		if err != nil {
-			if !errors.Is(err, st.ErrExceedsMaxLength) && !errors.Is(err, st.ErrNonPrintableASCII) {
-				t.Fatalf("unexpected error type: %v", err)
-			}
-
-			return
-		}
-
-		err = cistring.Validate()
-		if err != nil {
-			t.Fatalf("Validate() returned error for input %q: %v", data, err)
-		}
-
-		if got := cistring.Value(); got != data {
-			t.Fatalf("round-trip failed: input %q, got %q", data, got)
-		}
-
-		err = cistring.Validate()
-		if err != nil {
-			t.Fatalf("second Validate() returned error for input %q: %v", data, err)
-		}
-
-		cs2, err := st.SetCiString500Type(cistring.Value())
-		if err != nil {
-			t.Fatalf("idempotent Set failed for %q: %v", cistring.Value(), err)
-		}
-
-		if cs2.Value() != cistring.Value() {
-			t.Fatalf("idempotent Set mismatch: got %q, want %q", cs2.Value(), cistring.Value())
-		}
+	add := func(f *testing.F) {
+		f.Helper()
+		f.Add("a-valid-string")
+		f.Add("a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long")
+		f.Add("")
+		f.Add("string-with-non-printable-char\t")
+		f.Add("\u007f")
+		f.Add("\x1f")
+	}
+	fuzzCiString(f, add, func(s string) (ciStr, error) {
+		return st.SetCiString500Type(s)
 	})
 }

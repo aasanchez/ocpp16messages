@@ -1,3 +1,4 @@
+// Package bootnotification
 package bootnotification
 
 import (
