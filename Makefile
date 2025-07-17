@@ -45,8 +45,9 @@ benchmark: ## Run benchmark tests to measure performance of critical operations.
 
 ##@ Code Style and Static Analysis
 lint: ## Run static analysis, vetting, and linting using golangci-lint and other tools.
-	@rm -rf reports/*
-	@golangci-lint cache clean
+	@rm -rf reports/* || true
+	@mkdir -p reports || true
+	@golangci-lint cache clean || true
 	@golangci-lint --config golangci.yml run ./... || true
 	@go vet ./... > reports/govet.json
 	@staticcheck ./... > reports/staticcheck
