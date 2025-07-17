@@ -100,7 +100,7 @@ func FuzzSetCiString25Type(f *testing.F) {
 		f.Add("")
 		f.Add("string-with-non-printable-\r-char")
 		f.Add("string-with-$-symbol")
-		f.Add("\u001f")
+		f.Add("\u002f")
 		f.Add("\x1f")
 	}
 	fuzzCiString(f, add, func(s string) (ciStr, error) {
@@ -123,7 +123,7 @@ func FuzzSetCiString50Type(f *testing.F) {
 		f.Add("")
 		f.Add("string-with-non-printable-\a-char")
 		f.Add("string-with-#-symbol")
-		f.Add("\u001f")
+		f.Add("\u003f")
 		f.Add("\x1f")
 	}
 	fuzzCiString(f, add, func(s string) (ciStr, error) {
@@ -142,7 +142,7 @@ func FuzzSetCiString255Type(f *testing.F) {
 		f.Add("a-string-that-is-just-a-little-bit-over-255-characters-long-a-string-that-is-just-a-little-bit-over-255-characters-long-a-string-that-is-just-a-little-bit-over-255-characters-long-a-string-that-is-just-a-little-bit-over-255-characters-long-a-string-that-is-just-a-little-bit-over-255-characters-long")
 		f.Add("")
 		f.Add("string-with-non-printable-\t\t-char")
-		f.Add("\u001f")
+		f.Add("\u004f")
 		f.Add("\x1f")
 	}
 	fuzzCiString(f, add, func(s string) (ciStr, error) {
@@ -160,7 +160,7 @@ func FuzzSetCiString500Type(f *testing.F) {
 	f.Add("a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long")
 	f.Add("")
 	f.Add("string-with-non-printable-char\t")
-	f.Add("\u001f")
+	f.Add("\u007f")
 	f.Add("\x1f")
 
 	f.Fuzz(func(t *testing.T, data string) {
