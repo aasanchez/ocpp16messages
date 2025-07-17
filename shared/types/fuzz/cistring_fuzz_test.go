@@ -2,6 +2,7 @@ package sharedtypes_test
 
 import (
 	"errors"
+	"fmt"
 	"testing"
 	"unicode/utf8"
 
@@ -76,7 +77,7 @@ func FuzzSetCiString20Type(f *testing.F) {
 	fuzzCiString(f, add, func(s string) (ciStr, error) {
 		c, err := st.SetCiString20Type(s)
 
-		return c, err
+		return c, fmt.Errorf("failed to set CiString20Type: %w", err)
 	})
 }
 
@@ -99,7 +100,7 @@ func FuzzSetCiString25Type(f *testing.F) {
 	fuzzCiString(f, add, func(s string) (ciStr, error) {
 		c, err := st.SetCiString25Type(s)
 
-		return c, err
+		return c, fmt.Errorf("failed to set CiString25Type: %w", err)
 	})
 }
 
@@ -152,7 +153,7 @@ func FuzzSetCiString500Type(f *testing.F) {
 	f.Add("a-valid-string")
 	f.Add("a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long-a-string-that-is-just-a-little-bit-over-500-characters-long")
 	f.Add("")
-	f.Add("string-with-non-printable-	-char")
+	f.Add("string-with-non-printable-\t-char")
 	f.Add("\u001f")
 	f.Add("\x1f")
 
