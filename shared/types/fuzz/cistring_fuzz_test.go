@@ -103,8 +103,8 @@ func FuzzSetCiString25Type(f *testing.F) {
 // It fuzzes the function by providing various random string data and checks
 // for round-trip consistency and validation invariants.
 func FuzzSetCiString50Type(f *testing.F) {
-	// Add seed values to guide the fuzzer.
-	f.Add("a-valid-string")
+	add := func(f *testing.F) {
+		f.Add("a-valid-string")
 		f.Add("12345678901234567890123456789012345678901234567890")
 		f.Add("a-string-that-is-just-a-little-bit-over-50-characters-long")
 		f.Add("")
@@ -112,41 +112,9 @@ func FuzzSetCiString50Type(f *testing.F) {
 		f.Add("string-with-€-symbol")
 		f.Add("\u001f")
 		f.Add("\x1f")
-
-	f.Fuzz(func(t *testing.T, data string) {
-		if !utf8.ValidString(data) {
-			return
-		}
-
-		cs, err := st.SetCiString50Type(data)
-		if err != nil {
-			if !errors.Is(err, st.ErrExceedsMaxLength) && !errors.Is(err, st.ErrNonPrintableASCII) {
-				t.Fatalf("unexpected error type: %v", err)
-			}
-
-			return
-		}
-
-		if err := cs.Validate(); err != nil {
-			t.Fatalf("Validate() returned error for input %q: %v", data, err)
-		}
-
-		if got := cs.Value(); got != data {
-			t.Fatalf("round-trip failed: input %q, got %q", data, got)
-		}
-
-		if err := cs.Validate(); err != nil {
-			t.Fatalf("second Validate() returned error for input %q: %v", data, err)
-		}
-
-		cs2, err := st.SetCiString50Type(cs.Value())
-		if err != nil {
-			t.Fatalf("idempotent Set failed for %q: %v", cs.Value(), err)
-		}
-
-		if cs2.Value() != cs.Value() {
-			t.Fatalf("idempotent Set mismatch: got %q, want %q", cs2.Value(), cs.Value())
-		}
+	}
+	fuzzCiString(f, add, func(s string) (ciStr, error) {
+		return st.SetCiString50Type(s)
 	})
 }
 
@@ -155,48 +123,16 @@ func FuzzSetCiString50Type(f *testing.F) {
 // It fuzzes the function by providing various random string data and checks
 // for round-trip consistency and validation invariants.
 func FuzzSetCiString255Type(f *testing.F) {
-	// Add seed values to guide the fuzzer.
-	f.Add("a-valid-string")
-	f.Add("a-string-that-is-just-a-little-bit-over-255-characters-long-a-string-that-is-just-a-little-bit-over-255-characters-long-a-string-that-is-just-a-little-bit-over-255-characters-long-a-string-that-is-just-a-little-bit-over-255-characters-long-a-string-that-is-just-a-little-bit-over-255-characters-long")
-	f.Add("")
-	f.Add("string-with-non-printable-	-char")
-	f.Add("\u001f")
-	f.Add("\x1f")
-
-	f.Fuzz(func(t *testing.T, data string) {
-		if !utf8.ValidString(data) {
-			return
-		}
-
-		cs, err := st.SetCiString255Type(data)
-		if err != nil {
-			if !errors.Is(err, st.ErrExceedsMaxLength) && !errors.Is(err, st.ErrNonPrintableASCII) {
-				t.Fatalf("unexpected error type: %v", err)
-			}
-
-			return
-		}
-
-		if err := cs.Validate(); err != nil {
-			t.Fatalf("Validate() returned error for input %q: %v", data, err)
-		}
-
-		if got := cs.Value(); got != data {
-			t.Fatalf("round-trip failed: input %q, got %q", data, got)
-		}
-
-		if err := cs.Validate(); err != nil {
-			t.Fatalf("second Validate() returned error for input %q: %v", data, err)
-		}
-
-		cs2, err := st.SetCiString255Type(cs.Value())
-		if err != nil {
-			t.Fatalf("idempotent Set failed for %q: %v", cs.Value(), err)
-		}
-
-		if cs2.Value() != cs.Value() {
-			t.Fatalf("idempotent Set mismatch: got %q, want %q", cs2.Value(), cs.Value())
-		}
+	add := func(f *testing.F) {
+		f.Add("a-valid-string")
+		f.Add("a-string-that-is-just-a-little-bit-over-255-characters-long-a-string-that-is-just-a-little-bit-over-255-characters-long-a-string-that-is-just-a-little-bit-over-255-characters-long-a-string-that-is-just-a-little-bit-over-255-characters-long-a-string-that-is-just-a-little-bit-over-255-characters-long")
+		f.Add("")
+		f.Add("string-with-non-printable-\t-char")
+		f.Add("\u001f")
+		f.Add("\x1f")
+	}
+	fuzzCiString(f, add, func(s string) (ciStr, error) {
+		return st.SetCiString255Type(s)
 	})
 }
 
