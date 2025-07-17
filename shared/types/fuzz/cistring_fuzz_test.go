@@ -29,6 +29,7 @@ func fuzzCiString(f *testing.F, addSeeds func(*testing.F), setFn func(string) (c
 		cistring, err := setFn(data)
 		if err != nil {
 			handleFuzzError(t, err, data)
+
 			return
 		}
 
@@ -59,6 +60,7 @@ func fuzzCiString(f *testing.F, addSeeds func(*testing.F), setFn func(string) (c
 
 func handleFuzzError(t *testing.T, err error, data string) {
 	t.Helper()
+
 	if !errors.Is(err, st.ErrExceedsMaxLength) && !errors.Is(err, st.ErrNonPrintableASCII) {
 		t.Fatalf("unexpected error type for input %q: %v", data, err)
 	}
