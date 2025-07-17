@@ -20,15 +20,15 @@ func TestCiString20Type_RaceCondition(t *testing.T) {
 	}
 
 	// Use a WaitGroup to wait for all goroutines to complete.
-	var wg sync.WaitGroup
+	var wait sync.WaitGroup
 	// Set the number of concurrent goroutines to run.
 	numGoroutines := 10
-	wg.Add(numGoroutines)
+	wait.Add(numGoroutines)
 
 	// Launch multiple goroutines to concurrently access the ciString instance.
 	for i := 0; i < numGoroutines; i++ {
 		go func() {
-			defer wg.Done()
+			defer wait.Done()
 
 			// Concurrently call the Value and Validate methods.
 			// The race detector will report an error if there is a data race.
@@ -38,7 +38,7 @@ func TestCiString20Type_RaceCondition(t *testing.T) {
 	}
 
 	// Wait for all goroutines to finish.
-	wg.Wait()
+	wait.Wait()
 }
 
 // TestCiString25Type_RaceCondition is designed to detect race conditions
@@ -52,21 +52,21 @@ func TestCiString25Type_RaceCondition(t *testing.T) {
 		t.Fatalf("Failed to create CiString25Type: %v", err)
 	}
 
-	var wg sync.WaitGroup
+	var wait sync.WaitGroup
 
 	numGoroutines := 10
-	wg.Add(numGoroutines)
+	wait.Add(numGoroutines)
 
 	for i := 0; i < numGoroutines; i++ {
 		go func() {
-			defer wg.Done()
+			defer wait.Done()
 
 			_ = ciString.Value()
 			_ = ciString.Validate()
 		}()
 	}
 
-	wg.Wait()
+	wait.Wait()
 }
 
 // TestCiString50Type_RaceCondition is designed to detect race conditions
@@ -80,22 +80,22 @@ func TestCiString50Type_RaceCondition(t *testing.T) {
 		t.Fatalf("Failed to create CiString50Type: %v", err)
 	}
 
-	var wg sync.WaitGroup
+	var wait sync.WaitGroup
 
 	numGoroutines := 10
 
-	wg.Add(numGoroutines)
+	wait.Add(numGoroutines)
 
 	for i := 0; i < numGoroutines; i++ {
 		go func() {
-			defer wg.Done()
+			defer wait.Done()
 
 			_ = ciString.Value()
 			_ = ciString.Validate()
 		}()
 	}
 
-	wg.Wait()
+	wait.Wait()
 }
 
 // TestCiString255Type_RaceCondition is designed to detect race conditions
@@ -109,21 +109,21 @@ func TestCiString255Type_RaceCondition(t *testing.T) {
 		t.Fatalf("Failed to create CiString255Type: %v", err)
 	}
 
-	var wg sync.WaitGroup
+	var wait sync.WaitGroup
 
 	numGoroutines := 10
-	wg.Add(numGoroutines)
+	wait.Add(numGoroutines)
 
 	for i := 0; i < numGoroutines; i++ {
 		go func() {
-			defer wg.Done()
+			defer wait.Done()
 
 			_ = ciString.Value()
 			_ = ciString.Validate()
 		}()
 	}
 
-	wg.Wait()
+	wait.Wait()
 }
 
 // TestCiString500Type_RaceCondition is designed to detect race conditions
@@ -137,19 +137,19 @@ func TestCiString500Type_RaceCondition(t *testing.T) {
 		t.Fatalf("Failed to create CiString500Type: %v", err)
 	}
 
-	var wg sync.WaitGroup
+	var wait sync.WaitGroup
 
 	numGoroutines := 10
-	wg.Add(numGoroutines)
+	wait.Add(numGoroutines)
 
 	for i := 0; i < numGoroutines; i++ {
 		go func() {
-			defer wg.Done()
+			defer wait.Done()
 
 			_ = ciString.Value()
 			_ = ciString.Validate()
 		}()
 	}
 
-	wg.Wait()
+	wait.Wait()
 }

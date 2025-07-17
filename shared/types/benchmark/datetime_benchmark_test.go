@@ -24,6 +24,7 @@ func BenchmarkDateTime_String(b *testing.B) {
 	}
 
 	b.ResetTimer()
+
 	for range b.N {
 		_ = dt.String()
 	}
@@ -37,6 +38,7 @@ func BenchmarkDateTime_Value(b *testing.B) {
 	}
 
 	b.ResetTimer()
+
 	for range b.N {
 		_ = dt.Value()
 	}

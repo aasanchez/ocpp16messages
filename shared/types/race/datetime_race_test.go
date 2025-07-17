@@ -18,19 +18,19 @@ func TestDateTime_RaceCondition(t *testing.T) {
 		t.Fatalf("failed to parse DateTime: %v", err)
 	}
 
-	var wg sync.WaitGroup
+	var wait sync.WaitGroup
 
 	numGoroutines := 10
-	wg.Add(numGoroutines)
+	wait.Add(numGoroutines)
 
 	for i := 0; i < numGoroutines; i++ {
 		go func() {
-			defer wg.Done()
+			defer wait.Done()
 
 			_ = dt.Value()
 			_ = dt.String()
 		}()
 	}
 
-	wg.Wait()
+	wait.Wait()
 }
