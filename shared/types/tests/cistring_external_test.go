@@ -22,7 +22,7 @@
 // This blackbox testing approach complements the whitebox tests by validating the public
 // interface and ensuring that the combined internal logic (from `ciString` and `setCiString`)
 // correctly translates into compliant external behavior.
-package sharedtypes_external_test
+package sharedtypes_test
 
 import (
 	"errors"

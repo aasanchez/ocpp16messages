@@ -21,7 +21,7 @@
 // from a consumer's perspective and complies with the OCPP 1.6J specification,
 // particularly concerning integer data as described in OCPP 1.6J Part 2, Appendix 3:
 // "Data Types".
-package sharedtypes_external_test
+package sharedtypes_test
 
 import (
 	"testing"

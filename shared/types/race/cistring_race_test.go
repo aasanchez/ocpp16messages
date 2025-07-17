@@ -26,12 +26,10 @@ func TestCiString20Type_RaceCondition(t *testing.T) {
 	wait.Add(numGoroutines)
 
 	// Launch multiple goroutines to concurrently access the ciString instance.
-	for i := 0; i < numGoroutines; i++ {
+	for range make([]struct{}, numGoroutines) {
 		go func() {
 			defer wait.Done()
-
 			// Concurrently call the Value and Validate methods.
-			// The race detector will report an error if there is a data race.
 			_ = ciString.Value()
 			_ = ciString.Validate()
 		}()
@@ -57,7 +55,7 @@ func TestCiString25Type_RaceCondition(t *testing.T) {
 	numGoroutines := 10
 	wait.Add(numGoroutines)
 
-	for i := 0; i < numGoroutines; i++ {
+	for range make([]struct{}, numGoroutines) {
 		go func() {
 			defer wait.Done()
 
@@ -86,7 +84,7 @@ func TestCiString50Type_RaceCondition(t *testing.T) {
 
 	wait.Add(numGoroutines)
 
-	for i := 0; i < numGoroutines; i++ {
+	for range make([]struct{}, numGoroutines) {
 		go func() {
 			defer wait.Done()
 
@@ -114,7 +112,7 @@ func TestCiString255Type_RaceCondition(t *testing.T) {
 	numGoroutines := 10
 	wait.Add(numGoroutines)
 
-	for i := 0; i < numGoroutines; i++ {
+	for range make([]struct{}, numGoroutines) {
 		go func() {
 			defer wait.Done()
 
@@ -142,7 +140,7 @@ func TestCiString500Type_RaceCondition(t *testing.T) {
 	numGoroutines := 10
 	wait.Add(numGoroutines)
 
-	for i := 0; i < numGoroutines; i++ {
+	for range make([]struct{}, numGoroutines) {
 		go func() {
 			defer wait.Done()
 

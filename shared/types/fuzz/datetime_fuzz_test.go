@@ -1,9 +1,11 @@
 package sharedtypes_test
 
 import (
-	"testing"
+   "errors"
+   "testing"
+   "time"
 
-	st "github.com/aasanchez/ocpp16messages/shared/types"
+   st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 // FuzzSetDateTime ensures SetDateTime can handle a wide range of string inputs
@@ -23,24 +25,31 @@ func FuzzSetDateTime(f *testing.F) {
 	f.Add("2020-01-32T25:61:61Z")
 
 	// Run the fuzzer.
-	f.Fuzz(func(t *testing.T, data string) {
-		// Try to parse; if successful, perform a round-trip consistency check.
-		dt, err := st.SetDateTime(data)
-		if err != nil {
-			// invalid input is fine; we only want to catch panics or crashes
-			return
-		}
+   f.Fuzz(func(t *testing.T, data string) {
+       dt, err := st.SetDateTime(data)
+       if err != nil {
+           // Contract: invalid datetime must produce a time.ParseError
+           var pe *time.ParseError
+           if !errors.As(err, &pe) {
+               t.Fatalf("expected time.ParseError for %q, got: %v", data, err)
+           }
+           return
+       }
 
-		// Round-trip: format back to string and parse again
-		s := dt.String()
+       // Round-Trip: String() -> SetDateTime -> same time value
+       s := dt.String()
+       dt2, err := st.SetDateTime(s)
+       if err != nil {
+           t.Fatalf("round-trip parse failed: %q -> %q: %v", data, s, err)
+       }
 
-		dt2, err := st.SetDateTime(s)
-		if err != nil {
-			t.Fatalf("round-trip parse failed: %q -> %q: %v", data, s, err)
-		}
+       if !dt.Value().Equal(dt2.Value()) {
+           t.Fatalf("round-trip value mismatch: %q -> %q -> %q", data, dt.String(), dt2.String())
+       }
 
-		if !dt.Value().Equal(dt2.Value()) {
-			t.Fatalf("round-trip value mismatch: %q -> %q -> %q", data, dt.String(), dt2.String())
-		}
-	})
+       // Idempotence: formatting an already formatted value remains the same
+       if s2 := dt2.String(); s2 != s {
+           t.Fatalf("idempotent String mismatch: got %q, want %q", s2, s)
+       }
+   })
 }

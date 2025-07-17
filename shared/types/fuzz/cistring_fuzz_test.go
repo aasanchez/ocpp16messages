@@ -71,6 +71,7 @@ func FuzzSetCiString20Type(f *testing.F) {
 	}
 	fuzzCiString(f, add, func(s string) (ciStr, error) {
 		c, err := st.SetCiString20Type(s)
+
 		return c, err
 	})
 }
