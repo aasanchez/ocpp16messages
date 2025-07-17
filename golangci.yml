@@ -21,6 +21,8 @@ linters:
           disabled: true
         - name: add-constant
           disabled: true
+        - name: package-comments
+          disabled: true
         - name: exported
           disabled: true
         - name: cognitive-complexity
