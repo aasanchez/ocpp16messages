@@ -7,6 +7,8 @@ linters:
     - testpackage
     - lll
     - wsl
+    - nlreturn
+    - wsl_v5
   settings:
     revive:
       enable-all-rules: true

@@ -28,10 +28,7 @@ func fuzzCiString(f *testing.F, addSeeds func(*testing.F), setFn func(string) (c
 
 		cistring, err := setFn(data)
 		if err != nil {
-			if !errors.Is(err, st.ErrExceedsMaxLength) && !errors.Is(err, st.ErrNonPrintableASCII) {
-				t.Fatalf("unexpected error type: %v", err)
-			}
-
+			handleFuzzError(t, err, data)
 			return
 		}
 
@@ -58,6 +55,13 @@ func fuzzCiString(f *testing.F, addSeeds func(*testing.F), setFn func(string) (c
 			t.Fatalf("idempotent Set mismatch: got %q, want %q", cs2.Value(), cistring.Value())
 		}
 	})
+}
+
+func handleFuzzError(t *testing.T, err error, data string) {
+	t.Helper()
+	if !errors.Is(err, st.ErrExceedsMaxLength) && !errors.Is(err, st.ErrNonPrintableASCII) {
+		t.Fatalf("unexpected error type for input %q: %v", data, err)
+	}
 }
 
 // FuzzSetCiString20Type ensures that SetCiString20Type can handle a wide
