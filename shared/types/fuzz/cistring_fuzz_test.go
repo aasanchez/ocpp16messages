@@ -25,7 +25,7 @@ func fuzzCiString(f *testing.F, addSeeds func(*testing.F), setFn func(string) (c
 			return
 		}
 
-		cs, err := setFn(data)
+		cistring, err := setFn(data)
 		if err != nil {
 			if !errors.Is(err, st.ErrExceedsMaxLength) && !errors.Is(err, st.ErrNonPrintableASCII) {
 				t.Fatalf("unexpected error type: %v", err)
@@ -33,27 +33,27 @@ func fuzzCiString(f *testing.F, addSeeds func(*testing.F), setFn func(string) (c
 
 			return
 		}
-		err = cs.Validate()
-		if  err != nil {
+		err = cistring.Validate()
+		if err != nil {
 			t.Fatalf("Validate() returned error for input %q: %v", data, err)
 		}
 
-		if got := cs.Value(); got != data {
+		if got := cistring.Value(); got != data {
 			t.Fatalf("round-trip failed: input %q, got %q", data, got)
 		}
 
-		err = cs.Validate()
+		err = cistring.Validate()
 		if err != nil {
 			t.Fatalf("second Validate() returned error for input %q: %v", data, err)
 		}
 
-		cs2, err := setFn(cs.Value())
+		cs2, err := setFn(cistring.Value())
 		if err != nil {
-			t.Fatalf("idempotent Set failed for %q: %v", cs.Value(), err)
+			t.Fatalf("idempotent Set failed for %q: %v", cistring.Value(), err)
 		}
 
-		if cs2.Value() != cs.Value() {
-			t.Fatalf("idempotent Set mismatch: got %q, want %q", cs2.Value(), cs.Value())
+		if cs2.Value() != cistring.Value() {
+			t.Fatalf("idempotent Set mismatch: got %q, want %q", cs2.Value(), cistring.Value())
 		}
 	})
 }
@@ -62,6 +62,7 @@ func fuzzCiString(f *testing.F, addSeeds func(*testing.F), setFn func(string) (c
 // range of string inputs without crashing or producing unexpected behavior.
 func FuzzSetCiString20Type(f *testing.F) {
 	add := func(f *testing.F) {
+		f.Helper()
 		f.Add("valid-string")
 		f.Add("12345678901234567890")
 		f.Add("a-string-that-is-just-over-20-chars")
@@ -84,6 +85,7 @@ func FuzzSetCiString20Type(f *testing.F) {
 // for round-trip consistency and validation invariants.
 func FuzzSetCiString25Type(f *testing.F) {
 	add := func(f *testing.F) {
+		f.Helper()
 		f.Add("a-valid-string")
 		f.Add("1234567890123456789012345")
 		f.Add("a-string-that-is-just-over-25-characters")
@@ -106,6 +108,7 @@ func FuzzSetCiString25Type(f *testing.F) {
 // for round-trip consistency and validation invariants.
 func FuzzSetCiString50Type(f *testing.F) {
 	add := func(f *testing.F) {
+		f.Helper()
 		f.Add("a-valid-string")
 		f.Add("12345678901234567890123456789012345678901234567890")
 		f.Add("a-string-that-is-just-a-little-bit-over-50-characters-long")
@@ -126,6 +129,7 @@ func FuzzSetCiString50Type(f *testing.F) {
 // for round-trip consistency and validation invariants.
 func FuzzSetCiString255Type(f *testing.F) {
 	add := func(f *testing.F) {
+		f.Helper()
 		f.Add("a-valid-string")
 		f.Add("a-string-that-is-just-a-little-bit-over-255-characters-long-a-string-that-is-just-a-little-bit-over-255-characters-long-a-string-that-is-just-a-little-bit-over-255-characters-long-a-string-that-is-just-a-little-bit-over-255-characters-long-a-string-that-is-just-a-little-bit-over-255-characters-long")
 		f.Add("")
@@ -156,7 +160,7 @@ func FuzzSetCiString500Type(f *testing.F) {
 			return
 		}
 
-		cs, err := st.SetCiString500Type(data)
+		cistring, err := st.SetCiString500Type(data)
 		if err != nil {
 			if !errors.Is(err, st.ErrExceedsMaxLength) && !errors.Is(err, st.ErrNonPrintableASCII) {
 				t.Fatalf("unexpected error type: %v", err)
@@ -165,27 +169,27 @@ func FuzzSetCiString500Type(f *testing.F) {
 			return
 		}
 
-		err = cs.Validate()
+		err = cistring.Validate()
 		if err != nil {
 			t.Fatalf("Validate() returned error for input %q: %v", data, err)
 		}
 
-		if got := cs.Value(); got != data {
+		if got := cistring.Value(); got != data {
 			t.Fatalf("round-trip failed: input %q, got %q", data, got)
 		}
 
-		err = cs.Validate()
+		err = cistring.Validate()
 		if err != nil {
 			t.Fatalf("second Validate() returned error for input %q: %v", data, err)
 		}
 
-		cs2, err := st.SetCiString500Type(cs.Value())
+		cs2, err := st.SetCiString500Type(cistring.Value())
 		if err != nil {
-			t.Fatalf("idempotent Set failed for %q: %v", cs.Value(), err)
+			t.Fatalf("idempotent Set failed for %q: %v", cistring.Value(), err)
 		}
 
-		if cs2.Value() != cs.Value() {
-			t.Fatalf("idempotent Set mismatch: got %q, want %q", cs2.Value(), cs.Value())
+		if cs2.Value() != cistring.Value() {
+			t.Fatalf("idempotent Set mismatch: got %q, want %q", cs2.Value(), cistring.Value())
 		}
 	})
 }

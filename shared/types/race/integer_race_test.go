@@ -18,14 +18,14 @@ func TestInteger_RaceCondition(t *testing.T) {
 		t.Fatalf("failed to create Integer: %v", err)
 	}
 
-	var wg sync.WaitGroup
+	var wait sync.WaitGroup
 	const goroutines = 10
-	wg.Add(goroutines)
+	wait.Add(goroutines)
 	for range make([]struct{}, goroutines) {
 		go func() {
-			defer wg.Done()
+			defer wait.Done()
 			_ = i.Value()
 		}()
 	}
-	wg.Wait()
+	wait.Wait()
 }

@@ -18,28 +18,28 @@ func BenchmarkSetDateTime(b *testing.B) {
 
 // BenchmarkDateTime_String measures the cost of formatting a DateTime to string.
 func BenchmarkDateTime_String(b *testing.B) {
-	dt, err := st.SetDateTime("2013-02-01T20:00:00.000Z")
-	if err != nil {
-		b.Fatalf("unexpected error: %v", err)
-	}
+   dateTime, err := st.SetDateTime("2013-02-01T20:00:00.000Z")
+   if err != nil {
+       b.Fatalf("unexpected error: %v", err)
+   }
 
-	b.ResetTimer()
+   b.ResetTimer()
 
-	for range b.N {
-		_ = dt.String()
-	}
+   for range b.N {
+       _ = dateTime.String()
+   }
 }
 
 // BenchmarkDateTime_Value measures the cost of accessing the underlying time.Time value.
 func BenchmarkDateTime_Value(b *testing.B) {
-	dt, err := st.SetDateTime("2013-02-01T20:00:00.000Z")
-	if err != nil {
-		b.Fatalf("unexpected error: %v", err)
-	}
+   dateTime, err := st.SetDateTime("2013-02-01T20:00:00.000Z")
+   if err != nil {
+       b.Fatalf("unexpected error: %v", err)
+   }
 
-	b.ResetTimer()
+   b.ResetTimer()
 
-	for range b.N {
-		_ = dt.Value()
-	}
+   for range b.N {
+       _ = dateTime.Value()
+   }
 }

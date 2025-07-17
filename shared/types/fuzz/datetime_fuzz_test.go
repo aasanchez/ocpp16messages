@@ -26,7 +26,7 @@ func FuzzSetDateTime(f *testing.F) {
 
 	// Run the fuzzer.
 	f.Fuzz(func(t *testing.T, data string) {
-		dt, err := st.SetDateTime(data)
+		datetime, err := st.SetDateTime(data)
 		if err != nil {
 			// Contract: invalid datetime must produce a time.ParseError
 			var pe *time.ParseError
@@ -38,14 +38,14 @@ func FuzzSetDateTime(f *testing.F) {
 		}
 
 		// Round-Trip: String() -> SetDateTime -> same time value
-		s := dt.String()
+		s := datetime.String()
 		dt2, err := st.SetDateTime(s)
 		if err != nil {
 			t.Fatalf("round-trip parse failed: %q -> %q: %v", data, s, err)
 		}
 
-		if !dt.Value().Equal(dt2.Value()) {
-			t.Fatalf("round-trip value mismatch: %q -> %q -> %q", data, dt.String(), dt2.String())
+		if !datetime.Value().Equal(dt2.Value()) {
+			t.Fatalf("round-trip value mismatch: %q -> %q -> %q", data, datetime.String(), dt2.String())
 		}
 
 		// Idempotence: formatting an already formatted value remains the same

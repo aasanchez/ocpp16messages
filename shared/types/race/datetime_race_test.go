@@ -13,7 +13,7 @@ import (
 func TestDateTime_RaceCondition(t *testing.T) {
 	t.Parallel()
 
-	dt, err := st.SetDateTime("2013-02-01T20:00:00.000Z")
+	datetime, err := st.SetDateTime("2013-02-01T20:00:00.000Z")
 	if err != nil {
 		t.Fatalf("failed to parse DateTime: %v", err)
 	}
@@ -27,8 +27,8 @@ func TestDateTime_RaceCondition(t *testing.T) {
 		go func() {
 			defer wait.Done()
 
-			_ = dt.Value()
-			_ = dt.String()
+			_ = datetime.Value()
+			_ = datetime.String()
 		}()
 	}
 
