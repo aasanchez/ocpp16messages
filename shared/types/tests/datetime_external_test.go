@@ -26,10 +26,12 @@ func TestSetDateTime_Valid(t *testing.T) {
 	for _, tc := range tests {
 		t.Run(tc.input, func(t *testing.T) {
 			t.Parallel()
+
 			dt, err := st.SetDateTime(tc.input)
 			if err != nil {
 				t.Fatalf("SetDateTime(%q) returned error: %v", tc.input, err)
 			}
+
 			out := dt.String()
 			if out != tc.expected {
 				t.Errorf("String() = %q; want %q", out, tc.expected)
@@ -54,11 +56,13 @@ func TestSetDateTime_Invalid_Format(t *testing.T) {
 	for _, s := range cases {
 		t.Run(s, func(t *testing.T) {
 			t.Parallel()
-		var err error
-		_, err = st.SetDateTime(s)
-		if err == nil {
-			t.Fatalf("expected error for %q", s)
-		}
+
+			var err error
+
+			_, err = st.SetDateTime(s)
+			if err == nil {
+				t.Fatalf("expected error for %q", s)
+			}
 		})
 	}
 }
@@ -70,10 +74,12 @@ func TestSetDateTime_Invalid_OutOfRange(t *testing.T) {
 	for _, s := range cases {
 		t.Run(s, func(t *testing.T) {
 			t.Parallel()
+
 			_, err := st.SetDateTime(s)
 			if err == nil {
 				t.Fatalf("expected range error for %q", s)
 			}
+
 			var pe *time.ParseError
 			if !errors.As(err, &pe) {
 				t.Fatalf("expected ParseError for %q; got %T", s, err)

@@ -19,13 +19,18 @@ func TestInteger_RaceCondition(t *testing.T) {
 	}
 
 	var wait sync.WaitGroup
+
 	const goroutines = 10
+
 	wait.Add(goroutines)
+
 	for range make([]struct{}, goroutines) {
 		go func() {
 			defer wait.Done()
+
 			_ = i.Value()
 		}()
 	}
+
 	wait.Wait()
 }
