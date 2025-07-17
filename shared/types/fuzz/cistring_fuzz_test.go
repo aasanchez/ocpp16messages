@@ -18,6 +18,7 @@ type ciStr interface {
 // addSeeds should call f.Add(...) to register seed inputs.
 // setFn should wrap st.SetCiStringXXType, returning the typed CiString.
 func fuzzCiString(f *testing.F, addSeeds func(*testing.F), setFn func(string) (ciStr, error)) {
+	f.Helper()
 	addSeeds(f)
 	f.Fuzz(func(t *testing.T, data string) {
 		if !utf8.ValidString(data) {
