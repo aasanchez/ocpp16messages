@@ -1,9 +1,9 @@
 package sharedtypes_test
 
 import (
-   "testing"
+	"testing"
 
-   st "github.com/aasanchez/ocpp16messages/shared/types"
+	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 // BenchmarkSetInteger measures the performance of SetInteger parsing from string.

@@ -1,10 +1,10 @@
 package sharedtypes_test
 
 import (
-   "sync"
-   "testing"
+	"sync"
+	"testing"
 
-   st "github.com/aasanchez/ocpp16messages/shared/types"
+	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 // TestInteger_RaceCondition detects data races when accessing an Integer concurrently.
