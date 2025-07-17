@@ -29,6 +29,7 @@ func FuzzSetInteger(f *testing.F) {
 			if !errors.As(err, &ne) {
 				t.Fatalf("expected NumError for %q, got: %v", s, err)
 			}
+
 			return
 		}
 		// Round-Trip: format back and parse again

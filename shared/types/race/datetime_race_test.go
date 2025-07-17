@@ -23,7 +23,7 @@ func TestDateTime_RaceCondition(t *testing.T) {
 	numGoroutines := 10
 	wait.Add(numGoroutines)
 
-	for i := 0; i < numGoroutines; i++ {
+	for range numGoroutines {
 		go func() {
 			defer wait.Done()
 

@@ -33,6 +33,7 @@ func FuzzSetDateTime(f *testing.F) {
 			if !errors.As(err, &pe) {
 				t.Fatalf("expected time.ParseError for %q, got: %v", data, err)
 			}
+
 			return
 		}
 
