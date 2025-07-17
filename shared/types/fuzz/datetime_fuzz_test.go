@@ -38,10 +38,11 @@ func FuzzSetDateTime(f *testing.F) {
 		}
 
 		// Round-Trip: String() -> SetDateTime -> same time value
-		s := datetime.String()
-		dt2, err := st.SetDateTime(s)
+		timestamp := datetime.String()
+
+		dt2, err := st.SetDateTime(timestamp)
 		if err != nil {
-			t.Fatalf("round-trip parse failed: %q -> %q: %v", data, s, err)
+			t.Fatalf("round-trip parse failed: %q -> %q: %v", data, timestamp, err)
 		}
 
 		if !datetime.Value().Equal(dt2.Value()) {
@@ -49,8 +50,8 @@ func FuzzSetDateTime(f *testing.F) {
 		}
 
 		// Idempotence: formatting an already formatted value remains the same
-		if s2 := dt2.String(); s2 != s {
-			t.Fatalf("idempotent String mismatch: got %q, want %q", s2, s)
+		if s2 := dt2.String(); s2 != timestamp {
+			t.Fatalf("idempotent String mismatch: got %q, want %q", s2, timestamp)
 		}
 	})
 }

@@ -13,7 +13,7 @@ func TestInteger_RaceCondition(t *testing.T) {
 	t.Parallel()
 
 	// Create a shared Integer instance.
-	i, err := st.SetInteger("12345")
+	integer, err := st.SetInteger("12345")
 	if err != nil {
 		t.Fatalf("failed to create Integer: %v", err)
 	}
@@ -28,7 +28,7 @@ func TestInteger_RaceCondition(t *testing.T) {
 		go func() {
 			defer wait.Done()
 
-			_ = i.Value()
+			_ = integer.Value()
 		}()
 	}
 

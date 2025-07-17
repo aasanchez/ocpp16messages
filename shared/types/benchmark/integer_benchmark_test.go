@@ -25,6 +25,7 @@ func BenchmarkInteger_Value(b *testing.B) {
 	}
 
 	b.ResetTimer()
+
 	for range b.N {
 		_ = integer.Value()
 	}

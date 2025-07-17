@@ -33,6 +33,7 @@ func fuzzCiString(f *testing.F, addSeeds func(*testing.F), setFn func(string) (c
 
 			return
 		}
+
 		err = cistring.Validate()
 		if err != nil {
 			t.Fatalf("Validate() returned error for input %q: %v", data, err)

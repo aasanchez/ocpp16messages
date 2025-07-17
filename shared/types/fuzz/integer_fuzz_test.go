@@ -22,7 +22,7 @@ func FuzzSetInteger(f *testing.F) {
 	f.Add("not-a-number")
 
 	f.Fuzz(func(t *testing.T, text string) {
-		i, err := st.SetInteger(text)
+		integer, err := st.SetInteger(text)
 		if err != nil {
 			// Contract: invalid inputs produce a *strconv.NumError
 			var ne *strconv.NumError
@@ -32,14 +32,17 @@ func FuzzSetInteger(f *testing.F) {
 
 			return
 		}
+
 		// Round-Trip: format back and parse again
-		out := strconv.FormatUint(uint64(i.Value()), 10)
-		i2, err := st.SetInteger(out)
+		out := strconv.FormatUint(uint64(integer.Value()), 10)
+
+		integer2, err := st.SetInteger(out)
 		if err != nil {
 			t.Fatalf("round-trip parse failed: %q -> %q: %v", text, out, err)
 		}
-		if i2.Value() != i.Value() {
-			t.Fatalf("round-trip value mismatch: %q -> %q -> %q", text, i.Value(), i2.Value())
+
+		if integer2.Value() != integer.Value() {
+			t.Fatalf("round-trip value mismatch: %q -> %q -> %q", text, integer.Value(), integer2.Value())
 		}
 	})
 }
