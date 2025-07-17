@@ -1,4 +1,4 @@
-package sharedtypes_race
+package sharedtypes_test
 
 import (
 	"sync"

@@ -1,4 +1,4 @@
-package sharedtypes_fuzz
+package sharedtypes_test
 
 import (
 	"testing"

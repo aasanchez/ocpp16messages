@@ -1,11 +1,11 @@
-package sharedtypes_fuzz
+package sharedtypes_test
 
 import (
-   "errors"
-   "testing"
-   "unicode/utf8"
+	"errors"
+	"testing"
+	"unicode/utf8"
 
-   st "github.com/aasanchez/ocpp16messages/shared/types"
+	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 // ciStr is a minimal interface for fuzz tests: Validate and Value.
