@@ -55,7 +55,7 @@ sonar: test lint ## Run test suite and linters, then push code quality reports t
 	@sonar-scanner
 
 format: ## Format Go code to maintain consistent styling across the codebase.
-	@gofmt -d .
+	@gofmt -w .
 
 ##@ Documentation
 pkgsite: ## Start a local pkgsite server to browse Go documentation interactively.
