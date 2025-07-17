@@ -55,23 +55,23 @@ func IdTagInfo(input IdTagInfoPayload) (IdTagInfoType, error) {
 	return info, nil
 }
 
-func (i IdTagInfoType) Value() IdTagInfoPayload {
+func (idTagInfo IdTagInfoType) Value() IdTagInfoPayload {
 	var expiry *string
 
-	if str := i.expiryDate; str != nil {
+	if str := idTagInfo.expiryDate; str != nil {
 		s := str.String()
 		expiry = &s
 	}
 
 	var parent *string
 
-	if p := i.parentIdTag; p != nil {
-		val := p.Value()
+	if parentTag := idTagInfo.parentIdTag; parentTag != nil {
+		val := parentTag.Value()
 		parent = &val
 	}
 
 	return IdTagInfoPayload{
-		Status:      i.status.Value(),
+		Status:      idTagInfo.status.Value(),
 		ExpiryDate:  expiry,
 		ParentIdTag: parent,
 	}

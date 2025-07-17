@@ -19,13 +19,13 @@ func BenchmarkSetInteger(b *testing.B) {
 
 // BenchmarkInteger_Value measures the performance of retrieving the underlying value.
 func BenchmarkInteger_Value(b *testing.B) {
-	i, err := st.SetInteger("1234567890")
+	integer, err := st.SetInteger("1234567890")
 	if err != nil {
 		b.Fatalf("failed to create Integer: %v", err)
 	}
 
 	b.ResetTimer()
 	for range b.N {
-		_ = i.Value()
+		_ = integer.Value()
 	}
 }

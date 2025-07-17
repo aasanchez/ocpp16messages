@@ -28,11 +28,11 @@ func ExampleIdTagInfo_statusOnly() {
 }
 
 func ExampleIdTagInfo_withExpiryDate() {
-	exp := "2027-04-12T10:03:04Z"
+	expiryDate := "2027-04-12T10:03:04Z"
 
 	payload := mat.IdTagInfoPayload{
 		Status:      mat.Accepted,
-		ExpiryDate:  &exp,
+		ExpiryDate:  &expiryDate,
 		ParentIdTag: nil,
 	}
 
@@ -74,12 +74,12 @@ func ExampleIdTagInfo_withParentIdTag() {
 }
 
 func ExampleIdTagInfo_withAllFields() {
-	exp := "2026-04-12T10:03:04Z"
+	expiryDate := "2026-04-12T10:03:04Z"
 	parent := "XYZ789"
 
 	payload := mat.IdTagInfoPayload{
 		Status:      mat.Accepted,
-		ExpiryDate:  &exp,
+		ExpiryDate:  &expiryDate,
 		ParentIdTag: &parent,
 	}
 

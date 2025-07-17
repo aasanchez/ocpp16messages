@@ -69,11 +69,11 @@ func TestIdTagInfo_withExpiryDateOnly(t *testing.T) {
 	t.Parallel()
 
 	// Scenario: Create an `IdTagInfoPayload` with `Status` and a valid `ExpiryDate`.
-	exp := "2023-04-12T10:03:04Z"
+	expiryDate := "2023-04-12T10:03:04Z"
 
 	input := IdTagInfoPayload{
 		Status:      Accepted,
-		ExpiryDate:  &exp,
+		ExpiryDate:  &expiryDate,
 		ParentIdTag: nil,
 	}
 
@@ -84,8 +84,8 @@ func TestIdTagInfo_withExpiryDateOnly(t *testing.T) {
 	}
 
 	val := info.Value()
-	if val.ExpiryDate == nil || *val.ExpiryDate != exp {
-		t.Errorf("expiryDate mismatch: want %s, got %v", exp, val.ExpiryDate)
+	if val.ExpiryDate == nil || *val.ExpiryDate != expiryDate {
+		t.Errorf("expiryDate mismatch: want %s, got %v", expiryDate, val.ExpiryDate)
 	}
 }
 
@@ -122,12 +122,12 @@ func TestIdTagInfo_allFieldsPresent(t *testing.T) {
 	t.Parallel()
 
 	// Scenario: Create an `IdTagInfoPayload` with all fields populated with valid data.
-	exp := "2027-04-12T10:01:04Z"
+	expiryDate := "2027-04-12T10:01:04Z"
 	parent := "XYZ-987"
 
 	input := IdTagInfoPayload{
 		Status:      Accepted,
-		ExpiryDate:  &exp,
+		ExpiryDate:  &expiryDate,
 		ParentIdTag: &parent,
 	}
 
@@ -143,8 +143,8 @@ func TestIdTagInfo_allFieldsPresent(t *testing.T) {
 		t.Errorf("status mismatch: got %s", val.Status)
 	}
 
-	if val.ExpiryDate == nil || *val.ExpiryDate != exp {
-		t.Errorf("expiryDate mismatch: want %s, got %v", exp, val.ExpiryDate)
+	if val.ExpiryDate == nil || *val.ExpiryDate != expiryDate {
+		t.Errorf("expiryDate mismatch: want %s, got %v", expiryDate, val.ExpiryDate)
 	}
 
 	if val.ParentIdTag == nil || *val.ParentIdTag != parent {

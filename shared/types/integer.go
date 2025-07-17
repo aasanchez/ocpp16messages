@@ -67,6 +67,6 @@ func SetInteger(value string) (Integer, error) {
 // Returns:
 //
 //	uint32: The unsigned 32-bit integer value.
-func (i Integer) Value() uint32 {
-	return i.value
+func (integer Integer) Value() uint32 {
+	return integer.value
 }
