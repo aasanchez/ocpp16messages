@@ -21,7 +21,3 @@ func SetDateTime(input string) (DateTime, error) {
 func (dt DateTime) Value() time.Time {
 	return dt.value
 }
-
-func (dt DateTime) String() string {
-	return dt.value.Format(time.RFC3339Nano)
-}
