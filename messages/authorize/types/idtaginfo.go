@@ -62,5 +62,19 @@ func SetIdTagInfo(input IdTagInfoPayload) (IdTagInfo, error) {
 }
 
 func (idTagInfo IdTagInfo) Value() IdTagInfoPayload {
+	payload := IdTagInfoPayload{
+		ExpiryDate:  "",
+		ParentIdTag: "",
+		Status:      idTagInfo.status.Value(),
+	}
 
+	if idTagInfo.expiryDate != nil {
+		payload.ExpiryDate = idTagInfo.expiryDate.String()
+	}
+
+	if idTagInfo.parentIdTag != nil {
+		payload.ParentIdTag = idTagInfo.parentIdTag.Value().Value()
+	}
+
+	return payload
 }
