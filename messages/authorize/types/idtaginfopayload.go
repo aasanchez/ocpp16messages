@@ -3,6 +3,8 @@ package authorizetypes
 import (
 	"errors"
 	"fmt"
+
+	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 var errIdTagInfoPayload = errors.New("invalid IdTagInfoPayload")
@@ -15,7 +17,7 @@ type IdTagInfoPayload struct {
 
 func (input IdTagInfoPayload) Validate() error {
 	if input.Status == "" {
-		return fmt.Errorf("%w: %q", errIdTagInfoPayload, input)
+		return fmt.Errorf(st.ErrorWrapper, errIdTagInfoPayload, input)
 	}
 
 	return nil

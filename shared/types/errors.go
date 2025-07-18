@@ -1,7 +1,8 @@
 package sharedtypes
 
 const (
-	ErrorInvalid = "error: invalid %s -> %w"
-	ErrorMissing = "error: missing %s"
-	ErrorWrapper = "%w: %q"
+	ErrCiStringEmpty = "%s can't be empty, %w"
+	ErrorInvalid     = "error: invalid %s -> %w"
+	ErrorMissing     = "error: missing %s"
+	ErrorWrapper     = "%w: %q"
 )

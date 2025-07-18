@@ -8,10 +8,10 @@ type IdToken struct {
 	value st.CiString20Type
 }
 
-func SetIdToken(s st.CiString20Type) (IdToken, error) {
-	return IdToken{value: s}, nil
+func SetIdToken(cistring st.CiString20Type) (IdToken, error) {
+	return IdToken{value: cistring}, nil
 }
 
-func (id IdToken) Value() st.CiString20Type {
-	return id.value
+func (idtoken IdToken) Value() st.CiString20Type {
+	return idtoken.value
 }

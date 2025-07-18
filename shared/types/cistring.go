@@ -7,9 +7,7 @@ import (
 
 var (
 	errExceedsMaxLength = errors.New("exceeds maximum length")
-	errInvalidASCII     = errors.New(
-		"CiString: value contains non-printable ASCII characters",
-	)
+	errInvalidASCII     = errors.New("CiString: value contains non-printable ASCII characters")
 )
 
 type ciString struct {

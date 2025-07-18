@@ -1,77 +1,66 @@
 package authorizetypes
 
-// import (
-// 	"fmt"
+import (
+	"errors"
+	"fmt"
 
-// 	sharedtypes "github.com/aasanchez/ocpp16messages/shared/types"
-// )
+	st "github.com/aasanchez/ocpp16messages/shared/types"
+)
 
-// type IdTagInfo struct {
-// 	expiryDate  *sharedtypes.DateTime
-// 	parentIdTag *IdToken
-// 	status      AuthorizationStatus
-// }
+var (
+	errParsingExpiredDate = errors.New("failed to parse expiryDate")
+	errParseStatus        = errors.New("failed to parse status")
+	errParseParentId      = errors.New("failed to validate parentIdTag as CiString20")
+)
 
-// func SetIdTagInfo(input IdTagInfoPayload) (IdTagInfo, error) {
-// 	status, err := SetAuthorizationStatus(input.Status)
-// 	if err != nil {
-// 		return IdTagInfo{}, fmt.Errorf(sharedtypes.ErrFmtFieldWrapped,"failed to parse status",err)
-// 	}
+type IdTagInfo struct {
+	expiryDate  *st.DateTime
+	parentIdTag *IdToken
+	status      AuthorizationStatus
+}
 
-// 	info := IdTagInfo{
-// 		status:      status,
-// 		expiryDate:  nil,
-// 		parentIdTag: nil,
-// 	}
+func SetIdTagInfo(input IdTagInfoPayload) (IdTagInfo, error) {
+	status, err := SetAuthorizationStatus(input.Status)
+	if err != nil {
+		return IdTagInfo{}, fmt.Errorf(st.ErrorWrapper, errParseStatus, err)
+	}
 
-// 	if input.ExpiryDate != nil {
-// 		parsedDate, err := sharedtypes.SetDateTime(*input.ExpiryDate)
-// 		if err != nil {
-// 			return IdTagInfo{}, fmt.Errorf(
-// 				sharedtypes.ErrFmtFieldWrapped,
-// 				"failed to parse expiryDate",
-// 				err,
-// 			)
-// 		}
+	info := IdTagInfo{
+		status:      status,
+		expiryDate:  nil,
+		parentIdTag: nil,
+	}
 
-// 		info.expiryDate = &parsedDate
-// 	}
+	if input.ExpiryDate != "" {
+		parsedDate, err := st.SetDateTime(input.ExpiryDate)
+		if err != nil {
+			return IdTagInfo{}, fmt.Errorf(
+				st.ErrorWrapper,
+				errParsingExpiredDate,
+				err,
+			)
+		}
 
-// 	if input.ParentIdTag != nil {
-// 		cistring, err := sharedtypes.SetCiString20Type(*input.ParentIdTag)
-// 		if err != nil {
-// 			return IdTagInfo{}, fmt.Errorf(
-// 				sharedtypes.ErrFmtFieldWrapped,
-// 				"failed to validate parentIdTag as CiString20",
-// 				err,
-// 			)
-// 		}
+		info.expiryDate = &parsedDate
+	}
 
-// 		idTag, _ := SetIdToken(cistring)
-// 		info.parentIdTag = &idTag
-// 	}
+	if input.ParentIdTag != "" {
+		cistring, err := st.SetCiString20Type(input.ParentIdTag)
+		if err != nil {
+			return IdTagInfo{}, fmt.Errorf(
+				st.ErrorWrapper,
+				errParseParentId,
+				err,
+			)
+		}
 
-// 	return info, nil
-// }
+		idTag, _ := SetIdToken(cistring)
+		info.parentIdTag = &idTag
+	}
 
-// func (idTagInfo IdTagInfo) Value() IdTagInfoPayload {
-// 	var expiry *string
+	return info, nil
+}
 
-// 	if str := idTagInfo.expiryDate; str != nil {
-// 		s := str.String()
-// 		expiry = &s
-// 	}
+func (idTagInfo IdTagInfo) Value() IdTagInfoPayload {
 
-// 	var parent *string
-
-// 	if parentTag := idTagInfo.parentIdTag; parentTag != nil {
-// 		val := parentTag.Value()
-// 		parent = &val
-// 	}
-
-// 	return IdTagInfoPayload{
-// 		Status:      idTagInfo.status.Value(),
-// 		ExpiryDate:  expiry,
-// 		ParentIdTag: parent,
-// 	}
-// }
+}
