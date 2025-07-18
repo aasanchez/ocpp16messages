@@ -15,9 +15,8 @@ type IdTagInfoPayload struct {
 func (input IdTagInfoPayload) Validate() error {
 	if input.Status == "" {
 		return fmt.Errorf(
-			st.ErrFmtFieldWrapped,
-			"missing required field: Status",
-			st.ErrEmptyValueNotAllowed,
+			st.ErrorMissing,
+			"Status",
 		)
 	}
 

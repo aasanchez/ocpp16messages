@@ -12,9 +12,8 @@ type RequestPayload struct {
 
 func (input RequestPayload) Validate() error {
 	if input.idTag == "" {
-		return fmt.Errorf(st.ErrFmtFieldWrapped,
-			"missing required field: idTag",
-			st.ErrEmptyValueNotAllowed,
+		return fmt.Errorf(st.ErrorMissing,
+			"idTag",
 		)
 	}
 
