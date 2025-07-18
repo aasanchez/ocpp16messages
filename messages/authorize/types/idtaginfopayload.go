@@ -1,10 +1,11 @@
 package authorizetypes
 
 import (
+	"errors"
 	"fmt"
-
-	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
+
+var errIdTagInfoPayload = errors.New("invalid IdTagInfoPayload")
 
 type IdTagInfoPayload struct {
 	ExpiryDate  string
@@ -14,10 +15,7 @@ type IdTagInfoPayload struct {
 
 func (input IdTagInfoPayload) Validate() error {
 	if input.Status == "" {
-		return fmt.Errorf(
-			st.ErrorMissing,
-			"Status",
-		)
+		return fmt.Errorf("%w: %q", errIdTagInfoPayload, input)
 	}
 
 	return nil

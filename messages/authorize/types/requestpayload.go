@@ -1,10 +1,11 @@
 package authorizetypes
 
 import (
+	"errors"
 	"fmt"
-
-	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
+
+var errMissingIdTag = errors.New("error: Missing IdTag ")
 
 type RequestPayload struct {
 	idTag string
@@ -12,9 +13,7 @@ type RequestPayload struct {
 
 func (input RequestPayload) Validate() error {
 	if input.idTag == "" {
-		return fmt.Errorf(st.ErrorMissing,
-			"idTag",
-		)
+		return fmt.Errorf("%w: (%q)", errMissingIdTag, input)
 	}
 
 	return nil
