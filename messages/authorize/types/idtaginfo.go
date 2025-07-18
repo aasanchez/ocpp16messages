@@ -73,7 +73,7 @@ func (idTagInfo IdTagInfo) Value() IdTagInfoPayload {
 	}
 
 	if idTagInfo.parentIdTag != nil {
-		payload.ParentIdTag = idTagInfo.parentIdTag.Value().Value()
+		payload.ParentIdTag = idTagInfo.parentIdTag.String()
 	}
 
 	return payload

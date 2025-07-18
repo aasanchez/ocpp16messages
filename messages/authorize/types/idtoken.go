@@ -15,3 +15,7 @@ func SetIdToken(cistring st.CiString20Type) (IdToken, error) {
 func (idtoken IdToken) Value() st.CiString20Type {
 	return idtoken.value
 }
+
+func (idtoken IdToken) String() string {
+	return idtoken.value.Value()
+}
