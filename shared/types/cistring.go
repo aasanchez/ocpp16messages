@@ -25,7 +25,7 @@ func setCiString(input string, maxLen int) (ciString, error) {
 
 	for _, r := range input {
 		if r < 32 || r > 126 {
-			return ciString{}, fmt.Errorf("ciString.Validate: %w", ErrNonPrintableASCII)
+			return ciString{}, fmt.Errorf("ciString.Validate: value contains non-printable ASCII characters")
 		}
 	}
 
