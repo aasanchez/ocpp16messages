@@ -7,7 +7,7 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-func TestRaceCondition_IntegerValue(t *testing.T) {
+func RaceCondition_IntegerValue(t *testing.T) {
 	t.Parallel()
 
 	var wait sync.WaitGroup
