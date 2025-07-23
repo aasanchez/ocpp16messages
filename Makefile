@@ -37,7 +37,7 @@ test-race: ## Run race detector across all packages.
 	@echo "\n--- \033[1;32mRace Detector Report\033[0m ---"
 	@go test -mod=readonly -run='^Race' -v ./... >reports/test-race.txt
 
-benchmark: ## Run benchmark tests to measure performance of critical operations.
+test-benchmark: ## Run benchmark tests to measure performance of critical operations.
 	@echo "Stopping any running pkgsite processes..."
 	@go clean -modcache
 	@go test -bench=. -benchmem ./...
