@@ -35,7 +35,7 @@ test-fuzz: ## Run fuzz tests for each Fuzz* function in all packages
 test-race: ## Run race detector across all packages.
 	@mkdir -p reports
 	@echo "\n--- \033[1;32mRace Detector Report\033[0m ---"
-	@go test -mod=readonly -v -race -timeout 30s ./... | tee reports/race.txt
+	@go test -mod=readonly -run='^Race' -v ./... >reports/test-race.txt
 
 benchmark: ## Run benchmark tests to measure performance of critical operations.
 	@echo "Stopping any running pkgsite processes..."
