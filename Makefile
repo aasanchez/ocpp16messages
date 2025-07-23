@@ -7,15 +7,12 @@ help: ## Display this help message, listing all available targets and their desc
 
 ##@ Testing
 test: ## Run all unit tests and generate a code coverage report for critical test paths.
-	@rm -rf reports && mkdir -p reports
 	@go test -coverpkg=`go list -mod=readonly ./... | grep -v '/tests' | paste -sd ',' -` \
 		-mod=readonly -run='^Test(External|Internal)' \
 		-coverprofile=reports/coverage.out -v ./... >reports/test.txt
 	@echo "\n--- \033[32mCoverage Percentage\033[0m:"
 	@go tool cover -func=reports/coverage.out | tail -1 | awk -F" " '{print $$NF}'
 
-
-# go test -coverpkg=`go list -mod=readonly ./... | grep -v '/tests' | paste -sd ',' -`-mod=readonly -run='^Test(External|Internal)' -coverprofile=reports/coverage.out -v ./...
 test-coverage: test ## Generate and open a detailed HTML coverage report in the default browser.
 	@go tool cover -html=reports/coverage.out -o reports/coverage.html
 	@open -a "Google Chrome" reports/coverage.html
@@ -44,7 +41,6 @@ test-benchmark: ## Run benchmark tests to measure performance of critical operat
 
 ##@ Code Style and Static Analysis
 lint: ## Run static analysis, vetting, and linting using golangci-lint and other tools.
-	@rm -rf reports/*
 	@golangci-lint cache clean || true
 	@golangci-lint --config golangci.yml run ./... || true
 	@go vet ./... > reports/govet.json
