@@ -1,6 +1,3 @@
-//go:build blackbox
-// +build blackbox
-
 package sharedtypes_test
 
 import (
@@ -9,7 +6,7 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-func TestHappyValue(t *testing.T) {
+func TestExternal_SharedTypes_integer_Default(t *testing.T) {
 	t.Parallel()
 
 	i, err := st.SetInteger("42")
@@ -23,7 +20,7 @@ func TestHappyValue(t *testing.T) {
 	}
 }
 
-func TestOverflow(t *testing.T) {
+func TestExternal_SharedTypes_integer_Overflow(t *testing.T) {
 	t.Parallel()
 
 	_, err := st.SetInteger("4294967296")
@@ -32,7 +29,7 @@ func TestOverflow(t *testing.T) {
 	}
 }
 
-func TestNegative(t *testing.T) {
+func TestExternal_SharedTypes_integer_Negative(t *testing.T) {
 	t.Parallel()
 
 	_, err := st.SetInteger("-10")
@@ -41,7 +38,7 @@ func TestNegative(t *testing.T) {
 	}
 }
 
-func TestAlphanumeric(t *testing.T) {
+func TestExternal_SharedTypes_integer_Alphanumeric(t *testing.T) {
 	t.Parallel()
 
 	_, err := st.SetInteger("abc")
@@ -49,3 +46,4 @@ func TestAlphanumeric(t *testing.T) {
 		t.Fatalf(st.ErrorExpectedError, err)
 	}
 }
+
