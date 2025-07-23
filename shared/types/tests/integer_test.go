@@ -46,4 +46,3 @@ func TestExternal_SharedTypes_integer_Alphanumeric(t *testing.T) {
 		t.Fatalf(st.ErrorExpectedError, err)
 	}
 }
-

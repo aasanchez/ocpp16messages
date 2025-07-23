@@ -1,4 +1,4 @@
-package sharedtypes_fuzz
+package sharedtypes_test
 
 import (
 	"math"
@@ -17,10 +17,9 @@ func FuzzSetInteger(f *testing.F) {
 
 	f.Fuzz(func(t *testing.T, input string) {
 		integer, err := st.SetInteger(input)
-
 		if err == nil {
 			v := integer.Value()
-			if v >= math.MaxUint32 -1 {
+			if v >= math.MaxUint32-1 {
 				t.Errorf("Value() returned %d, which exceeds uint32 max", v)
 			}
 		}

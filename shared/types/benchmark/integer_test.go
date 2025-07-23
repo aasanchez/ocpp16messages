@@ -1,4 +1,4 @@
-package sharedtypes_benchmark
+package sharedtypes_test
 
 import (
 	"testing"
@@ -7,7 +7,7 @@ import (
 )
 
 func BenchmarkSetInteger_ValidInput(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		_, err := st.SetInteger("42")
 		if err != nil {
 			b.Fatalf("unexpected error: %v", err)
@@ -23,7 +23,7 @@ func BenchmarkInteger_Value(b *testing.B) {
 
 	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		_ = integer.Value()
 	}
 }

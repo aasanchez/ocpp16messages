@@ -1,4 +1,4 @@
-package sharedtypes_race
+package sharedtypes_test
 
 import (
 	"sync"
@@ -7,8 +7,10 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-func RaceCondition_IntegerValue(t *testing.T) {
-	var wg sync.WaitGroup
+func TestRaceCondition_IntegerValue(t *testing.T) {
+	t.Parallel()
+
+	var wait sync.WaitGroup
 
 	var shared st.Integer
 
@@ -17,19 +19,21 @@ func RaceCondition_IntegerValue(t *testing.T) {
 		t.Fatalf("SetInteger failed: %v", err)
 	}
 
-	for i := 0; i < 1000; i++ {
-		wg.Add(2)
+	for range 1000 {
+		wait.Add(2)
 
 		go func() {
-			defer wg.Done()
+			defer wait.Done()
+
 			_ = shared.Value()
 		}()
 
 		go func() {
-			defer wg.Done()
+			defer wait.Done()
+
 			shared, _ = st.SetInteger("42")
 		}()
 	}
 
-	wg.Wait()
+	wait.Wait()
 }
