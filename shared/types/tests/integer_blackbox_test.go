@@ -1,3 +1,6 @@
+//go:build blackbox
+// +build blackbox
+
 package sharedtypes_test
 
 import (
