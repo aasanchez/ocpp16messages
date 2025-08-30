@@ -7,6 +7,7 @@ help: ## Display this help message, listing all available targets and their desc
 
 ##@ Testing
 test: ## Run all unit tests and generate a code coverage report for critical test paths.
+	@rm -rf reports && mkdir -p reports
 	@go test -coverpkg=`go list -mod=readonly ./... | grep -v '/tests' | paste -sd ',' -` \
 		-mod=readonly -run='^Test(External|Internal)' \
 		-coverprofile=reports/coverage.out -v ./... >reports/test.txt
