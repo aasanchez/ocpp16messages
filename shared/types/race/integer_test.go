@@ -11,9 +11,9 @@ func TestRaceCondition_IntegerValue(t *testing.T) {
 	t.Parallel()
 
 	var (
-		mu        sync.RWMutex
-		shared    st.Integer
-		waitGroup sync.WaitGroup
+		mu     sync.RWMutex
+		shared st.Integer
+		wg     sync.WaitGroup
 	)
 
 	v42, err := st.SetInteger("42")
@@ -28,11 +28,11 @@ func TestRaceCondition_IntegerValue(t *testing.T) {
 
 	shared = v42
 
-	for i := range 1000 {
-		waitGroup.Add(2)
+	for i := range 1000 { // Go 1.22 integer range
+		wg.Add(2)
 
 		go func() { // reader
-			defer waitGroup.Done()
+			defer wg.Done()
 
 			mu.RLock()
 
@@ -42,7 +42,7 @@ func TestRaceCondition_IntegerValue(t *testing.T) {
 		}()
 
 		go func(i int) { // writer
-			defer waitGroup.Done()
+			defer wg.Done()
 
 			mu.Lock()
 
@@ -56,5 +56,5 @@ func TestRaceCondition_IntegerValue(t *testing.T) {
 		}(i)
 	}
 
-	waitGroup.Wait()
+	wg.Wait()
 }
