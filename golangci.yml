@@ -9,6 +9,7 @@ formatters:
 linters:
   default: all
   disable:
+    - godot
     - testpackage
     - lll
     - wsl
