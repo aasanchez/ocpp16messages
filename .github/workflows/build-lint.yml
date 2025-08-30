@@ -15,7 +15,7 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: 1.25
+          go-version: 1.24
           cache: false
 
       - run: mkdir -p reports
@@ -42,7 +42,7 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: 1.25
+          go-version: 1.24
           cache: false
 
       - name: Install Tools
@@ -84,7 +84,7 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: 1.25
+          go-version: 1.24
           cache: false
 
       - run: mkdir -p .reports
@@ -114,7 +114,7 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: 1.25
+          go-version: 1.24
           cache: false
 
       - name: Install stattickcheck
@@ -133,7 +133,7 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: 1.25
+          go-version: 1.24
           cache: false
 
       - run: go vet ./...
