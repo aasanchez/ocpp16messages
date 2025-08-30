@@ -1,6 +1,7 @@
 package sharedtypes_test
 
 import (
+	"math"
 	"strconv"
 	"testing"
 
@@ -28,7 +29,13 @@ func assertZeroOnError(t *testing.T, got st.Integer, s string) {
 func assertEqualsOracle(t *testing.T, s string, v uint16, oracle uint64) {
 	t.Helper()
 
-	if v != uint16(oracle) {
+	// Defensive guard: should never trigger given ParseUint(..., 10, 16).
+	if oracle > uint64(math.MaxUint16) {
+		t.Fatalf("oracle value out of range for uint16: %d", oracle)
+	}
+
+	// Compare without narrowing conversion.
+	if uint64(v) != oracle {
 		t.Fatalf("value mismatch for %q: got=%d, want=%d", s, v, oracle)
 	}
 }
