@@ -8,8 +8,6 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-// --- Helpers (each keeps branching local and out of FuzzSetInteger) ---
-
 func assertOracleConsistency(t *testing.T, s string, err error, oracleErr error) {
 	t.Helper()
 
@@ -29,12 +27,10 @@ func assertZeroOnError(t *testing.T, got st.Integer, s string) {
 func assertEqualsOracle(t *testing.T, s string, v uint16, oracle uint64) {
 	t.Helper()
 
-	// Defensive guard: should never trigger given ParseUint(..., 10, 16).
 	if oracle > uint64(math.MaxUint16) {
 		t.Fatalf("oracle value out of range for uint16: %d", oracle)
 	}
 
-	// Compare without narrowing conversion.
 	if uint64(v) != oracle {
 		t.Fatalf("value mismatch for %q: got=%d, want=%d", s, v, oracle)
 	}
@@ -58,8 +54,6 @@ func assertRoundTrip(t *testing.T, v uint16) {
 func assertSuccessLengthInvariant(t *testing.T, s string, v uint16) {
 	t.Helper()
 
-	// If success and more than 5 digits, it must start with '0' (leading zeros).
-	// A non-zero-leading string with >5 digits would overflow uint16.
 	if len(s) > 5 && s[0] != '0' {
 		t.Fatalf("parsed success from >5-digit non-zero-leading input: %q -> %d", s, v)
 	}
@@ -83,10 +77,7 @@ func assertNonEmptyOnSuccess(t *testing.T, s string) {
 	}
 }
 
-// --- Fuzzer (low cyclomatic complexity) ---
-
 func FuzzSetInteger(f *testing.F) {
-	// Seed corpus
 	for _, seed := range []string{
 		"0", "1", "9", "10",
 		"65535",      // max uint16
@@ -105,7 +96,6 @@ func FuzzSetInteger(f *testing.F) {
 	}
 
 	f.Fuzz(func(t *testing.T, s string) {
-		// Efficiency guard
 		if len(s) > 64 {
 			return
 		}
