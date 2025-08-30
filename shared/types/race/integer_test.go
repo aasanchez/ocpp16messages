@@ -28,10 +28,10 @@ func TestRaceCondition_IntegerValue(t *testing.T) {
 
 	shared = v42
 
-	for i := range 1000 { // Go 1.22 integer range
+	for i := range 1000 {
 		wg.Add(2)
 
-		go func() { // reader
+		go func() {
 			defer wg.Done()
 
 			mu.RLock()
@@ -41,7 +41,7 @@ func TestRaceCondition_IntegerValue(t *testing.T) {
 			mu.RUnlock()
 		}()
 
-		go func(i int) { // writer
+		go func(i int) {
 			defer wg.Done()
 
 			mu.Lock()
