@@ -10,10 +10,11 @@ linters:
   default: all
   disable:
     - godot
-    - testpackage
     - lll
-    - wsl
     - mnd
+    - testpackage
+    - varnamelen
+    - wsl
   settings:
     revive:
       enable-all-rules: true

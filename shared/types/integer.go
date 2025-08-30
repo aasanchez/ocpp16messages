@@ -6,18 +6,18 @@ import (
 )
 
 type Integer struct {
-	value uint32
+	value uint16
 }
 
 func SetInteger(value string) (Integer, error) {
-	parsedValue, err := strconv.ParseUint(value, 10, 32)
+	parsedValue, err := strconv.ParseUint(value, 10, 16)
 	if err != nil {
 		return Integer{}, fmt.Errorf("invalid Integer: %w", err)
 	}
 
-	return Integer{value: uint32(parsedValue)}, nil
+	return Integer{value: uint16(parsedValue)}, nil
 }
 
-func (integer Integer) Value() uint32 {
+func (integer Integer) Value() uint16 {
 	return integer.value
 }
