@@ -9,14 +9,14 @@ import (
 func TestExternal_SharedTypes_integer_Default(t *testing.T) {
 	t.Parallel()
 
-	i, err := st.SetInteger("42")
+	i, err := st.SetInteger("73")
 	if err != nil {
 		t.Fatalf("unexpected error from SetInteger: %v", err)
 	}
 
 	got := i.Value()
-	if got != 42 {
-		t.Errorf("Value() = %d; want 42", got)
+	if got != 73 {
+		t.Errorf("Value() = %d; want 73", got)
 	}
 }
 

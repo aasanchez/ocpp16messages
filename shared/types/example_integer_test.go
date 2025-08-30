@@ -7,16 +7,17 @@ import (
 )
 
 func ExampleSetInteger() {
-	intVal, err := st.SetInteger("42")
+	intVal, err := st.SetInteger("73")
 	if err != nil {
 		fmt.Println("unexpected error:", err)
+
 		return
 	}
 
 	fmt.Println("Value is:", intVal.Value())
 
 	// Output:
-	// Value is: 42
+	// Value is: 73
 }
 
 func ExampleSetInteger_invalid() {

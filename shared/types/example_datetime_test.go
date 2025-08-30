@@ -7,14 +7,15 @@ import (
 )
 
 func ExampleSetDateTime() {
-	dt, err := st.SetDateTime("2025-08-30T14:34:56Z")
+	datetime, err := st.SetDateTime("2025-08-30T14:34:56Z")
 	if err != nil {
 		fmt.Println("unexpected error:", err)
+
 		return
 	}
 
-	fmt.Println("Time value:", dt.Value().UTC())
-	fmt.Println("String:", dt.String())
+	fmt.Println("Time value:", datetime.Value().UTC())
+	fmt.Println("String:", datetime.String())
 
 	// Output:
 	// Time value: 2025-08-30 14:34:56 +0000 UTC
