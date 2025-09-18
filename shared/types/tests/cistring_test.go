@@ -15,7 +15,7 @@ func Test_sharedtypes_SetCiString20Type(t *testing.T) {
 
 	_, err := st.SetCiString20Type(val)
 	if err != nil {
-		t.Errorf("expected no error for 20-char string, got %v", err)
+		t.Errorf("unexpected error for a 20-character string: %v", err)
 	}
 }
 
@@ -26,7 +26,7 @@ func Test_sharedtypes_SetCiString20Type_Empty(t *testing.T) {
 
 	_, err := st.SetCiString20Type(val)
 	if err != nil {
-		t.Errorf("Empty value should be allowed")
+		t.Errorf("empty string should be accepted; got error: %v", err)
 	}
 }
 
@@ -37,7 +37,7 @@ func Test_sharedtypes_SetCiString20Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString20Type(val)
 	if err == nil {
-		t.Errorf("expected error for string longer than 20 chars, got nil")
+		t.Error("expected an error for a string longer than 20 characters; got none")
 	}
 }
 
@@ -48,7 +48,7 @@ func Test_sharedtypes_SetCiString20Type_TestValue(t *testing.T) {
 
 	ciStr, _ := st.SetCiString20Type(input)
 	if ciStr.Value() != input {
-		t.Errorf(st.ErrExpectedValueMismatch, input, ciStr.Value())
+		t.Errorf("value mismatch: want %q, got %q", input, ciStr.Value())
 	}
 }
 
@@ -60,7 +60,7 @@ func Test_sharedtypes_SetCiString25Type(t *testing.T) {
 
 	_, err := st.SetCiString25Type(val)
 	if err != nil {
-		t.Errorf("expected no error for 25-char string, got %v", err)
+		t.Errorf("unexpected error for a 25-character string: %v", err)
 	}
 }
 
@@ -71,7 +71,7 @@ func Test_sharedtypes_SetCiString25Type_Empty(t *testing.T) {
 
 	_, err := st.SetCiString25Type(val)
 	if err != nil {
-		t.Errorf("Empty value should be allowed")
+		t.Errorf("empty string should be accepted; got error: %v", err)
 	}
 }
 
@@ -82,7 +82,7 @@ func Test_sharedtypes_SetCiString25Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString25Type(val)
 	if err == nil {
-		t.Errorf("expected error for string longer than 25 chars, got nil")
+		t.Error("expected an error for a string longer than 25 characters; got none")
 	}
 }
 
@@ -93,7 +93,7 @@ func Test_sharedtypes_SetCiString25Type_TestValue(t *testing.T) {
 
 	ciStr, _ := st.SetCiString25Type(input)
 	if ciStr.Value() != input {
-		t.Errorf(st.ErrExpectedValueMismatch, input, ciStr.Value())
+		t.Errorf("value mismatch: want %q, got %q", input, ciStr.Value())
 	}
 }
 
@@ -105,7 +105,7 @@ func Test_sharedtypes_SetCiString50Type(t *testing.T) {
 
 	_, err := st.SetCiString50Type(val)
 	if err != nil {
-		t.Errorf("expected no error for 50-char string, got %v", err)
+		t.Errorf("unexpected error for a 50-character string: %v", err)
 	}
 }
 
@@ -116,7 +116,7 @@ func Test_sharedtypes_SetCiString50Type_Empty(t *testing.T) {
 
 	_, err := st.SetCiString50Type(val)
 	if err != nil {
-		t.Errorf("Empty value should be allowed")
+		t.Errorf("empty string should be accepted; got error: %v", err)
 	}
 }
 
@@ -127,7 +127,7 @@ func Test_sharedtypes_SetCiString50Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString50Type(val)
 	if err == nil {
-		t.Errorf("expected error for string longer than 50 chars, got nil")
+		t.Error("expected an error for a string longer than 50 characters; got none")
 	}
 }
 
@@ -138,7 +138,7 @@ func Test_sharedtypes_SetCiString50Type_TestValue(t *testing.T) {
 
 	ciStr, _ := st.SetCiString50Type(input)
 	if ciStr.Value() != input {
-		t.Errorf(st.ErrExpectedValueMismatch, input, ciStr.Value())
+		t.Errorf("value mismatch: want %q, got %q", input, ciStr.Value())
 	}
 }
 
@@ -150,7 +150,7 @@ func Test_sharedtypes_SetCiString255Type(t *testing.T) {
 
 	_, err := st.SetCiString255Type(val)
 	if err != nil {
-		t.Errorf("expected no error for 255-char string, got %v", err)
+		t.Errorf("unexpected error for a 255-character string: %v", err)
 	}
 }
 
@@ -161,7 +161,7 @@ func Test_sharedtypes_SetCiString255Type_Empty(t *testing.T) {
 
 	_, err := st.SetCiString255Type(val)
 	if err != nil {
-		t.Errorf("Empty value should be allowed")
+		t.Errorf("empty string should be accepted; got error: %v", err)
 	}
 }
 
@@ -172,7 +172,7 @@ func Test_sharedtypes_SetCiString255Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString255Type(val)
 	if err == nil {
-		t.Errorf("expected error for string longer than 50 chars, got nil")
+		t.Errorf("expected an error for a string longer than 255 characters; got none")
 	}
 }
 
@@ -183,7 +183,7 @@ func Test_sharedtypes_SetCiString255Type_TestValue(t *testing.T) {
 
 	ciStr, _ := st.SetCiString255Type(input)
 	if ciStr.Value() != input {
-		t.Errorf(st.ErrExpectedValueMismatch, input, ciStr.Value())
+		t.Errorf("value mismatch: want %q, got %q", input, ciStr.Value())
 	}
 }
 
@@ -195,7 +195,7 @@ func Test_sharedtypes_SetCiString500Type(t *testing.T) {
 
 	_, err := st.SetCiString500Type(val)
 	if err != nil {
-		t.Errorf("expected no error for 255-char string, got %v", err)
+		t.Errorf("unexpected error for a 500-character string: %v", err)
 	}
 }
 
@@ -206,7 +206,7 @@ func Test_sharedtypes_SetCiString500Type_Empty(t *testing.T) {
 
 	_, err := st.SetCiString500Type(val)
 	if err != nil {
-		t.Errorf("Empty value should be allowed")
+		t.Errorf("empty string should be accepted; got error: %v", err)
 	}
 }
 
@@ -217,7 +217,7 @@ func Test_sharedtypes_SetCiString500Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString500Type(val)
 	if err == nil {
-		t.Errorf("expected error for string longer than 50 chars, got nil")
+		t.Errorf("expected an error for a string longer than 500 characters; got none")
 	}
 }
 
@@ -228,6 +228,6 @@ func Test_sharedtypes_SetCiString500Type_TestValue(t *testing.T) {
 
 	ciStr, _ := st.SetCiString500Type(input)
 	if ciStr.Value() != input {
-		t.Errorf(st.ErrExpectedValueMismatch, input, ciStr.Value())
+		t.Errorf("value mismatch: want %q, got %q", input, ciStr.Value())
 	}
 }
