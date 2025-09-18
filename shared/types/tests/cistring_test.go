@@ -15,7 +15,18 @@ func TestSetCiString20Type_Valid(t *testing.T) {
 
 	_, err := st.SetCiString20Type(val)
 	if err != nil {
-		t.Fatalf("expected no error for 20-char string, got %v", err)
+		t.Errorf("expected no error for 20-char string, got %v", err)
+	}
+}
+
+func TestSetCiString20Type_Empty(t *testing.T) {
+	t.Parallel()
+
+	val := ""
+
+	_, err := st.SetCiString20Type(val)
+	if err != nil {
+		t.Errorf("Empty value should be allowed")
 	}
 }
 
@@ -26,7 +37,7 @@ func TestSetCiString20Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString20Type(val)
 	if err == nil {
-		t.Fatal("expected error for string longer than 20 chars, got nil")
+		t.Errorf("expected error for string longer than 20 chars, got nil")
 	}
 }
 
@@ -42,7 +53,6 @@ func TestSetCiString20Type_TestValue(t *testing.T) {
 }
 
 // CiString25Type
-
 func TestSetCiString25Type_Valid(t *testing.T) {
 	t.Parallel()
 
@@ -50,7 +60,18 @@ func TestSetCiString25Type_Valid(t *testing.T) {
 
 	_, err := st.SetCiString25Type(val)
 	if err != nil {
-		t.Fatalf("expected no error for 25-char string, got %v", err)
+		t.Errorf("expected no error for 25-char string, got %v", err)
+	}
+}
+
+func TestSetCiString25Type_Empty(t *testing.T) {
+	t.Parallel()
+
+	val := ""
+
+	_, err := st.SetCiString25Type(val)
+	if err != nil {
+		t.Errorf("Empty value should be allowed")
 	}
 }
 
@@ -61,7 +82,7 @@ func TestSetCiString25Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString25Type(val)
 	if err == nil {
-		t.Fatal("expected error for string longer than 25 chars, got nil")
+		t.Errorf("expected error for string longer than 25 chars, got nil")
 	}
 }
 
@@ -77,7 +98,6 @@ func TestSetCiString25Type_TestValue(t *testing.T) {
 }
 
 // CiString50Type
-
 func TestSetCiString50Type_Valid(t *testing.T) {
 	t.Parallel()
 
@@ -85,7 +105,18 @@ func TestSetCiString50Type_Valid(t *testing.T) {
 
 	_, err := st.SetCiString50Type(val)
 	if err != nil {
-		t.Fatalf("expected no error for 50-char string, got %v", err)
+		t.Errorf("expected no error for 50-char string, got %v", err)
+	}
+}
+
+func TestSetCiString50Type_Empty(t *testing.T) {
+	t.Parallel()
+
+	val := ""
+
+	_, err := st.SetCiString50Type(val)
+	if err != nil {
+		t.Errorf("Empty value should be allowed")
 	}
 }
 
@@ -96,7 +127,7 @@ func TestSetCiString50Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString50Type(val)
 	if err == nil {
-		t.Fatal("expected error for string longer than 50 chars, got nil")
+		t.Errorf("expected error for string longer than 50 chars, got nil")
 	}
 }
 
@@ -112,7 +143,6 @@ func TestSetCiString50Type_TestValue(t *testing.T) {
 }
 
 // CiString255Type
-
 func TestSetCiString255Type_Valid(t *testing.T) {
 	t.Parallel()
 
@@ -120,7 +150,18 @@ func TestSetCiString255Type_Valid(t *testing.T) {
 
 	_, err := st.SetCiString255Type(val)
 	if err != nil {
-		t.Fatalf("expected no error for 255-char string, got %v", err)
+		t.Errorf("expected no error for 255-char string, got %v", err)
+	}
+}
+
+func TestSetCiString255Type_Empty(t *testing.T) {
+	t.Parallel()
+
+	val := ""
+
+	_, err := st.SetCiString255Type(val)
+	if err != nil {
+		t.Errorf("Empty value should be allowed")
 	}
 }
 
@@ -131,7 +172,7 @@ func TestSetCiString255Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString255Type(val)
 	if err == nil {
-		t.Fatal("expected error for string longer than 50 chars, got nil")
+		t.Errorf("expected error for string longer than 50 chars, got nil")
 	}
 }
 
@@ -147,7 +188,6 @@ func TestSetCiString255Type_TestValue(t *testing.T) {
 }
 
 // CiString500Type
-
 func TestSetCiString500Type_Valid(t *testing.T) {
 	t.Parallel()
 
@@ -155,7 +195,18 @@ func TestSetCiString500Type_Valid(t *testing.T) {
 
 	_, err := st.SetCiString500Type(val)
 	if err != nil {
-		t.Fatalf("expected no error for 255-char string, got %v", err)
+		t.Errorf("expected no error for 255-char string, got %v", err)
+	}
+}
+
+func TestSetCiString500Type_Empty(t *testing.T) {
+	t.Parallel()
+
+	val := ""
+
+	_, err := st.SetCiString500Type(val)
+	if err != nil {
+		t.Errorf("Empty value should be allowed")
 	}
 }
 
@@ -166,7 +217,7 @@ func TestSetCiString500Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString500Type(val)
 	if err == nil {
-		t.Fatal("expected error for string longer than 50 chars, got nil")
+		t.Errorf("expected error for string longer than 50 chars, got nil")
 	}
 }
 
