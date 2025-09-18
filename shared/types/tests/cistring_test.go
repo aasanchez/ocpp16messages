@@ -8,7 +8,7 @@ import (
 )
 
 // CiString20Type
-func TestSetCiString20Type_Valid(t *testing.T) {
+func Test_sharedtypes_SetCiString20Type(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("A", 20)
@@ -19,7 +19,7 @@ func TestSetCiString20Type_Valid(t *testing.T) {
 	}
 }
 
-func TestSetCiString20Type_Empty(t *testing.T) {
+func Test_sharedtypes_SetCiString20Type_Empty(t *testing.T) {
 	t.Parallel()
 
 	val := ""
@@ -30,7 +30,7 @@ func TestSetCiString20Type_Empty(t *testing.T) {
 	}
 }
 
-func TestSetCiString20Type_TooLong(t *testing.T) {
+func Test_sharedtypes_SetCiString20Type_TooLong(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("A", 21)
@@ -41,7 +41,7 @@ func TestSetCiString20Type_TooLong(t *testing.T) {
 	}
 }
 
-func TestSetCiString20Type_TestValue(t *testing.T) {
+func Test_sharedtypes_SetCiString20Type_TestValue(t *testing.T) {
 	t.Parallel()
 
 	input := strings.Repeat("A", 20)
@@ -53,7 +53,7 @@ func TestSetCiString20Type_TestValue(t *testing.T) {
 }
 
 // CiString25Type
-func TestSetCiString25Type_Valid(t *testing.T) {
+func Test_sharedtypes_SetCiString25Type(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("B", 25)
@@ -64,7 +64,7 @@ func TestSetCiString25Type_Valid(t *testing.T) {
 	}
 }
 
-func TestSetCiString25Type_Empty(t *testing.T) {
+func Test_sharedtypes_SetCiString25Type_Empty(t *testing.T) {
 	t.Parallel()
 
 	val := ""
@@ -75,7 +75,7 @@ func TestSetCiString25Type_Empty(t *testing.T) {
 	}
 }
 
-func TestSetCiString25Type_TooLong(t *testing.T) {
+func Test_sharedtypes_SetCiString25Type_TooLong(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("B", 26)
@@ -86,7 +86,7 @@ func TestSetCiString25Type_TooLong(t *testing.T) {
 	}
 }
 
-func TestSetCiString25Type_TestValue(t *testing.T) {
+func Test_sharedtypes_SetCiString25Type_TestValue(t *testing.T) {
 	t.Parallel()
 
 	input := strings.Repeat("B", 25)
@@ -98,7 +98,7 @@ func TestSetCiString25Type_TestValue(t *testing.T) {
 }
 
 // CiString50Type
-func TestSetCiString50Type_Valid(t *testing.T) {
+func Test_sharedtypes_SetCiString50Type(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("C", 50)
@@ -109,7 +109,7 @@ func TestSetCiString50Type_Valid(t *testing.T) {
 	}
 }
 
-func TestSetCiString50Type_Empty(t *testing.T) {
+func Test_sharedtypes_SetCiString50Type_Empty(t *testing.T) {
 	t.Parallel()
 
 	val := ""
@@ -120,7 +120,7 @@ func TestSetCiString50Type_Empty(t *testing.T) {
 	}
 }
 
-func TestSetCiString50Type_TooLong(t *testing.T) {
+func Test_sharedtypes_SetCiString50Type_TooLong(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("C", 51)
@@ -131,7 +131,7 @@ func TestSetCiString50Type_TooLong(t *testing.T) {
 	}
 }
 
-func TestSetCiString50Type_TestValue(t *testing.T) {
+func Test_sharedtypes_SetCiString50Type_TestValue(t *testing.T) {
 	t.Parallel()
 
 	input := strings.Repeat("C", 50)
@@ -143,7 +143,7 @@ func TestSetCiString50Type_TestValue(t *testing.T) {
 }
 
 // CiString255Type
-func TestSetCiString255Type_Valid(t *testing.T) {
+func Test_sharedtypes_SetCiString255Type(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("D", 255)
@@ -154,7 +154,7 @@ func TestSetCiString255Type_Valid(t *testing.T) {
 	}
 }
 
-func TestSetCiString255Type_Empty(t *testing.T) {
+func Test_sharedtypes_SetCiString255Type_Empty(t *testing.T) {
 	t.Parallel()
 
 	val := ""
@@ -165,7 +165,7 @@ func TestSetCiString255Type_Empty(t *testing.T) {
 	}
 }
 
-func TestSetCiString255Type_TooLong(t *testing.T) {
+func Test_sharedtypes_SetCiString255Type_TooLong(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("D", 256)
@@ -176,7 +176,7 @@ func TestSetCiString255Type_TooLong(t *testing.T) {
 	}
 }
 
-func TestSetCiString255Type_TestValue(t *testing.T) {
+func Test_sharedtypes_SetCiString255Type_TestValue(t *testing.T) {
 	t.Parallel()
 
 	input := strings.Repeat("D", 255)
@@ -188,7 +188,7 @@ func TestSetCiString255Type_TestValue(t *testing.T) {
 }
 
 // CiString500Type
-func TestSetCiString500Type_Valid(t *testing.T) {
+func Test_sharedtypes_SetCiString500Type(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("E", 500)
@@ -199,7 +199,7 @@ func TestSetCiString500Type_Valid(t *testing.T) {
 	}
 }
 
-func TestSetCiString500Type_Empty(t *testing.T) {
+func Test_sharedtypes_SetCiString500Type_Empty(t *testing.T) {
 	t.Parallel()
 
 	val := ""
@@ -210,7 +210,7 @@ func TestSetCiString500Type_Empty(t *testing.T) {
 	}
 }
 
-func TestSetCiString500Type_TooLong(t *testing.T) {
+func Test_sharedtypes_SetCiString500Type_TooLong(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("E", 501)
@@ -221,7 +221,7 @@ func TestSetCiString500Type_TooLong(t *testing.T) {
 	}
 }
 
-func TestSetCiString500Type_TestValue(t *testing.T) {
+func Test_sharedtypes_SetCiString500Type_TestValue(t *testing.T) {
 	t.Parallel()
 
 	input := strings.Repeat("E", 500)
