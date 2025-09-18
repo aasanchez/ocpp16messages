@@ -9,8 +9,7 @@ import (
 func ExampleSetInteger() {
 	intVal, err := st.SetInteger("73")
 	if err != nil {
-		fmt.Println("unexpected error:", err)
-
+		fmt.Println("unexpected error while parsing a valid integer:", err)
 		return
 	}
 
@@ -23,9 +22,9 @@ func ExampleSetInteger() {
 func ExampleSetInteger_invalid() {
 	_, err := st.SetInteger("abc")
 	if err != nil {
-		fmt.Println(err != nil)
+		fmt.Println("failed to parse integer from input 'abc':", err)
 	}
 
 	// Output:
-	// true
+	// failed to parse integer from input 'abc': invalid Integer: strconv.ParseUint: parsing "abc": invalid syntax
 }

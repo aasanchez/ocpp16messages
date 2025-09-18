@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestInternal_SharedTypes_string_Valid(t *testing.T) {
+func Test_sharedtypes_setCiString_Valid(t *testing.T) {
 	t.Parallel()
 
 	input := "OCPP-Test-123"
@@ -21,7 +21,7 @@ func TestInternal_SharedTypes_string_Valid(t *testing.T) {
 	}
 }
 
-func TestInternal_SharedTypes_string_TooLong(t *testing.T) {
+func Test_sharedtypes_setCiString_TooLong(t *testing.T) {
 	t.Parallel()
 
 	input := "ThisStringIsWayTooLong"
@@ -37,7 +37,7 @@ func TestInternal_SharedTypes_string_TooLong(t *testing.T) {
 	}
 }
 
-func TestInternal_SharedTypes_string_NonPrintableASCII(t *testing.T) {
+func Test_sharedtypes_setCiString_NonPrintableASCII(t *testing.T) {
 	t.Parallel()
 
 	input := "Valid\x01Invalid"
@@ -52,7 +52,7 @@ func TestInternal_SharedTypes_string_NonPrintableASCII(t *testing.T) {
 	}
 }
 
-func TestInternal_SharedTypes_string_EmptyIsValid(t *testing.T) {
+func Test_sharedtypes_setCiString_EmptyIsValid(t *testing.T) {
 	t.Parallel()
 
 	input := ""
@@ -68,7 +68,7 @@ func TestInternal_SharedTypes_string_EmptyIsValid(t *testing.T) {
 	}
 }
 
-func TestInternal_SharedTypes_string_ASCIIBoundary(t *testing.T) {
+func Test_sharedtypes_setCiString_ASCIIBoundary(t *testing.T) {
 	t.Parallel()
 
 	input := " ~"

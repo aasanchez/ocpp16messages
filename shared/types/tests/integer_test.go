@@ -6,7 +6,7 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-func TestExternal_SharedTypes_integer_Default(t *testing.T) {
+func Test_sharedtypes_SetInteger(t *testing.T) {
 	t.Parallel()
 
 	i, err := st.SetInteger("73")
@@ -20,29 +20,29 @@ func TestExternal_SharedTypes_integer_Default(t *testing.T) {
 	}
 }
 
-func TestExternal_SharedTypes_integer_Overflow(t *testing.T) {
+func Test_sharedtypes_SetInteger_Overflow(t *testing.T) {
 	t.Parallel()
 
 	_, err := st.SetInteger("4294967296")
 	if err == nil {
-		t.Fatalf(st.ErrorExpectedError, err)
+		t.Errorf(st.ErrorExpectedError, err)
 	}
 }
 
-func TestExternal_SharedTypes_integer_Negative(t *testing.T) {
+func Test_sharedtypes_SetInteger_Negative(t *testing.T) {
 	t.Parallel()
 
 	_, err := st.SetInteger("-10")
 	if err == nil {
-		t.Fatalf(st.ErrorExpectedError, err)
+		t.Errorf(st.ErrorExpectedError, err)
 	}
 }
 
-func TestExternal_SharedTypes_integer_Alphanumeric(t *testing.T) {
+func Test_sharedtypes_SetInteger_Alphanumeric(t *testing.T) {
 	t.Parallel()
 
 	_, err := st.SetInteger("abc")
 	if err == nil {
-		t.Fatalf(st.ErrorExpectedError, err)
+		t.Errorf(st.ErrorExpectedError, err)
 	}
 }

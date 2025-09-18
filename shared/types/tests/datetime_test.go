@@ -7,19 +7,18 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-// --- Valid input: basic properties ---
-func TestSetDateTime_ReturnsNoError(t *testing.T) {
+func Test_sharedtypes_SetDateTime(t *testing.T) {
 	t.Parallel()
 
 	input := "2025-08-30T14:34:56+02:00"
 
 	_, err := st.SetDateTime(input)
 	if err != nil {
-		t.Fatalf("expected no error, got %v", err)
+		t.Errorf("expected no error, got %v", err)
 	}
 }
 
-func TestSetDateTime_ReturnsExpectedValue(t *testing.T) {
+func Test_sharedtypes_SetDateTime_ReturnsExpectedValue(t *testing.T) {
 	t.Parallel()
 
 	input := "2024-08-30T14:34:56+02:00"
@@ -27,11 +26,11 @@ func TestSetDateTime_ReturnsExpectedValue(t *testing.T) {
 
 	dt, _ := st.SetDateTime(input)
 	if !dt.Value().Equal(want) {
-		t.Fatalf("Value() mismatch: got %v, want %v", dt.Value(), want)
+		t.Errorf("Value() mismatch: got %v, want %v", dt.Value(), want)
 	}
 }
 
-func TestSetDateTime_StringFormatsRFC3339Nano(t *testing.T) {
+func Test_sharedtypes_SetDateTime_StringFormatsRFC3339Nano(t *testing.T) {
 	t.Parallel()
 
 	input := "2023-08-30T14:34:56+02:00"
@@ -40,35 +39,33 @@ func TestSetDateTime_StringFormatsRFC3339Nano(t *testing.T) {
 
 	got := dt.String()
 	if got != want.Format(time.RFC3339Nano) {
-		t.Fatalf("String() mismatch: got %q, want %q", got, want.Format(time.RFC3339Nano))
+		t.Errorf("String() mismatch: got %q, want %q", got, want.Format(time.RFC3339Nano))
 	}
 }
 
-// --- Invalid input: error and zero value ---
-func TestSetDateTime_InvalidReturnsError(t *testing.T) {
+func Test_sharedtypes_SetDateTime_InvalidReturnsError(t *testing.T) {
 	t.Parallel()
 
 	_, err := st.SetDateTime("not-a-time")
 	if err == nil {
-		t.Fatal("expected error for invalid datetime, got nil")
+		t.Error("expected error for invalid datetime, got nil")
 	}
 }
 
-func TestSetDateTime_InvalidYieldsZeroValue(t *testing.T) {
+func Test_sharedtypes_SetDateTime_EmptyError(t *testing.T) {
 	t.Parallel()
 
-	dt, _ := st.SetDateTime("not-a-time")
+	dt, _ := st.SetDateTime("")
 	if !dt.Value().IsZero() {
-		t.Fatalf("expected zero value after failed parse, got %v", dt.Value())
+		t.Errorf("expected zero value after failed parse, got %v", dt.Value())
 	}
 }
 
-// --- Zero value formatting ---
-func TestDateTime_StringZeroValue(t *testing.T) {
+func Test_sharedtypes_DateTime_StringZeroValue(t *testing.T) {
 	t.Parallel()
 
 	var dt st.DateTime
 	if dt.String() != (time.Time{}).Format(time.RFC3339Nano) {
-		t.Fatalf("String() zero mismatch: got %q", dt.String())
+		t.Errorf("String() zero mismatch: got %q", dt.String())
 	}
 }
