@@ -10,6 +10,7 @@ func ExampleSetInteger() {
 	intVal, err := st.SetInteger("73")
 	if err != nil {
 		fmt.Println("unexpected error while parsing a valid integer:", err)
+
 		return
 	}
 

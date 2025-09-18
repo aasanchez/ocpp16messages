@@ -172,7 +172,7 @@ func Test_sharedtypes_SetCiString255Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString255Type(val)
 	if err == nil {
-		t.Errorf("expected an error for a string longer than 255 characters; got none")
+		t.Error("expected an error for a string longer than 255 characters; got none")
 	}
 }
 
@@ -217,7 +217,7 @@ func Test_sharedtypes_SetCiString500Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString500Type(val)
 	if err == nil {
-		t.Errorf("expected an error for a string longer than 500 characters; got none")
+		t.Error("expected an error for a string longer than 500 characters; got none")
 	}
 }
 
