@@ -9,10 +9,12 @@ formatters:
 linters:
   default: all
   disable:
-    - testpackage
+    - godot
     - lll
-    - wsl
     - mnd
+    - testpackage
+    - varnamelen
+    - wsl
   settings:
     revive:
       enable-all-rules: true

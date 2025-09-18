@@ -5,7 +5,10 @@ import (
 	"fmt"
 )
 
-var errExceedsMaxLength = errors.New("exceeds maximum length")
+var (
+	errExceedsMaxLength = errors.New("exceeds maximum length")
+	errInvalidASCII     = errors.New("CiString: value contains non-printable ASCII characters")
+)
 
 type ciString struct {
 	value string
@@ -16,7 +19,7 @@ func setCiString(input string, maxLen int) (ciString, error) {
 
 	if len(cis.value) > maxLen {
 		return ciString{}, fmt.Errorf(
-			"ciString Error on Construc (len=%d, max=%d): %w",
+			"CiString Error on Construc (len=%d, max=%d): %w",
 			len(cis.value),
 			maxLen,
 			errExceedsMaxLength,
@@ -25,7 +28,7 @@ func setCiString(input string, maxLen int) (ciString, error) {
 
 	for _, r := range input {
 		if r < 32 || r > 126 {
-			return ciString{}, fmt.Errorf("ciString.Validate: %w", ErrNonPrintableASCII)
+			return ciString{}, errInvalidASCII
 		}
 	}
 
@@ -40,22 +43,18 @@ type CiString20Type struct {
 	value ciString
 }
 
-func (c CiString20Type) Value() string {
-	return c.value.val()
-}
-
 func SetCiString20Type(value string) (CiString20Type, error) {
 	cs, err := setCiString(value, 20)
 
 	return CiString20Type{value: cs}, err
 }
 
-type CiString25Type struct {
-	value ciString
+func (c CiString20Type) Value() string {
+	return c.value.val()
 }
 
-func (c CiString25Type) Value() string {
-	return c.value.val()
+type CiString25Type struct {
+	value ciString
 }
 
 func SetCiString25Type(value string) (CiString25Type, error) {
@@ -64,12 +63,12 @@ func SetCiString25Type(value string) (CiString25Type, error) {
 	return CiString25Type{value: cs}, err
 }
 
-type CiString50Type struct {
-	value ciString
+func (c CiString25Type) Value() string {
+	return c.value.val()
 }
 
-func (c CiString50Type) Value() string {
-	return c.value.val()
+type CiString50Type struct {
+	value ciString
 }
 
 func SetCiString50Type(value string) (CiString50Type, error) {
@@ -78,12 +77,12 @@ func SetCiString50Type(value string) (CiString50Type, error) {
 	return CiString50Type{value: cs}, err
 }
 
-type CiString255Type struct {
-	value ciString
+func (c CiString50Type) Value() string {
+	return c.value.val()
 }
 
-func (c CiString255Type) Value() string {
-	return c.value.val()
+type CiString255Type struct {
+	value ciString
 }
 
 func SetCiString255Type(value string) (CiString255Type, error) {
@@ -92,16 +91,20 @@ func SetCiString255Type(value string) (CiString255Type, error) {
 	return CiString255Type{value: cs}, err
 }
 
-type CiString500Type struct {
-	value ciString
+func (c CiString255Type) Value() string {
+	return c.value.val()
 }
 
-func (c CiString500Type) Value() string {
-	return c.value.val()
+type CiString500Type struct {
+	value ciString
 }
 
 func SetCiString500Type(value string) (CiString500Type, error) {
 	cis, err := setCiString(value, 500)
 
 	return CiString500Type{value: cis}, err
+}
+
+func (c CiString500Type) Value() string {
+	return c.value.val()
 }
