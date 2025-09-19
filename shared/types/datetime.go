@@ -16,6 +16,7 @@ func SetDateTime(input string) (DateTime, error) {
 	}
 
 	t = t.UTC()
+
 	return DateTime{value: t}, nil
 }
 
