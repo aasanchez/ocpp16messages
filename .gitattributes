@@ -22,3 +22,4 @@ golangci.yml              export-ignore
 Makefile                  export-ignore
 sonar-project.properties  export-ignore
 **/benchmarks/            export-ignore
+**/fuzz/                  export-ignore
