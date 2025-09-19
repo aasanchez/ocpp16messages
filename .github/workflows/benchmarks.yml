@@ -80,4 +80,4 @@ jobs:
         with:
           name: go-benchmarks-${{ github.run_number }}-${{ matrix.go }}
           path: reports
-          retention-days: 7
+          retention-days: 1
