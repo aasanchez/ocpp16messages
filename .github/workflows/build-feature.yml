@@ -1,8 +1,8 @@
-name: Build Check
-
+name: Build feature branch
 on:
   push:
-    branches: ["**"]
+    branches-ignore:
+      - main
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
 
@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        go: [1.24.7, 1.25.1]
+        go: [1.25.1]
     steps:
       - uses: actions/checkout@v4
 
@@ -105,7 +105,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        go: [1.24.7, 1.25.1]
+        go: [1.25.1]
     steps:
       - uses: actions/checkout@v4
 
