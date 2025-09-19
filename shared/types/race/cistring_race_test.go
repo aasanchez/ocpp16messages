@@ -48,11 +48,36 @@ func TestCiStringRace_ConcurrentSetAndValue(t *testing.T) {
 		set  func(string) (any, error)
 		val  func(any) string
 	}{
-		{"CiString20", 20, func(s string) (any, error) { return st.SetCiString20Type(s) }, func(v any) string { return v.(st.CiString20Type).Value() }},
-		{"CiString25", 25, func(s string) (any, error) { return st.SetCiString25Type(s) }, func(v any) string { return v.(st.CiString25Type).Value() }},
-		{"CiString50", 50, func(s string) (any, error) { return st.SetCiString50Type(s) }, func(v any) string { return v.(st.CiString50Type).Value() }},
-		{"CiString255", 255, func(s string) (any, error) { return st.SetCiString255Type(s) }, func(v any) string { return v.(st.CiString255Type).Value() }},
-		{"CiString500", 500, func(s string) (any, error) { return st.SetCiString500Type(s) }, func(v any) string { return v.(st.CiString500Type).Value() }},
+		{
+			"CiString20",
+			20,
+			func(s string) (any, error) { return st.SetCiString20Type(s) },
+			func(v any) string { return v.(st.CiString20Type).Value() },
+		},
+		{
+			"CiString25",
+			25,
+			func(s string) (any, error) { return st.SetCiString25Type(s) },
+			func(v any) string { return v.(st.CiString25Type).Value() },
+		},
+		{
+			"CiString50",
+			50,
+			func(s string) (any, error) { return st.SetCiString50Type(s) },
+			func(v any) string { return v.(st.CiString50Type).Value() },
+		},
+		{
+			"CiString255",
+			255,
+			func(s string) (any, error) { return st.SetCiString255Type(s) },
+			func(v any) string { return v.(st.CiString255Type).Value() },
+		},
+		{
+			"CiString500",
+			500,
+			func(s string) (any, error) { return st.SetCiString500Type(s) },
+			func(v any) string { return v.(st.CiString500Type).Value() },
+		},
 	}
 	for _, typ := range types {
 		for i := 0; i < 50; i++ {
@@ -73,7 +98,8 @@ func TestCiStringRace_ConcurrentSetAndValue(t *testing.T) {
 					max  int
 					set  func(string) (any, error)
 					val  func(any) string
-				}, input string) {
+				}, input string,
+				) {
 					defer wg.Done()
 					randomSleepCS()
 					v, err := typ.set(input)
@@ -151,8 +177,18 @@ func TestCiStringRace_Stress(t *testing.T) {
 		set  func(string) (any, error)
 		val  func(any) string
 	}{
-		{"CiString20", 20, func(s string) (any, error) { return st.SetCiString20Type(s) }, func(v any) string { return v.(st.CiString20Type).Value() }},
-		{"CiString255", 255, func(s string) (any, error) { return st.SetCiString255Type(s) }, func(v any) string { return v.(st.CiString255Type).Value() }},
+		{
+			"CiString20",
+			20,
+			func(s string) (any, error) { return st.SetCiString20Type(s) },
+			func(v any) string { return v.(st.CiString20Type).Value() },
+		},
+		{
+			"CiString255",
+			255,
+			func(s string) (any, error) { return st.SetCiString255Type(s) },
+			func(v any) string { return v.(st.CiString255Type).Value() },
+		},
 	}
 	nGoroutines := 2000
 	for i := 0; i < nGoroutines; i++ {
