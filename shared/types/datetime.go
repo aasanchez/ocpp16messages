@@ -15,6 +15,7 @@ func SetDateTime(input string) (DateTime, error) {
 		return DateTime{}, fmt.Errorf("invalid datetime: %w", err)
 	}
 
+	t = t.UTC()
 	return DateTime{value: t}, nil
 }
 
