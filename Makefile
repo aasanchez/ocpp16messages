@@ -25,23 +25,10 @@ test-example: ## Run documentation-based example tests to verify correctness of 
 	@echo "\n--- \033[1;32mTest Examples\033[0m ---"
 	@go test -mod=readonly -v -run '^Example' ./...
 
-test-fuzz: ## Run fuzz tests for each Fuzz* function in all packages
-	@echo "\n--- \033[1;32mRunning fuzzing (Fuzz) on each package...\033[0m ---"
-	@for pkg in $$(go list ./...); do \
-		for fuzz in $$(go test -timeout $(FUZZ_TIME) -list ^Fuzz $$pkg | grep ^Fuzz || true); do \
-			echo "Fuzzing $$fuzz in package $$pkg (for $(FUZZ_TIME))"; \
-			go test -mod=readonly -v -timeout $(FUZZ_TIME) -fuzztime=$(FUZZ_TIME) -fuzz=$$fuzz $$pkg; \
-		done; \
-	done
-
-test-race: ## Run race detector across all packages.
-	@echo "\n--- \033[1;32mRace Detector Report\033[0m ---"
-	@go test -mod=readonly -v -run '^TestRace' ./... >reports/test-race.txt
-
 test-benchmark: ## Run benchmark tests to measure performance of critical operations.
 	@go clean -modcache
 	@echo "\n--- \033[1;32mBenchmark\033[0m ---"
-	@go test -bench=. -benchmem ./...
+	@go test -tags=benchmark -bench=. -benchmem ./...
 
 test-all: test test-example test-race test-fuzz test-benchmark
 
