@@ -1,9 +1,9 @@
-name: Build on Trunk
+name: Build
 
 on:
-  push:
-    branches:
-       - main
+  push:            # any branch
+  pull_request:    # selected PR events
+    types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        go: [1.24.7, 1.25.1]
+        go: ${{ fromJSON( (github.ref == 'refs/heads/main' || (github.event_name == 'pull_request' && github.base_ref == 'main')) && '["1.24.7","1.25.1"]' || '["1.25.1"]' ) }}
     steps:
       - uses: actions/checkout@v4
 
@@ -31,7 +31,7 @@ jobs:
 
       - run: mkdir -p reports
 
-      - name: "Clean Cache"
+      - name: Clean Cache
         run: go clean -cache -testcache -modcache
 
       - name: Execute test
@@ -72,7 +72,7 @@ jobs:
           args: --config golangci.yml --timeout=5m ./...
 
       - name: Report
-        run: cat reports/golangci-lint.txt
+        run: cat reports/golangci-lint.txt || true
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
@@ -104,7 +104,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        go: [1.24.7, 1.25.1]
+        go: ${{ fromJSON( (github.ref == 'refs/heads/main' || (github.event_name == 'pull_request' && github.base_ref == 'main')) && '["1.24.7","1.25.1"]' || '["1.25.1"]' ) }}
     steps:
       - uses: actions/checkout@v4
 
