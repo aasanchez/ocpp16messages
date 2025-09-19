@@ -34,14 +34,14 @@ func BenchmarkInteger_Value(b *testing.B) {
 
 func BenchmarkSetInteger_VariousValid(b *testing.B) {
 	cases := []string{
-		"0",          // min
+		"0", // min
 		"1",
 		"9",
 		"10",
 		"99",
 		"100",
 		"1024",
-		"65535",      // max
+		"65535", // max
 	}
 	b.ReportAllocs()
 	for _, s := range cases {
@@ -58,15 +58,15 @@ func BenchmarkSetInteger_VariousValid(b *testing.B) {
 
 func BenchmarkSetInteger_VariousInvalid(b *testing.B) {
 	cases := []string{
-		"",          // empty
-		" ",         // space
-		"-1",        // negative
-		"65536",     // overflow
+		"",                // empty
+		" ",               // space
+		"-1",              // negative
+		"65536",           // overflow
 		"999999999999999", // way overflow
-		"1.5",       // float
-		"abc",       // non-numeric
-		"+12",       // plus sign not allowed by ParseUint base10?
-		"0x10",      // hex-like string but base10
+		"1.5",             // float
+		"abc",             // non-numeric
+		"+12",             // plus sign not allowed by ParseUint base10?
+		"0x10",            // hex-like string but base10
 	}
 	b.ReportAllocs()
 	for _, s := range cases {
@@ -86,8 +86,8 @@ func BenchmarkSetInteger_VariousInvalid(b *testing.B) {
 }
 
 func BenchmarkSetInteger_MixedWorkload(b *testing.B) {
-	inputs := []struct{
-		in string
+	inputs := []struct {
+		in  string
 		err bool
 	}{
 		{"0", false},

@@ -12,14 +12,18 @@ import (
 func FuzzCiStringTypes(f *testing.F) {
 	seedPrintable := func(n int) string { return strings.Repeat("A", n) }
 	seedNonPrintable := func(n int, r rune) string {
-		if n <= 0 { n = 1 }
+		if n <= 0 {
+			n = 1
+		}
 		runes := make([]rune, n)
-		for i := range runes { runes[i] = 'A' }
+		for i := range runes {
+			runes[i] = 'A'
+		}
 		runes[n/2] = r
 		return string(runes)
 	}
 
-	seeds := []struct{
+	seeds := []struct {
 		max int
 		mk  func(string) (any, error)
 	}{
@@ -41,11 +45,13 @@ func FuzzCiStringTypes(f *testing.F) {
 
 	f.Fuzz(func(t *testing.T, selector int, max int, s string) {
 		// normalize selector
-		if selector < 0 { selector = -selector }
+		if selector < 0 {
+			selector = -selector
+		}
 		selector = selector % 5
 
 		var (
-			mk func(string) (any, error)
+			mk    func(string) (any, error)
 			limit int
 		)
 		switch selector {
@@ -69,13 +75,21 @@ func FuzzCiStringTypes(f *testing.F) {
 		_, err := mk(s)
 		validASCII := true
 		for _, r := range s {
-			if r < 32 || r > 126 { validASCII = false; break }
+			if r < 32 || r > 126 {
+				validASCII = false
+				break
+			}
 		}
 		withinLimit := len(s) <= limit
 
 		if validASCII && withinLimit {
 			if err != nil {
-				t.Fatalf("expected success for len=%d limit=%d printable, got err=%v", len(s), limit, err)
+				t.Fatalf(
+					"expected success for len=%d limit=%d printable, got err=%v",
+					len(s),
+					limit,
+					err,
+				)
 			}
 		} else {
 			if err == nil {

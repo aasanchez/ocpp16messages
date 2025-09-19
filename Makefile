@@ -38,15 +38,19 @@ test-benchmark: ## Run benchmark tests to measure performance of critical operat
 
 test-fuzz-integer: .test-fuzz-header ## Fuzz SetInteger for $(FUZZTIME)
 	@echo "fuzz-integer"
-	@go test -run '^$$' $(FUZZPKG) -fuzz=FuzzSetInteger -fuzztime=$(FUZZTIME)
+	@go test -run '^$$' $(FUZZPKG) -tags=fuzz -fuzz=FuzzSetInteger -fuzztime=$(FUZZTIME)
 
 test-fuzz-cistring: .test-fuzz-header ## Fuzz CiString types for $(FUZZTIME)
 	@echo "fuzz-cistring"
-	@go test -run '^$$' $(FUZZPKG) -fuzz=FuzzCiStringTypes -fuzztime=$(FUZZTIME)
+	@go test -run '^$$' $(FUZZPKG) -tags=fuzz -fuzz=FuzzCiStringTypes -fuzztime=$(FUZZTIME)
 
 test-fuzz: test-fuzz-integer test-fuzz-cistring ## Run all fuzz tests (use FUZZTIME=30s to increase duration)
 
 test-all: test test-example test-fuzz test-benchmark
+
+test-race: ## Run all tests with the Go race detector enabled.
+	@echo "\n--- \033[1;32mRace Detector\033[0m ---"
+	@go test -race ./...
 
 ##@ Code Style and Static Analysis
 lint: ## Run static analysis, vetting, and linting using golangci-lint and other tools.

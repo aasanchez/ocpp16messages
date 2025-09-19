@@ -3,8 +3,9 @@
 package sharedtypes_test
 
 import (
-	st "github.com/aasanchez/ocpp16messages/shared/types"
 	"testing"
+
+	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 func BenchmarkSetDateTime(b *testing.B) {

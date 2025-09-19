@@ -91,8 +91,16 @@ func setters() []struct {
 		{"CiString20", 20, func(s string) error { _, err := st.SetCiString20Type(s); return err }},
 		{"CiString25", 25, func(s string) error { _, err := st.SetCiString25Type(s); return err }},
 		{"CiString50", 50, func(s string) error { _, err := st.SetCiString50Type(s); return err }},
-		{"CiString255", 255, func(s string) error { _, err := st.SetCiString255Type(s); return err }},
-		{"CiString500", 500, func(s string) error { _, err := st.SetCiString500Type(s); return err }},
+		{
+			"CiString255",
+			255,
+			func(s string) error { _, err := st.SetCiString255Type(s); return err },
+		},
+		{
+			"CiString500",
+			500,
+			func(s string) error { _, err := st.SetCiString500Type(s); return err },
+		},
 	}
 }
 
