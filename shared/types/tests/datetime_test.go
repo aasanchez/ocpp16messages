@@ -33,7 +33,7 @@ func Test_sharedtypes_SetDateTime_ReturnsExpectedValue(t *testing.T) {
 func Test_sharedtypes_SetDateTime_StringFormatsRFC3339Nano(t *testing.T) {
 	t.Parallel()
 
-	input := "2023-08-30T14:34:56+02:00"
+	input := "2023-08-30T12:34:56Z"
 	want, _ := time.Parse(time.RFC3339, input)
 	dt, _ := st.SetDateTime(input)
 

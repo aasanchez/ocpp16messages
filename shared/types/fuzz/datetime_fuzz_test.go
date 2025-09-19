@@ -3,9 +3,10 @@
 package sharedtypes_test
 
 import (
-	st "github.com/aasanchez/ocpp16messages/shared/types"
 	"testing"
 	"time"
+
+	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 // addSeedInputs adds a wide variety of valid and invalid RFC3339 strings to the fuzz corpus.
