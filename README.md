@@ -1,71 +1,83 @@
 # OCPP 1.6 Messages for Go
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/aasanchez/ocpp16messages.svg)](https://pkg.go.dev/github.com/aasanchez/ocpp16messages)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/aasanchez/ocpp16messages)
 [![Go Report Card](https://goreportcard.com/badge/github.com/aasanchez/ocpp16messages)](https://goreportcard.com/report/github.com/aasanchez/ocpp16messages)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=bugs)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=coverage)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
-[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
 
 ---
 
 ## Overview
 
-This project provides a robust, modular implementation of OCPP 1.6 message types and payload validation for Go. It supports high-quality message serialization, validation, and extensibility for OCPP-compliant EV charging station management.
+This project provides a robust, modular, and thoroughly tested implementation of OCPP 1.6 message types and payload validation for Go. It is designed for high-quality message serialization, strict type safety, and OCPP-compliant EV charging station management.
 
-### Features
+### Key Features
 
-- A growing set of OCPP 1.6 message types.
-- Strict type definitions and validation for all payloads.
-- Extensive unit and example tests for correctness.
-- Benchmark suite for key serialization and validation routines.
-- Idiomatic Go, clear error handling and modular package structure.
-- Tooling for linting, formatting, and static analysis.
+- **OCPP 1.6-compliant types**: Strict, validated types for all core OCPP 1.6 messages and fields.
+- **Extensive testing**: Includes unit, example, benchmark, fuzz, and race condition tests.
+- **High code quality**: Linting, formatting, static analysis, and CI integration.
+- **Performance and safety**: Benchmarks for all critical routines, and race/fuzz tests for concurrency and robustness.
+- **Idiomatic Go**: Clear error handling, modular structure, and full documentation.
 
-### Project Structure
+---
 
-The project is organized by message type, with shared utilities in a separate package.
+## Project Structure
 
-- `messages/authorize`: Handles authorization requests and confirmations.
-- `messages/bootnotification`: Manages boot notifications from charging stations.
-- `messages/cancelreservation`: Implements the cancellation of reservations.
-- `shared/types`: Contains common data types (e.g., for strings and datetimes) used across all messages.
+- `shared/types/` — Core types (e.g., `DateTime`, `Integer`, `CiString*`) with validation and OCPP-compliant formatting.
+- `shared/types/tests/` — Unit and example tests for all types.
+- `shared/types/benchmark/` — Microbenchmarks for performance-critical routines.
+- `shared/types/fuzz/` — Fuzz tests for robustness and edge-case discovery.
+- `shared/types/race/` — Race condition tests for thread safety under heavy concurrency.
+- `.github/workflows/` — CI configuration for build, lint, and test automation.
 
-### Getting Started
+---
 
-Install dependencies and run all tests:
+## Getting Started
+
+### Install dependencies
 
 ```sh
 go mod tidy
-make test
 ```
 
-Run benchmarks:
+### Run all tests (unit, example, race, fuzz, benchmark)
 
 ```sh
-make benchmark
+make test           # Unit and example tests
+make test-race      # Race detector (thread safety)
+make test-fuzz      # Fuzz tests (robustness, edge cases)
+make test-benchmark # Benchmarks (performance)
 ```
 
-Lint and format the code:
+### Lint, format, and static analysis
 
 ```sh
 make lint
 make format
 ```
 
-### Contributing
+### Open coverage report
 
-- Ensure full test and benchmark coverage for new logic.
-- Use idiomatic Go and document public types/functions.
+```sh
+make test-coverage
+```
+
+---
+
+## OCPP Compliance
+
+- All date/time fields are normalized to UTC and formatted per RFC3339, as required by the OCPP 1.6 specification.
+- All string types (CiString*) are strictly validated for length and ASCII printability.
+- All types are proven safe for concurrent use via race tests.
+
+---
+
+## Contributing
+
+- Ensure full test, fuzz, and benchmark coverage for new logic.
+- Use idiomatic Go and document all public types/functions.
 - Follow the project's code style and conventions.
+- Run `make test-all` before submitting a PR.
 
 ---
 
