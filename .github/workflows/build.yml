@@ -29,7 +29,7 @@ jobs:
           go-version: ${{ matrix.go }}
           cache: false
 
-      - run: mkdir -p .reports
+      - run: mkdir -p reports
 
       - name: Clean Cache
         run: go clean -cache -testcache -modcache
