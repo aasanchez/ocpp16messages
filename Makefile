@@ -10,7 +10,7 @@ test: ## Run all tests starting with "Test" and collect coverage.
 	@echo "\n--- \033[1;32mExecute Unit Test\033[0m ---"
 	@rm -rf reports && mkdir -p reports
 	@go clean -cache -testcache -modcache
-	@go test -mod=readonly -run '^Test([^R].*|R[^a].*|Ra[^c].*|Rac[^e].*)' \
+	@go test -mod=readonly \
 		-coverpkg=./... \
 		-coverprofile=reports/coverage.out \
 		-v ./... >reports/test.txt

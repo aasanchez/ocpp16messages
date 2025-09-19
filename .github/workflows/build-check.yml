@@ -37,7 +37,7 @@ jobs:
 
       - name: Execute test
         run: |
-          go test -mod=readonly -run '^Test([^R].*|R[^a].*|Ra[^c].*|Rac[^e].*)' \
+          go test -mod=readonly \
               -coverpkg=./... \
               -coverprofile=reports/coverage.out \
               -v ./... >reports/unittest.txt
