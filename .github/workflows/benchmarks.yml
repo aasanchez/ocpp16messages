@@ -2,9 +2,8 @@ name: Scheduled Benchmarks
 
 on:
   schedule:
-    # Every Monday at 04:00 UTC (06:00 in Madrid during CEST, 05:00 during CET)
     - cron: "0 4 * * 1"
-  workflow_dispatch: {}  # Allow manual runs from the Actions tab
+  workflow_dispatch: {}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -62,7 +61,6 @@ jobs:
             -cpu=1,2 \
             -json ./... > "reports/bench_go_${{ matrix.go }}.json"
 
-      # Optional: quick, readable summary right in the GitHub UI
       - name: Publish summary
         run: |
           {

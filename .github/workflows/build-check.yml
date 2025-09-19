@@ -97,6 +97,7 @@ jobs:
       - uses: dominikh/staticcheck-action@v1
         with:
           version: "latest"
+          skip-cache: true
 
   vet:
     name: go vet
