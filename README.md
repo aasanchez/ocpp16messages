@@ -6,7 +6,14 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=bugs)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=coverage)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
 
 ---
 
