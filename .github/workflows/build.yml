@@ -147,11 +147,6 @@ jobs:
           path: reports
           merge-multiple: true
 
-      - run: |
-          ls -la
-          cd reports
-          ls -la
-
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         env:
