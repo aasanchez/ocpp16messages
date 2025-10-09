@@ -13,11 +13,11 @@ func Test_sharedtypes_setCiString_Valid(t *testing.T) {
 
 	cis, err := setCiString(input, maxLen)
 	if err != nil {
-		t.Fatalf("expected no error, got: %v", err)
+		t.Fatalf(ErrorUnexpectedError, err)
 	}
 
 	if got := cis.val(); got != input {
-		t.Errorf("val() = %q; want %q", got, input)
+		t.Errorf(ErrorValueMismatch, got, input)
 	}
 }
 
@@ -64,7 +64,7 @@ func Test_sharedtypes_setCiString_EmptyIsValid(t *testing.T) {
 	}
 
 	if got := cis.val(); got != "" {
-		t.Errorf("val() = %q; want empty string", got)
+		t.Errorf(ErrorValueMismatch, input, got)
 	}
 }
 
@@ -76,10 +76,10 @@ func Test_sharedtypes_setCiString_ASCIIBoundary(t *testing.T) {
 
 	cis, err := setCiString(input, maxLen)
 	if err != nil {
-		t.Fatalf("expected no error, got: %v", err)
+		t.Fatalf(ErrorUnexpectedError, err)
 	}
 
 	if got := cis.val(); got != input {
-		t.Errorf("val() = %q; want %q", got, input)
+		t.Errorf(ErrorValueMismatch, got, input)
 	}
 }
