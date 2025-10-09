@@ -6,6 +6,6 @@ const (
 	ErrorMissing        = "error: missing %s"
 	ErrorWrapper        = "%w: %q"
 	ErrorExpectedError  = "Expected Error: %v"
-	ErrorStringMismatch = "Expected: %s, got: %s"
-	ErrorValueMismatch  = "expected Value() = %q, got %q"
+	ErrorStringMismatch = "Expected String: %s, got: %s"
+	ErrorValueMismatch  = "expected Value = %q, got %q"
 )
