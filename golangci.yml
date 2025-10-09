@@ -39,6 +39,8 @@ linters:
           disabled: true
         - name: cognitive-complexity
           arguments: [15]
+        - name: package-directory-mismatch
+          disabled: true
     depguard:
       rules:
         main:

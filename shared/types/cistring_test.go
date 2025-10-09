@@ -29,11 +29,11 @@ func Test_sharedtypes_setCiString_TooLong(t *testing.T) {
 
 	_, err := setCiString(input, maxLen)
 	if err == nil {
-		t.Fatal("expected error for exceeding max length, got nil")
+		t.Errorf(ErrorExpectedError, err)
 	}
 
 	if !errors.Is(err, errExceedsMaxLength) {
-		t.Errorf("expected errExceedsMaxLength, got: %v", err)
+		t.Errorf(ErrorExpectedError, err)
 	}
 }
 
@@ -44,11 +44,11 @@ func Test_sharedtypes_setCiString_NonPrintableASCII(t *testing.T) {
 
 	_, err := setCiString(input, 20)
 	if err == nil {
-		t.Fatal("expected error for non-printable ASCII, got nil")
+		t.Errorf(ErrorExpectedError, err)
 	}
 
 	if !errors.Is(err, errInvalidASCII) {
-		t.Errorf("expected errInvalidASCII, got: %v", err)
+		t.Errorf(ErrorExpectedError, err)
 	}
 }
 
@@ -60,7 +60,7 @@ func Test_sharedtypes_setCiString_EmptyIsValid(t *testing.T) {
 
 	cis, err := setCiString(input, maxLen)
 	if err != nil {
-		t.Fatalf("expected no error for empty input, got: %v", err)
+		t.Fatalf(ErrorExpectedError, err)
 	}
 
 	if got := cis.val(); got != "" {

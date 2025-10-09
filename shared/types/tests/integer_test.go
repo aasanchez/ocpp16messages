@@ -11,12 +11,12 @@ func Test_sharedtypes_SetInteger(t *testing.T) {
 
 	i, err := st.SetInteger("73")
 	if err != nil {
-		t.Fatalf("unexpected error from SetInteger: %v", err)
+		t.Errorf(st.ErrorUnexpectedError, err)
 	}
 
 	got := i.Value()
 	if got != 73 {
-		t.Errorf("Value() = %d; want 73", got)
+		t.Errorf(st.ErrorValueMismatch, 73, got)
 	}
 }
 

@@ -14,7 +14,7 @@ func Test_sharedtypes_SetDateTime(t *testing.T) {
 
 	_, err := st.SetDateTime(input)
 	if err != nil {
-		t.Errorf("expected no error, got %v", err)
+		t.Errorf(st.ErrorUnexpectedError, err)
 	}
 }
 
@@ -48,7 +48,7 @@ func Test_sharedtypes_SetDateTime_InvalidReturnsError(t *testing.T) {
 
 	_, err := st.SetDateTime("not-a-time")
 	if err == nil {
-		t.Error("expected error for invalid datetime, got nil")
+		t.Errorf(st.ErrorExpectedError,err)
 	}
 }
 

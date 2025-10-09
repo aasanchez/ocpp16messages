@@ -9,7 +9,7 @@ import (
 func ExampleSetDateTime() {
 	datetime, err := st.SetDateTime("2025-08-30T14:34:56Z")
 	if err != nil {
-		fmt.Println("unexpected error:", err)
+		fmt.Printf(st.ErrorUnexpectedError, err)
 
 		return
 	}
@@ -25,9 +25,9 @@ func ExampleSetDateTime() {
 func ExampleSetDateTime_invalid() {
 	_, err := st.SetDateTime("not-a-time")
 	if err != nil {
-		fmt.Println("error occurred")
+		fmt.Println("Invalid datetime")
 	}
 
 	// Output:
-	// error occurred
+	// Invalid datetime
 }
