@@ -82,7 +82,7 @@ func Test_sharedtypes_SetCiString25Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString25Type(val)
 	if err == nil {
-		t.Errorf(st.ErrorExpectedError,err)
+		t.Errorf(st.ErrorExpectedError, err)
 	}
 }
 
@@ -127,7 +127,7 @@ func Test_sharedtypes_SetCiString50Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString50Type(val)
 	if err == nil {
-		t.Errorf(st.ErrorExpectedError,err)
+		t.Errorf(st.ErrorExpectedError, err)
 	}
 }
 
@@ -172,7 +172,7 @@ func Test_sharedtypes_SetCiString255Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString255Type(val)
 	if err == nil {
-		t.Errorf(st.ErrorExpectedError,err)
+		t.Errorf(st.ErrorExpectedError, err)
 	}
 }
 
@@ -217,7 +217,7 @@ func Test_sharedtypes_SetCiString500Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString500Type(val)
 	if err == nil {
-		t.Errorf(st.ErrorExpectedError,err)
+		t.Errorf(st.ErrorExpectedError, err)
 	}
 }
 
