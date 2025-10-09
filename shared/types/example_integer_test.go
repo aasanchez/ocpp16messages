@@ -9,7 +9,7 @@ import (
 func ExampleSetInteger() {
 	intVal, err := st.SetInteger("73")
 	if err != nil {
-		fmt.Println("Unexpected error parsing int:", err)
+		fmt.Printf(st.ErrorUnexpectedError, err)
 
 		return
 	}
