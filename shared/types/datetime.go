@@ -10,14 +10,14 @@ type DateTime struct {
 }
 
 func SetDateTime(input string) (DateTime, error) {
-	t, err := time.Parse(time.RFC3339, input)
+	dateTime, err := time.Parse(time.RFC3339, input)
 	if err != nil {
 		return DateTime{}, fmt.Errorf("invalid datetime: %w", err)
 	}
 
-	t = t.UTC()
+	dateTime = dateTime.UTC()
 
-	return DateTime{value: t}, nil
+	return DateTime{value: dateTime}, nil
 }
 
 func (dt DateTime) Value() time.Time {

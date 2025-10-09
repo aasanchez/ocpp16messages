@@ -10,16 +10,11 @@ import (
 var errInvalidAuthorizationStatus = errors.New("invalid AuthorizationStatus")
 
 const (
-	// Identifier is allowed for charging.
-	Accepted = "Accepted"
-	// Identifier has been blocked. Not allowed for charging.
-	Blocked = "Blocked"
-	// Identifier has expired. Not allowed for charging.
-	Expired = "Expired"
-	// Identifier is unknown. Not allowed for charging.
-	Invalid = "Invalid"
-	// Identifier is already involved in another transaction and multiple transactions are not allowed. (Only relevant for a StartTransaction.req.)
-	ConcurrentTx = "ConcurrentTx"
+	Accepted     = "Accepted"     // is allowed for charging.
+	Blocked      = "Blocked"      // has been blocked. Not allowed for charging.
+	Expired      = "Expired"      // has expired. Not allowed for charging.
+	Invalid      = "Invalid"      // is unknown. Not allowed for charging.
+	ConcurrentTx = "ConcurrentTx" // "ID in use, multiple tx not allowed."
 )
 
 type AuthorizationStatus struct {

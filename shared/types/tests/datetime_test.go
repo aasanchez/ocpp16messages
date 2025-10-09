@@ -26,7 +26,7 @@ func Test_sharedtypes_SetDateTime_ReturnsExpectedValue(t *testing.T) {
 
 	dt, _ := st.SetDateTime(input)
 	if !dt.Value().Equal(want) {
-		t.Errorf("Value() mismatch: got %v, want %v", dt.Value(), want)
+		t.Errorf(st.ErrorValueMismatch, dt.Value(), want)
 	}
 }
 
@@ -39,7 +39,7 @@ func Test_sharedtypes_SetDateTime_StringFormatsRFC3339Nano(t *testing.T) {
 
 	got := dt.String()
 	if got != want.Format(time.RFC3339Nano) {
-		t.Errorf("String() mismatch: got %q, want %q", got, want.Format(time.RFC3339Nano))
+		t.Errorf(st.ErrorStringMismatch, got, want.Format(time.RFC3339Nano))
 	}
 }
 
@@ -57,7 +57,8 @@ func Test_sharedtypes_SetDateTime_EmptyError(t *testing.T) {
 
 	dt, _ := st.SetDateTime("")
 	if !dt.Value().IsZero() {
-		t.Errorf("expected zero value after failed parse, got %v", dt.Value())
+		expected := "0001-01-01 00:00:00 +0000 UTC"
+		t.Errorf(st.ErrorValueMismatch, expected, dt.Value())
 	}
 }
 
@@ -66,6 +67,6 @@ func Test_sharedtypes_DateTime_StringZeroValue(t *testing.T) {
 
 	var dt st.DateTime
 	if dt.String() != (time.Time{}).Format(time.RFC3339Nano) {
-		t.Errorf("String() zero mismatch: got %q", dt.String())
+		t.Errorf(st.ErrorStringMismatch, "0001-01-01T00:00:00Z", dt.String())
 	}
 }

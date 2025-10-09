@@ -40,7 +40,7 @@ func ExampleSetCiString20Type_invalid() {
 
 	fmt.Println(msgLength, len(cistr.Value()))
 	// Output:
-	// Error: CiString Error on Construc (len=21, max=20): exceeds maximum length
+	// Error: CiString len=21 > max=20 (error): exceeds maximum length
 }
 
 func ExampleSetCiString25Type() {
@@ -70,7 +70,7 @@ func ExampleSetCiString25Type_invalid() {
 
 	fmt.Println(msgLength, len(cistr.Value()))
 	// Output:
-	// Error: CiString Error on Construc (len=26, max=25): exceeds maximum length
+	// Error: CiString len=26 > max=25 (error): exceeds maximum length
 }
 
 func ExampleSetCiString50Type() {
@@ -100,7 +100,7 @@ func ExampleSetCiString50Type_invalid() {
 
 	fmt.Println(msgLength, len(cistr.Value()))
 	// Output:
-	// Error: CiString Error on Construc (len=51, max=50): exceeds maximum length
+	// Error: CiString len=51 > max=50 (error): exceeds maximum length
 }
 
 func ExampleSetCiString255Type() {
@@ -130,7 +130,7 @@ func ExampleSetCiString255Type_invalid() {
 
 	fmt.Println(msgLength, len(cistr.Value()))
 	// Output:
-	// Error: CiString Error on Construc (len=256, max=255): exceeds maximum length
+	// Error: CiString len=256 > max=255 (error): exceeds maximum length
 }
 
 func ExampleSetCiString500Type() {
@@ -160,5 +160,5 @@ func ExampleSetCiString500Type_invalid() {
 
 	fmt.Println(msgLength, len(cistr.Value()))
 	// Output:
-	// Error: CiString Error on Construc (len=501, max=500): exceeds maximum length
+	// Error: CiString len=501 > max=500 (error): exceeds maximum length
 }

@@ -10,7 +10,7 @@ import (
 var (
 	errParsingExpiredDate = errors.New("failed to parse expiryDate")
 	errParseStatus        = errors.New("failed to parse status")
-	errParseParentId      = errors.New("failed to validate parentIdTag as CiString20")
+	errParseParentId      = errors.New("failed to parse parentIdTag")
 )
 
 type IdTagInfo struct {

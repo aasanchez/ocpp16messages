@@ -6,16 +6,20 @@ formatters:
     - gofumpt
     - goimports
     - golines
+    # - swaggo
 linters:
   default: all
   disable:
     - godot
-    - lll
-    - mnd
     - testpackage
-    - varnamelen
     - wsl
   settings:
+    wsl_v5:
+      allow-first-in-block: true
+      allow-whole-block: false
+      branch-max-lines: 2
+    lll:
+      line-length: 80
     revive:
       enable-all-rules: true
       rules:
@@ -26,7 +30,7 @@ linters:
           arguments:
             - ["ID"]
         - name: line-length-limit
-          disabled: true
+          arguments: [80]
         - name: add-constant
           disabled: true
         - name: exported

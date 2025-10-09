@@ -37,7 +37,7 @@ func Test_sharedtypes_SetCiString20Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString20Type(val)
 	if err == nil {
-		t.Error("expected an error for a string longer than 20 characters; got none")
+		t.Error("No error for string >20 chars.")
 	}
 }
 
@@ -82,7 +82,7 @@ func Test_sharedtypes_SetCiString25Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString25Type(val)
 	if err == nil {
-		t.Error("expected an error for a string longer than 25 characters; got none")
+		t.Error("No error for string >25 chars.")
 	}
 }
 
@@ -127,7 +127,7 @@ func Test_sharedtypes_SetCiString50Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString50Type(val)
 	if err == nil {
-		t.Error("expected an error for a string longer than 50 characters; got none")
+		t.Error("No error for string >50 chars.")
 	}
 }
 
@@ -172,7 +172,7 @@ func Test_sharedtypes_SetCiString255Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString255Type(val)
 	if err == nil {
-		t.Error("expected an error for a string longer than 255 characters; got none")
+		t.Error("No error for string >255 chars.")
 	}
 }
 
@@ -217,7 +217,7 @@ func Test_sharedtypes_SetCiString500Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString500Type(val)
 	if err == nil {
-		t.Error("expected an error for a string longer than 500 characters; got none")
+		t.Error("No error for string >500 chars.")
 	}
 }
 
