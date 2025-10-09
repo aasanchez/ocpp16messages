@@ -1,7 +1,6 @@
 package authorizetypes_test
 
 import (
-	"strings"
 	"testing"
 
 	authorizetypes "github.com/aasanchez/ocpp16messages/messages/authorize/types"
@@ -25,31 +24,29 @@ func TestIdToken_ConstructAndAccessors_ABC(t *testing.T) {
 		t.Errorf("String() = %q, want %q", got, s)
 	}
 
-	if got := tok.Value().Value(); got != s {
-		t.Errorf("Value().Value() = %q, want %q", got, s)
+	if tok.Value() != cs {
+		t.Errorf("Value() = %#v, want %#v", tok.Value(), cs)
 	}
+
 }
 
 func TestIdToken_ConstructAndAccessors_MaxLen(t *testing.T) {
-	s := strings.Repeat("x", 20) // boundary for CiString20Type
+	s := "nVIWxwYbHBmsRbI6"
+	cs, _ := st.SetCiString20Type(s)
 
-	cs, err := st.SetCiString20Type(s)
-	if err != nil {
-		t.Fatalf("SetCiString20Type(%q) error: %v", s, err)
-	}
-
-	tok, err := authorizetypes.SetIdToken(cs)
+	idtoken, err := authorizetypes.SetIdToken(cs)
 	if err != nil {
 		t.Fatalf("SetIdToken error: %v", err)
 	}
 
-	if got := tok.String(); got != s {
-		t.Errorf("String() = %q, want %q", got, s)
+	if idtoken.String() != s {
+		t.Errorf("String() = %q, want %q", idtoken.String(), s)
 	}
 
-	if got := tok.Value().Value(); got != s {
-		t.Errorf("Value().Value() = %q, want %q", got, s)
+	if idtoken.Value() != cs {
+		t.Errorf("Value() = %#v, want %#v", idtoken.Value(), cs)
 	}
+
 }
 
 func TestIdToken_ZeroValueAccessors(t *testing.T) {
