@@ -15,7 +15,7 @@ func Test_sharedtypes_SetCiString20Type(t *testing.T) {
 
 	_, err := st.SetCiString20Type(val)
 	if err != nil {
-		t.Errorf("unexpected error for a 20-character string: %v", err)
+		t.Errorf(st.ErrorExpectedError, err)
 	}
 }
 
@@ -26,7 +26,7 @@ func Test_sharedtypes_SetCiString20Type_Empty(t *testing.T) {
 
 	_, err := st.SetCiString20Type(val)
 	if err != nil {
-		t.Errorf("empty string should be accepted; got error: %v", err)
+		t.Errorf(st.ErrorUnexpectedError, err)
 	}
 }
 
@@ -37,7 +37,7 @@ func Test_sharedtypes_SetCiString20Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString20Type(val)
 	if err == nil {
-		t.Error("No error for string >20 chars.")
+		t.Errorf(st.ErrorExpectedError, err)
 	}
 }
 
@@ -60,7 +60,7 @@ func Test_sharedtypes_SetCiString25Type(t *testing.T) {
 
 	_, err := st.SetCiString25Type(val)
 	if err != nil {
-		t.Errorf("unexpected error for a 25-character string: %v", err)
+		t.Errorf(st.ErrorUnexpectedError, err)
 	}
 }
 
