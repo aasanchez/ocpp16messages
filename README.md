@@ -5,8 +5,6 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=coverage)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aasanchez_ocpp16_messages&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=aasanchez_ocpp16_messages)
 
----
-
 ## Overview
 
 This project provides a robust, modular, and thoroughly tested implementation of OCPP 1.6 message types and payload validation for Go. It is designed for high-quality message serialization, strict type safety, and OCPP-compliant EV charging station management.
