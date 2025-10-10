@@ -12,10 +12,25 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
+// Race tests (build with -race).
+//
+// OCPP 1.6 context
+//   - Integer is immutable and read-only after build.
+//   - CP/CSMS code often reads values in parallel.
+//   - These tests exercise concurrent patterns to
+//     ensure no data races or flakiness.
+//
+// Patterns covered
+// - Many goroutines calling SetInteger/Value()
+// - Shared instance reads across goroutines
+// - Interleaved parse/read with varied inputs
+// - Stress with randomized values
 func randomSleep() {
 	time.Sleep(time.Duration(rand.Intn(10)) * time.Microsecond)
 }
 
+// Concurrent parses and reads should be safe.
+// Valid parses call Value(); errors are ignored.
 func TestIntegerRace_ConcurrentSetAndValue(t *testing.T) {
 	t.Parallel()
 	var wg sync.WaitGroup
@@ -38,6 +53,8 @@ func TestIntegerRace_ConcurrentSetAndValue(t *testing.T) {
 	wg.Wait()
 }
 
+// Shared instance reads must be race-free.
+// Many goroutines read the same Integer.
 func TestIntegerRace_SharedInstanceValue(t *testing.T) {
 	t.Parallel()
 	integer, err := st.SetInteger("12345")
@@ -59,6 +76,9 @@ func TestIntegerRace_SharedInstanceValue(t *testing.T) {
 	wg.Wait()
 }
 
+// Interleaved build and read.
+// Each goroutine parses a distinct value and
+// confirms Value() matches that value.
 func TestIntegerRace_InterleavedSetAndValue(t *testing.T) {
 	t.Parallel()
 	var wg sync.WaitGroup
@@ -81,6 +101,8 @@ func TestIntegerRace_InterleavedSetAndValue(t *testing.T) {
 	wg.Wait()
 }
 
+// Stress: many goroutines building valid values
+// and reading them to probe for race conditions.
 func TestIntegerRace_Stress(t *testing.T) {
 	t.Parallel()
 	var wg sync.WaitGroup
