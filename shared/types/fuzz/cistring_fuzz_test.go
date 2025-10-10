@@ -84,7 +84,7 @@ func FuzzCiStringTypes(f *testing.F) {
 
 		if validASCII && withinLimit {
 			if err != nil {
-				t.Fatalf(
+				t.Errorf(
 					"expected success for len=%d limit=%d printable, got err=%v",
 					len(s),
 					limit,
@@ -93,7 +93,7 @@ func FuzzCiStringTypes(f *testing.F) {
 			}
 		} else {
 			if err == nil {
-				t.Fatalf("expected error for len=%d limit=%d printable=%v, got nil", len(s), limit, validASCII)
+				t.Errorf("expected error for len=%d limit=%d printable=%v, got nil", len(s), limit, validASCII)
 			}
 		}
 	})

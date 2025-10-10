@@ -118,7 +118,7 @@ func TestCiStringRace_SharedInstanceValue(t *testing.T) {
 	var wg sync.WaitGroup
 	v, err := st.SetCiString255Type(makeASCIIString(255))
 	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
+		t.Errorf("unexpected error: %v", err)
 	}
 	for i := 0; i < 1000; i++ {
 		wg.Add(1)

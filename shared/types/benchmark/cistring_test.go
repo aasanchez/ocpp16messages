@@ -46,11 +46,11 @@ func benchmarkSetter(b *testing.B, name string, set setterFn, input string, want
 			err := set(input)
 			if wantErr {
 				if err == nil {
-					b.Fatalf("expected error, got nil")
+					b.Errorf("expected error, got nil")
 				}
 			} else {
 				if err != nil {
-					b.Fatalf("unexpected error: %v", err)
+					b.Errorf("unexpected error: %v", err)
 				}
 			}
 		}
@@ -66,11 +66,11 @@ func benchmarkSetterParallel(b *testing.B, name string, set setterFn, input stri
 				err := set(input)
 				if wantErr {
 					if err == nil {
-						b.Fatalf("expected error, got nil")
+						b.Errorf("expected error, got nil")
 					}
 				} else {
 					if err != nil {
-						b.Fatalf("unexpected error: %v", err)
+						b.Errorf("unexpected error: %v", err)
 					}
 				}
 			}
@@ -206,10 +206,10 @@ func BenchmarkSetCiString_MixedWorkload(b *testing.B) {
 				err := set.fn(item.in)
 				if item.wantErr {
 					if err == nil {
-						b.Fatalf("expected error, got nil")
+						b.Errorf("expected error, got nil")
 					}
 				} else if err != nil {
-					b.Fatalf("unexpected error: %v", err)
+					b.Errorf("unexpected error: %v", err)
 				}
 			}
 		}

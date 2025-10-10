@@ -24,17 +24,17 @@ func FuzzSetInteger(f *testing.F) {
 
 		if err == nil {
 			if perr != nil {
-				t.Fatalf("SetInteger accepted input %q but strconv.ParseUint failed: %v", s, perr)
+				t.Errorf("SetInteger accepted input %q but strconv.ParseUint failed: %v", s, perr)
 			}
 			if uint16(parsed) != got.Value() {
-				t.Fatalf("value mismatch for %q: got=%d want=%d", s, got.Value(), uint16(parsed))
+				t.Errorf("value mismatch for %q: got=%d want=%d", s, got.Value(), uint16(parsed))
 			}
 			return
 		}
 
 		// err != nil: ensure strconv indicates an error too
 		if perr == nil {
-			t.Fatalf("SetInteger rejected %q, but strconv.ParseUint succeeded (=%d)", s, parsed)
+			t.Errorf("SetInteger rejected %q, but strconv.ParseUint succeeded (=%d)", s, parsed)
 		}
 	})
 }

@@ -16,7 +16,7 @@ func TestIdToken_ConstructAndAccessors_MaxLen(t *testing.T) {
 
 	idtoken, err := mat.SetIdToken(cstr)
 	if err != nil {
-		t.Fatalf("SetIdToken error: %v", err)
+		t.Errorf("SetIdToken error: %v", err)
 	}
 
 	if idtoken.String() != str {

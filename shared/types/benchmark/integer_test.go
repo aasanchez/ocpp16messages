@@ -14,7 +14,7 @@ func BenchmarkSetInteger_ValidInput(b *testing.B) {
 	for range b.N {
 		_, err := st.SetInteger("73")
 		if err != nil {
-			b.Fatalf("unexpected error: %v", err)
+			b.Errorf("unexpected error: %v", err)
 		}
 	}
 }
@@ -22,7 +22,7 @@ func BenchmarkSetInteger_ValidInput(b *testing.B) {
 func BenchmarkInteger_Value(b *testing.B) {
 	integer, err := st.SetInteger("73")
 	if err != nil {
-		b.Fatalf("unexpected error: %v", err)
+		b.Errorf("unexpected error: %v", err)
 	}
 
 	b.ResetTimer()
@@ -49,7 +49,7 @@ func BenchmarkSetInteger_VariousValid(b *testing.B) {
 			for i := 0; i < b.N; i++ {
 				_, err := st.SetInteger(s)
 				if err != nil {
-					b.Fatalf("unexpected error: %v", err)
+					b.Errorf("unexpected error: %v", err)
 				}
 			}
 		})
@@ -78,7 +78,7 @@ func BenchmarkSetInteger_VariousInvalid(b *testing.B) {
 			for i := 0; i < b.N; i++ {
 				_, err := st.SetInteger(s)
 				if err == nil {
-					b.Fatalf("expected error for %q, got nil", s)
+					b.Errorf("expected error for %q, got nil", s)
 				}
 			}
 		})
@@ -111,10 +111,10 @@ func BenchmarkSetInteger_MixedWorkload(b *testing.B) {
 		_, err := st.SetInteger(item.in)
 		if item.err {
 			if err == nil {
-				b.Fatalf("expected error for %q, got nil", item.in)
+				b.Errorf("expected error for %q, got nil", item.in)
 			}
 		} else if err != nil {
-			b.Fatalf("unexpected error for %q: %v", item.in, err)
+			b.Errorf("unexpected error for %q: %v", item.in, err)
 		}
 	}
 }
@@ -129,7 +129,7 @@ func BenchmarkSetInteger_Parallel(b *testing.B) {
 			s := inputs[idx%len(inputs)]
 			_, err := st.SetInteger(s)
 			if err != nil {
-				b.Fatalf("unexpected error: %v", err)
+				b.Errorf("unexpected error: %v", err)
 			}
 		}
 	})
@@ -144,7 +144,7 @@ func BenchmarkSetInteger_ParseUintBaseline(b *testing.B) {
 			for i := 0; i < b.N; i++ {
 				_, err := strconv.ParseUint(s, 10, 16)
 				if err != nil {
-					b.Fatalf("unexpected error: %v", err)
+					b.Errorf("unexpected error: %v", err)
 				}
 			}
 		})

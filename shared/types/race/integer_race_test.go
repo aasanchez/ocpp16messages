@@ -12,7 +12,6 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-// Helper: random sleep to increase goroutine interleaving
 func randomSleep() {
 	time.Sleep(time.Duration(rand.Intn(10)) * time.Microsecond)
 }
@@ -43,7 +42,7 @@ func TestIntegerRace_SharedInstanceValue(t *testing.T) {
 	t.Parallel()
 	integer, err := st.SetInteger("12345")
 	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
+		t.Errorf("unexpected error: %v", err)
 	}
 	var wg sync.WaitGroup
 	for i := 0; i < 1000; i++ {
@@ -101,4 +100,3 @@ func TestIntegerRace_Stress(t *testing.T) {
 	wg.Wait()
 }
 
-// Document: If Integer ever becomes mutable, add tests for concurrent mutation and reading.

@@ -11,7 +11,6 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-// randomSleep increases goroutine interleaving to maximize race detection.
 func randomSleepDT() {
 	time.Sleep(time.Duration(rand.Intn(10)) * time.Microsecond)
 }
@@ -44,7 +43,7 @@ func TestDateTimeRace_SharedInstanceStringValue(t *testing.T) {
 	t.Parallel()
 	dt, err := st.SetDateTime("2025-09-19T12:34:56.789Z")
 	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
+		t.Errorf("unexpected error: %v", err)
 	}
 	var wg sync.WaitGroup
 	for i := 0; i < 1000; i++ {
@@ -111,5 +110,3 @@ func TestDateTimeRace_Stress(t *testing.T) {
 	}
 	wg.Wait()
 }
-
-// Document: If DateTime ever becomes mutable, add tests for concurrent mutation and reading.

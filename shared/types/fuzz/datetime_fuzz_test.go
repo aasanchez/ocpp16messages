@@ -79,10 +79,10 @@ func FuzzSetDateTime(f *testing.F) {
 		dtStr := dt.String()
 		dt2, err2 := st.SetDateTime(dtStr)
 		if err2 != nil {
-			t.Fatalf("round-trip parse failed: input=%q, dtStr=%q, err2=%v", input, dtStr, err2)
+			t.Errorf("round-trip parse failed: input=%q, dtStr=%q, err2=%v", input, dtStr, err2)
 		}
 		if !dt.Value().Equal(dt2.Value()) {
-			t.Fatalf(
+			t.Errorf(
 				"round-trip value mismatch: input=%q, dtStr=%q, got=%v, want=%v",
 				input,
 				dtStr,
@@ -92,11 +92,11 @@ func FuzzSetDateTime(f *testing.F) {
 		}
 		// Check that String() always produces a valid RFC3339Nano string
 		if _, err := time.Parse(time.RFC3339Nano, dtStr); err != nil {
-			t.Fatalf("String() output not RFC3339Nano: %q, err=%v", dtStr, err)
+			t.Errorf("String() output not RFC3339Nano: %q, err=%v", dtStr, err)
 		}
 		// Check nanosecond precision is preserved
 		if dt.Value().Nanosecond() != dt2.Value().Nanosecond() {
-			t.Fatalf(
+			t.Errorf(
 				"nanosecond precision lost: input=%q, got=%d, want=%d",
 				input,
 				dt2.Value().Nanosecond(),
@@ -105,7 +105,7 @@ func FuzzSetDateTime(f *testing.F) {
 		}
 		// Check time zone normalization: both should be UTC after round-trip
 		if dt2.Value().Location().String() != "UTC" {
-			t.Fatalf("round-trip location not UTC: input=%q, got=%v", input, dt2.Value().Location())
+			t.Errorf("round-trip location not UTC: input=%q, got=%v", input, dt2.Value().Location())
 		}
 	})
 }
