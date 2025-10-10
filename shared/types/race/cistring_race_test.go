@@ -1,5 +1,10 @@
 //go:build race
 
+// OCPP 1.6 CiString race tests.
+// Exercises case-insensitive bounded strings
+// under heavy concurrency and jitter.
+// Focus on idTag, vendor, model, etc.
+// Run with `go test -race -tags race`.
 package sharedtypes_test
 
 import (
@@ -12,12 +17,14 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-// randomSleepCS increases goroutine interleaving to maximize race detection.
+// randomSleepCS adds jitter to goroutines to
+// expose races in parse/read code paths.
 func randomSleepCS() {
 	time.Sleep(time.Duration(rand.Intn(10)) * time.Microsecond)
 }
 
-// makeASCIIString returns a string of length n with printable ASCII chars.
+// makeASCIIString creates an upper-ASCII payload
+// sized to target CiString bounds.
 func makeASCIIString(n int) string {
 	if n <= 0 {
 		return ""
@@ -25,7 +32,8 @@ func makeASCIIString(n int) string {
 	return strings.Repeat("A", n)
 }
 
-// makeStringWithRune returns a string of length n with a special rune in the middle.
+// makeStringWithRune injects a target rune mid-string
+// to simulate invalid or non-ASCII content.
 func makeStringWithRune(n int, r rune) string {
 	if n <= 0 {
 		return string(r)
@@ -39,6 +47,9 @@ func makeStringWithRune(n int, r rune) string {
 	return string(b)
 }
 
+// Parses and reads Value across all CiString sizes.
+// Uses boundary, invalid, and non-ASCII inputs.
+// Mirrors OCPP 1.6 id fields under load.
 func TestCiStringRace_ConcurrentSetAndValue(t *testing.T) {
 	t.Parallel()
 	var wg sync.WaitGroup
@@ -113,6 +124,9 @@ func TestCiStringRace_ConcurrentSetAndValue(t *testing.T) {
 	wg.Wait()
 }
 
+// Reads Value on a single instance across goroutines.
+// Ensures read-only access to Value is race-safe.
+// Validates exact length for CiString255.
 func TestCiStringRace_SharedInstanceValue(t *testing.T) {
 	t.Parallel()
 	var wg sync.WaitGroup
@@ -134,6 +148,9 @@ func TestCiStringRace_SharedInstanceValue(t *testing.T) {
 	wg.Wait()
 }
 
+// Alternates valid ASCII and invalid rune payloads.
+// Interleaves Set and Value under concurrency.
+// Reflects OCPP 1.6 field diversity.
 func TestCiStringRace_InterleavedSetAndValue(t *testing.T) {
 	t.Parallel()
 	var wg sync.WaitGroup
@@ -143,7 +160,10 @@ func TestCiStringRace_InterleavedSetAndValue(t *testing.T) {
 		set  func(string) (any, error)
 		val  func(any) string
 	}{
-		"CiString50", 50, func(s string) (any, error) { return st.SetCiString50Type(s) }, func(v any) string { return v.(st.CiString50Type).Value() },
+		"CiString50",
+		50,
+		func(s string) (any, error) { return st.SetCiString50Type(s) },
+		func(v any) string { return v.(st.CiString50Type).Value() },
 	}
 	for i := 0; i < 1000; i++ {
 		wg.Add(1)
@@ -168,6 +188,9 @@ func TestCiStringRace_InterleavedSetAndValue(t *testing.T) {
 	wg.Wait()
 }
 
+// Hammers parse and Value across types with
+// thousands of goroutines and inputs.
+// Models bursty OCPP identifier traffic.
 func TestCiStringRace_Stress(t *testing.T) {
 	t.Parallel()
 	var wg sync.WaitGroup
@@ -211,5 +234,3 @@ func TestCiStringRace_Stress(t *testing.T) {
 	}
 	wg.Wait()
 }
-
-// Document: If CiString types ever become mutable, add tests for concurrent mutation and reading.

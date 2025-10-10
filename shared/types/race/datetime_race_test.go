@@ -1,5 +1,8 @@
 //go:build race
 
+// OCPP 1.6 DateTime race tests.
+// Verifies RFC3339 parse, String, Value
+// under heavy concurrency and jitter.
 package sharedtypes_test
 
 import (
@@ -11,10 +14,15 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
+// randomSleepDT adds jitter to goroutines
+// to expose races under load.
 func randomSleepDT() {
 	time.Sleep(time.Duration(rand.Intn(10)) * time.Microsecond)
 }
 
+// Parses many inputs in parallel, then
+// calls String and Value on each.
+// Mirrors OCPP 1.6 time handling.
 func TestDateTimeRace_ConcurrentSetAndStringValue(t *testing.T) {
 	t.Parallel()
 	var wg sync.WaitGroup
@@ -39,6 +47,9 @@ func TestDateTimeRace_ConcurrentSetAndStringValue(t *testing.T) {
 	wg.Wait()
 }
 
+// Validates String and Value calls on a
+// single parsed instance across goroutines.
+// Ensures read-only access is race safe.
 func TestDateTimeRace_SharedInstanceStringValue(t *testing.T) {
 	t.Parallel()
 	dt, err := st.SetDateTime("2025-09-19T12:34:56.789Z")
@@ -64,6 +75,9 @@ func TestDateTimeRace_SharedInstanceStringValue(t *testing.T) {
 	wg.Wait()
 }
 
+// Interleaves parse with later String and
+// Value calls using mixed input quality.
+// Reflects OCPP 1.6 field diversity.
 func TestDateTimeRace_InterleavedSetStringValue(t *testing.T) {
 	t.Parallel()
 	var wg sync.WaitGroup
@@ -87,6 +101,9 @@ func TestDateTimeRace_InterleavedSetStringValue(t *testing.T) {
 	wg.Wait()
 }
 
+// Hammers parse, String, and Value with
+// thousands of goroutines and inputs.
+// Models bursty OCPP timestamp traffic.
 func TestDateTimeRace_Stress(t *testing.T) {
 	t.Parallel()
 	var wg sync.WaitGroup
