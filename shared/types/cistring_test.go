@@ -61,6 +61,10 @@ func Test_sharedtypes_setCiString_NonPrintableASCII(t *testing.T) {
 	}
 }
 
+// Empty string is accepted by CiString.
+// OCPP 1.6: payload schemas decide if empty
+// is allowed for a given field. The base type
+// permits empty; this test verifies round-trip.
 func Test_sharedtypes_setCiString_EmptyIsValid(t *testing.T) {
 	t.Parallel()
 
@@ -77,6 +81,10 @@ func Test_sharedtypes_setCiString_EmptyIsValid(t *testing.T) {
 	}
 }
 
+// ASCII boundary values are valid.
+// OCPP 1.6 allows printable ASCII only.
+// This test uses the lowest ' ' (32) and
+// highest '~' (126) printable characters.
 func Test_sharedtypes_setCiString_ASCIIBoundary(t *testing.T) {
 	t.Parallel()
 
