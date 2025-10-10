@@ -1,5 +1,24 @@
 //go:build fuzz
 
+// Package sharedtypes_test contains fuzz
+// tests that verify RFC3339/RFC3339Nano
+// parsing and formatting for OCPP 1.6
+// timestamps via SetDateTime. It protects
+// CSMS and charge points against malformed
+// time payloads in messages like
+// StartTransaction, MeterValues and
+// StatusNotification.
+//
+// In OCPP 1.6, timestamps annotate
+// transactions, connector status, and
+// meter samples. Robust handling prevents
+// time drift, overflow and injection that
+// could corrupt billing or monitoring.
+//
+// Run with:
+//
+//	go test -tags fuzz -fuzz
+//	FuzzSetDateTime ./...
 package sharedtypes_test
 
 import (
@@ -9,7 +28,12 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-// addSeedInputs adds a wide variety of valid and invalid RFC3339 strings to the fuzz corpus.
+// addSeedInputs seeds the corpus with
+// representative valid and invalid
+// RFC3339/RFC3339Nano forms seen in
+// OCPP 1.6 traffic. This drives early
+// coverage across zones, leap seconds,
+// partial forms and unicode noise.
 func addSeedInputs(f *testing.F) {
 	seeds := []string{
 		// Valid RFC3339
@@ -67,6 +91,16 @@ func addSeedInputs(f *testing.F) {
 	}
 }
 
+// FuzzSetDateTime stresses st.SetDateTime
+// with adversarial inputs to harden
+// OCPP 1.6 timestamp handling. It checks:
+// - no panics for any input
+// - String() round-trips the value
+// - output matches RFC3339Nano
+// - nanosecond precision is kept
+// - location normalizes to UTC
+// These invariants protect transaction and
+// meter time lines in CSMS.
 func FuzzSetDateTime(f *testing.F) {
 	addSeedInputs(f)
 	f.Fuzz(func(t *testing.T, input string) {

@@ -1,5 +1,22 @@
 //go:build fuzz
 
+// Package sharedtypes_test provides fuzz
+// tests for OCPP 1.6 case-insensitive
+// strings (CiStringXX). It validates the
+// ASCII-printable rule and max-length caps
+// used by fields like idTag, vendor,
+// model, serial, and firmware name.
+//
+// These tests harden CSMS and charge
+// point stacks against malformed input:
+// non-printable, overlong, and mixed-
+// encoding payloads that could break
+// parsing or UI surfaces.
+//
+// Run with:
+//
+//	go test -tags fuzz -fuzz
+//	FuzzCiStringTypes ./...
 package sharedtypes_test
 
 import (
