@@ -7,6 +7,12 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
+// OCPP 1.6 CiString external tests
+// - Printable ASCII only (32..126)
+// - Bounds: 20, 25, 50, 255, 500
+// - Base allows empty; schema decides usage
+// - Verifies accept, empty, overflow, round-trip
+
 // CiString20Type (max 20)
 // OCPP 1.6: IdTag, short tokens, compact labels.
 // Valid exact-bound length is accepted.
