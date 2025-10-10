@@ -99,4 +99,3 @@ func TestIntegerRace_Stress(t *testing.T) {
 	}
 	wg.Wait()
 }
-

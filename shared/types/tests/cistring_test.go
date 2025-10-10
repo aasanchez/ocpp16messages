@@ -7,7 +7,9 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-// CiString20Type
+// CiString20Type (max 20)
+// OCPP 1.6: IdTag, short tokens, compact labels.
+// Valid exact-bound length is accepted.
 func Test_sharedtypes_SetCiString20Type(t *testing.T) {
 	t.Parallel()
 
@@ -19,6 +21,8 @@ func Test_sharedtypes_SetCiString20Type(t *testing.T) {
 	}
 }
 
+// Empty is allowed by the base type. Final
+// allowance depends on the message schema.
 func Test_sharedtypes_SetCiString20Type_Empty(t *testing.T) {
 	t.Parallel()
 
@@ -30,6 +34,7 @@ func Test_sharedtypes_SetCiString20Type_Empty(t *testing.T) {
 	}
 }
 
+// Overflow (>20) is rejected with an error.
 func Test_sharedtypes_SetCiString20Type_TooLong(t *testing.T) {
 	t.Parallel()
 
@@ -41,6 +46,7 @@ func Test_sharedtypes_SetCiString20Type_TooLong(t *testing.T) {
 	}
 }
 
+// Value() round-trip returns the original input.
 func Test_sharedtypes_SetCiString20Type_TestValue(t *testing.T) {
 	t.Parallel()
 
@@ -52,7 +58,9 @@ func Test_sharedtypes_SetCiString20Type_TestValue(t *testing.T) {
 	}
 }
 
-// CiString25Type
+// CiString25Type (max 25)
+// OCPP 1.6: vendor/model-like descriptors.
+// Valid exact-bound length is accepted.
 func Test_sharedtypes_SetCiString25Type(t *testing.T) {
 	t.Parallel()
 
@@ -64,6 +72,7 @@ func Test_sharedtypes_SetCiString25Type(t *testing.T) {
 	}
 }
 
+// Empty allowed at base type; schema may forbid.
 func Test_sharedtypes_SetCiString25Type_Empty(t *testing.T) {
 	t.Parallel()
 
@@ -75,6 +84,7 @@ func Test_sharedtypes_SetCiString25Type_Empty(t *testing.T) {
 	}
 }
 
+// Overflow (>25) is rejected with an error.
 func Test_sharedtypes_SetCiString25Type_TooLong(t *testing.T) {
 	t.Parallel()
 
@@ -86,6 +96,7 @@ func Test_sharedtypes_SetCiString25Type_TooLong(t *testing.T) {
 	}
 }
 
+// Value() round-trip returns the original input.
 func Test_sharedtypes_SetCiString25Type_TestValue(t *testing.T) {
 	t.Parallel()
 
@@ -97,7 +108,9 @@ func Test_sharedtypes_SetCiString25Type_TestValue(t *testing.T) {
 	}
 }
 
-// CiString50Type
+// CiString50Type (max 50)
+// OCPP 1.6: firmware version, serials, labels.
+// Valid exact-bound length is accepted.
 func Test_sharedtypes_SetCiString50Type(t *testing.T) {
 	t.Parallel()
 
@@ -109,6 +122,7 @@ func Test_sharedtypes_SetCiString50Type(t *testing.T) {
 	}
 }
 
+// Empty allowed at base type; schema may forbid.
 func Test_sharedtypes_SetCiString50Type_Empty(t *testing.T) {
 	t.Parallel()
 
@@ -120,6 +134,7 @@ func Test_sharedtypes_SetCiString50Type_Empty(t *testing.T) {
 	}
 }
 
+// Overflow (>50) is rejected with an error.
 func Test_sharedtypes_SetCiString50Type_TooLong(t *testing.T) {
 	t.Parallel()
 
@@ -131,6 +146,7 @@ func Test_sharedtypes_SetCiString50Type_TooLong(t *testing.T) {
 	}
 }
 
+// Value() round-trip returns the original input.
 func Test_sharedtypes_SetCiString50Type_TestValue(t *testing.T) {
 	t.Parallel()
 
@@ -142,7 +158,9 @@ func Test_sharedtypes_SetCiString50Type_TestValue(t *testing.T) {
 	}
 }
 
-// CiString255Type
+// CiString255Type (max 255)
+// OCPP 1.6: descriptions, diagnostics, vendor text.
+// Valid exact-bound length is accepted.
 func Test_sharedtypes_SetCiString255Type(t *testing.T) {
 	t.Parallel()
 
@@ -154,6 +172,7 @@ func Test_sharedtypes_SetCiString255Type(t *testing.T) {
 	}
 }
 
+// Empty allowed at base type; schema may forbid.
 func Test_sharedtypes_SetCiString255Type_Empty(t *testing.T) {
 	t.Parallel()
 
@@ -165,6 +184,7 @@ func Test_sharedtypes_SetCiString255Type_Empty(t *testing.T) {
 	}
 }
 
+// Overflow (>255) is rejected with an error.
 func Test_sharedtypes_SetCiString255Type_TooLong(t *testing.T) {
 	t.Parallel()
 
@@ -176,6 +196,7 @@ func Test_sharedtypes_SetCiString255Type_TooLong(t *testing.T) {
 	}
 }
 
+// Value() round-trip returns the original input.
 func Test_sharedtypes_SetCiString255Type_TestValue(t *testing.T) {
 	t.Parallel()
 
@@ -187,7 +208,9 @@ func Test_sharedtypes_SetCiString255Type_TestValue(t *testing.T) {
 	}
 }
 
-// CiString500Type
+// CiString500Type (max 500)
+// OCPP 1.6: extended diagnostics, long ASCII notes.
+// Valid exact-bound length is accepted.
 func Test_sharedtypes_SetCiString500Type(t *testing.T) {
 	t.Parallel()
 
@@ -199,6 +222,7 @@ func Test_sharedtypes_SetCiString500Type(t *testing.T) {
 	}
 }
 
+// Empty allowed at base type; schema may forbid.
 func Test_sharedtypes_SetCiString500Type_Empty(t *testing.T) {
 	t.Parallel()
 
@@ -210,6 +234,7 @@ func Test_sharedtypes_SetCiString500Type_Empty(t *testing.T) {
 	}
 }
 
+// Overflow (>500) is rejected with an error.
 func Test_sharedtypes_SetCiString500Type_TooLong(t *testing.T) {
 	t.Parallel()
 
@@ -221,6 +246,7 @@ func Test_sharedtypes_SetCiString500Type_TooLong(t *testing.T) {
 	}
 }
 
+// Value() round-trip returns the original input.
 func Test_sharedtypes_SetCiString500Type_TestValue(t *testing.T) {
 	t.Parallel()
 

@@ -14,9 +14,9 @@ import (
 //   - SetDateTime validates and normalizes to UTC.
 //
 // What this shows
-//   1) Parse a timestamp string.
-//   2) Read the time.Time value (UTC).
-//   3) Render the canonical string form.
+//  1. Parse a timestamp string.
+//  2. Read the time.Time value (UTC).
+//  3. Render the canonical string form.
 func ExampleSetDateTime() {
 	datetime, err := st.SetDateTime("2025-08-30T14:34:56Z")
 	if err != nil {

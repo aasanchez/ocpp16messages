@@ -23,7 +23,7 @@ import (
 //   - Accepts RFC3339 (time.RFC3339) input.
 //   - Value() returns a UTC time.Time.
 //   - String() renders RFC3339Nano in UTC, which is
-//   stable for logs, tests, and message signing.
+//     stable for logs, tests, and message signing.
 //
 // Errors
 //   - SetDateTime wraps the parse error using
@@ -36,7 +36,6 @@ import (
 //	if err != nil { /* handle */ }
 //	_ = dt.Value()  // time.Time (UTC)
 //	_ = dt.String() // "2025-08-30T12:34:56Z"
-//
 type DateTime struct {
 	value time.Time
 }
