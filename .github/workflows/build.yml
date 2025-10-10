@@ -117,9 +117,12 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
           cache: false
+
       - run: mkdir -p reports
 
       - run: go vet ./... >reports/vet
+
+      - run: cat reports/vet
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
