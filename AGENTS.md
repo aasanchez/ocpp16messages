@@ -26,6 +26,7 @@ Always write the file, if is possible
 ### Universal Rules for Documentation
 
 - Always generate **pkgsite-style GoDoc comments** (top of file, package, and functions).
+- 80 columns limit of leght of the line
 - Documentation must be:
   - Highly detailed
   - Precise and professional

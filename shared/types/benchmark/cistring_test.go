@@ -1,5 +1,20 @@
 //go:build benchmark
 
+// Package sharedtypes_test provides micro-
+// benchmarks for CiString types used in
+// OCPP 1.6 payloads. It measures cost of
+// constructing and reading case-insensitive
+// fixed-size strings for fields such as
+// idTag, vendor, model and serial.
+//
+// Benchmarks target ASCII-printable checks,
+// length caps and concurrency behavior to
+// keep CP and CSMS paths predictable even
+// with malformed or adversarial inputs.
+//
+// Run with:
+//
+//	go test -tags benchmark -bench . -benchmem
 package sharedtypes_test
 
 import (
@@ -11,6 +26,11 @@ import (
 
 type setterFn func(s string) error
 
+// setterFn adapts SetCiStringXX to a common
+// signature for table-driven benchmarks.
+
+// makeASCIIString returns an ASCII 'A'
+// sequence of length n for valid inputs.
 func makeASCIIString(n int) string {
 	if n <= 0 {
 		return ""
@@ -18,6 +38,10 @@ func makeASCIIString(n int) string {
 	return strings.Repeat("A", n)
 }
 
+// makeStringWithRune returns an ASCII 'A'
+// sequence of length n with r inserted at
+// the middle position. Used to craft non-
+// printable and extended ASCII cases.
 func makeStringWithRune(n int, r rune) string {
 	if n <= 0 {
 		return string(r)
@@ -38,6 +62,9 @@ func makeStringWithRune(n int, r rune) string {
 	return string(b)
 }
 
+// benchmarkSetter runs a single-threaded
+// micro-benchmark for a setterFn with the
+// provided input and expected outcome.
 func benchmarkSetter(b *testing.B, name string, set setterFn, input string, wantErr bool) {
 	b.Helper()
 	b.ReportAllocs()
@@ -57,6 +84,9 @@ func benchmarkSetter(b *testing.B, name string, set setterFn, input string, want
 	})
 }
 
+// benchmarkSetterParallel runs the same
+// benchmark under b.RunParallel to observe
+// concurrency costs and allocations.
 func benchmarkSetterParallel(b *testing.B, name string, set setterFn, input string, wantErr bool) {
 	b.Helper()
 	b.ReportAllocs()
@@ -78,6 +108,8 @@ func benchmarkSetterParallel(b *testing.B, name string, set setterFn, input stri
 	})
 }
 
+// setters lists all CiString variants and
+// their limits to drive sub-benchmarks.
 func setters() []struct {
 	name string
 	max  int
@@ -104,6 +136,12 @@ func setters() []struct {
 	}
 }
 
+// BenchmarkSetCiString_AllScenarios measures
+// accept/reject paths around size limits and
+// byte classes (printable, control, DEL,
+// extended). It reports allocations and the
+// parallel variants mirror multi-goroutine
+// handlers in CP and CSMS.
 func BenchmarkSetCiString_AllScenarios(b *testing.B) {
 	for _, s := range setters() {
 		set := s
@@ -135,6 +173,9 @@ func BenchmarkSetCiString_AllScenarios(b *testing.B) {
 	}
 }
 
+// BenchmarkCiString_Value measures Value()
+// accessor cost. Should be O(1) without
+// allocations across all sizes.
 func BenchmarkCiString_Value(b *testing.B) {
 	cases := []struct {
 		name string
@@ -175,6 +216,10 @@ func BenchmarkCiString_Value(b *testing.B) {
 	}
 }
 
+// BenchmarkSetCiString_MixedWorkload mixes
+// valid and invalid inputs across sizes to
+// approximate production streams and catch
+// steady-state regressions.
 func BenchmarkSetCiString_MixedWorkload(b *testing.B) {
 	types := setters()
 	inputs := [][]struct {
@@ -216,6 +261,7 @@ func BenchmarkSetCiString_MixedWorkload(b *testing.B) {
 	}
 }
 
+// min returns the smaller int.
 func min(a, b int) int {
 	if a < b {
 		return a
@@ -223,6 +269,7 @@ func min(a, b int) int {
 	return b
 }
 
+// max returns the larger int.
 func max(a, b int) int {
 	if a > b {
 		return a

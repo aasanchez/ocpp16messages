@@ -1,5 +1,19 @@
 //go:build benchmark
 
+// Package sharedtypes_test provides micro-
+// benchmarks for the Integer type used in
+// OCPP 1.6 payloads. It measures parse,
+// allocation and concurrency cost for
+// 0..65535 values that represent connector
+// indices, counters and compact ids.
+//
+// These numbers help keep CP and CSMS
+// message handling fast and predictable,
+// even under invalid inputs and bursts.
+//
+// Run with:
+//
+//	go test -tags benchmark -bench . -benchmem
 package sharedtypes_test
 
 import (
@@ -10,6 +24,10 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
+// BenchmarkSetInteger_ValidInput measures the
+// common-case cost to parse a typical valid
+// value (e.g., connector index). Helps ensure
+// low latency in CP/CSMS message flows.
 func BenchmarkSetInteger_ValidInput(b *testing.B) {
 	for range b.N {
 		_, err := st.SetInteger("73")
@@ -19,6 +37,9 @@ func BenchmarkSetInteger_ValidInput(b *testing.B) {
 	}
 }
 
+// BenchmarkInteger_Value measures accessor
+// overhead to read the stored uint16. It
+// should be O(1) with zero allocations.
 func BenchmarkInteger_Value(b *testing.B) {
 	integer, err := st.SetInteger("73")
 	if err != nil {
@@ -32,6 +53,9 @@ func BenchmarkInteger_Value(b *testing.B) {
 	}
 }
 
+// BenchmarkSetInteger_VariousValid exercises
+// valid edge points from 0 up to 65535.
+// It reports allocations to catch regressions.
 func BenchmarkSetInteger_VariousValid(b *testing.B) {
 	cases := []string{
 		"0", // min
@@ -56,6 +80,10 @@ func BenchmarkSetInteger_VariousValid(b *testing.B) {
 	}
 }
 
+// BenchmarkSetInteger_VariousInvalid measures
+// rejection paths: empty, negative, overflow,
+// floats, and non decimal text. Ensures fast
+// and safe failure under bad inputs.
 func BenchmarkSetInteger_VariousInvalid(b *testing.B) {
 	cases := []string{
 		"",                // empty
@@ -65,8 +93,8 @@ func BenchmarkSetInteger_VariousInvalid(b *testing.B) {
 		"999999999999999", // way overflow
 		"1.5",             // float
 		"abc",             // non-numeric
-		"+12",             // plus sign not allowed by ParseUint base10?
-		"0x10",            // hex-like string but base10
+		"+12",             // explicit plus sign
+		"0x10",            // hex-like but base10
 	}
 	b.ReportAllocs()
 	for _, s := range cases {
@@ -85,6 +113,9 @@ func BenchmarkSetInteger_VariousInvalid(b *testing.B) {
 	}
 }
 
+// BenchmarkSetInteger_MixedWorkload simulates
+// production streams mixing valid and invalid
+// values. Useful to gauge steady-state cost.
 func BenchmarkSetInteger_MixedWorkload(b *testing.B) {
 	inputs := []struct {
 		in  string
@@ -119,6 +150,9 @@ func BenchmarkSetInteger_MixedWorkload(b *testing.B) {
 	}
 }
 
+// BenchmarkSetInteger_Parallel exercises parse
+// under parallelism to observe contention and
+// allocation behavior in concurrent handlers.
 func BenchmarkSetInteger_Parallel(b *testing.B) {
 	inputs := []string{"0", "1", "10", "100", "1024", "65535"}
 	var ctr uint64
@@ -135,6 +169,9 @@ func BenchmarkSetInteger_Parallel(b *testing.B) {
 	})
 }
 
+// BenchmarkSetInteger_ParseUintBaseline provides
+// a baseline using strconv.ParseUint. Compare to
+// SetInteger to understand wrapper overhead.
 func BenchmarkSetInteger_ParseUintBaseline(b *testing.B) {
 	// Baseline to understand SetInteger overhead vs direct strconv.ParseUint
 	inputs := []string{"73", "1024", "65535"}
