@@ -5,6 +5,9 @@ import (
 	"testing"
 )
 
+// Valid CiString construction: ASCII within bound.
+// OCPP 1.6: printable ASCII (32..126), length <= max.
+// Verifies the value round-trips without mutation.
 func Test_sharedtypes_setCiString_Valid(t *testing.T) {
 	t.Parallel()
 
@@ -21,6 +24,9 @@ func Test_sharedtypes_setCiString_Valid(t *testing.T) {
 	}
 }
 
+// Length overflow is rejected with a wrapped error.
+// OCPP 1.6: bounded strings fail fast on overflow.
+// Verifies errExceedsMaxLength is reported.
 func Test_sharedtypes_setCiString_TooLong(t *testing.T) {
 	t.Parallel()
 
@@ -37,6 +43,9 @@ func Test_sharedtypes_setCiString_TooLong(t *testing.T) {
 	}
 }
 
+// Non-printable ASCII is rejected.
+// OCPP 1.6 requires codes 32..126 only.
+// Verifies errInvalidASCII is reported.
 func Test_sharedtypes_setCiString_NonPrintableASCII(t *testing.T) {
 	t.Parallel()
 

@@ -8,28 +8,26 @@ import (
 // CiString types: printable ASCII strings for OCPP 1.6.
 //
 // Context
-//   - OCPP 1.6 uses compact, bounded strings for many
-//     fields (e.g. IdTag, vendor/model, messages).
-//   - Only printable ASCII (codes 32..126) is allowed
-//     to ensure safe transport and logging.
-//   - Empty string is valid unless specified otherwise
-//     by the message schema using these types.
+//   - OCPP 1.6 uses compact, bounded strings for many fields.
+//   - Only printable ASCII (codes 32..126) is allowed to ensure safe
+//     transport, logging, and predictable interop.
+//   - Empty string is valid unless the specific message schema forbids it.
 //
-// Families
-//   - CiString20Type  (max 20)
-//   - CiString25Type  (max 25)
-//   - CiString50Type  (max 50)
-//   - CiString255Type (max 255)
-//   - CiString500Type (max 500)
+// Families (max lengths)
+//   - CiString20Type  (20)
+//   - CiString25Type  (25)
+//   - CiString50Type  (50)
+//   - CiString255Type (255)
+//   - CiString500Type (500)
 //
 // Construction
-//   - Use SetCiStringXXType to validate and build.
-//   - Returns (value, error); no panics.
+//   - Use SetCiStringXXType to validate and build the value.
+//   - Returns (value, error); never panics.
 //   - Errors on non-ASCII or length overflow.
 //
 // Access
-//   - Call Value() to get the stored string.
-//   - Types are immutable and safe to share.
+//   - Call Value() to retrieve the stored string.
+//   - Values are immutable and safe to share across goroutines.
 const (
 	ci20  = 20
 	ci25  = 25
@@ -47,8 +45,7 @@ type ciString struct {
 	value string
 }
 
-// setCiString validates length and ASCII range,
-// then returns an internal ciString.
+// setCiString validates length and ASCII range, then returns an internal value.
 //
 // Rules
 //   - len(input) <= maxLen
@@ -78,13 +75,16 @@ func (cis ciString) val() string {
 	return cis.value
 }
 
-// CiString20Type holds up to 20 printable ASCII chars.
+// CiString20Type holds up to 20 printable ASCII characters.
 //
-// OCPP 1.6
-//   - Suitable for short identifiers (e.g. IdTag).
-//   - Empty allowed unless restricted by payload.
+// OCPP 1.6 usage examples
+//   - IdTag and short identifiers/tokens
+//   - Compact codes and status keys
+//   - Short connector labels or names
 //
-// Use SetCiString20Type to construct.
+// Notes
+//   - Empty is allowed unless the payload forbids it.
+//   - Prefer for small, frequently transported fields.
 type CiString20Type struct {
 	value ciString
 }
@@ -103,13 +103,16 @@ func (c CiString20Type) Value() string {
 	return c.value.val()
 }
 
-// CiString25Type holds up to 25 printable ASCII chars.
+// CiString25Type holds up to 25 printable ASCII characters.
 //
-// OCPP 1.6
-//   - Useful for vendor/model and similar fields.
-//   - Empty allowed unless restricted by payload.
+// OCPP 1.6 usage examples
+//   - Vendor/Model-like descriptors that are short
+//   - Firmware build tags or concise device labels
+//   - Short site or group codes
 //
-// Use SetCiString25Type to construct.
+// Notes
+//   - Empty is allowed unless the payload forbids it.
+//   - Use when 20 chars may be too tight but 50 is excessive.
 type CiString25Type struct {
 	value ciString
 }
@@ -128,9 +131,16 @@ func (c CiString25Type) Value() string {
 	return c.value.val()
 }
 
-// CiString50Type holds up to 50 printable ASCII chars.
-// Use for longer labels that remain compact.
-// Empty allowed unless restricted by payload.
+// CiString50Type holds up to 50 printable ASCII characters.
+//
+// OCPP 1.6 usage examples
+//   - FirmwareVersion, device serials, human labels
+//   - Vendor error codes, info strings, model variants
+//   - URLs or paths that must remain concise
+//
+// Notes
+//   - Empty is allowed unless the payload forbids it.
+//   - Good balance for medium-length descriptors.
 type CiString50Type struct {
 	value ciString
 }
@@ -149,9 +159,16 @@ func (c CiString50Type) Value() string {
 	return c.value.val()
 }
 
-// CiString255Type holds up to 255 printable ASCII chars.
-// Use for descriptions or extended fields.
-// Empty allowed unless restricted by payload.
+// CiString255Type holds up to 255 printable ASCII characters.
+//
+// OCPP 1.6 usage examples
+//   - Descriptions, diagnostics info, vendor messages
+//   - Longer URLs, identifiers, or composite labels
+//   - Free-form fields that stay within 255 chars
+//
+// Notes
+//   - Empty is allowed unless the payload forbids it.
+//   - Use when human-readable context is needed.
 type CiString255Type struct {
 	value ciString
 }
@@ -170,9 +187,16 @@ func (c CiString255Type) Value() string {
 	return c.value.val()
 }
 
-// CiString500Type holds up to 500 printable ASCII chars.
-// Use for notes or longer text where ASCII is enough.
-// Empty allowed unless restricted by payload.
+// CiString500Type holds up to 500 printable ASCII characters.
+//
+// OCPP 1.6 usage examples
+//   - Extended diagnostics, troubleshooting notes
+//   - Bulk vendor context or long free-form text
+//   - Large URLs or serialized parameters (ASCII)
+//
+// Notes
+//   - Empty is allowed unless the payload forbids it.
+//   - Choose only when shorter bounds are insufficient.
 type CiString500Type struct {
 	value ciString
 }
