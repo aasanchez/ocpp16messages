@@ -57,11 +57,9 @@ func TestIdToken_invalid(t *testing.T) {
 	t.Parallel()
 
 	str := strings.Repeat("D", 21)
-	cstr, _ := st.SetCiString20Type(str)
-
-	_, err := mat.SetIdToken(cstr)
-	if err != nil {
-		t.Errorf(st.ErrorExpectedError, err)
+	_, err := st.SetCiString20Type(str)
+	if err == nil {
+		t.Errorf(st.ErrorExpectedError, "length overflow")
 	}
 }
 
@@ -72,7 +70,7 @@ func TestIdToken_empty(t *testing.T) {
 	cstr, _ := st.SetCiString20Type(str)
 
 	_, err := mat.SetIdToken(cstr)
-	if err != nil {
+	if err == nil {
 		t.Errorf(st.ErrorExpectedError, err)
 	}
 }
