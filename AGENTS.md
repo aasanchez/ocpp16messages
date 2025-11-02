@@ -1,25 +1,23 @@
 # AGENTS.md
 
-## Prerequist
-
-- Go ≥ 1.24
-- Tools used by Makefile: golangci-lint, staticcheck, ripgrep (rg), gci, gofumpt, golines, pkgsite, sonar-scanner
-  (optional)
-
 ## Coding Style
 
 - Never add external third party libraries or package, we must use ONLY and exclusively the golang standard library
-- All type of tests, which can be unitest, fuzzy test, benchmark, or even race test, must be very atomic, targeting
-  individual cases, very atomic and simple.
+- All tests, whether unit tests, fuzz tests, benchmarks, or race tests, must remain highly atomic. Each test should
+  focus on a single, well-defined scenario, ensuring clarity, simplicity, and precise validation of behavior.
 - Leverage and exten [shared/types/errors.go](shared/types/errors.go) to consolidate the message errors
-- No string should be longer than 40 charecters, no mather the reason.
+
+## Agent: Code Generation
+
+- Always add test unit test, and ensure 100% code of the new code.
 
 ## Agent: Go Documentation Optimizer
 
 ### Purpose
 
 Whenever I ask to “improve the documentation for a file,” this agent should automatically apply the following
-instructions. The goal is to ensure all Go files in the project have **pkgsite-ready documentation** with domain context (OCPP 1.6), making them clear, professional, and highly usable.
+instructions. The goal is to ensure all Go files in the project have **pkgsite-ready documentation** with domain context
+(OCPP 1.6), making them clear, professional, and highly usable.
 
 Always write the file, if is possible
 
@@ -55,6 +53,7 @@ Follow the **Universal Rules for Documentation** in Agents.md.
 
 - When I say:
   > “Improve the documentation for @shared/types/fuzz/datetime_fuzz_test.go”
-  > The agent should automatically apply the rules above without me restating them.
+  
+  - The agent should automatically apply the rules above without me restating them.
 - Works for any file path.
 - Output must be directly usable in pkgsite.

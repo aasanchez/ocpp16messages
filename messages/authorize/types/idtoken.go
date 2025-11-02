@@ -1,7 +1,7 @@
 package authorizetypes
 
 import (
-	"fmt"
+	"errors"
 
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
@@ -12,7 +12,7 @@ type IdToken struct {
 
 func SetIdToken(cistring st.CiString20Type) (IdToken, error) {
 	if cistring.Value() == "" {
-		return IdToken{}, fmt.Errorf("IdToken cant be empty")
+		return IdToken{}, errors.New("IdToken cant be empty")
 	}
 	return IdToken{value: cistring}, nil
 }

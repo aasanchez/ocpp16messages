@@ -57,6 +57,7 @@ func TestIdToken_invalid(t *testing.T) {
 	t.Parallel()
 
 	str := strings.Repeat("D", 21)
+
 	_, err := st.SetCiString20Type(str)
 	if err == nil {
 		t.Errorf(st.ErrorExpectedError, "length overflow")
