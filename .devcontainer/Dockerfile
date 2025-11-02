@@ -43,6 +43,19 @@ RUN cp /usr/local/bin/lazygit /build/
 RUN cp /usr/local/bin/opencode /build/
 RUN cp -r ${ZSH_DIR} /build/.oh-my-zsh
 
+# Download and install nvm:
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash \
+    # in lieu of restarting the shell
+    \. "$HOME/.nvm/nvm.sh" \
+    # Download and install Node.js:
+    nvm install 24 \
+    # Verify the Node.js version:
+    node -v # Should print "v24.11.0". \
+    # Download and install pnpm:
+    corepack enable pnpm \
+    # Verify pnpm version:
+    pnpm -v
+
 # Final stage
 FROM mcr.microsoft.com/devcontainers/base:ubuntu
 
@@ -62,4 +75,4 @@ COPY .devcontainer/.zshrc /home/vscode/.zshrc
 WORKDIR /app
 
 # Set entrypoint or default command
-CMD ["/app/lazygit"]
+CMD ["zsh"]
