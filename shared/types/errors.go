@@ -30,10 +30,10 @@ package sharedtypes
 // - For user-facing strings, map these to localized text.
 const (
 	ErrCiStringEmpty     = "%s can't be empty, %w"
-	ErrorInvalid         = "Error: invalid %s -> %w"
-	MissingValue		 = "Error: Missing %s in %q"
-	ErrorExpectedError   = "Expected Error: %v"
-	ErrorUnexpectedError = "Unexpected Error: %v"
-	ErrorStringMismatch  = "Expected String: %s, got: %s"
-	ErrorValueMismatch   = "Expected Value = %q, got %q"
+	ErrorInvalid         = "error: invalid %s -> %w"
+	MissingValue         = "error: Missing %s in %q"
+	ErrorExpectedError   = "expected Error: %v"
+	ErrorUnexpectedError = "unexpected Error: %v"
+	ErrorStringMismatch  = "expected String: %s, got: %s"
+	ErrorValueMismatch   = "expected Value = %q, got %q"
 )

@@ -14,6 +14,7 @@ func SetIdToken(cistring st.CiString20Type) (IdToken, error) {
 	if cistring.Value() == "" {
 		return IdToken{}, errors.New("IdToken cant be empty")
 	}
+
 	return IdToken{value: cistring}, nil
 }
 
