@@ -1,9 +1,0 @@
-{
-  "editor.formatOnSave": true,
-    "[go]": {
-    "editor.defaultFormatter": "golang.go"
-  },
-  "go.toolsEnvVars": {
-    "GOFLAGS": "-tags=external,benchmark,fuzz,race"
-  }
-}
