@@ -7,9 +7,6 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-// OCPP 1.6: accept RFC3339 timestamps.
-// Verifies parsing succeeds for a valid input.
-// Internally the value is normalized to UTC.
 func Test_sharedtypes_SetDateTime(t *testing.T) {
 	t.Parallel()
 
@@ -21,9 +18,6 @@ func Test_sharedtypes_SetDateTime(t *testing.T) {
 	}
 }
 
-// Equality uses absolute time.
-// OCPP 1.6 inputs may include offsets; Value()
-// is in UTC but Equal compares instants.
 func Test_sharedtypes_SetDateTime_ReturnsExpectedValue(t *testing.T) {
 	t.Parallel()
 
@@ -36,8 +30,6 @@ func Test_sharedtypes_SetDateTime_ReturnsExpectedValue(t *testing.T) {
 	}
 }
 
-// Canonical rendering uses RFC3339Nano in UTC.
-// Useful for logs, signatures, and testing.
 func Test_sharedtypes_SetDateTime_StringFormatsRFC3339Nano(t *testing.T) {
 	t.Parallel()
 
@@ -51,8 +43,6 @@ func Test_sharedtypes_SetDateTime_StringFormatsRFC3339Nano(t *testing.T) {
 	}
 }
 
-// Invalid inputs return a wrapped parse error.
-// Allows callers to inspect the root cause.
 func Test_sharedtypes_SetDateTime_InvalidReturnsError(t *testing.T) {
 	t.Parallel()
 
@@ -62,9 +52,6 @@ func Test_sharedtypes_SetDateTime_InvalidReturnsError(t *testing.T) {
 	}
 }
 
-// Zero-value semantics on failure.
-// When parsing fails, the returned struct is
-// the zero value; Value() is time.Time{}.
 func Test_sharedtypes_SetDateTime_EmptyError(t *testing.T) {
 	t.Parallel()
 
@@ -75,8 +62,6 @@ func Test_sharedtypes_SetDateTime_EmptyError(t *testing.T) {
 	}
 }
 
-// Zero DateTime string form.
-// String() returns RFC3339Nano for time.Time{}.
 func Test_sharedtypes_DateTime_StringZeroValue(t *testing.T) {
 	t.Parallel()
 

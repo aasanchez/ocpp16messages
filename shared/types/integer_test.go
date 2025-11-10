@@ -6,11 +6,6 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-// OCPP 1.6: parse and read compact numbers.
-//
-// Verifies a valid base-10 string in range
-// 0..65535 is accepted and read via Value().
-// Useful for small counters and indices.
 func Test_sharedtypes_SetInteger(t *testing.T) {
 	t.Parallel()
 
@@ -25,10 +20,6 @@ func Test_sharedtypes_SetInteger(t *testing.T) {
 	}
 }
 
-// Range enforcement: overflow is rejected.
-//
-// Values above 65535 are invalid for OCPP 1.6
-// compact integers. The constructor must fail.
 func Test_sharedtypes_SetInteger_Overflow(t *testing.T) {
 	t.Parallel()
 
@@ -38,10 +29,6 @@ func Test_sharedtypes_SetInteger_Overflow(t *testing.T) {
 	}
 }
 
-// Unsigned constraint: negatives are invalid.
-//
-// OCPP 1.6 compact integers are unsigned.
-// Negative inputs must return an error.
 func Test_sharedtypes_SetInteger_Negative(t *testing.T) {
 	t.Parallel()
 
@@ -51,10 +38,6 @@ func Test_sharedtypes_SetInteger_Negative(t *testing.T) {
 	}
 }
 
-// Validation: non-decimal input is rejected.
-//
-// Only base-10 digits are accepted by SetInteger.
-// Alphanumeric strings must fail with an error.
 func Test_sharedtypes_SetInteger_Alphanumeric(t *testing.T) {
 	t.Parallel()
 
@@ -64,10 +47,6 @@ func Test_sharedtypes_SetInteger_Alphanumeric(t *testing.T) {
 	}
 }
 
-// Validation: decimal notation is not allowed.
-//
-// The parser accepts integers only. Decimal
-// strings like 1.22 must return an error.
 func Test_sharedtypes_SetInteger_Decimal(t *testing.T) {
 	t.Parallel()
 

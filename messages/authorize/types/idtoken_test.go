@@ -1,11 +1,10 @@
-package authorizetypes_test
+package authorizetypes
 
 import (
 	"fmt"
 	"strings"
 	"testing"
 
-	mat "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
@@ -15,7 +14,7 @@ func TestIdToken(t *testing.T) {
 	str := strings.Repeat("A", 16)
 	cstr, _ := st.SetCiString20Type(str)
 
-	_, err := mat.SetIdToken(cstr)
+	_, err := SetIdToken(cstr)
 	if err != nil {
 		t.Errorf("SetIdToken error: %v", err)
 	}
@@ -27,7 +26,7 @@ func TestIdToken_string(t *testing.T) {
 	str := strings.Repeat("B", 16)
 	cstr, _ := st.SetCiString20Type(str)
 
-	idtoken, _ := mat.SetIdToken(cstr)
+	idtoken, _ := SetIdToken(cstr)
 
 	if idtoken.String() != str {
 		t.Errorf(st.ErrorStringMismatch,
@@ -46,7 +45,7 @@ func TestIdToken_value(t *testing.T) {
 	str := strings.Repeat("C", 16)
 	cstr, _ := st.SetCiString20Type(str)
 
-	idtoken, _ := mat.SetIdToken(cstr)
+	idtoken, _ := SetIdToken(cstr)
 
 	if idtoken.Value() != cstr {
 		t.Errorf(st.ErrorValueMismatch, cstr.Value(), idtoken.String())
@@ -70,7 +69,7 @@ func TestIdToken_empty(t *testing.T) {
 	str := ""
 	cstr, _ := st.SetCiString20Type(str)
 
-	_, err := mat.SetIdToken(cstr)
+	_, err := SetIdToken(cstr)
 	if err == nil {
 		t.Errorf(st.ErrorExpectedError, err)
 	}
