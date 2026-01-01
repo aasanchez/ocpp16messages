@@ -5,9 +5,6 @@ help: ## Display this help message, listing all available targets and their desc
 	@awk 'BEGIN {FS = ":.*##"; printf "\n\033[1;34m${DOCKER_NAMESPACE}\033[0m\tCopyright (c) ${DATE} Alexis Sanchez\n \n\033[1;32mUsage:\033[0m\n  make \033[1;34m<target>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[1;34m%-18s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1;33m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
 ##@ Testing
-FUZZTIME ?= 10s
-FUZZPKG ?= ./shared/types/fuzz
-
 test: ## Run all tests starting with "Test" and collect coverage.
 	@echo "\n--- \033[1;32mExecute Unit Test\033[0m ---"
 	@rm -rf reports && mkdir -p reports
@@ -35,9 +32,6 @@ lint: ## Run static analysis, vetting, and linting using golangci-lint and other
 	@golangci-lint --config golangci.yml run ./... || true
 	@go vet ./... > reports/govet.json
 	@staticcheck ./... > reports/staticcheck
-
-sonar: test lint ## Run test suite and linters, then push code quality reports to SonarQube.
-	@sonar-scanner
 
 format: ## Format Go code to maintain consistent styling across the codebase.
 	@rg --files -g '*.go' | xargs gci write
