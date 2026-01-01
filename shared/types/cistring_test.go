@@ -1,4 +1,4 @@
-package sharedtypes
+package types
 
 import (
 	"errors"

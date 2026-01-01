@@ -1,4 +1,4 @@
-package sharedtypes
+package types
 
 // Error message format strings used throughout the shared types package.
 const (

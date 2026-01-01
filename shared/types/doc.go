@@ -1,4 +1,4 @@
-// Package sharedtypes provides core OCPP 1.6 type definitions with strict
+// package types provides core OCPP 1.6 type definitions with strict
 // validation.
 //
 // This package implements validated types for the OCPP 1.6 protocol including:
@@ -8,4 +8,4 @@
 //
 // All types enforce validation at construction time and are designed for
 // thread-safe concurrent use with immutable fields and value receivers.
-package sharedtypes
+package types

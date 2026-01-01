@@ -1,4 +1,4 @@
-package sharedtypes_test
+package types_test
 
 import (
 	"strings"
