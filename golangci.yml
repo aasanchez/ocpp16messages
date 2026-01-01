@@ -8,6 +8,8 @@ formatters:
     - golines
 linters:
   default: all
+  disable:
+    - wsl
   enable:
     - wsl_v5
   settings:
