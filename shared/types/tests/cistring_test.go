@@ -19,7 +19,12 @@ const (
 	ciString500Max  = 500
 	ciString500Over = 501
 
-	errMsgValueMismatch = "value mismatch: want %q, got %q"
+	emptyString = ""
+
+	errMsgValueMismatch   = "value mismatch: want %q, got %q"
+	errMsgStringTooLong   = "expected error for string exceeding %d characters"
+	errMsgUnexpectedError = "unexpected error for a %d-character string: %v"
+	errMsgEmptyAccepted   = "empty string should be accepted; got error: %v"
 )
 
 // CiString20Type
@@ -30,18 +35,18 @@ func Test_sharedtypes_SetCiString20Type(t *testing.T) {
 
 	_, err := st.SetCiString20Type(val)
 	if err != nil {
-		t.Errorf("unexpected error for a %d-character string: %v", ciString20Max, err)
+		t.Errorf(errMsgUnexpectedError, ciString20Max, err)
 	}
 }
 
 func Test_sharedtypes_SetCiString20Type_Empty(t *testing.T) {
 	t.Parallel()
 
-	val := ""
+	val := emptyString
 
 	_, err := st.SetCiString20Type(val)
 	if err != nil {
-		t.Errorf("empty string should be accepted; got error: %v", err)
+		t.Errorf(errMsgEmptyAccepted, err)
 	}
 }
 
@@ -52,7 +57,7 @@ func Test_sharedtypes_SetCiString20Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString20Type(val)
 	if err == nil {
-		t.Errorf("expected an error for a string longer than %d characters; got none", ciString20Max)
+		t.Errorf(errMsgStringTooLong, ciString20Max)
 	}
 }
 
@@ -75,18 +80,18 @@ func Test_sharedtypes_SetCiString25Type(t *testing.T) {
 
 	_, err := st.SetCiString25Type(val)
 	if err != nil {
-		t.Errorf("unexpected error for a %d-character string: %v", ciString25Max, err)
+		t.Errorf(errMsgUnexpectedError, ciString25Max, err)
 	}
 }
 
 func Test_sharedtypes_SetCiString25Type_Empty(t *testing.T) {
 	t.Parallel()
 
-	val := ""
+	val := emptyString
 
 	_, err := st.SetCiString25Type(val)
 	if err != nil {
-		t.Errorf("empty string should be accepted; got error: %v", err)
+		t.Errorf(errMsgEmptyAccepted, err)
 	}
 }
 
@@ -97,7 +102,7 @@ func Test_sharedtypes_SetCiString25Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString25Type(val)
 	if err == nil {
-		t.Errorf("expected an error for a string longer than %d characters; got none", ciString25Max)
+		t.Errorf(errMsgStringTooLong, ciString25Max)
 	}
 }
 
@@ -120,18 +125,18 @@ func Test_sharedtypes_SetCiString50Type(t *testing.T) {
 
 	_, err := st.SetCiString50Type(val)
 	if err != nil {
-		t.Errorf("unexpected error for a %d-character string: %v", ciString50Max, err)
+		t.Errorf(errMsgUnexpectedError, ciString50Max, err)
 	}
 }
 
 func Test_sharedtypes_SetCiString50Type_Empty(t *testing.T) {
 	t.Parallel()
 
-	val := ""
+	val := emptyString
 
 	_, err := st.SetCiString50Type(val)
 	if err != nil {
-		t.Errorf("empty string should be accepted; got error: %v", err)
+		t.Errorf(errMsgEmptyAccepted, err)
 	}
 }
 
@@ -142,7 +147,7 @@ func Test_sharedtypes_SetCiString50Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString50Type(val)
 	if err == nil {
-		t.Errorf("expected an error for a string longer than %d characters; got none", ciString50Max)
+		t.Errorf(errMsgStringTooLong, ciString50Max)
 	}
 }
 
@@ -165,21 +170,18 @@ func Test_sharedtypes_SetCiString255Type(t *testing.T) {
 
 	_, err := st.SetCiString255Type(val)
 	if err != nil {
-		t.Errorf(
-			"unexpected error for a %d-character string: %v",
-			ciString255Max, err,
-		)
+		t.Errorf(errMsgUnexpectedError, ciString255Max, err)
 	}
 }
 
 func Test_sharedtypes_SetCiString255Type_Empty(t *testing.T) {
 	t.Parallel()
 
-	val := ""
+	val := emptyString
 
 	_, err := st.SetCiString255Type(val)
 	if err != nil {
-		t.Errorf("empty string should be accepted; got error: %v", err)
+		t.Errorf(errMsgEmptyAccepted, err)
 	}
 }
 
@@ -190,10 +192,7 @@ func Test_sharedtypes_SetCiString255Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString255Type(val)
 	if err == nil {
-		t.Errorf(
-			"expected error for string exceeding %d characters",
-			ciString255Max,
-		)
+		t.Errorf(errMsgStringTooLong, ciString255Max)
 	}
 }
 
@@ -216,21 +215,18 @@ func Test_sharedtypes_SetCiString500Type(t *testing.T) {
 
 	_, err := st.SetCiString500Type(val)
 	if err != nil {
-		t.Errorf(
-			"unexpected error for a %d-character string: %v",
-			ciString500Max, err,
-		)
+		t.Errorf(errMsgUnexpectedError, ciString500Max, err)
 	}
 }
 
 func Test_sharedtypes_SetCiString500Type_Empty(t *testing.T) {
 	t.Parallel()
 
-	val := ""
+	val := emptyString
 
 	_, err := st.SetCiString500Type(val)
 	if err != nil {
-		t.Errorf("empty string should be accepted; got error: %v", err)
+		t.Errorf(errMsgEmptyAccepted, err)
 	}
 }
 
@@ -241,10 +237,7 @@ func Test_sharedtypes_SetCiString500Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString500Type(val)
 	if err == nil {
-		t.Errorf(
-			"expected error for string exceeding %d characters",
-			ciString500Max,
-		)
+		t.Errorf(errMsgStringTooLong, ciString500Max)
 	}
 }
 
