@@ -1,4 +1,5 @@
 {
+  "explorer.sortOrder": "type",
   "go.toolsEnvVars": {
     "GOFLAGS": "-tags=external,benchmark,fuzz,race"
   }

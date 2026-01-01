@@ -1,48 +1,48 @@
-package sharedtypes_test
+package sharedtypes
 
 import (
 	"testing"
-
-	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
+
+const testIntegerValue = 73
 
 func Test_sharedtypes_SetInteger(t *testing.T) {
 	t.Parallel()
 
-	i, err := st.SetInteger("73")
+	i, err := SetInteger("73")
 	if err != nil {
 		t.Fatalf("unexpected error from SetInteger: %v", err)
 	}
 
 	got := i.Value()
-	if got != 73 {
-		t.Errorf("Value() = %d; want 73", got)
+	if got != testIntegerValue {
+		t.Errorf("Value() = %d; want %d", got, testIntegerValue)
 	}
 }
 
 func Test_sharedtypes_SetInteger_Overflow(t *testing.T) {
 	t.Parallel()
 
-	_, err := st.SetInteger("4294967296")
+	_, err := SetInteger("4294967296")
 	if err == nil {
-		t.Errorf(st.ErrorExpectedError, err)
+		t.Errorf(ErrorExpectedError, err)
 	}
 }
 
 func Test_sharedtypes_SetInteger_Negative(t *testing.T) {
 	t.Parallel()
 
-	_, err := st.SetInteger("-10")
+	_, err := SetInteger("-10")
 	if err == nil {
-		t.Errorf(st.ErrorExpectedError, err)
+		t.Errorf(ErrorExpectedError, err)
 	}
 }
 
 func Test_sharedtypes_SetInteger_Alphanumeric(t *testing.T) {
 	t.Parallel()
 
-	_, err := st.SetInteger("abc")
+	_, err := SetInteger("abc")
 	if err == nil {
-		t.Errorf(st.ErrorExpectedError, err)
+		t.Errorf(ErrorExpectedError, err)
 	}
 }

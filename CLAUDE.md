@@ -19,7 +19,7 @@ OCPP 1.6 Messages for Go - A library providing OCPP 1.6-compliant message types 
 go mod tidy
 ```
 
-### Testing
+### Execution Testing
 
 ```sh
 make test                   # Unit and example tests with coverage (reports in reports/)
