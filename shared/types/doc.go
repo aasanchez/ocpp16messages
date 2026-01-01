@@ -1,4 +1,4 @@
-// package types provides core OCPP 1.6 type definitions with strict
+// Package types provides core OCPP 1.6 type definitions with strict
 // validation.
 //
 // This package implements validated types for the OCPP 1.6 protocol including:

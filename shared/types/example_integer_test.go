@@ -7,8 +7,8 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-func ExampleSetInteger() {
-	intVal, err := st.SetInteger("73")
+func ExampleNewInteger() {
+	intVal, err := st.NewInteger("73")
 	if err != nil {
 		fmt.Println("unexpected error while parsing a valid integer:", err)
 
@@ -21,8 +21,8 @@ func ExampleSetInteger() {
 	// Value is: 73
 }
 
-func ExampleSetInteger_invalid() {
-	_, err := st.SetInteger("abc")
+func ExampleNewInteger_invalid() {
+	_, err := st.NewInteger("abc")
 	if err != nil {
 		fmt.Println("failed to parse integer from input 'abc':", err)
 	}

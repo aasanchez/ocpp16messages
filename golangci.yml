@@ -24,6 +24,13 @@ linters:
       rules:
         - name: package-directory-mismatch
           disabled: true
+        - name: var-naming
+          severity: warning
+          disabled: false
+          arguments:
+            - [] # allowlist - empty means use defaults
+            - [] # denylist - empty means use defaults
+            - - skipPackageNameChecks: true # Skip package name checks entirely for this rule
     depguard:
       rules:
         main:

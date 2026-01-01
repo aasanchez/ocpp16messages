@@ -6,8 +6,8 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-func ExampleSetDateTime() {
-	datetime, err := st.SetDateTime("2025-08-30T14:34:56Z")
+func ExampleNewDateTime() {
+	datetime, err := st.NewDateTime("2025-08-30T14:34:56Z")
 	if err != nil {
 		fmt.Println("unexpected error:", err)
 
@@ -22,8 +22,8 @@ func ExampleSetDateTime() {
 	// String: 2025-08-30T14:34:56Z
 }
 
-func ExampleSetDateTime_invalid() {
-	_, err := st.SetDateTime("not-a-time")
+func ExampleNewDateTime_invalid() {
+	_, err := st.NewDateTime("not-a-time")
 	if err != nil {
 		fmt.Println("error occurred")
 	}

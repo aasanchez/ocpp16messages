@@ -62,11 +62,12 @@ make pkgsite                # Start local documentation server at http://localho
 
 The library implements OCPP 1.6 strict type validation using constructor pattern:
 
-- **Integer**: Wraps uint16 with validation via `SetInteger(string) (Integer, error)`
+- **Integer**: Wraps uint16 with validation via `NewInteger(string) (Integer, error)`
 - **DateTime**: RFC3339-compliant, auto-normalized to UTC. Parsing uses `time.RFC3339`, output uses `time.RFC3339Nano`
+  - Constructor: `NewDateTime(string) (DateTime, error)`
 - **CiString Types**: Length-validated ASCII printable strings (32-126)
-  - CiString20Type, CiString25Type, CiString50Type, CiString255Type, CiString500Type
-  - All use `SetCiString<N>Type(string)` constructor that validates length and ASCII range
+  - CiString20, CiString25, CiString50, CiString255, CiString500
+  - All use `NewCiString<N>(string)` constructor that validates length and ASCII range
 
 All types use value receivers and immutable fields, designed for thread-safe concurrent use.
 
@@ -100,6 +101,17 @@ All types use value receivers and immutable fields, designed for thread-safe con
 
 - Exported identifiers: PascalCase
 - Keep acronyms uppercase (e.g., ID not Id - allowed by revive var-naming rule)
+- **Constructors**: MUST use `New` prefix following Go idioms
+  - Public constructors: `NewType(args) (Type, error)` (e.g., `NewInteger`, `NewDateTime`, `NewCiString20`)
+  - Private constructors: `newType(args) (type, error)` (lowercase 'n' for unexported)
+  - **NEVER** use `Set` prefix for constructors (e.g., `SetInteger` ✗, `NewInteger` ✓)
+  - Rationale: "Set" implies mutation; "New" indicates construction (see Effective Go)
+- **Getters**: Do NOT use `Get` prefix
+  - Use `Value()` not `GetValue()` (see Effective Go getter guidelines)
+- **Test naming**: Follow Go conventions
+  - Unit tests: `Test_<package>_<Function>` (e.g., `Test_sharedtypes_NewInteger`)
+  - Example tests: `Example<Function>` (e.g., `ExampleNewInteger`)
+  - Subtests: Use descriptive suffixes (e.g., `Test_sharedtypes_NewInteger_Overflow`)
 
 ### Error Handling
 

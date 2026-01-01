@@ -15,10 +15,10 @@ const (
 	invalidCiString500Length = 501
 )
 
-func ExampleSetCiString20Type() {
+func ExampleNewCiString20() {
 	input := strings.Repeat("A", 20)
 
-	cistr, err := st.SetCiString20Type(input)
+	cistr, err := st.NewCiString20(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -31,10 +31,10 @@ func ExampleSetCiString20Type() {
 	// Length: 20
 }
 
-func ExampleSetCiString20Type_invalid() {
+func ExampleNewCiString20_invalid() {
 	input := strings.Repeat("A", 21)
 
-	cistr, err := st.SetCiString20Type(input)
+	cistr, err := st.NewCiString20(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -46,10 +46,10 @@ func ExampleSetCiString20Type_invalid() {
 	// Error: CiString Error on Construc (len=21, max=20): exceeds maximum length
 }
 
-func ExampleSetCiString25Type() {
+func ExampleNewCiString25() {
 	input := strings.Repeat("A", 25)
 
-	cistr, err := st.SetCiString25Type(input)
+	cistr, err := st.NewCiString25(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -61,10 +61,10 @@ func ExampleSetCiString25Type() {
 	// Length: 25
 }
 
-func ExampleSetCiString25Type_invalid() {
+func ExampleNewCiString25_invalid() {
 	input := strings.Repeat("A", 26)
 
-	cistr, err := st.SetCiString25Type(input)
+	cistr, err := st.NewCiString25(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -76,10 +76,10 @@ func ExampleSetCiString25Type_invalid() {
 	// Error: CiString Error on Construc (len=26, max=25): exceeds maximum length
 }
 
-func ExampleSetCiString50Type() {
+func ExampleNewCiString50() {
 	input := strings.Repeat("A", 50)
 
-	cistr, err := st.SetCiString50Type(input)
+	cistr, err := st.NewCiString50(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -91,10 +91,10 @@ func ExampleSetCiString50Type() {
 	// Length: 50
 }
 
-func ExampleSetCiString50Type_invalid() {
+func ExampleNewCiString50_invalid() {
 	input := strings.Repeat("A", 51)
 
-	cistr, err := st.SetCiString50Type(input)
+	cistr, err := st.NewCiString50(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -106,10 +106,10 @@ func ExampleSetCiString50Type_invalid() {
 	// Error: CiString Error on Construc (len=51, max=50): exceeds maximum length
 }
 
-func ExampleSetCiString255Type() {
+func ExampleNewCiString255() {
 	input := strings.Repeat("A", 255)
 
-	cistr, err := st.SetCiString255Type(input)
+	cistr, err := st.NewCiString255(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -121,10 +121,10 @@ func ExampleSetCiString255Type() {
 	// Length: 255
 }
 
-func ExampleSetCiString255Type_invalid() {
+func ExampleNewCiString255_invalid() {
 	input := strings.Repeat("A", 256)
 
-	cistr, err := st.SetCiString255Type(input)
+	cistr, err := st.NewCiString255(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -136,10 +136,10 @@ func ExampleSetCiString255Type_invalid() {
 	// Error: CiString Error on Construc (len=256, max=255): exceeds maximum length
 }
 
-func ExampleSetCiString500Type() {
+func ExampleNewCiString500() {
 	input := strings.Repeat("A", validCiString500Length)
 
-	cistr, err := st.SetCiString500Type(input)
+	cistr, err := st.NewCiString500(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 
@@ -151,10 +151,10 @@ func ExampleSetCiString500Type() {
 	// Length: 499
 }
 
-func ExampleSetCiString500Type_invalid() {
+func ExampleNewCiString500_invalid() {
 	input := strings.Repeat("A", invalidCiString500Length)
 
-	cistr, err := st.SetCiString500Type(input)
+	cistr, err := st.NewCiString500(input)
 	if err != nil {
 		fmt.Println(msgError, err)
 

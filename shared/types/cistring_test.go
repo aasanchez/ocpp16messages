@@ -13,13 +13,13 @@ const (
 
 // Internal test
 
-func Test_sharedtypes_setCiString_Valid(t *testing.T) {
+func Test_sharedtypes_newCiString_Valid(t *testing.T) {
 	t.Parallel()
 
 	input := "OCPP-Test-123"
 	maxLen := testMaxLen20
 
-	cis, err := setCiString(input, maxLen)
+	cis, err := newCiString(input, maxLen)
 	if err != nil {
 		t.Fatalf("expected no error, got: %v", err)
 	}
@@ -29,13 +29,13 @@ func Test_sharedtypes_setCiString_Valid(t *testing.T) {
 	}
 }
 
-func Test_sharedtypes_setCiString_TooLong(t *testing.T) {
+func Test_sharedtypes_newCiString_TooLong(t *testing.T) {
 	t.Parallel()
 
 	input := "ThisStringIsWayTooLong"
 	maxLen := testMaxLen5
 
-	_, err := setCiString(input, maxLen)
+	_, err := newCiString(input, maxLen)
 	if err == nil {
 		t.Fatal("expected error for exceeding max length, got nil")
 	}
@@ -45,12 +45,12 @@ func Test_sharedtypes_setCiString_TooLong(t *testing.T) {
 	}
 }
 
-func Test_sharedtypes_setCiString_NonPrintableASCII(t *testing.T) {
+func Test_sharedtypes_newCiString_NonPrintableASCII(t *testing.T) {
 	t.Parallel()
 
 	input := "Valid\x01Invalid"
 
-	_, err := setCiString(input, testMaxLen20)
+	_, err := newCiString(input, testMaxLen20)
 	if err == nil {
 		t.Fatal("expected error for non-printable ASCII, got nil")
 	}
@@ -60,13 +60,13 @@ func Test_sharedtypes_setCiString_NonPrintableASCII(t *testing.T) {
 	}
 }
 
-func Test_sharedtypes_setCiString_EmptyIsValid(t *testing.T) {
+func Test_sharedtypes_newCiString_EmptyIsValid(t *testing.T) {
 	t.Parallel()
 
 	input := ""
 	maxLen := testMaxLen10
 
-	cis, err := setCiString(input, maxLen)
+	cis, err := newCiString(input, maxLen)
 	if err != nil {
 		t.Fatalf("expected no error for empty input, got: %v", err)
 	}
@@ -76,13 +76,13 @@ func Test_sharedtypes_setCiString_EmptyIsValid(t *testing.T) {
 	}
 }
 
-func Test_sharedtypes_setCiString_ASCIIBoundary(t *testing.T) {
+func Test_sharedtypes_newCiString_ASCIIBoundary(t *testing.T) {
 	t.Parallel()
 
 	input := " ~"
 	maxLen := testMaxLen5
 
-	cis, err := setCiString(input, maxLen)
+	cis, err := newCiString(input, maxLen)
 	if err != nil {
 		t.Fatalf("expected no error, got: %v", err)
 	}

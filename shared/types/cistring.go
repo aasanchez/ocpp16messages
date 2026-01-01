@@ -31,7 +31,7 @@ type ciString struct {
 	value string
 }
 
-func setCiString(input string, maxLen int) (ciString, error) {
+func newCiString(input string, maxLen int) (ciString, error) {
 	cis := ciString{value: input}
 
 	if len(cis.value) > maxLen {
@@ -56,102 +56,102 @@ func (cis ciString) val() string {
 	return cis.value
 }
 
-// CiString20Type represents an OCPP 1.6 case-insensitive string with a maximum
+// CiString20 represents an OCPP 1.6 case-insensitive string with a maximum
 // length of 20 characters. The string must contain only printable ASCII
 // characters (32-126).
-type CiString20Type struct {
+type CiString20 struct {
 	value ciString
 }
 
-// SetCiString20Type creates a new CiString20Type from a string value. Returns
+// NewCiString20 creates a new CiString20 from a string value. Returns
 // an error if the value exceeds 20 characters or contains non-printable ASCII.
-func SetCiString20Type(value string) (CiString20Type, error) {
-	cs, err := setCiString(value, CiString20Max)
+func NewCiString20(value string) (CiString20, error) {
+	cs, err := newCiString(value, CiString20Max)
 
-	return CiString20Type{value: cs}, err
+	return CiString20{value: cs}, err
 }
 
-// Value returns the underlying string value of the CiString20Type.
-func (c CiString20Type) Value() string {
+// Value returns the underlying string value of the CiString20.
+func (c CiString20) Value() string {
 	return c.value.val()
 }
 
-// CiString25Type represents an OCPP 1.6 case-insensitive string with a maximum
+// CiString25 represents an OCPP 1.6 case-insensitive string with a maximum
 // length of 25 characters. The string must contain only printable ASCII
 // characters (32-126).
-type CiString25Type struct {
+type CiString25 struct {
 	value ciString
 }
 
-// SetCiString25Type creates a new CiString25Type from a string value. Returns
+// NewCiString25 creates a new CiString25 from a string value. Returns
 // an error if the value exceeds 25 characters or contains non-printable ASCII.
-func SetCiString25Type(value string) (CiString25Type, error) {
-	cs, err := setCiString(value, CiString25Max)
+func NewCiString25(value string) (CiString25, error) {
+	cs, err := newCiString(value, CiString25Max)
 
-	return CiString25Type{value: cs}, err
+	return CiString25{value: cs}, err
 }
 
-// Value returns the underlying string value of the CiString25Type.
-func (c CiString25Type) Value() string {
+// Value returns the underlying string value of the CiString25.
+func (c CiString25) Value() string {
 	return c.value.val()
 }
 
-// CiString50Type represents an OCPP 1.6 case-insensitive string with a maximum
+// CiString50 represents an OCPP 1.6 case-insensitive string with a maximum
 // length of 50 characters. The string must contain only printable ASCII
 // characters (32-126).
-type CiString50Type struct {
+type CiString50 struct {
 	value ciString
 }
 
-// SetCiString50Type creates a new CiString50Type from a string value. Returns
+// NewCiString50 creates a new CiString50 from a string value. Returns
 // an error if the value exceeds 50 characters or contains non-printable ASCII.
-func SetCiString50Type(value string) (CiString50Type, error) {
-	cs, err := setCiString(value, CiString50Max)
+func NewCiString50(value string) (CiString50, error) {
+	cs, err := newCiString(value, CiString50Max)
 
-	return CiString50Type{value: cs}, err
+	return CiString50{value: cs}, err
 }
 
-// Value returns the underlying string value of the CiString50Type.
-func (c CiString50Type) Value() string {
+// Value returns the underlying string value of the CiString50.
+func (c CiString50) Value() string {
 	return c.value.val()
 }
 
-// CiString255Type represents an OCPP 1.6 case-insensitive string with a maximum
+// CiString255 represents an OCPP 1.6 case-insensitive string with a maximum
 // length of 255 characters. The string must contain only printable ASCII
 // characters (32-126).
-type CiString255Type struct {
+type CiString255 struct {
 	value ciString
 }
 
-// SetCiString255Type creates a new CiString255Type from a string value. Returns
+// NewCiString255 creates a new CiString255 from a string value. Returns
 // an error if the value exceeds 255 characters or contains non-printable ASCII.
-func SetCiString255Type(value string) (CiString255Type, error) {
-	cs, err := setCiString(value, CiString255Max)
+func NewCiString255(value string) (CiString255, error) {
+	cs, err := newCiString(value, CiString255Max)
 
-	return CiString255Type{value: cs}, err
+	return CiString255{value: cs}, err
 }
 
-// Value returns the underlying string value of the CiString255Type.
-func (c CiString255Type) Value() string {
+// Value returns the underlying string value of the CiString255.
+func (c CiString255) Value() string {
 	return c.value.val()
 }
 
-// CiString500Type represents an OCPP 1.6 case-insensitive string with a maximum
+// CiString500 represents an OCPP 1.6 case-insensitive string with a maximum
 // length of 500 characters. The string must contain only printable ASCII
 // characters (32-126).
-type CiString500Type struct {
+type CiString500 struct {
 	value ciString
 }
 
-// SetCiString500Type creates a new CiString500Type from a string value. Returns
+// NewCiString500 creates a new CiString500 from a string value. Returns
 // an error if the value exceeds 500 characters or contains non-printable ASCII.
-func SetCiString500Type(value string) (CiString500Type, error) {
-	cis, err := setCiString(value, CiString500Max)
+func NewCiString500(value string) (CiString500, error) {
+	cis, err := newCiString(value, CiString500Max)
 
-	return CiString500Type{value: cis}, err
+	return CiString500{value: cis}, err
 }
 
-// Value returns the underlying string value of the CiString500Type.
-func (c CiString500Type) Value() string {
+// Value returns the underlying string value of the CiString500.
+func (c CiString500) Value() string {
 	return c.value.val()
 }

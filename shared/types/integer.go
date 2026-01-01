@@ -15,9 +15,9 @@ type Integer struct {
 	value uint16
 }
 
-// SetInteger creates a new Integer from a string value. Returns an error if
+// NewInteger creates a new Integer from a string value. Returns an error if
 // the value cannot be parsed as a valid uint16.
-func SetInteger(value string) (Integer, error) {
+func NewInteger(value string) (Integer, error) {
 	parsedValue, err := strconv.ParseUint(value, decimalBase, bitSize16)
 	if err != nil {
 		return Integer{}, fmt.Errorf("invalid Integer: %w", err)

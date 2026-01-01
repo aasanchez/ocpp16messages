@@ -22,226 +22,226 @@ const (
 	errMsgEmptyAccepted   = "empty string should be accepted; got error: %v"
 )
 
-// CiString20Type
-func Test_sharedtypes_SetCiString20Type(t *testing.T) {
+// CiString20
+func Test_sharedtypes_NewCiString20(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("A", st.CiString20Max)
 
-	_, err := st.SetCiString20Type(val)
+	_, err := st.NewCiString20(val)
 	if err != nil {
 		t.Errorf(errMsgUnexpectedError, st.CiString20Max, err)
 	}
 }
 
-func Test_sharedtypes_SetCiString20Type_Empty(t *testing.T) {
+func Test_sharedtypes_NewCiString20_Empty(t *testing.T) {
 	t.Parallel()
 
 	val := emptyString
 
-	_, err := st.SetCiString20Type(val)
+	_, err := st.NewCiString20(val)
 	if err != nil {
 		t.Errorf(errMsgEmptyAccepted, err)
 	}
 }
 
-func Test_sharedtypes_SetCiString20Type_TooLong(t *testing.T) {
+func Test_sharedtypes_NewCiString20_TooLong(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("B", ciString20Over)
 
-	_, err := st.SetCiString20Type(val)
+	_, err := st.NewCiString20(val)
 	if err == nil {
 		t.Errorf(errMsgStringTooLong, st.CiString20Max)
 	}
 }
 
-func Test_sharedtypes_SetCiString20Type_TestValue(t *testing.T) {
+func Test_sharedtypes_NewCiString20_TestValue(t *testing.T) {
 	t.Parallel()
 
 	input := strings.Repeat("C", st.CiString20Max)
 
-	ciStr, _ := st.SetCiString20Type(input)
+	ciStr, _ := st.NewCiString20(input)
 	if ciStr.Value() != input {
 		t.Errorf(errMsgValueMismatch, input, ciStr.Value())
 	}
 }
 
-// CiString25Type
-func Test_sharedtypes_SetCiString25Type(t *testing.T) {
+// CiString25
+func Test_sharedtypes_NewCiString25(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("D", st.CiString25Max)
 
-	_, err := st.SetCiString25Type(val)
+	_, err := st.NewCiString25(val)
 	if err != nil {
 		t.Errorf(errMsgUnexpectedError, st.CiString25Max, err)
 	}
 }
 
-func Test_sharedtypes_SetCiString25Type_Empty(t *testing.T) {
+func Test_sharedtypes_NewCiString25_Empty(t *testing.T) {
 	t.Parallel()
 
 	val := emptyString
 
-	_, err := st.SetCiString25Type(val)
+	_, err := st.NewCiString25(val)
 	if err != nil {
 		t.Errorf(errMsgEmptyAccepted, err)
 	}
 }
 
-func Test_sharedtypes_SetCiString25Type_TooLong(t *testing.T) {
+func Test_sharedtypes_NewCiString25_TooLong(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("E", ciString25Over)
 
-	_, err := st.SetCiString25Type(val)
+	_, err := st.NewCiString25(val)
 	if err == nil {
 		t.Errorf(errMsgStringTooLong, st.CiString25Max)
 	}
 }
 
-func Test_sharedtypes_SetCiString25Type_TestValue(t *testing.T) {
+func Test_sharedtypes_NewCiString25_TestValue(t *testing.T) {
 	t.Parallel()
 
 	input := strings.Repeat("F", st.CiString25Max)
 
-	ciStr, _ := st.SetCiString25Type(input)
+	ciStr, _ := st.NewCiString25(input)
 	if ciStr.Value() != input {
 		t.Errorf(errMsgValueMismatch, input, ciStr.Value())
 	}
 }
 
-// CiString50Type
-func Test_sharedtypes_SetCiString50Type(t *testing.T) {
+// CiString50
+func Test_sharedtypes_NewCiString50(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("G", st.CiString50Max)
 
-	_, err := st.SetCiString50Type(val)
+	_, err := st.NewCiString50(val)
 	if err != nil {
 		t.Errorf(errMsgUnexpectedError, st.CiString50Max, err)
 	}
 }
 
-func Test_sharedtypes_SetCiString50Type_Empty(t *testing.T) {
+func Test_sharedtypes_NewCiString50_Empty(t *testing.T) {
 	t.Parallel()
 
 	val := emptyString
 
-	_, err := st.SetCiString50Type(val)
+	_, err := st.NewCiString50(val)
 	if err != nil {
 		t.Errorf(errMsgEmptyAccepted, err)
 	}
 }
 
-func Test_sharedtypes_SetCiString50Type_TooLong(t *testing.T) {
+func Test_sharedtypes_NewCiString50_TooLong(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("H", ciString50Over)
 
-	_, err := st.SetCiString50Type(val)
+	_, err := st.NewCiString50(val)
 	if err == nil {
 		t.Errorf(errMsgStringTooLong, st.CiString50Max)
 	}
 }
 
-func Test_sharedtypes_SetCiString50Type_TestValue(t *testing.T) {
+func Test_sharedtypes_NewCiString50_TestValue(t *testing.T) {
 	t.Parallel()
 
 	input := strings.Repeat("I", st.CiString50Max)
 
-	ciStr, _ := st.SetCiString50Type(input)
+	ciStr, _ := st.NewCiString50(input)
 	if ciStr.Value() != input {
 		t.Errorf(errMsgValueMismatch, input, ciStr.Value())
 	}
 }
 
-// CiString255Type
-func Test_sharedtypes_SetCiString255Type(t *testing.T) {
+// CiString255
+func Test_sharedtypes_NewCiString255(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("J", st.CiString255Max)
 
-	_, err := st.SetCiString255Type(val)
+	_, err := st.NewCiString255(val)
 	if err != nil {
 		t.Errorf(errMsgUnexpectedError, st.CiString255Max, err)
 	}
 }
 
-func Test_sharedtypes_SetCiString255Type_Empty(t *testing.T) {
+func Test_sharedtypes_NewCiString255_Empty(t *testing.T) {
 	t.Parallel()
 
 	val := emptyString
 
-	_, err := st.SetCiString255Type(val)
+	_, err := st.NewCiString255(val)
 	if err != nil {
 		t.Errorf(errMsgEmptyAccepted, err)
 	}
 }
 
-func Test_sharedtypes_SetCiString255Type_TooLong(t *testing.T) {
+func Test_sharedtypes_NewCiString255_TooLong(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("K", ciString255Over)
 
-	_, err := st.SetCiString255Type(val)
+	_, err := st.NewCiString255(val)
 	if err == nil {
 		t.Errorf(errMsgStringTooLong, st.CiString255Max)
 	}
 }
 
-func Test_sharedtypes_SetCiString255Type_TestValue(t *testing.T) {
+func Test_sharedtypes_NewCiString255_TestValue(t *testing.T) {
 	t.Parallel()
 
 	input := strings.Repeat("L", st.CiString255Max)
 
-	ciStr, _ := st.SetCiString255Type(input)
+	ciStr, _ := st.NewCiString255(input)
 	if ciStr.Value() != input {
 		t.Errorf(errMsgValueMismatch, input, ciStr.Value())
 	}
 }
 
-// CiString500Type
-func Test_sharedtypes_SetCiString500Type(t *testing.T) {
+// CiString500
+func Test_sharedtypes_NewCiString500(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("M", st.CiString500Max)
 
-	_, err := st.SetCiString500Type(val)
+	_, err := st.NewCiString500(val)
 	if err != nil {
 		t.Errorf(errMsgUnexpectedError, st.CiString500Max, err)
 	}
 }
 
-func Test_sharedtypes_SetCiString500Type_Empty(t *testing.T) {
+func Test_sharedtypes_NewCiString500_Empty(t *testing.T) {
 	t.Parallel()
 
 	val := emptyString
 
-	_, err := st.SetCiString500Type(val)
+	_, err := st.NewCiString500(val)
 	if err != nil {
 		t.Errorf(errMsgEmptyAccepted, err)
 	}
 }
 
-func Test_sharedtypes_SetCiString500Type_TooLong(t *testing.T) {
+func Test_sharedtypes_NewCiString500_TooLong(t *testing.T) {
 	t.Parallel()
 
 	val := strings.Repeat("N", ciString500Over)
 
-	_, err := st.SetCiString500Type(val)
+	_, err := st.NewCiString500(val)
 	if err == nil {
 		t.Errorf(errMsgStringTooLong, st.CiString500Max)
 	}
 }
 
-func Test_sharedtypes_SetCiString500Type_TestValue(t *testing.T) {
+func Test_sharedtypes_NewCiString500_TestValue(t *testing.T) {
 	t.Parallel()
 
 	input := strings.Repeat("O", st.CiString500Max)
 
-	ciStr, _ := st.SetCiString500Type(input)
+	ciStr, _ := st.NewCiString500(input)
 	if ciStr.Value() != input {
 		t.Errorf(errMsgValueMismatch, input, ciStr.Value())
 	}
