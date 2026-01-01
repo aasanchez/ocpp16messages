@@ -88,3 +88,5 @@ reports/
 .gocache
 testdata
 .claude/settings.local.json
+
+.vscode/
