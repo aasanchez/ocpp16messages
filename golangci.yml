@@ -10,6 +10,7 @@ linters:
   default: all
   disable:
     - wsl
+    - testpackage
   enable:
     - wsl_v5
   settings:
@@ -19,6 +20,9 @@ linters:
       branch-max-lines: 2
     revive:
       enable-all-rules: true
+      rules:
+        - name: package-directory-mismatch
+          disabled: true
     depguard:
       rules:
         main:

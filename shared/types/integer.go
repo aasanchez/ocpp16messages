@@ -18,6 +18,7 @@ func SetInteger(value string) (Integer, error) {
 	return Integer{value: uint16(parsedValue)}, nil
 }
 
+// Value returns the underlying uint16 value of the Integer.
 func (integer Integer) Value() uint16 {
 	return integer.value
 }
