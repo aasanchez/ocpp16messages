@@ -30,7 +30,7 @@ linters:
           arguments:
             - [] # allowlist - empty means use defaults
             - [] # denylist - empty means use defaults
-            - - skipPackageNameChecks: true # Skip package name checks entirely for this rule
+            - - skipPackageNameChecks: true
     depguard:
       rules:
         main:
