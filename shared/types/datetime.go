@@ -10,9 +10,9 @@ type DateTime struct {
 	value time.Time
 }
 
-// SetDateTime creates a new DateTime from an RFC3339 formatted string.
-// The resulting DateTime is automatically normalized to UTC.
-// Returns an error if the input string is not a valid RFC3339 timestamp.
+// SetDateTime creates a new DateTime from an RFC3339 formatted string. The
+// resulting DateTime is automatically normalized to UTC. Returns an error if
+// the input string is not a valid RFC3339 timestamp.
 func SetDateTime(input string) (DateTime, error) {
 	timestamp, err := time.Parse(time.RFC3339, input)
 	if err != nil {
