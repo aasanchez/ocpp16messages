@@ -8,8 +8,10 @@ import (
 )
 
 const (
-	msgError  = "Error:"
-	msgLength = "Length:"
+	msgError                  = "Error:"
+	msgLength                 = "Length:"
+	validCiString500Length    = 499
+	invalidCiString500Length  = 501
 )
 
 func ExampleSetCiString20Type() {
@@ -134,7 +136,7 @@ func ExampleSetCiString255Type_invalid() {
 }
 
 func ExampleSetCiString500Type() {
-	input := strings.Repeat("A", 499)
+	input := strings.Repeat("A", validCiString500Length)
 
 	cistr, err := st.SetCiString500Type(input)
 	if err != nil {
@@ -149,7 +151,7 @@ func ExampleSetCiString500Type() {
 }
 
 func ExampleSetCiString500Type_invalid() {
-	input := strings.Repeat("A", 501)
+	input := strings.Repeat("A", invalidCiString500Length)
 
 	cistr, err := st.SetCiString500Type(input)
 	if err != nil {
