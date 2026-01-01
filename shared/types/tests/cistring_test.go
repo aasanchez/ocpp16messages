@@ -8,15 +8,10 @@ import (
 )
 
 const (
-	ciString20Max   = 20
 	ciString20Over  = 21
-	ciString25Max   = 25
 	ciString25Over  = 26
-	ciString50Max   = 50
 	ciString50Over  = 51
-	ciString255Max  = 255
 	ciString255Over = 256
-	ciString500Max  = 500
 	ciString500Over = 501
 
 	emptyString = ""
@@ -31,11 +26,11 @@ const (
 func Test_sharedtypes_SetCiString20Type(t *testing.T) {
 	t.Parallel()
 
-	val := strings.Repeat("A", ciString20Max)
+	val := strings.Repeat("A", st.CiString20Max)
 
 	_, err := st.SetCiString20Type(val)
 	if err != nil {
-		t.Errorf(errMsgUnexpectedError, ciString20Max, err)
+		t.Errorf(errMsgUnexpectedError, st.CiString20Max, err)
 	}
 }
 
@@ -57,14 +52,14 @@ func Test_sharedtypes_SetCiString20Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString20Type(val)
 	if err == nil {
-		t.Errorf(errMsgStringTooLong, ciString20Max)
+		t.Errorf(errMsgStringTooLong, st.CiString20Max)
 	}
 }
 
 func Test_sharedtypes_SetCiString20Type_TestValue(t *testing.T) {
 	t.Parallel()
 
-	input := strings.Repeat("C", ciString20Max)
+	input := strings.Repeat("C", st.CiString20Max)
 
 	ciStr, _ := st.SetCiString20Type(input)
 	if ciStr.Value() != input {
@@ -76,11 +71,11 @@ func Test_sharedtypes_SetCiString20Type_TestValue(t *testing.T) {
 func Test_sharedtypes_SetCiString25Type(t *testing.T) {
 	t.Parallel()
 
-	val := strings.Repeat("D", ciString25Max)
+	val := strings.Repeat("D", st.CiString25Max)
 
 	_, err := st.SetCiString25Type(val)
 	if err != nil {
-		t.Errorf(errMsgUnexpectedError, ciString25Max, err)
+		t.Errorf(errMsgUnexpectedError, st.CiString25Max, err)
 	}
 }
 
@@ -102,14 +97,14 @@ func Test_sharedtypes_SetCiString25Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString25Type(val)
 	if err == nil {
-		t.Errorf(errMsgStringTooLong, ciString25Max)
+		t.Errorf(errMsgStringTooLong, st.CiString25Max)
 	}
 }
 
 func Test_sharedtypes_SetCiString25Type_TestValue(t *testing.T) {
 	t.Parallel()
 
-	input := strings.Repeat("F", ciString25Max)
+	input := strings.Repeat("F", st.CiString25Max)
 
 	ciStr, _ := st.SetCiString25Type(input)
 	if ciStr.Value() != input {
@@ -121,11 +116,11 @@ func Test_sharedtypes_SetCiString25Type_TestValue(t *testing.T) {
 func Test_sharedtypes_SetCiString50Type(t *testing.T) {
 	t.Parallel()
 
-	val := strings.Repeat("G", ciString50Max)
+	val := strings.Repeat("G", st.CiString50Max)
 
 	_, err := st.SetCiString50Type(val)
 	if err != nil {
-		t.Errorf(errMsgUnexpectedError, ciString50Max, err)
+		t.Errorf(errMsgUnexpectedError, st.CiString50Max, err)
 	}
 }
 
@@ -147,14 +142,14 @@ func Test_sharedtypes_SetCiString50Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString50Type(val)
 	if err == nil {
-		t.Errorf(errMsgStringTooLong, ciString50Max)
+		t.Errorf(errMsgStringTooLong, st.CiString50Max)
 	}
 }
 
 func Test_sharedtypes_SetCiString50Type_TestValue(t *testing.T) {
 	t.Parallel()
 
-	input := strings.Repeat("I", ciString50Max)
+	input := strings.Repeat("I", st.CiString50Max)
 
 	ciStr, _ := st.SetCiString50Type(input)
 	if ciStr.Value() != input {
@@ -166,11 +161,11 @@ func Test_sharedtypes_SetCiString50Type_TestValue(t *testing.T) {
 func Test_sharedtypes_SetCiString255Type(t *testing.T) {
 	t.Parallel()
 
-	val := strings.Repeat("J", ciString255Max)
+	val := strings.Repeat("J", st.CiString255Max)
 
 	_, err := st.SetCiString255Type(val)
 	if err != nil {
-		t.Errorf(errMsgUnexpectedError, ciString255Max, err)
+		t.Errorf(errMsgUnexpectedError, st.CiString255Max, err)
 	}
 }
 
@@ -192,14 +187,14 @@ func Test_sharedtypes_SetCiString255Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString255Type(val)
 	if err == nil {
-		t.Errorf(errMsgStringTooLong, ciString255Max)
+		t.Errorf(errMsgStringTooLong, st.CiString255Max)
 	}
 }
 
 func Test_sharedtypes_SetCiString255Type_TestValue(t *testing.T) {
 	t.Parallel()
 
-	input := strings.Repeat("L", ciString255Max)
+	input := strings.Repeat("L", st.CiString255Max)
 
 	ciStr, _ := st.SetCiString255Type(input)
 	if ciStr.Value() != input {
@@ -211,11 +206,11 @@ func Test_sharedtypes_SetCiString255Type_TestValue(t *testing.T) {
 func Test_sharedtypes_SetCiString500Type(t *testing.T) {
 	t.Parallel()
 
-	val := strings.Repeat("M", ciString500Max)
+	val := strings.Repeat("M", st.CiString500Max)
 
 	_, err := st.SetCiString500Type(val)
 	if err != nil {
-		t.Errorf(errMsgUnexpectedError, ciString500Max, err)
+		t.Errorf(errMsgUnexpectedError, st.CiString500Max, err)
 	}
 }
 
@@ -237,14 +232,14 @@ func Test_sharedtypes_SetCiString500Type_TooLong(t *testing.T) {
 
 	_, err := st.SetCiString500Type(val)
 	if err == nil {
-		t.Errorf(errMsgStringTooLong, ciString500Max)
+		t.Errorf(errMsgStringTooLong, st.CiString500Max)
 	}
 }
 
 func Test_sharedtypes_SetCiString500Type_TestValue(t *testing.T) {
 	t.Parallel()
 
-	input := strings.Repeat("O", ciString500Max)
+	input := strings.Repeat("O", st.CiString500Max)
 
 	ciStr, _ := st.SetCiString500Type(input)
 	if ciStr.Value() != input {

@@ -11,6 +11,7 @@ linters:
   disable:
     - wsl
     - testpackage
+    - godot
   enable:
     - wsl_v5
   settings:

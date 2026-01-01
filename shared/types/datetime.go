@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// DateTime represents an OCPP 1.6–compliant RFC3339 timestamp in UTC
+// DateTime represents an OCPP 1.6–compliant RFC3339 timestamp in UTC.
 type DateTime struct {
 	value time.Time
 }
