@@ -1,5 +1,6 @@
 package sharedtypes_test
 
+//revive:disable line-length-limit
 import (
 	"fmt"
 

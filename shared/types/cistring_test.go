@@ -5,13 +5,19 @@ import (
 	"testing"
 )
 
+const (
+	testMaxLen5  = 5
+	testMaxLen10 = 10
+	testMaxLen20 = 20
+)
+
 // Internal test
 
 func Test_sharedtypes_setCiString_Valid(t *testing.T) {
 	t.Parallel()
 
 	input := "OCPP-Test-123"
-	maxLen := 20
+	maxLen := testMaxLen20
 
 	cis, err := setCiString(input, maxLen)
 	if err != nil {
@@ -27,7 +33,7 @@ func Test_sharedtypes_setCiString_TooLong(t *testing.T) {
 	t.Parallel()
 
 	input := "ThisStringIsWayTooLong"
-	maxLen := 5
+	maxLen := testMaxLen5
 
 	_, err := setCiString(input, maxLen)
 	if err == nil {
@@ -44,7 +50,7 @@ func Test_sharedtypes_setCiString_NonPrintableASCII(t *testing.T) {
 
 	input := "Valid\x01Invalid"
 
-	_, err := setCiString(input, 20)
+	_, err := setCiString(input, testMaxLen20)
 	if err == nil {
 		t.Fatal("expected error for non-printable ASCII, got nil")
 	}
@@ -58,7 +64,7 @@ func Test_sharedtypes_setCiString_EmptyIsValid(t *testing.T) {
 	t.Parallel()
 
 	input := ""
-	maxLen := 10
+	maxLen := testMaxLen10
 
 	cis, err := setCiString(input, maxLen)
 	if err != nil {
@@ -74,7 +80,7 @@ func Test_sharedtypes_setCiString_ASCIIBoundary(t *testing.T) {
 	t.Parallel()
 
 	input := " ~"
-	maxLen := 5
+	maxLen := testMaxLen5
 
 	cis, err := setCiString(input, maxLen)
 	if err != nil {

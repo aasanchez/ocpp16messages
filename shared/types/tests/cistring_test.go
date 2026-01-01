@@ -8,12 +8,12 @@ import (
 )
 
 const (
-	ciString20Max  = 20
-	ciString20Over = 21
-	ciString25Max  = 25
-	ciString25Over = 26
-	ciString50Max  = 50
-	ciString50Over = 51
+	ciString20Max   = 20
+	ciString20Over  = 21
+	ciString25Max   = 25
+	ciString25Over  = 26
+	ciString50Max   = 50
+	ciString50Over  = 51
 	ciString255Max  = 255
 	ciString255Over = 256
 	ciString500Max  = 500

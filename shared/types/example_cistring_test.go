@@ -1,5 +1,6 @@
 package sharedtypes_test
 
+//revive:disable line-length-limit
 import (
 	"fmt"
 	"strings"
@@ -8,10 +9,10 @@ import (
 )
 
 const (
-	msgError                  = "Error:"
-	msgLength                 = "Length:"
-	validCiString500Length    = 499
-	invalidCiString500Length  = 501
+	msgError                 = "Error:"
+	msgLength                = "Length:"
+	validCiString500Length   = 499
+	invalidCiString500Length = 501
 )
 
 func ExampleSetCiString20Type() {

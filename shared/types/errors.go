@@ -1,5 +1,6 @@
 package sharedtypes
 
+// Error message format strings used throughout the shared types package.
 const (
 	ErrCiStringEmpty         = "%s can't be empty, %w"
 	ErrorInvalid             = "error: invalid %s -> %w"
