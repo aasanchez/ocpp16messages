@@ -1,7 +1,6 @@
 package types
 
 import (
-	"fmt"
 	"strings"
 	"testing"
 
@@ -13,51 +12,49 @@ const (
 	invalidTokenLength = 21
 )
 
-func TestIdToken(t *testing.T) {
+func TestIDToken(t *testing.T) {
 	t.Parallel()
 
 	str := strings.Repeat("A", validTokenLength)
 	cstr, _ := sharedTypes.NewCiString20(str)
 
-	_, err := SetIdToken(cstr)
+	_, err := NewIDToken(cstr)
 	if err != nil {
-		t.Errorf("SetIdToken error: %v", err)
+		t.Errorf("NewIDToken error: %v", err)
 	}
 }
 
-func TestIdToken_string(t *testing.T) {
+func TestIDToken_string(t *testing.T) {
 	t.Parallel()
 
 	str := strings.Repeat("B", validTokenLength)
 	cstr, _ := sharedTypes.NewCiString20(str)
 
-	idtoken, _ := SetIdToken(cstr)
+	idtoken, _ := NewIDToken(cstr)
 
 	if idtoken.String() != str {
-		t.Errorf(sharedTypes.ErrorStringMismatch,
-			fmt.Sprintf("%q", str),
-			fmt.Sprintf("%q", idtoken.String()))
+		t.Errorf(sharedTypes.ErrorMismatch, str, idtoken.String())
 	}
 
 	if idtoken.Value() != cstr {
-		t.Errorf(sharedTypes.ErrorValueMismatch, cstr.Value(), idtoken.String())
+		t.Errorf(sharedTypes.ErrorMismatch, cstr.Value(), idtoken.String())
 	}
 }
 
-func TestIdToken_value(t *testing.T) {
+func TestIDToken_value(t *testing.T) {
 	t.Parallel()
 
 	str := strings.Repeat("C", validTokenLength)
 	cstr, _ := sharedTypes.NewCiString20(str)
 
-	idtoken, _ := SetIdToken(cstr)
+	idtoken, _ := NewIDToken(cstr)
 
 	if idtoken.Value() != cstr {
-		t.Errorf(sharedTypes.ErrorValueMismatch, cstr.Value(), idtoken.String())
+		t.Errorf(sharedTypes.ErrorMismatch, cstr.Value(), idtoken.String())
 	}
 }
 
-func TestIdToken_invalid(t *testing.T) {
+func TestIDToken_invalid(t *testing.T) {
 	t.Parallel()
 
 	str := strings.Repeat("D", invalidTokenLength)
@@ -68,13 +65,13 @@ func TestIdToken_invalid(t *testing.T) {
 	}
 }
 
-func TestIdToken_empty(t *testing.T) {
+func TestIDToken_empty(t *testing.T) {
 	t.Parallel()
 
 	str := ""
 	cstr, _ := sharedTypes.NewCiString20(str)
 
-	_, err := SetIdToken(cstr)
+	_, err := NewIDToken(cstr)
 	if err == nil {
 		t.Errorf(sharedTypes.ErrorExpectedError, err)
 	}

@@ -5,12 +5,14 @@ import (
 	"fmt"
 )
 
-// Error message format strings used throughout the shared types package.
+// Error message format strings used throughout the types package.
 const (
-	// ErrorExpectedError is used in tests to format error assertion messages.
-	ErrorExpectedError  = "Expected Error: %v"
-	ErrorStringMismatch = "Expected String: %s, got: %s"
-	ErrorValueMismatch  = "expected Value = %q, got %q"
+	// ErrorExpectedError is used in tests to format error assertion
+	// messages.
+	ErrorExpectedError = "Expected Error: %v"
+	// ErrorMismatch is used in tests to format expected vs actual value
+	// comparison failures.
+	ErrorMismatch = "expected %q, got %q"
 )
 
 // ErrEmptyValue is a sentinel error for empty field validation.
