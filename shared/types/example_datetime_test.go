@@ -15,11 +15,9 @@ func ExampleNewDateTime() {
 	}
 
 	fmt.Println("Time value:", datetime.Value().UTC())
-	fmt.Println("String:", datetime.String())
 
 	// Output:
 	// Time value: 2025-08-30 14:34:56 +0000 UTC
-	// String: 2025-08-30T14:34:56Z
 }
 
 func ExampleNewDateTime_invalid() {

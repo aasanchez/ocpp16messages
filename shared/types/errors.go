@@ -32,3 +32,9 @@ func ErrEmpty(fieldName string) error {
 func ErrInvalid(fieldName string) error {
 	return fmt.Errorf("%s: %w", fieldName, ErrInvalidValue)
 }
+
+// ErrField wraps an error with field context for validation failures.
+// Use this to add field name context to validation errors.
+func ErrField(fieldName string, err error) error {
+	return fmt.Errorf("%s: %w", fieldName, err)
+}

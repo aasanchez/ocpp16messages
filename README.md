@@ -143,15 +143,15 @@ Reports are generated in the `reports/` directory:
 
 ### Type System
 
-| OCPP Type    | Go Type              | Validation                                      |
-|--------------|----------------------|-------------------------------------------------|
-| CiString20Type   | `types.CiString20Type`   | Length ≤ 20, ASCII printable (32–126)           |
-| CiString25Type   | `types.CiString25Type`   | Length ≤ 25, ASCII printable (32–126)           |
-| CiString50Type   | `types.CiString50Type`   | Length ≤ 50, ASCII printable (32–126)           |
-| CiString255Type  | `types.CiString255Type`  | Length ≤ 255, ASCII printable (32–126)          |
-| CiString500Type  | `types.CiString500Type`  | Length ≤ 500, ASCII printable (32–126)          |
-| dateTime     | `types.DateTime`     | RFC3339, normalized to UTC                      |
-| integer      | `types.Integer`      | uint16 (0–65535)                                |
+| OCPP Type       | Go Type                  | Validation                            |
+|-----------------|--------------------------|---------------------------------------|
+| CiString20Type  | `types.CiString20Type`   | Length ≤ 20, ASCII printable (32–126) |
+| CiString25Type  | `types.CiString25Type`   | Length ≤ 25, ASCII printable (32–126) |
+| CiString50Type  | `types.CiString50Type`   | Length ≤ 50, ASCII printable (32–126) |
+| CiString255Type | `types.CiString255Type`  | Length ≤ 255, ASCII printable (32–126)|
+| CiString500Type | `types.CiString500Type`  | Length ≤ 500, ASCII printable (32–126)|
+| dateTime        | `types.DateTime`         | RFC3339, normalized to UTC            |
+| integer         | `types.Integer`          | uint16 (0–65535)                      |
 
 ### Message Implementation Status
 

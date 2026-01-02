@@ -30,21 +30,6 @@ func Test_sharedtypes_NewDateTime_ReturnsExpectedValue(t *testing.T) {
 	}
 }
 
-func Test_sharedtypes_NewDateTime_StringFormatsRFC3339Nano(t *testing.T) {
-	t.Parallel()
-
-	input := "2023-08-30T12:34:56Z"
-	want, _ := time.Parse(time.RFC3339, input)
-	dt, _ := st.NewDateTime(input)
-
-	got := dt.String()
-	if got != want.Format(time.RFC3339Nano) {
-		t.Errorf("String() mismatch: got %q, want %q",
-			got, want.Format(time.RFC3339Nano),
-		)
-	}
-}
-
 func Test_sharedtypes_NewDateTime_InvalidReturnsError(t *testing.T) {
 	t.Parallel()
 
@@ -60,14 +45,5 @@ func Test_sharedtypes_NewDateTime_EmptyError(t *testing.T) {
 	dt, _ := st.NewDateTime("")
 	if !dt.Value().IsZero() {
 		t.Errorf("expected zero value after failed parse, got %v", dt.Value())
-	}
-}
-
-func Test_sharedtypes_DateTime_StringZeroValue(t *testing.T) {
-	t.Parallel()
-
-	var dt st.DateTime
-	if dt.String() != (time.Time{}).Format(time.RFC3339Nano) {
-		t.Errorf("String() zero mismatch: got %q", dt.String())
 	}
 }

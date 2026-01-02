@@ -12,25 +12,15 @@ type IdToken struct {
 	value st.CiString20Type
 }
 
-// NewIdToken creates a new IdToken from a CiString20Type value.
-// Returns an error if the provided cistring value is empty.
-func NewIdToken(cistring st.CiString20Type) (IdToken, error) {
-	if cistring.Value() == "" {
-		return IdToken{}, fmt.Errorf(
-			"NewIdToken: %w",
-			st.ErrEmpty("IdToken"),
-		)
+func NewIdToken(CiString20Type st.CiString20Type) (IdToken, error) {
+	if CiString20Type.Value() == "" {
+		return IdToken{}, fmt.Errorf("NewIdToken: %w", st.ErrEmpty("IdToken"))
 	}
 
-	return IdToken{value: cistring}, nil
+	return IdToken{value: CiString20Type}, nil
 }
 
 // Value returns the underlying CiString20Type value of the IdToken.
 func (idtoken IdToken) Value() st.CiString20Type {
 	return idtoken.value
-}
-
-// String returns the string representation of the IdToken.
-func (idtoken IdToken) String() string {
-	return idtoken.value.Value()
 }

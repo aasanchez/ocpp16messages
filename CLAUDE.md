@@ -25,9 +25,6 @@ go mod tidy
 make test                   # Unit and example tests with coverage (reports in reports/)
 make test-coverage          # Generate and open HTML coverage report
 make test-example           # Run example tests (documentation tests)
-make test-benchmark         # Run performance benchmarks
-make test-race              # Run tests with race detector
-make test-fuzz              # Run fuzz tests (default 10s per fuzz function)
 make test-all               # Run all test types
 
 # Run single test package
@@ -35,12 +32,6 @@ go test -v ./shared/types
 
 # Run specific test
 go test -v ./shared/types -run '^TestDateTime$'
-
-# Run specific benchmark
-go test -run '^$' -bench '^BenchmarkInteger$' ./shared/types/benchmark
-
-# Custom fuzz duration
-FUZZTIME=30s make test-fuzz
 ```
 
 ### Linting and Formatting
@@ -75,9 +66,6 @@ All types use value receivers and immutable fields, designed for thread-safe con
 
 - `shared/types/tests/` - Unit tests (table-driven where applicable)
 - `shared/types/example_*_test.go` - Documentation/example tests
-- `shared/types/benchmark/` - Performance benchmarks (requires `-tags=benchmark`)
-- `shared/types/fuzz/` - Fuzz tests (requires `-tags=fuzz`)
-- `shared/types/race/` - Concurrency/race condition tests
 
 ## Code Style Guidelines
 
@@ -100,9 +88,9 @@ All types use value receivers and immutable fields, designed for thread-safe con
 ### Naming
 
 - Exported identifiers: PascalCase
-- Keep acronyms uppercase (e.g., ID not Id - allowed by revive var-naming rule)
+- Keep acronyms uppercase (e.g., Id not ID - allowed by revive var-naming rule)
 - **Constructors**: MUST use `New` prefix following Go idioms
-  - Public constructors: `NewType(args) (Type, error)` (e.g., `NewInteger`, `NewDateTime`, `NewCiString20`)
+  - Public constructors: `NewType(args) (Type, error)` (e.g., `NewInteger`, `NewDateTime`, `NewCiString20Type`)
   - Private constructors: `newType(args) (type, error)` (lowercase 'n' for unexported)
   - **NEVER** use `Set` prefix for constructors (e.g., `SetInteger` ✗, `NewInteger` ✓)
   - Rationale: "Set" implies mutation; "New" indicates construction (see Effective Go)
@@ -133,13 +121,9 @@ All types use value receivers and immutable fields, designed for thread-safe con
 - View with: `go tool cover -func=reports/coverage.out`
 - HTML report: `make test-coverage`
 
-### Quality Gates
-
-- SonarCloud integration for code quality metrics
-- Run `make sonar` after test and lint (requires sonar-scanner)
-
 ### Linter Output
 
+- Execute `make lint` to execute all the lints
 - golangci-lint: `reports/golangci-lint.txt`
 - go vet: `reports/govet.json`
 - staticcheck: `reports/staticcheck`

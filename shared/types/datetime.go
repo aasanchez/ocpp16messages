@@ -28,8 +28,3 @@ func NewDateTime(input string) (DateTime, error) {
 func (dt DateTime) Value() time.Time {
 	return dt.value
 }
-
-// String returns the DateTime formatted as an RFC3339Nano string.
-func (dt DateTime) String() string {
-	return dt.value.Format(time.RFC3339Nano)
-}

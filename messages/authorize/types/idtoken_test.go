@@ -24,23 +24,6 @@ func TestIdToken(t *testing.T) {
 	}
 }
 
-func TestIdToken_string(t *testing.T) {
-	t.Parallel()
-
-	str := strings.Repeat("B", validTokenLength)
-	cstr, _ := st.NewCiString20Type(str)
-
-	idtoken, _ := NewIdToken(cstr)
-
-	if idtoken.String() != str {
-		t.Errorf(st.ErrorMismatch, str, idtoken.String())
-	}
-
-	if idtoken.Value() != cstr {
-		t.Errorf(st.ErrorMismatch, cstr.Value(), idtoken.String())
-	}
-}
-
 func TestIdToken_value(t *testing.T) {
 	t.Parallel()
 
@@ -50,7 +33,7 @@ func TestIdToken_value(t *testing.T) {
 	idtoken, _ := NewIdToken(cstr)
 
 	if idtoken.Value() != cstr {
-		t.Errorf(st.ErrorMismatch, cstr.Value(), idtoken.String())
+		t.Errorf(st.ErrorMismatch, cstr.Value(), string(idtoken.value.Value()))
 	}
 }
 
