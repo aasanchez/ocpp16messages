@@ -26,7 +26,7 @@ linters:
           disabled: true
         - name: var-naming
           arguments:
-            - [] # allowlist - empty means use defaults
+            - [ID] # allowlist - empty means use defaults
             - [] # denylist - empty means use defaults
             - - skipPackageNameChecks: true
         # - name: import-alias-naming

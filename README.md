@@ -43,7 +43,7 @@ go get github.com/aasanchez/ocpp16messages
 │   └── authorize/        # Authorize message implementation
 │       ├── request.go    # Authorize request message
 │       └── types/        # Authorize-specific types
-│           ├── idtoken.go      # IDToken type
+│           ├── idtoken.go      # IdToken type
 │           ├── request.go      # Request payload
 │           └── tests/          # Message-specific tests
 └── SECURITY.md           # Security policy and vulnerability reporting
@@ -59,7 +59,7 @@ The library provides validated OCPP 1.6 data types:
 import "github.com/aasanchez/ocpp16messages/shared/types"
 
 // CiString types (case-insensitive, ASCII printable, length-validated)
-idTag, err := types.NewCiString20("RFID-ABC123")
+idTag, err := types.NewCiString20Type("RFID-ABC123")
 if err != nil {
     // Handle validation error (length > 20 or non-ASCII chars)
 }
@@ -87,7 +87,7 @@ import (
 
 // Create request payload
 payload := mat.Request{
-    IDTag: "RFID-ABC123",
+    IdTag: "RFID-ABC123",
 }
 
 // Validate payload
@@ -145,11 +145,11 @@ Reports are generated in the `reports/` directory:
 
 | OCPP Type    | Go Type              | Validation                                      |
 |--------------|----------------------|-------------------------------------------------|
-| CiString20   | `types.CiString20`   | Length ≤ 20, ASCII printable (32–126)           |
-| CiString25   | `types.CiString25`   | Length ≤ 25, ASCII printable (32–126)           |
-| CiString50   | `types.CiString50`   | Length ≤ 50, ASCII printable (32–126)           |
-| CiString255  | `types.CiString255`  | Length ≤ 255, ASCII printable (32–126)          |
-| CiString500  | `types.CiString500`  | Length ≤ 500, ASCII printable (32–126)          |
+| CiString20Type   | `types.CiString20Type`   | Length ≤ 20, ASCII printable (32–126)           |
+| CiString25Type   | `types.CiString25Type`   | Length ≤ 25, ASCII printable (32–126)           |
+| CiString50Type   | `types.CiString50Type`   | Length ≤ 50, ASCII printable (32–126)           |
+| CiString255Type  | `types.CiString255Type`  | Length ≤ 255, ASCII printable (32–126)          |
+| CiString500Type  | `types.CiString500Type`  | Length ≤ 500, ASCII printable (32–126)          |
 | dateTime     | `types.DateTime`     | RFC3339, normalized to UTC                      |
 | integer      | `types.Integer`      | uint16 (0–65535)                                |
 

@@ -6,31 +6,31 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-// IDToken represents an OCPP 1.6 identifier token used for authorization.
-// It wraps a CiString20 value that must not be empty.
-type IDToken struct {
-	value st.CiString20
+// IdToken represents an OCPP 1.6 identifier token used for authorization.
+// It wraps a CiString20Type value that must not be empty.
+type IdToken struct {
+	value st.CiString20Type
 }
 
-// NewIDToken creates a new IDToken from a CiString20 value. Returns an error
-// if the provided cistring value is empty.
-func NewIDToken(cistring st.CiString20) (IDToken, error) {
+// NewIdToken creates a new IdToken from a CiString20Type value.
+// Returns an error if the provided cistring value is empty.
+func NewIdToken(cistring st.CiString20Type) (IdToken, error) {
 	if cistring.Value() == "" {
-		return IDToken{}, fmt.Errorf(
-			"NewIDToken: %w",
-			st.ErrEmpty("IDToken"),
+		return IdToken{}, fmt.Errorf(
+			"NewIdToken: %w",
+			st.ErrEmpty("IdToken"),
 		)
 	}
 
-	return IDToken{value: cistring}, nil
+	return IdToken{value: cistring}, nil
 }
 
-// Value returns the underlying CiString20 value of the IDToken.
-func (idtoken IDToken) Value() st.CiString20 {
+// Value returns the underlying CiString20Type value of the IdToken.
+func (idtoken IdToken) Value() st.CiString20Type {
 	return idtoken.value
 }
 
-// String returns the string representation of the IDToken.
-func (idtoken IDToken) String() string {
+// String returns the string representation of the IdToken.
+func (idtoken IdToken) String() string {
 	return idtoken.value.Value()
 }
