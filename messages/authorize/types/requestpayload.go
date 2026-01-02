@@ -3,7 +3,7 @@ package types
 import (
 	"fmt"
 
-	sharedTypes "github.com/aasanchez/ocpp16messages/shared/types"
+	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 // RequestPayload represents the OCPP 1.6 Authorize request payload structure.
@@ -18,7 +18,7 @@ func (r RequestPayload) Validate() error {
 		return fmt.Errorf("request payload: %w", ErrInvalidIDTag)
 	}
 
-	_, err := sharedTypes.NewCiString20(r.IDTag)
+	_, err := st.NewCiString20(r.IDTag)
 	if err != nil {
 		return fmt.Errorf("request payload: %w", err)
 	}

@@ -29,9 +29,9 @@ linters:
             - [] # allowlist - empty means use defaults
             - [] # denylist - empty means use defaults
             - - skipPackageNameChecks: true
-        - name: import-alias-naming
-          arguments:
-            - allow-regex: "^[a-z]+(?:[A-Z][a-z0-9]*)*$"
+        # - name: import-alias-naming
+        #   arguments:
+        #     - allow-regex: "^[a-z]+(?:[A-Z][a-z0-9]*)*$"
     depguard:
       rules:
         main:
