@@ -13,7 +13,7 @@ func Test_sharedtypes_NewInteger(t *testing.T) {
 
 	i, err := st.NewInteger("73")
 	if err != nil {
-		t.Fatalf("unexpected error from NewInteger: %v", err)
+		t.Errorf("unexpected error from NewInteger: %v", err)
 	}
 
 	got := i.Value()

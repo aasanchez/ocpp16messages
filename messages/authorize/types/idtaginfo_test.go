@@ -11,7 +11,7 @@ func TestNewIdTagInfo_ValidStatus(t *testing.T) {
 
 	_, err := NewIdTagInfo(AuthorizationStatusAccepted)
 	if err != nil {
-		t.Fatalf("NewIdTagInfo() error = %v, want nil", err)
+		t.Errorf("NewIdTagInfo() error = %v, want nil", err)
 	}
 }
 

@@ -19,7 +19,7 @@ func TestNewRequest_EmptyIdTag(t *testing.T) {
 
 	_, err := ma.NewRequest(payload)
 	if err == nil {
-		t.Fatal("NewRequest() error = nil, want error for empty IdTag")
+		t.Error("NewRequest() error = nil, want error for empty IdTag")
 	}
 
 	if !errors.Is(err, st.ErrEmptyValue) {
@@ -40,7 +40,7 @@ func TestNewRequest_IdTagTooLong(t *testing.T) {
 
 	_, err := ma.NewRequest(payload)
 	if err == nil {
-		t.Fatal("NewRequest() error = nil, want error for IdTag too long")
+		t.Error("NewRequest() error = nil, want error for IdTag too long")
 	}
 
 	if !strings.Contains(err.Error(), "exceeds maximum length") {
@@ -60,7 +60,7 @@ func TestNewRequest_InvalidCharacters(t *testing.T) {
 
 	_, err := ma.NewRequest(payload)
 	if err == nil {
-		t.Fatal(
+		t.Error(
 			"NewRequest() error = nil, want error for non-printable chars",
 		)
 	}

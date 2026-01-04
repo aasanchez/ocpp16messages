@@ -14,7 +14,7 @@ func Test_IdTokenFromCiString(t *testing.T) {
 
 	str, err := st.NewCiString20Type(validStr)
 	if err != nil {
-		t.Fatalf("failed to construct CiString20: %v", err)
+		t.Errorf("failed to construct CiString20: %v", err)
 	}
 
 	_, err = mat.NewIdToken(str)
@@ -30,7 +30,7 @@ func Test_IdTokenFromCiString_TooLong(t *testing.T) {
 
 	_, err := st.NewCiString20Type(invalidStr)
 	if err == nil {
-		t.Fatal(
+		t.Error(
 			"expected error creating CiString20 from over-length string",
 		)
 	}
@@ -41,7 +41,7 @@ func Test_IdTokenFromCiString_Empty(t *testing.T) {
 
 	str, err := st.NewCiString20Type("")
 	if err != nil {
-		t.Fatalf("failed to construct empty CiString20: %v", err)
+		t.Errorf("failed to construct empty CiString20: %v", err)
 	}
 
 	_, err = mat.NewIdToken(str)
