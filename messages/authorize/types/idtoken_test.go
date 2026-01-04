@@ -33,7 +33,7 @@ func TestIdToken_value(t *testing.T) {
 	idtoken, _ := NewIdToken(cstr)
 
 	if idtoken.Value() != cstr {
-		t.Errorf(st.ErrorMismatch, cstr.Value(), string(idtoken.value.Value()))
+		t.Errorf(st.ErrorMismatch, cstr.Value(), idtoken.value.Value())
 	}
 }
 

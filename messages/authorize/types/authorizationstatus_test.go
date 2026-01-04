@@ -20,15 +20,15 @@ func TestAuthorizationStatus_IsValid(t *testing.T) {
 		{"Lowercase", AuthorizationStatus("accepted"), false},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+	for _, testCase := range tests {
+		t.Run(testCase.name, func(t *testing.T) {
 			t.Parallel()
 
-			if got := tt.status.IsValid(); got != tt.want {
+			if got := testCase.status.IsValid(); got != testCase.want {
 				t.Errorf(
 					"AuthorizationStatus.IsValid() = %v, want %v",
 					got,
-					tt.want,
+					testCase.want,
 				)
 			}
 		})
@@ -50,15 +50,15 @@ func TestAuthorizationStatus_String(t *testing.T) {
 		{"ConcurrentTx", AuthorizationStatusConcurrentTx, "ConcurrentTx"},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+	for _, testCase := range tests {
+		t.Run(testCase.name, func(t *testing.T) {
 			t.Parallel()
 
-			if got := tt.status.String(); got != tt.want {
+			if got := testCase.status.String(); got != testCase.want {
 				t.Errorf(
 					"AuthorizationStatus.String() = %v, want %v",
 					got,
-					tt.want,
+					testCase.want,
 				)
 			}
 		})

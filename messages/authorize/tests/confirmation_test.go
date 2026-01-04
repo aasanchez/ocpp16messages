@@ -3,6 +3,7 @@ package authorize
 import (
 	"testing"
 
+	ma "github.com/aasanchez/ocpp16messages/messages/authorize"
 	mat "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
@@ -14,7 +15,7 @@ func TestNewResponse(t *testing.T) {
 		t.Parallel()
 
 		idTagInfo, _ := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
-		resp := NewResponse(idTagInfo)
+		resp := ma.NewResponse(idTagInfo)
 
 		if resp.IdTagInfo.Status != mat.AuthorizationStatusAccepted {
 			t.Errorf(
@@ -32,7 +33,7 @@ func TestNewResponse(t *testing.T) {
 		idTagInfo, _ := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
 		idTagInfo = idTagInfo.WithExpiryDate(expiryDate)
 
-		resp := NewResponse(idTagInfo)
+		resp := ma.NewResponse(idTagInfo)
 
 		if resp.IdTagInfo.ExpiryDate == nil {
 			t.Error("Response.IdTagInfo.ExpiryDate = nil, want non-nil")
@@ -47,7 +48,7 @@ func TestNewResponse(t *testing.T) {
 		idTagInfo, _ := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
 		idTagInfo = idTagInfo.WithParentIdTag(parentTag)
 
-		resp := NewResponse(idTagInfo)
+		resp := ma.NewResponse(idTagInfo)
 
 		if resp.IdTagInfo.ParentIdTag == nil {
 			t.Error("Response.IdTagInfo.ParentIdTag = nil, want non-nil")
@@ -71,7 +72,7 @@ func TestNewResponse(t *testing.T) {
 				t.Fatalf("NewIdTagInfo(%v) error = %v", status, err)
 			}
 
-			resp := NewResponse(idTagInfo)
+			resp := ma.NewResponse(idTagInfo)
 			if resp.IdTagInfo.Status != status {
 				t.Errorf(
 					"Response.IdTagInfo.Status = %v, want %v",

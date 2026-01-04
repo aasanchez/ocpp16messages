@@ -24,3 +24,8 @@ func NewIdToken(CiString20Type st.CiString20Type) (IdToken, error) {
 func (idtoken IdToken) Value() st.CiString20Type {
 	return idtoken.value
 }
+
+// String returns the string representation of the IdToken.
+func (idtoken IdToken) String() string {
+	return idtoken.value.Value()
+}
