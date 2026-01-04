@@ -1,10 +1,13 @@
 package authorize_test
 
 import (
+	"errors"
+	"strings"
 	"testing"
 
 	ma "github.com/aasanchez/ocpp16messages/messages/authorize"
 	mat "github.com/aasanchez/ocpp16messages/messages/authorize/types"
+	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 func TestNewRequest_EmptyIdTag(t *testing.T) {
@@ -16,7 +19,15 @@ func TestNewRequest_EmptyIdTag(t *testing.T) {
 
 	_, err := ma.NewRequest(payload)
 	if err == nil {
-		t.Error("NewRequest() error = nil, want error for empty IdTag")
+		t.Fatal("NewRequest() error = nil, want error for empty IdTag")
+	}
+
+	if !errors.Is(err, st.ErrEmptyValue) {
+		t.Errorf(
+			"NewRequest() error = %v, want error wrapping %v",
+			err,
+			st.ErrEmptyValue,
+		)
 	}
 }
 
@@ -29,7 +40,14 @@ func TestNewRequest_IdTagTooLong(t *testing.T) {
 
 	_, err := ma.NewRequest(payload)
 	if err == nil {
-		t.Error("NewRequest() error = nil, want error for IdTag too long")
+		t.Fatal("NewRequest() error = nil, want error for IdTag too long")
+	}
+
+	if !strings.Contains(err.Error(), "exceeds maximum length") {
+		t.Errorf(
+			"NewRequest() error = %v, want error containing 'exceeds maximum length'",
+			err,
+		)
 	}
 }
 
@@ -42,8 +60,15 @@ func TestNewRequest_InvalidCharacters(t *testing.T) {
 
 	_, err := ma.NewRequest(payload)
 	if err == nil {
-		t.Error(
+		t.Fatal(
 			"NewRequest() error = nil, want error for non-printable chars",
+		)
+	}
+
+	if !strings.Contains(err.Error(), "non-printable ASCII") {
+		t.Errorf(
+			"NewRequest() error = %v, want error containing 'non-printable ASCII'",
+			err,
 		)
 	}
 }
