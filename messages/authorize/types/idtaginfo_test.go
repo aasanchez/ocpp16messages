@@ -29,7 +29,11 @@ func TestNewIdTagInfo_SetsCorrectStatus(t *testing.T) {
 
 	info, _ := NewIdTagInfo(AuthorizationStatusAccepted)
 	if info.Status != AuthorizationStatusAccepted {
-		t.Errorf("IdTagInfo.Status = %v, want %v", info.Status, AuthorizationStatusAccepted)
+		t.Errorf(
+			"IdTagInfo.Status = %v, want %v",
+			info.Status,
+			AuthorizationStatusAccepted,
+		)
 	}
 }
 
@@ -84,7 +88,11 @@ func TestIdTagInfo_WithExpiryDate_PreservesStatus(t *testing.T) {
 	result := info.WithExpiryDate(expiryDate)
 
 	if result.Status != AuthorizationStatusAccepted {
-		t.Errorf("IdTagInfo.Status = %v, want %v", result.Status, AuthorizationStatusAccepted)
+		t.Errorf(
+			"IdTagInfo.Status = %v, want %v",
+			result.Status,
+			AuthorizationStatusAccepted,
+		)
 	}
 }
 

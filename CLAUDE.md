@@ -109,9 +109,14 @@ All types use value receivers and immutable fields, designed for thread-safe con
 
 ### Testing
 
-- Use table-driven tests where applicable
+- **CRITICAL: Write atomic, individual test functions** - Each test should verify ONE specific behavior or case
+  - ✓ GOOD: `TestIdToken_String_ReturnsValue()`, `TestIdToken_Empty_ReturnsError()`
+  - ✗ BAD: Table-driven tests with multiple cases in one function
+  - Rationale: Atomic tests are easier to debug, maintain, and understand. Each test failure points directly to the specific case that broke.
+  - Exception: Only use table-driven tests when testing the same logic with slight variations (e.g., boundary values), and even then prefer splitting into separate functions when possible.
 - Place example tests in `example_*_test.go` for documentation
 - Ensure all new tests are race-compatible
+- Each test must call `t.Parallel()` for concurrent execution
 
 ## CI and Quality
 
