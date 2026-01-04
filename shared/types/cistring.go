@@ -36,7 +36,7 @@ func newCiString(input string, maxLen int) (ciString, error) {
 
 	if len(cis.value) > maxLen {
 		return ciString{}, fmt.Errorf(
-			"CiString Error on Construc (len=%d, max=%d): %w",
+			"CiString Error on Construct (len=%d, max=%d): %w",
 			len(cis.value),
 			maxLen,
 			errExceedsMaxLength,

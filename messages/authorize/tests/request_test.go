@@ -45,7 +45,7 @@ func TestNewRequest_IdTagTooLong(t *testing.T) {
 
 	if !strings.Contains(err.Error(), "exceeds maximum length") {
 		t.Errorf(
-			"NewRequest() error = %v, want error containing 'exceeds maximum length'",
+			"NewRequest() error = %v, want 'exceeds maximum length'",
 			err,
 		)
 	}
@@ -67,7 +67,7 @@ func TestNewRequest_InvalidCharacters(t *testing.T) {
 
 	if !strings.Contains(err.Error(), "non-printable ASCII") {
 		t.Errorf(
-			"NewRequest() error = %v, want error containing 'non-printable ASCII'",
+			"NewRequest() error = %v, want 'non-printable ASCII'",
 			err,
 		)
 	}
