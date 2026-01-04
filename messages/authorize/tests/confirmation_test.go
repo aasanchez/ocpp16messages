@@ -16,7 +16,7 @@ func TestNewResponse_BasicResponse(t *testing.T) {
 
 	if resp.IdTagInfo.Status != mat.AuthorizationStatusAccepted {
 		t.Errorf(
-			"Response.IdTagInfo.Status = %v, want %v",
+			ma.ErrorResponseStatusMismatch,
 			resp.IdTagInfo.Status,
 			mat.AuthorizationStatusAccepted,
 		)
@@ -60,7 +60,7 @@ func TestNewResponse_StatusAccepted(t *testing.T) {
 
 	if resp.IdTagInfo.Status != mat.AuthorizationStatusAccepted {
 		t.Errorf(
-			"Response.IdTagInfo.Status = %v, want %v",
+			ma.ErrorResponseStatusMismatch,
 			resp.IdTagInfo.Status,
 			mat.AuthorizationStatusAccepted,
 		)
@@ -75,7 +75,7 @@ func TestNewResponse_StatusBlocked(t *testing.T) {
 
 	if resp.IdTagInfo.Status != mat.AuthorizationStatusBlocked {
 		t.Errorf(
-			"Response.IdTagInfo.Status = %v, want %v",
+			ma.ErrorResponseStatusMismatch,
 			resp.IdTagInfo.Status,
 			mat.AuthorizationStatusBlocked,
 		)
@@ -90,7 +90,7 @@ func TestNewResponse_StatusExpired(t *testing.T) {
 
 	if resp.IdTagInfo.Status != mat.AuthorizationStatusExpired {
 		t.Errorf(
-			"Response.IdTagInfo.Status = %v, want %v",
+			ma.ErrorResponseStatusMismatch,
 			resp.IdTagInfo.Status,
 			mat.AuthorizationStatusExpired,
 		)
@@ -105,7 +105,7 @@ func TestNewResponse_StatusInvalid(t *testing.T) {
 
 	if resp.IdTagInfo.Status != mat.AuthorizationStatusInvalid {
 		t.Errorf(
-			"Response.IdTagInfo.Status = %v, want %v",
+			ma.ErrorResponseStatusMismatch,
 			resp.IdTagInfo.Status,
 			mat.AuthorizationStatusInvalid,
 		)
@@ -120,7 +120,7 @@ func TestNewResponse_StatusConcurrentTx(t *testing.T) {
 
 	if resp.IdTagInfo.Status != mat.AuthorizationStatusConcurrentTx {
 		t.Errorf(
-			"Response.IdTagInfo.Status = %v, want %v",
+			ma.ErrorResponseStatusMismatch,
 			resp.IdTagInfo.Status,
 			mat.AuthorizationStatusConcurrentTx,
 		)

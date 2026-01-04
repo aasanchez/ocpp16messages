@@ -106,6 +106,17 @@ All types use value receivers and immutable fields, designed for thread-safe con
 - Never panic in library code
 - Wrap errors with context: `fmt.Errorf("context: %w", err)`
 - Provide actionable error messages
+- **Error Constants and Reusability**:
+  - ALWAYS check if an error constant or format string already exists before creating a new one
+  - Prefer reusing error constants from:
+    1. `shared/types/errors.go` - For generic validation errors (ErrorMismatch, ErrorExpectedError, ErrorFieldFormat)
+    2. Package-level `errors.go` - For package-specific errors (e.g., `messages/authorize/types/errors.go`)
+    3. Parent package `errors.go` - For message-level errors (e.g., `messages/authorize/errors.go`)
+  - When creating new error constants:
+    - Place in `shared/types/errors.go` if applicable across multiple packages
+    - Place in package `errors.go` if specific to that package
+    - Document the parameters and usage clearly
+  - Avoid string literal duplication in tests - use constants from errors.go files
 
 ### Testing
 

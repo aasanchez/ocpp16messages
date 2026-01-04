@@ -34,11 +34,13 @@ func NewIdTagInfo(status AuthorizationStatus) (IdTagInfo, error) {
 // WithExpiryDate sets the expiry date and returns the IdTagInfo.
 func (i IdTagInfo) WithExpiryDate(expiryDate st.DateTime) IdTagInfo {
 	i.ExpiryDate = &expiryDate
+
 	return i
 }
 
 // WithParentIdTag sets the parent ID tag and returns the IdTagInfo.
 func (i IdTagInfo) WithParentIdTag(parentIdTag IdToken) IdTagInfo {
 	i.ParentIdTag = &parentIdTag
+
 	return i
 }

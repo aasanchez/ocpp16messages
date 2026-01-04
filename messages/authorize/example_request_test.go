@@ -14,6 +14,7 @@ const (
 	errInvalidPayload   = "Error: invalid payload -> %v\n"
 	outputFormat        = "Authorize.req: {idTag:%s}\n"
 )
+
 func ExampleRequest() {
 	input := mat.Request{IdTag: "B85A-50CBE9678EC6"}
 
@@ -41,7 +42,8 @@ func ExampleRequest() {
 // 	fmt.Println("This should not print")
 
 // 	// Output:
-// 	// Error: request -> invalid idTag -> ciString.Validate: value must not be empty
+// 	// Error: request -> invalid idTag -> ciString.Validate: value must
+// not be empty
 // }
 
 // func ExampleRequest_too_long_idtag() {
@@ -53,7 +55,9 @@ func ExampleRequest() {
 // 	}
 
 // 	// Output:
-// 	// Error: failed to construct request -> request -> invalid idTag -> ciString.Validate: value exceeds maximum allowed length (got length 25, max 20)
+// 	// Error: failed to construct request -> request -> invalid idTag -
+// > ciString.Validate: value exceeds maximum allowed length (got length
+// 25, max 20)
 // }
 
 // func ExampleRequest_parse() {
@@ -112,8 +116,6 @@ func ExampleRequest() {
 // 		fmt.Printf(errRequestFormat, err)
 // 	}
 
-// 	// Output:
-// 	// Error: Request failed -> request -> invalid idTag -> ciString.Validate: value exceeds maximum allowed length (got length 36, max 20)
 // }
 
 // func ExampleRequest_parse_empty() {
@@ -139,8 +141,6 @@ func ExampleRequest() {
 // 		fmt.Printf(errRequestFormat, err)
 // 	}
 
-// 	// Output:
-// 	// Error: Request failed -> request -> invalid idTag -> ciString.Validate: value must not be empty
 // }
 
 // func ExampleRequest_parse_idTag_empty() {
@@ -168,8 +168,7 @@ func ExampleRequest() {
 // 		fmt.Printf(errRequestFormat, err)
 // 	}
 
-// 	// Output:
-// 	// Error: Request failed -> request -> invalid idTag -> ciString.Validate: value must not be empty
+//  value must not be empty
 // }
 
 // func ExampleRequest_parse_idTag_NotFound() {
@@ -196,20 +195,16 @@ func ExampleRequest() {
 // 	if err != nil {
 // 		fmt.Printf(errRequestFormat, err)
 // 	}
-
-// 	// Output:
-// 	// Error: Request failed -> request -> invalid idTag -> ciString.Validate: value must not be empty
 // }
 
-// // decodeRawIdTag extracts the "idTag" field from a JSON object and returns a RequestPayload.
-// // It uses fmt.Fprintf to stderr for error output to comply with forbidigo.
 // func decodeRawIdTag(raw json.RawMessage) authorizetypes.RequestPayload {
 // 	var temp struct {
 // 		IdTag string `json:"idTag"`
 // 	}
 
 // 	if err := json.Unmarshal(raw, &temp); err != nil {
-// 		_, _ = fmt.Fprintf(os.Stderr, errInvalidPayload, err) // compliant with errcheck + forbidigo
+// 		_, _ = fmt.Fprintf(os.Stderr, errInvalidPayload, err) // compliant
+// with errcheck + forbidigo
 // 	}
 
 // 	return authorizetypes.RequestPayload{IdTag: temp.IdTag}

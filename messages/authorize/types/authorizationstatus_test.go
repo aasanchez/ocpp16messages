@@ -3,10 +3,10 @@ package types
 import "testing"
 
 const (
-	statusAcceptedStr    = "Accepted"
-	statusBlockedStr     = "Blocked"
-	statusExpiredStr     = "Expired"
-	statusInvalidStr     = "Invalid"
+	statusAcceptedStr     = "Accepted"
+	statusBlockedStr      = "Blocked"
+	statusExpiredStr      = "Expired"
+	statusInvalidStr      = "Invalid"
 	statusConcurrentTxStr = "ConcurrentTx"
 )
 

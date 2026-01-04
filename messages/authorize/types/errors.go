@@ -10,6 +10,10 @@ const (
 	// comparison failures. The first parameter is the actual value, and
 	// the second parameter is the expected value.
 	ErrorMethodMismatch = "AuthorizationStatus.String() = %v, want %v"
+	// ErrorStatusMismatch is used in tests to format IdTagInfo.Status
+	// comparison failures. The first parameter is the actual value, and
+	// the second parameter is the expected value.
+	ErrorStatusMismatch = "IdTagInfo.Status = %v, want %v"
 )
 
 // ErrInvalidIDTag is returned when an ID tag value is invalid.

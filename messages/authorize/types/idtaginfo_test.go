@@ -30,7 +30,7 @@ func TestNewIdTagInfo_SetsCorrectStatus(t *testing.T) {
 	info, _ := NewIdTagInfo(AuthorizationStatusAccepted)
 	if info.Status != AuthorizationStatusAccepted {
 		t.Errorf(
-			"IdTagInfo.Status = %v, want %v",
+			ErrorStatusMismatch,
 			info.Status,
 			AuthorizationStatusAccepted,
 		)
@@ -89,7 +89,7 @@ func TestIdTagInfo_WithExpiryDate_PreservesStatus(t *testing.T) {
 
 	if result.Status != AuthorizationStatusAccepted {
 		t.Errorf(
-			"IdTagInfo.Status = %v, want %v",
+			ErrorStatusMismatch,
 			result.Status,
 			AuthorizationStatusAccepted,
 		)
@@ -105,6 +105,10 @@ func TestIdTagInfo_WithParentIdTag_PreservesStatus(t *testing.T) {
 	result := info.WithParentIdTag(parentTag)
 
 	if result.Status != AuthorizationStatusAccepted {
-		t.Errorf("IdTagInfo.Status = %v, want %v", result.Status, AuthorizationStatusAccepted)
+		t.Errorf(
+			ErrorStatusMismatch,
+			result.Status,
+			AuthorizationStatusAccepted,
+		)
 	}
 }
