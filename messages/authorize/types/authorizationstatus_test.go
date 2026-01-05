@@ -10,36 +10,72 @@ const (
 	statusConcurrentTxStr = "ConcurrentTx"
 )
 
-func TestAuthorizationStatus_IsValid(t *testing.T) {
+func TestAuthorizationStatus_IsValid_Accepted(t *testing.T) {
 	t.Parallel()
 
-	tests := []struct {
-		name   string
-		status AuthorizationStatus
-		want   bool
-	}{
-		{statusAcceptedStr, AuthorizationStatusAccepted, true},
-		{statusBlockedStr, AuthorizationStatusBlocked, true},
-		{statusExpiredStr, AuthorizationStatusExpired, true},
-		{statusInvalidStr, AuthorizationStatusInvalid, true},
-		{statusConcurrentTxStr, AuthorizationStatusConcurrentTx, true},
-		{"Empty", AuthorizationStatus(""), false},
-		{"Unknown", AuthorizationStatus("Unknown"), false},
-		{"Lowercase", AuthorizationStatus("accepted"), false},
+	if !AuthorizationStatusAccepted.IsValid() {
+		t.Error("AuthorizationStatusAccepted.IsValid() = false, want true")
 	}
+}
 
-	for _, testCase := range tests {
-		t.Run(testCase.name, func(t *testing.T) {
-			t.Parallel()
+func TestAuthorizationStatus_IsValid_Blocked(t *testing.T) {
+	t.Parallel()
 
-			if got := testCase.status.IsValid(); got != testCase.want {
-				t.Errorf(
-					"AuthorizationStatus.IsValid() = %v, want %v",
-					got,
-					testCase.want,
-				)
-			}
-		})
+	if !AuthorizationStatusBlocked.IsValid() {
+		t.Error("AuthorizationStatusBlocked.IsValid() = false, want true")
+	}
+}
+
+func TestAuthorizationStatus_IsValid_Expired(t *testing.T) {
+	t.Parallel()
+
+	if !AuthorizationStatusExpired.IsValid() {
+		t.Error("AuthorizationStatusExpired.IsValid() = false, want true")
+	}
+}
+
+func TestAuthorizationStatus_IsValid_Invalid(t *testing.T) {
+	t.Parallel()
+
+	if !AuthorizationStatusInvalid.IsValid() {
+		t.Error("AuthorizationStatusInvalid.IsValid() = false, want true")
+	}
+}
+
+func TestAuthorizationStatus_IsValid_ConcurrentTx(t *testing.T) {
+	t.Parallel()
+
+	if !AuthorizationStatusConcurrentTx.IsValid() {
+		t.Error("AuthorizationStatusConcurrentTx.IsValid() = false, want true")
+	}
+}
+
+func TestAuthorizationStatus_IsValid_Empty(t *testing.T) {
+	t.Parallel()
+
+	status := AuthorizationStatus("")
+	if status.IsValid() {
+		t.Error("AuthorizationStatus(\"\").IsValid() = true, want false")
+	}
+}
+
+func TestAuthorizationStatus_IsValid_Unknown(t *testing.T) {
+	t.Parallel()
+
+	status := AuthorizationStatus("Unknown")
+	if status.IsValid() {
+		t.Error("AuthorizationStatus(\"Unknown\").IsValid() = true, want false")
+	}
+}
+
+func TestAuthorizationStatus_IsValid_Lowercase(t *testing.T) {
+	t.Parallel()
+
+	status := AuthorizationStatus("accepted")
+	if status.IsValid() {
+		t.Error(
+			"AuthorizationStatus(\"accepted\").IsValid() = true, want false",
+		)
 	}
 }
 
