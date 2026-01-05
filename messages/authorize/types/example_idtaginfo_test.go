@@ -7,16 +7,22 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
+const (
+	strError  = "Error:"
+	strStatus = "Status:"
+)
+
 // ExampleNewIdTagInfo demonstrates creating a basic IdTagInfo with an
 // Accepted status.
 func ExampleNewIdTagInfo() {
 	idTagInfo, err := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(strError, err)
+
 		return
 	}
 
-	fmt.Println("Status:", idTagInfo.Status.String())
+	fmt.Println(strStatus, idTagInfo.Status.String())
 	// Output:
 	// Status: Accepted
 }
@@ -25,14 +31,16 @@ func ExampleNewIdTagInfo() {
 // with an expiry date using the builder pattern.
 func ExampleNewIdTagInfo_withExpiryDate() {
 	expiryDate, _ := st.NewDateTime("2025-12-31T23:59:59Z")
+
 	idTagInfo, err := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(strError, err)
+
 		return
 	}
 
 	idTagInfo = idTagInfo.WithExpiryDate(expiryDate)
-	fmt.Println("Status:", idTagInfo.Status.String())
+	fmt.Println(strStatus, idTagInfo.Status.String())
 	fmt.Println("Has expiry date:", idTagInfo.ExpiryDate != nil)
 	// Output:
 	// Status: Accepted
@@ -47,12 +55,13 @@ func ExampleNewIdTagInfo_withParentIdTag() {
 
 	idTagInfo, err := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(strError, err)
+
 		return
 	}
 
 	idTagInfo = idTagInfo.WithParentIdTag(parentIdToken)
-	fmt.Println("Status:", idTagInfo.Status.String())
+	fmt.Println(strStatus, idTagInfo.Status.String())
 	fmt.Println("Has parent tag:", idTagInfo.ParentIdTag != nil)
 	// Output:
 	// Status: Accepted
@@ -68,7 +77,8 @@ func ExampleNewIdTagInfo_complete() {
 
 	idTagInfo, err := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(strError, err)
+
 		return
 	}
 
@@ -76,7 +86,7 @@ func ExampleNewIdTagInfo_complete() {
 		WithExpiryDate(expiryDate).
 		WithParentIdTag(parentIdToken)
 
-	fmt.Println("Status:", idTagInfo.Status.String())
+	fmt.Println(strStatus, idTagInfo.Status.String())
 	fmt.Println("Has expiry date:", idTagInfo.ExpiryDate != nil)
 	fmt.Println("Has parent tag:", idTagInfo.ParentIdTag != nil)
 	// Output:
@@ -90,11 +100,12 @@ func ExampleNewIdTagInfo_complete() {
 func ExampleNewIdTagInfo_blocked() {
 	idTagInfo, err := mat.NewIdTagInfo(mat.AuthorizationStatusBlocked)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(strError, err)
+
 		return
 	}
 
-	fmt.Println("Status:", idTagInfo.Status.String())
+	fmt.Println(strStatus, idTagInfo.Status.String())
 	// Output:
 	// Status: Blocked
 }
@@ -104,11 +115,12 @@ func ExampleNewIdTagInfo_blocked() {
 func ExampleNewIdTagInfo_expired() {
 	idTagInfo, err := mat.NewIdTagInfo(mat.AuthorizationStatusExpired)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(strError, err)
+
 		return
 	}
 
-	fmt.Println("Status:", idTagInfo.Status.String())
+	fmt.Println(strStatus, idTagInfo.Status.String())
 	// Output:
 	// Status: Expired
 }
@@ -118,11 +130,12 @@ func ExampleNewIdTagInfo_expired() {
 func ExampleNewIdTagInfo_invalid() {
 	idTagInfo, err := mat.NewIdTagInfo(mat.AuthorizationStatusInvalid)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(strError, err)
+
 		return
 	}
 
-	fmt.Println("Status:", idTagInfo.Status.String())
+	fmt.Println(strStatus, idTagInfo.Status.String())
 	// Output:
 	// Status: Invalid
 }
@@ -132,11 +145,12 @@ func ExampleNewIdTagInfo_invalid() {
 func ExampleNewIdTagInfo_concurrentTx() {
 	idTagInfo, err := mat.NewIdTagInfo(mat.AuthorizationStatusConcurrentTx)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(strError, err)
+
 		return
 	}
 
-	fmt.Println("Status:", idTagInfo.Status.String())
+	fmt.Println(strStatus, idTagInfo.Status.String())
 	// Output:
 	// Status: ConcurrentTx
 }
