@@ -16,7 +16,7 @@ func ExampleNewIdToken() {
 
 	idToken, err := mat.NewIdToken(ciStr)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(err)
 
 		return
 	}
@@ -33,10 +33,10 @@ func ExampleNewIdToken_empty() {
 
 	_, err := mat.NewIdToken(ciStr)
 	if err != nil {
-		fmt.Println("Error: IdToken cannot be empty")
+		fmt.Println(err)
 	}
 	// Output:
-	// Error: IdToken cannot be empty
+	// NewIdToken: IdToken: value cannot be empty
 }
 
 // ExampleNewIdToken_shortTag demonstrates creating an IdToken with a short
@@ -46,7 +46,7 @@ func ExampleNewIdToken_shortTag() {
 
 	idToken, err := mat.NewIdToken(ciStr)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(err)
 
 		return
 	}
@@ -56,19 +56,15 @@ func ExampleNewIdToken_shortTag() {
 	// IdToken: TAG1
 }
 
-// ExampleNewIdToken_maxLength demonstrates creating an IdToken with the
-// maximum allowed length of 20 characters.
-func ExampleNewIdToken_maxLength() {
-	ciStr, _ := st.NewCiString20Type("12345678901234567890") // Exactly 20 chars
+func ExampleNewIdToken_tooLong() {
+	ciStr, _ := st.NewCiString20Type("123456789012345678901") // Exactly 21 chars
 
-	idToken, err := mat.NewIdToken(ciStr)
+	_, err := mat.NewIdToken(ciStr)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(err)
 
 		return
 	}
-
-	fmt.Println("IdToken length:", len(idToken.String()))
 	// Output:
-	// IdToken length: 20
+	// NewIdToken: IdToken: value cannot be empty
 }

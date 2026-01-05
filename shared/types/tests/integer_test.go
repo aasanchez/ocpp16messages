@@ -18,7 +18,7 @@ func TestNewInteger(t *testing.T) {
 
 	got := i.Value()
 	if got != testIntegerValue {
-		t.Errorf("Value() = %d; want %d", got, testIntegerValue)
+		t.Errorf(st.ErrorMismatch, got, testIntegerValue)
 	}
 }
 
@@ -27,7 +27,7 @@ func TestNewInteger_Overflow(t *testing.T) {
 
 	_, err := st.NewInteger("4294967296")
 	if err == nil {
-		t.Errorf(st.ErrorExpectedError, err)
+		t.Error(err)
 	}
 }
 
@@ -36,7 +36,7 @@ func TestNewInteger_Negative(t *testing.T) {
 
 	_, err := st.NewInteger("-10")
 	if err == nil {
-		t.Errorf(st.ErrorExpectedError, err)
+		t.Error(err)
 	}
 }
 
@@ -45,6 +45,6 @@ func TestNewInteger_Alphanumeric(t *testing.T) {
 
 	_, err := st.NewInteger("abc")
 	if err == nil {
-		t.Errorf(st.ErrorExpectedError, err)
+		t.Error(err)
 	}
 }

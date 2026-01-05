@@ -19,15 +19,11 @@ func TestNewRequest_EmptyIdTag(t *testing.T) {
 
 	_, err := ma.NewRequest(payload)
 	if err == nil {
-		t.Error("NewRequest() error = nil, want error for empty IdTag")
+		t.Error(err)
 	}
 
 	if !errors.Is(err, st.ErrEmptyValue) {
-		t.Errorf(
-			"NewRequest() error = %v, want error wrapping %v",
-			err,
-			st.ErrEmptyValue,
-		)
+		t.Errorf(st.ErrorWrapping, err, st.ErrEmptyValue)
 	}
 }
 

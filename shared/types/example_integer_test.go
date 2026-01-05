@@ -24,9 +24,9 @@ func ExampleNewInteger() {
 func ExampleNewInteger_invalid() {
 	_, err := st.NewInteger("abc")
 	if err != nil {
-		fmt.Println(st.ErrorMsg, err)
+		fmt.Println(err)
 	}
 
 	// Output:
-	// Error: invalid Integer: strconv.ParseUint: parsing "abc": invalid syntax
+	// invalid Integer: strconv.ParseUint: parsing "abc": invalid syntax
 }

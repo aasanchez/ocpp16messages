@@ -23,9 +23,9 @@ func ExampleNewDateTime() {
 func ExampleNewDateTime_invalid() {
 	_, err := st.NewDateTime("not-a-time")
 	if err != nil {
-		fmt.Println(st.ErrorMsg, err)
+		fmt.Println(err)
 	}
 
 	// Output:
-	// Error: invalid datetime: parsing time "not-a-time" as "2006-01-02T15:04:05Z07:00": cannot parse "not-a-time" as "2006"
+	// invalid datetime: parsing time "not-a-time" as "2006-01-02T15:04:05Z07:00": cannot parse "not-a-time" as "2006"
 }

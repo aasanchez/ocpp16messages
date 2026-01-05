@@ -8,9 +8,9 @@
 // the identifier differs from the one used to start the transaction.
 //
 // A Charge Point may authorize an idTag locally using the Local Authorization
-// List or Authorization Cache. If the idTag is not available locally, the Charge
-// Point shall send an Authorize.req to the Central System. If the idTag is found
-// locally, sending Authorize.req is optional.
+// List or Authorization Cache. If the idTag is not available locally, the
+// Charge Point shall send an Authorize.req to the Central System. If the idTag
+// is found locally, sending Authorize.req is optional.
 //
 // The Central System shall respond to Authorize.req with an Authorize.conf
 // indicating whether the idTag is accepted or rejected. An accepted response

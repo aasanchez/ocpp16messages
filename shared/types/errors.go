@@ -10,9 +10,10 @@ const (
 	// with field name context. The first parameter is the field name
 	// (string), and the second parameter is the wrapped error. This format
 	// enables error chain compatibility using fmt.Errorf with the %w verb.
-	ErrorFieldFormat   = "%s: %w" // ErrorMsg  = "Error:"
-	ErrorMsg           = "Error:"
+	ErrorFieldFormat   = "%s: %w"
 	ErrorExpectedError = "Expected Error: %v"
+	ErrorMismatch      = "Expected %q, got %q"
+	ErrorWrapping      = "%v, wants wrapping %v"
 )
 
 // ErrEmptyValue is a sentinel error for empty field validation.

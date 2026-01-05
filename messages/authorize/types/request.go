@@ -15,12 +15,12 @@ type Request struct {
 // Returns an error if IdTag is empty or exceeds CiString20Type length.
 func (r Request) Validate() error {
 	if r.IdTag == "" {
-		return fmt.Errorf("request payload: %w", sharedtypes.ErrInvalidValue)
+		return fmt.Errorf("%w", sharedtypes.ErrInvalidValue)
 	}
 
 	_, err := sharedtypes.NewCiString20Type(r.IdTag)
 	if err != nil {
-		return fmt.Errorf("request payload: %w", err)
+		return fmt.Errorf("%w", err)
 	}
 
 	return nil
