@@ -125,9 +125,18 @@ concurrent use.
 - **Error Constants and Reusability**:
   - ALWAYS check if an error constant or format string already exists before
     creating a new one
+  - Use sentinel errors (`ErrEmptyValue`, `ErrInvalidValue`) from
+    `shared/types/errors.go` with `fmt.Errorf` and `ErrorFieldFormat`:
+
+    ```go
+    // Example: wrapping a sentinel error with field context
+    return fmt.Errorf("NewIdToken: "+st.ErrorFieldFormat, "IdToken", st.ErrEmptyValue)
+    ```
+
   - Prefer reusing error constants from:
     1. `shared/types/errors.go` - For generic validation errors
-       (ErrorMismatch, ErrorExpectedError, ErrorFieldFormat)
+       (ErrorMismatch, ErrorExpectedError, ErrorFieldFormat, ErrEmptyValue,
+       ErrInvalidValue)
     2. Package-level `errors.go` - For package-specific errors
        (e.g., `messages/authorize/types/errors.go`)
     3. Parent package `errors.go` - For message-level errors
@@ -138,6 +147,8 @@ concurrent use.
     - Document the parameters and usage clearly
   - Avoid string literal duplication in tests - use constants from
     errors.go files
+  - **Do NOT create helper functions** that just wrap `fmt.Errorf` - use
+    `fmt.Errorf` directly with sentinel errors and format constants
 
 ### Testing
 

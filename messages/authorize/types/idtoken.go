@@ -16,7 +16,11 @@ type IdToken struct {
 // Returns an error if the provided value is empty.
 func NewIdToken(ciString20Type st.CiString20Type) (IdToken, error) {
 	if ciString20Type.Value() == "" {
-		return IdToken{}, fmt.Errorf("NewIdToken: %w", st.ErrEmpty("IdToken"))
+		return IdToken{}, fmt.Errorf(
+			"NewIdToken: "+st.ErrorFieldFormat,
+			"IdToken",
+			st.ErrEmptyValue,
+		)
 	}
 
 	return IdToken{value: ciString20Type}, nil

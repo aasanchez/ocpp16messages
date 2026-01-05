@@ -2,7 +2,6 @@ package types
 
 import (
 	"errors"
-	"fmt"
 )
 
 // Error message format strings used throughout the types package.
@@ -25,21 +24,3 @@ var ErrEmptyValue = errors.New("value cannot be empty")
 
 // ErrInvalidValue is a sentinel error for invalid field validation.
 var ErrInvalidValue = errors.New("invalid value")
-
-// ErrEmpty returns an error indicating that the specified field cannot
-// be empty. It wraps ErrEmptyValue for error chain compatibility.
-func ErrEmpty(fieldName string) error {
-	return fmt.Errorf(ErrorFieldFormat, fieldName, ErrEmptyValue)
-}
-
-// ErrInvalid returns an error indicating that the specified field has an
-// invalid value. It wraps ErrInvalidValue for error chain compatibility.
-func ErrInvalid(fieldName string) error {
-	return fmt.Errorf(ErrorFieldFormat, fieldName, ErrInvalidValue)
-}
-
-// ErrField wraps an error with field context for validation failures.
-// Use this to add field name context to validation errors.
-func ErrField(fieldName string, err error) error {
-	return fmt.Errorf(ErrorFieldFormat, fieldName, err)
-}

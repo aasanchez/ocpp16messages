@@ -19,8 +19,9 @@ type IdTagInfo struct {
 func NewIdTagInfo(status AuthorizationStatus) (IdTagInfo, error) {
 	if !status.IsValid() {
 		return IdTagInfo{}, fmt.Errorf(
-			"NewIdTagInfo: %w",
-			st.ErrInvalid("AuthorizationStatus"),
+			"NewIdTagInfo: "+st.ErrorFieldFormat,
+			"AuthorizationStatus",
+			st.ErrInvalidValue,
 		)
 	}
 
