@@ -59,3 +59,15 @@ func TestIdToken_empty(t *testing.T) {
 		t.Errorf(st.ErrorExpectedError, err)
 	}
 }
+
+func TestIdToken_String(t *testing.T) {
+	t.Parallel()
+
+	str := "RFID-TAG-123"
+	cstr, _ := st.NewCiString20Type(str)
+	idtoken, _ := NewIdToken(cstr)
+
+	if idtoken.String() != str {
+		t.Errorf(st.ErrorMismatch, str, idtoken.String())
+	}
+}

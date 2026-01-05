@@ -160,12 +160,14 @@ Reports are generated in the `reports/` directory:
 
 ### Design Principles
 
-1. **Constructor Validation** - All types require `New*()` constructors that validate input
+1. **Constructor Validation** - All types require `New*()` constructors that
+   validate input
 2. **Immutability** - Types use private fields and value receivers
 3. **Error Wrapping** - Context preserved via `fmt.Errorf` with `%w`
 4. **No Panics** - Library never panics; all errors returned
 5. **Thread Safety** - All types proven safe via race tests
-6. **Go Conventions** - Follows [Effective Go](https://go.dev/doc/effective_go) guidelines
+6. **Go Conventions** - Follows [Effective Go](https://go.dev/doc/effective_go)
+   guidelines
 
 ## Security
 
@@ -177,7 +179,8 @@ Security is critical for EV charging infrastructure. This library:
 - Uses immutable types to prevent tampering
 - Is designed for safe concurrent use
 
-**Reporting vulnerabilities:** See [SECURITY.md](SECURITY.md) for our security policy and responsible disclosure process.
+**Reporting vulnerabilities:** See [SECURITY.md](SECURITY.md) for our security
+policy and responsible disclosure process.
 
 ## Contributing
 
