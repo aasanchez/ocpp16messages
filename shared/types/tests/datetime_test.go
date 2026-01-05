@@ -7,7 +7,7 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-func Test_sharedtypes_NewDateTime(t *testing.T) {
+func TestNewDateTime(t *testing.T) {
 	t.Parallel()
 
 	input := "2025-08-30T14:34:56+02:00"
@@ -18,7 +18,7 @@ func Test_sharedtypes_NewDateTime(t *testing.T) {
 	}
 }
 
-func Test_sharedtypes_NewDateTime_ReturnsExpectedValue(t *testing.T) {
+func TestNewDateTime_ReturnsExpectedValue(t *testing.T) {
 	t.Parallel()
 
 	input := "2024-08-30T14:34:56+02:00"
@@ -30,7 +30,7 @@ func Test_sharedtypes_NewDateTime_ReturnsExpectedValue(t *testing.T) {
 	}
 }
 
-func Test_sharedtypes_NewDateTime_InvalidReturnsError(t *testing.T) {
+func TestNewDateTime_InvalidReturnsError(t *testing.T) {
 	t.Parallel()
 
 	_, err := st.NewDateTime("not-a-time")
@@ -39,7 +39,7 @@ func Test_sharedtypes_NewDateTime_InvalidReturnsError(t *testing.T) {
 	}
 }
 
-func Test_sharedtypes_NewDateTime_EmptyError(t *testing.T) {
+func TestNewDateTime_EmptyError(t *testing.T) {
 	t.Parallel()
 
 	dt, _ := st.NewDateTime("")

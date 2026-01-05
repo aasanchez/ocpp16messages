@@ -17,7 +17,7 @@ func ExampleNewRequest() {
 
 	req, err := ma.NewRequest(payload)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(err)
 
 		return
 	}
@@ -36,10 +36,10 @@ func ExampleNewRequest_emptyIdTag() {
 
 	_, err := ma.NewRequest(payload)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(err)
 	}
 	// Output:
-	// Error: idToken: NewIdToken: IdToken: value cannot be empty
+	// idToken: NewIdToken: IdToken: value cannot be empty
 }
 
 // ExampleNewRequest_idTagTooLong demonstrates the error returned when
@@ -51,10 +51,10 @@ func ExampleNewRequest_idTagTooLong() {
 
 	_, err := ma.NewRequest(payload)
 	if err != nil {
-		fmt.Println("Error: ID tag exceeds maximum length")
+		fmt.Println(err)
 	}
 	// Output:
-	// Error: ID tag exceeds maximum length
+	// idTag: CiString Error on Construct (len=23, max=20): exceeds maximum length
 }
 
 // ExampleNewRequest_invalidCharacters demonstrates the error returned when
@@ -66,10 +66,10 @@ func ExampleNewRequest_invalidCharacters() {
 
 	_, err := ma.NewRequest(payload)
 	if err != nil {
-		fmt.Println("Error: ID tag contains invalid characters")
+		fmt.Println(err)
 	}
 	// Output:
-	// Error: ID tag contains invalid characters
+	// idTag: CiString: value contains non-printable ASCII characters
 }
 
 // ExampleNewRequest_shortIdTag demonstrates that short ID tags
@@ -81,7 +81,7 @@ func ExampleNewRequest_shortIdTag() {
 
 	req, err := ma.NewRequest(payload)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println(err)
 
 		return
 	}

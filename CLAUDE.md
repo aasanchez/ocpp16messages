@@ -73,8 +73,102 @@ concurrent use.
 
 ### Test Organization
 
-- `shared/types/tests/` - Unit tests (table-driven where applicable)
-- `shared/types/example_*_test.go` - Documentation/example tests
+Tests MUST be organized by API visibility to maintain clear boundaries between
+internal implementation and public API:
+
+#### Same-Package Tests (`*_test.go` with `package <name>`)
+
+- **Location**: In the same directory as the code being tested
+- **Package**: MUST use same package name (e.g., `package types`)
+- **Purpose**: Test private/unexported functions and internal implementation
+  details
+- **Access**: Can access package internals (unexported functions, types,
+  variables)
+- **When to create**: ONLY when you have private/unexported functions that need
+  testing
+- **Example**: `shared/types/cistring_test.go` tests `newCiString()` (private
+  constructor)
+
+```go
+// shared/types/cistring_test.go
+package types  // Same package - can access private functions
+
+func Test_sharedtypes_newCiString_Valid(t *testing.T) {
+    // Tests private newCiString() function
+    cis, err := newCiString("test", 20)
+    // ...
+}
+```
+
+#### Public API Tests (`tests/*_test.go` with `package <name>_test`)
+
+- **Location**: In a `tests/` subdirectory within the package
+- **Package**: MUST use `package <name>_test` (e.g., `package types_test`)
+- **Purpose**: Test all exported/public API as external consumers would use it
+- **Access**: Black-box testing - imports the package like external code would
+- **When to create**: For ALL public constructors, methods, and functions
+- **Example**: `shared/types/tests/cistring_test.go` tests
+  `NewCiString20Type()` (public constructor)
+
+```go
+// shared/types/tests/cistring_test.go
+package types_test  // External package - black-box testing
+
+import st "github.com/aasanchez/ocpp16messages/shared/types"
+
+func Test_sharedtypes_NewCiString20Type(t *testing.T) {
+    // Tests public NewCiString20Type() function
+    _, err := st.NewCiString20Type("test")
+    // ...
+}
+```
+
+#### Example Tests (`example_*_test.go` with `package <name>_test`)
+
+- **Location**: In the same directory as the code (NOT in `tests/`)
+- **Package**: MUST use `package <name>_test` for external perspective
+- **Purpose**: Executable documentation for public constructors and complex
+  APIs
+- **Guidelines**: See "Example Tests - Use Selectively" section below
+
+#### Directory Structure
+
+```text
+shared/types/
+├── cistring.go                  # Implementation with public/private functions
+├── cistring_test.go             # Tests for PRIVATE (package types)
+├── example_cistring_test.go     # Examples for PUBLIC (package types_test)
+└── tests/
+    └── cistring_test.go         # Tests for PUBLIC API (package types_test)
+
+messages/authorize/types/
+├── idtoken.go                   # Implementation (only public API)
+├── example_idtoken_test.go      # Examples for PUBLIC (package types_test)
+└── tests/
+    └── idtoken_test.go          # Tests for PUBLIC API (package types_test)
+```
+
+**Key Guidelines:**
+
+- If a package has ONLY public API (no private functions to test), skip
+  same-package tests entirely
+- ALL public API MUST have tests in the `tests/` directory using
+  `package <name>_test`
+- Same-package tests are the exception, not the rule - only create them when
+  testing private implementation
+- The `tests/` directory is the primary location for understanding how the
+  package works from a user perspective
+
+**Rationale:**
+
+- Clear separation between internal implementation tests and public API tests
+- External developers can focus on `tests/` directory to understand public API
+  behavior
+- Internal developers can find implementation tests alongside the code
+- `package <name>_test` enforces black-box testing and prevents accidental
+  coupling to internals
+- Prevents accidental breaking of public API by making external-facing tests
+  explicit
 
 ## Code Style Guidelines
 

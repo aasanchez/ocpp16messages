@@ -1,51 +1,74 @@
 package types_test
 
 import (
+	"strings"
 	"testing"
 
 	mat "github.com/aasanchez/ocpp16messages/messages/authorize/types"
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-func Test_IdTokenFromCiString(t *testing.T) {
+const (
+	validTokenLength   = 16
+	invalidTokenLength = 21
+)
+
+func TestIdToken(t *testing.T) {
 	t.Parallel()
 
-	validStr := "ABC1234567890123456" // 20 characters
+	str := strings.Repeat("A", validTokenLength)
+	cstr, _ := st.NewCiString20Type(str)
 
-	str, err := st.NewCiString20Type(validStr)
+	_, err := mat.NewIdToken(cstr)
 	if err != nil {
-		t.Errorf("failed to construct CiString20: %v", err)
-	}
-
-	_, err = mat.NewIdToken(str)
-	if err != nil {
-		t.Errorf("expected no error, got %v", err)
+		t.Errorf(ErrorExpectedError, err)
 	}
 }
 
-func Test_IdTokenFromCiString_TooLong(t *testing.T) {
+func TestIdToken_value(t *testing.T) {
 	t.Parallel()
 
-	invalidStr := "ABC1234567890123456789" // 21 characters
+	str := strings.Repeat("C", validTokenLength)
+	cstr, _ := st.NewCiString20Type(str)
 
-	_, err := st.NewCiString20Type(invalidStr)
-	if err == nil {
-		t.Error(
-			"expected error creating CiString20 from over-length string",
-		)
+	idtoken, _ := mat.NewIdToken(cstr)
+
+	if idtoken.Value() != cstr {
+		t.Errorf(ErrorMismatch, cstr.Value(), idtoken.String())
 	}
 }
 
-func Test_IdTokenFromCiString_Empty(t *testing.T) {
+func TestIdToken_invalid(t *testing.T) {
 	t.Parallel()
 
-	str, err := st.NewCiString20Type("")
-	if err != nil {
-		t.Errorf("failed to construct empty CiString20: %v", err)
-	}
+	str := strings.Repeat("D", invalidTokenLength)
 
-	_, err = mat.NewIdToken(str)
+	_, err := st.NewCiString20Type(str)
 	if err == nil {
-		t.Error("expected error from NewIdToken with empty CiString20")
+		t.Errorf(ErrorExpectedError, err)
+	}
+}
+
+func TestIdToken_empty(t *testing.T) {
+	t.Parallel()
+
+	str := ""
+	cstr, _ := st.NewCiString20Type(str)
+
+	_, err := mat.NewIdToken(cstr)
+	if err == nil {
+		t.Errorf(ErrorExpectedError, err)
+	}
+}
+
+func TestIdToken_String(t *testing.T) {
+	t.Parallel()
+
+	str := "RFID-TAG-123"
+	cstr, _ := st.NewCiString20Type(str)
+	idtoken, _ := mat.NewIdToken(cstr)
+
+	if idtoken.String() != str {
+		t.Errorf(ErrorMismatch, str, idtoken.String())
 	}
 }

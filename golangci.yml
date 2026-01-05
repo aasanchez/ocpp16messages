@@ -29,8 +29,6 @@ linters:
             - [ID] # allowlist - empty means use defaults
             - [] # denylist - empty means use defaults
             - - skipPackageNameChecks: true
-        - name: add-constant
-          disabled: true # Disabled - can reduce readability in example tests
         # - name: import-alias-naming
         #   arguments:
         #     - allow-regex: "^[a-z]+(?:[A-Z][a-z0-9]*)*$"

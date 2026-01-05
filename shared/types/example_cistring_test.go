@@ -9,7 +9,6 @@ import (
 )
 
 const (
-	msgError                 = "Error:"
 	msgLength                = "Length:"
 	validCiString500Length   = 499
 	invalidCiString500Length = 501
@@ -20,7 +19,7 @@ func ExampleNewCiString20Type() {
 
 	cistr, err := st.NewCiString20Type(input)
 	if err != nil {
-		fmt.Println(msgError, err)
+		fmt.Println(st.ErrorMsg, err)
 
 		return
 	}
@@ -36,7 +35,7 @@ func ExampleNewCiString20Type_invalid() {
 
 	cistr, err := st.NewCiString20Type(input)
 	if err != nil {
-		fmt.Println(msgError, err)
+		fmt.Println(st.ErrorMsg, err)
 
 		return
 	}
@@ -51,7 +50,7 @@ func ExampleNewCiString25Type() {
 
 	cistr, err := st.NewCiString25Type(input)
 	if err != nil {
-		fmt.Println(msgError, err)
+		fmt.Println(st.ErrorMsg, err)
 
 		return
 	}
@@ -66,7 +65,7 @@ func ExampleNewCiString25Type_invalid() {
 
 	cistr, err := st.NewCiString25Type(input)
 	if err != nil {
-		fmt.Println(msgError, err)
+		fmt.Println(st.ErrorMsg, err)
 
 		return
 	}
@@ -81,7 +80,7 @@ func ExampleNewCiString50Type() {
 
 	cistr, err := st.NewCiString50Type(input)
 	if err != nil {
-		fmt.Println(msgError, err)
+		fmt.Println(st.ErrorMsg, err)
 
 		return
 	}
@@ -96,7 +95,7 @@ func ExampleNewCiString50Type_invalid() {
 
 	cistr, err := st.NewCiString50Type(input)
 	if err != nil {
-		fmt.Println(msgError, err)
+		fmt.Println(st.ErrorMsg, err)
 
 		return
 	}
@@ -111,7 +110,7 @@ func ExampleNewCiString255Type() {
 
 	cistr, err := st.NewCiString255Type(input)
 	if err != nil {
-		fmt.Println(msgError, err)
+		fmt.Println(st.ErrorMsg, err)
 
 		return
 	}
@@ -126,7 +125,7 @@ func ExampleNewCiString255Type_invalid() {
 
 	cistr, err := st.NewCiString255Type(input)
 	if err != nil {
-		fmt.Println(msgError, err)
+		fmt.Println(st.ErrorMsg, err)
 
 		return
 	}
@@ -141,7 +140,7 @@ func ExampleNewCiString500Type() {
 
 	cistr, err := st.NewCiString500Type(input)
 	if err != nil {
-		fmt.Println(msgError, err)
+		fmt.Println(st.ErrorMsg, err)
 
 		return
 	}
@@ -156,7 +155,7 @@ func ExampleNewCiString500Type_invalid() {
 
 	cistr, err := st.NewCiString500Type(input)
 	if err != nil {
-		fmt.Println(msgError, err)
+		fmt.Println(st.ErrorMsg, err)
 
 		return
 	}
