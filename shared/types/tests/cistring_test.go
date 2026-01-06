@@ -7,6 +7,7 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
+// String length test values (one character over maximum allowed).
 const (
 	ciString20Over  = 21
 	ciString25Over  = 26
@@ -15,7 +16,10 @@ const (
 	ciString500Over = 501
 
 	emptyString = ""
+)
 
+// Test error message formats.
+const (
 	errMsgValueMismatch   = "value mismatch: want %q, got %q"
 	errMsgStringTooLong   = "expected error for string exceeding %d characters"
 	errMsgUnexpectedError = "unexpected error for a %d-character string: %v"

@@ -21,16 +21,27 @@ const (
 )
 
 var (
+	// errExceedsMaxLength is returned when a CiString value exceeds its
+	// maximum length constraint.
 	errExceedsMaxLength = errors.New("exceeds maximum length")
-	errInvalidASCII     = errors.New(
+
+	// errInvalidASCII is returned when a CiString value contains characters
+	// outside the printable ASCII range (32-126).
+	errInvalidASCII = errors.New(
 		"CiString: value contains non-printable ASCII characters",
 	)
 )
 
+// ciString is the internal implementation of OCPP 1.6 case-insensitive string
+// validation. It validates string length and ensures only printable ASCII
+// characters (32-126) are present.
 type ciString struct {
 	value string
 }
 
+// newCiString creates a new ciString with the given maximum length constraint.
+// Returns an error if the input exceeds maxLen or contains non-printable ASCII
+// characters.
 func newCiString(input string, maxLen int) (ciString, error) {
 	cis := ciString{value: input}
 
@@ -52,6 +63,7 @@ func newCiString(input string, maxLen int) (ciString, error) {
 	return cis, nil
 }
 
+// val returns the underlying string value.
 func (cis ciString) val() string {
 	return cis.value
 }

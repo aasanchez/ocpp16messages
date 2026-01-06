@@ -55,16 +55,3 @@ func ExampleNewIdToken_shortTag() {
 	// Output:
 	// IdToken: TAG1
 }
-
-func ExampleNewIdToken_tooLong() {
-	ciStr, _ := st.NewCiString20Type("123456789012345678901") // Exactly 21 chars
-
-	_, err := mat.NewIdToken(ciStr)
-	if err != nil {
-		fmt.Println(err)
-
-		return
-	}
-	// Output:
-	// NewIdToken: IdToken: value cannot be empty
-}

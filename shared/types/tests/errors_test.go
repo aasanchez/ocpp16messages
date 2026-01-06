@@ -1,11 +1,5 @@
 package types_test
 
-// Test error message format strings for public API tests.
-const (
-// ErrorExpectedError is used in tests to format error assertion
-// messages.
-
-// ErrorMismatch is used in tests to format expected vs actual value
-// comparison failures.
-
-)
+// This file is reserved for test-specific error constants that differ from
+// shared/types/errors.go. Currently, all error constants used in public API
+// tests are imported directly from the shared/types package.

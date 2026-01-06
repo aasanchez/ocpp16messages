@@ -5,13 +5,14 @@ import (
 	"testing"
 )
 
+// Test helper constants for maximum length validation.
 const (
 	testMaxLen5  = 5
 	testMaxLen10 = 10
 	testMaxLen20 = 20
 )
 
-// Internal test
+// Tests for internal newCiString function (unexported).
 
 func Test_newCiString_Valid(t *testing.T) {
 	t.Parallel()

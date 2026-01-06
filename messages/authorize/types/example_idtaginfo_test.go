@@ -7,8 +7,12 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
+// Example output formatting constants.
 const (
-	strError  = "Error:"
+	// strError is the prefix used in example output for error messages.
+	strError = "Error:"
+
+	// strStatus is the prefix used in example output for status information.
 	strStatus = "Status:"
 )
 

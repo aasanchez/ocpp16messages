@@ -6,8 +6,11 @@ import (
 )
 
 const (
+	// decimalBase is the base-10 radix used for parsing integer strings.
 	decimalBase = 10
-	bitSize16   = 16
+
+	// bitSize16 is the bit size for uint16 parsing validation.
+	bitSize16 = 16
 )
 
 // Integer represents an OCPP 1.6 compliant integer value (uint16).
