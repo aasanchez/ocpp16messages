@@ -10,15 +10,15 @@ import (
 func ExampleNewInteger() {
 	intVal, err := st.NewInteger("73")
 	if err != nil {
-		fmt.Println("unexpected error while parsing a valid integer:", err)
+		fmt.Println(err)
 
 		return
 	}
 
-	fmt.Println("Value is:", intVal.Value())
+	fmt.Println(intVal.Value())
 
 	// Output:
-	// Value is: 73
+	// 73
 }
 
 func ExampleNewInteger_invalid() {
@@ -28,5 +28,5 @@ func ExampleNewInteger_invalid() {
 	}
 
 	// Output:
-	// invalid Integer: strconv.ParseUint: parsing "abc": invalid syntax
+	// strconv.ParseUint: parsing "abc": invalid syntax
 }

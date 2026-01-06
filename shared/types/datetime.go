@@ -16,7 +16,7 @@ type DateTime struct {
 func NewDateTime(input string) (DateTime, error) {
 	timestamp, err := time.Parse(time.RFC3339, input)
 	if err != nil {
-		return DateTime{}, fmt.Errorf("invalid datetime: %w", err)
+		return DateTime{}, fmt.Errorf("%w", err)
 	}
 
 	timestamp = timestamp.UTC()

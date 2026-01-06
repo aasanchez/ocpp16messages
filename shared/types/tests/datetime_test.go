@@ -14,7 +14,7 @@ func TestNewDateTime(t *testing.T) {
 
 	_, err := st.NewDateTime(input)
 	if err != nil {
-		t.Errorf("expected no error, got %v", err)
+		t.Errorf("%v", err)
 	}
 }
 
@@ -26,7 +26,7 @@ func TestNewDateTime_ReturnsExpectedValue(t *testing.T) {
 
 	dt, _ := st.NewDateTime(input)
 	if !dt.Value().Equal(want) {
-		t.Errorf("Value() mismatch: got %v, want %v", dt.Value(), want)
+		t.Errorf(st.ErrorMismatch, dt.Value(), want)
 	}
 }
 
