@@ -17,7 +17,7 @@ This library implements OCPP (Open Charge Point Protocol) 1.6 message types with
 - ✅ **Type Safety** - Constructor pattern with validation (`New*()` functions)
 - ✅ **OCPP 1.6 Compliance** - Strict adherence to protocol specification
 - ✅ **Immutable Types** - Thread-safe by design with value receivers
-- ✅ **Comprehensive Testing** - Unit, integration, race, and fuzz tests
+- ✅ **Comprehensive Testing** - Unit tests and example tests
 - ✅ **Zero Panics** - All errors returned, never panicked
 - ✅ **Well Documented** - Full godoc coverage and examples
 
@@ -33,20 +33,25 @@ go get github.com/aasanchez/ocpp16messages
 
 ```text
 .
-├── shared/types/          # Core OCPP data types
-│   ├── cistring.go       # CiString20/25/50/255/500 types
-│   ├── datetime.go       # RFC3339 DateTime with UTC normalization
-│   ├── integer.go        # Validated uint16 Integer type
-│   ├── errors.go         # Reusable error constructors
-│   └── tests/            # Unit and integration tests
+├── shared/types/                # Core OCPP data types
+│   ├── cistring.go             # CiString20/25/50/255/500 types
+│   ├── datetime.go             # RFC3339 DateTime with UTC normalization
+│   ├── integer.go              # Validated uint16 Integer type
+│   ├── errors.go               # Shared error constants and sentinels
+│   ├── doc.go                  # Package documentation
+│   └── tests/                  # Public API tests (black-box)
 ├── messages/
-│   └── authorize/        # Authorize message implementation
-│       ├── request.go    # Authorize request message
-│       └── types/        # Authorize-specific types
-│           ├── idtoken.go      # IdToken type
-│           ├── request.go      # Request payload
-│           └── tests/          # Message-specific tests
-└── SECURITY.md           # Security policy and vulnerability reporting
+│   └── authorize/              # Authorize message implementation
+│       ├── request.go          # Authorize request message
+│       ├── doc.go              # Package documentation
+│       └── types/              # Authorize-specific types
+│           ├── idtoken.go            # IdToken type
+│           ├── idtaginfo.go          # IdTagInfo type with builder pattern
+│           ├── authorizationstatus.go # AuthorizationStatus enum
+│           ├── request.go            # Request payload
+│           ├── doc.go                # Package documentation
+│           └── tests/                # Public API tests
+└── SECURITY.md                 # Security policy and vulnerability reporting
 ```
 
 ## Usage
@@ -118,11 +123,10 @@ if err != nil {
 go mod tidy
 
 # Run tests
-make test                   # Unit and example tests
+make test                   # Unit tests with coverage
 make test-coverage          # Generate HTML coverage report
-make test-race              # Race detector (concurrency safety)
-make test-fuzz              # Fuzz tests (10s per function, configurable with FUZZTIME)
-make test-all               # All test types
+make test-example           # Run example tests (documentation tests)
+make test-all               # Run all test types
 
 # Code quality
 make lint                   # Run all linters (golangci-lint, go vet, staticcheck)
@@ -165,7 +169,7 @@ Reports are generated in the `reports/` directory:
 2. **Immutability** - Types use private fields and value receivers
 3. **Error Wrapping** - Context preserved via `fmt.Errorf` with `%w`
 4. **No Panics** - Library never panics; all errors returned
-5. **Thread Safety** - All types proven safe via race tests
+5. **Thread Safety** - Designed for safe concurrent use
 6. **Go Conventions** - Follows [Effective Go](https://go.dev/doc/effective_go)
    guidelines
 
