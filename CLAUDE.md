@@ -185,11 +185,16 @@ func Test_sharedtypes_newCiString_Valid(t *testing.T) {
 // shared/types/tests/cistring_test.go
 package types_test  // External package - black-box testing
 
-import st "github.com/aasanchez/ocpp16messages/shared/types"
+import (
+    "testing"
+
+    "github.com/aasanchez/ocpp16messages/shared/types"
+)
 
 func Test_sharedtypes_NewCiString20Type(t *testing.T) {
+    t.Parallel()
     // Tests public NewCiString20Type() function
-    _, err := st.NewCiString20Type("test")
+    _, err := types.NewCiString20Type("test")
     // ...
 }
 ```
@@ -248,6 +253,15 @@ messages/authorize/types/
 - Managed by gci: stdlib first, then github.com/aasanchez/ocpp16messages,
   then others
 - No unused imports
+- **Prefer full package names over aliases** in test files for readability:
+  - ✓ GOOD: `authorize.Req(authorize.Input{...})`
+  - ✗ AVOID: `ma.Req(ma.Input{...})`
+- Use short aliases only when:
+  - Package name conflicts with another import
+  - Package name is very long and used frequently in implementation code
+- Common aliases when needed:
+  - `st` for `github.com/aasanchez/ocpp16messages/shared/types`
+  - `mat` for `github.com/aasanchez/ocpp16messages/messages/authorize/types`
 
 ### Formatting
 
@@ -337,7 +351,7 @@ pkgsite. **Use examples strategically**, not for every function.
 
 **✓ CREATE examples for:**
 
-- **Public constructors** - Primary API entry points (e.g., `NewRequest`,
+- **Public constructors** - Primary API entry points (e.g., `Req`, `Conf`,
   `NewIdToken`, `NewIdTagInfo`)
   - Place in `example_*_test.go` in the same package
   - Show both success cases and common error scenarios

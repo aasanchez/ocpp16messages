@@ -14,10 +14,11 @@ This library implements OCPP (Open Charge Point Protocol) 1.6 message types with
 
 ### Key Features
 
-- ✅ **Type Safety** - Constructor pattern with validation (`New*()` functions)
+- ✅ **Type Safety** - Constructor pattern with validation (`New*()` for types, `Req()`/`Conf()` for messages)
 - ✅ **OCPP 1.6 Compliance** - Strict adherence to protocol specification
+- ✅ **OCPP Naming** - Uses `Req()`/`Conf()` to match OCPP terminology (Authorize.req, Authorize.conf)
 - ✅ **Immutable Types** - Thread-safe by design with value receivers
-- ✅ **Comprehensive Testing** - Unit tests and example tests
+- ✅ **Comprehensive Testing** - Unit tests and example tests with 100% coverage
 - ✅ **Zero Panics** - All errors returned, never panicked
 - ✅ **Well Documented** - Full godoc coverage and examples
 
@@ -33,7 +34,7 @@ go get github.com/aasanchez/ocpp16messages
 
 ```text
 .
-├── shared/types/                # Core OCPP data types
+├── shared/types/               # Core OCPP data types
 │   ├── cistring.go             # CiString20/25/50/255/500 types
 │   ├── datetime.go             # RFC3339 DateTime with UTC normalization
 │   ├── integer.go              # Validated uint16 Integer type
@@ -42,12 +43,14 @@ go get github.com/aasanchez/ocpp16messages
 │   └── tests/                  # Public API tests (black-box)
 ├── messages/
 │   └── authorize/              # Authorize message implementation
-│       ├── request.go          # Authorize.req message
+│       ├── request.go          # Authorize.req message (Req constructor)
+│       ├── errors.go           # Package-level error constants
 │       ├── doc.go              # Package documentation
 │       └── types/              # Authorize-specific types
 │           ├── idtoken.go            # IdToken type
 │           ├── idtaginfo.go          # IdTagInfo type with builder pattern
 │           ├── authorizationstatus.go # AuthorizationStatus enum
+│           ├── errors.go             # Type-level error constants
 │           ├── doc.go                # Package documentation
 │           └── tests/                # Public API tests
 └── SECURITY.md                 # Security policy and vulnerability reporting
@@ -83,6 +86,8 @@ if err != nil {
 
 ### Message Types
 
+Messages use OCPP terminology with `Req()` for requests and `Conf()` for responses:
+
 ```go
 import "github.com/aasanchez/ocpp16messages/messages/authorize"
 
@@ -98,6 +103,9 @@ if err != nil {
 // Access the validated IdTag
 fmt.Println(req.IdTag.String()) // "RFID-ABC123"
 ```
+
+The `Message` type returned by `Req()` contains validated, typed fields that are
+immutable and thread-safe.
 
 ## Development
 
@@ -151,18 +159,19 @@ Reports are generated in the `reports/` directory:
 
 ### Message Implementation Status
 
-- ✅ **Authorize** - Request/Response
+- ✅ **Authorize** - Authorize.req (`authorize.Req()`)
 - 🚧 Additional messages in development
 
 ### Design Principles
 
-1. **Constructor Validation** - All types require `New*()` constructors that
-   validate input
-2. **Immutability** - Types use private fields and value receivers
-3. **Error Wrapping** - Context preserved via `fmt.Errorf` with `%w`
-4. **No Panics** - Library never panics; all errors returned
-5. **Thread Safety** - Designed for safe concurrent use
-6. **Go Conventions** - Follows [Effective Go](https://go.dev/doc/effective_go)
+1. **OCPP Naming** - Messages use `Req()`/`Conf()` to match OCPP terminology
+2. **Constructor Validation** - All types require constructors that validate input
+3. **Input Struct Pattern** - Raw values passed via `Input` struct, validated automatically
+4. **Immutability** - Types use private fields and value receivers
+5. **Error Wrapping** - Context preserved via `fmt.Errorf` with `%w`
+6. **No Panics** - Library never panics; all errors returned
+7. **Thread Safety** - Designed for safe concurrent use
+8. **Go Conventions** - Follows [Effective Go](https://go.dev/doc/effective_go)
    guidelines
 
 ## Security
