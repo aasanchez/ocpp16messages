@@ -29,10 +29,7 @@ func Req(input ReqInput) (ReqMessage, error) {
 		return ReqMessage{}, fmt.Errorf("idTag: %w", err)
 	}
 
-	idToken, err := mat.NewIdToken(str)
-	if err != nil {
-		return ReqMessage{}, fmt.Errorf("idTag: %w", err)
-	}
+	idToken := mat.NewIdToken(str)
 
 	return ReqMessage{IdTag: idToken}, nil
 }

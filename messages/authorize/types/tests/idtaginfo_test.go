@@ -72,7 +72,7 @@ func TestIdTagInfo_WithParentIdTag(t *testing.T) {
 	t.Parallel()
 
 	cistring, _ := st.NewCiString20Type("PARENT123")
-	parentTag, _ := mat.NewIdToken(cistring)
+	parentTag := mat.NewIdToken(cistring)
 	info, _ := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
 	result := info.WithParentIdTag(parentTag)
 
@@ -101,7 +101,7 @@ func TestIdTagInfo_WithParentIdTag_PreservesStatus(t *testing.T) {
 	t.Parallel()
 
 	cistring, _ := st.NewCiString20Type("PARENT123")
-	parentTag, _ := mat.NewIdToken(cistring)
+	parentTag := mat.NewIdToken(cistring)
 	info, _ := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
 	result := info.WithParentIdTag(parentTag)
 

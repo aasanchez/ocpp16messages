@@ -121,10 +121,7 @@ func validateParentIdTag(tag string, errs []error) (mat.IdToken, []error) {
 		return mat.IdToken{}, append(errs, fmt.Errorf("parentIdTag: %w", err))
 	}
 
-	token, err := mat.NewIdToken(ciStr)
-	if err != nil {
-		return mat.IdToken{}, append(errs, fmt.Errorf("parentIdTag: %w", err))
-	}
+	token := mat.NewIdToken(ciStr)
 
 	return token, errs
 }

@@ -1,6 +1,7 @@
 package types_test
 
 import (
+	"errors"
 	"strings"
 	"testing"
 
@@ -23,7 +24,8 @@ const (
 	errMsgValueMismatch   = "value mismatch: want %q, got %q"
 	errMsgStringTooLong   = "expected error for string exceeding %d characters"
 	errMsgUnexpectedError = "unexpected error for a %d-character string: %v"
-	errMsgEmptyAccepted   = "empty string should be accepted; got error: %v"
+	errMsgEmptyWantError  = "empty string should return error, got nil"
+	errMsgWantErrEmptyVal = "expected ErrEmptyValue, got: %v"
 )
 
 // CiString20
@@ -44,8 +46,12 @@ func TestNewCiString20_Empty(t *testing.T) {
 	val := emptyString
 
 	_, err := st.NewCiString20Type(val)
-	if err != nil {
-		t.Errorf(errMsgEmptyAccepted, err)
+	if err == nil {
+		t.Error(errMsgEmptyWantError)
+	}
+
+	if !errors.Is(err, st.ErrEmptyValue) {
+		t.Errorf(errMsgWantErrEmptyVal, err)
 	}
 }
 
@@ -89,8 +95,12 @@ func TestNewCiString25_Empty(t *testing.T) {
 	val := emptyString
 
 	_, err := st.NewCiString25Type(val)
-	if err != nil {
-		t.Errorf(errMsgEmptyAccepted, err)
+	if err == nil {
+		t.Error(errMsgEmptyWantError)
+	}
+
+	if !errors.Is(err, st.ErrEmptyValue) {
+		t.Errorf(errMsgWantErrEmptyVal, err)
 	}
 }
 
@@ -134,8 +144,12 @@ func TestNewCiString50_Empty(t *testing.T) {
 	val := emptyString
 
 	_, err := st.NewCiString50Type(val)
-	if err != nil {
-		t.Errorf(errMsgEmptyAccepted, err)
+	if err == nil {
+		t.Error(errMsgEmptyWantError)
+	}
+
+	if !errors.Is(err, st.ErrEmptyValue) {
+		t.Errorf(errMsgWantErrEmptyVal, err)
 	}
 }
 
@@ -179,8 +193,12 @@ func TestNewCiString255_Empty(t *testing.T) {
 	val := emptyString
 
 	_, err := st.NewCiString255Type(val)
-	if err != nil {
-		t.Errorf(errMsgEmptyAccepted, err)
+	if err == nil {
+		t.Error(errMsgEmptyWantError)
+	}
+
+	if !errors.Is(err, st.ErrEmptyValue) {
+		t.Errorf(errMsgWantErrEmptyVal, err)
 	}
 }
 
@@ -224,8 +242,12 @@ func TestNewCiString500_Empty(t *testing.T) {
 	val := emptyString
 
 	_, err := st.NewCiString500Type(val)
-	if err != nil {
-		t.Errorf(errMsgEmptyAccepted, err)
+	if err == nil {
+		t.Error(errMsgEmptyWantError)
+	}
+
+	if !errors.Is(err, st.ErrEmptyValue) {
+		t.Errorf(errMsgWantErrEmptyVal, err)
 	}
 }
 

@@ -55,7 +55,7 @@ func ExampleNewIdTagInfo_withExpiryDate() {
 // with a parent ID tag using the builder pattern.
 func ExampleNewIdTagInfo_withParentIdTag() {
 	parentCiStr, _ := st.NewCiString20Type("PARENT-TAG-001")
-	parentIdToken, _ := mat.NewIdToken(parentCiStr)
+	parentIdToken := mat.NewIdToken(parentCiStr)
 
 	idTagInfo, err := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
 	if err != nil {
@@ -77,7 +77,7 @@ func ExampleNewIdTagInfo_withParentIdTag() {
 func ExampleNewIdTagInfo_complete() {
 	expiryDate, _ := st.NewDateTime("2025-12-31T23:59:59Z")
 	parentCiStr, _ := st.NewCiString20Type("PARENT-TAG-001")
-	parentIdToken, _ := mat.NewIdToken(parentCiStr)
+	parentIdToken := mat.NewIdToken(parentCiStr)
 
 	idTagInfo, err := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
 	if err != nil {

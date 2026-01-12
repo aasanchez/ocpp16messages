@@ -14,29 +14,22 @@ import (
 func ExampleNewIdToken() {
 	ciStr, _ := st.NewCiString20Type("RFID-TAG-12345")
 
-	idToken, err := mat.NewIdToken(ciStr)
-	if err != nil {
-		fmt.Println(err)
-
-		return
-	}
+	idToken := mat.NewIdToken(ciStr)
 
 	fmt.Println("IdToken:", idToken.String())
 	// Output:
 	// IdToken: RFID-TAG-12345
 }
 
-// ExampleNewIdToken_empty demonstrates the error returned when trying to
-// create an IdToken from an empty CiString20Type value.
+// ExampleNewIdToken_empty demonstrates that empty strings are rejected at the
+// CiString20Type level, not at the IdToken level.
 func ExampleNewIdToken_empty() {
-	ciStr, _ := st.NewCiString20Type("")
-
-	_, err := mat.NewIdToken(ciStr)
+	_, err := st.NewCiString20Type("")
 	if err != nil {
 		fmt.Println(err)
 	}
 	// Output:
-	// NewIdToken: IdToken: value cannot be empty
+	// value cannot be empty
 }
 
 // ExampleNewIdToken_shortTag demonstrates creating an IdToken with a short
@@ -44,12 +37,7 @@ func ExampleNewIdToken_empty() {
 func ExampleNewIdToken_shortTag() {
 	ciStr, _ := st.NewCiString20Type("TAG1")
 
-	idToken, err := mat.NewIdToken(ciStr)
-	if err != nil {
-		fmt.Println(err)
-
-		return
-	}
+	idToken := mat.NewIdToken(ciStr)
 
 	fmt.Println("IdToken:", idToken.String())
 	// Output:
