@@ -83,15 +83,16 @@ Message types use OCPP terminology:
 
 - **Req()**: Constructor for request messages (e.g., `authorize.Req()` for Authorize.req)
 - **Conf()**: Constructor for response messages (e.g., `authorize.Conf()` for Authorize.conf)
-- **Message**: The returned type representing the validated message
+- **ReqInput/ConfInput**: Input structs for raw values
+- **ReqMessage/ConfMessage**: The returned types representing validated messages
 
 #### Usage Pattern
 
-All messages use an `Input` struct that accepts raw values (strings, integers):
+All messages use a `ReqInput`/`ConfInput` struct that accepts raw values (strings, integers):
 
 ```go
 // Authorize.req message
-req, err := authorize.Req(authorize.Input{
+req, err := authorize.Req(authorize.ReqInput{
     IdTag: "RFID-ABC123",
 })
 if err != nil {
@@ -102,11 +103,11 @@ if err != nil {
 #### Complex Messages (nested structures, arrays)
 
 For messages with complex nested structures (like MeterValues with arrays of
-SampledValue), the Input struct contains nested Input structs:
+SampledValue), the input struct contains nested input structs:
 
 ```go
 // MeterValues.req - complex nested structure
-req, err := metervalues.Req(metervalues.Input{
+req, err := metervalues.Req(metervalues.ReqInput{
     ConnectorId:   1,
     TransactionId: 123,
     MeterValue: []metervalues.MeterValueInput{
@@ -123,23 +124,23 @@ req, err := metervalues.Req(metervalues.Input{
 #### Design Principles
 
 - **OCPP naming**: Use `Req()`/`Conf()` to match OCPP terminology (Authorize.req, Authorize.conf)
-- **Input struct with raw values**: Users create structs with simple Go types
+- **Input structs with raw values**: Users create `ReqInput`/`ConfInput` structs with simple Go types
 - **Single constructor call**: One `Req(input)` call validates everything
 - **No separate Validate()**: Validation is built into the constructor
-- **Error on construction**: Return `(Message, error)` - if error is nil, the message
+- **Error on construction**: Return `(ReqMessage/ConfMessage, error)` - if error is nil, the message
   is valid
-- **Immutable result**: The returned Message contains validated, typed fields
+- **Immutable result**: The returned `ReqMessage`/`ConfMessage` contains validated, typed fields
 
 #### What NOT to do
 
 ```go
 // ✗ BAD - Don't require separate validation step
-input := authorize.Input{IdTag: "ABC123"}
+input := authorize.ReqInput{IdTag: "ABC123"}
 if err := input.Validate(); err != nil { ... }  // NO separate Validate()!
 req, err := authorize.Req(input)
 
 // ✓ GOOD - Single step, validation built-in
-req, err := authorize.Req(authorize.Input{IdTag: "ABC123"})
+req, err := authorize.Req(authorize.ReqInput{IdTag: "ABC123"})
 ```
 
 ### Test Organization
@@ -254,7 +255,7 @@ messages/authorize/types/
   then others
 - No unused imports
 - **Prefer full package names over aliases** in test files for readability:
-  - ✓ GOOD: `authorize.Req(authorize.Input{...})`
+  - ✓ GOOD: `authorize.Req(authorize.ReqInput{...})`
   - ✗ AVOID: `ma.Req(ma.Input{...})`
 - Use short aliases only when:
   - Package name conflicts with another import

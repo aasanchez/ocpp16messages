@@ -91,9 +91,9 @@ Messages use OCPP terminology with `Req()` for requests and `Conf()` for respons
 ```go
 import "github.com/aasanchez/ocpp16messages/messages/authorize"
 
-// Create an Authorize.req message using the Input struct
+// Create an Authorize.req message using the ReqInput struct
 // Validation happens automatically in the constructor
-req, err := authorize.Req(authorize.Input{
+req, err := authorize.Req(authorize.ReqInput{
     IdTag: "RFID-ABC123",
 })
 if err != nil {
@@ -104,7 +104,7 @@ if err != nil {
 fmt.Println(req.IdTag.String()) // "RFID-ABC123"
 ```
 
-The `Message` type returned by `Req()` contains validated, typed fields that are
+The `ReqMessage` type returned by `Req()` contains validated, typed fields that are
 immutable and thread-safe.
 
 ## Development
@@ -166,7 +166,7 @@ Reports are generated in the `reports/` directory:
 
 1. **OCPP Naming** - Messages use `Req()`/`Conf()` to match OCPP terminology
 2. **Constructor Validation** - All types require constructors that validate input
-3. **Input Struct Pattern** - Raw values passed via `Input` struct, validated automatically
+3. **Input Struct Pattern** - Raw values passed via `ReqInput`/`ConfInput` structs, validated automatically
 4. **Immutability** - Types use private fields and value receivers
 5. **Error Wrapping** - Context preserved via `fmt.Errorf` with `%w`
 6. **No Panics** - Library never panics; all errors returned

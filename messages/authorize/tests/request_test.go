@@ -14,7 +14,7 @@ const testValidIdTag = "RFID-TAG-12345"
 func TestReq_Valid(t *testing.T) {
 	t.Parallel()
 
-	req, err := authorize.Req(authorize.Input{IdTag: testValidIdTag})
+	req, err := authorize.Req(authorize.ReqInput{IdTag: testValidIdTag})
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
 	}
@@ -27,7 +27,7 @@ func TestReq_Valid(t *testing.T) {
 func TestReq_EmptyIdTag(t *testing.T) {
 	t.Parallel()
 
-	_, err := authorize.Req(authorize.Input{IdTag: ""})
+	_, err := authorize.Req(authorize.ReqInput{IdTag: ""})
 	if err == nil {
 		t.Error("Req() error = nil, want error for empty idTag")
 	}
@@ -41,7 +41,7 @@ func TestReq_IdTagTooLong(t *testing.T) {
 	t.Parallel()
 
 	// 23 chars, max is 20
-	_, err := authorize.Req(authorize.Input{IdTag: "RFID-ABC123456789012345"})
+	_, err := authorize.Req(authorize.ReqInput{IdTag: "RFID-ABC123456789012345"})
 	if err == nil {
 		t.Error("Req() error = nil, want error for IdTag too long")
 	}
@@ -58,7 +58,7 @@ func TestReq_InvalidCharacters(t *testing.T) {
 	t.Parallel()
 
 	// Contains null byte
-	_, err := authorize.Req(authorize.Input{IdTag: "RFID\x00ABC"})
+	_, err := authorize.Req(authorize.ReqInput{IdTag: "RFID\x00ABC"})
 	if err == nil {
 		t.Error(
 			"Req() error = nil, want error for non-printable chars",
