@@ -10,11 +10,10 @@ import (
 )
 
 const (
-	StatusAccepted = "Accepted"
-	ErrParentIdTag = "parentIdTag"
-	ErrExpiryDate  = "expiryDate"
-	ErrWantParent  = "Conf() error = %v, want error with 'parentIdTag'"
-	ErrWantExpiry  = "Conf() error = %v, want error with 'expiryDate'"
+	StatusAccepted  = "Accepted"
+	ErrParentIdTag  = "parentIdTag"
+	ErrExpiryDate   = "expiryDate"
+	ErrWantContains = "Conf() error = %v, want error with '%s'"
 )
 
 func TestConf_ValidAccepted(t *testing.T) {
@@ -224,7 +223,7 @@ func TestConf_WithParentIdTagTooLong(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), ErrParentIdTag) {
-		t.Errorf(ErrWantParent, err)
+		t.Errorf(ErrWantContains, err, ErrParentIdTag)
 	}
 }
 
@@ -243,7 +242,7 @@ func TestConf_WithEmptyParentIdTag(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), ErrParentIdTag) {
-		t.Errorf(ErrWantParent, err)
+		t.Errorf(ErrWantContains, err, ErrParentIdTag)
 	}
 }
 
@@ -305,11 +304,11 @@ func TestConf_MultipleErrors(t *testing.T) {
 	}
 
 	if !strings.Contains(errStr, ErrExpiryDate) {
-		t.Errorf(ErrWantExpiry, err)
+		t.Errorf(ErrWantContains, err, ErrExpiryDate)
 	}
 
 	if !strings.Contains(errStr, ErrParentIdTag) {
-		t.Errorf(ErrWantParent, err)
+		t.Errorf(ErrWantContains, err, ErrParentIdTag)
 	}
 }
 
@@ -333,6 +332,6 @@ func TestConf_MultipleErrors_StatusAndExpiryDate(t *testing.T) {
 	}
 
 	if !strings.Contains(errStr, ErrExpiryDate) {
-		t.Errorf(ErrWantExpiry, err)
+		t.Errorf(ErrWantContains, err, ErrExpiryDate)
 	}
 }

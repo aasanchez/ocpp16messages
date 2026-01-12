@@ -1,7 +1,5 @@
 package authorize_test
 
-//revive:disable:line-length-limit
-
 import (
 	"fmt"
 
@@ -44,13 +42,15 @@ func ExampleReq_idTagTooLong() {
 		fmt.Println(err)
 	}
 	// Output:
-	// idTag: CiString Error on Construct (len=23, max=20): exceeds maximum length
+	// idTag: CiString Error on Construct (len=23, max=20): exceeds maximum
+	// length
 }
 
 // ExampleReq_invalidCharacters demonstrates the error returned when
 // the ID tag contains non-printable ASCII characters.
 func ExampleReq_invalidCharacters() {
-	_, err := authorize.Req(authorize.ReqInput{IdTag: "RFID\x00TAG"}) // Contains null byte
+	// Contains null byte
+	_, err := authorize.Req(authorize.ReqInput{IdTag: "RFID\x00TAG"})
 	if err != nil {
 		fmt.Println(err)
 	}
