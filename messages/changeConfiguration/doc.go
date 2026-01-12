@@ -1,4 +1,7 @@
-// ChangeConfiguration handling rules:
+// Package changeConfiguration implements the OCPP 1.6 ChangeConfiguration
+// message.
+//
+// # Handling Rules
 //
 // The Central System MAY request a Charge Point to change configuration
 // parameters by sending a ChangeConfiguration.req containing a key-value

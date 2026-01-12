@@ -1,4 +1,7 @@
-// ChangeAvailability handling rules:
+// Package changeAvailability implements the OCPP 1.6 ChangeAvailability
+// message.
+//
+// # Handling Rules
 //
 // The Central System MAY request a Charge Point to change its availability
 // by sending a ChangeAvailability.req.

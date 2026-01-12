@@ -41,7 +41,9 @@ func TestReq_IdTagTooLong(t *testing.T) {
 	t.Parallel()
 
 	// 23 chars, max is 20
-	_, err := authorize.Req(authorize.ReqInput{IdTag: "RFID-ABC123456789012345"})
+	_, err := authorize.Req(authorize.ReqInput{
+		IdTag: "RFID-ABC123456789012345",
+	})
 	if err == nil {
 		t.Error("Req() error = nil, want error for IdTag too long")
 	}

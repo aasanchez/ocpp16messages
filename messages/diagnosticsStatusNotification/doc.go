@@ -1,4 +1,7 @@
-// GetDiagnostics handling rules:
+// Package diagnosticsStatusNotification implements the OCPP 1.6
+// DiagnosticsStatusNotification message.
+//
+// # Handling Rules
 //
 // The Central System MAY request diagnostic information from a Charge Point
 // by sending a GetDiagnostics.req, including a location where the diagnostics

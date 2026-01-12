@@ -37,7 +37,9 @@ func ExampleReq_emptyIdTag() {
 // ExampleReq_idTagTooLong demonstrates the error returned when
 // the ID tag exceeds the maximum length of 20 characters.
 func ExampleReq_idTagTooLong() {
-	_, err := authorize.Req(authorize.ReqInput{IdTag: "RFID-ABC123456789012345"}) // 23 chars
+	_, err := authorize.Req(authorize.ReqInput{
+		IdTag: "RFID-ABC123456789012345",
+	}) // 23 chars
 	if err != nil {
 		fmt.Println(err)
 	}

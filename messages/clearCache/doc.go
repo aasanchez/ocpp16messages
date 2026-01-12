@@ -1,4 +1,6 @@
-// ClearCache handling rules:
+// Package clearCache implements the OCPP 1.6 ClearCache message.
+//
+// # Handling Rules
 //
 // The Central System MAY request a Charge Point to clear its Authorization
 // Cache by sending a ClearCache.req.

@@ -1,4 +1,6 @@
-// Heartbeat handling rules:
+// Package heartbeat implements the OCPP 1.6 Heartbeat message.
+//
+// # Handling Rules
 //
 // A Charge Point SHALL send Heartbeat.req messages at a configurable interval
 // to inform the Central System that it is still connected.

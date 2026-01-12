@@ -1,4 +1,7 @@
-// GetCompositeSchedule handling rules:
+// Package getCompositeSchedule implements the OCPP 1.6 GetCompositeSchedule
+// message.
+//
+// # Handling Rules
 //
 // The Central System MAY request a Composite Charging Schedule by sending
 // GetCompositeSchedule.req.

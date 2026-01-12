@@ -1,4 +1,7 @@
-// FirmwareStatusNotification handling rules:
+// Package firmwareStatusNotification implements the OCPP 1.6
+// FirmwareStatusNotification message.
+//
+// # Handling Rules
 //
 // A Charge Point SHALL inform the Central System about the progress of a
 // firmware update by sending FirmwareStatusNotification.req messages.
