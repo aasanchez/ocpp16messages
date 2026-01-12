@@ -1,6 +1,7 @@
 package authorize
 
 import (
+	"errors"
 	"fmt"
 
 	mat "github.com/aasanchez/ocpp16messages/messages/authorize/types"
@@ -21,38 +22,67 @@ type ConfMessage struct {
 }
 
 // Conf creates an Authorize.conf message from the given input.
-// It validates all fields automatically and returns an error if:
+// It validates all fields and accumulates all errors, returning them together.
+// This allows callers to see all validation issues at once rather than one at a time.
+// Returns an error if:
 //   - Status is not a valid AuthorizationStatus value
 //   - ExpiryDate (if provided) is not a valid RFC3339 date
 //   - ParentIdTag (if provided) exceeds 20 characters or contains invalid chars
 func Conf(input ConfInput) (ConfMessage, error) {
+	var errs []error
+
+	var idTagInfo mat.IdTagInfo
+
+	var expiryDate st.DateTime
+
+	var parentIdToken mat.IdToken
+
+	// Validate status (required)
 	status := mat.AuthorizationStatus(input.Status)
 
-	idTagInfo, err := mat.NewIdTagInfo(status)
+	info, err := mat.NewIdTagInfo(status)
 	if err != nil {
-		return ConfMessage{}, fmt.Errorf("idTagInfo: %w", err)
+		errs = append(errs, fmt.Errorf("status: %w", err))
+	} else {
+		idTagInfo = info
 	}
 
+	// Validate expiryDate (optional)
 	if input.ExpiryDate != nil {
-		expiryDate, err := st.NewDateTime(*input.ExpiryDate)
+		date, err := st.NewDateTime(*input.ExpiryDate)
 		if err != nil {
-			return ConfMessage{}, fmt.Errorf("expiryDate: %w", err)
+			errs = append(errs, fmt.Errorf("expiryDate: %w", err))
+		} else {
+			expiryDate = date
 		}
+	}
 
+	// Validate parentIdTag (optional)
+	if input.ParentIdTag != nil {
+		ciStr, err := st.NewCiString20Type(*input.ParentIdTag)
+		if err != nil {
+			errs = append(errs, fmt.Errorf("parentIdTag: %w", err))
+		} else {
+			token, err := mat.NewIdToken(ciStr)
+			if err != nil {
+				errs = append(errs, fmt.Errorf("parentIdTag: %w", err))
+			} else {
+				parentIdToken = token
+			}
+		}
+	}
+
+	// Return all accumulated errors
+	if len(errs) > 0 {
+		return ConfMessage{}, errors.Join(errs...)
+	}
+
+	// Build the message with validated fields
+	if input.ExpiryDate != nil {
 		idTagInfo = idTagInfo.WithExpiryDate(expiryDate)
 	}
 
 	if input.ParentIdTag != nil {
-		ciStr, err := st.NewCiString20Type(*input.ParentIdTag)
-		if err != nil {
-			return ConfMessage{}, fmt.Errorf("parentIdTag: %w", err)
-		}
-
-		parentIdToken, err := mat.NewIdToken(ciStr)
-		if err != nil {
-			return ConfMessage{}, fmt.Errorf("parentIdTag: %w", err)
-		}
-
 		idTagInfo = idTagInfo.WithParentIdTag(parentIdToken)
 	}
 
