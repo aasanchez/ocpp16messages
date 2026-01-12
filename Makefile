@@ -32,6 +32,7 @@ lint: ## Run static analysis, vetting, and linting using golangci-lint and other
 	@golangci-lint --config golangci.yml run ./... || true
 	@go vet ./... > reports/govet.json
 	@staticcheck ./... > reports/staticcheck
+	@cat reports/golangci-lint.txt
 
 format: ## Format Go code to maintain consistent styling across the codebase.
 	@rg --files -g '*.go' | xargs gci write

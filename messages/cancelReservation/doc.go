@@ -1,4 +1,6 @@
-// CancelReservation handling rules:
+// Package cancelReservation implements the OCPP 1.6 CancelReservation message.
+//
+// # Handling Rules
 //
 // To cancel a reservation, the Central System SHALL send a
 // CancelReservation.req to the Charge Point.

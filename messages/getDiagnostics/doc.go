@@ -1,4 +1,6 @@
-// GetDiagnostics handling rules:
+// Package getDiagnostics implements the OCPP 1.6 GetDiagnostics message.
+//
+// # Handling Rules
 //
 // The Central System MAY request diagnostic information from a Charge Point
 // by sending GetDiagnostics.req, including a location for uploading the data
@@ -12,6 +14,7 @@
 // If no diagnostic information is available, the response SHALL NOT include
 // a file name.
 //
-// During the upload, the Charge Point MUST send DiagnosticsStatusNotification.req
-// messages to keep the Central System informed of the upload status.
+// During the upload, the Charge Point MUST send
+// DiagnosticsStatusNotification.req messages to keep the Central System
+// informed of the upload status.
 package getDiagnostics

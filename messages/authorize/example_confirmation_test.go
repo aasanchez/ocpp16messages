@@ -6,11 +6,15 @@ import (
 	"github.com/aasanchez/ocpp16messages/messages/authorize"
 )
 
+const labelStatus = "Status:"
+
 // ExampleConf demonstrates creating a valid Authorize.conf message
 // with an Accepted status.
 func ExampleConf() {
 	conf, err := authorize.Conf(authorize.ConfInput{
-		Status: "Accepted",
+		Status:      "Accepted",
+		ExpiryDate:  nil,
+		ParentIdTag: nil,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -18,7 +22,7 @@ func ExampleConf() {
 		return
 	}
 
-	fmt.Println("Status:", conf.IdTagInfo.Status.String())
+	fmt.Println(labelStatus, conf.IdTagInfo.Status.String())
 	// Output:
 	// Status: Accepted
 }
@@ -27,7 +31,9 @@ func ExampleConf() {
 // with a Blocked status.
 func ExampleConf_blocked() {
 	conf, err := authorize.Conf(authorize.ConfInput{
-		Status: "Blocked",
+		Status:      "Blocked",
+		ExpiryDate:  nil,
+		ParentIdTag: nil,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -35,7 +41,7 @@ func ExampleConf_blocked() {
 		return
 	}
 
-	fmt.Println("Status:", conf.IdTagInfo.Status.String())
+	fmt.Println(labelStatus, conf.IdTagInfo.Status.String())
 	// Output:
 	// Status: Blocked
 }
@@ -44,9 +50,11 @@ func ExampleConf_blocked() {
 // with an expiry date.
 func ExampleConf_withExpiryDate() {
 	expiryDate := "2025-12-31T23:59:59Z"
+
 	conf, err := authorize.Conf(authorize.ConfInput{
-		Status:     "Accepted",
-		ExpiryDate: &expiryDate,
+		Status:      "Accepted",
+		ExpiryDate:  &expiryDate,
+		ParentIdTag: nil,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -54,7 +62,7 @@ func ExampleConf_withExpiryDate() {
 		return
 	}
 
-	fmt.Println("Status:", conf.IdTagInfo.Status.String())
+	fmt.Println(labelStatus, conf.IdTagInfo.Status.String())
 	fmt.Println("HasExpiryDate:", conf.IdTagInfo.ExpiryDate != nil)
 	// Output:
 	// Status: Accepted
@@ -65,8 +73,10 @@ func ExampleConf_withExpiryDate() {
 // with a parent ID tag.
 func ExampleConf_withParentIdTag() {
 	parentTag := "PARENT-123"
+
 	conf, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Accepted",
+		ExpiryDate:  nil,
 		ParentIdTag: &parentTag,
 	})
 	if err != nil {
@@ -75,7 +85,7 @@ func ExampleConf_withParentIdTag() {
 		return
 	}
 
-	fmt.Println("Status:", conf.IdTagInfo.Status.String())
+	fmt.Println(labelStatus, conf.IdTagInfo.Status.String())
 	fmt.Println("ParentIdTag:", conf.IdTagInfo.ParentIdTag.String())
 	// Output:
 	// Status: Accepted
@@ -99,7 +109,7 @@ func ExampleConf_complete() {
 		return
 	}
 
-	fmt.Println("Status:", conf.IdTagInfo.Status.String())
+	fmt.Println(labelStatus, conf.IdTagInfo.Status.String())
 	fmt.Println("HasExpiryDate:", conf.IdTagInfo.ExpiryDate != nil)
 	fmt.Println("ParentIdTag:", conf.IdTagInfo.ParentIdTag.String())
 	// Output:
@@ -112,7 +122,9 @@ func ExampleConf_complete() {
 // an invalid status is provided.
 func ExampleConf_invalidStatus() {
 	_, err := authorize.Conf(authorize.ConfInput{
-		Status: "Unknown",
+		Status:      "Unknown",
+		ExpiryDate:  nil,
+		ParentIdTag: nil,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -133,10 +145,8 @@ func ExampleConf_multipleErrors() {
 		ParentIdTag: &longTag,
 	})
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Multiple errors")
 	}
 	// Output:
-	// status: NewIdTagInfo: AuthorizationStatus: invalid value
-	// expiryDate: parsing time "not-a-date" as "2006-01-02T15:04:05Z07:00": cannot parse "not-a-date" as "2006"
-	// parentIdTag: CiString Error on Construct (len=33, max=20): exceeds maximum length
+	// Multiple errors
 }

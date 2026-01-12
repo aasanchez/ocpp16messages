@@ -1,4 +1,7 @@
-// GetLocalListVersion handling rules:
+// Package getLocalListVersion implements the OCPP 1.6 GetLocalListVersion
+// message.
+//
+// # Handling Rules
 //
 // The Central System MAY request the version number of the Charge Point's
 // Local Authorization List by sending GetLocalListVersion.req.
