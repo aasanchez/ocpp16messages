@@ -42,7 +42,7 @@ go get github.com/aasanchez/ocpp16messages
 │   └── tests/                  # Public API tests (black-box)
 ├── messages/
 │   └── authorize/              # Authorize message implementation
-│       ├── request.go          # Authorize request message
+│       ├── request.go          # Authorize.req message
 │       ├── doc.go              # Package documentation
 │       └── types/              # Authorize-specific types
 │           ├── idtoken.go            # IdToken type
@@ -86,9 +86,9 @@ if err != nil {
 ```go
 import "github.com/aasanchez/ocpp16messages/messages/authorize"
 
-// Create an Authorize request using the Input struct
+// Create an Authorize.req message using the Input struct
 // Validation happens automatically in the constructor
-request, err := authorize.NewRequest(authorize.Input{
+req, err := authorize.Req(authorize.Input{
     IdTag: "RFID-ABC123",
 })
 if err != nil {
@@ -96,7 +96,7 @@ if err != nil {
 }
 
 // Access the validated IdTag
-fmt.Println(request.IdTag.String()) // "RFID-ABC123"
+fmt.Println(req.IdTag.String()) // "RFID-ABC123"
 ```
 
 ## Development

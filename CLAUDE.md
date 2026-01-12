@@ -77,13 +77,21 @@ OCPP messages follow an **Input struct pattern** where users create a simple
 struct with raw values and pass it to the constructor. The constructor validates
 all fields automatically - there is NO separate `Validate()` method.
 
+#### Naming Convention
+
+Message types use OCPP terminology:
+
+- **Req()**: Constructor for request messages (e.g., `authorize.Req()` for Authorize.req)
+- **Conf()**: Constructor for response messages (e.g., `authorize.Conf()` for Authorize.conf)
+- **Message**: The returned type representing the validated message
+
 #### Usage Pattern
 
 All messages use an `Input` struct that accepts raw values (strings, integers):
 
 ```go
-// Authorize request
-request, err := authorize.NewRequest(authorize.Input{
+// Authorize.req message
+req, err := authorize.Req(authorize.Input{
     IdTag: "RFID-ABC123",
 })
 if err != nil {
@@ -97,8 +105,8 @@ For messages with complex nested structures (like MeterValues with arrays of
 SampledValue), the Input struct contains nested Input structs:
 
 ```go
-// MeterValues - complex nested structure
-request, err := metervalues.NewRequest(metervalues.Input{
+// MeterValues.req - complex nested structure
+req, err := metervalues.Req(metervalues.Input{
     ConnectorId:   1,
     TransactionId: 123,
     MeterValue: []metervalues.MeterValueInput{
@@ -114,12 +122,13 @@ request, err := metervalues.NewRequest(metervalues.Input{
 
 #### Design Principles
 
+- **OCPP naming**: Use `Req()`/`Conf()` to match OCPP terminology (Authorize.req, Authorize.conf)
 - **Input struct with raw values**: Users create structs with simple Go types
-- **Single constructor call**: One `NewRequest(input)` call validates everything
+- **Single constructor call**: One `Req(input)` call validates everything
 - **No separate Validate()**: Validation is built into the constructor
-- **Error on construction**: Return `(T, error)` - if error is nil, the message
+- **Error on construction**: Return `(Message, error)` - if error is nil, the message
   is valid
-- **Immutable result**: The returned struct contains validated, typed fields
+- **Immutable result**: The returned Message contains validated, typed fields
 
 #### What NOT to do
 
@@ -127,10 +136,10 @@ request, err := metervalues.NewRequest(metervalues.Input{
 // ✗ BAD - Don't require separate validation step
 input := authorize.Input{IdTag: "ABC123"}
 if err := input.Validate(); err != nil { ... }  // NO separate Validate()!
-request, err := authorize.NewRequest(input)
+req, err := authorize.Req(input)
 
 // ✓ GOOD - Single step, validation built-in
-request, err := authorize.NewRequest(authorize.Input{IdTag: "ABC123"})
+req, err := authorize.Req(authorize.Input{IdTag: "ABC123"})
 ```
 
 ### Test Organization
@@ -359,7 +368,7 @@ pkgsite. **Use examples strategically**, not for every function.
 
 ```text
 messages/authorize/
-├── example_request_test.go      ✓ Examples for NewRequest (public API)
+├── example_request_test.go      ✓ Examples for Req (public API)
 └── types/
     ├── example_idtoken_test.go  ✓ Examples for NewIdToken (public API)
     └── tests/

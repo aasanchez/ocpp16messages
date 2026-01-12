@@ -7,32 +7,32 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
-// Input represents the raw input data for creating an Authorize request.
-// The constructor NewRequest validates all fields automatically.
+// Input represents the raw input data for creating an Authorize.req message.
+// The constructor Req validates all fields automatically.
 type Input struct {
 	IdTag string
 }
 
-// Request represents an OCPP 1.6 Authorize request message.
-type Request struct {
+// Message represents an OCPP 1.6 Authorize.req message.
+type Message struct {
 	IdTag mat.IdToken
 }
 
-// NewRequest creates a new Authorize request from the given input.
+// Req creates an Authorize.req message from the given input.
 // It validates all fields automatically and returns an error if:
 //   - IdTag is empty
 //   - IdTag exceeds 20 characters
 //   - IdTag contains non-printable ASCII characters
-func NewRequest(input Input) (Request, error) {
+func Req(input Input) (Message, error) {
 	str, err := st.NewCiString20Type(input.IdTag)
 	if err != nil {
-		return Request{}, fmt.Errorf("idTag: %w", err)
+		return Message{}, fmt.Errorf("idTag: %w", err)
 	}
 
 	idToken, err := mat.NewIdToken(str)
 	if err != nil {
-		return Request{}, fmt.Errorf("idTag: %w", err)
+		return Message{}, fmt.Errorf("idTag: %w", err)
 	}
 
-	return Request{IdTag: idToken}, nil
+	return Message{IdTag: idToken}, nil
 }
