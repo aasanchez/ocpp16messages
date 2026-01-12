@@ -48,7 +48,6 @@ go get github.com/aasanchez/ocpp16messages
 │           ├── idtoken.go            # IdToken type
 │           ├── idtaginfo.go          # IdTagInfo type with builder pattern
 │           ├── authorizationstatus.go # AuthorizationStatus enum
-│           ├── request.go            # Request payload
 │           ├── doc.go                # Package documentation
 │           └── tests/                # Public API tests
 └── SECURITY.md                 # Security policy and vulnerability reporting
@@ -85,26 +84,19 @@ if err != nil {
 ### Message Types
 
 ```go
-import (
-    "github.com/aasanchez/ocpp16messages/messages/authorize"
-    mat "github.com/aasanchez/ocpp16messages/messages/authorize/types"
-)
+import "github.com/aasanchez/ocpp16messages/messages/authorize"
 
-// Create request payload
-payload := mat.Request{
+// Create an Authorize request using the Input struct
+// Validation happens automatically in the constructor
+request, err := authorize.NewRequest(authorize.Input{
     IdTag: "RFID-ABC123",
-}
-
-// Validate payload
-if err := payload.Validate(); err != nil {
-    // Handle validation error
-}
-
-// Create message
-request, err := authorize.NewRequest(payload)
+})
 if err != nil {
-    // Handle construction error
+    // Handle validation error (empty, too long, or invalid characters)
 }
+
+// Access the validated IdTag
+fmt.Println(request.IdTag.String()) // "RFID-ABC123"
 ```
 
 ## Development

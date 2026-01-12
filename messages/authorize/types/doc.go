@@ -5,5 +5,4 @@
 //   - IdTagInfo: authorization status information returned in responses
 //   - AuthorizationStatus: enumeration of authorization states (Accepted,
 //     Blocked, Expired, Invalid, ConcurrentTx)
-//   - Request: authorize request payload structure
 package types

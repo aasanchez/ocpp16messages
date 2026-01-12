@@ -71,6 +71,68 @@ pattern:
 All types use value receivers and immutable fields, designed for thread-safe
 concurrent use.
 
+### Message API Design
+
+OCPP messages follow an **Input struct pattern** where users create a simple
+struct with raw values and pass it to the constructor. The constructor validates
+all fields automatically - there is NO separate `Validate()` method.
+
+#### Usage Pattern
+
+All messages use an `Input` struct that accepts raw values (strings, integers):
+
+```go
+// Authorize request
+request, err := authorize.NewRequest(authorize.Input{
+    IdTag: "RFID-ABC123",
+})
+if err != nil {
+    // Handle validation error
+}
+```
+
+#### Complex Messages (nested structures, arrays)
+
+For messages with complex nested structures (like MeterValues with arrays of
+SampledValue), the Input struct contains nested Input structs:
+
+```go
+// MeterValues - complex nested structure
+request, err := metervalues.NewRequest(metervalues.Input{
+    ConnectorId:   1,
+    TransactionId: 123,
+    MeterValue: []metervalues.MeterValueInput{
+        {
+            Timestamp: "2025-01-02T15:00:00Z",
+            SampledValue: []metervalues.SampledValueInput{
+                {Value: "100", Measurand: "Energy.Active.Import.Register"},
+            },
+        },
+    },
+})
+```
+
+#### Design Principles
+
+- **Input struct with raw values**: Users create structs with simple Go types
+- **Single constructor call**: One `NewRequest(input)` call validates everything
+- **No separate Validate()**: Validation is built into the constructor
+- **Error on construction**: Return `(T, error)` - if error is nil, the message
+  is valid
+- **Immutable result**: The returned struct contains validated, typed fields
+
+#### What NOT to do
+
+```go
+// ✗ BAD - Don't require separate validation step
+input := authorize.Input{IdTag: "ABC123"}
+if err := input.Validate(); err != nil { ... }  // NO separate Validate()!
+request, err := authorize.NewRequest(input)
+
+// ✓ GOOD - Single step, validation built-in
+request, err := authorize.NewRequest(authorize.Input{IdTag: "ABC123"})
+```
+
 ### Test Organization
 
 Tests MUST be organized by API visibility to maintain clear boundaries between
@@ -299,8 +361,9 @@ pkgsite. **Use examples strategically**, not for every function.
 messages/authorize/
 ├── example_request_test.go      ✓ Examples for NewRequest (public API)
 └── types/
-    ├── request_test.go          ✓ Unit tests for Validate(), Value() (internal)
-    └── example_request_test.go  ✗ Avoid - Request.Validate() is internal
+    ├── example_idtoken_test.go  ✓ Examples for NewIdToken (public API)
+    └── tests/
+        └── idtoken_test.go      ✓ Unit tests for IdToken (public API)
 ```
 
 ## CI and Quality
