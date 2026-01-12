@@ -40,9 +40,13 @@ type ciString struct {
 }
 
 // newCiString creates a new ciString with the given maximum length constraint.
-// Returns an error if the input exceeds maxLen or contains non-printable ASCII
-// characters.
+// Returns an error if the input is empty, exceeds maxLen, or contains
+// non-printable ASCII characters.
 func newCiString(input string, maxLen int) (ciString, error) {
+	if input == "" {
+		return ciString{}, ErrEmptyValue
+	}
+
 	cis := ciString{value: input}
 
 	if len(cis.value) > maxLen {

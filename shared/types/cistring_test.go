@@ -14,7 +14,7 @@ const (
 
 // Tests for internal newCiString function (unexported).
 
-func Test_newCiString_Valid(t *testing.T) {
+func Test_newCiString(t *testing.T) {
 	t.Parallel()
 
 	input := "OCPP-Test-123"
@@ -61,19 +61,19 @@ func Test_newCiString_NonPrintableASCII(t *testing.T) {
 	}
 }
 
-func Test_newCiString_EmptyIsValid(t *testing.T) {
+func Test_newCiString_EmptyReturnsError(t *testing.T) {
 	t.Parallel()
 
 	input := ""
 	maxLen := testMaxLen10
 
-	cis, err := newCiString(input, maxLen)
-	if err != nil {
-		t.Errorf(ErrorUnexpectedError, err)
+	_, err := newCiString(input, maxLen)
+	if err == nil {
+		t.Error("newCiString() error = nil, want error for empty string")
 	}
 
-	if got := cis.val(); got != "" {
-		t.Errorf("val() = %q; want empty string", got)
+	if !errors.Is(err, ErrEmptyValue) {
+		t.Errorf("expected ErrEmptyValue, got: %v", err)
 	}
 }
 

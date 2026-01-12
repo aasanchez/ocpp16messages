@@ -29,7 +29,7 @@ func ExampleReq_emptyIdTag() {
 		fmt.Println(err)
 	}
 	// Output:
-	// idTag: NewIdToken: IdToken: value cannot be empty
+	// idTag: value cannot be empty
 }
 
 // ExampleReq_idTagTooLong demonstrates the error returned when

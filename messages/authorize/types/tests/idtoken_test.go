@@ -19,9 +19,10 @@ func TestIdToken(t *testing.T) {
 	str := strings.Repeat("A", validTokenLength)
 	cstr, _ := st.NewCiString20Type(str)
 
-	_, err := mat.NewIdToken(cstr)
-	if err != nil {
-		t.Errorf(ErrorExpectedError, err)
+	idtoken := mat.NewIdToken(cstr)
+
+	if idtoken.String() != str {
+		t.Errorf(ErrorMismatch, str, idtoken.String())
 	}
 }
 
@@ -31,7 +32,7 @@ func TestIdToken_value(t *testing.T) {
 	str := strings.Repeat("C", validTokenLength)
 	cstr, _ := st.NewCiString20Type(str)
 
-	idtoken, _ := mat.NewIdToken(cstr)
+	idtoken := mat.NewIdToken(cstr)
 
 	if idtoken.Value() != cstr {
 		t.Errorf(ErrorMismatch, cstr.Value(), idtoken.String())
@@ -53,11 +54,10 @@ func TestIdToken_empty(t *testing.T) {
 	t.Parallel()
 
 	str := ""
-	cstr, _ := st.NewCiString20Type(str)
 
-	_, err := mat.NewIdToken(cstr)
+	_, err := st.NewCiString20Type(str)
 	if err == nil {
-		t.Errorf(ErrorExpectedError, err)
+		t.Error("NewCiString20Type() error = nil, want error for empty string")
 	}
 }
 
@@ -66,7 +66,7 @@ func TestIdToken_String(t *testing.T) {
 
 	str := "RFID-TAG-123"
 	cstr, _ := st.NewCiString20Type(str)
-	idtoken, _ := mat.NewIdToken(cstr)
+	idtoken := mat.NewIdToken(cstr)
 
 	if idtoken.String() != str {
 		t.Errorf(ErrorMismatch, str, idtoken.String())

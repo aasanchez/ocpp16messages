@@ -1,8 +1,6 @@
 package types
 
 import (
-	"fmt"
-
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
@@ -13,17 +11,9 @@ type IdToken struct {
 }
 
 // NewIdToken creates a new IdToken from a CiString20Type value.
-// Returns an error if the provided value is empty.
-func NewIdToken(ciString20Type st.CiString20Type) (IdToken, error) {
-	if ciString20Type.Value() == "" {
-		return IdToken{}, fmt.Errorf(
-			"NewIdToken: "+st.ErrorFieldFormat,
-			"IdToken",
-			st.ErrEmptyValue,
-		)
-	}
-
-	return IdToken{value: ciString20Type}, nil
+// CiString20Type already validates that the value is non-empty.
+func NewIdToken(ciString20Type st.CiString20Type) IdToken {
+	return IdToken{value: ciString20Type}
 }
 
 // Value returns the underlying CiString20Type value of the IdToken.
