@@ -87,6 +87,7 @@ func ExampleConf_withParentIdTag() {
 func ExampleConf_complete() {
 	expiryDate := "2025-12-31T23:59:59Z"
 	parentTag := "PARENT-123"
+
 	conf, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Accepted",
 		ExpiryDate:  &expiryDate,
@@ -117,5 +118,25 @@ func ExampleConf_invalidStatus() {
 		fmt.Println(err)
 	}
 	// Output:
-	// idTagInfo: NewIdTagInfo: AuthorizationStatus: invalid value
+	// status: NewIdTagInfo: AuthorizationStatus: invalid value
+}
+
+// ExampleConf_multipleErrors demonstrates that all validation errors
+// are returned at once, not just the first one encountered.
+func ExampleConf_multipleErrors() {
+	invalidDate := "not-a-date"
+	longTag := "THIS-TAG-IS-WAY-TOO-LONG-FOR-OCPP"
+
+	_, err := authorize.Conf(authorize.ConfInput{
+		Status:      "Invalid-Status",
+		ExpiryDate:  &invalidDate,
+		ParentIdTag: &longTag,
+	})
+	if err != nil {
+		fmt.Println(err)
+	}
+	// Output:
+	// status: NewIdTagInfo: AuthorizationStatus: invalid value
+	// expiryDate: parsing time "not-a-date" as "2006-01-02T15:04:05Z07:00": cannot parse "not-a-date" as "2006"
+	// parentIdTag: CiString Error on Construct (len=33, max=20): exceeds maximum length
 }

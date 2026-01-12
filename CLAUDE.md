@@ -329,6 +329,37 @@ messages/authorize/types/
     errors.go files
   - **Do NOT create helper functions** that just wrap `fmt.Errorf` - use
     `fmt.Errorf` directly with sentinel errors and format constants
+- **Error Accumulation in Constructors**:
+  - Message constructors (`Req()`, `Conf()`) SHOULD accumulate all validation
+    errors and return them together using `errors.Join()`
+  - This maximizes verbosity and efficiency by showing all issues at once
+  - Pattern:
+
+    ```go
+    func Conf(input ConfInput) (ConfMessage, error) {
+        var errs []error
+
+        // Validate each field, accumulating errors
+        if err := validateField1(); err != nil {
+            errs = append(errs, fmt.Errorf("field1: %w", err))
+        }
+        if err := validateField2(); err != nil {
+            errs = append(errs, fmt.Errorf("field2: %w", err))
+        }
+
+        // Return all accumulated errors at once
+        if len(errs) > 0 {
+            return ConfMessage{}, errors.Join(errs...)
+        }
+
+        return ConfMessage{...}, nil
+    }
+    ```
+
+  - Benefits:
+    - Users see all validation issues in one call, not one at a time
+    - Reduces debugging cycles for malformed input
+    - Each error is prefixed with the field name for clarity
 
 ### Testing
 

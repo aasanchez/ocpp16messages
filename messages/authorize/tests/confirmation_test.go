@@ -125,7 +125,6 @@ func TestConf_WithInvalidExpiryDate(t *testing.T) {
 		Status:     "Accepted",
 		ExpiryDate: &invalidDate,
 	})
-
 	if err == nil {
 		t.Error("Conf() error = nil, want error for invalid expiry date")
 	}
@@ -164,7 +163,6 @@ func TestConf_WithParentIdTagTooLong(t *testing.T) {
 		Status:      "Accepted",
 		ParentIdTag: &longTag,
 	})
-
 	if err == nil {
 		t.Error("Conf() error = nil, want error for parentIdTag too long")
 	}
@@ -182,7 +180,6 @@ func TestConf_WithEmptyParentIdTag(t *testing.T) {
 		Status:      "Accepted",
 		ParentIdTag: &emptyTag,
 	})
-
 	if err == nil {
 		t.Error("Conf() error = nil, want error for empty parentIdTag")
 	}
@@ -197,6 +194,7 @@ func TestConf_Complete(t *testing.T) {
 
 	expiryDate := "2025-12-31T23:59:59Z"
 	parentTag := "PARENT-123"
+
 	conf, err := authorize.Conf(authorize.ConfInput{
 		Status:      "Accepted",
 		ExpiryDate:  &expiryDate,
@@ -220,5 +218,60 @@ func TestConf_Complete(t *testing.T) {
 
 	if conf.IdTagInfo.ParentIdTag.String() != parentTag {
 		t.Errorf(st.ErrorMismatch, parentTag, conf.IdTagInfo.ParentIdTag.String())
+	}
+}
+
+func TestConf_MultipleErrors(t *testing.T) {
+	t.Parallel()
+
+	invalidDate := "not-a-date"
+	longTag := "THIS-TAG-IS-WAY-TOO-LONG-FOR-OCPP"
+
+	_, err := authorize.Conf(authorize.ConfInput{
+		Status:      "Invalid-Status",
+		ExpiryDate:  &invalidDate,
+		ParentIdTag: &longTag,
+	})
+
+	if err == nil {
+		t.Error("Conf() error = nil, want error for multiple invalid fields")
+	}
+
+	// Check that all errors are present
+	errStr := err.Error()
+	if !strings.Contains(errStr, "status") {
+		t.Errorf("Conf() error = %v, want error containing 'status'", err)
+	}
+
+	if !strings.Contains(errStr, "expiryDate") {
+		t.Errorf("Conf() error = %v, want error containing 'expiryDate'", err)
+	}
+
+	if !strings.Contains(errStr, "parentIdTag") {
+		t.Errorf("Conf() error = %v, want error containing 'parentIdTag'", err)
+	}
+}
+
+func TestConf_MultipleErrors_StatusAndExpiryDate(t *testing.T) {
+	t.Parallel()
+
+	invalidDate := "invalid"
+
+	_, err := authorize.Conf(authorize.ConfInput{
+		Status:     "BadStatus",
+		ExpiryDate: &invalidDate,
+	})
+
+	if err == nil {
+		t.Error("Conf() error = nil, want error for invalid status and expiry date")
+	}
+
+	errStr := err.Error()
+	if !strings.Contains(errStr, "status") {
+		t.Errorf("Conf() error = %v, want error containing 'status'", err)
+	}
+
+	if !strings.Contains(errStr, "expiryDate") {
+		t.Errorf("Conf() error = %v, want error containing 'expiryDate'", err)
 	}
 }
