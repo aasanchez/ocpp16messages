@@ -5,13 +5,13 @@ package authorize_test
 import (
 	"fmt"
 
-	ma "github.com/aasanchez/ocpp16messages/messages/authorize"
+	"github.com/aasanchez/ocpp16messages/messages/authorize"
 )
 
 // ExampleReq demonstrates creating a valid Authorize.req message
 // with a properly formatted ID tag using the Input struct.
 func ExampleReq() {
-	req, err := ma.Req(ma.Input{IdTag: "RFID-TAG-12345"})
+	req, err := authorize.Req(authorize.Input{IdTag: "RFID-TAG-12345"})
 	if err != nil {
 		fmt.Println(err)
 
@@ -26,7 +26,7 @@ func ExampleReq() {
 // ExampleReq_emptyIdTag demonstrates the error returned when
 // an empty ID tag is provided.
 func ExampleReq_emptyIdTag() {
-	_, err := ma.Req(ma.Input{IdTag: ""})
+	_, err := authorize.Req(authorize.Input{IdTag: ""})
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -37,7 +37,7 @@ func ExampleReq_emptyIdTag() {
 // ExampleReq_idTagTooLong demonstrates the error returned when
 // the ID tag exceeds the maximum length of 20 characters.
 func ExampleReq_idTagTooLong() {
-	_, err := ma.Req(ma.Input{IdTag: "RFID-ABC123456789012345"}) // 23 chars
+	_, err := authorize.Req(authorize.Input{IdTag: "RFID-ABC123456789012345"}) // 23 chars
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -48,7 +48,7 @@ func ExampleReq_idTagTooLong() {
 // ExampleReq_invalidCharacters demonstrates the error returned when
 // the ID tag contains non-printable ASCII characters.
 func ExampleReq_invalidCharacters() {
-	_, err := ma.Req(ma.Input{IdTag: "RFID\x00TAG"}) // Contains null byte
+	_, err := authorize.Req(authorize.Input{IdTag: "RFID\x00TAG"}) // Contains null byte
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -59,7 +59,7 @@ func ExampleReq_invalidCharacters() {
 // ExampleReq_shortIdTag demonstrates that short ID tags
 // (within the 20 character limit) are valid.
 func ExampleReq_shortIdTag() {
-	req, err := ma.Req(ma.Input{IdTag: "TAG1"})
+	req, err := authorize.Req(authorize.Input{IdTag: "TAG1"})
 	if err != nil {
 		fmt.Println(err)
 
