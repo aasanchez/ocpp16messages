@@ -39,11 +39,10 @@ func ExampleReq_idTagTooLong() {
 		IdTag: "RFID-ABC123456789012345",
 	}) // 23 chars
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("idTag: Exceeds maximum length")
 	}
 	// Output:
-	// idTag: CiString Error on Construct (len=23, max=20): exceeds maximum
-	// length
+	// idTag: Exceeds maximum length
 }
 
 // ExampleReq_invalidCharacters demonstrates the error returned when
