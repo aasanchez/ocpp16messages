@@ -63,7 +63,7 @@ go get github.com/aasanchez/ocpp16messages
 The library provides validated OCPP 1.6 data types:
 
 ```go
-import "github.com/aasanchez/ocpp16messages/shared/types"
+import "github.com/aasanchez/ocpp16messages/types"
 
 // CiString types (case-insensitive, ASCII printable, length-validated)
 idTag, err := types.NewCiString20Type("RFID-ABC123")
@@ -89,7 +89,7 @@ if err != nil {
 Messages use OCPP terminology with `Req()` for requests and `Conf()` for responses:
 
 ```go
-import "github.com/aasanchez/ocpp16messages/messages/authorize"
+import "github.com/aasanchez/ocpp16messages/authorize"
 
 // Create an Authorize.req message using the ReqInput struct
 // Validation happens automatically in the constructor

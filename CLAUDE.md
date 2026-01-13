@@ -189,7 +189,7 @@ package types_test  // External package - black-box testing
 import (
     "testing"
 
-    "github.com/aasanchez/ocpp16messages/shared/types"
+    "github.com/aasanchez/ocpp16messages/types"
 )
 
 func Test_sharedtypes_NewCiString20Type(t *testing.T) {
@@ -261,8 +261,8 @@ messages/authorize/types/
   - Package name conflicts with another import
   - Package name is very long and used frequently in implementation code
 - Common aliases when needed:
-  - `st` for `github.com/aasanchez/ocpp16messages/shared/types`
-  - `mat` for `github.com/aasanchez/ocpp16messages/messages/authorize/types`
+  - `st` for `github.com/aasanchez/ocpp16messages/types`
+  - `mat` for `github.com/aasanchez/ocpp16messages/authorize/types`
 
 ### Formatting
 

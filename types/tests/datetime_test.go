@@ -1,0 +1,49 @@
+package types_test
+
+import (
+	"testing"
+	"time"
+
+	st "github.com/aasanchez/ocpp16messages/types"
+)
+
+func TestNewDateTime(t *testing.T) {
+	t.Parallel()
+
+	input := "2025-08-30T14:34:56+02:00"
+
+	_, err := st.NewDateTime(input)
+	if err != nil {
+		t.Errorf("%v", err)
+	}
+}
+
+func TestNewDateTime_ReturnsExpectedValue(t *testing.T) {
+	t.Parallel()
+
+	input := "2024-08-30T14:34:56+02:00"
+	want, _ := time.Parse(time.RFC3339, input)
+
+	dt, _ := st.NewDateTime(input)
+	if !dt.Value().Equal(want) {
+		t.Errorf(st.ErrorMismatch, dt.Value(), want)
+	}
+}
+
+func TestNewDateTime_InvalidReturnsError(t *testing.T) {
+	t.Parallel()
+
+	_, err := st.NewDateTime("not-a-time")
+	if err == nil {
+		t.Error("expected error for invalid datetime, got nil")
+	}
+}
+
+func TestNewDateTime_EmptyError(t *testing.T) {
+	t.Parallel()
+
+	dt, _ := st.NewDateTime("")
+	if !dt.Value().IsZero() {
+		t.Errorf("expected zero value after failed parse, got %v", dt.Value())
+	}
+}
