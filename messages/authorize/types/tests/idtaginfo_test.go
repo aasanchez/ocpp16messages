@@ -7,6 +7,8 @@ import (
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
+const fieldStatus = "IdTagInfo.Status"
+
 func TestNewIdTagInfo_ValidStatus(t *testing.T) {
 	t.Parallel()
 
@@ -31,7 +33,8 @@ func TestNewIdTagInfo_SetsCorrectStatus(t *testing.T) {
 	info, _ := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
 	if info.Status != mat.AuthorizationStatusAccepted {
 		t.Errorf(
-			ErrorStatusMismatch,
+			st.ErrorMethodMismatch,
+			fieldStatus,
 			info.Status,
 			mat.AuthorizationStatusAccepted,
 		)
@@ -90,7 +93,8 @@ func TestIdTagInfo_WithExpiryDate_PreservesStatus(t *testing.T) {
 
 	if result.Status != mat.AuthorizationStatusAccepted {
 		t.Errorf(
-			ErrorStatusMismatch,
+			st.ErrorMethodMismatch,
+			fieldStatus,
 			result.Status,
 			mat.AuthorizationStatusAccepted,
 		)
@@ -107,7 +111,8 @@ func TestIdTagInfo_WithParentIdTag_PreservesStatus(t *testing.T) {
 
 	if result.Status != mat.AuthorizationStatusAccepted {
 		t.Errorf(
-			ErrorStatusMismatch,
+			st.ErrorMethodMismatch,
+			fieldStatus,
 			result.Status,
 			mat.AuthorizationStatusAccepted,
 		)

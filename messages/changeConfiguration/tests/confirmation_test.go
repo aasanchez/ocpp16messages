@@ -1,11 +1,11 @@
-package changeAvailability_test
+package changeConfiguration_test
 
 import (
 	"strings"
 	"testing"
 
-	ca "github.com/aasanchez/ocpp16messages/messages/changeAvailability"
-	mcat "github.com/aasanchez/ocpp16messages/messages/changeAvailability/types"
+	cc "github.com/aasanchez/ocpp16messages/messages/changeConfiguration"
+	cct "github.com/aasanchez/ocpp16messages/messages/changeConfiguration/types"
 	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
@@ -16,15 +16,15 @@ const (
 func TestConf_Valid_Accepted(t *testing.T) {
 	t.Parallel()
 
-	conf, err := ca.Conf(ca.ConfInput{Status: "Accepted"})
+	conf, err := cc.Conf(cc.ConfInput{Status: "Accepted"})
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != mcat.AvailabilityStatusAccepted {
+	if conf.Status != cct.ConfigurationStatusAccepted {
 		t.Errorf(
 			st.ErrorMismatch,
-			mcat.AvailabilityStatusAccepted,
+			cct.ConfigurationStatusAccepted,
 			conf.Status,
 		)
 	}
@@ -33,32 +33,49 @@ func TestConf_Valid_Accepted(t *testing.T) {
 func TestConf_Valid_Rejected(t *testing.T) {
 	t.Parallel()
 
-	conf, err := ca.Conf(ca.ConfInput{Status: "Rejected"})
+	conf, err := cc.Conf(cc.ConfInput{Status: "Rejected"})
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != mcat.AvailabilityStatusRejected {
+	if conf.Status != cct.ConfigurationStatusRejected {
 		t.Errorf(
 			st.ErrorMismatch,
-			mcat.AvailabilityStatusRejected,
+			cct.ConfigurationStatusRejected,
 			conf.Status,
 		)
 	}
 }
 
-func TestConf_Valid_Scheduled(t *testing.T) {
+func TestConf_Valid_RebootRequired(t *testing.T) {
 	t.Parallel()
 
-	conf, err := ca.Conf(ca.ConfInput{Status: "Scheduled"})
+	conf, err := cc.Conf(cc.ConfInput{Status: "RebootRequired"})
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != mcat.AvailabilityStatusScheduled {
+	if conf.Status != cct.ConfigurationStatusRebootRequired {
 		t.Errorf(
 			st.ErrorMismatch,
-			mcat.AvailabilityStatusScheduled,
+			cct.ConfigurationStatusRebootRequired,
+			conf.Status,
+		)
+	}
+}
+
+func TestConf_Valid_NotSupported(t *testing.T) {
+	t.Parallel()
+
+	conf, err := cc.Conf(cc.ConfInput{Status: "NotSupported"})
+	if err != nil {
+		t.Errorf(st.ErrorUnexpectedError, err)
+	}
+
+	if conf.Status != cct.ConfigurationStatusNotSupported {
+		t.Errorf(
+			st.ErrorMismatch,
+			cct.ConfigurationStatusNotSupported,
 			conf.Status,
 		)
 	}
@@ -67,7 +84,7 @@ func TestConf_Valid_Scheduled(t *testing.T) {
 func TestConf_EmptyStatus(t *testing.T) {
 	t.Parallel()
 
-	_, err := ca.Conf(ca.ConfInput{Status: ""})
+	_, err := cc.Conf(cc.ConfInput{Status: ""})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "empty status")
 	}
@@ -80,7 +97,7 @@ func TestConf_EmptyStatus(t *testing.T) {
 func TestConf_InvalidStatus_Unknown(t *testing.T) {
 	t.Parallel()
 
-	_, err := ca.Conf(ca.ConfInput{Status: "Unknown"})
+	_, err := cc.Conf(cc.ConfInput{Status: "Unknown"})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "unknown status")
 	}
@@ -93,7 +110,7 @@ func TestConf_InvalidStatus_Unknown(t *testing.T) {
 func TestConf_InvalidStatus_Lowercase(t *testing.T) {
 	t.Parallel()
 
-	_, err := ca.Conf(ca.ConfInput{Status: "accepted"})
+	_, err := cc.Conf(cc.ConfInput{Status: "accepted"})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "lowercase status")
 	}
@@ -103,12 +120,12 @@ func TestConf_InvalidStatus_Lowercase(t *testing.T) {
 	}
 }
 
-func TestConf_InvalidStatus_Pending(t *testing.T) {
+func TestConf_InvalidStatus_Scheduled(t *testing.T) {
 	t.Parallel()
 
-	_, err := ca.Conf(ca.ConfInput{Status: "Pending"})
+	_, err := cc.Conf(cc.ConfInput{Status: "Scheduled"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "Pending (invalid for ChangeAvailability)")
+		t.Errorf(st.ErrorWantNil, "Scheduled (invalid for ChangeConfiguration)")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {

@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	mat "github.com/aasanchez/ocpp16messages/messages/authorize/types"
+	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 const (
@@ -12,13 +13,14 @@ const (
 	statusExpiredStr      = "Expired"
 	statusInvalidStr      = "Invalid"
 	statusConcurrentTxStr = "ConcurrentTx"
+	methodString          = "AuthorizationStatus.String()"
 )
 
 func TestAuthorizationStatus_IsValid_Accepted(t *testing.T) {
 	t.Parallel()
 
 	if !mat.AuthorizationStatusAccepted.IsValid() {
-		t.Error("AuthorizationStatusAccepted.IsValid() = false, want true")
+		t.Errorf(st.ErrorIsValidFalse, "AuthorizationStatusAccepted")
 	}
 }
 
@@ -26,7 +28,7 @@ func TestAuthorizationStatus_IsValid_Blocked(t *testing.T) {
 	t.Parallel()
 
 	if !mat.AuthorizationStatusBlocked.IsValid() {
-		t.Error("AuthorizationStatusBlocked.IsValid() = false, want true")
+		t.Errorf(st.ErrorIsValidFalse, "AuthorizationStatusBlocked")
 	}
 }
 
@@ -34,7 +36,7 @@ func TestAuthorizationStatus_IsValid_Expired(t *testing.T) {
 	t.Parallel()
 
 	if !mat.AuthorizationStatusExpired.IsValid() {
-		t.Error("AuthorizationStatusExpired.IsValid() = false, want true")
+		t.Errorf(st.ErrorIsValidFalse, "AuthorizationStatusExpired")
 	}
 }
 
@@ -42,7 +44,7 @@ func TestAuthorizationStatus_IsValid_Invalid(t *testing.T) {
 	t.Parallel()
 
 	if !mat.AuthorizationStatusInvalid.IsValid() {
-		t.Error("AuthorizationStatusInvalid.IsValid() = false, want true")
+		t.Errorf(st.ErrorIsValidFalse, "AuthorizationStatusInvalid")
 	}
 }
 
@@ -50,7 +52,7 @@ func TestAuthorizationStatus_IsValid_ConcurrentTx(t *testing.T) {
 	t.Parallel()
 
 	if !mat.AuthorizationStatusConcurrentTx.IsValid() {
-		t.Error("AuthorizationStatusConcurrentTx.IsValid() = false, want true")
+		t.Errorf(st.ErrorIsValidFalse, "AuthorizationStatusConcurrentTx")
 	}
 }
 
@@ -59,7 +61,7 @@ func TestAuthorizationStatus_IsValid_Empty(t *testing.T) {
 
 	status := mat.AuthorizationStatus("")
 	if status.IsValid() {
-		t.Error("AuthorizationStatus(\"\").IsValid() = true, want false")
+		t.Errorf(st.ErrorIsValidTrue, "AuthorizationStatus(\"\")")
 	}
 }
 
@@ -68,7 +70,7 @@ func TestAuthorizationStatus_IsValid_Unknown(t *testing.T) {
 
 	status := mat.AuthorizationStatus("Unknown")
 	if status.IsValid() {
-		t.Error("AuthorizationStatus(\"Unknown\").IsValid() = true, want false")
+		t.Errorf(st.ErrorIsValidTrue, "AuthorizationStatus(\"Unknown\")")
 	}
 }
 
@@ -77,9 +79,7 @@ func TestAuthorizationStatus_IsValid_Lowercase(t *testing.T) {
 
 	status := mat.AuthorizationStatus("accepted")
 	if status.IsValid() {
-		t.Error(
-			"AuthorizationStatus(\"accepted\").IsValid() = true, want false",
-		)
+		t.Errorf(st.ErrorIsValidTrue, "AuthorizationStatus(\"accepted\")")
 	}
 }
 
@@ -88,31 +88,54 @@ func TestAuthorizationStatus_String_Accepted(t *testing.T) {
 
 	got := mat.AuthorizationStatusAccepted.String()
 	if got != statusAcceptedStr {
-		t.Errorf(ErrorMethodMismatch, got, statusAcceptedStr)
+		t.Errorf(
+			st.ErrorMethodMismatch,
+			methodString,
+			got,
+			statusAcceptedStr,
+		)
 	}
 }
 
 func TestAuthorizationStatus_String_Blocked(t *testing.T) {
 	t.Parallel()
 
-	if got := mat.AuthorizationStatusBlocked.String(); got != statusBlockedStr {
-		t.Errorf(ErrorMethodMismatch, got, statusBlockedStr)
+	got := mat.AuthorizationStatusBlocked.String()
+	if got != statusBlockedStr {
+		t.Errorf(
+			st.ErrorMethodMismatch,
+			methodString,
+			got,
+			statusBlockedStr,
+		)
 	}
 }
 
 func TestAuthorizationStatus_String_Expired(t *testing.T) {
 	t.Parallel()
 
-	if got := mat.AuthorizationStatusExpired.String(); got != statusExpiredStr {
-		t.Errorf(ErrorMethodMismatch, got, statusExpiredStr)
+	got := mat.AuthorizationStatusExpired.String()
+	if got != statusExpiredStr {
+		t.Errorf(
+			st.ErrorMethodMismatch,
+			methodString,
+			got,
+			statusExpiredStr,
+		)
 	}
 }
 
 func TestAuthorizationStatus_String_Invalid(t *testing.T) {
 	t.Parallel()
 
-	if got := mat.AuthorizationStatusInvalid.String(); got != statusInvalidStr {
-		t.Errorf(ErrorMethodMismatch, got, statusInvalidStr)
+	got := mat.AuthorizationStatusInvalid.String()
+	if got != statusInvalidStr {
+		t.Errorf(
+			st.ErrorMethodMismatch,
+			methodString,
+			got,
+			statusInvalidStr,
+		)
 	}
 }
 
@@ -121,6 +144,11 @@ func TestAuthorizationStatus_String_ConcurrentTx(t *testing.T) {
 
 	got := mat.AuthorizationStatusConcurrentTx.String()
 	if got != statusConcurrentTxStr {
-		t.Errorf(ErrorMethodMismatch, got, statusConcurrentTxStr)
+		t.Errorf(
+			st.ErrorMethodMismatch,
+			methodString,
+			got,
+			statusConcurrentTxStr,
+		)
 	}
 }

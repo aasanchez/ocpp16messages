@@ -4,22 +4,19 @@ import (
 	"testing"
 
 	mct "github.com/aasanchez/ocpp16messages/messages/cancelReservation/types"
+	st "github.com/aasanchez/ocpp16messages/shared/types"
 )
 
 const (
-	statusAcceptedStr   = "Accepted"
-	statusRejectedStr   = "Rejected"
-	errIsValidUnknown   = "Status(\"Unknown\").IsValid() = true, want false"
-	errIsValidLowercase = "Status(\"accepted\").IsValid() = true, want false"
-	errIsValidPending   = "Status(\"Pending\").IsValid() = true, want false"
-	errMethodMismatch   = "CancelReservationStatus.String() = %v, want %v"
+	statusAcceptedStr = "Accepted"
+	statusRejectedStr = "Rejected"
 )
 
 func TestCancelReservationStatus_IsValid_Accepted(t *testing.T) {
 	t.Parallel()
 
 	if !mct.CancelReservationStatusAccepted.IsValid() {
-		t.Error("CancelReservationStatusAccepted.IsValid() = false, want true")
+		t.Errorf(st.ErrorIsValidFalse, "CancelReservationStatusAccepted")
 	}
 }
 
@@ -27,7 +24,7 @@ func TestCancelReservationStatus_IsValid_Rejected(t *testing.T) {
 	t.Parallel()
 
 	if !mct.CancelReservationStatusRejected.IsValid() {
-		t.Error("CancelReservationStatusRejected.IsValid() = false, want true")
+		t.Errorf(st.ErrorIsValidFalse, "CancelReservationStatusRejected")
 	}
 }
 
@@ -36,7 +33,7 @@ func TestCancelReservationStatus_IsValid_Empty(t *testing.T) {
 
 	status := mct.CancelReservationStatus("")
 	if status.IsValid() {
-		t.Error("CancelReservationStatus(\"\").IsValid() = true, want false")
+		t.Errorf(st.ErrorIsValidTrue, "CancelReservationStatus(\"\")")
 	}
 }
 
@@ -45,7 +42,7 @@ func TestCancelReservationStatus_IsValid_Unknown(t *testing.T) {
 
 	status := mct.CancelReservationStatus("Unknown")
 	if status.IsValid() {
-		t.Error(errIsValidUnknown)
+		t.Errorf(st.ErrorIsValidTrue, "CancelReservationStatus(\"Unknown\")")
 	}
 }
 
@@ -54,7 +51,7 @@ func TestCancelReservationStatus_IsValid_Lowercase(t *testing.T) {
 
 	status := mct.CancelReservationStatus("accepted")
 	if status.IsValid() {
-		t.Error(errIsValidLowercase)
+		t.Errorf(st.ErrorIsValidTrue, "CancelReservationStatus(\"accepted\")")
 	}
 }
 
@@ -63,7 +60,7 @@ func TestCancelReservationStatus_IsValid_Pending(t *testing.T) {
 
 	status := mct.CancelReservationStatus("Pending")
 	if status.IsValid() {
-		t.Error(errIsValidPending)
+		t.Errorf(st.ErrorIsValidTrue, "CancelReservationStatus(\"Pending\")")
 	}
 }
 
@@ -72,7 +69,12 @@ func TestCancelReservationStatus_String_Accepted(t *testing.T) {
 
 	got := mct.CancelReservationStatusAccepted.String()
 	if got != statusAcceptedStr {
-		t.Errorf(errMethodMismatch, got, statusAcceptedStr)
+		t.Errorf(
+			st.ErrorMethodMismatch,
+			"CancelReservationStatus.String()",
+			got,
+			statusAcceptedStr,
+		)
 	}
 }
 
@@ -81,6 +83,11 @@ func TestCancelReservationStatus_String_Rejected(t *testing.T) {
 
 	got := mct.CancelReservationStatusRejected.String()
 	if got != statusRejectedStr {
-		t.Errorf(errMethodMismatch, got, statusRejectedStr)
+		t.Errorf(
+			st.ErrorMethodMismatch,
+			"CancelReservationStatus.String()",
+			got,
+			statusRejectedStr,
+		)
 	}
 }

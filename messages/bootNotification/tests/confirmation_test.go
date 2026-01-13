@@ -18,10 +18,6 @@ const (
 	errStatus         = "status"
 	errCurrentTime    = "currentTime"
 	errInterval       = "interval"
-	confErrContains   = "Conf() error = %v, want error with '%s'"
-	confUnexpected    = "Unexpected Error: %v"
-	confMismatch      = "Expected %q, got %q"
-	confWantNil       = "Conf() error = nil, want error for %s"
 	zeroInterval      = 0
 	utcNormalizedHour = 7
 )
@@ -35,11 +31,11 @@ func TestConf_ValidAccepted(t *testing.T) {
 		Interval:    validInterval,
 	})
 	if err != nil {
-		t.Errorf(confUnexpected, err)
+		t.Errorf(st.ErrorUnexpectedError, err)
 	}
 
 	if conf.Status.String() != statusAccepted {
-		t.Errorf(confMismatch, statusAccepted, conf.Status.String())
+		t.Errorf(st.ErrorMismatch, statusAccepted, conf.Status.String())
 	}
 }
 
@@ -52,11 +48,11 @@ func TestConf_ValidPending(t *testing.T) {
 		Interval:    validInterval,
 	})
 	if err != nil {
-		t.Errorf(confUnexpected, err)
+		t.Errorf(st.ErrorUnexpectedError, err)
 	}
 
 	if conf.Status.String() != statusPending {
-		t.Errorf(confMismatch, statusPending, conf.Status.String())
+		t.Errorf(st.ErrorMismatch, statusPending, conf.Status.String())
 	}
 }
 
@@ -69,11 +65,11 @@ func TestConf_ValidRejected(t *testing.T) {
 		Interval:    validInterval,
 	})
 	if err != nil {
-		t.Errorf(confUnexpected, err)
+		t.Errorf(st.ErrorUnexpectedError, err)
 	}
 
 	if conf.Status.String() != statusRejected {
-		t.Errorf(confMismatch, statusRejected, conf.Status.String())
+		t.Errorf(st.ErrorMismatch, statusRejected, conf.Status.String())
 	}
 }
 
@@ -86,7 +82,7 @@ func TestConf_InvalidStatus(t *testing.T) {
 		Interval:    validInterval,
 	})
 	if err == nil {
-		t.Errorf(confWantNil, "invalid status")
+		t.Errorf(st.ErrorWantNil, "invalid status")
 	}
 
 	if !errors.Is(err, st.ErrInvalidValue) {
@@ -103,7 +99,7 @@ func TestConf_EmptyStatus(t *testing.T) {
 		Interval:    validInterval,
 	})
 	if err == nil {
-		t.Errorf(confWantNil, "empty status")
+		t.Errorf(st.ErrorWantNil, "empty status")
 	}
 
 	if !errors.Is(err, st.ErrInvalidValue) {
@@ -120,11 +116,11 @@ func TestConf_InvalidCurrentTime(t *testing.T) {
 		Interval:    validInterval,
 	})
 	if err == nil {
-		t.Errorf(confWantNil, "invalid currentTime")
+		t.Errorf(st.ErrorWantNil, "invalid currentTime")
 	}
 
 	if !strings.Contains(err.Error(), errCurrentTime) {
-		t.Errorf(confErrContains, err, errCurrentTime)
+		t.Errorf(st.ErrorWantContains, err, errCurrentTime)
 	}
 }
 
@@ -137,11 +133,11 @@ func TestConf_EmptyCurrentTime(t *testing.T) {
 		Interval:    validInterval,
 	})
 	if err == nil {
-		t.Errorf(confWantNil, "empty currentTime")
+		t.Errorf(st.ErrorWantNil, "empty currentTime")
 	}
 
 	if !strings.Contains(err.Error(), errCurrentTime) {
-		t.Errorf(confErrContains, err, errCurrentTime)
+		t.Errorf(st.ErrorWantContains, err, errCurrentTime)
 	}
 }
 
@@ -154,11 +150,11 @@ func TestConf_NegativeInterval(t *testing.T) {
 		Interval:    -1,
 	})
 	if err == nil {
-		t.Errorf(confWantNil, "negative interval")
+		t.Errorf(st.ErrorWantNil, "negative interval")
 	}
 
 	if !strings.Contains(err.Error(), errInterval) {
-		t.Errorf(confErrContains, err, errInterval)
+		t.Errorf(st.ErrorWantContains, err, errInterval)
 	}
 }
 
@@ -171,11 +167,11 @@ func TestConf_IntervalTooLarge(t *testing.T) {
 		Interval:    70000, // exceeds uint16 max (65535)
 	})
 	if err == nil {
-		t.Errorf(confWantNil, "interval too large")
+		t.Errorf(st.ErrorWantNil, "interval too large")
 	}
 
 	if !strings.Contains(err.Error(), errInterval) {
-		t.Errorf(confErrContains, err, errInterval)
+		t.Errorf(st.ErrorWantContains, err, errInterval)
 	}
 }
 
@@ -188,7 +184,7 @@ func TestConf_ZeroInterval(t *testing.T) {
 		Interval:    0,
 	})
 	if err != nil {
-		t.Errorf(confUnexpected, err)
+		t.Errorf(st.ErrorUnexpectedError, err)
 	}
 
 	if conf.Interval.Value() != zeroInterval {
@@ -215,15 +211,15 @@ func TestConf_MultipleErrors(t *testing.T) {
 	errStr := err.Error()
 
 	if !strings.Contains(errStr, errStatus) {
-		t.Errorf(confErrContains, err, errStatus)
+		t.Errorf(st.ErrorWantContains, err, errStatus)
 	}
 
 	if !strings.Contains(errStr, errCurrentTime) {
-		t.Errorf(confErrContains, err, errCurrentTime)
+		t.Errorf(st.ErrorWantContains, err, errCurrentTime)
 	}
 
 	if !strings.Contains(errStr, errInterval) {
-		t.Errorf(confErrContains, err, errInterval)
+		t.Errorf(st.ErrorWantContains, err, errInterval)
 	}
 }
 
@@ -237,7 +233,7 @@ func TestConf_CurrentTimeNormalized(t *testing.T) {
 		Interval:    validInterval,
 	})
 	if err != nil {
-		t.Errorf(confUnexpected, err)
+		t.Errorf(st.ErrorUnexpectedError, err)
 	}
 
 	// Time should be normalized to UTC (07:00:00Z)

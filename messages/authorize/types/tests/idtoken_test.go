@@ -22,7 +22,7 @@ func TestIdToken(t *testing.T) {
 	idtoken := mat.NewIdToken(cstr)
 
 	if idtoken.String() != str {
-		t.Errorf(ErrorMismatch, str, idtoken.String())
+		t.Errorf(st.ErrorMismatch, str, idtoken.String())
 	}
 }
 
@@ -35,7 +35,7 @@ func TestIdToken_value(t *testing.T) {
 	idtoken := mat.NewIdToken(cstr)
 
 	if idtoken.Value() != cstr {
-		t.Errorf(ErrorMismatch, cstr.Value(), idtoken.String())
+		t.Errorf(st.ErrorMismatch, cstr.Value(), idtoken.String())
 	}
 }
 
@@ -46,7 +46,7 @@ func TestIdToken_invalid(t *testing.T) {
 
 	_, err := st.NewCiString20Type(str)
 	if err == nil {
-		t.Errorf(ErrorExpectedError, err)
+		t.Errorf(st.ErrorExpectedError, err)
 	}
 }
 
@@ -69,6 +69,6 @@ func TestIdToken_String(t *testing.T) {
 	idtoken := mat.NewIdToken(cstr)
 
 	if idtoken.String() != str {
-		t.Errorf(ErrorMismatch, str, idtoken.String())
+		t.Errorf(st.ErrorMismatch, str, idtoken.String())
 	}
 }
