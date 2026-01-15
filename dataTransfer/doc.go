@@ -1,6 +1,6 @@
 // Package dataTransfer implements the OCPP 1.6 DataTransfer message.
 //
-// # Usage Rules
+// # Handling Rules
 //
 // When a Charge Point needs to exchange information with the Central System
 // for functionality not covered by OCPP, it SHALL use DataTransfer.req.
