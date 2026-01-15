@@ -4,19 +4,25 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/aasanchez/ocpp16messages)](https://goreportcard.com/report/github.com/aasanchez/ocpp16messages)
 [![codecov](https://codecov.io/gh/aasanchez/ocpp16messages/graph/badge.svg?token=1I9VVL7DWO)](https://codecov.io/gh/aasanchez/ocpp16messages)
 
-A type-safe, OCPP 1.6-compliant Go library providing message structures and validation for Electric Vehicle charging station communication.
+A type-safe, OCPP 1.6-compliant Go library providing message structures and
+validation for Electric Vehicle charging station communication.
 
 ## Overview
 
-This library implements OCPP (Open Charge Point Protocol) 1.6 message types with strict validation, following Go best practices and the official OCPP 1.6 specification. It is designed as a foundation for building OCPP-compliant charging station management systems and charge point implementations.
+This library implements OCPP (Open Charge Point Protocol) 1.6 message types
+with strict validation, following Go best practices and the official OCPP 1.6
+specification. It is designed as a foundation for building OCPP-compliant
+charging station management systems and charge point implementations.
 
 **Status:** Active Development (Pre-1.0)
 
 ### Key Features
 
-- **Type Safety** - Constructor pattern with validation (`New*()` for types, `Req()`/`Conf()` for messages)
+- **Type Safety** - Constructor pattern with validation
+  (`New*()` for types, `Req()`/`Conf()` for messages)
 - **OCPP 1.6 Compliance** - Strict adherence to protocol specification
-- **OCPP Naming** - Uses `Req()`/`Conf()` to match OCPP terminology (Authorize.req, Authorize.conf)
+- **OCPP Naming** - Uses `Req()`/`Conf()` to match OCPP terminology
+  (Authorize.req, Authorize.conf)
 - **Immutable Types** - Thread-safe by design with value receivers
 - **Comprehensive Testing** - Unit tests and example tests with 100% coverage
 - **Zero Panics** - All errors returned, never panicked
@@ -143,8 +149,8 @@ req, err := clearChargingProfile.Req(clearChargingProfile.ReqInput{
 })
 ```
 
-The `ReqMessage` type returned by `Req()` contains validated, typed fields that are
-immutable and thread-safe.
+The `ReqMessage` type returned by `Req()` contains validated, typed fields
+that are immutable and thread-safe.
 
 ## Development
 
@@ -186,56 +192,58 @@ Reports are generated in the `reports/` directory:
 
 ### Type System
 
-| OCPP Type       | Go Type                  | Validation                            |
-|-----------------|--------------------------|---------------------------------------|
-| CiString20Type  | `types.CiString20Type`   | Length <= 20, ASCII printable (32-126) |
-| CiString25Type  | `types.CiString25Type`   | Length <= 25, ASCII printable (32-126) |
-| CiString50Type  | `types.CiString50Type`   | Length <= 50, ASCII printable (32-126) |
-| CiString255Type | `types.CiString255Type`  | Length <= 255, ASCII printable (32-126)|
-| CiString500Type | `types.CiString500Type`  | Length <= 500, ASCII printable (32-126)|
-| dateTime        | `types.DateTime`         | RFC3339, normalized to UTC            |
-| integer         | `types.Integer`          | uint16 (0-65535)                      |
+| OCPP Type       | Go Type                 | Validation                              |
+|-----------------|-------------------------|-----------------------------------------|
+| CiString20Type  | `types.CiString20Type`  | Length <= 20, ASCII printable (32-126)  |
+| CiString25Type  | `types.CiString25Type`  | Length <= 25, ASCII printable (32-126)  |
+| CiString50Type  | `types.CiString50Type`  | Length <= 50, ASCII printable (32-126)  |
+| CiString255Type | `types.CiString255Type` | Length <= 255, ASCII printable (32-126) |
+| CiString500Type | `types.CiString500Type` | Length <= 500, ASCII printable (32-126) |
+| dateTime        | `types.DateTime`        | RFC3339, normalized to UTC              |
+| integer         | `types.Integer`         | uint16 (0-65535)                        |
 
 ### Message Implementation Status
 
-| Message | Request | Confirmation | Package |
-|---------|---------|--------------|---------|
-| Authorize | Done | Done | `authorize` |
-| BootNotification | Done | Done | `bootNotification` |
-| CancelReservation | Done | Done | `cancelReservation` |
-| ChangeAvailability | Done | Done | `changeAvailability` |
-| ChangeConfiguration | Done | Done | `changeConfiguration` |
-| ClearCache | Done | Done | `clearCache` |
-| ClearChargingProfile | Done | Done | `clearChargingProfile` |
-| DataTransfer | Planned | Planned | `dataTransfer` |
-| DiagnosticsStatusNotification | Planned | Planned | `diagnosticsStatusNotification` |
-| FirmwareStatusNotification | Planned | Planned | `firmwareStatusNotification` |
-| GetCompositeSchedule | Planned | Planned | `getCompositeSchedule` |
-| GetConfiguration | Planned | Planned | `getConfiguration` |
-| GetDiagnostics | Planned | Planned | `getDiagnostics` |
-| GetLocalListVersion | Planned | Planned | `getLocalListVersion` |
-| Heartbeat | Planned | Planned | `heartbeat` |
-| MeterValues | Planned | Planned | `meterValues` |
-| RemoteStartTransaction | Planned | Planned | `remoteStartTransaction` |
-| RemoteStopTransaction | Planned | Planned | `remoteStopTransaction` |
-| ReserveNow | Planned | Planned | `reserveNow` |
-| Reset | Planned | Planned | `reset` |
-| SendLocalList | Planned | Planned | `sendLocalList` |
-| SetChargingProfile | Planned | Planned | `setChargingProfile` |
-| StartTransaction | Planned | Planned | `startTransaction` |
-| StatusNotification | Planned | Planned | `statusNotification` |
-| StopTransaction | Planned | Planned | `stopTransaction` |
-| TriggerMessage | Planned | Planned | `triggerMessage` |
-| UnlockConnector | Planned | Planned | `unlockConnector` |
-| UpdateFirmware | Planned | Planned | `updateFirmware` |
+| Message                       | Request | Confirmation | Package                         |
+|-------------------------------|---------|--------------|---------------------------------|
+| Authorize                     | Done    | Done         | `authorize`                     |
+| BootNotification              | Done    | Done         | `bootNotification`              |
+| CancelReservation             | Done    | Done         | `cancelReservation`             |
+| ChangeAvailability            | Done    | Done         | `changeAvailability`            |
+| ChangeConfiguration           | Done    | Done         | `changeConfiguration`           |
+| ClearCache                    | Done    | Done         | `clearCache`                    |
+| ClearChargingProfile          | Done    | Done         | `clearChargingProfile`          |
+| DataTransfer                  | Planned | Planned      | `dataTransfer`                  |
+| DiagnosticsStatusNotification | Planned | Planned      | `diagnosticsStatusNotification` |
+| FirmwareStatusNotification    | Planned | Planned      | `firmwareStatusNotification`    |
+| GetCompositeSchedule          | Planned | Planned      | `getCompositeSchedule`          |
+| GetConfiguration              | Planned | Planned      | `getConfiguration`              |
+| GetDiagnostics                | Planned | Planned      | `getDiagnostics`                |
+| GetLocalListVersion           | Planned | Planned      | `getLocalListVersion`           |
+| Heartbeat                     | Planned | Planned      | `heartbeat`                     |
+| MeterValues                   | Planned | Planned      | `meterValues`                   |
+| RemoteStartTransaction        | Planned | Planned      | `remoteStartTransaction`        |
+| RemoteStopTransaction         | Planned | Planned      | `remoteStopTransaction`         |
+| ReserveNow                    | Planned | Planned      | `reserveNow`                    |
+| Reset                         | Planned | Planned      | `reset`                         |
+| SendLocalList                 | Planned | Planned      | `sendLocalList`                 |
+| SetChargingProfile            | Planned | Planned      | `setChargingProfile`            |
+| StartTransaction              | Planned | Planned      | `startTransaction`              |
+| StatusNotification            | Planned | Planned      | `statusNotification`            |
+| StopTransaction               | Planned | Planned      | `stopTransaction`               |
+| TriggerMessage                | Planned | Planned      | `triggerMessage`                |
+| UnlockConnector               | Planned | Planned      | `unlockConnector`               |
+| UpdateFirmware                | Planned | Planned      | `updateFirmware`                |
 
 ### Design Principles
 
 1. **OCPP Naming** - Messages use `Req()`/`Conf()` to match OCPP terminology
 2. **Constructor Validation** - All types require constructors that validate input
-3. **Input Struct Pattern** - Raw values passed via `ReqInput`/`ConfInput` structs, validated automatically
+3. **Input Struct Pattern** - Raw values passed via `ReqInput`/`ConfInput`
+   structs, validated automatically
 4. **Immutability** - Types use private fields and value receivers
-5. **Error Accumulation** - Constructors report all validation errors at once using `errors.Join()`
+5. **Error Accumulation** - Constructors report all validation errors at once
+   using `errors.Join()`
 6. **Error Wrapping** - Context preserved via `fmt.Errorf` with `%w`
 7. **No Panics** - Library never panics; all errors returned
 8. **Thread Safety** - Designed for safe concurrent use

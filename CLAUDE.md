@@ -92,7 +92,8 @@ Message types use OCPP terminology:
 
 #### Usage Pattern
 
-All messages use a `ReqInput`/`ConfInput` struct that accepts raw values (strings, integers):
+All messages use a `ReqInput`/`ConfInput` struct that accepts raw values
+(strings, integers):
 
 ```go
 // Authorize.req message
@@ -127,13 +128,16 @@ req, err := metervalues.Req(metervalues.ReqInput{
 
 #### Design Principles
 
-- **OCPP naming**: Use `Req()`/`Conf()` to match OCPP terminology (Authorize.req, Authorize.conf)
-- **Input structs with raw values**: Users create `ReqInput`/`ConfInput` structs with simple Go types
+- **OCPP naming**: Use `Req()`/`Conf()` to match OCPP terminology
+  (Authorize.req, Authorize.conf)
+- **Input structs with raw values**: Users create `ReqInput`/`ConfInput`
+  structs with simple Go types
 - **Single constructor call**: One `Req(input)` call validates everything
 - **No separate Validate()**: Validation is built into the constructor
-- **Error on construction**: Return `(ReqMessage/ConfMessage, error)` - if error is nil, the message
-  is valid
-- **Immutable result**: The returned `ReqMessage`/`ConfMessage` contains validated, typed fields
+- **Error on construction**: Return `(ReqMessage/ConfMessage, error)` - if
+  error is nil, the message is valid
+- **Immutable result**: The returned `ReqMessage`/`ConfMessage` contains
+  validated, typed fields
 
 #### What NOT to do
 
@@ -303,6 +307,15 @@ authorize/
 
 - Enforced by gofumpt + golines
 - Always run `make format` before committing
+
+### Markdown Linting
+
+- Run `markdownlint README.md CLAUDE.md SECURITY.md` after modifying any
+  Markdown file
+- Configuration in `.markdownlint.json`:
+  - Line length: 80 characters max
+  - Tables and code blocks: exempt from line length
+- Fix all errors before committing Markdown changes
 
 ### Type Design
 
