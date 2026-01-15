@@ -38,7 +38,7 @@ type reqValidation struct {
 func Req(input ReqInput) (ReqMessage, error) {
 	validated, errs := validateReqInput(input)
 
-	if len(errs) > 0 {
+	if errs != nil {
 		return ReqMessage{}, errors.Join(errs...)
 	}
 

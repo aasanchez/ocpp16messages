@@ -6,6 +6,8 @@ import (
 	"github.com/aasanchez/ocpp16messages/dataTransfer"
 )
 
+const labelVendorId = "VendorId:"
+
 // ExampleReq demonstrates creating a valid DataTransfer.req message
 // with only the required vendorId field.
 func ExampleReq() {
@@ -20,7 +22,7 @@ func ExampleReq() {
 		return
 	}
 
-	fmt.Println("VendorId:", req.VendorId.Value())
+	fmt.Println(labelVendorId, req.VendorId.Value())
 	// Output:
 	// VendorId: com.example.vendor
 }
@@ -41,7 +43,7 @@ func ExampleReq_withMessageId() {
 		return
 	}
 
-	fmt.Println("VendorId:", req.VendorId.Value())
+	fmt.Println(labelVendorId, req.VendorId.Value())
 	fmt.Println("MessageId:", req.MessageId.Value())
 	// Output:
 	// VendorId: com.example.vendor
@@ -64,7 +66,7 @@ func ExampleReq_withData() {
 		return
 	}
 
-	fmt.Println("VendorId:", req.VendorId.Value())
+	fmt.Println(labelVendorId, req.VendorId.Value())
 	fmt.Println("HasData:", req.Data != nil)
 	// Output:
 	// VendorId: com.example.vendor
@@ -88,7 +90,7 @@ func ExampleReq_complete() {
 		return
 	}
 
-	fmt.Println("VendorId:", req.VendorId.Value())
+	fmt.Println(labelVendorId, req.VendorId.Value())
 	fmt.Println("MessageId:", req.MessageId.Value())
 	fmt.Println("Data:", *req.Data)
 	// Output:

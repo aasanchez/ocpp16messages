@@ -6,11 +6,16 @@ import (
 	dt "github.com/aasanchez/ocpp16messages/dataTransfer/types"
 )
 
+const (
+	labelStatus  = "Status:"
+	labelIsValid = "IsValid:"
+)
+
 // ExampleDataTransferStatusAccepted demonstrates using the Accepted status.
 func ExampleDataTransferStatusAccepted() {
 	status := dt.DataTransferStatusAccepted
-	fmt.Println("Status:", status.String())
-	fmt.Println("IsValid:", status.IsValid())
+	fmt.Println(labelStatus, status.String())
+	fmt.Println(labelIsValid, status.IsValid())
 	// Output:
 	// Status: Accepted
 	// IsValid: true
@@ -19,8 +24,8 @@ func ExampleDataTransferStatusAccepted() {
 // ExampleDataTransferStatusRejected demonstrates using the Rejected status.
 func ExampleDataTransferStatusRejected() {
 	status := dt.DataTransferStatusRejected
-	fmt.Println("Status:", status.String())
-	fmt.Println("IsValid:", status.IsValid())
+	fmt.Println(labelStatus, status.String())
+	fmt.Println(labelIsValid, status.IsValid())
 	// Output:
 	// Status: Rejected
 	// IsValid: true
@@ -30,8 +35,8 @@ func ExampleDataTransferStatusRejected() {
 // status used when a messageId is not recognized.
 func ExampleDataTransferStatusUnknownMessageId() {
 	status := dt.DataTransferStatusUnknownMessageId
-	fmt.Println("Status:", status.String())
-	fmt.Println("IsValid:", status.IsValid())
+	fmt.Println(labelStatus, status.String())
+	fmt.Println(labelIsValid, status.IsValid())
 	// Output:
 	// Status: UnknownMessageId
 	// IsValid: true
@@ -41,8 +46,8 @@ func ExampleDataTransferStatusUnknownMessageId() {
 // used when a vendorId is not recognized.
 func ExampleDataTransferStatusUnknownVendor() {
 	status := dt.DataTransferStatusUnknownVendor
-	fmt.Println("Status:", status.String())
-	fmt.Println("IsValid:", status.IsValid())
+	fmt.Println(labelStatus, status.String())
+	fmt.Println(labelIsValid, status.IsValid())
 	// Output:
 	// Status: UnknownVendor
 	// IsValid: true
@@ -52,7 +57,7 @@ func ExampleDataTransferStatusUnknownVendor() {
 // values are rejected.
 func ExampleDataTransferStatus_IsValid_invalid() {
 	status := dt.DataTransferStatus("InvalidStatus")
-	fmt.Println("IsValid:", status.IsValid())
+	fmt.Println(labelIsValid, status.IsValid())
 	// Output:
 	// IsValid: false
 }

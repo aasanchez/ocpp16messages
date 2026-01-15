@@ -12,6 +12,7 @@ const (
 	statusRejectedStr         = "Rejected"
 	statusUnknownMessageIdStr = "UnknownMessageId"
 	statusUnknownVendorStr    = "UnknownVendor"
+	methodStringName          = "DataTransferStatus.String()"
 )
 
 func TestDataTransferStatus_IsValid_Accepted(t *testing.T) {
@@ -80,7 +81,7 @@ func TestDataTransferStatus_String_Accepted(t *testing.T) {
 	if got != statusAcceptedStr {
 		t.Errorf(
 			st.ErrorMethodMismatch,
-			"DataTransferStatus.String()",
+			methodStringName,
 			got,
 			statusAcceptedStr,
 		)
@@ -94,7 +95,7 @@ func TestDataTransferStatus_String_Rejected(t *testing.T) {
 	if got != statusRejectedStr {
 		t.Errorf(
 			st.ErrorMethodMismatch,
-			"DataTransferStatus.String()",
+			methodStringName,
 			got,
 			statusRejectedStr,
 		)
@@ -108,7 +109,7 @@ func TestDataTransferStatus_String_UnknownMessageId(t *testing.T) {
 	if got != statusUnknownMessageIdStr {
 		t.Errorf(
 			st.ErrorMethodMismatch,
-			"DataTransferStatus.String()",
+			methodStringName,
 			got,
 			statusUnknownMessageIdStr,
 		)
@@ -122,7 +123,7 @@ func TestDataTransferStatus_String_UnknownVendor(t *testing.T) {
 	if got != statusUnknownVendorStr {
 		t.Errorf(
 			st.ErrorMethodMismatch,
-			"DataTransferStatus.String()",
+			methodStringName,
 			got,
 			statusUnknownVendorStr,
 		)

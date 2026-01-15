@@ -10,9 +10,14 @@ import (
 )
 
 const (
-	testValidVendorId  = "com.example.vendor"
-	testValidMessageId = "CustomMessage"
-	testValidData      = `{"key": "value"}`
+	testValidVendorId   = "com.example.vendor"
+	testValidMessageId  = "CustomMessage"
+	testValidData       = `{"key": "value"}`
+	errFieldVendorId    = "vendorId"
+	errFieldMessageId   = "messageId"
+	errExceedsMaxLength = "exceeds maximum length"
+	vendorIdMaxPlusOne  = 256
+	messageIdMaxPlusOne = 51
 )
 
 func TestReq_Valid_VendorIdOnly(t *testing.T) {
@@ -151,7 +156,7 @@ func TestReq_VendorIdTooLong(t *testing.T) {
 	t.Parallel()
 
 	// Create a string longer than 255 characters
-	longVendorId := strings.Repeat("a", 256)
+	longVendorId := strings.Repeat("a", vendorIdMaxPlusOne)
 
 	_, err := dataTransfer.Req(dataTransfer.ReqInput{
 		VendorId:  longVendorId,
@@ -162,12 +167,12 @@ func TestReq_VendorIdTooLong(t *testing.T) {
 		t.Error("Req() error = nil, want error for vendorId too long")
 	}
 
-	if !strings.Contains(err.Error(), "vendorId") {
-		t.Errorf(st.ErrorWantContains, err, "vendorId")
+	if !strings.Contains(err.Error(), errFieldVendorId) {
+		t.Errorf(st.ErrorWantContains, err, errFieldVendorId)
 	}
 
-	if !strings.Contains(err.Error(), "exceeds maximum length") {
-		t.Errorf(st.ErrorWantContains, err, "exceeds maximum length")
+	if !strings.Contains(err.Error(), errExceedsMaxLength) {
+		t.Errorf(st.ErrorWantContains, err, errExceedsMaxLength)
 	}
 }
 
@@ -183,8 +188,8 @@ func TestReq_VendorIdInvalidChars(t *testing.T) {
 		t.Error("Req() error = nil, want error for invalid chars in vendorId")
 	}
 
-	if !strings.Contains(err.Error(), "vendorId") {
-		t.Errorf(st.ErrorWantContains, err, "vendorId")
+	if !strings.Contains(err.Error(), errFieldVendorId) {
+		t.Errorf(st.ErrorWantContains, err, errFieldVendorId)
 	}
 }
 
@@ -202,8 +207,8 @@ func TestReq_EmptyMessageId(t *testing.T) {
 		t.Error("Req() error = nil, want error for empty messageId")
 	}
 
-	if !strings.Contains(err.Error(), "messageId") {
-		t.Errorf(st.ErrorWantContains, err, "messageId")
+	if !strings.Contains(err.Error(), errFieldMessageId) {
+		t.Errorf(st.ErrorWantContains, err, errFieldMessageId)
 	}
 }
 
@@ -211,7 +216,7 @@ func TestReq_MessageIdTooLong(t *testing.T) {
 	t.Parallel()
 
 	// Create a string longer than 50 characters
-	longMessageId := strings.Repeat("m", 51)
+	longMessageId := strings.Repeat("m", messageIdMaxPlusOne)
 
 	_, err := dataTransfer.Req(dataTransfer.ReqInput{
 		VendorId:  testValidVendorId,
@@ -222,12 +227,12 @@ func TestReq_MessageIdTooLong(t *testing.T) {
 		t.Error("Req() error = nil, want error for messageId too long")
 	}
 
-	if !strings.Contains(err.Error(), "messageId") {
-		t.Errorf(st.ErrorWantContains, err, "messageId")
+	if !strings.Contains(err.Error(), errFieldMessageId) {
+		t.Errorf(st.ErrorWantContains, err, errFieldMessageId)
 	}
 
-	if !strings.Contains(err.Error(), "exceeds maximum length") {
-		t.Errorf(st.ErrorWantContains, err, "exceeds maximum length")
+	if !strings.Contains(err.Error(), errExceedsMaxLength) {
+		t.Errorf(st.ErrorWantContains, err, errExceedsMaxLength)
 	}
 }
 
@@ -245,8 +250,8 @@ func TestReq_MessageIdInvalidChars(t *testing.T) {
 		t.Error("Req() error = nil, want error for invalid chars in messageId")
 	}
 
-	if !strings.Contains(err.Error(), "messageId") {
-		t.Errorf(st.ErrorWantContains, err, "messageId")
+	if !strings.Contains(err.Error(), errFieldMessageId) {
+		t.Errorf(st.ErrorWantContains, err, errFieldMessageId)
 	}
 }
 
@@ -265,11 +270,11 @@ func TestReq_MultipleErrors(t *testing.T) {
 	}
 
 	errStr := err.Error()
-	if !strings.Contains(errStr, "vendorId") {
-		t.Errorf(st.ErrorWantContains, err, "vendorId")
+	if !strings.Contains(errStr, errFieldVendorId) {
+		t.Errorf(st.ErrorWantContains, err, errFieldVendorId)
 	}
 
-	if !strings.Contains(errStr, "messageId") {
-		t.Errorf(st.ErrorWantContains, err, "messageId")
+	if !strings.Contains(errStr, errFieldMessageId) {
+		t.Errorf(st.ErrorWantContains, err, errFieldMessageId)
 	}
 }
