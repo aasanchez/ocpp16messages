@@ -32,10 +32,14 @@ make test-example  # Run example tests (documentation tests)
 make test-all      # Run all test types
 
 # Run single test package
-go test -v ./shared/types
+go test -v ./types
 
 # Run specific test
-go test -v ./shared/types -run '^TestDateTime$'
+go test -v ./types -run '^TestDateTime$'
+
+# Run message package tests
+go test -v ./authorize/...
+go test -v ./clearChargingProfile/...
 ```
 
 ### Linting and Formatting
@@ -53,7 +57,7 @@ make pkgsite # Start local documentation server at http://localhost:8080
 
 ## Architecture
 
-### Core Type System (shared/types/)
+### Core Type System (types/)
 
 The library implements OCPP 1.6 strict type validation using constructor
 pattern:
@@ -134,12 +138,12 @@ req, err := metervalues.Req(metervalues.ReqInput{
 #### What NOT to do
 
 ```go
-// ✗ BAD - Don't require separate validation step
+// BAD - Don't require separate validation step
 input := authorize.ReqInput{IdTag: "ABC123"}
 if err := input.Validate(); err != nil { ... }  // NO separate Validate()!
 req, err := authorize.Req(input)
 
-// ✓ GOOD - Single step, validation built-in
+// GOOD - Single step, validation built-in
 req, err := authorize.Req(authorize.ReqInput{IdTag: "ABC123"})
 ```
 
@@ -158,11 +162,11 @@ internal implementation and public API:
   variables)
 - **When to create**: ONLY when you have private/unexported functions that need
   testing
-- **Example**: `shared/types/cistring_test.go` tests `newCiString()` (private
+- **Example**: `types/cistring_test.go` tests `newCiString()` (private
   constructor)
 
 ```go
-// shared/types/cistring_test.go
+// types/cistring_test.go
 package types  // Same package - can access private functions
 
 func Test_sharedtypes_newCiString_Valid(t *testing.T) {
@@ -179,11 +183,11 @@ func Test_sharedtypes_newCiString_Valid(t *testing.T) {
 - **Purpose**: Test all exported/public API as external consumers would use it
 - **Access**: Black-box testing - imports the package like external code would
 - **When to create**: For ALL public constructors, methods, and functions
-- **Example**: `shared/types/tests/cistring_test.go` tests
+- **Example**: `types/tests/cistring_test.go` tests
   `NewCiString20Type()` (public constructor)
 
 ```go
-// shared/types/tests/cistring_test.go
+// types/tests/cistring_test.go
 package types_test  // External package - black-box testing
 
 import (
@@ -211,18 +215,45 @@ func Test_sharedtypes_NewCiString20Type(t *testing.T) {
 #### Directory Structure
 
 ```text
-shared/types/
+types/
 ├── cistring.go                  # Implementation with public/private functions
+├── datetime.go                  # DateTime type
+├── integer.go                   # Integer type
+├── errors.go                    # Shared error constants
+├── doc.go                       # Package documentation
 ├── cistring_test.go             # Tests for PRIVATE (package types)
 ├── example_cistring_test.go     # Examples for PUBLIC (package types_test)
+├── example_datetime_test.go     # Examples for PUBLIC (package types_test)
+├── example_integer_test.go      # Examples for PUBLIC (package types_test)
 └── tests/
-    └── cistring_test.go         # Tests for PUBLIC API (package types_test)
+    ├── cistring_test.go         # Tests for PUBLIC API (package types_test)
+    ├── datetime_test.go         # Tests for PUBLIC API (package types_test)
+    ├── integer_test.go          # Tests for PUBLIC API (package types_test)
+    └── errors_test.go           # Tests for error constants
 
-messages/authorize/types/
-├── idtoken.go                   # Implementation (only public API)
-├── example_idtoken_test.go      # Examples for PUBLIC (package types_test)
-└── tests/
-    └── idtoken_test.go          # Tests for PUBLIC API (package types_test)
+authorize/
+├── request.go                   # Authorize.req implementation
+├── confirmation.go              # Authorize.conf implementation
+├── errors.go                    # Package-level error constants
+├── doc.go                       # Package documentation
+├── example_request_test.go      # Examples for Req (package authorize_test)
+├── example_confirmation_test.go # Examples for Conf (package authorize_test)
+├── tests/
+│   ├── request_test.go          # Tests for Req (package authorize_test)
+│   └── confirmation_test.go     # Tests for Conf (package authorize_test)
+└── types/
+    ├── idtoken.go               # IdToken type
+    ├── idtaginfo.go             # IdTagInfo type
+    ├── authorizationstatus.go   # AuthorizationStatus enum
+    ├── errors.go                # Type-level error constants
+    ├── doc.go                   # Package documentation
+    ├── example_idtoken_test.go              # Examples for NewIdToken
+    ├── example_idtaginfo_test.go            # Examples for NewIdTagInfo
+    ├── example_authorizationstatus_test.go  # Examples for AuthorizationStatus
+    └── tests/
+        ├── idtoken_test.go               # Tests for IdToken
+        ├── idtaginfo_test.go             # Tests for IdTagInfo
+        └── authorizationstatus_test.go   # Tests for AuthorizationStatus
 ```
 
 **Key Guidelines:**
@@ -255,14 +286,18 @@ messages/authorize/types/
   then others
 - No unused imports
 - **Prefer full package names over aliases** in test files for readability:
-  - ✓ GOOD: `authorize.Req(authorize.ReqInput{...})`
-  - ✗ AVOID: `ma.Req(ma.Input{...})`
+  - GOOD: `authorize.Req(authorize.ReqInput{...})`
+  - AVOID: `ma.Req(ma.Input{...})`
 - Use short aliases only when:
   - Package name conflicts with another import
-  - Package name is very long and used frequently in implementation code
+  - Import line exceeds 80 characters (revive line-length-limit)
 - Common aliases when needed:
   - `st` for `github.com/aasanchez/ocpp16messages/types`
-  - `mat` for `github.com/aasanchez/ocpp16messages/authorize/types`
+  - `at` for `github.com/aasanchez/ocpp16messages/authorize/types`
+  - `ct` for `github.com/aasanchez/ocpp16messages/clearChargingProfile/types`
+- **Line length constraint**: Import lines must be <= 80 characters. For long
+  package paths like `clearChargingProfile/types`, use short 2-character aliases
+  (e.g., `ct`) to stay within the limit.
 
 ### Formatting
 
@@ -271,7 +306,7 @@ messages/authorize/types/
 
 ### Type Design
 
-- Use precise types from shared/types for OCPP fields
+- Use precise types from types/ for OCPP fields
 - Time parsing/formatting strictly uses RFC3339/RFC3339Nano (see DateTime type)
 - All constructors/setters return `(T, error)` for validation
 
@@ -285,7 +320,7 @@ messages/authorize/types/
   - Private constructors: `newType(args) (type, error)` (lowercase 'n'
     for unexported)
   - **NEVER** use `Set` prefix for constructors
-    (e.g., `SetInteger` ✗, `NewInteger` ✓)
+    (e.g., `SetInteger` BAD, `NewInteger` GOOD)
   - Rationale: "Set" implies mutation; "New" indicates
     construction(see Effective Go)
 - **Getters**: Do NOT use `Get` prefix
@@ -306,7 +341,7 @@ messages/authorize/types/
   - ALWAYS check if an error constant or format string already exists before
     creating a new one
   - Use sentinel errors (`ErrEmptyValue`, `ErrInvalidValue`) from
-    `shared/types/errors.go` with `fmt.Errorf` and `ErrorFieldFormat`:
+    `types/errors.go` with `fmt.Errorf` and `ErrorFieldFormat`:
 
     ```go
     // Example: wrapping a sentinel error with field context
@@ -314,15 +349,15 @@ messages/authorize/types/
     ```
 
   - Prefer reusing error constants from:
-    1. `shared/types/errors.go` - For generic validation errors
+    1. `types/errors.go` - For generic validation errors
        (ErrorMismatch, ErrorExpectedError, ErrorFieldFormat, ErrEmptyValue,
        ErrInvalidValue)
     2. Package-level `errors.go` - For package-specific errors
-       (e.g., `messages/authorize/types/errors.go`)
+       (e.g., `authorize/types/errors.go`)
     3. Parent package `errors.go` - For message-level errors
-       (e.g., `messages/authorize/errors.go`)
+       (e.g., `authorize/errors.go`)
   - When creating new error constants:
-    - Place in `shared/types/errors.go` if applicable across multiple packages
+    - Place in `types/errors.go` if applicable across multiple packages
     - Place in package `errors.go` if specific to that package
     - Document the parameters and usage clearly
   - Avoid string literal duplication in tests - use constants from
@@ -365,9 +400,9 @@ messages/authorize/types/
 
 - **CRITICAL: Write atomic, individual test functions** - Each test should
   verify ONE specific behavior or case
-  - ✓ GOOD: `TestIdToken_String_ReturnsValue()`,
+  - GOOD: `TestIdToken_String_ReturnsValue()`,
     `TestIdToken_Empty_ReturnsError()`
-  - ✗ BAD: Table-driven tests with multiple cases in one function
+  - BAD: Table-driven tests with multiple cases in one function
   - Rationale: Atomic tests are easier to debug, maintain, and understand.
     Each test failure points directly to the specific case that broke.
   - Exception: Only use table-driven tests when testing the same logic with
@@ -375,13 +410,19 @@ messages/authorize/types/
     into separate functions when possible.
 - Ensure all new tests are race-compatible
 - Each test must call `t.Parallel()` for concurrent execution
+- **Cognitive complexity**: Keep test functions simple. If revive reports
+  cognitive complexity > 7, split the test into smaller focused tests.
+- **Magic numbers**: Use named constants for test values instead of raw numbers
+  (e.g., `valueZero`, `valueOne`, `valueNegative`, `valueExceedsMax`).
+- **Variable names**: Avoid short variable names like `p`, `id`. Use descriptive
+  names like `purposeType`, `profileId` to pass varnamelen linter.
 
 #### Example Tests - Use Selectively
 
 Example tests serve as executable documentation and appear in `go doc` and
 pkgsite. **Use examples strategically**, not for every function.
 
-**✓ CREATE examples for:**
+**CREATE examples for:**
 
 - **Public constructors** - Primary API entry points (e.g., `Req`, `Conf`,
   `NewIdToken`, `NewIdTagInfo`)
@@ -391,7 +432,7 @@ pkgsite. **Use examples strategically**, not for every function.
 - **Package-level functions** - Functions that users will call directly from
   outside the package
 
-**✗ SKIP examples for:**
+**SKIP examples for:**
 
 - **Error Management files** - files related to consolidation of error messages,
   and not need it.
@@ -413,12 +454,13 @@ pkgsite. **Use examples strategically**, not for every function.
 **Example organization:**
 
 ```text
-messages/authorize/
-├── example_request_test.go      ✓ Examples for Req (public API)
+authorize/
+├── example_request_test.go      # Examples for Req (public API)
+├── example_confirmation_test.go # Examples for Conf (public API)
 └── types/
-    ├── example_idtoken_test.go  ✓ Examples for NewIdToken (public API)
+    ├── example_idtoken_test.go  # Examples for NewIdToken (public API)
     └── tests/
-        └── idtoken_test.go      ✓ Unit tests for IdToken (public API)
+        └── idtoken_test.go      # Unit tests for IdToken (public API)
 ```
 
 ## CI and Quality
@@ -435,6 +477,16 @@ messages/authorize/
 - golangci-lint: `reports/golangci-lint.txt`
 - go vet: `reports/govet.json`
 - staticcheck: `reports/staticcheck`
+
+### Linter Rules
+
+Key linter rules enforced by golangci-lint:
+
+- **line-length-limit**: 80 characters max (revive)
+- **cognitive-complexity**: max 7 (revive)
+- **varnamelen**: variable names must be descriptive
+- **wsl_v5**: whitespace linter for consistent formatting
+- **exhaustruct**: all struct fields must be explicitly initialized
 
 ## OCPP Compliance Notes
 

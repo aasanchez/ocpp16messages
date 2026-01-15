@@ -10,17 +10,17 @@ A type-safe, OCPP 1.6-compliant Go library providing message structures and vali
 
 This library implements OCPP (Open Charge Point Protocol) 1.6 message types with strict validation, following Go best practices and the official OCPP 1.6 specification. It is designed as a foundation for building OCPP-compliant charging station management systems and charge point implementations.
 
-**Status:** 🚧 Active Development (Pre-1.0)
+**Status:** Active Development (Pre-1.0)
 
 ### Key Features
 
-- ✅ **Type Safety** - Constructor pattern with validation (`New*()` for types, `Req()`/`Conf()` for messages)
-- ✅ **OCPP 1.6 Compliance** - Strict adherence to protocol specification
-- ✅ **OCPP Naming** - Uses `Req()`/`Conf()` to match OCPP terminology (Authorize.req, Authorize.conf)
-- ✅ **Immutable Types** - Thread-safe by design with value receivers
-- ✅ **Comprehensive Testing** - Unit tests and example tests with 100% coverage
-- ✅ **Zero Panics** - All errors returned, never panicked
-- ✅ **Well Documented** - Full godoc coverage and examples
+- **Type Safety** - Constructor pattern with validation (`New*()` for types, `Req()`/`Conf()` for messages)
+- **OCPP 1.6 Compliance** - Strict adherence to protocol specification
+- **OCPP Naming** - Uses `Req()`/`Conf()` to match OCPP terminology (Authorize.req, Authorize.conf)
+- **Immutable Types** - Thread-safe by design with value receivers
+- **Comprehensive Testing** - Unit tests and example tests with 100% coverage
+- **Zero Panics** - All errors returned, never panicked
+- **Well Documented** - Full godoc coverage and examples
 
 ## Installation
 
@@ -34,25 +34,51 @@ go get github.com/aasanchez/ocpp16messages
 
 ```text
 .
-├── shared/types/               # Core OCPP data types
+├── types/                      # Core OCPP data types
 │   ├── cistring.go             # CiString20/25/50/255/500 types
 │   ├── datetime.go             # RFC3339 DateTime with UTC normalization
 │   ├── integer.go              # Validated uint16 Integer type
 │   ├── errors.go               # Shared error constants and sentinels
 │   ├── doc.go                  # Package documentation
 │   └── tests/                  # Public API tests (black-box)
-├── messages/
-│   └── authorize/              # Authorize message implementation
-│       ├── request.go          # Authorize.req message (Req constructor)
-│       ├── errors.go           # Package-level error constants
-│       ├── doc.go              # Package documentation
-│       └── types/              # Authorize-specific types
-│           ├── idtoken.go            # IdToken type
-│           ├── idtaginfo.go          # IdTagInfo type with builder pattern
-│           ├── authorizationstatus.go # AuthorizationStatus enum
-│           ├── errors.go             # Type-level error constants
-│           ├── doc.go                # Package documentation
-│           └── tests/                # Public API tests
+├── authorize/                  # Authorize message (implemented)
+│   ├── request.go              # Authorize.req (Req constructor)
+│   ├── confirmation.go         # Authorize.conf (Conf constructor)
+│   ├── errors.go               # Package-level error constants
+│   ├── doc.go                  # Package documentation
+│   ├── tests/                  # Public API tests
+│   └── types/                  # Authorize-specific types
+│       ├── idtoken.go          # IdToken type
+│       ├── idtaginfo.go        # IdTagInfo type
+│       ├── authorizationstatus.go
+│       └── tests/              # Type tests
+├── bootNotification/           # BootNotification message (implemented)
+├── cancelReservation/          # CancelReservation message (implemented)
+├── changeAvailability/         # ChangeAvailability message (implemented)
+├── changeConfiguration/        # ChangeConfiguration message (implemented)
+├── clearCache/                 # ClearCache message (implemented)
+├── clearChargingProfile/       # ClearChargingProfile message (implemented)
+├── dataTransfer/               # DataTransfer message (stub)
+├── diagnosticsStatusNotification/  # DiagnosticsStatusNotification (stub)
+├── firmwareStatusNotification/ # FirmwareStatusNotification (stub)
+├── getCompositeSchedule/       # GetCompositeSchedule (stub)
+├── getConfiguration/           # GetConfiguration (stub)
+├── getDiagnostics/             # GetDiagnostics (stub)
+├── getLocalListVersion/        # GetLocalListVersion (stub)
+├── heartbeat/                  # Heartbeat (stub)
+├── meterValues/                # MeterValues (stub)
+├── remoteStartTransaction/     # RemoteStartTransaction (stub)
+├── remoteStopTransaction/      # RemoteStopTransaction (stub)
+├── reserveNow/                 # ReserveNow (stub)
+├── reset/                      # Reset (stub)
+├── sendLocalList/              # SendLocalList (stub)
+├── setChargingProfile/         # SetChargingProfile (stub)
+├── startTransaction/           # StartTransaction (stub)
+├── statusNotification/         # StatusNotification (stub)
+├── stopTransaction/            # StopTransaction (stub)
+├── triggerMessage/             # TriggerMessage (stub)
+├── unlockConnector/            # UnlockConnector (stub)
+├── updateFirmware/             # UpdateFirmware (stub)
 └── SECURITY.md                 # Security policy and vulnerability reporting
 ```
 
@@ -104,6 +130,19 @@ if err != nil {
 fmt.Println(req.IdTag.String()) // "RFID-ABC123"
 ```
 
+```go
+import "github.com/aasanchez/ocpp16messages/clearChargingProfile"
+
+// ClearChargingProfile.req with optional fields
+id := 123
+req, err := clearChargingProfile.Req(clearChargingProfile.ReqInput{
+    Id:                     &id,
+    ConnectorId:            nil,
+    ChargingProfilePurpose: nil,
+    StackLevel:             nil,
+})
+```
+
 The `ReqMessage` type returned by `Req()` contains validated, typed fields that are
 immutable and thread-safe.
 
@@ -149,18 +188,46 @@ Reports are generated in the `reports/` directory:
 
 | OCPP Type       | Go Type                  | Validation                            |
 |-----------------|--------------------------|---------------------------------------|
-| CiString20Type  | `types.CiString20Type`   | Length ≤ 20, ASCII printable (32–126) |
-| CiString25Type  | `types.CiString25Type`   | Length ≤ 25, ASCII printable (32–126) |
-| CiString50Type  | `types.CiString50Type`   | Length ≤ 50, ASCII printable (32–126) |
-| CiString255Type | `types.CiString255Type`  | Length ≤ 255, ASCII printable (32–126)|
-| CiString500Type | `types.CiString500Type`  | Length ≤ 500, ASCII printable (32–126)|
+| CiString20Type  | `types.CiString20Type`   | Length <= 20, ASCII printable (32-126) |
+| CiString25Type  | `types.CiString25Type`   | Length <= 25, ASCII printable (32-126) |
+| CiString50Type  | `types.CiString50Type`   | Length <= 50, ASCII printable (32-126) |
+| CiString255Type | `types.CiString255Type`  | Length <= 255, ASCII printable (32-126)|
+| CiString500Type | `types.CiString500Type`  | Length <= 500, ASCII printable (32-126)|
 | dateTime        | `types.DateTime`         | RFC3339, normalized to UTC            |
-| integer         | `types.Integer`          | uint16 (0–65535)                      |
+| integer         | `types.Integer`          | uint16 (0-65535)                      |
 
 ### Message Implementation Status
 
-- ✅ **Authorize** - Authorize.req (`authorize.Req()`)
-- 🚧 Additional messages in development
+| Message | Request | Confirmation | Package |
+|---------|---------|--------------|---------|
+| Authorize | Done | Done | `authorize` |
+| BootNotification | Done | Done | `bootNotification` |
+| CancelReservation | Done | Done | `cancelReservation` |
+| ChangeAvailability | Done | Done | `changeAvailability` |
+| ChangeConfiguration | Done | Done | `changeConfiguration` |
+| ClearCache | Done | Done | `clearCache` |
+| ClearChargingProfile | Done | Done | `clearChargingProfile` |
+| DataTransfer | Planned | Planned | `dataTransfer` |
+| DiagnosticsStatusNotification | Planned | Planned | `diagnosticsStatusNotification` |
+| FirmwareStatusNotification | Planned | Planned | `firmwareStatusNotification` |
+| GetCompositeSchedule | Planned | Planned | `getCompositeSchedule` |
+| GetConfiguration | Planned | Planned | `getConfiguration` |
+| GetDiagnostics | Planned | Planned | `getDiagnostics` |
+| GetLocalListVersion | Planned | Planned | `getLocalListVersion` |
+| Heartbeat | Planned | Planned | `heartbeat` |
+| MeterValues | Planned | Planned | `meterValues` |
+| RemoteStartTransaction | Planned | Planned | `remoteStartTransaction` |
+| RemoteStopTransaction | Planned | Planned | `remoteStopTransaction` |
+| ReserveNow | Planned | Planned | `reserveNow` |
+| Reset | Planned | Planned | `reset` |
+| SendLocalList | Planned | Planned | `sendLocalList` |
+| SetChargingProfile | Planned | Planned | `setChargingProfile` |
+| StartTransaction | Planned | Planned | `startTransaction` |
+| StatusNotification | Planned | Planned | `statusNotification` |
+| StopTransaction | Planned | Planned | `stopTransaction` |
+| TriggerMessage | Planned | Planned | `triggerMessage` |
+| UnlockConnector | Planned | Planned | `unlockConnector` |
+| UpdateFirmware | Planned | Planned | `updateFirmware` |
 
 ### Design Principles
 
@@ -168,10 +235,11 @@ Reports are generated in the `reports/` directory:
 2. **Constructor Validation** - All types require constructors that validate input
 3. **Input Struct Pattern** - Raw values passed via `ReqInput`/`ConfInput` structs, validated automatically
 4. **Immutability** - Types use private fields and value receivers
-5. **Error Wrapping** - Context preserved via `fmt.Errorf` with `%w`
-6. **No Panics** - Library never panics; all errors returned
-7. **Thread Safety** - Designed for safe concurrent use
-8. **Go Conventions** - Follows [Effective Go](https://go.dev/doc/effective_go)
+5. **Error Accumulation** - Constructors report all validation errors at once using `errors.Join()`
+6. **Error Wrapping** - Context preserved via `fmt.Errorf` with `%w`
+7. **No Panics** - Library never panics; all errors returned
+8. **Thread Safety** - Designed for safe concurrent use
+9. **Go Conventions** - Follows [Effective Go](https://go.dev/doc/effective_go)
    guidelines
 
 ## Security
