@@ -11,16 +11,12 @@ jobs:
   Unittest:
     name: Unit Test
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        go: ["1.24.11","1.25.5"]
     steps:
       - uses: actions/checkout@v5
 
       - uses: actions/setup-go@v5
         with:
-          go-version: ${{ matrix.go }}
+          go-version: 1.25.5
           cache: false
 
       - run: mkdir -p reports
@@ -41,7 +37,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Go test artifacts for build ${{ github.run_number }}-${{ matrix.go }} in ocpp16messages
+          name: Go test artifacts for build ${{ github.run_number }} in ocpp16messages
           path: reports
           retention-days: 1
 
@@ -53,7 +49,7 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: 1.25
+          go-version: 1.25.5
           cache: false
 
       - name: golangci-lint
@@ -100,16 +96,12 @@ jobs:
   vet:
     name: go vet
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        go: ["1.24.11","1.25.5"]
     steps:
       - uses: actions/checkout@v5
 
       - uses: actions/setup-go@v5
         with:
-          go-version: ${{ matrix.go }}
+          go-version: 1.25.5
           cache: false
       - run: mkdir -p reports
 
@@ -118,6 +110,6 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: go vet artifacts for build ${{ github.run_number }}-${{ matrix.go }} in ocpp16messages
+          name: go vet artifacts for build ${{ github.run_number }} in ocpp16messages
           include-hidden-files: true
           path: reports/
