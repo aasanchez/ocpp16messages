@@ -238,7 +238,6 @@ types/
 authorize/
 ├── request.go                   # Authorize.req implementation
 ├── confirmation.go              # Authorize.conf implementation
-├── errors.go                    # Package-level error constants
 ├── doc.go                       # Package documentation
 ├── example_request_test.go      # Examples for Req (package authorize_test)
 ├── example_confirmation_test.go # Examples for Conf (package authorize_test)
@@ -249,7 +248,6 @@ authorize/
     ├── idtoken.go               # IdToken type
     ├── idtaginfo.go             # IdTagInfo type
     ├── authorizationstatus.go   # AuthorizationStatus enum
-    ├── errors.go                # Type-level error constants
     ├── doc.go                   # Package documentation
     ├── example_idtoken_test.go              # Examples for NewIdToken
     ├── example_idtaginfo_test.go            # Examples for NewIdTagInfo
@@ -361,20 +359,18 @@ authorize/
     return fmt.Errorf("NewIdToken: "+st.ErrorFieldFormat, "IdToken", st.ErrEmptyValue)
     ```
 
-  - Prefer reusing error constants from:
-    1. `types/errors.go` - For generic validation errors
-       (ErrorMismatch, ErrorExpectedError, ErrorFieldFormat, ErrEmptyValue,
-       ErrInvalidValue)
-    2. Package-level `errors.go` - For package-specific errors
-       (e.g., `authorize/types/errors.go`)
-    3. Parent package `errors.go` - For message-level errors
-       (e.g., `authorize/errors.go`)
+  - Prefer reusing error constants from `types/errors.go` - this file contains
+    generic validation errors (ErrorMismatch, ErrorExpectedError,
+    ErrorFieldFormat, ErrEmptyValue, ErrInvalidValue)
+  - **Do NOT create empty errors.go files** - only create an `errors.go` file
+    in a package when you have package-specific error constants to define
   - When creating new error constants:
     - Place in `types/errors.go` if applicable across multiple packages
-    - Place in package `errors.go` if specific to that package
+    - Place in package `errors.go` ONLY if specific to that package and
+      you have actual error constants to define
     - Document the parameters and usage clearly
   - Avoid string literal duplication in tests - use constants from
-    errors.go files
+    `types/errors.go`
   - **Do NOT create helper functions** that just wrap `fmt.Errorf` - use
     `fmt.Errorf` directly with sentinel errors and format constants
 - **Error Accumulation in Constructors**:
