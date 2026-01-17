@@ -38,7 +38,7 @@ func Conf(input ConfInput) (ConfMessage, error) {
 // confValidateFileName validates the optional file name field.
 func confValidateFileName(fileName *string) (*st.CiString255Type, error) {
 	if fileName == nil {
-		return nil, nil
+		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
 	fn, err := st.NewCiString255Type(*fileName)

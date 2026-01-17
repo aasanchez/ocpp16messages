@@ -90,7 +90,7 @@ func confValidateStatus(
 // confValidateConnectorId validates the optional connector ID field.
 func confValidateConnectorId(connectorId *int) (*st.Integer, error) {
 	if connectorId == nil {
-		return nil, nil
+		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
 	cid, err := st.NewInteger(strconv.Itoa(*connectorId))
@@ -104,7 +104,7 @@ func confValidateConnectorId(connectorId *int) (*st.Integer, error) {
 // confValidateScheduleStart validates the optional schedule start field.
 func confValidateScheduleStart(scheduleStart *string) (*st.DateTime, error) {
 	if scheduleStart == nil {
-		return nil, nil
+		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
 	ss, err := st.NewDateTime(*scheduleStart)
@@ -120,7 +120,7 @@ func confValidateChargingSchedule(
 	schedule *gt.ChargingScheduleInput,
 ) (*gt.ChargingSchedule, error) {
 	if schedule == nil {
-		return nil, nil
+		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
 	cs, err := gt.NewChargingSchedule(*schedule)

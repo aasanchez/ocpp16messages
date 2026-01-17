@@ -124,8 +124,9 @@ func TestReq_Invalid_NegativeConnectorId(t *testing.T) {
 	t.Parallel()
 
 	_, err := gcs.Req(gcs.ReqInput{
-		ConnectorId: valueNegative,
-		Duration:    valueThreeHund,
+		ConnectorId:      valueNegative,
+		Duration:         valueThreeHund,
+		ChargingRateUnit: nil,
 	})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "negative ConnectorId")
@@ -140,8 +141,9 @@ func TestReq_Invalid_ConnectorIdExceedsMax(t *testing.T) {
 	t.Parallel()
 
 	_, err := gcs.Req(gcs.ReqInput{
-		ConnectorId: valueExceedsMax,
-		Duration:    valueThreeHund,
+		ConnectorId:      valueExceedsMax,
+		Duration:         valueThreeHund,
+		ChargingRateUnit: nil,
 	})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "ConnectorId exceeds max")
@@ -156,8 +158,9 @@ func TestReq_Invalid_NegativeDuration(t *testing.T) {
 	t.Parallel()
 
 	_, err := gcs.Req(gcs.ReqInput{
-		ConnectorId: valueOne,
-		Duration:    valueNegative,
+		ConnectorId:      valueOne,
+		Duration:         valueNegative,
+		ChargingRateUnit: nil,
 	})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "negative Duration")
@@ -172,8 +175,9 @@ func TestReq_Invalid_DurationExceedsMax(t *testing.T) {
 	t.Parallel()
 
 	_, err := gcs.Req(gcs.ReqInput{
-		ConnectorId: valueOne,
-		Duration:    valueExceedsMax,
+		ConnectorId:      valueOne,
+		Duration:         valueExceedsMax,
+		ChargingRateUnit: nil,
 	})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "Duration exceeds max")

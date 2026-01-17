@@ -72,7 +72,7 @@ func NewChargingSchedulePeriod(
 // validateNumberPhases validates the optional number of phases.
 func validateNumberPhases(phases *int) (*st.Integer, error) {
 	if phases == nil {
-		return nil, nil
+		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
 	if *phases < minNumberPhases || *phases > maxNumberPhases {

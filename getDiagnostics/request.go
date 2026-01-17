@@ -89,7 +89,7 @@ func Req(input ReqInput) (ReqMessage, error) {
 // reqValidateRetries validates the optional retries field.
 func reqValidateRetries(retries *int) (*st.Integer, error) {
 	if retries == nil {
-		return nil, nil
+		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
 	r, err := st.NewInteger(strconv.Itoa(*retries))
@@ -103,7 +103,7 @@ func reqValidateRetries(retries *int) (*st.Integer, error) {
 // reqValidateRetryInterval validates the optional retry interval field.
 func reqValidateRetryInterval(retryInterval *int) (*st.Integer, error) {
 	if retryInterval == nil {
-		return nil, nil
+		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
 	ri, err := st.NewInteger(strconv.Itoa(*retryInterval))
@@ -117,7 +117,7 @@ func reqValidateRetryInterval(retryInterval *int) (*st.Integer, error) {
 // reqValidateStartTime validates the optional start time field.
 func reqValidateStartTime(startTime *string) (*st.DateTime, error) {
 	if startTime == nil {
-		return nil, nil
+		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
 	parsedStartTime, err := st.NewDateTime(*startTime)
@@ -131,7 +131,7 @@ func reqValidateStartTime(startTime *string) (*st.DateTime, error) {
 // reqValidateStopTime validates the optional stop time field.
 func reqValidateStopTime(stopTime *string) (*st.DateTime, error) {
 	if stopTime == nil {
-		return nil, nil
+		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
 	parsedStopTime, err := st.NewDateTime(*stopTime)

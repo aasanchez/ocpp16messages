@@ -84,7 +84,7 @@ func NewChargingSchedule(
 // validateDuration validates the optional duration field.
 func validateDuration(duration *int) (*st.Integer, error) {
 	if duration == nil {
-		return nil, nil
+		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
 	d, err := st.NewInteger(strconv.Itoa(*duration))
@@ -137,7 +137,7 @@ func validatePeriods(
 // validateMinChargingRate validates the optional minimum charging rate.
 func validateMinChargingRate(rate *float64) (*float64, error) {
 	if rate == nil {
-		return nil, nil
+		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
 	if *rate < minChargingRateZero {

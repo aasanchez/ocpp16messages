@@ -15,13 +15,17 @@ const (
 	exampleLimitConf         = 32.0
 	exampleStartPeriodSecond = 1800
 	exampleLimitSecondPeriod = 16.0
+	statusLabel              = "Status:"
 )
 
 // ExampleConf demonstrates creating a GetCompositeSchedule.conf message
 // with status Accepted and no optional fields.
 func ExampleConf() {
 	conf, err := getCompositeSchedule.Conf(getCompositeSchedule.ConfInput{
-		Status: "Accepted",
+		Status:           "Accepted",
+		ConnectorId:      nil,
+		ScheduleStart:    nil,
+		ChargingSchedule: nil,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -29,7 +33,7 @@ func ExampleConf() {
 		return
 	}
 
-	fmt.Println("Status:", conf.Status.String())
+	fmt.Println(statusLabel, conf.Status.String())
 	// Output:
 	// Status: Accepted
 }
@@ -38,7 +42,10 @@ func ExampleConf() {
 // message with status Rejected.
 func ExampleConf_rejected() {
 	conf, err := getCompositeSchedule.Conf(getCompositeSchedule.ConfInput{
-		Status: "Rejected",
+		Status:           "Rejected",
+		ConnectorId:      nil,
+		ScheduleStart:    nil,
+		ChargingSchedule: nil,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -46,7 +53,7 @@ func ExampleConf_rejected() {
 		return
 	}
 
-	fmt.Println("Status:", conf.Status.String())
+	fmt.Println(statusLabel, conf.Status.String())
 	// Output:
 	// Status: Rejected
 }
@@ -66,12 +73,18 @@ func ExampleConf_withAllFields() {
 			Duration:         &duration,
 			ChargingRateUnit: "A",
 			ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{
-				{StartPeriod: exampleStartPeriodConf, Limit: exampleLimitConf},
 				{
-					StartPeriod: exampleStartPeriodSecond,
-					Limit:       exampleLimitSecondPeriod,
+					StartPeriod:  exampleStartPeriodConf,
+					Limit:        exampleLimitConf,
+					NumberPhases: nil,
+				},
+				{
+					StartPeriod:  exampleStartPeriodSecond,
+					Limit:        exampleLimitSecondPeriod,
+					NumberPhases: nil,
 				},
 			},
+			MinChargingRate: nil,
 		},
 	})
 	if err != nil {
@@ -80,7 +93,7 @@ func ExampleConf_withAllFields() {
 		return
 	}
 
-	fmt.Println("Status:", conf.Status.String())
+	fmt.Println(statusLabel, conf.Status.String())
 	fmt.Println("ConnectorId:", conf.ConnectorId.Value())
 	fmt.Println("Periods:", len(conf.ChargingSchedule.ChargingSchedulePeriod()))
 	// Output:
@@ -93,7 +106,10 @@ func ExampleConf_withAllFields() {
 // an invalid status is provided.
 func ExampleConf_invalidStatus() {
 	_, err := getCompositeSchedule.Conf(getCompositeSchedule.ConfInput{
-		Status: "Invalid",
+		Status:           "Invalid",
+		ConnectorId:      nil,
+		ScheduleStart:    nil,
+		ChargingSchedule: nil,
 	})
 	if err != nil {
 		fmt.Println("Error: invalid status")
