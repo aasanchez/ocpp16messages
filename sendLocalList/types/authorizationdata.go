@@ -3,7 +3,6 @@ package types
 import (
 	"fmt"
 
-	at "github.com/aasanchez/ocpp16messages/authorize/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -29,8 +28,8 @@ type IdTagInfoInput struct {
 
 // AuthorizationData represents an entry in the local authorization list.
 type AuthorizationData struct {
-	IdTag     at.IdToken
-	IdTagInfo *at.IdTagInfo
+	IdTag     st.IdToken
+	IdTagInfo *st.IdTagInfo
 }
 
 // NewAuthorizationData creates a new AuthorizationData from the given input.
@@ -49,7 +48,7 @@ func NewAuthorizationData(
 		)
 	}
 
-	idToken := at.NewIdToken(ciString)
+	idToken := st.NewIdToken(ciString)
 
 	if input.IdTagInfo == nil {
 		return AuthorizationData{
@@ -73,18 +72,18 @@ func NewAuthorizationData(
 	}, nil
 }
 
-func buildIdTagInfo(input IdTagInfoInput) (at.IdTagInfo, error) {
-	status := at.AuthorizationStatus(input.Status)
+func buildIdTagInfo(input IdTagInfoInput) (st.IdTagInfo, error) {
+	status := st.AuthorizationStatus(input.Status)
 
-	idTagInfo, err := at.NewIdTagInfo(status)
+	idTagInfo, err := st.NewIdTagInfo(status)
 	if err != nil {
-		return at.IdTagInfo{}, fmt.Errorf("buildIdTagInfo: %w", err)
+		return st.IdTagInfo{}, fmt.Errorf("buildIdTagInfo: %w", err)
 	}
 
 	if input.ExpiryDate != nil {
 		expiryDate, err := st.NewDateTime(*input.ExpiryDate)
 		if err != nil {
-			return at.IdTagInfo{}, fmt.Errorf(
+			return st.IdTagInfo{}, fmt.Errorf(
 				st.ErrorFieldFormat,
 				"ExpiryDate",
 				err,
@@ -97,14 +96,14 @@ func buildIdTagInfo(input IdTagInfoInput) (at.IdTagInfo, error) {
 	if input.ParentIdTag != nil {
 		ciString, err := st.NewCiString20Type(*input.ParentIdTag)
 		if err != nil {
-			return at.IdTagInfo{}, fmt.Errorf(
+			return st.IdTagInfo{}, fmt.Errorf(
 				st.ErrorFieldFormat,
 				"ParentIdTag",
 				err,
 			)
 		}
 
-		parentIdToken := at.NewIdToken(ciString)
+		parentIdToken := st.NewIdToken(ciString)
 		idTagInfo = idTagInfo.WithParentIdTag(parentIdToken)
 	}
 

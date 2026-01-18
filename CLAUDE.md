@@ -295,7 +295,6 @@ authorize/
   - Import line exceeds 80 characters (revive line-length-limit)
 - Common aliases when needed:
   - `st` for `github.com/aasanchez/ocpp16messages/types`
-  - `at` for `github.com/aasanchez/ocpp16messages/authorize/types`
   - `ct` for `github.com/aasanchez/ocpp16messages/clearChargingProfile/types`
 - **Line length constraint**: Import lines must be <= 80 characters. For long
   package paths like `clearChargingProfile/types`, use short 2-character aliases

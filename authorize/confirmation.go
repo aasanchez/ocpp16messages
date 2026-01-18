@@ -4,8 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	mat "github.com/aasanchez/ocpp16messages/authorize/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	"github.com/aasanchez/ocpp16messages/types"
 )
 
 // ConfInput represents the raw input data for creating an Authorize.conf
@@ -18,14 +17,14 @@ type ConfInput struct {
 
 // ConfMessage represents an OCPP 1.6 Authorize.conf message.
 type ConfMessage struct {
-	IdTagInfo mat.IdTagInfo
+	IdTagInfo types.IdTagInfo
 }
 
 // confValidation holds validated fields during Conf construction.
 type confValidation struct {
-	idTagInfo     mat.IdTagInfo
-	expiryDate    st.DateTime
-	parentIdToken mat.IdToken
+	idTagInfo     types.IdTagInfo
+	expiryDate    types.DateTime
+	parentIdToken types.IdToken
 }
 
 // Conf creates an Authorize.conf message from the given input.
@@ -40,7 +39,7 @@ func Conf(input ConfInput) (ConfMessage, error) {
 
 	if errs != nil {
 		return ConfMessage{
-			IdTagInfo: mat.IdTagInfo{
+			IdTagInfo: types.IdTagInfo{
 				Status:      "",
 				ExpiryDate:  nil,
 				ParentIdTag: nil,
@@ -76,10 +75,10 @@ func validateConfInput(input ConfInput) (confValidation, []error) {
 }
 
 // validateStatus validates the status field and returns the IdTagInfo.
-func validateStatus(status string, errs []error) (mat.IdTagInfo, []error) {
-	info, err := mat.NewIdTagInfo(mat.AuthorizationStatus(status))
+func validateStatus(status string, errs []error) (types.IdTagInfo, []error) {
+	info, err := types.NewIdTagInfo(types.AuthorizationStatus(status))
 	if err != nil {
-		return mat.IdTagInfo{
+		return types.IdTagInfo{
 			Status:      "",
 			ExpiryDate:  nil,
 			ParentIdTag: nil,
@@ -90,10 +89,10 @@ func validateStatus(status string, errs []error) (mat.IdTagInfo, []error) {
 }
 
 // validateExpiryDate validates the expiry date string and returns the DateTime.
-func validateExpiryDate(date string, errs []error) (st.DateTime, []error) {
-	expiryDate, err := st.NewDateTime(date)
+func validateExpiryDate(date string, errs []error) (types.DateTime, []error) {
+	expiryDate, err := types.NewDateTime(date)
 	if err != nil {
-		return st.DateTime{}, append(errs, fmt.Errorf("expiryDate: %w", err))
+		return types.DateTime{}, append(errs, fmt.Errorf("expiryDate: %w", err))
 	}
 
 	return expiryDate, errs
@@ -115,13 +114,13 @@ func buildConfMessage(input ConfInput, validated confValidation) ConfMessage {
 }
 
 // validateParentIdTag validates the parent ID tag and returns the token.
-func validateParentIdTag(tag string, errs []error) (mat.IdToken, []error) {
-	ciStr, err := st.NewCiString20Type(tag)
+func validateParentIdTag(tag string, errs []error) (types.IdToken, []error) {
+	ciStr, err := types.NewCiString20Type(tag)
 	if err != nil {
-		return mat.IdToken{}, append(errs, fmt.Errorf("parentIdTag: %w", err))
+		return types.IdToken{}, append(errs, fmt.Errorf("parentIdTag: %w", err))
 	}
 
-	token := mat.NewIdToken(ciStr)
+	token := types.NewIdToken(ciStr)
 
 	return token, errs
 }

@@ -3,8 +3,7 @@ package types_test
 import (
 	"testing"
 
-	mat "github.com/aasanchez/ocpp16messages/authorize/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	"github.com/aasanchez/ocpp16messages/types"
 )
 
 const fieldStatus = "IdTagInfo.Status"
@@ -12,31 +11,31 @@ const fieldStatus = "IdTagInfo.Status"
 func TestNewIdTagInfo_ValidStatus(t *testing.T) {
 	t.Parallel()
 
-	_, err := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
+	_, err := types.NewIdTagInfo(types.AuthorizationStatusAccepted)
 	if err != nil {
-		t.Errorf("mat.NewIdTagInfo() error = %v, want nil", err)
+		t.Errorf("types.NewIdTagInfo() error = %v, want nil", err)
 	}
 }
 
 func TestNewIdTagInfo_InvalidStatus(t *testing.T) {
 	t.Parallel()
 
-	_, err := mat.NewIdTagInfo(mat.AuthorizationStatus("InvalidStatus"))
+	_, err := types.NewIdTagInfo(types.AuthorizationStatus("InvalidStatus"))
 	if err == nil {
-		t.Error("mat.NewIdTagInfo() error = nil, want error")
+		t.Error("types.NewIdTagInfo() error = nil, want error")
 	}
 }
 
 func TestNewIdTagInfo_SetsCorrectStatus(t *testing.T) {
 	t.Parallel()
 
-	info, _ := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
-	if info.Status != mat.AuthorizationStatusAccepted {
+	info, _ := types.NewIdTagInfo(types.AuthorizationStatusAccepted)
+	if info.Status != types.AuthorizationStatusAccepted {
 		t.Errorf(
-			st.ErrorMethodMismatch,
+			types.ErrorMethodMismatch,
 			fieldStatus,
 			info.Status,
-			mat.AuthorizationStatusAccepted,
+			types.AuthorizationStatusAccepted,
 		)
 	}
 }
@@ -44,7 +43,7 @@ func TestNewIdTagInfo_SetsCorrectStatus(t *testing.T) {
 func TestNewIdTagInfo_DefaultExpiryDateIsNil(t *testing.T) {
 	t.Parallel()
 
-	info, _ := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
+	info, _ := types.NewIdTagInfo(types.AuthorizationStatusAccepted)
 	if info.ExpiryDate != nil {
 		t.Errorf("IdTagInfo.ExpiryDate = %v, want nil", info.ExpiryDate)
 	}
@@ -53,7 +52,7 @@ func TestNewIdTagInfo_DefaultExpiryDateIsNil(t *testing.T) {
 func TestNewIdTagInfo_DefaultParentIdTagIsNil(t *testing.T) {
 	t.Parallel()
 
-	info, _ := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
+	info, _ := types.NewIdTagInfo(types.AuthorizationStatusAccepted)
 	if info.ParentIdTag != nil {
 		t.Errorf("IdTagInfo.ParentIdTag = %v, want nil", info.ParentIdTag)
 	}
@@ -62,8 +61,8 @@ func TestNewIdTagInfo_DefaultParentIdTagIsNil(t *testing.T) {
 func TestIdTagInfo_WithExpiryDate(t *testing.T) {
 	t.Parallel()
 
-	expiryDate, _ := st.NewDateTime("2025-12-31T23:59:59Z")
-	info, _ := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
+	expiryDate, _ := types.NewDateTime("2025-12-31T23:59:59Z")
+	info, _ := types.NewIdTagInfo(types.AuthorizationStatusAccepted)
 	result := info.WithExpiryDate(expiryDate)
 
 	if result.ExpiryDate == nil {
@@ -74,9 +73,9 @@ func TestIdTagInfo_WithExpiryDate(t *testing.T) {
 func TestIdTagInfo_WithParentIdTag(t *testing.T) {
 	t.Parallel()
 
-	cistring, _ := st.NewCiString20Type("PARENT123")
-	parentTag := mat.NewIdToken(cistring)
-	info, _ := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
+	cistring, _ := types.NewCiString20Type("PARENT123")
+	parentTag := types.NewIdToken(cistring)
+	info, _ := types.NewIdTagInfo(types.AuthorizationStatusAccepted)
 	result := info.WithParentIdTag(parentTag)
 
 	if result.ParentIdTag == nil {
@@ -87,16 +86,16 @@ func TestIdTagInfo_WithParentIdTag(t *testing.T) {
 func TestIdTagInfo_WithExpiryDate_PreservesStatus(t *testing.T) {
 	t.Parallel()
 
-	expiryDate, _ := st.NewDateTime("2025-12-31T23:59:59Z")
-	info, _ := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
+	expiryDate, _ := types.NewDateTime("2025-12-31T23:59:59Z")
+	info, _ := types.NewIdTagInfo(types.AuthorizationStatusAccepted)
 	result := info.WithExpiryDate(expiryDate)
 
-	if result.Status != mat.AuthorizationStatusAccepted {
+	if result.Status != types.AuthorizationStatusAccepted {
 		t.Errorf(
-			st.ErrorMethodMismatch,
+			types.ErrorMethodMismatch,
 			fieldStatus,
 			result.Status,
-			mat.AuthorizationStatusAccepted,
+			types.AuthorizationStatusAccepted,
 		)
 	}
 }
@@ -104,17 +103,17 @@ func TestIdTagInfo_WithExpiryDate_PreservesStatus(t *testing.T) {
 func TestIdTagInfo_WithParentIdTag_PreservesStatus(t *testing.T) {
 	t.Parallel()
 
-	cistring, _ := st.NewCiString20Type("PARENT123")
-	parentTag := mat.NewIdToken(cistring)
-	info, _ := mat.NewIdTagInfo(mat.AuthorizationStatusAccepted)
+	cistring, _ := types.NewCiString20Type("PARENT123")
+	parentTag := types.NewIdToken(cistring)
+	info, _ := types.NewIdTagInfo(types.AuthorizationStatusAccepted)
 	result := info.WithParentIdTag(parentTag)
 
-	if result.Status != mat.AuthorizationStatusAccepted {
+	if result.Status != types.AuthorizationStatusAccepted {
 		t.Errorf(
-			st.ErrorMethodMismatch,
+			types.ErrorMethodMismatch,
 			fieldStatus,
 			result.Status,
-			mat.AuthorizationStatusAccepted,
+			types.AuthorizationStatusAccepted,
 		)
 	}
 }

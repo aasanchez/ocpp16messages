@@ -4,8 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	mat "github.com/aasanchez/ocpp16messages/authorize/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	"github.com/aasanchez/ocpp16messages/types"
 )
 
 const (
@@ -17,12 +16,12 @@ func TestIdToken(t *testing.T) {
 	t.Parallel()
 
 	str := strings.Repeat("A", validTokenLength)
-	cstr, _ := st.NewCiString20Type(str)
+	cstr, _ := types.NewCiString20Type(str)
 
-	idtoken := mat.NewIdToken(cstr)
+	idtoken := types.NewIdToken(cstr)
 
 	if idtoken.String() != str {
-		t.Errorf(st.ErrorMismatch, str, idtoken.String())
+		t.Errorf(types.ErrorMismatch, str, idtoken.String())
 	}
 }
 
@@ -30,12 +29,12 @@ func TestIdToken_value(t *testing.T) {
 	t.Parallel()
 
 	str := strings.Repeat("C", validTokenLength)
-	cstr, _ := st.NewCiString20Type(str)
+	cstr, _ := types.NewCiString20Type(str)
 
-	idtoken := mat.NewIdToken(cstr)
+	idtoken := types.NewIdToken(cstr)
 
 	if idtoken.Value() != cstr {
-		t.Errorf(st.ErrorMismatch, cstr.Value(), idtoken.String())
+		t.Errorf(types.ErrorMismatch, cstr.Value(), idtoken.String())
 	}
 }
 
@@ -44,9 +43,9 @@ func TestIdToken_invalid(t *testing.T) {
 
 	str := strings.Repeat("D", invalidTokenLength)
 
-	_, err := st.NewCiString20Type(str)
+	_, err := types.NewCiString20Type(str)
 	if err == nil {
-		t.Errorf(st.ErrorExpectedError, err)
+		t.Errorf(types.ErrorExpectedError, err)
 	}
 }
 
@@ -55,7 +54,7 @@ func TestIdToken_empty(t *testing.T) {
 
 	str := ""
 
-	_, err := st.NewCiString20Type(str)
+	_, err := types.NewCiString20Type(str)
 	if err == nil {
 		t.Error("NewCiString20Type() error = nil, want error for empty string")
 	}
@@ -65,10 +64,10 @@ func TestIdToken_String(t *testing.T) {
 	t.Parallel()
 
 	str := "RFID-TAG-123"
-	cstr, _ := st.NewCiString20Type(str)
-	idtoken := mat.NewIdToken(cstr)
+	cstr, _ := types.NewCiString20Type(str)
+	idtoken := types.NewIdToken(cstr)
 
 	if idtoken.String() != str {
-		t.Errorf(st.ErrorMismatch, str, idtoken.String())
+		t.Errorf(types.ErrorMismatch, str, idtoken.String())
 	}
 }

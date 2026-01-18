@@ -2,16 +2,14 @@ package types
 
 import (
 	"fmt"
-
-	st "github.com/aasanchez/ocpp16messages/types"
 )
 
 // IdTagInfo contains status information about an identifier.
 // It is returned in Authorize, StartTransaction, and StopTransaction responses.
 type IdTagInfo struct {
 	Status      AuthorizationStatus
-	ExpiryDate  *st.DateTime // Optional
-	ParentIdTag *IdToken     // Optional
+	ExpiryDate  *DateTime // Optional
+	ParentIdTag *IdToken  // Optional
 }
 
 // NewIdTagInfo creates a new IdTagInfo with the given status.
@@ -19,9 +17,9 @@ type IdTagInfo struct {
 func NewIdTagInfo(status AuthorizationStatus) (IdTagInfo, error) {
 	if !status.IsValid() {
 		return IdTagInfo{}, fmt.Errorf(
-			"NewIdTagInfo: "+st.ErrorFieldFormat,
+			"NewIdTagInfo: "+ErrorFieldFormat,
 			"AuthorizationStatus",
-			st.ErrInvalidValue,
+			ErrInvalidValue,
 		)
 	}
 
@@ -33,7 +31,7 @@ func NewIdTagInfo(status AuthorizationStatus) (IdTagInfo, error) {
 }
 
 // WithExpiryDate sets the expiry date and returns the IdTagInfo.
-func (i IdTagInfo) WithExpiryDate(expiryDate st.DateTime) IdTagInfo {
+func (i IdTagInfo) WithExpiryDate(expiryDate DateTime) IdTagInfo {
 	i.ExpiryDate = &expiryDate
 
 	return i

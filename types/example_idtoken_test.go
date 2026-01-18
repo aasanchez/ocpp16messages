@@ -5,16 +5,15 @@ package types_test
 import (
 	"fmt"
 
-	mat "github.com/aasanchez/ocpp16messages/authorize/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	"github.com/aasanchez/ocpp16messages/types"
 )
 
 // ExampleNewIdToken demonstrates creating a valid IdToken from a
 // CiString20Type.
 func ExampleNewIdToken() {
-	ciStr, _ := st.NewCiString20Type("RFID-TAG-12345")
+	ciStr, _ := types.NewCiString20Type("RFID-TAG-12345")
 
-	idToken := mat.NewIdToken(ciStr)
+	idToken := types.NewIdToken(ciStr)
 
 	fmt.Println("IdToken:", idToken.String())
 	// Output:
@@ -24,7 +23,7 @@ func ExampleNewIdToken() {
 // ExampleNewIdToken_empty demonstrates that empty strings are rejected at the
 // CiString20Type level, not at the IdToken level.
 func ExampleNewIdToken_empty() {
-	_, err := st.NewCiString20Type("")
+	_, err := types.NewCiString20Type("")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -35,9 +34,9 @@ func ExampleNewIdToken_empty() {
 // ExampleNewIdToken_shortTag demonstrates creating an IdToken with a short
 // tag value, showing that any non-empty value is acceptable.
 func ExampleNewIdToken_shortTag() {
-	ciStr, _ := st.NewCiString20Type("TAG1")
+	ciStr, _ := types.NewCiString20Type("TAG1")
 
-	idToken := mat.NewIdToken(ciStr)
+	idToken := types.NewIdToken(ciStr)
 
 	fmt.Println("IdToken:", idToken.String())
 	// Output:

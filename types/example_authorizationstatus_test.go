@@ -3,7 +3,7 @@ package types_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/authorize/types"
+	"github.com/aasanchez/ocpp16messages/types"
 )
 
 // ExampleAuthorizationStatus demonstrates using the AuthorizationStatus
