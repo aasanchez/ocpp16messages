@@ -4,8 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
-
-	st "github.com/aasanchez/ocpp16messages/types"
 )
 
 const (
@@ -29,12 +27,15 @@ type ChargingScheduleInput struct {
 	ChargingSchedulePeriod []ChargingSchedulePeriodInput
 	// Optional: Minimum charging rate supported by the EV
 	MinChargingRate *float64
+	// Optional: Starting point of an absolute schedule (RFC3339 format)
+	StartSchedule *string
 }
 
 // ChargingSchedule represents a composite charging schedule as defined in
 // OCPP 1.6.
 type ChargingSchedule struct {
-	duration               *st.Integer
+	duration               *Integer
+	startSchedule          *DateTime
 	chargingRateUnit       ChargingRateUnit
 	chargingSchedulePeriod []ChargingSchedulePeriod
 	minChargingRate        *float64
@@ -46,12 +47,18 @@ type ChargingSchedule struct {
 //   - ChargingRateUnit is not a valid value ("W" or "A")
 //   - ChargingSchedulePeriod is empty or contains invalid periods
 //   - MinChargingRate (if provided) is negative
+//   - StartSchedule (if provided) is not a valid RFC3339 timestamp
 func NewChargingSchedule(
 	input ChargingScheduleInput,
 ) (ChargingSchedule, error) {
 	var errs []error
 
-	duration, err := validateDuration(input.Duration)
+	duration, err := validateScheduleDuration(input.Duration)
+	if err != nil {
+		errs = append(errs, err)
+	}
+
+	startSchedule, err := validateStartSchedule(input.StartSchedule)
 	if err != nil {
 		errs = append(errs, err)
 	}
@@ -61,7 +68,7 @@ func NewChargingSchedule(
 		errs = append(errs, err)
 	}
 
-	periods, periodErrs := validatePeriods(input.ChargingSchedulePeriod)
+	periods, periodErrs := validateSchedulePeriods(input.ChargingSchedulePeriod)
 	errs = append(errs, periodErrs...)
 
 	minChargingRate, err := validateMinChargingRate(input.MinChargingRate)
@@ -75,19 +82,20 @@ func NewChargingSchedule(
 
 	return ChargingSchedule{
 		duration:               duration,
+		startSchedule:          startSchedule,
 		chargingRateUnit:       chargingRateUnit,
 		chargingSchedulePeriod: periods,
 		minChargingRate:        minChargingRate,
 	}, nil
 }
 
-// validateDuration validates the optional duration field.
-func validateDuration(duration *int) (*st.Integer, error) {
+// validateScheduleDuration validates the optional duration field.
+func validateScheduleDuration(duration *int) (*Integer, error) {
 	if duration == nil {
 		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
-	d, err := st.NewInteger(strconv.Itoa(*duration))
+	d, err := NewInteger(strconv.Itoa(*duration))
 	if err != nil {
 		return nil, fmt.Errorf("duration: %w", err)
 	}
@@ -95,23 +103,37 @@ func validateDuration(duration *int) (*st.Integer, error) {
 	return &d, nil
 }
 
+// validateStartSchedule validates the optional start schedule field.
+func validateStartSchedule(startSchedule *string) (*DateTime, error) {
+	if startSchedule == nil {
+		return nil, nil //nolint:nilnil // nil is valid for optional field
+	}
+
+	ss, err := NewDateTime(*startSchedule)
+	if err != nil {
+		return nil, fmt.Errorf("startSchedule: %w", err)
+	}
+
+	return &ss, nil
+}
+
 // validateChargingRateUnit validates the charging rate unit field.
 func validateChargingRateUnit(unit string) (ChargingRateUnit, error) {
 	chargingRateUnit := ChargingRateUnit(unit)
 	if !chargingRateUnit.IsValid() {
-		return "", fmt.Errorf("chargingRateUnit: %w", st.ErrInvalidValue)
+		return "", fmt.Errorf("chargingRateUnit: %w", ErrInvalidValue)
 	}
 
 	return chargingRateUnit, nil
 }
 
-// validatePeriods validates the charging schedule periods.
-func validatePeriods(
+// validateSchedulePeriods validates the charging schedule periods.
+func validateSchedulePeriods(
 	periods []ChargingSchedulePeriodInput,
 ) ([]ChargingSchedulePeriod, []error) {
 	if len(periods) == periodsLenZero {
 		return nil, []error{
-			fmt.Errorf("chargingSchedulePeriod: %w", st.ErrEmptyValue),
+			fmt.Errorf("chargingSchedulePeriod: %w", ErrEmptyValue),
 		}
 	}
 
@@ -141,15 +163,20 @@ func validateMinChargingRate(rate *float64) (*float64, error) {
 	}
 
 	if *rate < minChargingRateZero {
-		return nil, fmt.Errorf("minChargingRate: %w", st.ErrInvalidValue)
+		return nil, fmt.Errorf("minChargingRate: %w", ErrInvalidValue)
 	}
 
 	return rate, nil
 }
 
 // Duration returns the duration in seconds, or nil if not specified.
-func (c ChargingSchedule) Duration() *st.Integer {
+func (c ChargingSchedule) Duration() *Integer {
 	return c.duration
+}
+
+// StartSchedule returns the start schedule, or nil if not specified.
+func (c ChargingSchedule) StartSchedule() *DateTime {
+	return c.startSchedule
 }
 
 // ChargingRateUnit returns the unit of measure for the charging rate.

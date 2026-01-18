@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	ct "github.com/aasanchez/ocpp16messages/clearChargingProfile/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	"github.com/aasanchez/ocpp16messages/types"
 )
 
 // ConfInput represents the raw input data for creating a
@@ -27,7 +27,7 @@ func Conf(input ConfInput) (ConfMessage, error) {
 	status := ct.ClearChargingProfileStatus(input.Status)
 
 	if !status.IsValid() {
-		return ConfMessage{}, fmt.Errorf("status: %w", st.ErrInvalidValue)
+		return ConfMessage{}, fmt.Errorf("status: %w", types.ErrInvalidValue)
 	}
 
 	return ConfMessage{Status: status}, nil

@@ -5,8 +5,7 @@ import (
 	"testing"
 
 	gcs "github.com/aasanchez/ocpp16messages/getCompositeSchedule"
-	gt "github.com/aasanchez/ocpp16messages/getCompositeSchedule/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	"github.com/aasanchez/ocpp16messages/types"
 )
 
 const (
@@ -37,15 +36,15 @@ func TestReq_Valid_RequiredFieldsOnly(t *testing.T) {
 		ChargingRateUnit: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId.Value() != valueOne {
-		t.Errorf(st.ErrorMismatchValue, valueOne, req.ConnectorId.Value())
+		t.Errorf(types.ErrorMismatchValue, valueOne, req.ConnectorId.Value())
 	}
 
 	if req.Duration.Value() != valueThreeHund {
-		t.Errorf(st.ErrorMismatchValue, valueThreeHund, req.Duration.Value())
+		t.Errorf(types.ErrorMismatchValue, valueThreeHund, req.Duration.Value())
 	}
 
 	if req.ChargingRateUnit != nil {
@@ -62,11 +61,11 @@ func TestReq_Valid_ConnectorIdZero(t *testing.T) {
 		ChargingRateUnit: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId.Value() != valueZero {
-		t.Errorf(st.ErrorMismatchValue, valueZero, req.ConnectorId.Value())
+		t.Errorf(types.ErrorMismatchValue, valueZero, req.ConnectorId.Value())
 	}
 }
 
@@ -79,17 +78,17 @@ func TestReq_Valid_WithChargingRateUnitWatts(t *testing.T) {
 		ChargingRateUnit: strPtr("W"),
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ChargingRateUnit == nil {
 		t.Fatal(chargingRateUnitNotNil)
 	}
 
-	if *req.ChargingRateUnit != gt.ChargingRateUnitWatts {
+	if *req.ChargingRateUnit != types.ChargingRateUnitWatts {
 		t.Errorf(
-			st.ErrorMismatch,
-			gt.ChargingRateUnitWatts,
+			types.ErrorMismatch,
+			types.ChargingRateUnitWatts,
 			*req.ChargingRateUnit,
 		)
 	}
@@ -104,17 +103,17 @@ func TestReq_Valid_WithChargingRateUnitAmperes(t *testing.T) {
 		ChargingRateUnit: strPtr("A"),
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ChargingRateUnit == nil {
 		t.Fatal(chargingRateUnitNotNil)
 	}
 
-	if *req.ChargingRateUnit != gt.ChargingRateUnitAmperes {
+	if *req.ChargingRateUnit != types.ChargingRateUnitAmperes {
 		t.Errorf(
-			st.ErrorMismatch,
-			gt.ChargingRateUnitAmperes,
+			types.ErrorMismatch,
+			types.ChargingRateUnitAmperes,
 			*req.ChargingRateUnit,
 		)
 	}
@@ -129,11 +128,11 @@ func TestReq_Invalid_NegativeConnectorId(t *testing.T) {
 		ChargingRateUnit: nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "negative ConnectorId")
+		t.Errorf(types.ErrorWantNil, "negative ConnectorId")
 	}
 
 	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errConnectorId)
 	}
 }
 
@@ -146,11 +145,11 @@ func TestReq_Invalid_ConnectorIdExceedsMax(t *testing.T) {
 		ChargingRateUnit: nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "ConnectorId exceeds max")
+		t.Errorf(types.ErrorWantNil, "ConnectorId exceeds max")
 	}
 
 	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errConnectorId)
 	}
 }
 
@@ -163,11 +162,11 @@ func TestReq_Invalid_NegativeDuration(t *testing.T) {
 		ChargingRateUnit: nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "negative Duration")
+		t.Errorf(types.ErrorWantNil, "negative Duration")
 	}
 
 	if !strings.Contains(err.Error(), errDuration) {
-		t.Errorf(st.ErrorWantContains, err, errDuration)
+		t.Errorf(types.ErrorWantContains, err, errDuration)
 	}
 }
 
@@ -180,11 +179,11 @@ func TestReq_Invalid_DurationExceedsMax(t *testing.T) {
 		ChargingRateUnit: nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "Duration exceeds max")
+		t.Errorf(types.ErrorWantNil, "Duration exceeds max")
 	}
 
 	if !strings.Contains(err.Error(), errDuration) {
-		t.Errorf(st.ErrorWantContains, err, errDuration)
+		t.Errorf(types.ErrorWantContains, err, errDuration)
 	}
 }
 
@@ -197,11 +196,11 @@ func TestReq_Invalid_ChargingRateUnit(t *testing.T) {
 		ChargingRateUnit: strPtr("X"),
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "invalid ChargingRateUnit")
+		t.Errorf(types.ErrorWantNil, "invalid ChargingRateUnit")
 	}
 
 	if !strings.Contains(err.Error(), errChargingRateUnit) {
-		t.Errorf(st.ErrorWantContains, err, errChargingRateUnit)
+		t.Errorf(types.ErrorWantContains, err, errChargingRateUnit)
 	}
 }
 
@@ -214,11 +213,11 @@ func TestReq_Invalid_EmptyChargingRateUnit(t *testing.T) {
 		ChargingRateUnit: strPtr(""),
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty ChargingRateUnit")
+		t.Errorf(types.ErrorWantNil, "empty ChargingRateUnit")
 	}
 
 	if !strings.Contains(err.Error(), errChargingRateUnit) {
-		t.Errorf(st.ErrorWantContains, err, errChargingRateUnit)
+		t.Errorf(types.ErrorWantContains, err, errChargingRateUnit)
 	}
 }
 
@@ -231,11 +230,11 @@ func TestReq_Invalid_LowercaseChargingRateUnit(t *testing.T) {
 		ChargingRateUnit: strPtr("w"),
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "lowercase ChargingRateUnit")
+		t.Errorf(types.ErrorWantNil, "lowercase ChargingRateUnit")
 	}
 
 	if !strings.Contains(err.Error(), errChargingRateUnit) {
-		t.Errorf(st.ErrorWantContains, err, errChargingRateUnit)
+		t.Errorf(types.ErrorWantContains, err, errChargingRateUnit)
 	}
 }
 
@@ -248,18 +247,18 @@ func TestReq_Invalid_MultipleErrors(t *testing.T) {
 		ChargingRateUnit: strPtr("X"),
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "multiple invalid fields")
+		t.Errorf(types.ErrorWantNil, "multiple invalid fields")
 	}
 
 	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errConnectorId)
 	}
 
 	if !strings.Contains(err.Error(), errDuration) {
-		t.Errorf(st.ErrorWantContains, err, errDuration)
+		t.Errorf(types.ErrorWantContains, err, errDuration)
 	}
 
 	if !strings.Contains(err.Error(), errChargingRateUnit) {
-		t.Errorf(st.ErrorWantContains, err, errChargingRateUnit)
+		t.Errorf(types.ErrorWantContains, err, errChargingRateUnit)
 	}
 }

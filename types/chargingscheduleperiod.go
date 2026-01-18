@@ -3,8 +3,6 @@ package types
 import (
 	"fmt"
 	"strconv"
-
-	st "github.com/aasanchez/ocpp16messages/types"
 )
 
 const (
@@ -32,9 +30,9 @@ type ChargingSchedulePeriodInput struct {
 // ChargingSchedulePeriod represents a period within a charging schedule
 // as defined in OCPP 1.6.
 type ChargingSchedulePeriod struct {
-	startPeriod  st.Integer
+	startPeriod  Integer
 	limit        float64
-	numberPhases *st.Integer
+	numberPhases *Integer
 }
 
 // NewChargingSchedulePeriod creates a new ChargingSchedulePeriod from input.
@@ -45,7 +43,7 @@ type ChargingSchedulePeriod struct {
 func NewChargingSchedulePeriod(
 	input ChargingSchedulePeriodInput,
 ) (ChargingSchedulePeriod, error) {
-	startPeriod, err := st.NewInteger(strconv.Itoa(input.StartPeriod))
+	startPeriod, err := NewInteger(strconv.Itoa(input.StartPeriod))
 	if err != nil {
 		return ChargingSchedulePeriod{}, fmt.Errorf("startPeriod: %w", err)
 	}
@@ -53,7 +51,7 @@ func NewChargingSchedulePeriod(
 	if input.Limit < limitZero {
 		return ChargingSchedulePeriod{}, fmt.Errorf(
 			"limit: %w",
-			st.ErrInvalidValue,
+			ErrInvalidValue,
 		)
 	}
 
@@ -70,16 +68,16 @@ func NewChargingSchedulePeriod(
 }
 
 // validateNumberPhases validates the optional number of phases.
-func validateNumberPhases(phases *int) (*st.Integer, error) {
+func validateNumberPhases(phases *int) (*Integer, error) {
 	if phases == nil {
 		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
 	if *phases < minNumberPhases || *phases > maxNumberPhases {
-		return nil, fmt.Errorf("numberPhases: %w", st.ErrInvalidValue)
+		return nil, fmt.Errorf("numberPhases: %w", ErrInvalidValue)
 	}
 
-	np, err := st.NewInteger(strconv.Itoa(*phases))
+	np, err := NewInteger(strconv.Itoa(*phases))
 	if err != nil {
 		return nil, fmt.Errorf("numberPhases: %w", err)
 	}
@@ -88,7 +86,7 @@ func validateNumberPhases(phases *int) (*st.Integer, error) {
 }
 
 // StartPeriod returns the start period in seconds relative to schedule start.
-func (c ChargingSchedulePeriod) StartPeriod() st.Integer {
+func (c ChargingSchedulePeriod) StartPeriod() Integer {
 	return c.startPeriod
 }
 
@@ -99,6 +97,6 @@ func (c ChargingSchedulePeriod) Limit() float64 {
 
 // NumberPhases returns the number of phases to use for charging, or nil if not
 // specified.
-func (c ChargingSchedulePeriod) NumberPhases() *st.Integer {
+func (c ChargingSchedulePeriod) NumberPhases() *Integer {
 	return c.numberPhases
 }

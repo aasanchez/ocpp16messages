@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	gt "github.com/aasanchez/ocpp16messages/getCompositeSchedule/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	"github.com/aasanchez/ocpp16messages/types"
 )
 
 // ConfInput represents the raw input data for creating a
@@ -20,15 +20,15 @@ type ConfInput struct {
 	// Optional: Time at which the schedule starts (RFC3339 format)
 	ScheduleStart *string
 	// Optional: The composite charging schedule
-	ChargingSchedule *gt.ChargingScheduleInput
+	ChargingSchedule *types.ChargingScheduleInput
 }
 
 // ConfMessage represents an OCPP 1.6 GetCompositeSchedule.conf message.
 type ConfMessage struct {
 	Status           gt.GetCompositeScheduleStatus
-	ConnectorId      *st.Integer
-	ScheduleStart    *st.DateTime
-	ChargingSchedule *gt.ChargingSchedule
+	ConnectorId      *types.Integer
+	ScheduleStart    *types.DateTime
+	ChargingSchedule *types.ChargingSchedule
 }
 
 // Conf creates a GetCompositeSchedule.conf message from the given input.
@@ -81,19 +81,19 @@ func confValidateStatus(
 ) (gt.GetCompositeScheduleStatus, error) {
 	status := gt.GetCompositeScheduleStatus(statusStr)
 	if !status.IsValid() {
-		return "", fmt.Errorf("status: %w", st.ErrInvalidValue)
+		return "", fmt.Errorf("status: %w", types.ErrInvalidValue)
 	}
 
 	return status, nil
 }
 
 // confValidateConnectorId validates the optional connector ID field.
-func confValidateConnectorId(connectorId *int) (*st.Integer, error) {
+func confValidateConnectorId(connectorId *int) (*types.Integer, error) {
 	if connectorId == nil {
 		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
-	cid, err := st.NewInteger(strconv.Itoa(*connectorId))
+	cid, err := types.NewInteger(strconv.Itoa(*connectorId))
 	if err != nil {
 		return nil, fmt.Errorf("connectorId: %w", err)
 	}
@@ -102,12 +102,12 @@ func confValidateConnectorId(connectorId *int) (*st.Integer, error) {
 }
 
 // confValidateScheduleStart validates the optional schedule start field.
-func confValidateScheduleStart(scheduleStart *string) (*st.DateTime, error) {
+func confValidateScheduleStart(scheduleStart *string) (*types.DateTime, error) {
 	if scheduleStart == nil {
 		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
-	ss, err := st.NewDateTime(*scheduleStart)
+	ss, err := types.NewDateTime(*scheduleStart)
 	if err != nil {
 		return nil, fmt.Errorf("scheduleStart: %w", err)
 	}
@@ -117,13 +117,13 @@ func confValidateScheduleStart(scheduleStart *string) (*st.DateTime, error) {
 
 // confValidateChargingSchedule validates the optional charging schedule field.
 func confValidateChargingSchedule(
-	schedule *gt.ChargingScheduleInput,
-) (*gt.ChargingSchedule, error) {
+	schedule *types.ChargingScheduleInput,
+) (*types.ChargingSchedule, error) {
 	if schedule == nil {
 		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
-	cs, err := gt.NewChargingSchedule(*schedule)
+	cs, err := types.NewChargingSchedule(*schedule)
 	if err != nil {
 		return nil, fmt.Errorf("chargingSchedule: %w", err)
 	}

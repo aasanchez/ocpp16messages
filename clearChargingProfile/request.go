@@ -5,8 +5,7 @@ import (
 	"fmt"
 	"strconv"
 
-	ct "github.com/aasanchez/ocpp16messages/clearChargingProfile/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	"github.com/aasanchez/ocpp16messages/types"
 )
 
 // ReqInput represents the raw input data for creating a
@@ -27,18 +26,18 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 ClearChargingProfile.req message.
 type ReqMessage struct {
-	Id                     *st.Integer
-	ConnectorId            *st.Integer
-	ChargingProfilePurpose *ct.ChargingProfilePurposeType
-	StackLevel             *st.Integer
+	Id                     *types.Integer
+	ConnectorId            *types.Integer
+	ChargingProfilePurpose *types.ChargingProfilePurposeType
+	StackLevel             *types.Integer
 }
 
 // reqValidation holds validated fields during Req construction.
 type reqValidation struct {
-	id                     *st.Integer
-	connectorId            *st.Integer
-	chargingProfilePurpose *ct.ChargingProfilePurposeType
-	stackLevel             *st.Integer
+	id                     *types.Integer
+	connectorId            *types.Integer
+	chargingProfilePurpose *types.ChargingProfilePurposeType
+	stackLevel             *types.Integer
 }
 
 // Req creates a ClearChargingProfile.req message from the given input.
@@ -101,8 +100,8 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 }
 
 // validateId validates the id field.
-func validateId(id int, errs []error) (*st.Integer, []error) {
-	val, err := st.NewInteger(strconv.Itoa(id))
+func validateId(id int, errs []error) (*types.Integer, []error) {
+	val, err := types.NewInteger(strconv.Itoa(id))
 	if err != nil {
 		return nil, append(errs, fmt.Errorf("id: %w", err))
 	}
@@ -111,8 +110,11 @@ func validateId(id int, errs []error) (*st.Integer, []error) {
 }
 
 // validateConnectorId validates the connectorId field.
-func validateConnectorId(connectorId int, errs []error) (*st.Integer, []error) {
-	val, err := st.NewInteger(strconv.Itoa(connectorId))
+func validateConnectorId(
+	connectorId int,
+	errs []error,
+) (*types.Integer, []error) {
+	val, err := types.NewInteger(strconv.Itoa(connectorId))
 	if err != nil {
 		return nil, append(errs, fmt.Errorf("connectorId: %w", err))
 	}
@@ -124,12 +126,12 @@ func validateConnectorId(connectorId int, errs []error) (*st.Integer, []error) {
 func validatePurpose(
 	purpose string,
 	errs []error,
-) (*ct.ChargingProfilePurposeType, []error) {
-	purposeType := ct.ChargingProfilePurposeType(purpose)
+) (*types.ChargingProfilePurposeType, []error) {
+	purposeType := types.ChargingProfilePurposeType(purpose)
 	if !purposeType.IsValid() {
 		return nil, append(
 			errs,
-			fmt.Errorf("chargingProfilePurpose: %w", st.ErrInvalidValue),
+			fmt.Errorf("chargingProfilePurpose: %w", types.ErrInvalidValue),
 		)
 	}
 
@@ -137,8 +139,11 @@ func validatePurpose(
 }
 
 // validateStackLevel validates the stackLevel field.
-func validateStackLevel(stackLevel int, errs []error) (*st.Integer, []error) {
-	val, err := st.NewInteger(strconv.Itoa(stackLevel))
+func validateStackLevel(
+	stackLevel int,
+	errs []error,
+) (*types.Integer, []error) {
+	val, err := types.NewInteger(strconv.Itoa(stackLevel))
 	if err != nil {
 		return nil, append(errs, fmt.Errorf("stackLevel: %w", err))
 	}

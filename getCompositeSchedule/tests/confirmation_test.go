@@ -6,7 +6,7 @@ import (
 
 	gcs "github.com/aasanchez/ocpp16messages/getCompositeSchedule"
 	gt "github.com/aasanchez/ocpp16messages/getCompositeSchedule/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	"github.com/aasanchez/ocpp16messages/types"
 )
 
 const (
@@ -39,12 +39,12 @@ func TestConf_Valid_AcceptedOnly(t *testing.T) {
 		ChargingSchedule: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.Status != gt.GetCompositeScheduleStatusAccepted {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			gt.GetCompositeScheduleStatusAccepted,
 			conf.Status,
 		)
@@ -76,12 +76,12 @@ func TestConf_Valid_RejectedOnly(t *testing.T) {
 		ChargingSchedule: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.Status != gt.GetCompositeScheduleStatusRejected {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			gt.GetCompositeScheduleStatusRejected,
 			conf.Status,
 		)
@@ -98,7 +98,7 @@ func TestConf_Valid_WithConnectorId(t *testing.T) {
 		ChargingSchedule: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.ConnectorId == nil {
@@ -106,7 +106,7 @@ func TestConf_Valid_WithConnectorId(t *testing.T) {
 	}
 
 	if conf.ConnectorId.Value() != valueOne {
-		t.Errorf(st.ErrorMismatchValue, valueOne, conf.ConnectorId.Value())
+		t.Errorf(types.ErrorMismatchValue, valueOne, conf.ConnectorId.Value())
 	}
 }
 
@@ -120,7 +120,7 @@ func TestConf_Valid_WithConnectorIdZero(t *testing.T) {
 		ChargingSchedule: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.ConnectorId == nil {
@@ -128,7 +128,7 @@ func TestConf_Valid_WithConnectorIdZero(t *testing.T) {
 	}
 
 	if conf.ConnectorId.Value() != valueZero {
-		t.Errorf(st.ErrorMismatchValue, valueZero, conf.ConnectorId.Value())
+		t.Errorf(types.ErrorMismatchValue, valueZero, conf.ConnectorId.Value())
 	}
 }
 
@@ -144,7 +144,7 @@ func TestConf_Valid_WithScheduleStart(t *testing.T) {
 		ChargingSchedule: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.ScheduleStart == nil {
@@ -159,10 +159,10 @@ func TestConf_Valid_WithChargingSchedule(t *testing.T) {
 		Status:        "Accepted",
 		ConnectorId:   nil,
 		ScheduleStart: nil,
-		ChargingSchedule: &gt.ChargingScheduleInput{
+		ChargingSchedule: &types.ChargingScheduleInput{
 			Duration:         nil,
 			ChargingRateUnit: "W",
-			ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{
+			ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{
 				{
 					StartPeriod:  valueZero,
 					Limit:        limitConfValue,
@@ -170,20 +170,21 @@ func TestConf_Valid_WithChargingSchedule(t *testing.T) {
 				},
 			},
 			MinChargingRate: nil,
+			StartSchedule:   nil,
 		},
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.ChargingSchedule == nil {
 		t.Fatal(chargingScheduleNotNil)
 	}
 
-	if conf.ChargingSchedule.ChargingRateUnit() != gt.ChargingRateUnitWatts {
+	if conf.ChargingSchedule.ChargingRateUnit() != types.ChargingRateUnitWatts {
 		t.Errorf(
-			st.ErrorMismatch,
-			gt.ChargingRateUnitWatts,
+			types.ErrorMismatch,
+			types.ChargingRateUnitWatts,
 			conf.ChargingSchedule.ChargingRateUnit(),
 		)
 	}
@@ -199,10 +200,10 @@ func TestConf_Valid_WithAllFields(t *testing.T) {
 		Status:        "Accepted",
 		ConnectorId:   intPtr(valueOne),
 		ScheduleStart: &scheduleStart,
-		ChargingSchedule: &gt.ChargingScheduleInput{
+		ChargingSchedule: &types.ChargingScheduleInput{
 			Duration:         &duration,
 			ChargingRateUnit: "A",
-			ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{
+			ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{
 				{
 					StartPeriod:  valueZero,
 					Limit:        limitConfValue,
@@ -210,15 +211,16 @@ func TestConf_Valid_WithAllFields(t *testing.T) {
 				},
 			},
 			MinChargingRate: nil,
+			StartSchedule:   nil,
 		},
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.Status != gt.GetCompositeScheduleStatusAccepted {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			gt.GetCompositeScheduleStatusAccepted,
 			conf.Status,
 		)
@@ -247,11 +249,11 @@ func TestConf_Invalid_EmptyStatus(t *testing.T) {
 		ChargingSchedule: nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty status")
+		t.Errorf(types.ErrorWantNil, "empty status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -265,11 +267,11 @@ func TestConf_Invalid_InvalidStatus(t *testing.T) {
 		ChargingSchedule: nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "invalid status")
+		t.Errorf(types.ErrorWantNil, "invalid status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -283,11 +285,11 @@ func TestConf_Invalid_LowercaseStatus(t *testing.T) {
 		ChargingSchedule: nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "lowercase status")
+		t.Errorf(types.ErrorWantNil, "lowercase status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -301,11 +303,11 @@ func TestConf_Invalid_NegativeConnectorId(t *testing.T) {
 		ChargingSchedule: nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "negative ConnectorId")
+		t.Errorf(types.ErrorWantNil, "negative ConnectorId")
 	}
 
 	if !strings.Contains(err.Error(), errConnectorIdConf) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorIdConf)
+		t.Errorf(types.ErrorWantContains, err, errConnectorIdConf)
 	}
 }
 
@@ -319,11 +321,11 @@ func TestConf_Invalid_ConnectorIdExceedsMax(t *testing.T) {
 		ChargingSchedule: nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "ConnectorId exceeds max")
+		t.Errorf(types.ErrorWantNil, "ConnectorId exceeds max")
 	}
 
 	if !strings.Contains(err.Error(), errConnectorIdConf) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorIdConf)
+		t.Errorf(types.ErrorWantContains, err, errConnectorIdConf)
 	}
 }
 
@@ -339,11 +341,11 @@ func TestConf_Invalid_InvalidScheduleStart(t *testing.T) {
 		ChargingSchedule: nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "invalid scheduleStart")
+		t.Errorf(types.ErrorWantNil, "invalid scheduleStart")
 	}
 
 	if !strings.Contains(err.Error(), errScheduleStart) {
-		t.Errorf(st.ErrorWantContains, err, errScheduleStart)
+		t.Errorf(types.ErrorWantContains, err, errScheduleStart)
 	}
 }
 
@@ -354,19 +356,20 @@ func TestConf_Invalid_InvalidChargingSchedule(t *testing.T) {
 		Status:        "Accepted",
 		ConnectorId:   nil,
 		ScheduleStart: nil,
-		ChargingSchedule: &gt.ChargingScheduleInput{
+		ChargingSchedule: &types.ChargingScheduleInput{
 			Duration:               nil,
 			ChargingRateUnit:       "X",
-			ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{},
+			ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{},
 			MinChargingRate:        nil,
+			StartSchedule:          nil,
 		},
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "invalid chargingSchedule")
+		t.Errorf(types.ErrorWantNil, "invalid chargingSchedule")
 	}
 
 	if !strings.Contains(err.Error(), errChargingSchedule) {
-		t.Errorf(st.ErrorWantContains, err, errChargingSchedule)
+		t.Errorf(types.ErrorWantContains, err, errChargingSchedule)
 	}
 }
 
@@ -379,30 +382,31 @@ func TestConf_Invalid_MultipleErrors(t *testing.T) {
 		Status:        "Invalid",
 		ConnectorId:   intPtr(valueNegative),
 		ScheduleStart: &scheduleStart,
-		ChargingSchedule: &gt.ChargingScheduleInput{
+		ChargingSchedule: &types.ChargingScheduleInput{
 			Duration:               nil,
 			ChargingRateUnit:       "X",
-			ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{},
+			ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{},
 			MinChargingRate:        nil,
+			StartSchedule:          nil,
 		},
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "multiple invalid fields")
+		t.Errorf(types.ErrorWantNil, "multiple invalid fields")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 
 	if !strings.Contains(err.Error(), errConnectorIdConf) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorIdConf)
+		t.Errorf(types.ErrorWantContains, err, errConnectorIdConf)
 	}
 
 	if !strings.Contains(err.Error(), errScheduleStart) {
-		t.Errorf(st.ErrorWantContains, err, errScheduleStart)
+		t.Errorf(types.ErrorWantContains, err, errScheduleStart)
 	}
 
 	if !strings.Contains(err.Error(), errChargingSchedule) {
-		t.Errorf(st.ErrorWantContains, err, errChargingSchedule)
+		t.Errorf(types.ErrorWantContains, err, errChargingSchedule)
 	}
 }

@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/aasanchez/ocpp16messages/getCompositeSchedule"
-	gt "github.com/aasanchez/ocpp16messages/getCompositeSchedule/types"
+	"github.com/aasanchez/ocpp16messages/types"
 )
 
 const (
@@ -69,10 +69,10 @@ func ExampleConf_withAllFields() {
 		Status:        "Accepted",
 		ConnectorId:   &connectorId,
 		ScheduleStart: &scheduleStart,
-		ChargingSchedule: &gt.ChargingScheduleInput{
+		ChargingSchedule: &types.ChargingScheduleInput{
 			Duration:         &duration,
 			ChargingRateUnit: "A",
-			ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{
+			ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{
 				{
 					StartPeriod:  exampleStartPeriodConf,
 					Limit:        exampleLimitConf,
@@ -85,6 +85,7 @@ func ExampleConf_withAllFields() {
 				},
 			},
 			MinChargingRate: nil,
+			StartSchedule:   nil,
 		},
 	})
 	if err != nil {

@@ -5,8 +5,7 @@ import (
 	"fmt"
 	"strconv"
 
-	gt "github.com/aasanchez/ocpp16messages/getCompositeSchedule/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	"github.com/aasanchez/ocpp16messages/types"
 )
 
 const (
@@ -29,9 +28,9 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 GetCompositeSchedule.req message.
 type ReqMessage struct {
-	ConnectorId      st.Integer
-	Duration         st.Integer
-	ChargingRateUnit *gt.ChargingRateUnit
+	ConnectorId      types.Integer
+	Duration         types.Integer
+	ChargingRateUnit *types.ChargingRateUnit
 }
 
 // Req creates a GetCompositeSchedule.req message from the given input.
@@ -43,24 +42,24 @@ type ReqMessage struct {
 func Req(input ReqInput) (ReqMessage, error) {
 	var errs []error
 
-	connectorId, err := st.NewInteger(strconv.Itoa(input.ConnectorId))
+	connectorId, err := types.NewInteger(strconv.Itoa(input.ConnectorId))
 	if err != nil {
 		errs = append(errs, fmt.Errorf("connectorId: %w", err))
 	}
 
-	duration, err := st.NewInteger(strconv.Itoa(input.Duration))
+	duration, err := types.NewInteger(strconv.Itoa(input.Duration))
 	if err != nil {
 		errs = append(errs, fmt.Errorf("duration: %w", err))
 	}
 
-	var chargingRateUnit *gt.ChargingRateUnit
+	var chargingRateUnit *types.ChargingRateUnit
 
 	if input.ChargingRateUnit != nil {
-		unit := gt.ChargingRateUnit(*input.ChargingRateUnit)
+		unit := types.ChargingRateUnit(*input.ChargingRateUnit)
 		if !unit.IsValid() {
 			errs = append(
 				errs,
-				fmt.Errorf("chargingRateUnit: %w", st.ErrInvalidValue),
+				fmt.Errorf("chargingRateUnit: %w", types.ErrInvalidValue),
 			)
 		} else {
 			chargingRateUnit = &unit

@@ -5,8 +5,7 @@ import (
 	"testing"
 
 	ccp "github.com/aasanchez/ocpp16messages/clearChargingProfile"
-	ct "github.com/aasanchez/ocpp16messages/clearChargingProfile/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	"github.com/aasanchez/ocpp16messages/types"
 )
 
 const (
@@ -45,7 +44,7 @@ func TestReq_Valid_NoFields(t *testing.T) {
 		StackLevel:             nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Id != nil {
@@ -76,7 +75,7 @@ func TestReq_Valid_WithId(t *testing.T) {
 		StackLevel:             nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Id == nil {
@@ -84,7 +83,7 @@ func TestReq_Valid_WithId(t *testing.T) {
 	}
 
 	if req.Id.Value() != valueId {
-		t.Errorf(st.ErrorMismatchValue, valueId, req.Id.Value())
+		t.Errorf(types.ErrorMismatchValue, valueId, req.Id.Value())
 	}
 }
 
@@ -98,7 +97,7 @@ func TestReq_Valid_WithIdZero(t *testing.T) {
 		StackLevel:             nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Id == nil {
@@ -106,7 +105,7 @@ func TestReq_Valid_WithIdZero(t *testing.T) {
 	}
 
 	if req.Id.Value() != valueZero {
-		t.Errorf(st.ErrorMismatchValue, valueZero, req.Id.Value())
+		t.Errorf(types.ErrorMismatchValue, valueZero, req.Id.Value())
 	}
 }
 
@@ -120,7 +119,7 @@ func TestReq_Valid_WithConnectorId(t *testing.T) {
 		StackLevel:             nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId == nil {
@@ -128,7 +127,7 @@ func TestReq_Valid_WithConnectorId(t *testing.T) {
 	}
 
 	if req.ConnectorId.Value() != valueOne {
-		t.Errorf(st.ErrorMismatchValue, valueOne, req.ConnectorId.Value())
+		t.Errorf(types.ErrorMismatchValue, valueOne, req.ConnectorId.Value())
 	}
 }
 
@@ -142,7 +141,7 @@ func TestReq_Valid_WithConnectorIdZero(t *testing.T) {
 		StackLevel:             nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId == nil {
@@ -150,7 +149,7 @@ func TestReq_Valid_WithConnectorIdZero(t *testing.T) {
 	}
 
 	if req.ConnectorId.Value() != valueZero {
-		t.Errorf(st.ErrorMismatchValue, valueZero, req.ConnectorId.Value())
+		t.Errorf(types.ErrorMismatchValue, valueZero, req.ConnectorId.Value())
 	}
 }
 
@@ -164,16 +163,16 @@ func TestReq_Valid_WithPurpose_ChargePointMaxProfile(t *testing.T) {
 		StackLevel:             nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ChargingProfilePurpose == nil {
 		t.Fatal(purposeNotNil)
 	}
 
-	expected := ct.ChargePointMaxProfile
+	expected := types.ChargePointMaxProfile
 	if *req.ChargingProfilePurpose != expected {
-		t.Errorf(st.ErrorMismatch, expected, *req.ChargingProfilePurpose)
+		t.Errorf(types.ErrorMismatch, expected, *req.ChargingProfilePurpose)
 	}
 }
 
@@ -187,16 +186,16 @@ func TestReq_Valid_WithPurpose_TxDefaultProfile(t *testing.T) {
 		StackLevel:             nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ChargingProfilePurpose == nil {
 		t.Fatal(purposeNotNil)
 	}
 
-	expected := ct.TxDefaultProfile
+	expected := types.TxDefaultProfile
 	if *req.ChargingProfilePurpose != expected {
-		t.Errorf(st.ErrorMismatch, expected, *req.ChargingProfilePurpose)
+		t.Errorf(types.ErrorMismatch, expected, *req.ChargingProfilePurpose)
 	}
 }
 
@@ -210,16 +209,16 @@ func TestReq_Valid_WithPurpose_TxProfile(t *testing.T) {
 		StackLevel:             nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ChargingProfilePurpose == nil {
 		t.Fatal(purposeNotNil)
 	}
 
-	expected := ct.TxProfile
+	expected := types.TxProfile
 	if *req.ChargingProfilePurpose != expected {
-		t.Errorf(st.ErrorMismatch, expected, *req.ChargingProfilePurpose)
+		t.Errorf(types.ErrorMismatch, expected, *req.ChargingProfilePurpose)
 	}
 }
 
@@ -233,7 +232,7 @@ func TestReq_Valid_WithStackLevel(t *testing.T) {
 		StackLevel:             intPtr(valueFive),
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.StackLevel == nil {
@@ -241,7 +240,7 @@ func TestReq_Valid_WithStackLevel(t *testing.T) {
 	}
 
 	if req.StackLevel.Value() != valueFive {
-		t.Errorf(st.ErrorMismatchValue, valueFive, req.StackLevel.Value())
+		t.Errorf(types.ErrorMismatchValue, valueFive, req.StackLevel.Value())
 	}
 }
 
@@ -255,7 +254,7 @@ func TestReq_Valid_AllFields_Id(t *testing.T) {
 		StackLevel:             intPtr(valueThree),
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Id == nil || req.Id.Value() != valueOne {
@@ -273,7 +272,7 @@ func TestReq_Valid_AllFields_ConnectorId(t *testing.T) {
 		StackLevel:             intPtr(valueThree),
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId == nil || req.ConnectorId.Value() != valueTwo {
@@ -291,14 +290,14 @@ func TestReq_Valid_AllFields_Purpose(t *testing.T) {
 		StackLevel:             intPtr(valueThree),
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ChargingProfilePurpose == nil {
 		t.Fatal(purposeNotNil)
 	}
 
-	if *req.ChargingProfilePurpose != ct.TxProfile {
+	if *req.ChargingProfilePurpose != types.TxProfile {
 		t.Error("ChargingProfilePurpose mismatch")
 	}
 }
@@ -313,7 +312,7 @@ func TestReq_Valid_AllFields_StackLevel(t *testing.T) {
 		StackLevel:             intPtr(valueThree),
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.StackLevel == nil || req.StackLevel.Value() != valueThree {
@@ -331,11 +330,11 @@ func TestReq_Invalid_NegativeId(t *testing.T) {
 		StackLevel:             nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "negative Id")
+		t.Errorf(types.ErrorWantNil, "negative Id")
 	}
 
 	if !strings.Contains(err.Error(), errId) {
-		t.Errorf(st.ErrorWantContains, err, errId)
+		t.Errorf(types.ErrorWantContains, err, errId)
 	}
 }
 
@@ -349,11 +348,11 @@ func TestReq_Invalid_IdExceedsMax(t *testing.T) {
 		StackLevel:             nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "Id exceeds max")
+		t.Errorf(types.ErrorWantNil, "Id exceeds max")
 	}
 
 	if !strings.Contains(err.Error(), errId) {
-		t.Errorf(st.ErrorWantContains, err, errId)
+		t.Errorf(types.ErrorWantContains, err, errId)
 	}
 }
 
@@ -367,11 +366,11 @@ func TestReq_Invalid_NegativeConnectorId(t *testing.T) {
 		StackLevel:             nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "negative ConnectorId")
+		t.Errorf(types.ErrorWantNil, "negative ConnectorId")
 	}
 
 	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errConnectorId)
 	}
 }
 
@@ -385,11 +384,11 @@ func TestReq_Invalid_ConnectorIdExceedsMax(t *testing.T) {
 		StackLevel:             nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "ConnectorId exceeds max")
+		t.Errorf(types.ErrorWantNil, "ConnectorId exceeds max")
 	}
 
 	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errConnectorId)
 	}
 }
 
@@ -403,11 +402,11 @@ func TestReq_Invalid_Purpose(t *testing.T) {
 		StackLevel:             nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "invalid ChargingProfilePurpose")
+		t.Errorf(types.ErrorWantNil, "invalid ChargingProfilePurpose")
 	}
 
 	if !strings.Contains(err.Error(), errChargingProfilePurpose) {
-		t.Errorf(st.ErrorWantContains, err, errChargingProfilePurpose)
+		t.Errorf(types.ErrorWantContains, err, errChargingProfilePurpose)
 	}
 }
 
@@ -421,11 +420,11 @@ func TestReq_Invalid_PurposeEmpty(t *testing.T) {
 		StackLevel:             nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty ChargingProfilePurpose")
+		t.Errorf(types.ErrorWantNil, "empty ChargingProfilePurpose")
 	}
 
 	if !strings.Contains(err.Error(), errChargingProfilePurpose) {
-		t.Errorf(st.ErrorWantContains, err, errChargingProfilePurpose)
+		t.Errorf(types.ErrorWantContains, err, errChargingProfilePurpose)
 	}
 }
 
@@ -439,11 +438,11 @@ func TestReq_Invalid_PurposeLowercase(t *testing.T) {
 		StackLevel:             nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "lowercase ChargingProfilePurpose")
+		t.Errorf(types.ErrorWantNil, "lowercase ChargingProfilePurpose")
 	}
 
 	if !strings.Contains(err.Error(), errChargingProfilePurpose) {
-		t.Errorf(st.ErrorWantContains, err, errChargingProfilePurpose)
+		t.Errorf(types.ErrorWantContains, err, errChargingProfilePurpose)
 	}
 }
 
@@ -457,11 +456,11 @@ func TestReq_Invalid_NegativeStackLevel(t *testing.T) {
 		StackLevel:             intPtr(valueNegative),
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "negative StackLevel")
+		t.Errorf(types.ErrorWantNil, "negative StackLevel")
 	}
 
 	if !strings.Contains(err.Error(), errStackLevel) {
-		t.Errorf(st.ErrorWantContains, err, errStackLevel)
+		t.Errorf(types.ErrorWantContains, err, errStackLevel)
 	}
 }
 
@@ -475,11 +474,11 @@ func TestReq_Invalid_StackLevelExceedsMax(t *testing.T) {
 		StackLevel:             intPtr(valueExceedsMax),
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "StackLevel exceeds max")
+		t.Errorf(types.ErrorWantNil, "StackLevel exceeds max")
 	}
 
 	if !strings.Contains(err.Error(), errStackLevel) {
-		t.Errorf(st.ErrorWantContains, err, errStackLevel)
+		t.Errorf(types.ErrorWantContains, err, errStackLevel)
 	}
 }
 
@@ -493,22 +492,22 @@ func TestReq_Invalid_MultipleErrors(t *testing.T) {
 		StackLevel:             intPtr(valueNegative),
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "multiple invalid fields")
+		t.Errorf(types.ErrorWantNil, "multiple invalid fields")
 	}
 
 	if !strings.Contains(err.Error(), errId) {
-		t.Errorf(st.ErrorWantContains, err, errId)
+		t.Errorf(types.ErrorWantContains, err, errId)
 	}
 
 	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errConnectorId)
 	}
 
 	if !strings.Contains(err.Error(), errChargingProfilePurpose) {
-		t.Errorf(st.ErrorWantContains, err, errChargingProfilePurpose)
+		t.Errorf(types.ErrorWantContains, err, errChargingProfilePurpose)
 	}
 
 	if !strings.Contains(err.Error(), errStackLevel) {
-		t.Errorf(st.ErrorWantContains, err, errStackLevel)
+		t.Errorf(types.ErrorWantContains, err, errStackLevel)
 	}
 }
