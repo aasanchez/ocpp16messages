@@ -25,10 +25,12 @@ func TestChargingSchedule_Valid_RequiredFieldsOnly(t *testing.T) {
 	t.Parallel()
 
 	schedule, err := gt.NewChargingSchedule(gt.ChargingScheduleInput{
+		Duration:         nil,
 		ChargingRateUnit: "W",
 		ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{
-			{StartPeriod: valueZero, Limit: limitTen},
+			{StartPeriod: valueZero, Limit: limitTen, NumberPhases: nil},
 		},
+		MinChargingRate: nil,
 	})
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
@@ -55,7 +57,10 @@ func TestChargingSchedule_Valid_RequiredFieldsOnly(t *testing.T) {
 	}
 
 	if schedule.MinChargingRate() != nil {
-		t.Errorf("MinChargingRate should be nil, got %v", schedule.MinChargingRate())
+		t.Errorf(
+			"MinChargingRate should be nil, got %v",
+			schedule.MinChargingRate(),
+		)
 	}
 }
 
@@ -68,8 +73,9 @@ func TestChargingSchedule_Valid_WithDuration(t *testing.T) {
 		Duration:         &duration,
 		ChargingRateUnit: "W",
 		ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{
-			{StartPeriod: valueZero, Limit: limitTen},
+			{StartPeriod: valueZero, Limit: limitTen, NumberPhases: nil},
 		},
+		MinChargingRate: nil,
 	})
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
@@ -92,10 +98,12 @@ func TestChargingSchedule_Valid_WithChargingRateUnitAmperes(t *testing.T) {
 	t.Parallel()
 
 	schedule, err := gt.NewChargingSchedule(gt.ChargingScheduleInput{
+		Duration:         nil,
 		ChargingRateUnit: "A",
 		ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{
-			{StartPeriod: valueZero, Limit: limitTen},
+			{StartPeriod: valueZero, Limit: limitTen, NumberPhases: nil},
 		},
+		MinChargingRate: nil,
 	})
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
@@ -114,11 +122,13 @@ func TestChargingSchedule_Valid_WithMultiplePeriods(t *testing.T) {
 	t.Parallel()
 
 	schedule, err := gt.NewChargingSchedule(gt.ChargingScheduleInput{
+		Duration:         nil,
 		ChargingRateUnit: "W",
 		ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{
-			{StartPeriod: valueZero, Limit: limitTen},
-			{StartPeriod: valueThirty, Limit: limitTwenty},
+			{StartPeriod: valueZero, Limit: limitTen, NumberPhases: nil},
+			{StartPeriod: valueThirty, Limit: limitTwenty, NumberPhases: nil},
 		},
+		MinChargingRate: nil,
 	})
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
@@ -139,9 +149,10 @@ func TestChargingSchedule_Valid_WithMinChargingRate(t *testing.T) {
 	minRate := minChargingRateFive
 
 	schedule, err := gt.NewChargingSchedule(gt.ChargingScheduleInput{
+		Duration:         nil,
 		ChargingRateUnit: "W",
 		ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{
-			{StartPeriod: valueZero, Limit: limitTen},
+			{StartPeriod: valueZero, Limit: limitTen, NumberPhases: nil},
 		},
 		MinChargingRate: &minRate,
 	})
@@ -174,7 +185,7 @@ func TestChargingSchedule_Valid_WithAllFields(t *testing.T) {
 		ChargingRateUnit: "A",
 		ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{
 			{StartPeriod: valueZero, Limit: limitTen, NumberPhases: &phases},
-			{StartPeriod: valueThirty, Limit: limitTwenty},
+			{StartPeriod: valueThirty, Limit: limitTwenty, NumberPhases: nil},
 		},
 		MinChargingRate: &minRate,
 	})
@@ -228,8 +239,9 @@ func TestChargingSchedule_Invalid_NegativeDuration(t *testing.T) {
 		Duration:         &duration,
 		ChargingRateUnit: "W",
 		ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{
-			{StartPeriod: valueZero, Limit: limitTen},
+			{StartPeriod: valueZero, Limit: limitTen, NumberPhases: nil},
 		},
+		MinChargingRate: nil,
 	})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "negative duration")
@@ -249,8 +261,9 @@ func TestChargingSchedule_Invalid_DurationExceedsMax(t *testing.T) {
 		Duration:         &duration,
 		ChargingRateUnit: "W",
 		ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{
-			{StartPeriod: valueZero, Limit: limitTen},
+			{StartPeriod: valueZero, Limit: limitTen, NumberPhases: nil},
 		},
+		MinChargingRate: nil,
 	})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "duration exceeds max")
@@ -265,10 +278,12 @@ func TestChargingSchedule_Invalid_ChargingRateUnit(t *testing.T) {
 	t.Parallel()
 
 	_, err := gt.NewChargingSchedule(gt.ChargingScheduleInput{
+		Duration:         nil,
 		ChargingRateUnit: "X",
 		ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{
-			{StartPeriod: valueZero, Limit: limitTen},
+			{StartPeriod: valueZero, Limit: limitTen, NumberPhases: nil},
 		},
+		MinChargingRate: nil,
 	})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "invalid chargingRateUnit")
@@ -283,10 +298,12 @@ func TestChargingSchedule_Invalid_EmptyChargingRateUnit(t *testing.T) {
 	t.Parallel()
 
 	_, err := gt.NewChargingSchedule(gt.ChargingScheduleInput{
+		Duration:         nil,
 		ChargingRateUnit: "",
 		ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{
-			{StartPeriod: valueZero, Limit: limitTen},
+			{StartPeriod: valueZero, Limit: limitTen, NumberPhases: nil},
 		},
+		MinChargingRate: nil,
 	})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "empty chargingRateUnit")
@@ -301,8 +318,10 @@ func TestChargingSchedule_Invalid_EmptyPeriods(t *testing.T) {
 	t.Parallel()
 
 	_, err := gt.NewChargingSchedule(gt.ChargingScheduleInput{
+		Duration:               nil,
 		ChargingRateUnit:       "W",
 		ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{},
+		MinChargingRate:        nil,
 	})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "empty chargingSchedulePeriod")
@@ -317,8 +336,10 @@ func TestChargingSchedule_Invalid_NilPeriods(t *testing.T) {
 	t.Parallel()
 
 	_, err := gt.NewChargingSchedule(gt.ChargingScheduleInput{
+		Duration:               nil,
 		ChargingRateUnit:       "W",
 		ChargingSchedulePeriod: nil,
+		MinChargingRate:        nil,
 	})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "nil chargingSchedulePeriod")
@@ -333,10 +354,12 @@ func TestChargingSchedule_Invalid_InvalidPeriod(t *testing.T) {
 	t.Parallel()
 
 	_, err := gt.NewChargingSchedule(gt.ChargingScheduleInput{
+		Duration:         nil,
 		ChargingRateUnit: "W",
 		ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{
-			{StartPeriod: valueNegative, Limit: limitTen},
+			{StartPeriod: valueNegative, Limit: limitTen, NumberPhases: nil},
 		},
+		MinChargingRate: nil,
 	})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "invalid period")
@@ -353,9 +376,10 @@ func TestChargingSchedule_Invalid_NegativeMinChargingRate(t *testing.T) {
 	minRate := minChargingRateNeg
 
 	_, err := gt.NewChargingSchedule(gt.ChargingScheduleInput{
+		Duration:         nil,
 		ChargingRateUnit: "W",
 		ChargingSchedulePeriod: []gt.ChargingSchedulePeriodInput{
-			{StartPeriod: valueZero, Limit: limitTen},
+			{StartPeriod: valueZero, Limit: limitTen, NumberPhases: nil},
 		},
 		MinChargingRate: &minRate,
 	})

@@ -64,7 +64,11 @@ func TestReq_Valid_SingleKey(t *testing.T) {
 	}
 
 	if len(req.Key) != expectedKeyCountOne {
-		t.Errorf("Req() Key length = %d, want %d", len(req.Key), expectedKeyCountOne)
+		t.Errorf(
+			"Req() Key length = %d, want %d",
+			len(req.Key),
+			expectedKeyCountOne,
+		)
 	}
 
 	if req.Key[0].Value() != testValidKey {

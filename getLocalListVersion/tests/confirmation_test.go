@@ -83,13 +83,17 @@ func TestConf_Valid_ZeroValue(t *testing.T) {
 	t.Parallel()
 
 	conf, err := getLocalListVersion.Conf(getLocalListVersion.ConfInput{
-		ListVersion: 0,
+		ListVersion: testVersionEmpty,
 	})
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
 	}
 
-	if conf.ListVersion.Value() != 0 {
-		t.Errorf(st.ErrorMismatchValue, 0, conf.ListVersion.Value())
+	if conf.ListVersion.Value() != testVersionEmpty {
+		t.Errorf(
+			st.ErrorMismatchValue,
+			testVersionEmpty,
+			conf.ListVersion.Value(),
+		)
 	}
 }

@@ -15,10 +15,12 @@ const (
 // with required fields only.
 func ExampleNewChargingSchedule() {
 	schedule, err := types.NewChargingSchedule(types.ChargingScheduleInput{
+		Duration:         nil,
 		ChargingRateUnit: "W",
 		ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{
-			{StartPeriod: 0, Limit: 10.0},
+			{StartPeriod: 0, Limit: 10.0, NumberPhases: nil},
 		},
+		MinChargingRate: nil,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -43,8 +45,8 @@ func ExampleNewChargingSchedule_withAllFields() {
 		Duration:         &duration,
 		ChargingRateUnit: "A",
 		ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{
-			{StartPeriod: 0, Limit: 16.0},
-			{StartPeriod: 300, Limit: 32.0},
+			{StartPeriod: 0, Limit: 16.0, NumberPhases: nil},
+			{StartPeriod: 300, Limit: 32.0, NumberPhases: nil},
 		},
 		MinChargingRate: &minRate,
 	})
@@ -69,10 +71,12 @@ func ExampleNewChargingSchedule_withAllFields() {
 // returned when an invalid charging rate unit is provided.
 func ExampleNewChargingSchedule_invalidChargingRateUnit() {
 	_, err := types.NewChargingSchedule(types.ChargingScheduleInput{
+		Duration:         nil,
 		ChargingRateUnit: "X",
 		ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{
-			{StartPeriod: 0, Limit: 10.0},
+			{StartPeriod: 0, Limit: 10.0, NumberPhases: nil},
 		},
+		MinChargingRate: nil,
 	})
 	if err != nil {
 		fmt.Println("Error: invalid charging rate unit")
@@ -85,8 +89,10 @@ func ExampleNewChargingSchedule_invalidChargingRateUnit() {
 // when no charging schedule periods are provided.
 func ExampleNewChargingSchedule_emptyPeriods() {
 	_, err := types.NewChargingSchedule(types.ChargingScheduleInput{
+		Duration:               nil,
 		ChargingRateUnit:       "W",
 		ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{},
+		MinChargingRate:        nil,
 	})
 	if err != nil {
 		fmt.Println("Error: empty charging schedule periods")

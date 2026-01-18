@@ -1,3 +1,4 @@
+//nolint:dupl // enum test pattern is intentionally similar across types
 package types_test
 
 import (
@@ -64,7 +65,12 @@ func TestGetCompositeScheduleStatus_String_Accepted(t *testing.T) {
 
 	got := gt.GetCompositeScheduleStatusAccepted.String()
 	if got != statusAcceptedStr {
-		t.Errorf(st.ErrorMethodMismatch, statusTypeString, got, statusAcceptedStr)
+		t.Errorf(
+			st.ErrorMethodMismatch,
+			statusTypeString,
+			got,
+			statusAcceptedStr,
+		)
 	}
 }
 
@@ -73,6 +79,11 @@ func TestGetCompositeScheduleStatus_String_Rejected(t *testing.T) {
 
 	got := gt.GetCompositeScheduleStatusRejected.String()
 	if got != statusRejectedStr {
-		t.Errorf(st.ErrorMethodMismatch, statusTypeString, got, statusRejectedStr)
+		t.Errorf(
+			st.ErrorMethodMismatch,
+			statusTypeString,
+			got,
+			statusRejectedStr,
+		)
 	}
 }

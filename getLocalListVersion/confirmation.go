@@ -2,6 +2,7 @@ package getLocalListVersion
 
 import (
 	"fmt"
+	"strconv"
 
 	mt "github.com/aasanchez/ocpp16messages/getLocalListVersion/types"
 )
@@ -26,7 +27,9 @@ type ConfMessage struct {
 // It validates all fields and returns an error if:
 //   - ListVersion cannot be converted to a valid int32
 func Conf(input ConfInput) (ConfMessage, error) {
-	listVersion, err := mt.NewListVersionNumber(fmt.Sprintf("%d", input.ListVersion))
+	versionStr := strconv.Itoa(input.ListVersion)
+
+	listVersion, err := mt.NewListVersionNumber(versionStr)
 	if err != nil {
 		return ConfMessage{}, fmt.Errorf("listVersion: %w", err)
 	}

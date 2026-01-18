@@ -10,7 +10,13 @@ import (
 // the required Value field.
 func ExampleNewSampledValue() {
 	input := types.SampledValueInput{
-		Value: "12500",
+		Value:     "12500",
+		Context:   nil,
+		Format:    nil,
+		Measurand: nil,
+		Phase:     nil,
+		Location:  nil,
+		Unit:      nil,
 	}
 
 	sampledValue, err := types.NewSampledValue(input)
@@ -64,7 +70,13 @@ func ExampleNewSampledValue_withOptionalFields() {
 // ExampleNewSampledValue_emptyValue demonstrates the error when Value is empty.
 func ExampleNewSampledValue_emptyValue() {
 	input := types.SampledValueInput{
-		Value: "",
+		Value:     "",
+		Context:   nil,
+		Format:    nil,
+		Measurand: nil,
+		Phase:     nil,
+		Location:  nil,
+		Unit:      nil,
 	}
 
 	_, err := types.NewSampledValue(input)

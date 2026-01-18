@@ -59,11 +59,19 @@ func TestReq_ValidMinimalInput(t *testing.T) {
 	}
 
 	if req.ConnectorId.Value() != validConnectorId {
-		t.Errorf(st.ErrorMismatchValue, validConnectorId, req.ConnectorId.Value())
+		t.Errorf(
+			st.ErrorMismatchValue,
+			validConnectorId,
+			req.ConnectorId.Value(),
+		)
 	}
 
 	if len(req.MeterValue) != expectedMeterCount1 {
-		t.Errorf(st.ErrorMismatchValue, expectedMeterCount1, len(req.MeterValue))
+		t.Errorf(
+			st.ErrorMismatchValue,
+			expectedMeterCount1,
+			len(req.MeterValue),
+		)
 	}
 }
 
@@ -139,7 +147,11 @@ func TestReq_ValidConnectorIdZero(t *testing.T) {
 	}
 
 	if req.ConnectorId.Value() != connectorIdZero {
-		t.Errorf(st.ErrorMismatchValue, connectorIdZero, req.ConnectorId.Value())
+		t.Errorf(
+			st.ErrorMismatchValue,
+			connectorIdZero,
+			req.ConnectorId.Value(),
+		)
 	}
 }
 
@@ -147,18 +159,35 @@ func TestReq_ValidMultipleMeterValues(t *testing.T) {
 	t.Parallel()
 
 	input := meterValues.ReqInput{
-		ConnectorId: validConnectorId,
+		ConnectorId:   validConnectorId,
+		TransactionId: nil,
 		MeterValue: []mt.MeterValueInput{
 			{
 				Timestamp: "2025-01-02T15:00:00Z",
 				SampledValue: []mt.SampledValueInput{
-					{Value: "100"},
+					{
+						Value:     "100",
+						Context:   nil,
+						Format:    nil,
+						Measurand: nil,
+						Phase:     nil,
+						Location:  nil,
+						Unit:      nil,
+					},
 				},
 			},
 			{
 				Timestamp: "2025-01-02T15:05:00Z",
 				SampledValue: []mt.SampledValueInput{
-					{Value: "150"},
+					{
+						Value:     "150",
+						Context:   nil,
+						Format:    nil,
+						Measurand: nil,
+						Phase:     nil,
+						Location:  nil,
+						Unit:      nil,
+					},
 				},
 			},
 		},
@@ -170,7 +199,11 @@ func TestReq_ValidMultipleMeterValues(t *testing.T) {
 	}
 
 	if len(req.MeterValue) != expectedMeterCount2 {
-		t.Errorf(st.ErrorMismatchValue, expectedMeterCount2, len(req.MeterValue))
+		t.Errorf(
+			st.ErrorMismatchValue,
+			expectedMeterCount2,
+			len(req.MeterValue),
+		)
 	}
 }
 
@@ -184,7 +217,15 @@ func TestReq_NegativeConnectorId(t *testing.T) {
 			{
 				Timestamp: validTimestampReq,
 				SampledValue: []mt.SampledValueInput{
-					{Value: validValueReq},
+					{
+						Value:     validValueReq,
+						Context:   nil,
+						Format:    nil,
+						Measurand: nil,
+						Phase:     nil,
+						Location:  nil,
+						Unit:      nil,
+					},
 				},
 			},
 		},

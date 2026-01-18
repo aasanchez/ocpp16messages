@@ -1,3 +1,4 @@
+//nolint:dupl // enum test pattern is intentionally similar across types
 package types_test
 
 import (

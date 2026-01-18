@@ -13,17 +13,18 @@ const (
 	errLimit        = "limit"
 	errNumberPhases = "numberPhases"
 
-	valueZero       = 0
-	valueOne        = 1
-	valueTwo        = 2
-	valueThree      = 3
-	valueFour       = 4
-	valueThirty     = 30
-	valueNegative   = -1
-	valueExceedsMax = 65536
-	limitTen        = 10.0
-	limitTwenty     = 20.0
-	limitNegative   = -1.0
+	valueZero             = 0
+	valueOne              = 1
+	valueTwo              = 2
+	valueThree            = 3
+	valueFour             = 4
+	valueThirty           = 30
+	valueNegative         = -1
+	valueExceedsMax       = 65536
+	limitTen              = 10.0
+	limitTwenty           = 20.0
+	limitNegative         = -1.0
+	numberPhasesNotNilMsg = "NumberPhases should not be nil"
 )
 
 func intPtr(v int) *int {
@@ -34,8 +35,9 @@ func TestChargingSchedulePeriod_Valid_RequiredFieldsOnly(t *testing.T) {
 	t.Parallel()
 
 	period, err := gt.NewChargingSchedulePeriod(gt.ChargingSchedulePeriodInput{
-		StartPeriod: valueZero,
-		Limit:       limitTen,
+		StartPeriod:  valueZero,
+		Limit:        limitTen,
+		NumberPhases: nil,
 	})
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
@@ -58,15 +60,20 @@ func TestChargingSchedulePeriod_Valid_WithStartPeriodNonZero(t *testing.T) {
 	t.Parallel()
 
 	period, err := gt.NewChargingSchedulePeriod(gt.ChargingSchedulePeriodInput{
-		StartPeriod: valueThirty,
-		Limit:       limitTwenty,
+		StartPeriod:  valueThirty,
+		Limit:        limitTwenty,
+		NumberPhases: nil,
 	})
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
 	}
 
 	if period.StartPeriod().Value() != valueThirty {
-		t.Errorf(st.ErrorMismatchValue, valueThirty, period.StartPeriod().Value())
+		t.Errorf(
+			st.ErrorMismatchValue,
+			valueThirty,
+			period.StartPeriod().Value(),
+		)
 	}
 }
 
@@ -83,7 +90,7 @@ func TestChargingSchedulePeriod_Valid_WithNumberPhasesOne(t *testing.T) {
 	}
 
 	if period.NumberPhases() == nil {
-		t.Fatal("NumberPhases should not be nil")
+		t.Fatal(numberPhasesNotNilMsg)
 	}
 
 	if period.NumberPhases().Value() != valueOne {
@@ -104,7 +111,7 @@ func TestChargingSchedulePeriod_Valid_WithNumberPhasesTwo(t *testing.T) {
 	}
 
 	if period.NumberPhases() == nil {
-		t.Fatal("NumberPhases should not be nil")
+		t.Fatal(numberPhasesNotNilMsg)
 	}
 
 	if period.NumberPhases().Value() != valueTwo {
@@ -125,11 +132,15 @@ func TestChargingSchedulePeriod_Valid_WithNumberPhasesThree(t *testing.T) {
 	}
 
 	if period.NumberPhases() == nil {
-		t.Fatal("NumberPhases should not be nil")
+		t.Fatal(numberPhasesNotNilMsg)
 	}
 
 	if period.NumberPhases().Value() != valueThree {
-		t.Errorf(st.ErrorMismatchValue, valueThree, period.NumberPhases().Value())
+		t.Errorf(
+			st.ErrorMismatchValue,
+			valueThree,
+			period.NumberPhases().Value(),
+		)
 	}
 }
 
@@ -137,8 +148,9 @@ func TestChargingSchedulePeriod_Invalid_NegativeStartPeriod(t *testing.T) {
 	t.Parallel()
 
 	_, err := gt.NewChargingSchedulePeriod(gt.ChargingSchedulePeriodInput{
-		StartPeriod: valueNegative,
-		Limit:       limitTen,
+		StartPeriod:  valueNegative,
+		Limit:        limitTen,
+		NumberPhases: nil,
 	})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "negative startPeriod")
@@ -153,8 +165,9 @@ func TestChargingSchedulePeriod_Invalid_StartPeriodExceedsMax(t *testing.T) {
 	t.Parallel()
 
 	_, err := gt.NewChargingSchedulePeriod(gt.ChargingSchedulePeriodInput{
-		StartPeriod: valueExceedsMax,
-		Limit:       limitTen,
+		StartPeriod:  valueExceedsMax,
+		Limit:        limitTen,
+		NumberPhases: nil,
 	})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "startPeriod exceeds max")
@@ -169,8 +182,9 @@ func TestChargingSchedulePeriod_Invalid_NegativeLimit(t *testing.T) {
 	t.Parallel()
 
 	_, err := gt.NewChargingSchedulePeriod(gt.ChargingSchedulePeriodInput{
-		StartPeriod: valueZero,
-		Limit:       limitNegative,
+		StartPeriod:  valueZero,
+		Limit:        limitNegative,
+		NumberPhases: nil,
 	})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "negative limit")

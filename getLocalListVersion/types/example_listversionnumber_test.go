@@ -6,6 +6,8 @@ import (
 	"github.com/aasanchez/ocpp16messages/getLocalListVersion/types"
 )
 
+const exampleValueLabel = "Value:"
+
 // ExampleNewListVersionNumber demonstrates creating a ListVersionNumber
 // with a positive version number.
 func ExampleNewListVersionNumber() {
@@ -16,7 +18,7 @@ func ExampleNewListVersionNumber() {
 		return
 	}
 
-	fmt.Println("Value:", listVersion.Value())
+	fmt.Println(exampleValueLabel, listVersion.Value())
 	fmt.Println("String:", listVersion.String())
 	// Output:
 	// Value: 5
@@ -34,7 +36,7 @@ func ExampleNewListVersionNumber_unsupported() {
 		return
 	}
 
-	fmt.Println("Value:", listVersion.Value())
+	fmt.Println(exampleValueLabel, listVersion.Value())
 	fmt.Println("IsUnsupported:", listVersion.IsUnsupported())
 	// Output:
 	// Value: -1
@@ -51,7 +53,7 @@ func ExampleNewListVersionNumber_emptyList() {
 		return
 	}
 
-	fmt.Println("Value:", listVersion.Value())
+	fmt.Println(exampleValueLabel, listVersion.Value())
 	fmt.Println("IsEmpty:", listVersion.IsEmpty())
 	// Output:
 	// Value: 0

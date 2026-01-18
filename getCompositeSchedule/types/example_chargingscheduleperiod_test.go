@@ -17,10 +17,13 @@ const (
 // ExampleNewChargingSchedulePeriod demonstrates creating a
 // ChargingSchedulePeriod with required fields only.
 func ExampleNewChargingSchedulePeriod() {
-	period, err := types.NewChargingSchedulePeriod(types.ChargingSchedulePeriodInput{
-		StartPeriod: exampleStartPeriodZero,
-		Limit:       exampleLimitTen,
-	})
+	period, err := types.NewChargingSchedulePeriod(
+		types.ChargingSchedulePeriodInput{
+			StartPeriod:  exampleStartPeriodZero,
+			Limit:        exampleLimitTen,
+			NumberPhases: nil,
+		},
+	)
 	if err != nil {
 		fmt.Println(err)
 
@@ -39,11 +42,13 @@ func ExampleNewChargingSchedulePeriod() {
 func ExampleNewChargingSchedulePeriod_withNumberPhases() {
 	phases := exampleNumberPhasesThree
 
-	period, err := types.NewChargingSchedulePeriod(types.ChargingSchedulePeriodInput{
-		StartPeriod:  exampleStartPeriodThirty,
-		Limit:        exampleLimitTwenty,
-		NumberPhases: &phases,
-	})
+	period, err := types.NewChargingSchedulePeriod(
+		types.ChargingSchedulePeriodInput{
+			StartPeriod:  exampleStartPeriodThirty,
+			Limit:        exampleLimitTwenty,
+			NumberPhases: &phases,
+		},
+	)
 	if err != nil {
 		fmt.Println(err)
 
@@ -62,10 +67,13 @@ func ExampleNewChargingSchedulePeriod_withNumberPhases() {
 // ExampleNewChargingSchedulePeriod_invalidLimit demonstrates the error
 // returned when a negative limit is provided.
 func ExampleNewChargingSchedulePeriod_invalidLimit() {
-	_, err := types.NewChargingSchedulePeriod(types.ChargingSchedulePeriodInput{
-		StartPeriod: exampleStartPeriodZero,
-		Limit:       -1.0,
-	})
+	_, err := types.NewChargingSchedulePeriod(
+		types.ChargingSchedulePeriodInput{
+			StartPeriod:  exampleStartPeriodZero,
+			Limit:        -1.0,
+			NumberPhases: nil,
+		},
+	)
 	if err != nil {
 		fmt.Println("Error: invalid limit")
 	}

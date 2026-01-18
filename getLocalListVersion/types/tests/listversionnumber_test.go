@@ -31,7 +31,11 @@ func TestNewListVersionNumber_Valid_Positive(t *testing.T) {
 	}
 
 	if listVersion.Value() != expectedValuePositive {
-		t.Errorf(st.ErrorMismatchValue, expectedValuePositive, listVersion.Value())
+		t.Errorf(
+			st.ErrorMismatchValue,
+			expectedValuePositive,
+			listVersion.Value(),
+		)
 	}
 }
 

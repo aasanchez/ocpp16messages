@@ -88,7 +88,10 @@ func validateSampledValueInput(
 		errs,
 	)
 	validated.phase, errs = validateSampledValuePhase(input.Phase, errs)
-	validated.location, errs = validateSampledValueLocation(input.Location, errs)
+	validated.location, errs = validateSampledValueLocation(
+		input.Location,
+		errs,
+	)
 	validated.unit, errs = validateSampledValueUnit(input.Unit, errs)
 
 	return validated, errs

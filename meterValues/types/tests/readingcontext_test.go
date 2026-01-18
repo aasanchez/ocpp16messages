@@ -106,7 +106,12 @@ func TestReadingContext_String_InterruptionBegin(t *testing.T) {
 
 	got := mt.InterruptionBegin.String()
 	if got != rcInterruptionBeginStr {
-		t.Errorf(st.ErrorMethodMismatch, rcTypeString, got, rcInterruptionBeginStr)
+		t.Errorf(
+			st.ErrorMethodMismatch,
+			rcTypeString,
+			got,
+			rcInterruptionBeginStr,
+		)
 	}
 }
 
@@ -115,7 +120,12 @@ func TestReadingContext_String_InterruptionEnd(t *testing.T) {
 
 	got := mt.InterruptionEnd.String()
 	if got != rcInterruptionEndStr {
-		t.Errorf(st.ErrorMethodMismatch, rcTypeString, got, rcInterruptionEndStr)
+		t.Errorf(
+			st.ErrorMethodMismatch,
+			rcTypeString,
+			got,
+			rcInterruptionEndStr,
+		)
 	}
 }
 
@@ -151,7 +161,12 @@ func TestReadingContext_String_TransactionBegin(t *testing.T) {
 
 	got := mt.TransactionBegin.String()
 	if got != rcTransactionBeginStr {
-		t.Errorf(st.ErrorMethodMismatch, rcTypeString, got, rcTransactionBeginStr)
+		t.Errorf(
+			st.ErrorMethodMismatch,
+			rcTypeString,
+			got,
+			rcTransactionBeginStr,
+		)
 	}
 }
 
