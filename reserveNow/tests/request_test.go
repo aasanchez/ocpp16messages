@@ -99,7 +99,11 @@ func TestReq_Valid_WithParentIdTag(t *testing.T) {
 	}
 
 	if req.ParentIdTag.Value() != testValidParentIdTag {
-		t.Errorf(st.ErrorMismatch, testValidParentIdTag, req.ParentIdTag.Value())
+		t.Errorf(
+			st.ErrorMismatch,
+			testValidParentIdTag,
+			req.ParentIdTag.Value(),
+		)
 	}
 }
 

@@ -6,6 +6,8 @@ import (
 	"github.com/aasanchez/ocpp16messages/sendLocalList"
 )
 
+const fmtStatusStr = "Status: %s\n"
+
 // ExampleConf demonstrates creating a valid SendLocalList.conf message
 // with an Accepted status.
 func ExampleConf() {
@@ -18,7 +20,7 @@ func ExampleConf() {
 		return
 	}
 
-	fmt.Printf("Status: %s\n", conf.Status.String())
+	fmt.Printf(fmtStatusStr, conf.Status.String())
 	// Output:
 	// Status: Accepted
 }
@@ -35,7 +37,7 @@ func ExampleConf_failed() {
 		return
 	}
 
-	fmt.Printf("Status: %s\n", conf.Status.String())
+	fmt.Printf(fmtStatusStr, conf.Status.String())
 	// Output:
 	// Status: Failed
 }
@@ -52,7 +54,7 @@ func ExampleConf_versionMismatch() {
 		return
 	}
 
-	fmt.Printf("Status: %s\n", conf.Status.String())
+	fmt.Printf(fmtStatusStr, conf.Status.String())
 	// Output:
 	// Status: VersionMismatch
 }

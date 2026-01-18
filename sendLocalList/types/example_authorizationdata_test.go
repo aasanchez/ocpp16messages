@@ -32,7 +32,9 @@ func ExampleNewAuthorizationData_withStatus() {
 	authData, err := slt.NewAuthorizationData(slt.AuthorizationDataInput{
 		IdTag: "RFID12345",
 		IdTagInfo: &slt.IdTagInfoInput{
-			Status: "Accepted",
+			Status:      "Accepted",
+			ExpiryDate:  nil,
+			ParentIdTag: nil,
 		},
 	})
 	if err != nil {

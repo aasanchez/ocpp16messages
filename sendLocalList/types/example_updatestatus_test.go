@@ -6,11 +6,16 @@ import (
 	slt "github.com/aasanchez/ocpp16messages/sendLocalList/types"
 )
 
+const (
+	fmtStatus = "Status: %s\n"
+	fmtValid  = "Valid: %t\n"
+)
+
 // ExampleUpdateStatusAccepted demonstrates using the Accepted status constant.
 func ExampleUpdateStatusAccepted() {
 	status := slt.UpdateStatusAccepted
-	fmt.Printf("Status: %s\n", status.String())
-	fmt.Printf("Valid: %t\n", status.IsValid())
+	fmt.Printf(fmtStatus, status.String())
+	fmt.Printf(fmtValid, status.IsValid())
 	// Output:
 	// Status: Accepted
 	// Valid: true
@@ -19,8 +24,8 @@ func ExampleUpdateStatusAccepted() {
 // ExampleUpdateStatusFailed demonstrates using the Failed status constant.
 func ExampleUpdateStatusFailed() {
 	status := slt.UpdateStatusFailed
-	fmt.Printf("Status: %s\n", status.String())
-	fmt.Printf("Valid: %t\n", status.IsValid())
+	fmt.Printf(fmtStatus, status.String())
+	fmt.Printf(fmtValid, status.IsValid())
 	// Output:
 	// Status: Failed
 	// Valid: true
@@ -30,8 +35,8 @@ func ExampleUpdateStatusFailed() {
 // constant.
 func ExampleUpdateStatusNotSupported() {
 	status := slt.UpdateStatusNotSupported
-	fmt.Printf("Status: %s\n", status.String())
-	fmt.Printf("Valid: %t\n", status.IsValid())
+	fmt.Printf(fmtStatus, status.String())
+	fmt.Printf(fmtValid, status.IsValid())
 	// Output:
 	// Status: NotSupported
 	// Valid: true
@@ -41,8 +46,8 @@ func ExampleUpdateStatusNotSupported() {
 // status constant.
 func ExampleUpdateStatusVersionMismatch() {
 	status := slt.UpdateStatusVersionMismatch
-	fmt.Printf("Status: %s\n", status.String())
-	fmt.Printf("Valid: %t\n", status.IsValid())
+	fmt.Printf(fmtStatus, status.String())
+	fmt.Printf(fmtValid, status.IsValid())
 	// Output:
 	// Status: VersionMismatch
 	// Valid: true

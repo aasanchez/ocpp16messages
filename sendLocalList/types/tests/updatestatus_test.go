@@ -12,6 +12,7 @@ const (
 	statusFailedStr          = "Failed"
 	statusNotSupportedStr    = "NotSupported"
 	statusVersionMismatchStr = "VersionMismatch"
+	methodUpdateStatusString = "UpdateStatus.String()"
 )
 
 func TestUpdateStatus_IsValid_Accepted(t *testing.T) {
@@ -101,7 +102,7 @@ func TestUpdateStatus_String_Accepted(t *testing.T) {
 	if got != statusAcceptedStr {
 		t.Errorf(
 			st.ErrorMethodMismatch,
-			"UpdateStatus.String()",
+			methodUpdateStatusString,
 			got,
 			statusAcceptedStr,
 		)
@@ -115,7 +116,7 @@ func TestUpdateStatus_String_Failed(t *testing.T) {
 	if got != statusFailedStr {
 		t.Errorf(
 			st.ErrorMethodMismatch,
-			"UpdateStatus.String()",
+			methodUpdateStatusString,
 			got,
 			statusFailedStr,
 		)
@@ -129,7 +130,7 @@ func TestUpdateStatus_String_NotSupported(t *testing.T) {
 	if got != statusNotSupportedStr {
 		t.Errorf(
 			st.ErrorMethodMismatch,
-			"UpdateStatus.String()",
+			methodUpdateStatusString,
 			got,
 			statusNotSupportedStr,
 		)
@@ -143,7 +144,7 @@ func TestUpdateStatus_String_VersionMismatch(t *testing.T) {
 	if got != statusVersionMismatchStr {
 		t.Errorf(
 			st.ErrorMethodMismatch,
-			"UpdateStatus.String()",
+			methodUpdateStatusString,
 			got,
 			statusVersionMismatchStr,
 		)

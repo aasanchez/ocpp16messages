@@ -8,11 +8,12 @@ import (
 )
 
 const (
-	statusAcceptedStr    = "Accepted"
-	statusFaultedStr     = "Faulted"
-	statusOccupiedStr    = "Occupied"
-	statusRejectedStr    = "Rejected"
-	statusUnavailableStr = "Unavailable"
+	statusAcceptedStr       = "Accepted"
+	statusFaultedStr        = "Faulted"
+	statusOccupiedStr       = "Occupied"
+	statusRejectedStr       = "Rejected"
+	statusUnavailableStr    = "Unavailable"
+	methodReservationStatus = "ReservationStatus.String()"
 )
 
 func TestReservationStatus_IsValid_Accepted(t *testing.T) {
@@ -98,7 +99,7 @@ func TestReservationStatus_String_Accepted(t *testing.T) {
 	if got != statusAcceptedStr {
 		t.Errorf(
 			st.ErrorMethodMismatch,
-			"ReservationStatus.String()",
+			methodReservationStatus,
 			got,
 			statusAcceptedStr,
 		)
@@ -112,7 +113,7 @@ func TestReservationStatus_String_Faulted(t *testing.T) {
 	if got != statusFaultedStr {
 		t.Errorf(
 			st.ErrorMethodMismatch,
-			"ReservationStatus.String()",
+			methodReservationStatus,
 			got,
 			statusFaultedStr,
 		)
@@ -126,7 +127,7 @@ func TestReservationStatus_String_Occupied(t *testing.T) {
 	if got != statusOccupiedStr {
 		t.Errorf(
 			st.ErrorMethodMismatch,
-			"ReservationStatus.String()",
+			methodReservationStatus,
 			got,
 			statusOccupiedStr,
 		)
@@ -140,7 +141,7 @@ func TestReservationStatus_String_Rejected(t *testing.T) {
 	if got != statusRejectedStr {
 		t.Errorf(
 			st.ErrorMethodMismatch,
-			"ReservationStatus.String()",
+			methodReservationStatus,
 			got,
 			statusRejectedStr,
 		)
@@ -154,7 +155,7 @@ func TestReservationStatus_String_Unavailable(t *testing.T) {
 	if got != statusUnavailableStr {
 		t.Errorf(
 			st.ErrorMethodMismatch,
-			"ReservationStatus.String()",
+			methodReservationStatus,
 			got,
 			statusUnavailableStr,
 		)

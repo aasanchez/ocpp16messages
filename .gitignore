@@ -87,6 +87,6 @@ reports/
 *.zip
 .gocache
 testdata
-.claude/settings.local.json
+.claude/
 
 .vscode/

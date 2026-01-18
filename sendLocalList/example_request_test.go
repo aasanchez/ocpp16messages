@@ -7,6 +7,11 @@ import (
 	slt "github.com/aasanchez/ocpp16messages/sendLocalList/types"
 )
 
+const (
+	fmtListVersion = "ListVersion: %d\n"
+	fmtUpdateType  = "UpdateType: %s\n"
+)
+
 // ExampleReq demonstrates creating a valid SendLocalList.req message
 // with a full list replacement.
 func ExampleReq() {
@@ -30,8 +35,8 @@ func ExampleReq() {
 		return
 	}
 
-	fmt.Printf("ListVersion: %d\n", req.ListVersion.Value())
-	fmt.Printf("UpdateType: %s\n", req.UpdateType.String())
+	fmt.Printf(fmtListVersion, req.ListVersion.Value())
+	fmt.Printf(fmtUpdateType, req.UpdateType.String())
 	fmt.Printf("Entries: %d\n", len(req.LocalAuthorizationList))
 	// Output:
 	// ListVersion: 1
@@ -58,8 +63,8 @@ func ExampleReq_differential() {
 		return
 	}
 
-	fmt.Printf("ListVersion: %d\n", req.ListVersion.Value())
-	fmt.Printf("UpdateType: %s\n", req.UpdateType.String())
+	fmt.Printf(fmtListVersion, req.ListVersion.Value())
+	fmt.Printf(fmtUpdateType, req.UpdateType.String())
 	// Output:
 	// ListVersion: 2
 	// UpdateType: Differential
@@ -79,8 +84,8 @@ func ExampleReq_clearList() {
 		return
 	}
 
-	fmt.Printf("ListVersion: %d\n", req.ListVersion.Value())
-	fmt.Printf("UpdateType: %s\n", req.UpdateType.String())
+	fmt.Printf(fmtListVersion, req.ListVersion.Value())
+	fmt.Printf(fmtUpdateType, req.UpdateType.String())
 	fmt.Printf("Entries: %d\n", len(req.LocalAuthorizationList))
 	// Output:
 	// ListVersion: 3
