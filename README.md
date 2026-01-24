@@ -14,7 +14,7 @@ with strict validation, following Go best practices and the official OCPP 1.6
 specification. It is designed as a foundation for building OCPP-compliant
 charging station management systems and charge point implementations.
 
-**Status:** Active Development (Pre-1.0)
+**Status:** Active Development - 25/28 messages implemented (Pre-1.0)
 
 ### Key Features
 
@@ -40,51 +40,56 @@ go get github.com/aasanchez/ocpp16messages
 
 ```text
 .
-├── types/                      # Core OCPP data types
+├── types/                      # Core OCPP data types (shared across messages)
 │   ├── cistring.go             # CiString20/25/50/255/500 types
 │   ├── datetime.go             # RFC3339 DateTime with UTC normalization
 │   ├── integer.go              # Validated uint16 Integer type
 │   ├── errors.go               # Shared error constants and sentinels
+│   ├── authorizationstatus.go  # AuthorizationStatus enum
+│   ├── idtoken.go              # IdToken type
+│   ├── idtaginfo.go            # IdTagInfo type
+│   ├── chargingprofilepurposetype.go  # ChargingProfilePurposeType enum
+│   ├── chargingrateunit.go     # ChargingRateUnit enum
+│   ├── chargingschedule.go     # ChargingSchedule type
+│   ├── chargingscheduleperiod.go  # ChargingSchedulePeriod type
+│   ├── metervalue.go           # MeterValue and MeterValueInput types
+│   ├── sampledvalue.go         # SampledValue and SampledValueInput types
+│   ├── measurand.go            # Measurand enum
+│   ├── readingcontext.go       # ReadingContext enum
+│   ├── valueformat.go          # ValueFormat enum
+│   ├── phase.go                # Phase enum
+│   ├── location.go             # Location enum
+│   ├── unitofmeasure.go        # UnitOfMeasure enum
 │   ├── doc.go                  # Package documentation
 │   └── tests/                  # Public API tests (black-box)
-├── authorize/                  # Authorize message (implemented)
-│   ├── request.go              # Authorize.req (Req constructor)
-│   ├── confirmation.go         # Authorize.conf (Conf constructor)
-│   ├── errors.go               # Package-level error constants
-│   ├── doc.go                  # Package documentation
-│   ├── tests/                  # Public API tests
-│   └── types/                  # Authorize-specific types
-│       ├── idtoken.go          # IdToken type
-│       ├── idtaginfo.go        # IdTagInfo type
-│       ├── authorizationstatus.go
-│       └── tests/              # Type tests
-├── bootNotification/           # BootNotification message (implemented)
-├── cancelReservation/          # CancelReservation message (implemented)
-├── changeAvailability/         # ChangeAvailability message (implemented)
-├── changeConfiguration/        # ChangeConfiguration message (implemented)
-├── clearCache/                 # ClearCache message (implemented)
-├── clearChargingProfile/       # ClearChargingProfile message (implemented)
-├── dataTransfer/               # DataTransfer message (stub)
-├── diagnosticsStatusNotification/  # DiagnosticsStatusNotification (stub)
-├── firmwareStatusNotification/ # FirmwareStatusNotification (stub)
-├── getCompositeSchedule/       # GetCompositeSchedule (stub)
-├── getConfiguration/           # GetConfiguration (stub)
-├── getDiagnostics/             # GetDiagnostics (stub)
-├── getLocalListVersion/        # GetLocalListVersion (stub)
-├── heartbeat/                  # Heartbeat (stub)
-├── meterValues/                # MeterValues (stub)
-├── remoteStartTransaction/     # RemoteStartTransaction (stub)
-├── remoteStopTransaction/      # RemoteStopTransaction (stub)
-├── reserveNow/                 # ReserveNow (stub)
-├── reset/                      # Reset (stub)
-├── sendLocalList/              # SendLocalList (stub)
-├── setChargingProfile/         # SetChargingProfile (stub)
-├── startTransaction/           # StartTransaction (stub)
-├── statusNotification/         # StatusNotification (stub)
-├── stopTransaction/            # StopTransaction (stub)
-├── triggerMessage/             # TriggerMessage (stub)
-├── unlockConnector/            # UnlockConnector (stub)
-├── updateFirmware/             # UpdateFirmware (stub)
+├── authorize/                  # Authorize message
+├── bootNotification/           # BootNotification message
+├── cancelReservation/          # CancelReservation message
+├── changeAvailability/         # ChangeAvailability message
+├── changeConfiguration/        # ChangeConfiguration message
+├── clearCache/                 # ClearCache message
+├── clearChargingProfile/       # ClearChargingProfile message
+├── dataTransfer/               # DataTransfer message
+├── diagnosticsStatusNotification/  # DiagnosticsStatusNotification message
+├── firmwareStatusNotification/ # FirmwareStatusNotification message
+├── getCompositeSchedule/       # GetCompositeSchedule message
+├── getConfiguration/           # GetConfiguration message
+├── getDiagnostics/             # GetDiagnostics message
+├── getLocalListVersion/        # GetLocalListVersion message
+├── heartbeat/                  # Heartbeat message
+├── meterValues/                # MeterValues message
+├── remoteStartTransaction/     # RemoteStartTransaction message
+├── remoteStopTransaction/      # RemoteStopTransaction message
+├── reserveNow/                 # ReserveNow message
+├── reset/                      # Reset message
+├── sendLocalList/              # SendLocalList message
+├── setChargingProfile/         # SetChargingProfile message
+├── startTransaction/           # StartTransaction message
+├── statusNotification/         # StatusNotification message
+├── stopTransaction/            # StopTransaction message
+├── triggerMessage/             # TriggerMessage (planned)
+├── unlockConnector/            # UnlockConnector (planned)
+├── updateFirmware/             # UpdateFirmware (planned)
 └── SECURITY.md                 # Security policy and vulnerability reporting
 ```
 
@@ -201,6 +206,12 @@ Reports are generated in the `reports/` directory:
 | CiString500Type | `types.CiString500Type` | Length <= 500, ASCII printable (32-126) |
 | dateTime        | `types.DateTime`        | RFC3339, normalized to UTC              |
 | integer         | `types.Integer`         | uint16 (0-65535)                        |
+| MeterValue      | `types.MeterValue`      | Timestamp + SampledValue array          |
+| SampledValue    | `types.SampledValue`    | Value + optional context/format/etc     |
+| Measurand       | `types.Measurand`       | Enum: Energy, Power, Current, etc       |
+| Phase           | `types.Phase`           | Enum: L1, L2, L3, N, L1-N, etc          |
+| Location        | `types.Location`        | Enum: Body, Cable, EV, Inlet, Outlet    |
+| UnitOfMeasure   | `types.UnitOfMeasure`   | Enum: Wh, kWh, W, kW, A, V, etc         |
 
 ### Message Implementation Status
 
@@ -213,24 +224,24 @@ Reports are generated in the `reports/` directory:
 | ChangeConfiguration           | Done    | Done         | `changeConfiguration`           |
 | ClearCache                    | Done    | Done         | `clearCache`                    |
 | ClearChargingProfile          | Done    | Done         | `clearChargingProfile`          |
-| DataTransfer                  | Planned | Planned      | `dataTransfer`                  |
-| DiagnosticsStatusNotification | Planned | Planned      | `diagnosticsStatusNotification` |
-| FirmwareStatusNotification    | Planned | Planned      | `firmwareStatusNotification`    |
-| GetCompositeSchedule          | Planned | Planned      | `getCompositeSchedule`          |
-| GetConfiguration              | Planned | Planned      | `getConfiguration`              |
-| GetDiagnostics                | Planned | Planned      | `getDiagnostics`                |
-| GetLocalListVersion           | Planned | Planned      | `getLocalListVersion`           |
-| Heartbeat                     | Planned | Planned      | `heartbeat`                     |
-| MeterValues                   | Planned | Planned      | `meterValues`                   |
-| RemoteStartTransaction        | Planned | Planned      | `remoteStartTransaction`        |
-| RemoteStopTransaction         | Planned | Planned      | `remoteStopTransaction`         |
-| ReserveNow                    | Planned | Planned      | `reserveNow`                    |
-| Reset                         | Planned | Planned      | `reset`                         |
-| SendLocalList                 | Planned | Planned      | `sendLocalList`                 |
-| SetChargingProfile            | Planned | Planned      | `setChargingProfile`            |
-| StartTransaction              | Planned | Planned      | `startTransaction`              |
-| StatusNotification            | Planned | Planned      | `statusNotification`            |
-| StopTransaction               | Planned | Planned      | `stopTransaction`               |
+| DataTransfer                  | Done    | Done         | `dataTransfer`                  |
+| DiagnosticsStatusNotification | Done    | Done         | `diagnosticsStatusNotification` |
+| FirmwareStatusNotification    | Done    | Done         | `firmwareStatusNotification`    |
+| GetCompositeSchedule          | Done    | Done         | `getCompositeSchedule`          |
+| GetConfiguration              | Done    | Done         | `getConfiguration`              |
+| GetDiagnostics                | Done    | Done         | `getDiagnostics`                |
+| GetLocalListVersion           | Done    | Done         | `getLocalListVersion`           |
+| Heartbeat                     | Done    | Done         | `heartbeat`                     |
+| MeterValues                   | Done    | Done         | `meterValues`                   |
+| RemoteStartTransaction        | Done    | Done         | `remoteStartTransaction`        |
+| RemoteStopTransaction         | Done    | Done         | `remoteStopTransaction`         |
+| ReserveNow                    | Done    | Done         | `reserveNow`                    |
+| Reset                         | Done    | Done         | `reset`                         |
+| SendLocalList                 | Done    | Done         | `sendLocalList`                 |
+| SetChargingProfile            | Done    | Done         | `setChargingProfile`            |
+| StartTransaction              | Done    | Done         | `startTransaction`              |
+| StatusNotification            | Done    | Done         | `statusNotification`            |
+| StopTransaction               | Done    | Done         | `stopTransaction`               |
 | TriggerMessage                | Planned | Planned      | `triggerMessage`                |
 | UnlockConnector               | Planned | Planned      | `unlockConnector`               |
 | UpdateFirmware                | Planned | Planned      | `updateFirmware`                |

@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/meterValues"
-	mt "github.com/aasanchez/ocpp16messages/meterValues/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -35,10 +34,10 @@ func TestReq_ValidMinimalInput(t *testing.T) {
 	input := meterValues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: nil,
-		MeterValue: []mt.MeterValueInput{
+		MeterValue: []st.MeterValueInput{
 			{
 				Timestamp: validTimestampReq,
-				SampledValue: []mt.SampledValueInput{
+				SampledValue: []st.SampledValueInput{
 					{
 						Value:     validValueReq,
 						Context:   nil,
@@ -81,10 +80,10 @@ func TestReq_ValidWithTransactionId(t *testing.T) {
 	input := meterValues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: intPtr(validTransactionId),
-		MeterValue: []mt.MeterValueInput{
+		MeterValue: []st.MeterValueInput{
 			{
 				Timestamp: validTimestampReq,
-				SampledValue: []mt.SampledValueInput{
+				SampledValue: []st.SampledValueInput{
 					{
 						Value:     validValueReq,
 						Context:   nil,
@@ -123,10 +122,10 @@ func TestReq_ValidConnectorIdZero(t *testing.T) {
 	input := meterValues.ReqInput{
 		ConnectorId:   connectorIdZero,
 		TransactionId: nil,
-		MeterValue: []mt.MeterValueInput{
+		MeterValue: []st.MeterValueInput{
 			{
 				Timestamp: validTimestampReq,
-				SampledValue: []mt.SampledValueInput{
+				SampledValue: []st.SampledValueInput{
 					{
 						Value:     validValueReq,
 						Context:   nil,
@@ -161,10 +160,10 @@ func TestReq_ValidMultipleMeterValues(t *testing.T) {
 	input := meterValues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: nil,
-		MeterValue: []mt.MeterValueInput{
+		MeterValue: []st.MeterValueInput{
 			{
 				Timestamp: "2025-01-02T15:00:00Z",
-				SampledValue: []mt.SampledValueInput{
+				SampledValue: []st.SampledValueInput{
 					{
 						Value:     "100",
 						Context:   nil,
@@ -178,7 +177,7 @@ func TestReq_ValidMultipleMeterValues(t *testing.T) {
 			},
 			{
 				Timestamp: "2025-01-02T15:05:00Z",
-				SampledValue: []mt.SampledValueInput{
+				SampledValue: []st.SampledValueInput{
 					{
 						Value:     "150",
 						Context:   nil,
@@ -213,10 +212,10 @@ func TestReq_NegativeConnectorId(t *testing.T) {
 	input := meterValues.ReqInput{
 		ConnectorId:   negativeConnectorId,
 		TransactionId: nil,
-		MeterValue: []mt.MeterValueInput{
+		MeterValue: []st.MeterValueInput{
 			{
 				Timestamp: validTimestampReq,
-				SampledValue: []mt.SampledValueInput{
+				SampledValue: []st.SampledValueInput{
 					{
 						Value:     validValueReq,
 						Context:   nil,
@@ -247,10 +246,10 @@ func TestReq_NegativeTransactionId(t *testing.T) {
 	input := meterValues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: intPtr(invalidTransactionId),
-		MeterValue: []mt.MeterValueInput{
+		MeterValue: []st.MeterValueInput{
 			{
 				Timestamp: validTimestampReq,
-				SampledValue: []mt.SampledValueInput{
+				SampledValue: []st.SampledValueInput{
 					{
 						Value:     validValueReq,
 						Context:   nil,
@@ -281,7 +280,7 @@ func TestReq_EmptyMeterValue(t *testing.T) {
 	input := meterValues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: nil,
-		MeterValue:    []mt.MeterValueInput{},
+		MeterValue:    []st.MeterValueInput{},
 	}
 
 	_, err := meterValues.Req(input)
@@ -319,10 +318,10 @@ func TestReq_InvalidMeterValue(t *testing.T) {
 	input := meterValues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: nil,
-		MeterValue: []mt.MeterValueInput{
+		MeterValue: []st.MeterValueInput{
 			{
 				Timestamp: "invalid-timestamp",
-				SampledValue: []mt.SampledValueInput{
+				SampledValue: []st.SampledValueInput{
 					{
 						Value:     validValueReq,
 						Context:   nil,

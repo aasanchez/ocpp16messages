@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"strconv"
 
-	mt "github.com/aasanchez/ocpp16messages/meterValues/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -18,21 +17,21 @@ type ReqInput struct {
 	// Optional: The transaction ID for which meter values are reported.
 	TransactionId *int
 	// Required: One or more meter value sets.
-	MeterValue []mt.MeterValueInput
+	MeterValue []st.MeterValueInput
 }
 
 // ReqMessage represents an OCPP 1.6 MeterValues.req message.
 type ReqMessage struct {
 	ConnectorId   st.Integer
 	TransactionId *st.Integer
-	MeterValue    []mt.MeterValue
+	MeterValue    []st.MeterValue
 }
 
 // reqValidation holds validated fields during construction.
 type reqValidation struct {
 	connectorId   st.Integer
 	transactionId *st.Integer
-	meterValue    []mt.MeterValue
+	meterValue    []st.MeterValue
 }
 
 // Req creates a MeterValues.req message from the given input.
@@ -114,9 +113,9 @@ func validateReqTransactionId(
 const meterValuesLenZero = 0
 
 func validateReqMeterValues(
-	meterValues []mt.MeterValueInput,
+	meterValues []st.MeterValueInput,
 	errs []error,
-) ([]mt.MeterValue, []error) {
+) ([]st.MeterValue, []error) {
 	if len(meterValues) == meterValuesLenZero {
 		return nil, append(
 			errs,
@@ -124,10 +123,10 @@ func validateReqMeterValues(
 		)
 	}
 
-	var validValues []mt.MeterValue
+	var validValues []st.MeterValue
 
 	for i, mvInput := range meterValues {
-		meterValue, err := mt.NewMeterValue(mvInput)
+		meterValue, err := st.NewMeterValue(mvInput)
 		if err != nil {
 			errs = append(errs, fmt.Errorf("meterValue[%d]: %w", i, err))
 		} else {
