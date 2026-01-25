@@ -5,6 +5,9 @@ import (
 	"strconv"
 )
 
+// Compile-time interface verification.
+var _ fmt.Stringer = (*Integer)(nil)
+
 const (
 	// decimalBase is the base-10 radix used for parsing integer strings.
 	decimalBase = 10
@@ -32,4 +35,10 @@ func NewInteger(value string) (Integer, error) {
 // Value returns the underlying uint16 value of the Integer.
 func (integer Integer) Value() uint16 {
 	return integer.value
+}
+
+// String implements the fmt.Stringer interface, returning the decimal string
+// representation of the integer value.
+func (integer Integer) String() string {
+	return strconv.FormatUint(uint64(integer.value), decimalBase)
 }

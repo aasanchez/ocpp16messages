@@ -6,7 +6,12 @@ import (
 	"github.com/aasanchez/ocpp16messages/types"
 )
 
-const fieldStatus = "IdTagInfo.Status"
+const (
+	fieldStatus     = "IdTagInfo.Status"
+	testExpiryDate  = "2025-12-31T23:59:59Z"
+	testParentIdTag = "PARENT123"
+	closingBrace    = "}"
+)
 
 func TestNewIdTagInfo_ValidStatus(t *testing.T) {
 	t.Parallel()
@@ -61,7 +66,7 @@ func TestNewIdTagInfo_DefaultParentIdTagIsNil(t *testing.T) {
 func TestIdTagInfo_WithExpiryDate(t *testing.T) {
 	t.Parallel()
 
-	expiryDate, _ := types.NewDateTime("2025-12-31T23:59:59Z")
+	expiryDate, _ := types.NewDateTime(testExpiryDate)
 	info, _ := types.NewIdTagInfo(types.AuthorizationStatusAccepted)
 	result := info.WithExpiryDate(expiryDate)
 
@@ -73,7 +78,7 @@ func TestIdTagInfo_WithExpiryDate(t *testing.T) {
 func TestIdTagInfo_WithParentIdTag(t *testing.T) {
 	t.Parallel()
 
-	cistring, _ := types.NewCiString20Type("PARENT123")
+	cistring, _ := types.NewCiString20Type(testParentIdTag)
 	parentTag := types.NewIdToken(cistring)
 	info, _ := types.NewIdTagInfo(types.AuthorizationStatusAccepted)
 	result := info.WithParentIdTag(parentTag)
@@ -86,7 +91,7 @@ func TestIdTagInfo_WithParentIdTag(t *testing.T) {
 func TestIdTagInfo_WithExpiryDate_PreservesStatus(t *testing.T) {
 	t.Parallel()
 
-	expiryDate, _ := types.NewDateTime("2025-12-31T23:59:59Z")
+	expiryDate, _ := types.NewDateTime(testExpiryDate)
 	info, _ := types.NewIdTagInfo(types.AuthorizationStatusAccepted)
 	result := info.WithExpiryDate(expiryDate)
 
@@ -103,7 +108,7 @@ func TestIdTagInfo_WithExpiryDate_PreservesStatus(t *testing.T) {
 func TestIdTagInfo_WithParentIdTag_PreservesStatus(t *testing.T) {
 	t.Parallel()
 
-	cistring, _ := types.NewCiString20Type("PARENT123")
+	cistring, _ := types.NewCiString20Type(testParentIdTag)
 	parentTag := types.NewIdToken(cistring)
 	info, _ := types.NewIdTagInfo(types.AuthorizationStatusAccepted)
 	result := info.WithParentIdTag(parentTag)
@@ -115,5 +120,65 @@ func TestIdTagInfo_WithParentIdTag_PreservesStatus(t *testing.T) {
 			result.Status,
 			types.AuthorizationStatusAccepted,
 		)
+	}
+}
+
+func TestIdTagInfo_String_StatusOnly(t *testing.T) {
+	t.Parallel()
+
+	info, _ := types.NewIdTagInfo(types.AuthorizationStatusAccepted)
+	got := info.String()
+	want := "IdTagInfo{Status: Accepted}"
+
+	if got != want {
+		t.Errorf(types.ErrorMismatch, got, want)
+	}
+}
+
+func TestIdTagInfo_String_WithExpiryDate(t *testing.T) {
+	t.Parallel()
+
+	expiryDate, _ := types.NewDateTime(testExpiryDate)
+	info, _ := types.NewIdTagInfo(types.AuthorizationStatusAccepted)
+	result := info.WithExpiryDate(expiryDate)
+	got := result.String()
+	want := "IdTagInfo{Status: Accepted, ExpiryDate: " +
+		testExpiryDate + closingBrace
+
+	if got != want {
+		t.Errorf(types.ErrorMismatch, got, want)
+	}
+}
+
+func TestIdTagInfo_String_WithParentIdTag(t *testing.T) {
+	t.Parallel()
+
+	cistring, _ := types.NewCiString20Type(testParentIdTag)
+	parentTag := types.NewIdToken(cistring)
+	info, _ := types.NewIdTagInfo(types.AuthorizationStatusBlocked)
+	result := info.WithParentIdTag(parentTag)
+	got := result.String()
+	want := "IdTagInfo{Status: Blocked, ParentIdTag: " +
+		testParentIdTag + closingBrace
+
+	if got != want {
+		t.Errorf(types.ErrorMismatch, got, want)
+	}
+}
+
+func TestIdTagInfo_String_Complete(t *testing.T) {
+	t.Parallel()
+
+	expiryDate, _ := types.NewDateTime(testExpiryDate)
+	cistring, _ := types.NewCiString20Type(testParentIdTag)
+	parentTag := types.NewIdToken(cistring)
+	info, _ := types.NewIdTagInfo(types.AuthorizationStatusExpired)
+	result := info.WithExpiryDate(expiryDate).WithParentIdTag(parentTag)
+	got := result.String()
+	want := "IdTagInfo{Status: Expired, ExpiryDate: " + testExpiryDate +
+		", ParentIdTag: " + testParentIdTag + closingBrace
+
+	if got != want {
+		t.Errorf(types.ErrorMismatch, got, want)
 	}
 }

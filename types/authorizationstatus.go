@@ -1,5 +1,10 @@
 package types
 
+import "fmt"
+
+// Compile-time interface verification.
+var _ fmt.Stringer = AuthorizationStatus("")
+
 // AuthorizationStatus represents the status in a response to an Authorize
 // request.
 type AuthorizationStatus string

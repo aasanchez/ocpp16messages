@@ -1,5 +1,10 @@
 package types
 
+import "fmt"
+
+// Compile-time interface verification.
+var _ fmt.Stringer = (*IdToken)(nil)
+
 // IdToken represents an OCPP 1.6 identifier token used for authorization.
 // It wraps a CiString20Type value that must not be empty.
 type IdToken struct {

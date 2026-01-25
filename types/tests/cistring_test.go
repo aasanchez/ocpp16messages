@@ -272,3 +272,60 @@ func TestNewCiString500_TestValue(t *testing.T) {
 		t.Errorf(errMsgValueMismatch, input, ciStr.Value())
 	}
 }
+
+// String() method tests
+
+func TestCiString20Type_String(t *testing.T) {
+	t.Parallel()
+
+	input := "test-value"
+
+	ciStr, _ := st.NewCiString20Type(input)
+	if ciStr.String() != input {
+		t.Errorf(errMsgValueMismatch, input, ciStr.String())
+	}
+}
+
+func TestCiString25Type_String(t *testing.T) {
+	t.Parallel()
+
+	input := "test-value-25"
+
+	ciStr, _ := st.NewCiString25Type(input)
+	if ciStr.String() != input {
+		t.Errorf(errMsgValueMismatch, input, ciStr.String())
+	}
+}
+
+func TestCiString50Type_String(t *testing.T) {
+	t.Parallel()
+
+	input := "test-value-50"
+
+	ciStr, _ := st.NewCiString50Type(input)
+	if ciStr.String() != input {
+		t.Errorf(errMsgValueMismatch, input, ciStr.String())
+	}
+}
+
+func TestCiString255Type_String(t *testing.T) {
+	t.Parallel()
+
+	input := "test-value-255"
+
+	ciStr, _ := st.NewCiString255Type(input)
+	if ciStr.String() != input {
+		t.Errorf(errMsgValueMismatch, input, ciStr.String())
+	}
+}
+
+func TestCiString500Type_String(t *testing.T) {
+	t.Parallel()
+
+	input := "test-value-500"
+
+	ciStr, _ := st.NewCiString500Type(input)
+	if ciStr.String() != input {
+		t.Errorf(errMsgValueMismatch, input, ciStr.String())
+	}
+}

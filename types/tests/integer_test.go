@@ -6,17 +6,20 @@ import (
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
-const testIntegerValue = 73
+const (
+	testIntegerValue    = 73
+	testIntegerValueStr = "73"
+)
 
 func TestNewInteger(t *testing.T) {
 	t.Parallel()
 
-	i, err := st.NewInteger("73")
+	integer, err := st.NewInteger(testIntegerValueStr)
 	if err != nil {
 		t.Errorf(st.ErrorExpectedError, err)
 	}
 
-	got := i.Value()
+	got := integer.Value()
 	if got != testIntegerValue {
 		t.Errorf(st.ErrorMismatch, got, testIntegerValue)
 	}
@@ -46,5 +49,42 @@ func TestNewInteger_Alphanumeric(t *testing.T) {
 	_, err := st.NewInteger("abc")
 	if err == nil {
 		t.Error(err)
+	}
+}
+
+func TestInteger_String(t *testing.T) {
+	t.Parallel()
+
+	integer, _ := st.NewInteger(testIntegerValueStr)
+	got := integer.String()
+
+	if got != testIntegerValueStr {
+		t.Errorf(st.ErrorMismatch, got, testIntegerValueStr)
+	}
+}
+
+func TestInteger_String_Zero(t *testing.T) {
+	t.Parallel()
+
+	integer, _ := st.NewInteger("0")
+
+	got := integer.String()
+	want := "0"
+
+	if got != want {
+		t.Errorf(st.ErrorMismatch, got, want)
+	}
+}
+
+func TestInteger_String_MaxValue(t *testing.T) {
+	t.Parallel()
+
+	integer, _ := st.NewInteger("65535")
+
+	got := integer.String()
+	want := "65535"
+
+	if got != want {
+		t.Errorf(st.ErrorMismatch, got, want)
 	}
 }

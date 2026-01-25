@@ -4,6 +4,9 @@ import (
 	"fmt"
 )
 
+// Compile-time interface verification.
+var _ fmt.Stringer = (*IdTagInfo)(nil)
+
 // IdTagInfo contains status information about an identifier.
 // It is returned in Authorize, StartTransaction, and StopTransaction responses.
 type IdTagInfo struct {
@@ -42,4 +45,22 @@ func (i IdTagInfo) WithParentIdTag(parentIdTag IdToken) IdTagInfo {
 	i.ParentIdTag = &parentIdTag
 
 	return i
+}
+
+// String implements the fmt.Stringer interface, returning a human-readable
+// representation of the IdTagInfo for debugging purposes.
+func (i IdTagInfo) String() string {
+	result := "IdTagInfo{Status: " + i.Status.String()
+
+	if i.ExpiryDate != nil {
+		result += ", ExpiryDate: " + i.ExpiryDate.String()
+	}
+
+	if i.ParentIdTag != nil {
+		result += ", ParentIdTag: " + i.ParentIdTag.String()
+	}
+
+	result += "}"
+
+	return result
 }

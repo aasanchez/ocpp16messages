@@ -5,6 +5,9 @@ import (
 	"time"
 )
 
+// Compile-time interface verification.
+var _ fmt.Stringer = (*DateTime)(nil)
+
 // DateTime represents an OCPP 1.6–compliant RFC3339 timestamp in UTC.
 type DateTime struct {
 	value time.Time
@@ -27,4 +30,10 @@ func NewDateTime(input string) (DateTime, error) {
 // Value returns the underlying time.Time value of the DateTime.
 func (dt DateTime) Value() time.Time {
 	return dt.value
+}
+
+// String implements the fmt.Stringer interface, returning the RFC3339Nano
+// formatted string representation of the DateTime in UTC.
+func (dt DateTime) String() string {
+	return dt.value.Format(time.RFC3339Nano)
 }

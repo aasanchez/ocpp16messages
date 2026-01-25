@@ -5,6 +5,15 @@ import (
 	"fmt"
 )
 
+// Compile-time interface verification.
+var (
+	_ fmt.Stringer = (*CiString20Type)(nil)
+	_ fmt.Stringer = (*CiString25Type)(nil)
+	_ fmt.Stringer = (*CiString50Type)(nil)
+	_ fmt.Stringer = (*CiString255Type)(nil)
+	_ fmt.Stringer = (*CiString500Type)(nil)
+)
+
 // Maximum length constants for OCPP 1.6 CiString types.
 const (
 	CiString20Max  = 20
@@ -92,6 +101,11 @@ func (c CiString20Type) Value() string {
 	return c.value.val()
 }
 
+// String implements the fmt.Stringer interface, returning the string value.
+func (c CiString20Type) String() string {
+	return c.value.val()
+}
+
 // CiString25Type represents an OCPP 1.6 case-insensitive string with a maximum
 // length of 25 characters. The string must contain only printable ASCII
 // characters (32-126).
@@ -109,6 +123,11 @@ func NewCiString25Type(value string) (CiString25Type, error) {
 
 // Value returns the underlying string value of the CiString25Type.
 func (c CiString25Type) Value() string {
+	return c.value.val()
+}
+
+// String implements the fmt.Stringer interface, returning the string value.
+func (c CiString25Type) String() string {
 	return c.value.val()
 }
 
@@ -132,6 +151,11 @@ func (c CiString50Type) Value() string {
 	return c.value.val()
 }
 
+// String implements the fmt.Stringer interface, returning the string value.
+func (c CiString50Type) String() string {
+	return c.value.val()
+}
+
 // CiString255Type represents an OCPP 1.6 case-insensitive string with a maximum
 // length of 255 characters. The string must contain only printable ASCII
 // characters (32-126).
@@ -152,6 +176,11 @@ func (c CiString255Type) Value() string {
 	return c.value.val()
 }
 
+// String implements the fmt.Stringer interface, returning the string value.
+func (c CiString255Type) String() string {
+	return c.value.val()
+}
+
 // CiString500Type represents an OCPP 1.6 case-insensitive string with a maximum
 // length of 500 characters. The string must contain only printable ASCII
 // characters (32-126).
@@ -169,5 +198,10 @@ func NewCiString500Type(value string) (CiString500Type, error) {
 
 // Value returns the underlying string value of the CiString500Type.
 func (c CiString500Type) Value() string {
+	return c.value.val()
+}
+
+// String implements the fmt.Stringer interface, returning the string value.
+func (c CiString500Type) String() string {
 	return c.value.val()
 }

@@ -7,6 +7,10 @@ import (
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
+const (
+	testDateTimeUTC = "2025-01-15T10:30:00Z"
+)
+
 func TestNewDateTime(t *testing.T) {
 	t.Parallel()
 
@@ -45,5 +49,45 @@ func TestNewDateTime_EmptyError(t *testing.T) {
 	dt, _ := st.NewDateTime("")
 	if !dt.Value().IsZero() {
 		t.Errorf("expected zero value after failed parse, got %v", dt.Value())
+	}
+}
+
+func TestDateTime_String(t *testing.T) {
+	t.Parallel()
+
+	dt, _ := st.NewDateTime(testDateTimeUTC)
+	got := dt.String()
+
+	if got != testDateTimeUTC {
+		t.Errorf(st.ErrorMismatch, got, testDateTimeUTC)
+	}
+}
+
+func TestDateTime_String_WithTimezone(t *testing.T) {
+	t.Parallel()
+
+	// Input with timezone offset is converted to UTC
+	input := "2025-01-15T12:30:00+02:00"
+
+	dt, _ := st.NewDateTime(input)
+	got := dt.String()
+
+	// Should be normalized to UTC (12:30 + 02:00 = 10:30 UTC)
+	if got != testDateTimeUTC {
+		t.Errorf(st.ErrorMismatch, got, testDateTimeUTC)
+	}
+}
+
+func TestDateTime_String_WithNanoseconds(t *testing.T) {
+	t.Parallel()
+
+	// RFC3339 parsing doesn't preserve nanoseconds, verify output format
+	dt, _ := st.NewDateTime(testDateTimeUTC)
+	got := dt.String()
+
+	// Verify it can be parsed back as RFC3339
+	_, err := time.Parse(time.RFC3339Nano, got)
+	if err != nil {
+		t.Errorf("String() output should be valid RFC3339Nano: %v", err)
 	}
 }
