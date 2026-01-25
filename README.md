@@ -14,7 +14,7 @@ with strict validation, following Go best practices and the official OCPP 1.6
 specification. It is designed as a foundation for building OCPP-compliant
 charging station management systems and charge point implementations.
 
-**Status:** Active Development - 25/28 messages implemented (Pre-1.0)
+**Status:** Active Development - 28/28 messages implemented (Pre-1.0)
 
 ### Key Features
 
@@ -87,9 +87,9 @@ go get github.com/aasanchez/ocpp16messages
 ├── startTransaction/           # StartTransaction message
 ├── statusNotification/         # StatusNotification message
 ├── stopTransaction/            # StopTransaction message
-├── triggerMessage/             # TriggerMessage (planned)
-├── unlockConnector/            # UnlockConnector (planned)
-├── updateFirmware/             # UpdateFirmware (planned)
+├── triggerMessage/             # TriggerMessage message
+├── unlockConnector/            # UnlockConnector message
+├── updateFirmware/             # UpdateFirmware message
 └── SECURITY.md                 # Security policy and vulnerability reporting
 ```
 
@@ -197,6 +197,8 @@ Reports are generated in the `reports/` directory:
 
 ### Type System
 
+#### Core Types (`types/`)
+
 | OCPP Type       | Go Type                 | Validation                              |
 |-----------------|-------------------------|-----------------------------------------|
 | CiString20Type  | `types.CiString20Type`  | Length <= 20, ASCII printable (32-126)  |
@@ -206,12 +208,72 @@ Reports are generated in the `reports/` directory:
 | CiString500Type | `types.CiString500Type` | Length <= 500, ASCII printable (32-126) |
 | dateTime        | `types.DateTime`        | RFC3339, normalized to UTC              |
 | integer         | `types.Integer`         | uint16 (0-65535)                        |
-| MeterValue      | `types.MeterValue`      | Timestamp + SampledValue array          |
-| SampledValue    | `types.SampledValue`    | Value + optional context/format/etc     |
-| Measurand       | `types.Measurand`       | Enum: Energy, Power, Current, etc       |
-| Phase           | `types.Phase`           | Enum: L1, L2, L3, N, L1-N, etc          |
-| Location        | `types.Location`        | Enum: Body, Cable, EV, Inlet, Outlet    |
-| UnitOfMeasure   | `types.UnitOfMeasure`   | Enum: Wh, kWh, W, kW, A, V, etc         |
+
+#### Authorization Types (`types/`)
+
+| OCPP Type           | Go Type                     | Description                      |
+|---------------------|-----------------------------|----------------------------------|
+| IdToken             | `types.IdToken`             | RFID tag identifier (CiString20) |
+| IdTagInfo           | `types.IdTagInfo`           | Authorization info with status   |
+| AuthorizationStatus | `types.AuthorizationStatus` | Accepted, Blocked, Expired, etc  |
+
+#### Charging Profile Types (`types/`)
+
+| OCPP Type                  | Go Type                            | Description                 |
+|----------------------------|------------------------------------|-----------------------------|
+| ChargingProfilePurposeType | `types.ChargingProfilePurposeType` | TxDefaultProfile, TxProfile |
+| ChargingRateUnit           | `types.ChargingRateUnit`           | W or A                      |
+| ChargingSchedule           | `types.ChargingSchedule`           | Schedule with periods       |
+| ChargingSchedulePeriod     | `types.ChargingSchedulePeriod`     | Start/limit/phases          |
+
+#### Meter Value Types (`types/`)
+
+| OCPP Type      | Go Type                | Description                          |
+|----------------|------------------------|--------------------------------------|
+| MeterValue     | `types.MeterValue`     | Timestamp + SampledValue array       |
+| SampledValue   | `types.SampledValue`   | Value + optional context/format/etc  |
+| Measurand      | `types.Measurand`      | Energy, Power, Current, Voltage, etc |
+| ReadingContext | `types.ReadingContext` | Sample.Clock, Sample.Periodic, etc   |
+| ValueFormat    | `types.ValueFormat`    | Raw or SignedData                    |
+| Phase          | `types.Phase`          | L1, L2, L3, N, L1-N, L2-N, L3-N      |
+| Location       | `types.Location`       | Body, Cable, EV, Inlet, Outlet       |
+| UnitOfMeasure  | `types.UnitOfMeasure`  | Wh, kWh, varh, kvarh, W, kW, VA, etc |
+
+#### Message-Specific Types
+
+| Package                         | Type                           | Description                        |
+|---------------------------------|--------------------------------|------------------------------------|
+| `bootNotification/types`        | `RegistrationStatus`           | Accepted, Pending, Rejected        |
+| `cancelReservation/types`       | `CancelReservationStatus`      | Accepted, Rejected                 |
+| `changeAvailability/types`      | `AvailabilityType`             | Inoperative, Operative             |
+| `changeAvailability/types`      | `AvailabilityStatus`           | Accepted, Rejected, Scheduled      |
+| `changeConfiguration/types`     | `ConfigurationStatus`          | Accepted, Rejected, etc            |
+| `clearCache/types`              | `ClearCacheStatus`             | Accepted, Rejected                 |
+| `clearChargingProfile/types`    | `ClearChargingProfileStatus`   | Accepted, Unknown                  |
+| `dataTransfer/types`            | `DataTransferStatus`           | Accepted, Rejected, etc            |
+| `diagnosticsStatusNotification` | `DiagnosticsStatus`            | Idle, Uploaded, UploadFailed, etc  |
+| `firmwareStatusNotification`    | `FirmwareStatus`               | Downloaded, Installing, etc        |
+| `getCompositeSchedule/types`    | `GetCompositeScheduleStatus`   | Accepted, Rejected                 |
+| `getConfiguration/types`        | `KeyValue`                     | Configuration key-value pair       |
+| `getLocalListVersion/types`     | `ListVersionNumber`            | Local list version number          |
+| `remoteStartTransaction/types`  | `RemoteStartTransactionStatus` | Accepted, Rejected                 |
+| `remoteStopTransaction/types`   | `RemoteStopTransactionStatus`  | Accepted, Rejected                 |
+| `reserveNow/types`              | `ReservationStatus`            | Accepted, Faulted, Occupied, etc   |
+| `reset/types`                   | `ResetType`                    | Hard, Soft                         |
+| `reset/types`                   | `ResetStatus`                  | Accepted, Rejected                 |
+| `sendLocalList/types`           | `UpdateType`                   | Differential, Full                 |
+| `sendLocalList/types`           | `UpdateStatus`                 | Accepted, Failed, etc              |
+| `sendLocalList/types`           | `AuthorizationData`            | IdTag + IdTagInfo                  |
+| `setChargingProfile/types`      | `ChargingProfile`              | Complete charging profile          |
+| `setChargingProfile/types`      | `ChargingProfileKindType`      | Absolute, Recurring, Relative      |
+| `setChargingProfile/types`      | `ChargingProfileStatus`        | Accepted, Rejected, etc            |
+| `setChargingProfile/types`      | `RecurrencyKindType`           | Daily, Weekly                      |
+| `statusNotification/types`      | `ChargePointErrorCode`         | ConnectorLockFailure, etc          |
+| `statusNotification/types`      | `ChargePointStatus`            | Available, Charging, Faulted, etc  |
+| `stopTransaction/types`         | `StopReason`                   | EmergencyStop, EVDisconnected, etc |
+| `triggerMessage/types`          | `MessageTrigger`               | BootNotification, Heartbeat, etc   |
+| `triggerMessage/types`          | `TriggerMessageStatus`         | Accepted, Rejected, NotImplemented |
+| `unlockConnector/types`         | `UnlockStatus`                 | Unlocked, UnlockFailed, etc        |
 
 ### Message Implementation Status
 
@@ -242,9 +304,9 @@ Reports are generated in the `reports/` directory:
 | StartTransaction              | Done    | Done         | `startTransaction`              |
 | StatusNotification            | Done    | Done         | `statusNotification`            |
 | StopTransaction               | Done    | Done         | `stopTransaction`               |
-| TriggerMessage                | Planned | Planned      | `triggerMessage`                |
-| UnlockConnector               | Planned | Planned      | `unlockConnector`               |
-| UpdateFirmware                | Planned | Planned      | `updateFirmware`                |
+| TriggerMessage                | Done    | Done         | `triggerMessage`                |
+| UnlockConnector               | Done    | Done         | `unlockConnector`               |
+| UpdateFirmware                | Done    | Done         | `updateFirmware`                |
 
 ### Design Principles
 
