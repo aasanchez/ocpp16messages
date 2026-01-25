@@ -24,7 +24,7 @@ charging station management systems and charge point implementations.
 - **OCPP Naming** - Uses `Req()`/`Conf()` to match OCPP terminology
   (Authorize.req, Authorize.conf)
 - **Immutable Types** - Thread-safe by design with value receivers
-- **Comprehensive Testing** - Unit tests and example tests with 100% coverage
+- **Comprehensive Testing** - Unit tests and example tests with high coverage
 - **Zero Panics** - All errors returned, never panicked
 - **Well Documented** - Full godoc coverage and examples
 
