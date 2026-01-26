@@ -37,10 +37,10 @@ type meterValueValidation struct {
 func NewMeterValue(input MeterValueInput) (MeterValue, error) {
 	validated, errs := validateMeterValueInput(input)
 	if errs != nil {
-		return MeterValue{
-			Timestamp:    DateTime{value: time.Time{}},
-			SampledValue: nil,
-		}, fmt.Errorf("NewMeterValue: %w", errors.Join(errs...))
+		return MeterValue{}, fmt.Errorf(
+			"NewMeterValue: %w",
+			errors.Join(errs...),
+		)
 	}
 
 	return MeterValue{

@@ -8,11 +8,15 @@ import (
 )
 
 const exampleValueLabel = "Value:"
+const (
+	exampleListVersionPositive = 5
+	exampleListVersionZero     = 0
+)
 
 // ExampleNewListVersionNumber demonstrates creating a ListVersionNumber
 // with a positive version number.
 func ExampleNewListVersionNumber() {
-	listVersion, err := types.NewListVersionNumber(5)
+	listVersion, err := types.NewListVersionNumber(exampleListVersionPositive)
 	if err != nil {
 		fmt.Println(err)
 
@@ -47,7 +51,7 @@ func ExampleNewListVersionNumber_unsupported() {
 // ExampleNewListVersionNumber_emptyList demonstrates creating a
 // ListVersionNumber indicating the local authorization list is empty.
 func ExampleNewListVersionNumber_emptyList() {
-	listVersion, err := types.NewListVersionNumber(0)
+	listVersion, err := types.NewListVersionNumber(exampleListVersionZero)
 	if err != nil {
 		fmt.Println(err)
 

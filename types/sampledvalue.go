@@ -50,15 +50,10 @@ type sampledValueValidation struct {
 func NewSampledValue(input SampledValueInput) (SampledValue, error) {
 	validated, errs := validateSampledValueInput(input)
 	if errs != nil {
-		return SampledValue{
-			Value:     CiString500Type{value: ciString{value: ""}},
-			Context:   nil,
-			Format:    nil,
-			Measurand: nil,
-			Phase:     nil,
-			Location:  nil,
-			Unit:      nil,
-		}, fmt.Errorf("NewSampledValue: %w", errors.Join(errs...))
+		return SampledValue{}, fmt.Errorf(
+			"NewSampledValue: %w",
+			errors.Join(errs...),
+		)
 	}
 
 	return SampledValue{

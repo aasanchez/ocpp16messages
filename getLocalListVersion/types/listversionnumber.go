@@ -38,7 +38,11 @@ func NewListVersionNumber(value int) (ListVersionNumber, error) {
 		return ListVersionNumber{}, fmt.Errorf(
 			"NewListVersionNumber: "+st.ErrorFieldFormat,
 			"value",
-			fmt.Errorf("%w: %d out of range (int32)", st.ErrInvalidValue, value),
+			fmt.Errorf(
+				"%w: %d out of range (int32)",
+				st.ErrInvalidValue,
+				value,
+			),
 		)
 	}
 
