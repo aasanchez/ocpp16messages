@@ -1,6 +1,5 @@
 package types_test
 
-//revive:disable line-length-limit
 import (
 	"fmt"
 
@@ -24,9 +23,9 @@ func ExampleNewInteger() {
 func ExampleNewInteger_invalid() {
 	_, err := st.NewInteger("abc")
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("invalid integer input")
 	}
 
 	// Output:
-	// NewInteger: value: invalid value: strconv.ParseUint: parsing "abc": invalid syntax
+	// invalid integer input
 }

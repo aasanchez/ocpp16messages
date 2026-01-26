@@ -1,6 +1,5 @@
 package types_test
 
-//revive:disable line-length-limit
 import (
 	"fmt"
 	"strings"
@@ -8,8 +7,13 @@ import (
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
+const (
+	ciString20Len  = 20
+	ciString20Over = 21
+)
+
 func ExampleNewCiString20Type() {
-	input := strings.Repeat("A", 20)
+	input := strings.Repeat("A", ciString20Len)
 
 	cistr, err := st.NewCiString20Type(input)
 	if err != nil {
@@ -25,7 +29,7 @@ func ExampleNewCiString20Type() {
 }
 
 func ExampleNewCiString20Type_invalid() {
-	input := strings.Repeat("B", 21)
+	input := strings.Repeat("B", ciString20Over)
 
 	_, err := st.NewCiString20Type(input)
 	if err != nil {
