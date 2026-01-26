@@ -97,3 +97,17 @@ func TestConf_Valid_ZeroValue(t *testing.T) {
 		)
 	}
 }
+
+func TestConf_InvalidListVersion_ExceedsInt32(t *testing.T) {
+	t.Parallel()
+
+	// Value exceeds int32 max (2147483647), should cause overflow error
+	overflowValue := 2147483648
+
+	_, err := getLocalListVersion.Conf(getLocalListVersion.ConfInput{
+		ListVersion: overflowValue,
+	})
+	if err == nil {
+		t.Error("Conf() error = nil, want error for int32 overflow")
+	}
+}

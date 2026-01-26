@@ -134,3 +134,221 @@ func TestChargingProfile_ChargingSchedule(t *testing.T) {
 		)
 	}
 }
+
+func TestNewChargingProfile_InvalidChargingProfileId(t *testing.T) {
+	t.Parallel()
+
+	_, err := types.NewChargingProfile(types.ChargingProfileInput{
+		ChargingProfileId:      -1,
+		StackLevel:             testStackLevel,
+		ChargingProfilePurpose: testPurposeTxProfile,
+		ChargingProfileKind:    testKindAbsolute,
+		ChargingSchedule: st.ChargingScheduleInput{
+			ChargingRateUnit: testChargingRateUnitA,
+			ChargingSchedulePeriod: []st.ChargingSchedulePeriodInput{
+				{StartPeriod: testStartPeriod, Limit: testLimit},
+			},
+		},
+	})
+
+	if err == nil {
+		t.Error("NewChargingProfile() error = nil, want error")
+	}
+}
+
+func TestNewChargingProfile_InvalidTransactionId(t *testing.T) {
+	t.Parallel()
+
+	transactionId := -1
+	_, err := types.NewChargingProfile(types.ChargingProfileInput{
+		ChargingProfileId:      testChargingProfileId,
+		TransactionId:          &transactionId,
+		StackLevel:             testStackLevel,
+		ChargingProfilePurpose: testPurposeTxProfile,
+		ChargingProfileKind:    testKindAbsolute,
+		ChargingSchedule: st.ChargingScheduleInput{
+			ChargingRateUnit: testChargingRateUnitA,
+			ChargingSchedulePeriod: []st.ChargingSchedulePeriodInput{
+				{StartPeriod: testStartPeriod, Limit: testLimit},
+			},
+		},
+	})
+
+	if err == nil {
+		t.Error("NewChargingProfile() error = nil, want error")
+	}
+}
+
+func TestNewChargingProfile_InvalidStackLevel(t *testing.T) {
+	t.Parallel()
+
+	_, err := types.NewChargingProfile(types.ChargingProfileInput{
+		ChargingProfileId:      testChargingProfileId,
+		StackLevel:             -1,
+		ChargingProfilePurpose: testPurposeTxProfile,
+		ChargingProfileKind:    testKindAbsolute,
+		ChargingSchedule: st.ChargingScheduleInput{
+			ChargingRateUnit: testChargingRateUnitA,
+			ChargingSchedulePeriod: []st.ChargingSchedulePeriodInput{
+				{StartPeriod: testStartPeriod, Limit: testLimit},
+			},
+		},
+	})
+
+	if err == nil {
+		t.Error("NewChargingProfile() error = nil, want error")
+	}
+}
+
+func TestNewChargingProfile_StackLevelExceedsUint16(t *testing.T) {
+	t.Parallel()
+
+	overflowStackLevel := 65536
+
+	_, err := types.NewChargingProfile(types.ChargingProfileInput{
+		ChargingProfileId:      testChargingProfileId,
+		StackLevel:             overflowStackLevel,
+		ChargingProfilePurpose: testPurposeTxProfile,
+		ChargingProfileKind:    testKindAbsolute,
+		ChargingSchedule: st.ChargingScheduleInput{
+			ChargingRateUnit: testChargingRateUnitA,
+			ChargingSchedulePeriod: []st.ChargingSchedulePeriodInput{
+				{StartPeriod: testStartPeriod, Limit: testLimit},
+			},
+		},
+	})
+
+	if err == nil {
+		t.Error("NewChargingProfile() error = nil, want error for uint16 overflow")
+	}
+}
+
+func TestNewChargingProfile_InvalidPurpose(t *testing.T) {
+	t.Parallel()
+
+	_, err := types.NewChargingProfile(types.ChargingProfileInput{
+		ChargingProfileId:      testChargingProfileId,
+		StackLevel:             testStackLevel,
+		ChargingProfilePurpose: "InvalidPurpose",
+		ChargingProfileKind:    testKindAbsolute,
+		ChargingSchedule: st.ChargingScheduleInput{
+			ChargingRateUnit: testChargingRateUnitA,
+			ChargingSchedulePeriod: []st.ChargingSchedulePeriodInput{
+				{StartPeriod: testStartPeriod, Limit: testLimit},
+			},
+		},
+	})
+
+	if err == nil {
+		t.Error("NewChargingProfile() error = nil, want error")
+	}
+}
+
+func TestNewChargingProfile_InvalidKind(t *testing.T) {
+	t.Parallel()
+
+	_, err := types.NewChargingProfile(types.ChargingProfileInput{
+		ChargingProfileId:      testChargingProfileId,
+		StackLevel:             testStackLevel,
+		ChargingProfilePurpose: testPurposeTxProfile,
+		ChargingProfileKind:    "InvalidKind",
+		ChargingSchedule: st.ChargingScheduleInput{
+			ChargingRateUnit: testChargingRateUnitA,
+			ChargingSchedulePeriod: []st.ChargingSchedulePeriodInput{
+				{StartPeriod: testStartPeriod, Limit: testLimit},
+			},
+		},
+	})
+
+	if err == nil {
+		t.Error("NewChargingProfile() error = nil, want error")
+	}
+}
+
+func TestNewChargingProfile_InvalidRecurrencyKind(t *testing.T) {
+	t.Parallel()
+
+	recurrencyKind := "InvalidRecurrency"
+	_, err := types.NewChargingProfile(types.ChargingProfileInput{
+		ChargingProfileId:      testChargingProfileId,
+		StackLevel:             testStackLevel,
+		ChargingProfilePurpose: testPurposeTxProfile,
+		ChargingProfileKind:    testKindAbsolute,
+		RecurrencyKind:         &recurrencyKind,
+		ChargingSchedule: st.ChargingScheduleInput{
+			ChargingRateUnit: testChargingRateUnitA,
+			ChargingSchedulePeriod: []st.ChargingSchedulePeriodInput{
+				{StartPeriod: testStartPeriod, Limit: testLimit},
+			},
+		},
+	})
+
+	if err == nil {
+		t.Error("NewChargingProfile() error = nil, want error")
+	}
+}
+
+func TestNewChargingProfile_InvalidValidFrom(t *testing.T) {
+	t.Parallel()
+
+	invalidTime := "not-a-valid-time"
+	_, err := types.NewChargingProfile(types.ChargingProfileInput{
+		ChargingProfileId:      testChargingProfileId,
+		StackLevel:             testStackLevel,
+		ChargingProfilePurpose: testPurposeTxProfile,
+		ChargingProfileKind:    testKindAbsolute,
+		ValidFrom:              &invalidTime,
+		ChargingSchedule: st.ChargingScheduleInput{
+			ChargingRateUnit: testChargingRateUnitA,
+			ChargingSchedulePeriod: []st.ChargingSchedulePeriodInput{
+				{StartPeriod: testStartPeriod, Limit: testLimit},
+			},
+		},
+	})
+
+	if err == nil {
+		t.Error("NewChargingProfile() error = nil, want error")
+	}
+}
+
+func TestNewChargingProfile_InvalidValidTo(t *testing.T) {
+	t.Parallel()
+
+	invalidTime := "not-a-valid-time"
+	_, err := types.NewChargingProfile(types.ChargingProfileInput{
+		ChargingProfileId:      testChargingProfileId,
+		StackLevel:             testStackLevel,
+		ChargingProfilePurpose: testPurposeTxProfile,
+		ChargingProfileKind:    testKindAbsolute,
+		ValidTo:                &invalidTime,
+		ChargingSchedule: st.ChargingScheduleInput{
+			ChargingRateUnit: testChargingRateUnitA,
+			ChargingSchedulePeriod: []st.ChargingSchedulePeriodInput{
+				{StartPeriod: testStartPeriod, Limit: testLimit},
+			},
+		},
+	})
+
+	if err == nil {
+		t.Error("NewChargingProfile() error = nil, want error")
+	}
+}
+
+func TestNewChargingProfile_InvalidChargingSchedule(t *testing.T) {
+	t.Parallel()
+
+	_, err := types.NewChargingProfile(types.ChargingProfileInput{
+		ChargingProfileId:      testChargingProfileId,
+		StackLevel:             testStackLevel,
+		ChargingProfilePurpose: testPurposeTxProfile,
+		ChargingProfileKind:    testKindAbsolute,
+		ChargingSchedule: st.ChargingScheduleInput{
+			ChargingRateUnit:       "InvalidUnit",
+			ChargingSchedulePeriod: []st.ChargingSchedulePeriodInput{},
+		},
+	})
+
+	if err == nil {
+		t.Error("NewChargingProfile() error = nil, want error")
+	}
+}

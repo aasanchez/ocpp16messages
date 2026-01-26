@@ -450,3 +450,47 @@ func TestReq_AllErrorCodes(t *testing.T) {
 		}
 	}
 }
+
+func TestReq_InvalidVendorId(t *testing.T) {
+	t.Parallel()
+
+	// VendorId must be valid CiString255, test with invalid ASCII
+	invalidVendorId := "Vendor\x00Id"
+
+	_, err := statusNotification.Req(statusNotification.ReqInput{
+		ConnectorId:     testConnectorIdOne,
+		ErrorCode:       testErrorCodeNoError,
+		Status:          testStatusAvailable,
+		VendorId:        &invalidVendorId,
+		VendorErrorCode: nil,
+	})
+	if err == nil {
+		t.Error("Req() error = nil, want error for invalid vendorId")
+	}
+
+	if !strings.Contains(err.Error(), "vendorId") {
+		t.Errorf(st.ErrorWantContains, err, "vendorId")
+	}
+}
+
+func TestReq_InvalidVendorErrorCode(t *testing.T) {
+	t.Parallel()
+
+	// VendorErrorCode must be valid CiString50, test with invalid ASCII
+	invalidVendorErrorCode := "Error\x00Code"
+
+	_, err := statusNotification.Req(statusNotification.ReqInput{
+		ConnectorId:     testConnectorIdOne,
+		ErrorCode:       testErrorCodeNoError,
+		Status:          testStatusAvailable,
+		VendorId:        nil,
+		VendorErrorCode: &invalidVendorErrorCode,
+	})
+	if err == nil {
+		t.Error("Req() error = nil, want error for invalid vendorErrorCode")
+	}
+
+	if !strings.Contains(err.Error(), "vendorErrorCode") {
+		t.Errorf(st.ErrorWantContains, err, "vendorErrorCode")
+	}
+}

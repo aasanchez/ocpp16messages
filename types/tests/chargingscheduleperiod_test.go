@@ -92,3 +92,59 @@ func TestChargingSchedulePeriod_NumberPhases_WhenNil(t *testing.T) {
 		t.Error("ChargingSchedulePeriod.NumberPhases() = non-nil, want nil")
 	}
 }
+
+func TestNewChargingSchedulePeriod_NegativeStartPeriod(t *testing.T) {
+	t.Parallel()
+
+	_, err := types.NewChargingSchedulePeriod(types.ChargingSchedulePeriodInput{
+		StartPeriod: -1,
+		Limit:       testPeriodLimit,
+	})
+
+	if err == nil {
+		t.Error("NewChargingSchedulePeriod() error = nil, want error")
+	}
+}
+
+func TestNewChargingSchedulePeriod_NegativeLimit(t *testing.T) {
+	t.Parallel()
+
+	_, err := types.NewChargingSchedulePeriod(types.ChargingSchedulePeriodInput{
+		StartPeriod: testPeriodStartPeriod,
+		Limit:       -1.0,
+	})
+
+	if err == nil {
+		t.Error("NewChargingSchedulePeriod() error = nil, want error")
+	}
+}
+
+func TestNewChargingSchedulePeriod_NumberPhasesTooLow(t *testing.T) {
+	t.Parallel()
+
+	numPhases := 0
+	_, err := types.NewChargingSchedulePeriod(types.ChargingSchedulePeriodInput{
+		StartPeriod:  testPeriodStartPeriod,
+		Limit:        testPeriodLimit,
+		NumberPhases: &numPhases,
+	})
+
+	if err == nil {
+		t.Error("NewChargingSchedulePeriod() error = nil, want error")
+	}
+}
+
+func TestNewChargingSchedulePeriod_NumberPhasesTooHigh(t *testing.T) {
+	t.Parallel()
+
+	numPhases := 4
+	_, err := types.NewChargingSchedulePeriod(types.ChargingSchedulePeriodInput{
+		StartPeriod:  testPeriodStartPeriod,
+		Limit:        testPeriodLimit,
+		NumberPhases: &numPhases,
+	})
+
+	if err == nil {
+		t.Error("NewChargingSchedulePeriod() error = nil, want error")
+	}
+}
