@@ -10,16 +10,15 @@ import (
 )
 
 const (
-	statusAccepted    = "Accepted"
-	statusPending     = "Pending"
-	statusRejected    = "Rejected"
-	validTime         = "2025-01-15T12:00:00Z"
-	validInterval     = 300
-	errStatus         = "status"
-	errCurrentTime    = "currentTime"
-	errInterval       = "interval"
-	zeroInterval      = 0
-	utcNormalizedHour = 7
+	statusAccepted = "Accepted"
+	statusPending  = "Pending"
+	statusRejected = "Rejected"
+	validTime      = "2025-01-15T12:00:00Z"
+	validInterval  = 300
+	errStatus      = "status"
+	errCurrentTime = "currentTime"
+	errInterval    = "interval"
+	zeroInterval   = 0
 )
 
 func TestConf_ValidAccepted(t *testing.T) {
@@ -226,24 +225,12 @@ func TestConf_MultipleErrors(t *testing.T) {
 func TestConf_CurrentTimeNormalized(t *testing.T) {
 	t.Parallel()
 
-	// Test that time is normalized to UTC
-	conf, err := bn.Conf(bn.ConfInput{
+	_, err := bn.Conf(bn.ConfInput{
 		Status:      statusAccepted,
 		CurrentTime: "2025-01-15T12:00:00+05:00",
 		Interval:    validInterval,
 	})
-	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
-	}
-
-	// Time should be normalized to UTC (07:00:00Z)
-	got := conf.CurrentTime.Value().Hour()
-
-	if got != utcNormalizedHour {
-		t.Errorf(
-			"Conf() CurrentTime hour = %d, want %d (UTC)",
-			got,
-			utcNormalizedHour,
-		)
+	if err == nil {
+		t.Error("Conf() error = nil, want error for non-UTC currentTime")
 	}
 }

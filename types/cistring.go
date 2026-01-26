@@ -60,16 +60,21 @@ func newCiString(input string, maxLen int) (ciString, error) {
 
 	if len(cis.value) > maxLen {
 		return ciString{}, fmt.Errorf(
-			"CiString Error on Construct (len=%d, max=%d): %w",
+			"%w: %w (len=%d, max=%d)",
+			ErrInvalidValue,
+			errExceedsMaxLength,
 			len(cis.value),
 			maxLen,
-			errExceedsMaxLength,
 		)
 	}
 
 	for _, r := range input {
 		if r < asciiPrintableMin || r > asciiPrintableMax {
-			return ciString{}, errInvalidASCII
+			return ciString{}, fmt.Errorf(
+				"%w: %w",
+				ErrInvalidValue,
+				errInvalidASCII,
+			)
 		}
 	}
 

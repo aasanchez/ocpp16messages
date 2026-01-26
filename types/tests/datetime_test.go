@@ -1,6 +1,8 @@
 package types_test
 
 import (
+	"errors"
+	"strings"
 	"testing"
 	"time"
 
@@ -8,29 +10,42 @@ import (
 )
 
 const (
-	testDateTimeUTC = "2025-01-15T10:30:00Z"
+	testDateTimeUTC    = "2025-01-15T10:30:00Z"
+	testDateTimeNonUTC = "2025-08-30T14:34:56+02:00"
 )
 
-func TestNewDateTime(t *testing.T) {
+func TestNewDateTime_AcceptsUTC(t *testing.T) {
 	t.Parallel()
 
-	input := "2025-08-30T14:34:56+02:00"
-
-	_, err := st.NewDateTime(input)
+	dateTime, err := st.NewDateTime(testDateTimeUTC)
 	if err != nil {
-		t.Errorf("%v", err)
+		t.Errorf(st.ErrorUnexpectedError, err)
+	}
+
+	want, _ := time.Parse(time.RFC3339, testDateTimeUTC)
+	if !dateTime.Value().Equal(want) {
+		t.Errorf(st.ErrorMismatch, dateTime.Value(), want)
+	}
+
+	if dateTime.Value().Location() != time.UTC {
+		t.Errorf("location = %v, want UTC", dateTime.Value().Location())
 	}
 }
 
-func TestNewDateTime_ReturnsExpectedValue(t *testing.T) {
+func TestNewDateTime_RejectsNonUTC(t *testing.T) {
 	t.Parallel()
 
-	input := "2024-08-30T14:34:56+02:00"
-	want, _ := time.Parse(time.RFC3339, input)
+	_, err := st.NewDateTime(testDateTimeNonUTC)
+	if err == nil {
+		t.Fatal("NewDateTime() error = nil, want non-UTC error")
+	}
 
-	dt, _ := st.NewDateTime(input)
-	if !dt.Value().Equal(want) {
-		t.Errorf(st.ErrorMismatch, dt.Value(), want)
+	if !errors.Is(err, st.ErrInvalidValue) {
+		t.Errorf(st.ErrorWrapping, err, st.ErrInvalidValue)
+	}
+
+	if !strings.Contains(err.Error(), "UTC") {
+		t.Errorf(st.ErrorWantContains, err, "UTC")
 	}
 }
 
@@ -39,53 +54,37 @@ func TestNewDateTime_InvalidReturnsError(t *testing.T) {
 
 	_, err := st.NewDateTime("not-a-time")
 	if err == nil {
-		t.Error("expected error for invalid datetime, got nil")
+		t.Fatal("expected error for invalid datetime, got nil")
+	}
+
+	if !errors.Is(err, st.ErrInvalidValue) {
+		t.Errorf(st.ErrorWrapping, err, st.ErrInvalidValue)
 	}
 }
 
 func TestNewDateTime_EmptyError(t *testing.T) {
 	t.Parallel()
 
-	dt, _ := st.NewDateTime("")
-	if !dt.Value().IsZero() {
-		t.Errorf("expected zero value after failed parse, got %v", dt.Value())
+	_, err := st.NewDateTime("")
+	if err == nil {
+		t.Fatal("expected error for empty datetime, got nil")
+	}
+
+	if !errors.Is(err, st.ErrEmptyValue) {
+		t.Errorf(st.ErrorWrapping, err, st.ErrEmptyValue)
 	}
 }
 
 func TestDateTime_String(t *testing.T) {
 	t.Parallel()
 
-	dt, _ := st.NewDateTime(testDateTimeUTC)
-	got := dt.String()
+	dateTime, _ := st.NewDateTime(testDateTimeUTC)
+	got := dateTime.String()
 
 	if got != testDateTimeUTC {
 		t.Errorf(st.ErrorMismatch, got, testDateTimeUTC)
 	}
-}
 
-func TestDateTime_String_WithTimezone(t *testing.T) {
-	t.Parallel()
-
-	// Input with timezone offset is converted to UTC
-	input := "2025-01-15T12:30:00+02:00"
-
-	dt, _ := st.NewDateTime(input)
-	got := dt.String()
-
-	// Should be normalized to UTC (12:30 + 02:00 = 10:30 UTC)
-	if got != testDateTimeUTC {
-		t.Errorf(st.ErrorMismatch, got, testDateTimeUTC)
-	}
-}
-
-func TestDateTime_String_WithNanoseconds(t *testing.T) {
-	t.Parallel()
-
-	// RFC3339 parsing doesn't preserve nanoseconds, verify output format
-	dt, _ := st.NewDateTime(testDateTimeUTC)
-	got := dt.String()
-
-	// Verify it can be parsed back as RFC3339
 	_, err := time.Parse(time.RFC3339Nano, got)
 	if err != nil {
 		t.Errorf("String() output should be valid RFC3339Nano: %v", err)

@@ -28,5 +28,5 @@ func ExampleNewInteger_invalid() {
 	}
 
 	// Output:
-	// strconv.ParseUint: parsing "abc": invalid syntax
+	// NewInteger: value: invalid value: strconv.ParseUint: parsing "abc": invalid syntax
 }

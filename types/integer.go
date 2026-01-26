@@ -26,7 +26,11 @@ type Integer struct {
 func NewInteger(value string) (Integer, error) {
 	parsedValue, err := strconv.ParseUint(value, decimalBase, bitSize16)
 	if err != nil {
-		return Integer{}, fmt.Errorf("%w", err)
+		return Integer{}, fmt.Errorf(
+			"NewInteger: "+ErrorFieldFormat,
+			"value",
+			fmt.Errorf("%w: %w", ErrInvalidValue, err),
+		)
 	}
 
 	return Integer{value: uint16(parsedValue)}, nil

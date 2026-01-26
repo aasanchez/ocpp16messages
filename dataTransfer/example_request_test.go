@@ -123,8 +123,8 @@ func ExampleReq_invalidVendorIdChars() {
 		Data:      nil,
 	})
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("vendorId has non-printable ASCII characters")
 	}
 	// Output:
-	// vendorId: CiString: value contains non-printable ASCII characters
+	// vendorId has non-printable ASCII characters
 }

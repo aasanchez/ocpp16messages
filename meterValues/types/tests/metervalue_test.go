@@ -18,7 +18,6 @@ const (
 	fieldTimestamp       = "Timestamp"
 	fieldSampledValue    = "SampledValue"
 	fieldSampledValueIdx = "sampledValue[0]"
-	expectedHourUTC      = 15
 )
 
 func TestNewMeterValue_ValidSingleSampledValue(t *testing.T) {
@@ -323,16 +322,8 @@ func TestNewMeterValue_TimestampNormalization(t *testing.T) {
 		},
 	}
 
-	meterValue, err := mt.NewMeterValue(input)
-	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
-	}
-
-	timestampValue := meterValue.Timestamp.Value()
-	if timestampValue.Hour() != expectedHourUTC {
-		t.Errorf(
-			"timestamp should be normalized to UTC (hour 15), got hour %d",
-			timestampValue.Hour(),
-		)
+	_, err := mt.NewMeterValue(input)
+	if err == nil {
+		t.Errorf(st.ErrorWantNil, "non-UTC timestamp")
 	}
 }

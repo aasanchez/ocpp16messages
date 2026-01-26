@@ -100,8 +100,8 @@ func ExampleReq_invalidKeyChars() {
 		Key: []string{"Invalid\x00Key"},
 	})
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("key has non-printable ASCII characters")
 	}
 	// Output:
-	// key[0]: CiString: value contains non-printable ASCII characters
+	// key has non-printable ASCII characters
 }

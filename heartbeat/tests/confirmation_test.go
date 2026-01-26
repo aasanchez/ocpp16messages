@@ -64,22 +64,11 @@ func TestConf_InvalidCurrentTime(t *testing.T) {
 func TestConf_CurrentTimeNormalizesToUTC(t *testing.T) {
 	t.Parallel()
 
-	// Input with timezone offset
-	conf, err := heartbeat.Conf(heartbeat.ConfInput{
+	_, err := heartbeat.Conf(heartbeat.ConfInput{
 		CurrentTime: "2025-01-15T12:30:00+02:00",
 	})
-	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
-	}
-
-	// Should be normalized to UTC (10:30 UTC = 12:30 +02:00)
-	expectedTime, _ := time.Parse(time.RFC3339, "2025-01-15T10:30:00Z")
-	if !conf.CurrentTime.Value().Equal(expectedTime) {
-		t.Errorf(
-			st.ErrorMismatch,
-			expectedTime,
-			conf.CurrentTime.Value(),
-		)
+	if err == nil {
+		t.Error("Conf() error = nil, want error for non-UTC currentTime")
 	}
 }
 

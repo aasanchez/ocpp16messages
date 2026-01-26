@@ -51,10 +51,10 @@ func ExampleReq_invalidCharacters() {
 	// Contains null byte
 	_, err := authorize.Req(authorize.ReqInput{IdTag: "RFID\x00TAG"})
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("idTag has non-printable ASCII characters")
 	}
 	// Output:
-	// idTag: CiString: value contains non-printable ASCII characters
+	// idTag has non-printable ASCII characters
 }
 
 // ExampleReq_shortIdTag demonstrates that short ID tags

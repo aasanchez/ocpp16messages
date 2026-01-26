@@ -61,8 +61,8 @@ pattern:
 
 - **Integer**: Wraps uint16 with validation via
   `NewInteger(string) (Integer, error)`
-- **DateTime**: RFC3339-compliant, auto-normalized to UTC. Parsing uses
-  `time.RFC3339`, output uses `time.RFC3339Nano`
+- **DateTime**: RFC3339-compliant, UTC-only (non-UTC offsets rejected). Parsing
+  uses `time.RFC3339`, output uses `time.RFC3339Nano`
   - Constructor: `NewDateTime(string) (DateTime, error)`
 - **CiString Types**: Length-validated ASCII printable strings (32-126)
   - CiString20, CiString25, CiString50, CiString255, CiString500
@@ -495,7 +495,7 @@ Key linter rules enforced by golangci-lint:
 
 ## OCPP Compliance Notes
 
-- All DateTime fields normalized to UTC per OCPP 1.6 spec
+- All DateTime fields must be provided in UTC per OCPP 1.6 spec
 - CiString types enforce ASCII printable characters only (32-126)
 - All types proven thread-safe via race tests
 - String length validation enforced at construction time

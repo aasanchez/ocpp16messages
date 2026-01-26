@@ -34,5 +34,5 @@ func ExampleNewCiString20Type_invalid() {
 		return
 	}
 	// Output:
-	// CiString Error on Construct (len=21, max=20): exceeds maximum length
+	// invalid value: exceeds maximum length (len=21, max=20)
 }

@@ -1,9 +1,15 @@
 package authorize
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/aasanchez/ocpp16messages/types"
+)
+
+const (
+	// errCountZero is the empty error count.
+	errCountZero = 0
 )
 
 // ReqInput represents the raw input data for creating an Authorize.req message.
@@ -23,9 +29,15 @@ type ReqMessage struct {
 //   - IdTag exceeds 20 characters
 //   - IdTag contains non-printable ASCII characters
 func Req(input ReqInput) (ReqMessage, error) {
+	var errs []error
+
 	str, err := types.NewCiString20Type(input.IdTag)
 	if err != nil {
-		return ReqMessage{}, fmt.Errorf("idTag: %w", err)
+		errs = append(errs, fmt.Errorf("idTag: %w", err))
+	}
+
+	if len(errs) > errCountZero {
+		return ReqMessage{}, errors.Join(errs...)
 	}
 
 	idToken := types.NewIdToken(str)

@@ -127,7 +127,7 @@ if err != nil {
     // Handle validation error (length > 20 or non-ASCII chars)
 }
 
-// DateTime (RFC3339, auto-normalized to UTC)
+// DateTime (RFC3339, must be UTC)
 timestamp, err := types.NewDateTime("2025-01-02T15:04:05Z")
 if err != nil {
     // Handle parsing error
@@ -225,7 +225,7 @@ Reports are generated in the `reports/` directory:
 | CiString50Type  | `types.CiString50Type`  | Length <= 50, ASCII printable (32-126)  |
 | CiString255Type | `types.CiString255Type` | Length <= 255, ASCII printable (32-126) |
 | CiString500Type | `types.CiString500Type` | Length <= 500, ASCII printable (32-126) |
-| dateTime        | `types.DateTime`        | RFC3339, normalized to UTC              |
+| dateTime        | `types.DateTime`        | RFC3339, UTC only                       |
 | integer         | `types.Integer`         | uint16 (0-65535)                        |
 
 #### Authorization Types (`types/`)

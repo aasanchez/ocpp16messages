@@ -8,23 +8,52 @@ import (
 // Compile-time interface verification.
 var _ fmt.Stringer = (*DateTime)(nil)
 
+const (
+	utcOffsetSeconds = 0
+	dateTimeField    = "value"
+)
+
 // DateTime represents an OCPP 1.6–compliant RFC3339 timestamp in UTC.
+// Inputs must already be expressed in UTC; non-UTC offsets are rejected.
 type DateTime struct {
 	value time.Time
 }
 
-// NewDateTime creates a new DateTime from an RFC3339 formatted string. The
-// resulting DateTime is automatically normalized to UTC. Returns an error if
-// the input string is not a valid RFC3339 timestamp.
+// NewDateTime creates a new DateTime from an RFC3339 formatted string.
+// The input must be UTC (offset 0). Returns an error if parsing fails or
+// the input is not UTC.
 func NewDateTime(input string) (DateTime, error) {
-	timestamp, err := time.Parse(time.RFC3339, input)
-	if err != nil {
-		return DateTime{}, fmt.Errorf("%w", err)
+	if input == "" {
+		return DateTime{}, fmt.Errorf(
+			"NewDateTime: "+ErrorFieldFormat,
+			dateTimeField,
+			ErrEmptyValue,
+		)
 	}
 
-	timestamp = timestamp.UTC()
+	timestamp, err := time.Parse(time.RFC3339, input)
+	if err != nil {
+		return DateTime{}, fmt.Errorf(
+			"NewDateTime: "+ErrorFieldFormat,
+			dateTimeField,
+			fmt.Errorf("%w: %w", ErrInvalidValue, err),
+		)
+	}
 
-	return DateTime{value: timestamp}, nil
+	_, offset := timestamp.Zone()
+	if offset != utcOffsetSeconds {
+		return DateTime{}, fmt.Errorf(
+			"NewDateTime: "+ErrorFieldFormat,
+			dateTimeField,
+			fmt.Errorf(
+				"%w: expected UTC offset, got %s",
+				ErrInvalidValue,
+				timestamp.Format("Z07:00"),
+			),
+		)
+	}
+
+	return DateTime{value: timestamp.UTC()}, nil
 }
 
 // Value returns the underlying time.Time value of the DateTime.
