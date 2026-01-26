@@ -77,10 +77,8 @@ func validateNumberPhases(phases *int) (*Integer, error) {
 		return nil, fmt.Errorf("numberPhases: %w", ErrInvalidValue)
 	}
 
-	np, err := NewInteger(strconv.Itoa(*phases))
-	if err != nil {
-		return nil, fmt.Errorf("numberPhases: %w", err)
-	}
+	// NewInteger cannot fail here: values 1-3 are always valid for uint16
+	np, _ := NewInteger(strconv.Itoa(*phases))
 
 	return &np, nil
 }
