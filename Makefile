@@ -34,6 +34,10 @@ test-bench: ## Run benchmarks in ./benchmark with the bench build tag.
 	@echo "\n--- \033[1;32mRun benchmarks\033[0m ---"
 	@go test -tags=bench -run=^$ -bench=. ./benchmark
 
+test-race: ## Run full test suite with the race detector enabled (race tag optional).
+	@echo "\n--- \033[1;32mRun race detector\033[0m ---"
+	@go test -race -tags=race ./...
+
 ##@ Code Style and Static Analysis
 lint: ## Run static analysis, vetting, and linting using golangci-lint and other tools.
 	@golangci-lint cache clean || true
