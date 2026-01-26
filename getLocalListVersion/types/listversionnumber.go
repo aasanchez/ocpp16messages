@@ -2,7 +2,10 @@ package types
 
 import (
 	"fmt"
+	"math"
 	"strconv"
+
+	st "github.com/aasanchez/ocpp16messages/types"
 )
 
 const (
@@ -13,11 +16,8 @@ const (
 	// ListVersionEmpty indicates the local authorization list is empty.
 	ListVersionEmpty = 0
 
-	// decimalBase is the base-10 radix used for parsing integer strings.
+	// decimalBase is the base-10 radix used for formatting.
 	decimalBase = 10
-
-	// bitSize32 is the bit size for int32 parsing validation.
-	bitSize32 = 32
 )
 
 // ListVersionNumber represents the version number of the local authorization
@@ -31,15 +31,18 @@ type ListVersionNumber struct {
 	value int32
 }
 
-// NewListVersionNumber creates a new ListVersionNumber from a string value.
-// Returns an error if the value cannot be parsed as a valid int32.
-func NewListVersionNumber(value string) (ListVersionNumber, error) {
-	parsedValue, err := strconv.ParseInt(value, decimalBase, bitSize32)
-	if err != nil {
-		return ListVersionNumber{}, fmt.Errorf("%w", err)
+// NewListVersionNumber creates a new ListVersionNumber from an int value.
+// Returns an error if the value is outside int32 range.
+func NewListVersionNumber(value int) (ListVersionNumber, error) {
+	if value < math.MinInt32 || value > math.MaxInt32 {
+		return ListVersionNumber{}, fmt.Errorf(
+			"NewListVersionNumber: "+st.ErrorFieldFormat,
+			"value",
+			fmt.Errorf("%w: %d out of range (int32)", st.ErrInvalidValue, value),
+		)
 	}
 
-	return ListVersionNumber{value: int32(parsedValue)}, nil
+	return ListVersionNumber{value: int32(value)}, nil
 }
 
 // Value returns the underlying int32 value of the ListVersionNumber.

@@ -1,7 +1,9 @@
 package types_test
 
 import (
-	"strings"
+	"errors"
+	"math"
+	"strconv"
 	"testing"
 
 	mt "github.com/aasanchez/ocpp16messages/getLocalListVersion/types"
@@ -9,12 +11,11 @@ import (
 )
 
 const (
-	testValuePositive    = "5"
-	testValueZero        = "0"
-	testValueNegativeOne = "-1"
-	testValueNegativeTen = "-10"
-	testValueInvalid     = "invalid"
-	testValueOverflow    = "9999999999999999999"
+	testValuePositive    = 5
+	testValueZero        = 0
+	testValueNegativeOne = -1
+	testValueNegativeTen = -10
+	testValueOverflow    = math.MaxInt32 + 1
 
 	expectedValuePositive    = int32(5)
 	expectedValueZero        = int32(0)
@@ -89,22 +90,13 @@ func TestNewListVersionNumber_Valid_NegativeTen(t *testing.T) {
 func TestNewListVersionNumber_Invalid_NonNumeric(t *testing.T) {
 	t.Parallel()
 
-	_, err := mt.NewListVersionNumber(testValueInvalid)
-	if err == nil {
-		t.Errorf(st.ErrorWantNil, "non-numeric value")
-	}
-}
-
-func TestNewListVersionNumber_Invalid_Overflow(t *testing.T) {
-	t.Parallel()
-
 	_, err := mt.NewListVersionNumber(testValueOverflow)
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "overflow value")
 	}
 
-	if !strings.Contains(err.Error(), "value out of range") {
-		t.Errorf(st.ErrorWantContains, err, "value out of range")
+	if !errors.Is(err, st.ErrInvalidValue) {
+		t.Errorf(st.ErrorWrapping, err, st.ErrInvalidValue)
 	}
 }
 
@@ -168,12 +160,12 @@ func TestListVersionNumber_String_Positive(t *testing.T) {
 		t.Errorf(st.ErrorUnexpectedError, err)
 	}
 
-	if listVersion.String() != testValuePositive {
+	if listVersion.String() != strconv.Itoa(testValuePositive) {
 		t.Errorf(
 			st.ErrorMethodMismatch,
 			"ListVersionNumber.String()",
 			listVersion.String(),
-			testValuePositive,
+			strconv.Itoa(testValuePositive),
 		)
 	}
 }
@@ -186,12 +178,12 @@ func TestListVersionNumber_String_NegativeOne(t *testing.T) {
 		t.Errorf(st.ErrorUnexpectedError, err)
 	}
 
-	if listVersion.String() != testValueNegativeOne {
+	if listVersion.String() != strconv.Itoa(testValueNegativeOne) {
 		t.Errorf(
 			st.ErrorMethodMismatch,
 			"ListVersionNumber.String()",
 			listVersion.String(),
-			testValueNegativeOne,
+			strconv.Itoa(testValueNegativeOne),
 		)
 	}
 }
