@@ -9,6 +9,8 @@ import (
 func Test_validateTransactionData_EmptySlice(t *testing.T) {
 	t.Parallel()
 
+	const expectedLenZero = 0
+
 	transactionData := []mt.MeterValueInput{}
 
 	validated, errs := validateTransactionData(transactionData, nil)
@@ -21,8 +23,12 @@ func Test_validateTransactionData_EmptySlice(t *testing.T) {
 		t.Fatal("validated data = nil, want empty slice")
 	}
 
-	if len(validated) != 0 {
-		t.Fatalf("len(validated) = %d, want 0", len(validated))
+	if len(validated) != expectedLenZero {
+		t.Fatalf(
+			"len(validated) = %d, want %d",
+			len(validated),
+			expectedLenZero,
+		)
 	}
 }
 

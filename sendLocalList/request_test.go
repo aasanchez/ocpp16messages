@@ -9,6 +9,8 @@ import (
 func Test_validateReqAuthorizationList_EmptySlice(t *testing.T) {
 	t.Parallel()
 
+	const expectedLenZero = 0
+
 	authList := []slt.AuthorizationDataInput{}
 
 	validated, errs := validateReqAuthorizationList(authList, nil)
@@ -21,7 +23,11 @@ func Test_validateReqAuthorizationList_EmptySlice(t *testing.T) {
 		t.Fatal("validated list = nil, want empty slice")
 	}
 
-	if len(validated) != 0 {
-		t.Fatalf("len(validated) = %d, want 0", len(validated))
+	if len(validated) != expectedLenZero {
+		t.Fatalf(
+			"len(validated) = %d, want %d",
+			len(validated),
+			expectedLenZero,
+		)
 	}
 }
