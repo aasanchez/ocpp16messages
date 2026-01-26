@@ -135,6 +135,9 @@ req, err := metervalues.Req(metervalues.ReqInput{
 - **Immutable result**: The returned `ReqMessage`/`ConfMessage` contains
   validated, typed fields
 
+- **Optional slices**: Nil slice means the field was omitted; an empty slice
+  means it was provided but empty. Constructors preserve this distinction.
+
 #### What NOT to do
 
 ```go

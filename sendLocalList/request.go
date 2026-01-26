@@ -118,8 +118,12 @@ func validateReqAuthorizationList(
 	authList []slt.AuthorizationDataInput,
 	errs []error,
 ) ([]slt.AuthorizationData, []error) {
-	if len(authList) == authListLenZero {
+	if authList == nil {
 		return nil, errs
+	}
+
+	if len(authList) == authListLenZero {
+		return []slt.AuthorizationData{}, errs
 	}
 
 	var validEntries []slt.AuthorizationData

@@ -179,6 +179,10 @@ func validateTransactionData(
 	transactionData []mt.MeterValueInput,
 	errs []error,
 ) ([]mt.MeterValue, []error) {
+	if transactionData == nil {
+		return nil, errs
+	}
+
 	var validValues []mt.MeterValue
 
 	for i, mvInput := range transactionData {
@@ -188,6 +192,10 @@ func validateTransactionData(
 		} else {
 			validValues = append(validValues, meterValue)
 		}
+	}
+
+	if len(transactionData) == 0 {
+		return []mt.MeterValue{}, errs
 	}
 
 	return validValues, errs
