@@ -10,17 +10,26 @@ const (
 	testPeriodStartPeriod = 0
 	testPeriodLimit       = 32.0
 	testPeriodNumPhases   = 3
+	errCreatePeriod       = "Failed to create ChargingSchedulePeriod: %v"
+	errWantPeriodError    = "NewChargingSchedulePeriod(): want error"
+	invalidNumPhasesLow   = 0
+	invalidNumPhasesHigh  = 4
+	invalidStartPeriod    = -1
+	invalidLimitValue     = -1.0
 )
 
 func TestChargingSchedulePeriod_StartPeriod(t *testing.T) {
 	t.Parallel()
 
-	period, err := types.NewChargingSchedulePeriod(types.ChargingSchedulePeriodInput{
-		StartPeriod: testPeriodStartPeriod,
-		Limit:       testPeriodLimit,
-	})
+	input := types.ChargingSchedulePeriodInput{
+		StartPeriod:  testPeriodStartPeriod,
+		Limit:        testPeriodLimit,
+		NumberPhases: nil,
+	}
+
+	period, err := types.NewChargingSchedulePeriod(input)
 	if err != nil {
-		t.Fatalf("Failed to create ChargingSchedulePeriod: %v", err)
+		t.Fatalf(errCreatePeriod, err)
 	}
 
 	startPeriod := period.StartPeriod()
@@ -37,12 +46,15 @@ func TestChargingSchedulePeriod_StartPeriod(t *testing.T) {
 func TestChargingSchedulePeriod_Limit(t *testing.T) {
 	t.Parallel()
 
-	period, err := types.NewChargingSchedulePeriod(types.ChargingSchedulePeriodInput{
-		StartPeriod: testPeriodStartPeriod,
-		Limit:       testPeriodLimit,
-	})
+	input := types.ChargingSchedulePeriodInput{
+		StartPeriod:  testPeriodStartPeriod,
+		Limit:        testPeriodLimit,
+		NumberPhases: nil,
+	}
+
+	period, err := types.NewChargingSchedulePeriod(input)
 	if err != nil {
-		t.Fatalf("Failed to create ChargingSchedulePeriod: %v", err)
+		t.Fatalf(errCreatePeriod, err)
 	}
 
 	limit := period.Limit()
@@ -60,13 +72,15 @@ func TestChargingSchedulePeriod_NumberPhases(t *testing.T) {
 	t.Parallel()
 
 	numPhases := testPeriodNumPhases
-	period, err := types.NewChargingSchedulePeriod(types.ChargingSchedulePeriodInput{
+	input := types.ChargingSchedulePeriodInput{
 		StartPeriod:  testPeriodStartPeriod,
 		Limit:        testPeriodLimit,
 		NumberPhases: &numPhases,
-	})
+	}
+
+	period, err := types.NewChargingSchedulePeriod(input)
 	if err != nil {
-		t.Fatalf("Failed to create ChargingSchedulePeriod: %v", err)
+		t.Fatalf(errCreatePeriod, err)
 	}
 
 	numberPhases := period.NumberPhases()
@@ -79,13 +93,15 @@ func TestChargingSchedulePeriod_NumberPhases(t *testing.T) {
 func TestChargingSchedulePeriod_NumberPhases_WhenNil(t *testing.T) {
 	t.Parallel()
 
-	period, err := types.NewChargingSchedulePeriod(types.ChargingSchedulePeriodInput{
-		StartPeriod:  testPeriodStartPeriod,
-		Limit:        testPeriodLimit,
-		NumberPhases: nil,
-	})
+	period, err := types.NewChargingSchedulePeriod(
+		types.ChargingSchedulePeriodInput{
+			StartPeriod:  testPeriodStartPeriod,
+			Limit:        testPeriodLimit,
+			NumberPhases: nil,
+		},
+	)
 	if err != nil {
-		t.Fatalf("Failed to create ChargingSchedulePeriod: %v", err)
+		t.Fatalf(errCreatePeriod, err)
 	}
 
 	if period.NumberPhases() != nil {
@@ -96,55 +112,59 @@ func TestChargingSchedulePeriod_NumberPhases_WhenNil(t *testing.T) {
 func TestNewChargingSchedulePeriod_NegativeStartPeriod(t *testing.T) {
 	t.Parallel()
 
-	_, err := types.NewChargingSchedulePeriod(types.ChargingSchedulePeriodInput{
-		StartPeriod: -1,
-		Limit:       testPeriodLimit,
-	})
+	input := types.ChargingSchedulePeriodInput{
+		StartPeriod:  invalidStartPeriod,
+		Limit:        testPeriodLimit,
+		NumberPhases: nil,
+	}
 
+	_, err := types.NewChargingSchedulePeriod(input)
 	if err == nil {
-		t.Error("NewChargingSchedulePeriod() error = nil, want error")
+		t.Error(errWantPeriodError)
 	}
 }
 
 func TestNewChargingSchedulePeriod_NegativeLimit(t *testing.T) {
 	t.Parallel()
 
-	_, err := types.NewChargingSchedulePeriod(types.ChargingSchedulePeriodInput{
-		StartPeriod: testPeriodStartPeriod,
-		Limit:       -1.0,
-	})
+	input := types.ChargingSchedulePeriodInput{
+		StartPeriod:  testPeriodStartPeriod,
+		Limit:        invalidLimitValue,
+		NumberPhases: nil,
+	}
 
+	_, err := types.NewChargingSchedulePeriod(input)
 	if err == nil {
-		t.Error("NewChargingSchedulePeriod() error = nil, want error")
+		t.Error(errWantPeriodError)
 	}
 }
 
 func TestNewChargingSchedulePeriod_NumberPhasesTooLow(t *testing.T) {
 	t.Parallel()
 
-	numPhases := 0
+	numPhases := invalidNumPhasesLow
+
 	_, err := types.NewChargingSchedulePeriod(types.ChargingSchedulePeriodInput{
 		StartPeriod:  testPeriodStartPeriod,
 		Limit:        testPeriodLimit,
 		NumberPhases: &numPhases,
 	})
-
 	if err == nil {
-		t.Error("NewChargingSchedulePeriod() error = nil, want error")
+		t.Error(errWantPeriodError)
 	}
 }
 
 func TestNewChargingSchedulePeriod_NumberPhasesTooHigh(t *testing.T) {
 	t.Parallel()
 
-	numPhases := 4
+	numPhases := invalidNumPhasesHigh
+
 	_, err := types.NewChargingSchedulePeriod(types.ChargingSchedulePeriodInput{
 		StartPeriod:  testPeriodStartPeriod,
 		Limit:        testPeriodLimit,
 		NumberPhases: &numPhases,
 	})
-
 	if err == nil {
-		t.Error("NewChargingSchedulePeriod() error = nil, want error")
+		t.Error(errWantPeriodError)
 	}
 }

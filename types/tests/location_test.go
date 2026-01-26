@@ -6,59 +6,46 @@ import (
 	"github.com/aasanchez/ocpp16messages/types"
 )
 
+func checkLocation(t *testing.T, location types.Location, want string) {
+	t.Helper()
+
+	if location.String() != want {
+		t.Errorf(types.ErrorMismatch, want, location.String())
+	}
+
+	if !location.IsValid() {
+		t.Errorf("Location.IsValid() = false, want true for %s", location)
+	}
+}
+
 func TestLocation_String_Body(t *testing.T) {
 	t.Parallel()
 
-	got := types.LocationBody.String()
-	want := "Body"
-
-	if got != want {
-		t.Errorf(types.ErrorMismatch, got, want)
-	}
+	checkLocation(t, types.LocationBody, "Body")
 }
 
 func TestLocation_String_Cable(t *testing.T) {
 	t.Parallel()
 
-	got := types.LocationCable.String()
-	want := "Cable"
-
-	if got != want {
-		t.Errorf(types.ErrorMismatch, got, want)
-	}
+	checkLocation(t, types.LocationCable, "Cable")
 }
 
 func TestLocation_String_EV(t *testing.T) {
 	t.Parallel()
 
-	got := types.LocationEV.String()
-	want := "EV"
-
-	if got != want {
-		t.Errorf(types.ErrorMismatch, got, want)
-	}
+	checkLocation(t, types.LocationEV, "EV")
 }
 
 func TestLocation_String_Inlet(t *testing.T) {
 	t.Parallel()
 
-	got := types.LocationInlet.String()
-	want := "Inlet"
-
-	if got != want {
-		t.Errorf(types.ErrorMismatch, got, want)
-	}
+	checkLocation(t, types.LocationInlet, "Inlet")
 }
 
 func TestLocation_String_Outlet(t *testing.T) {
 	t.Parallel()
 
-	got := types.LocationOutlet.String()
-	want := "Outlet"
-
-	if got != want {
-		t.Errorf(types.ErrorMismatch, got, want)
-	}
+	checkLocation(t, types.LocationOutlet, "Outlet")
 }
 
 func TestLocation_IsValid_InvalidValue(t *testing.T) {

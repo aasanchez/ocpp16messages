@@ -461,6 +461,8 @@ func TestReq_InvalidVendorId(t *testing.T) {
 		ConnectorId:     testConnectorIdOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
+		Info:            nil,
+		Timestamp:       nil,
 		VendorId:        &invalidVendorId,
 		VendorErrorCode: nil,
 	})
@@ -483,6 +485,8 @@ func TestReq_InvalidVendorErrorCode(t *testing.T) {
 		ConnectorId:     testConnectorIdOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
+		Info:            nil,
+		Timestamp:       nil,
 		VendorId:        nil,
 		VendorErrorCode: &invalidVendorErrorCode,
 	})

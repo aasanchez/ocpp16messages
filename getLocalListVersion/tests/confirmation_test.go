@@ -12,6 +12,7 @@ const (
 	testVersionPositive  = 5
 	testVersionUnsupport = -1
 	testVersionEmpty     = 0
+	testVersionOverflow  = 2147483648
 )
 
 func TestConf_Valid_PositiveVersion(t *testing.T) {
@@ -102,10 +103,8 @@ func TestConf_InvalidListVersion_ExceedsInt32(t *testing.T) {
 	t.Parallel()
 
 	// Value exceeds int32 max (2147483647), should cause overflow error
-	overflowValue := 2147483648
-
 	_, err := getLocalListVersion.Conf(getLocalListVersion.ConfInput{
-		ListVersion: overflowValue,
+		ListVersion: testVersionOverflow,
 	})
 	if err == nil {
 		t.Error("Conf() error = nil, want error for int32 overflow")

@@ -6,14 +6,18 @@ import (
 	"github.com/aasanchez/ocpp16messages/types"
 )
 
+const errPhaseValidFalse = "IsValid() = false, want true"
+
 func TestPhase_String_L1(t *testing.T) {
 	t.Parallel()
 
 	got := types.PhaseL1.String()
-	want := "L1"
+	if got != "L1" {
+		t.Errorf(types.ErrorMismatch, "L1", got)
+	}
 
-	if got != want {
-		t.Errorf(types.ErrorMismatch, got, want)
+	if !types.PhaseL1.IsValid() {
+		t.Error(errPhaseValidFalse)
 	}
 }
 
@@ -21,10 +25,12 @@ func TestPhase_String_L2(t *testing.T) {
 	t.Parallel()
 
 	got := types.PhaseL2.String()
-	want := "L2"
+	if got != "L2" {
+		t.Errorf(types.ErrorMismatch, "L2", got)
+	}
 
-	if got != want {
-		t.Errorf(types.ErrorMismatch, got, want)
+	if !types.PhaseL2.IsValid() {
+		t.Error(errPhaseValidFalse)
 	}
 }
 
@@ -32,10 +38,12 @@ func TestPhase_String_L3(t *testing.T) {
 	t.Parallel()
 
 	got := types.PhaseL3.String()
-	want := "L3"
+	if got != "L3" {
+		t.Errorf(types.ErrorMismatch, "L3", got)
+	}
 
-	if got != want {
-		t.Errorf(types.ErrorMismatch, got, want)
+	if !types.PhaseL3.IsValid() {
+		t.Error(errPhaseValidFalse)
 	}
 }
 
@@ -43,10 +51,12 @@ func TestPhase_String_N(t *testing.T) {
 	t.Parallel()
 
 	got := types.PhaseN.String()
-	want := "N"
+	if got != "N" {
+		t.Errorf(types.ErrorMismatch, "N", got)
+	}
 
-	if got != want {
-		t.Errorf(types.ErrorMismatch, got, want)
+	if !types.PhaseN.IsValid() {
+		t.Error(errPhaseValidFalse)
 	}
 }
 
@@ -54,10 +64,12 @@ func TestPhase_String_L1N(t *testing.T) {
 	t.Parallel()
 
 	got := types.PhaseL1N.String()
-	want := "L1-N"
+	if got != "L1-N" {
+		t.Errorf(types.ErrorMismatch, "L1-N", got)
+	}
 
-	if got != want {
-		t.Errorf(types.ErrorMismatch, got, want)
+	if !types.PhaseL1N.IsValid() {
+		t.Error(errPhaseValidFalse)
 	}
 }
 

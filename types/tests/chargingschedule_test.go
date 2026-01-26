@@ -7,21 +7,21 @@ import (
 )
 
 const (
-	testScheduleDuration     = 3600
-	testScheduleStartTime    = "2025-01-01T00:00:00Z"
-	testScheduleRateUnit     = "A"
-	testScheduleStartPeriod  = 0
-	testScheduleLimit        = 32.0
-	testScheduleMinRate      = 6.0
-	testInvalidDuration      = -1
-	testNegativeMinRate      = -1.0
-	errFailedCreateSchedule  = "Failed to create ChargingSchedule: %v"
-	errScheduleWantNegDur    = "NewChargingSchedule() error = nil, want neg dur"
-	errScheduleWantInvTime   = "NewChargingSchedule() error = nil, want inv time"
-	errScheduleWantInvUnit   = "NewChargingSchedule() error = nil, want inv unit"
-	errScheduleWantEmptyPer  = "NewChargingSchedule() error = nil, want empty per"
-	errScheduleWantInvPer    = "NewChargingSchedule() error = nil, want inv per"
-	errScheduleWantNegRate   = "NewChargingSchedule() error = nil, want neg rate"
+	testScheduleDuration    = 3600
+	testScheduleStartTime   = "2025-01-01T00:00:00Z"
+	testScheduleRateUnit    = "A"
+	testScheduleStartPeriod = 0
+	testScheduleLimit       = 32.0
+	testScheduleMinRate     = 6.0
+	testInvalidDuration     = -1
+	testNegativeMinRate     = -1.0
+	errFailedCreateSchedule = "Failed to create ChargingSchedule: %v"
+	errScheduleWantNegDur   = "NewChargingSchedule() error = nil, want neg dur"
+	errScheduleWantInvTime  = "NewChargingSchedule(): want error for bad time"
+	errScheduleWantInvUnit  = "NewChargingSchedule(): want error for bad unit"
+	errScheduleWantEmptyPer = "NewChargingSchedule(): want error empty periods"
+	errScheduleWantInvPer   = "NewChargingSchedule(): want error bad period"
+	errScheduleWantNegRate  = "NewChargingSchedule(): want error negative rate"
 )
 
 func createValidChargingSchedule(t *testing.T) types.ChargingSchedule {

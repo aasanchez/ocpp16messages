@@ -69,7 +69,7 @@ func TestNewSampledValue_ValidContext(t *testing.T) {
 
 	validContext := "Sample.Periodic"
 
-	sv, err := types.NewSampledValue(types.SampledValueInput{
+	valueWithContext, err := types.NewSampledValue(types.SampledValueInput{
 		Value:     testSampledValueValue,
 		Context:   &validContext,
 		Format:    nil,
@@ -82,7 +82,7 @@ func TestNewSampledValue_ValidContext(t *testing.T) {
 		t.Errorf(errSampledValueNil, err)
 	}
 
-	if sv.Context == nil {
+	if valueWithContext.Context == nil {
 		t.Error("SampledValue.Context = nil, want non-nil")
 	}
 }
@@ -111,7 +111,7 @@ func TestNewSampledValue_ValidFormat(t *testing.T) {
 
 	validFormat := "Raw"
 
-	sv, err := types.NewSampledValue(types.SampledValueInput{
+	valueWithFormat, err := types.NewSampledValue(types.SampledValueInput{
 		Value:     testSampledValueValue,
 		Context:   nil,
 		Format:    &validFormat,
@@ -124,7 +124,7 @@ func TestNewSampledValue_ValidFormat(t *testing.T) {
 		t.Errorf(errSampledValueNil, err)
 	}
 
-	if sv.Format == nil {
+	if valueWithFormat.Format == nil {
 		t.Error("SampledValue.Format = nil, want non-nil")
 	}
 }
@@ -153,7 +153,7 @@ func TestNewSampledValue_ValidMeasurand(t *testing.T) {
 
 	validMeasurand := "Energy.Active.Import.Register"
 
-	sv, err := types.NewSampledValue(types.SampledValueInput{
+	valueWithMeasurand, err := types.NewSampledValue(types.SampledValueInput{
 		Value:     testSampledValueValue,
 		Context:   nil,
 		Format:    nil,
@@ -166,7 +166,7 @@ func TestNewSampledValue_ValidMeasurand(t *testing.T) {
 		t.Errorf(errSampledValueNil, err)
 	}
 
-	if sv.Measurand == nil {
+	if valueWithMeasurand.Measurand == nil {
 		t.Error("SampledValue.Measurand = nil, want non-nil")
 	}
 }
@@ -195,7 +195,7 @@ func TestNewSampledValue_ValidPhase(t *testing.T) {
 
 	validPhase := "L1"
 
-	sv, err := types.NewSampledValue(types.SampledValueInput{
+	valueWithPhase, err := types.NewSampledValue(types.SampledValueInput{
 		Value:     testSampledValueValue,
 		Context:   nil,
 		Format:    nil,
@@ -208,7 +208,7 @@ func TestNewSampledValue_ValidPhase(t *testing.T) {
 		t.Errorf(errSampledValueNil, err)
 	}
 
-	if sv.Phase == nil {
+	if valueWithPhase.Phase == nil {
 		t.Error("SampledValue.Phase = nil, want non-nil")
 	}
 }
@@ -228,7 +228,7 @@ func TestNewSampledValue_InvalidLocation(t *testing.T) {
 		Unit:      nil,
 	})
 	if err == nil {
-		t.Error("NewSampledValue() error = nil, want error for invalid location")
+		t.Error("NewSampledValue() error = nil, want error for bad location")
 	}
 }
 
@@ -237,7 +237,7 @@ func TestNewSampledValue_ValidLocation(t *testing.T) {
 
 	validLocation := "Outlet"
 
-	sv, err := types.NewSampledValue(types.SampledValueInput{
+	valueWithLocation, err := types.NewSampledValue(types.SampledValueInput{
 		Value:     testSampledValueValue,
 		Context:   nil,
 		Format:    nil,
@@ -250,7 +250,7 @@ func TestNewSampledValue_ValidLocation(t *testing.T) {
 		t.Errorf(errSampledValueNil, err)
 	}
 
-	if sv.Location == nil {
+	if valueWithLocation.Location == nil {
 		t.Error("SampledValue.Location = nil, want non-nil")
 	}
 }
@@ -279,7 +279,7 @@ func TestNewSampledValue_ValidUnit(t *testing.T) {
 
 	validUnit := "Wh"
 
-	sv, err := types.NewSampledValue(types.SampledValueInput{
+	valueWithUnit, err := types.NewSampledValue(types.SampledValueInput{
 		Value:     testSampledValueValue,
 		Context:   nil,
 		Format:    nil,
@@ -292,7 +292,7 @@ func TestNewSampledValue_ValidUnit(t *testing.T) {
 		t.Errorf(errSampledValueNil, err)
 	}
 
-	if sv.Unit == nil {
+	if valueWithUnit.Unit == nil {
 		t.Error("SampledValue.Unit = nil, want non-nil")
 	}
 }

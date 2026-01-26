@@ -149,7 +149,8 @@ func TestChargingProfile_ChargingSchedule(t *testing.T) {
 
 	if schedule.ChargingRateUnit() != st.ChargingRateUnitAmperes {
 		t.Errorf(
-			"ChargingProfile.ChargingSchedule().ChargingRateUnit() = %v, want %v",
+			"ChargingProfile.ChargingSchedule().ChargingRateUnit() = %v, "+
+				"want %v",
 			schedule.ChargingRateUnit(),
 			st.ChargingRateUnitAmperes,
 		)
