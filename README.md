@@ -205,9 +205,10 @@ that are immutable and thread-safe.
     # Documentation
     make pkgsite                # Start local documentation server at http://localhost:8080
 
-    # Nightly CI (opt-in suites)
-    - Nightly workflow runs `make test-all`, `make test-race`, `make test-fuzz`,
-      and `make test-bench` to guard the opt-in suites.
+### Nightly CI (opt-in suites)
+
+- Nightly workflow runs `make test-all`, `make test-race`, `make test-fuzz`,
+  and `make test-bench` to guard the opt-in suites.
 
 ### Test Coverage
 
