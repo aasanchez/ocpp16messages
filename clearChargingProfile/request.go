@@ -3,7 +3,6 @@ package clearChargingProfile
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	"github.com/aasanchez/ocpp16messages/types"
 )
@@ -101,7 +100,7 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 
 // validateId validates the id field.
 func validateId(id int, errs []error) (*types.Integer, []error) {
-	val, err := types.NewInteger(strconv.Itoa(id))
+	val, err := types.NewIntegerFromInt(id)
 	if err != nil {
 		return nil, append(errs, fmt.Errorf("id: %w", err))
 	}
@@ -114,7 +113,7 @@ func validateConnectorId(
 	connectorId int,
 	errs []error,
 ) (*types.Integer, []error) {
-	val, err := types.NewInteger(strconv.Itoa(connectorId))
+	val, err := types.NewIntegerFromInt(connectorId)
 	if err != nil {
 		return nil, append(errs, fmt.Errorf("connectorId: %w", err))
 	}
@@ -143,7 +142,7 @@ func validateStackLevel(
 	stackLevel int,
 	errs []error,
 ) (*types.Integer, []error) {
-	val, err := types.NewInteger(strconv.Itoa(stackLevel))
+	val, err := types.NewIntegerFromInt(stackLevel)
 	if err != nil {
 		return nil, append(errs, fmt.Errorf("stackLevel: %w", err))
 	}

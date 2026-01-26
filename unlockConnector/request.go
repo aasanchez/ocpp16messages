@@ -2,7 +2,6 @@ package unlockConnector
 
 import (
 	"fmt"
-	"strconv"
 
 	st "github.com/aasanchez/ocpp16messages/types"
 )
@@ -35,7 +34,7 @@ func Req(input ReqInput) (ReqMessage, error) {
 		return ReqMessage{}, fmt.Errorf("connectorId: %w", st.ErrInvalidValue)
 	}
 
-	connectorId, err := st.NewInteger(strconv.Itoa(input.ConnectorId))
+	connectorId, err := st.NewIntegerFromInt(input.ConnectorId)
 	if err != nil {
 		return ReqMessage{}, fmt.Errorf("connectorId: %w", err)
 	}

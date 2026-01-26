@@ -3,7 +3,6 @@ package getCompositeSchedule
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	gt "github.com/aasanchez/ocpp16messages/getCompositeSchedule/types"
 	"github.com/aasanchez/ocpp16messages/types"
@@ -93,7 +92,7 @@ func confValidateConnectorId(connectorId *int) (*types.Integer, error) {
 		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
-	cid, err := types.NewInteger(strconv.Itoa(*connectorId))
+	cid, err := types.NewIntegerFromInt(*connectorId)
 	if err != nil {
 		return nil, fmt.Errorf("connectorId: %w", err)
 	}

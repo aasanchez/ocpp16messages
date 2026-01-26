@@ -2,7 +2,6 @@ package remoteStopTransaction
 
 import (
 	"fmt"
-	"strconv"
 
 	st "github.com/aasanchez/ocpp16messages/types"
 )
@@ -24,7 +23,7 @@ type ReqMessage struct {
 // It validates all fields and returns an error if:
 //   - TransactionId is negative or exceeds uint16 max value (65535)
 func Req(input ReqInput) (ReqMessage, error) {
-	transactionId, err := st.NewInteger(strconv.Itoa(input.TransactionId))
+	transactionId, err := st.NewIntegerFromInt(input.TransactionId)
 	if err != nil {
 		return ReqMessage{}, fmt.Errorf("transactionId: %w", err)
 	}

@@ -3,7 +3,6 @@ package startTransaction
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	st "github.com/aasanchez/ocpp16messages/types"
 )
@@ -90,7 +89,7 @@ func validateTransactionId(
 	transactionId int,
 	errs []error,
 ) (st.Integer, []error) {
-	val, err := st.NewInteger(strconv.Itoa(transactionId))
+	val, err := st.NewIntegerFromInt(transactionId)
 	if err != nil {
 		return st.Integer{}, append(errs, fmt.Errorf("transactionId: %w", err))
 	}

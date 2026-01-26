@@ -3,7 +3,6 @@ package sendLocalList
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	slt "github.com/aasanchez/ocpp16messages/sendLocalList/types"
 	st "github.com/aasanchez/ocpp16messages/types"
@@ -86,7 +85,7 @@ func validateReqListVersion(
 	listVersion int,
 	errs []error,
 ) (st.Integer, []error) {
-	intVal, err := st.NewInteger(strconv.Itoa(listVersion))
+	intVal, err := st.NewIntegerFromInt(listVersion)
 	if err != nil {
 		return st.Integer{}, append(
 			errs,

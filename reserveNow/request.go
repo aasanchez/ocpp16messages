@@ -3,7 +3,6 @@ package reserveNow
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	st "github.com/aasanchez/ocpp16messages/types"
 )
@@ -51,12 +50,12 @@ type ReqMessage struct {
 func Req(input ReqInput) (ReqMessage, error) {
 	var errs []error
 
-	reservationId, err := st.NewInteger(strconv.Itoa(input.ReservationId))
+	reservationId, err := st.NewIntegerFromInt(input.ReservationId)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("reservationId: %w", err))
 	}
 
-	connectorId, err := st.NewInteger(strconv.Itoa(input.ConnectorId))
+	connectorId, err := st.NewIntegerFromInt(input.ConnectorId)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("connectorId: %w", err))
 	}

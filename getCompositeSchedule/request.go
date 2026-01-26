@@ -3,7 +3,6 @@ package getCompositeSchedule
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	"github.com/aasanchez/ocpp16messages/types"
 )
@@ -42,12 +41,12 @@ type ReqMessage struct {
 func Req(input ReqInput) (ReqMessage, error) {
 	var errs []error
 
-	connectorId, err := types.NewInteger(strconv.Itoa(input.ConnectorId))
+	connectorId, err := types.NewIntegerFromInt(input.ConnectorId)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("connectorId: %w", err))
 	}
 
-	duration, err := types.NewInteger(strconv.Itoa(input.Duration))
+	duration, err := types.NewIntegerFromInt(input.Duration)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("duration: %w", err))
 	}

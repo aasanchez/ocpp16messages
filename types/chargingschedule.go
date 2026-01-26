@@ -3,7 +3,6 @@ package types
 import (
 	"errors"
 	"fmt"
-	"strconv"
 )
 
 const (
@@ -95,7 +94,7 @@ func validateScheduleDuration(duration *int) (*Integer, error) {
 		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
-	d, err := NewInteger(strconv.Itoa(*duration))
+	d, err := NewIntegerFromInt(*duration)
 	if err != nil {
 		return nil, fmt.Errorf("duration: %w", err)
 	}

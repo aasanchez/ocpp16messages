@@ -2,7 +2,6 @@ package cancelReservation
 
 import (
 	"fmt"
-	"strconv"
 
 	st "github.com/aasanchez/ocpp16messages/types"
 )
@@ -22,7 +21,7 @@ type ReqMessage struct {
 // It validates all fields and returns an error if:
 //   - ReservationId is negative or exceeds uint16 max value (65535)
 func Req(input ReqInput) (ReqMessage, error) {
-	reservationId, err := st.NewInteger(strconv.Itoa(input.ReservationId))
+	reservationId, err := st.NewIntegerFromInt(input.ReservationId)
 	if err != nil {
 		return ReqMessage{}, fmt.Errorf("reservationId: %w", err)
 	}

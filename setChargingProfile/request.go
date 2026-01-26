@@ -3,7 +3,6 @@ package setChargingProfile
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	spt "github.com/aasanchez/ocpp16messages/setChargingProfile/types"
 	"github.com/aasanchez/ocpp16messages/types"
@@ -38,7 +37,7 @@ type ReqMessage struct {
 func Req(input ReqInput) (ReqMessage, error) {
 	var errs []error
 
-	connectorId, err := types.NewInteger(strconv.Itoa(input.ConnectorId))
+	connectorId, err := types.NewIntegerFromInt(input.ConnectorId)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("connectorId: %w", err))
 	}

@@ -3,7 +3,6 @@ package types
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	st "github.com/aasanchez/ocpp16messages/types"
 )
@@ -134,7 +133,7 @@ func NewChargingProfile(input ChargingProfileInput) (ChargingProfile, error) {
 
 // validateChargingProfileId validates the charging profile ID.
 func validateChargingProfileId(id int) (st.Integer, error) {
-	profileId, err := st.NewInteger(strconv.Itoa(id))
+	profileId, err := st.NewIntegerFromInt(id)
 	if err != nil {
 		return st.Integer{}, fmt.Errorf("chargingProfileId: %w", err)
 	}
@@ -148,7 +147,7 @@ func validateTransactionId(id *int) (*st.Integer, error) {
 		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
-	txId, err := st.NewInteger(strconv.Itoa(*id))
+	txId, err := st.NewIntegerFromInt(*id)
 	if err != nil {
 		return nil, fmt.Errorf("transactionId: %w", err)
 	}
@@ -162,7 +161,7 @@ func validateStackLevel(level int) (st.Integer, error) {
 		return st.Integer{}, fmt.Errorf("stackLevel: %w", st.ErrInvalidValue)
 	}
 
-	stackLevel, err := st.NewInteger(strconv.Itoa(level))
+	stackLevel, err := st.NewIntegerFromInt(level)
 	if err != nil {
 		return st.Integer{}, fmt.Errorf("stackLevel: %w", err)
 	}

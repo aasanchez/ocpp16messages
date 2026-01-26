@@ -3,7 +3,6 @@ package changeAvailability
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	mcat "github.com/aasanchez/ocpp16messages/changeAvailability/types"
 	st "github.com/aasanchez/ocpp16messages/types"
@@ -30,7 +29,7 @@ type ReqMessage struct {
 func Req(input ReqInput) (ReqMessage, error) {
 	var errs []error
 
-	connectorId, err := st.NewInteger(strconv.Itoa(input.ConnectorId))
+	connectorId, err := st.NewIntegerFromInt(input.ConnectorId)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("connectorId: %w", err))
 	}

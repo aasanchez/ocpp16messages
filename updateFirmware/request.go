@@ -3,7 +3,6 @@ package updateFirmware
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	st "github.com/aasanchez/ocpp16messages/types"
 )
@@ -83,7 +82,7 @@ func reqValidateRetries(retries *int) (*st.Integer, error) {
 		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
-	r, err := st.NewInteger(strconv.Itoa(*retries))
+	r, err := st.NewIntegerFromInt(*retries)
 	if err != nil {
 		return nil, fmt.Errorf("retries: %w", err)
 	}
@@ -97,7 +96,7 @@ func reqValidateRetryInterval(retryInterval *int) (*st.Integer, error) {
 		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
-	ri, err := st.NewInteger(strconv.Itoa(*retryInterval))
+	ri, err := st.NewIntegerFromInt(*retryInterval)
 	if err != nil {
 		return nil, fmt.Errorf("retryInterval: %w", err)
 	}

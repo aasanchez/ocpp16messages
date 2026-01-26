@@ -3,7 +3,6 @@ package stopTransaction
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	mt "github.com/aasanchez/ocpp16messages/meterValues/types"
 	stt "github.com/aasanchez/ocpp16messages/stopTransaction/types"
@@ -122,7 +121,7 @@ func validateTransactionId(
 	transactionId int,
 	errs []error,
 ) (st.Integer, []error) {
-	val, err := st.NewInteger(strconv.Itoa(transactionId))
+	val, err := st.NewIntegerFromInt(transactionId)
 	if err != nil {
 		return st.Integer{}, append(errs, fmt.Errorf("transactionId: %w", err))
 	}
@@ -144,7 +143,7 @@ func validateIdTag(idTag string, errs []error) (*st.IdToken, []error) {
 
 // validateMeterStop validates the meterStop field.
 func validateMeterStop(meterStop int, errs []error) (st.Integer, []error) {
-	val, err := st.NewInteger(strconv.Itoa(meterStop))
+	val, err := st.NewIntegerFromInt(meterStop)
 	if err != nil {
 		return st.Integer{}, append(errs, fmt.Errorf("meterStop: %w", err))
 	}

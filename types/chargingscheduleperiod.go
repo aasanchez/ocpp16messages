@@ -1,9 +1,6 @@
 package types
 
-import (
-	"fmt"
-	"strconv"
-)
+import "fmt"
 
 const (
 	// minNumberPhases is the minimum valid number of phases for charging.
@@ -43,7 +40,7 @@ type ChargingSchedulePeriod struct {
 func NewChargingSchedulePeriod(
 	input ChargingSchedulePeriodInput,
 ) (ChargingSchedulePeriod, error) {
-	startPeriod, err := NewInteger(strconv.Itoa(input.StartPeriod))
+	startPeriod, err := NewIntegerFromInt(input.StartPeriod)
 	if err != nil {
 		return ChargingSchedulePeriod{}, fmt.Errorf("startPeriod: %w", err)
 	}
@@ -78,7 +75,7 @@ func validateNumberPhases(phases *int) (*Integer, error) {
 	}
 
 	// NewInteger cannot fail here: values 1-3 are always valid for uint16
-	np, _ := NewInteger(strconv.Itoa(*phases))
+	np, _ := NewIntegerFromInt(*phases)
 
 	return &np, nil
 }

@@ -3,7 +3,6 @@ package meterValues
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	st "github.com/aasanchez/ocpp16messages/types"
 )
@@ -84,7 +83,7 @@ func validateReqConnectorId(
 	connectorId int,
 	errs []error,
 ) (st.Integer, []error) {
-	intVal, err := st.NewInteger(strconv.Itoa(connectorId))
+	intVal, err := st.NewIntegerFromInt(connectorId)
 	if err != nil {
 		return st.Integer{}, append(
 			errs,
@@ -99,7 +98,7 @@ func validateReqTransactionId(
 	transactionId int,
 	errs []error,
 ) (*st.Integer, []error) {
-	intVal, err := st.NewInteger(strconv.Itoa(transactionId))
+	intVal, err := st.NewIntegerFromInt(transactionId)
 	if err != nil {
 		return nil, append(
 			errs,

@@ -3,7 +3,6 @@ package triggerMessage
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	tt "github.com/aasanchez/ocpp16messages/triggerMessage/types"
 	st "github.com/aasanchez/ocpp16messages/types"
@@ -94,7 +93,7 @@ func validateRequestedMessage(
 
 // validateConnectorId validates the connectorId field.
 func validateConnectorId(connectorId int, errs []error) (st.Integer, []error) {
-	val, err := st.NewInteger(strconv.Itoa(connectorId))
+	val, err := st.NewIntegerFromInt(connectorId)
 	if err != nil {
 		return st.Integer{}, append(errs, fmt.Errorf("connectorId: %w", err))
 	}

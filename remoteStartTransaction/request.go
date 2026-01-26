@@ -3,7 +3,6 @@ package remoteStartTransaction
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	st "github.com/aasanchez/ocpp16messages/types"
 )
@@ -63,7 +62,7 @@ func Req(input ReqInput) (ReqMessage, error) {
 
 // validateConnectorId validates the connectorId field.
 func validateConnectorId(connectorId int, errs []error) (*st.Integer, []error) {
-	val, err := st.NewInteger(strconv.Itoa(connectorId))
+	val, err := st.NewIntegerFromInt(connectorId)
 	if err != nil {
 		return nil, append(errs, fmt.Errorf("connectorId: %w", err))
 	}

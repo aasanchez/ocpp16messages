@@ -3,7 +3,6 @@ package bootNotification
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	mbt "github.com/aasanchez/ocpp16messages/bootNotification/types"
 	st "github.com/aasanchez/ocpp16messages/types"
@@ -110,7 +109,7 @@ func validateCurrentTime(
 
 // validateInterval validates the interval field.
 func validateInterval(interval int, errs []error) (st.Integer, []error) {
-	intVal, err := st.NewInteger(strconv.Itoa(interval))
+	intVal, err := st.NewIntegerFromInt(interval)
 	if err != nil {
 		return st.Integer{}, append(
 			errs,
