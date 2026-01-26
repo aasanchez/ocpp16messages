@@ -27,6 +27,7 @@ make test          # Unit and example tests with coverage (reports in reports/)
 make test-coverage # Generate and open HTML coverage report
 make test-example  # Run example tests (documentation tests)
 make test-all      # Run all test types
+make test-fuzz     # Run fuzz tests in ./fuzz (requires Go 1.20+)
 
 # Run single test package
 go test -v ./types
@@ -423,6 +424,9 @@ authorize/
   (e.g., `valueZero`, `valueOne`, `valueNegative`, `valueExceedsMax`).
 - **Variable names**: Avoid short variable names like `p`, `id`. Use descriptive
   names like `purposeType`, `profileId` to pass varnamelen linter.
+- **Fuzz tests**: Place fuzzers under `./fuzz` with the `//go:build fuzz` tag.
+  Run them explicitly via `make test-fuzz`; they are not part of default
+  `go test ./...`.
 
 #### Example Tests - Use Selectively
 

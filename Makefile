@@ -26,6 +26,10 @@ test-example: ## Run documentation-based example tests to verify correctness of 
 
 test-all: test test-example
 
+test-fuzz: ## Run fuzzers (requires Go 1.20+); uses fuzz build tag.
+	@echo "\n--- \033[1;32mRun fuzzers\033[0m ---"
+	@go test -tags=fuzz -run=^$ -fuzz=Fuzz ./fuzz
+
 ##@ Code Style and Static Analysis
 lint: ## Run static analysis, vetting, and linting using golangci-lint and other tools.
 	@golangci-lint cache clean || true
