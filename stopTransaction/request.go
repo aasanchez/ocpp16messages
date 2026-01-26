@@ -106,7 +106,7 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 		validated.reason, errs = validateReason(*input.Reason, errs)
 	}
 
-	if len(input.TransactionData) > errCountZero {
+	if input.TransactionData != nil {
 		validated.transactionData, errs = validateTransactionData(
 			input.TransactionData,
 			errs,

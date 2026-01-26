@@ -17,6 +17,7 @@ const (
 	testMeterStop5000       = 5000
 	testValueZero           = 0
 	testValueNegativeOne    = -1
+	testTxDataLenZero       = 0
 	testExpectedTxDataLen   = 1
 	errFieldTransactionId   = "transactionId"
 	errFieldMeterStop       = "meterStop"
@@ -202,6 +203,30 @@ func TestReq_ValidWithTransactionData(t *testing.T) {
 			testExpectedTxDataLen,
 			len(req.TransactionData),
 		)
+	}
+}
+
+func TestReq_ValidWithEmptyTransactionData(t *testing.T) {
+	t.Parallel()
+
+	req, err := stopTransaction.Req(stopTransaction.ReqInput{
+		TransactionId:   testTransactionId12345,
+		IdTag:           nil,
+		MeterStop:       testMeterStop5000,
+		Timestamp:       testValidTimestamp,
+		Reason:          nil,
+		TransactionData: []mt.MeterValueInput{},
+	})
+	if err != nil {
+		t.Errorf(st.ErrorUnexpectedError, err)
+	}
+
+	if req.TransactionData == nil {
+		t.Error("TransactionData = nil, want empty slice")
+	}
+
+	if len(req.TransactionData) != testTxDataLenZero {
+		t.Errorf(st.ErrorMismatch, testTxDataLenZero, len(req.TransactionData))
 	}
 }
 

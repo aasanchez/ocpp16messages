@@ -18,6 +18,7 @@ const (
 	listVersionZero           = 0
 	listVersionOne            = 1
 	listVersionNegative       = -1
+	expectedLenZero           = 0
 	expectedLenOne            = 1
 	expectedLenThree          = 3
 )
@@ -152,6 +153,31 @@ func TestReq_Valid_WithMultipleAuthorizationEntries(t *testing.T) {
 		t.Errorf(
 			st.ErrorMismatchValue,
 			expectedLenThree,
+			len(req.LocalAuthorizationList),
+		)
+	}
+}
+
+func TestReq_Valid_WithEmptyAuthorizationList(t *testing.T) {
+	t.Parallel()
+
+	req, err := sendLocalList.Req(sendLocalList.ReqInput{
+		ListVersion:            listVersionOne,
+		LocalAuthorizationList: []slt.AuthorizationDataInput{},
+		UpdateType:             "Full",
+	})
+	if err != nil {
+		t.Errorf(st.ErrorUnexpectedError, err)
+	}
+
+	if req.LocalAuthorizationList == nil {
+		t.Error("LocalAuthorizationList = nil, want empty slice")
+	}
+
+	if len(req.LocalAuthorizationList) != expectedLenZero {
+		t.Errorf(
+			st.ErrorMismatchValue,
+			expectedLenZero,
 			len(req.LocalAuthorizationList),
 		)
 	}
