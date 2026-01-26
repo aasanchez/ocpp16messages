@@ -30,6 +30,10 @@ test-fuzz: ## Run fuzzers (requires Go 1.20+); uses fuzz build tag.
 	@echo "\n--- \033[1;32mRun fuzzers\033[0m ---"
 	@go test -tags=fuzz -run=^$ -fuzz=Fuzz ./fuzz
 
+test-bench: ## Run benchmarks in ./benchmark with the bench build tag.
+	@echo "\n--- \033[1;32mRun benchmarks\033[0m ---"
+	@go test -tags=bench -run=^$ -bench=. ./benchmark
+
 ##@ Code Style and Static Analysis
 lint: ## Run static analysis, vetting, and linting using golangci-lint and other tools.
 	@golangci-lint cache clean || true

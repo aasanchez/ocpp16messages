@@ -179,6 +179,8 @@ func validateTransactionData(
 	transactionData []mt.MeterValueInput,
 	errs []error,
 ) ([]mt.MeterValue, []error) {
+	const transactionDataEmpty = 0
+
 	if transactionData == nil {
 		return nil, errs
 	}
@@ -194,7 +196,7 @@ func validateTransactionData(
 		}
 	}
 
-	if len(transactionData) == 0 {
+	if len(transactionData) == transactionDataEmpty {
 		return []mt.MeterValue{}, errs
 	}
 
