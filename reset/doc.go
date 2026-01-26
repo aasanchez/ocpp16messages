@@ -1,4 +1,5 @@
-// Package reset implements the OCPP 1.6 Reset message.
+// Package reset implements the Open Charge Point Protocol (OCPP) 1.6
+// Reset message for EV charging.
 //
 // # Handling Rules
 //

@@ -1,4 +1,5 @@
-// Package types provides core OCPP 1.6 type definitions with strict
+// Package types provides Open Charge Point Protocol (OCPP) 1.6
+// core data types with strict validation for EV charging.
 // validation.
 //
 // This package implements validated types for the OCPP 1.6 protocol including:

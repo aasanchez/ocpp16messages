@@ -1,4 +1,5 @@
-// Package bootNotification implements the OCPP 1.6 BootNotification message.
+// Package bootNotification implements the Open Charge Point Protocol (OCPP) 1.6
+// BootNotification message for EV charging.
 //
 // # Handling Rules
 //

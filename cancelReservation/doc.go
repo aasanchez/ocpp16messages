@@ -1,4 +1,5 @@
-// Package cancelReservation implements the OCPP 1.6 CancelReservation message.
+// Package cancelReservation implements the Open Charge Point Protocol
+// (OCPP) 1.6 CancelReservation message for EV charging.
 //
 // # Handling Rules
 //

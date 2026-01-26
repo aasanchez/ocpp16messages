@@ -1,4 +1,5 @@
-// Package reserveNow implements the OCPP 1.6 ReserveNow message.
+// Package reserveNow implements the Open Charge Point Protocol (OCPP) 1.6
+// ReserveNow message for EV charging.
 //
 // # Handling Rules
 //

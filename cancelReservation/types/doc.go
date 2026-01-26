@@ -1,4 +1,5 @@
-// Package types provides OCPP 1.6 CancelReservation message type definitions.
+// Package types provides Open Charge Point Protocol (OCPP) 1.6
+// CancelReservation type definitions for EV charging.
 //
 // This package includes:
 //   - CancelReservationStatus: enumeration of cancel reservation results

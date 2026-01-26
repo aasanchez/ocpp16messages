@@ -4,8 +4,9 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/aasanchez/ocpp16messages)](https://goreportcard.com/report/github.com/aasanchez/ocpp16messages)
 [![codecov](https://codecov.io/gh/aasanchez/ocpp16messages/graph/badge.svg?token=1I9VVL7DWO)](https://codecov.io/gh/aasanchez/ocpp16messages)
 
-A type-safe, OCPP 1.6-compliant Go library providing message structures and
-validation for Electric Vehicle charging station communication.
+A type-safe Go implementation of the Open Charge Point Protocol (OCPP) 1.6
+message set, with validated request/response structures for EV charge points
+(EVSE) and Central Systems (CSMS/backends).
 
 ## Overview
 
@@ -14,7 +15,12 @@ with strict validation, following Go best practices and the official OCPP 1.6
 specification. It is designed as a foundation for building OCPP-compliant
 charging station management systems and charge point implementations.
 
-**Status:** Active Development - 28/28 messages implemented (Pre-1.0)
+**Status:** Active Development - 28/28 OCPP 1.6 JSON messages implemented
+  (Pre-1.0)
+
+**Search terms**: OCPP 1.6, Open Charge Point Protocol, EVSE, CSMS, charge
+station backend, Authorize.req, BootNotification, MeterValues, RemoteStart,
+Charge Point, Central System.
 
 ### Key Features
 
@@ -27,6 +33,19 @@ charging station management systems and charge point implementations.
 - **Comprehensive Testing** - Unit tests and example tests with high coverage
 - **Zero Panics** - All errors returned, never panicked
 - **Well Documented** - Full godoc coverage and examples
+
+### Implemented OCPP 1.6 operations
+
+The library covers the full OCPP 1.6 message surface, including:
+
+- Authorize.req / .conf, BootNotification.req / .conf, Heartbeat.req / .conf
+- StartTransaction.req / .conf, StopTransaction.req / .conf, StatusNotification
+- MeterValues, ClearChargingProfile, SetChargingProfile, TriggerMessage
+- RemoteStartTransaction, RemoteStopTransaction, ChangeAvailability,
+  ChangeConfiguration, GetConfiguration, DataTransfer
+- ReserveNow, CancelReservation, UnlockConnector, Reset, UpdateFirmware,
+  GetDiagnostics, DiagnosticsStatusNotification, FirmwareStatusNotification
+- SendLocalList, GetLocalListVersion, GetCompositeSchedule
 
 ## Installation
 

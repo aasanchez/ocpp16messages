@@ -1,5 +1,5 @@
-// Package diagnosticsStatusNotification implements the OCPP 1.6
-// DiagnosticsStatusNotification message.
+// Package diagnosticsStatusNotification implements the Open Charge Point
+// Protocol (OCPP) 1.6 DiagnosticsStatusNotification message for EV charging.
 //
 // # Handling Rules
 //

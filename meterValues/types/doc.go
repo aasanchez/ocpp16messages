@@ -1,4 +1,5 @@
-// Package types provides OCPP 1.6 MeterValues message type definitions.
+// Package types provides Open Charge Point Protocol (OCPP) 1.6
+// MeterValues type definitions for EV charging.
 //
 // This package includes:
 //   - ReadingContext: enumeration of reading context values

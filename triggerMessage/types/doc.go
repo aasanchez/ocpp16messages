@@ -1,4 +1,5 @@
-// Package types provides OCPP 1.6 TriggerMessage message type definitions.
+// Package types provides Open Charge Point Protocol (OCPP) 1.6
+// TriggerMessage type definitions for EV charging.
 //
 // This package includes:
 //   - MessageTrigger: enumeration of messages that can be triggered

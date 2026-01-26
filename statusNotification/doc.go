@@ -1,5 +1,5 @@
-// Package statusNotification implements the OCPP 1.6 StatusNotification
-// message.
+// Package statusNotification implements the Open Charge Point Protocol
+// (OCPP) 1.6 StatusNotification message for EV charging.
 //
 // # Handling Rules
 //

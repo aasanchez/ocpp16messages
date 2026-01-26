@@ -1,4 +1,5 @@
-// Package sendLocalList implements the OCPP 1.6 SendLocalList message.
+// Package sendLocalList implements the Open Charge Point Protocol (OCPP) 1.6
+// SendLocalList message for EV charging.
 //
 // # Handling Rules
 //

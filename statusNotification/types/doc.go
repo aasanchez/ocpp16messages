@@ -1,4 +1,5 @@
-// Package types provides OCPP 1.6 StatusNotification message type definitions.
+// Package types provides Open Charge Point Protocol (OCPP) 1.6
+// StatusNotification type definitions for EV charging.
 //
 // This package includes:
 //   - ChargePointStatus: enumeration of connector/Charge Point states

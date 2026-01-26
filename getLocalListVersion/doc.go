@@ -1,5 +1,5 @@
-// Package getLocalListVersion implements the OCPP 1.6 GetLocalListVersion
-// message.
+// Package getLocalListVersion implements the Open Charge Point Protocol
+// (OCPP) 1.6 GetLocalListVersion message for EV charging.
 //
 // # Handling Rules
 //

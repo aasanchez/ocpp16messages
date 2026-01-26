@@ -1,5 +1,5 @@
-// Package changeConfiguration implements the OCPP 1.6 ChangeConfiguration
-// message.
+// Package changeConfiguration implements the Open Charge Point Protocol
+// (OCPP) 1.6 ChangeConfiguration message for EV charging.
 //
 // # Handling Rules
 //

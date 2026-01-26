@@ -1,4 +1,5 @@
-// Package unlockConnector implements the OCPP 1.6 UnlockConnector message.
+// Package unlockConnector implements the Open Charge Point Protocol (OCPP) 1.6
+// UnlockConnector message for EV charging.
 //
 // # Handling Rules
 //

@@ -1,4 +1,5 @@
-// Package types provides OCPP 1.6 SendLocalList message type definitions.
+// Package types provides Open Charge Point Protocol (OCPP) 1.6
+// SendLocalList type definitions for EV charging.
 //
 // This package includes:
 //   - UpdateType: enumeration of update types (Full, Differential)

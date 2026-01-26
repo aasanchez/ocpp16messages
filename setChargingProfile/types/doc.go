@@ -1,5 +1,5 @@
-// Package types provides OCPP 1.6 compliant types for the SetChargingProfile
-// message.
+// Package types provides Open Charge Point Protocol (OCPP) 1.6
+// SetChargingProfile type definitions for EV charging.
 //
 // This package includes:
 //   - ChargingProfileKindType: The kind of charging profile

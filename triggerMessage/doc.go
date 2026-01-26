@@ -1,4 +1,5 @@
-// Package triggerMessage implements the OCPP 1.6 TriggerMessage message.
+// Package triggerMessage implements the Open Charge Point Protocol (OCPP) 1.6
+// TriggerMessage message for EV charging.
 //
 // # Handling Rules
 //

@@ -1,4 +1,5 @@
-// Package getConfiguration implements the OCPP 1.6 GetConfiguration message.
+// Package getConfiguration implements the Open Charge Point Protocol (OCPP) 1.6
+// GetConfiguration message for EV charging.
 //
 // # Handling Rules
 //

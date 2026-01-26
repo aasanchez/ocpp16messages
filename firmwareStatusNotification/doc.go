@@ -1,5 +1,5 @@
-// Package firmwareStatusNotification implements the OCPP 1.6
-// FirmwareStatusNotification message.
+// Package firmwareStatusNotification implements the Open Charge Point Protocol
+// (OCPP) 1.6 FirmwareStatusNotification message for EV charging.
 //
 // # Handling Rules
 //

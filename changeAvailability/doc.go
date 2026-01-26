@@ -1,5 +1,5 @@
-// Package changeAvailability implements the OCPP 1.6 ChangeAvailability
-// message.
+// Package changeAvailability implements the Open Charge Point Protocol
+// (OCPP) 1.6 ChangeAvailability message for EV charging.
 //
 // # Handling Rules
 //

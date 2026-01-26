@@ -1,4 +1,5 @@
-// Package meterValues implements the OCPP 1.6 MeterValues message.
+// Package meterValues implements the Open Charge Point Protocol (OCPP) 1.6
+// MeterValues message for EV charging.
 //
 // # Handling Rules
 //

@@ -1,4 +1,5 @@
-// Package types provides OCPP 1.6 ReserveNow message type definitions.
+// Package types provides Open Charge Point Protocol (OCPP) 1.6
+// ReserveNow type definitions for EV charging.
 //
 // This package includes:
 //   - ReservationStatus: enumeration of reservation results (Accepted, Faulted,

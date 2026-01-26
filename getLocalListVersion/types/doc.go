@@ -1,4 +1,5 @@
-// Package types provides OCPP 1.6 GetLocalListVersion message type definitions.
+// Package types provides Open Charge Point Protocol (OCPP) 1.6
+// GetLocalListVersion type definitions for EV charging.
 //
 // This package includes:
 //   - ListVersionNumber: represents the version number of the local

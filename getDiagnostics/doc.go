@@ -1,4 +1,5 @@
-// Package getDiagnostics implements the OCPP 1.6 GetDiagnostics message.
+// Package getDiagnostics implements the Open Charge Point Protocol (OCPP) 1.6
+// GetDiagnostics message for EV charging.
 //
 // # Handling Rules
 //

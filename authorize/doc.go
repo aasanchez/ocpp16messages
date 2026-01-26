@@ -1,4 +1,5 @@
-// Package authorize provides OCPP 1.6 Authorize message implementation.
+// Package authorize implements the Open Charge Point Protocol (OCPP) 1.6
+// Authorize message for EV charging.
 //
 // Authorization is required before a Charge Point may start or stop a charging
 // transaction. Energy shall only be supplied after successful authorization.

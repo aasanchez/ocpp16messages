@@ -1,4 +1,5 @@
-// Package heartbeat implements the OCPP 1.6 Heartbeat message.
+// Package heartbeat implements the Open Charge Point Protocol (OCPP) 1.6
+// Heartbeat message for EV charging.
 //
 // # Handling Rules
 //

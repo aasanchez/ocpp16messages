@@ -1,5 +1,6 @@
-// Package ocpp16messages provides OCPP 1.6-compliant message types and
-// validation for EV charging station management.
+// Package ocpp16messages provides Open Charge Point Protocol (OCPP) 1.6
+// message types covering Central System (CSMS) and Charge Point (EVSE)
+// interactions with validation for EV charging networks.
 //
 // This library implements strict type validation for OCPP 1.6 protocol
 // messages, including CiString types (case-insensitive strings with

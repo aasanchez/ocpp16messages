@@ -1,4 +1,5 @@
-// Package types provides OCPP 1.6 GetCompositeSchedule message type
+// Package types provides Open Charge Point Protocol (OCPP) 1.6
+// GetCompositeSchedule type definitions for EV charging.
 // definitions.
 //
 // This package includes:
