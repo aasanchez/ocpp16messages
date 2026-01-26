@@ -27,9 +27,20 @@ func TestRace_MeterValuesSingleReq(t *testing.T) {
 		go func() {
 			defer wg.Done()
 			for j := 0; j < mvIterations; j++ {
-				_, err := mv.SingleReq(1, "2025-01-02T15:00:00Z", sampled, nil)
+				_, err := mv.Req(mv.ReqInput{
+					ConnectorId: 1,
+					MeterValue: []st.MeterValueInput{
+						{
+							Timestamp: "2025-01-02T15:00:00Z",
+							SampledValue: []st.SampledValueInput{
+								sampled,
+							},
+						},
+					},
+					TransactionId: nil,
+				})
 				if err != nil {
-					t.Fatalf("SingleReq unexpected error: %v", err)
+					t.Fatalf("Req unexpected error: %v", err)
 				}
 			}
 		}()
