@@ -1,7 +1,4 @@
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with
-code in this repository.
+# AGENTS.md
 
 ## Project Overview
 
@@ -307,7 +304,7 @@ authorize/
 
 ### Markdown Linting
 
-- Run `markdownlint README.md CLAUDE.md SECURITY.md` after modifying any
+- Run `markdownlint .` after modifying any
   Markdown file
 - Configuration in `.markdownlint.json`:
   - Line length: 80 characters max

@@ -24,7 +24,15 @@ func TestNewMeterValue_ValidSingleSampledValue(t *testing.T) {
 	input := types.MeterValueInput{
 		Timestamp: validMeterValueTimestamp,
 		SampledValue: []types.SampledValueInput{
-			{Value: validMeterValue},
+			{
+				Value:     validMeterValue,
+				Context:   nil,
+				Format:    nil,
+				Measurand: nil,
+				Phase:     nil,
+				Location:  nil,
+				Unit:      nil,
+			},
 		},
 	}
 
@@ -48,13 +56,21 @@ func TestNewMeterValue_EmptyTimestamp(t *testing.T) {
 	input := types.MeterValueInput{
 		Timestamp: "",
 		SampledValue: []types.SampledValueInput{
-			{Value: validMeterValue},
+			{
+				Value:     validMeterValue,
+				Context:   nil,
+				Format:    nil,
+				Measurand: nil,
+				Phase:     nil,
+				Location:  nil,
+				Unit:      nil,
+			},
 		},
 	}
 
 	_, err := types.NewMeterValue(input)
 	if err == nil {
-		t.Error("NewMeterValue() error = nil, want error for empty timestamp")
+		t.Error("NewMeterValue() error = nil, want empty timestamp error")
 	}
 
 	if !strings.Contains(err.Error(), fieldMeterTimestamp) {
@@ -68,13 +84,21 @@ func TestNewMeterValue_InvalidTimestamp(t *testing.T) {
 	input := types.MeterValueInput{
 		Timestamp: invalidMeterTimestamp,
 		SampledValue: []types.SampledValueInput{
-			{Value: validMeterValue},
+			{
+				Value:     validMeterValue,
+				Context:   nil,
+				Format:    nil,
+				Measurand: nil,
+				Phase:     nil,
+				Location:  nil,
+				Unit:      nil,
+			},
 		},
 	}
 
 	_, err := types.NewMeterValue(input)
 	if err == nil {
-		t.Error("NewMeterValue() error = nil, want error for invalid timestamp")
+		t.Error("NewMeterValue() error = nil, want invalid timestamp error")
 	}
 
 	if !strings.Contains(err.Error(), fieldMeterTimestamp) {
@@ -92,7 +116,7 @@ func TestNewMeterValue_EmptySampledValueArray(t *testing.T) {
 
 	_, err := types.NewMeterValue(input)
 	if err == nil {
-		t.Error("NewMeterValue() error = nil, want error for empty sampled values")
+		t.Error("NewMeterValue() error = nil, want empty sampled error")
 	}
 
 	if !strings.Contains(err.Error(), fieldMeterSampledValue) {
@@ -110,7 +134,7 @@ func TestNewMeterValue_NilSampledValueArray(t *testing.T) {
 
 	_, err := types.NewMeterValue(input)
 	if err == nil {
-		t.Error("NewMeterValue() error = nil, want error for nil sampled values")
+		t.Error("NewMeterValue() error = nil, want nil sampled error")
 	}
 
 	if !strings.Contains(err.Error(), fieldMeterSampledValue) {
@@ -124,13 +148,21 @@ func TestNewMeterValue_InvalidSampledValue(t *testing.T) {
 	input := types.MeterValueInput{
 		Timestamp: validMeterValueTimestamp,
 		SampledValue: []types.SampledValueInput{
-			{Value: emptyMeterValueStr},
+			{
+				Value:     emptyMeterValueStr,
+				Context:   nil,
+				Format:    nil,
+				Measurand: nil,
+				Phase:     nil,
+				Location:  nil,
+				Unit:      nil,
+			},
 		},
 	}
 
 	_, err := types.NewMeterValue(input)
 	if err == nil {
-		t.Error("NewMeterValue() error = nil, want error for invalid sampled value")
+		t.Error("NewMeterValue() error = nil, want invalid sampled error")
 	}
 
 	if !strings.Contains(err.Error(), fieldMeterSampledIdx) {
@@ -144,15 +176,39 @@ func TestNewMeterValue_MultipleInvalidSampledValues(t *testing.T) {
 	input := types.MeterValueInput{
 		Timestamp: validMeterValueTimestamp,
 		SampledValue: []types.SampledValueInput{
-			{Value: emptyMeterValueStr},
-			{Value: validMeterValue},
-			{Value: emptyMeterValueStr},
+			{
+				Value:     emptyMeterValueStr,
+				Context:   nil,
+				Format:    nil,
+				Measurand: nil,
+				Phase:     nil,
+				Location:  nil,
+				Unit:      nil,
+			},
+			{
+				Value:     validMeterValue,
+				Context:   nil,
+				Format:    nil,
+				Measurand: nil,
+				Phase:     nil,
+				Location:  nil,
+				Unit:      nil,
+			},
+			{
+				Value:     emptyMeterValueStr,
+				Context:   nil,
+				Format:    nil,
+				Measurand: nil,
+				Phase:     nil,
+				Location:  nil,
+				Unit:      nil,
+			},
 		},
 	}
 
 	_, err := types.NewMeterValue(input)
 	if err == nil {
-		t.Error("NewMeterValue() error = nil, want error for invalid sampled values")
+		t.Error("NewMeterValue() error = nil, want invalid sampled error")
 	}
 
 	if !strings.Contains(err.Error(), fieldMeterSampledIdx) {
@@ -170,13 +226,21 @@ func TestNewMeterValue_MultipleErrors(t *testing.T) {
 	input := types.MeterValueInput{
 		Timestamp: invalidMeterTimestamp,
 		SampledValue: []types.SampledValueInput{
-			{Value: emptyMeterValueStr},
+			{
+				Value:     emptyMeterValueStr,
+				Context:   nil,
+				Format:    nil,
+				Measurand: nil,
+				Phase:     nil,
+				Location:  nil,
+				Unit:      nil,
+			},
 		},
 	}
 
 	_, err := types.NewMeterValue(input)
 	if err == nil {
-		t.Error("NewMeterValue() error = nil, want error for multiple errors")
+		t.Error("NewMeterValue() error = nil, want multiple errors")
 	}
 
 	if !strings.Contains(err.Error(), fieldMeterTimestamp) {

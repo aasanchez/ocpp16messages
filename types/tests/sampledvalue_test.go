@@ -8,16 +8,23 @@ import (
 
 const (
 	testSampledValueValue = "100"
+	errSampledValueNil    = "NewSampledValue() error = %v, want nil"
 )
 
 func TestNewSampledValue_Valid(t *testing.T) {
 	t.Parallel()
 
 	_, err := types.NewSampledValue(types.SampledValueInput{
-		Value: testSampledValueValue,
+		Value:     testSampledValueValue,
+		Context:   nil,
+		Format:    nil,
+		Measurand: nil,
+		Phase:     nil,
+		Location:  nil,
+		Unit:      nil,
 	})
 	if err != nil {
-		t.Errorf("NewSampledValue() error = %v, want nil", err)
+		t.Errorf(errSampledValueNil, err)
 	}
 }
 
@@ -25,9 +32,14 @@ func TestNewSampledValue_EmptyValue(t *testing.T) {
 	t.Parallel()
 
 	_, err := types.NewSampledValue(types.SampledValueInput{
-		Value: "",
+		Value:     "",
+		Context:   nil,
+		Format:    nil,
+		Measurand: nil,
+		Phase:     nil,
+		Location:  nil,
+		Unit:      nil,
 	})
-
 	if err == nil {
 		t.Error("NewSampledValue() error = nil, want error for empty value")
 	}
@@ -37,11 +49,16 @@ func TestNewSampledValue_InvalidContext(t *testing.T) {
 	t.Parallel()
 
 	invalidContext := "InvalidContext"
-	_, err := types.NewSampledValue(types.SampledValueInput{
-		Value:   testSampledValueValue,
-		Context: &invalidContext,
-	})
 
+	_, err := types.NewSampledValue(types.SampledValueInput{
+		Value:     testSampledValueValue,
+		Context:   &invalidContext,
+		Format:    nil,
+		Measurand: nil,
+		Phase:     nil,
+		Location:  nil,
+		Unit:      nil,
+	})
 	if err == nil {
 		t.Error("NewSampledValue() error = nil, want error for invalid context")
 	}
@@ -51,12 +68,18 @@ func TestNewSampledValue_ValidContext(t *testing.T) {
 	t.Parallel()
 
 	validContext := "Sample.Periodic"
+
 	sv, err := types.NewSampledValue(types.SampledValueInput{
-		Value:   testSampledValueValue,
-		Context: &validContext,
+		Value:     testSampledValueValue,
+		Context:   &validContext,
+		Format:    nil,
+		Measurand: nil,
+		Phase:     nil,
+		Location:  nil,
+		Unit:      nil,
 	})
 	if err != nil {
-		t.Errorf("NewSampledValue() error = %v, want nil", err)
+		t.Errorf(errSampledValueNil, err)
 	}
 
 	if sv.Context == nil {
@@ -68,11 +91,16 @@ func TestNewSampledValue_InvalidFormat(t *testing.T) {
 	t.Parallel()
 
 	invalidFormat := "InvalidFormat"
-	_, err := types.NewSampledValue(types.SampledValueInput{
-		Value:  testSampledValueValue,
-		Format: &invalidFormat,
-	})
 
+	_, err := types.NewSampledValue(types.SampledValueInput{
+		Value:     testSampledValueValue,
+		Context:   nil,
+		Format:    &invalidFormat,
+		Measurand: nil,
+		Phase:     nil,
+		Location:  nil,
+		Unit:      nil,
+	})
 	if err == nil {
 		t.Error("NewSampledValue() error = nil, want error for invalid format")
 	}
@@ -82,12 +110,18 @@ func TestNewSampledValue_ValidFormat(t *testing.T) {
 	t.Parallel()
 
 	validFormat := "Raw"
+
 	sv, err := types.NewSampledValue(types.SampledValueInput{
-		Value:  testSampledValueValue,
-		Format: &validFormat,
+		Value:     testSampledValueValue,
+		Context:   nil,
+		Format:    &validFormat,
+		Measurand: nil,
+		Phase:     nil,
+		Location:  nil,
+		Unit:      nil,
 	})
 	if err != nil {
-		t.Errorf("NewSampledValue() error = %v, want nil", err)
+		t.Errorf(errSampledValueNil, err)
 	}
 
 	if sv.Format == nil {
@@ -99,13 +133,18 @@ func TestNewSampledValue_InvalidMeasurand(t *testing.T) {
 	t.Parallel()
 
 	invalidMeasurand := "InvalidMeasurand"
+
 	_, err := types.NewSampledValue(types.SampledValueInput{
 		Value:     testSampledValueValue,
+		Context:   nil,
+		Format:    nil,
 		Measurand: &invalidMeasurand,
+		Phase:     nil,
+		Location:  nil,
+		Unit:      nil,
 	})
-
 	if err == nil {
-		t.Error("NewSampledValue() error = nil, want error for invalid measurand")
+		t.Error("NewSampledValue() error = nil, want invalid measurand")
 	}
 }
 
@@ -113,12 +152,18 @@ func TestNewSampledValue_ValidMeasurand(t *testing.T) {
 	t.Parallel()
 
 	validMeasurand := "Energy.Active.Import.Register"
+
 	sv, err := types.NewSampledValue(types.SampledValueInput{
 		Value:     testSampledValueValue,
+		Context:   nil,
+		Format:    nil,
 		Measurand: &validMeasurand,
+		Phase:     nil,
+		Location:  nil,
+		Unit:      nil,
 	})
 	if err != nil {
-		t.Errorf("NewSampledValue() error = %v, want nil", err)
+		t.Errorf(errSampledValueNil, err)
 	}
 
 	if sv.Measurand == nil {
@@ -130,11 +175,16 @@ func TestNewSampledValue_InvalidPhase(t *testing.T) {
 	t.Parallel()
 
 	invalidPhase := "InvalidPhase"
-	_, err := types.NewSampledValue(types.SampledValueInput{
-		Value: testSampledValueValue,
-		Phase: &invalidPhase,
-	})
 
+	_, err := types.NewSampledValue(types.SampledValueInput{
+		Value:     testSampledValueValue,
+		Context:   nil,
+		Format:    nil,
+		Measurand: nil,
+		Phase:     &invalidPhase,
+		Location:  nil,
+		Unit:      nil,
+	})
 	if err == nil {
 		t.Error("NewSampledValue() error = nil, want error for invalid phase")
 	}
@@ -144,12 +194,18 @@ func TestNewSampledValue_ValidPhase(t *testing.T) {
 	t.Parallel()
 
 	validPhase := "L1"
+
 	sv, err := types.NewSampledValue(types.SampledValueInput{
-		Value: testSampledValueValue,
-		Phase: &validPhase,
+		Value:     testSampledValueValue,
+		Context:   nil,
+		Format:    nil,
+		Measurand: nil,
+		Phase:     &validPhase,
+		Location:  nil,
+		Unit:      nil,
 	})
 	if err != nil {
-		t.Errorf("NewSampledValue() error = %v, want nil", err)
+		t.Errorf(errSampledValueNil, err)
 	}
 
 	if sv.Phase == nil {
@@ -161,11 +217,16 @@ func TestNewSampledValue_InvalidLocation(t *testing.T) {
 	t.Parallel()
 
 	invalidLocation := "InvalidLocation"
-	_, err := types.NewSampledValue(types.SampledValueInput{
-		Value:    testSampledValueValue,
-		Location: &invalidLocation,
-	})
 
+	_, err := types.NewSampledValue(types.SampledValueInput{
+		Value:     testSampledValueValue,
+		Context:   nil,
+		Format:    nil,
+		Measurand: nil,
+		Phase:     nil,
+		Location:  &invalidLocation,
+		Unit:      nil,
+	})
 	if err == nil {
 		t.Error("NewSampledValue() error = nil, want error for invalid location")
 	}
@@ -175,12 +236,18 @@ func TestNewSampledValue_ValidLocation(t *testing.T) {
 	t.Parallel()
 
 	validLocation := "Outlet"
+
 	sv, err := types.NewSampledValue(types.SampledValueInput{
-		Value:    testSampledValueValue,
-		Location: &validLocation,
+		Value:     testSampledValueValue,
+		Context:   nil,
+		Format:    nil,
+		Measurand: nil,
+		Phase:     nil,
+		Location:  &validLocation,
+		Unit:      nil,
 	})
 	if err != nil {
-		t.Errorf("NewSampledValue() error = %v, want nil", err)
+		t.Errorf(errSampledValueNil, err)
 	}
 
 	if sv.Location == nil {
@@ -192,11 +259,16 @@ func TestNewSampledValue_InvalidUnit(t *testing.T) {
 	t.Parallel()
 
 	invalidUnit := "InvalidUnit"
-	_, err := types.NewSampledValue(types.SampledValueInput{
-		Value: testSampledValueValue,
-		Unit:  &invalidUnit,
-	})
 
+	_, err := types.NewSampledValue(types.SampledValueInput{
+		Value:     testSampledValueValue,
+		Context:   nil,
+		Format:    nil,
+		Measurand: nil,
+		Phase:     nil,
+		Location:  nil,
+		Unit:      &invalidUnit,
+	})
 	if err == nil {
 		t.Error("NewSampledValue() error = nil, want error for invalid unit")
 	}
@@ -206,12 +278,18 @@ func TestNewSampledValue_ValidUnit(t *testing.T) {
 	t.Parallel()
 
 	validUnit := "Wh"
+
 	sv, err := types.NewSampledValue(types.SampledValueInput{
-		Value: testSampledValueValue,
-		Unit:  &validUnit,
+		Value:     testSampledValueValue,
+		Context:   nil,
+		Format:    nil,
+		Measurand: nil,
+		Phase:     nil,
+		Location:  nil,
+		Unit:      &validUnit,
 	})
 	if err != nil {
-		t.Errorf("NewSampledValue() error = %v, want nil", err)
+		t.Errorf(errSampledValueNil, err)
 	}
 
 	if sv.Unit == nil {

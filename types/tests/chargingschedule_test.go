@@ -7,12 +7,21 @@ import (
 )
 
 const (
-	testScheduleDuration    = 3600
-	testScheduleStartTime   = "2025-01-01T00:00:00Z"
-	testScheduleRateUnit    = "A"
-	testScheduleStartPeriod = 0
-	testScheduleLimit       = 32.0
-	testScheduleMinRate     = 6.0
+	testScheduleDuration     = 3600
+	testScheduleStartTime    = "2025-01-01T00:00:00Z"
+	testScheduleRateUnit     = "A"
+	testScheduleStartPeriod  = 0
+	testScheduleLimit        = 32.0
+	testScheduleMinRate      = 6.0
+	testInvalidDuration      = -1
+	testNegativeMinRate      = -1.0
+	errFailedCreateSchedule  = "Failed to create ChargingSchedule: %v"
+	errScheduleWantNegDur    = "NewChargingSchedule() error = nil, want neg dur"
+	errScheduleWantInvTime   = "NewChargingSchedule() error = nil, want inv time"
+	errScheduleWantInvUnit   = "NewChargingSchedule() error = nil, want inv unit"
+	errScheduleWantEmptyPer  = "NewChargingSchedule() error = nil, want empty per"
+	errScheduleWantInvPer    = "NewChargingSchedule() error = nil, want inv per"
+	errScheduleWantNegRate   = "NewChargingSchedule() error = nil, want neg rate"
 )
 
 func createValidChargingSchedule(t *testing.T) types.ChargingSchedule {
@@ -27,7 +36,11 @@ func createValidChargingSchedule(t *testing.T) types.ChargingSchedule {
 		StartSchedule:    &startSchedule,
 		ChargingRateUnit: testScheduleRateUnit,
 		ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{
-			{StartPeriod: testScheduleStartPeriod, Limit: testScheduleLimit},
+			{
+				StartPeriod:  testScheduleStartPeriod,
+				Limit:        testScheduleLimit,
+				NumberPhases: nil,
+			},
 		},
 		MinChargingRate: &minChargingRate,
 	})
@@ -56,11 +69,17 @@ func TestChargingSchedule_Duration_WhenNil(t *testing.T) {
 		Duration:         nil,
 		ChargingRateUnit: testScheduleRateUnit,
 		ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{
-			{StartPeriod: testScheduleStartPeriod, Limit: testScheduleLimit},
+			{
+				StartPeriod:  testScheduleStartPeriod,
+				Limit:        testScheduleLimit,
+				NumberPhases: nil,
+			},
 		},
+		MinChargingRate: nil,
+		StartSchedule:   nil,
 	})
 	if err != nil {
-		t.Fatalf("Failed to create ChargingSchedule: %v", err)
+		t.Fatalf(errFailedCreateSchedule, err)
 	}
 
 	if schedule.Duration() != nil {
@@ -83,14 +102,20 @@ func TestChargingSchedule_StartSchedule_WhenNil(t *testing.T) {
 	t.Parallel()
 
 	schedule, err := types.NewChargingSchedule(types.ChargingScheduleInput{
+		Duration:         nil,
 		StartSchedule:    nil,
 		ChargingRateUnit: testScheduleRateUnit,
 		ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{
-			{StartPeriod: testScheduleStartPeriod, Limit: testScheduleLimit},
+			{
+				StartPeriod:  testScheduleStartPeriod,
+				Limit:        testScheduleLimit,
+				NumberPhases: nil,
+			},
 		},
+		MinChargingRate: nil,
 	})
 	if err != nil {
-		t.Fatalf("Failed to create ChargingSchedule: %v", err)
+		t.Fatalf(errFailedCreateSchedule, err)
 	}
 
 	if schedule.StartSchedule() != nil {
@@ -113,14 +138,20 @@ func TestChargingSchedule_MinChargingRate_WhenNil(t *testing.T) {
 	t.Parallel()
 
 	schedule, err := types.NewChargingSchedule(types.ChargingScheduleInput{
+		Duration:         nil,
 		ChargingRateUnit: testScheduleRateUnit,
 		ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{
-			{StartPeriod: testScheduleStartPeriod, Limit: testScheduleLimit},
+			{
+				StartPeriod:  testScheduleStartPeriod,
+				Limit:        testScheduleLimit,
+				NumberPhases: nil,
+			},
 		},
 		MinChargingRate: nil,
+		StartSchedule:   nil,
 	})
 	if err != nil {
-		t.Fatalf("Failed to create ChargingSchedule: %v", err)
+		t.Fatalf(errFailedCreateSchedule, err)
 	}
 
 	if schedule.MinChargingRate() != nil {
@@ -131,17 +162,23 @@ func TestChargingSchedule_MinChargingRate_WhenNil(t *testing.T) {
 func TestNewChargingSchedule_InvalidDuration(t *testing.T) {
 	t.Parallel()
 
-	duration := -1
+	duration := testInvalidDuration
+
 	_, err := types.NewChargingSchedule(types.ChargingScheduleInput{
 		Duration:         &duration,
 		ChargingRateUnit: testScheduleRateUnit,
 		ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{
-			{StartPeriod: testScheduleStartPeriod, Limit: testScheduleLimit},
+			{
+				StartPeriod:  testScheduleStartPeriod,
+				Limit:        testScheduleLimit,
+				NumberPhases: nil,
+			},
 		},
+		MinChargingRate: nil,
+		StartSchedule:   nil,
 	})
-
 	if err == nil {
-		t.Error("NewChargingSchedule() error = nil, want error for negative duration")
+		t.Error(errScheduleWantNegDur)
 	}
 }
 
@@ -149,16 +186,22 @@ func TestNewChargingSchedule_InvalidStartSchedule(t *testing.T) {
 	t.Parallel()
 
 	invalidTime := "not-a-valid-time"
+
 	_, err := types.NewChargingSchedule(types.ChargingScheduleInput{
+		Duration:         nil,
 		StartSchedule:    &invalidTime,
 		ChargingRateUnit: testScheduleRateUnit,
 		ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{
-			{StartPeriod: testScheduleStartPeriod, Limit: testScheduleLimit},
+			{
+				StartPeriod:  testScheduleStartPeriod,
+				Limit:        testScheduleLimit,
+				NumberPhases: nil,
+			},
 		},
+		MinChargingRate: nil,
 	})
-
 	if err == nil {
-		t.Error("NewChargingSchedule() error = nil, want error for invalid time")
+		t.Error(errScheduleWantInvTime)
 	}
 }
 
@@ -166,14 +209,20 @@ func TestNewChargingSchedule_InvalidChargingRateUnit(t *testing.T) {
 	t.Parallel()
 
 	_, err := types.NewChargingSchedule(types.ChargingScheduleInput{
+		Duration:         nil,
 		ChargingRateUnit: "InvalidUnit",
 		ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{
-			{StartPeriod: testScheduleStartPeriod, Limit: testScheduleLimit},
+			{
+				StartPeriod:  testScheduleStartPeriod,
+				Limit:        testScheduleLimit,
+				NumberPhases: nil,
+			},
 		},
+		MinChargingRate: nil,
+		StartSchedule:   nil,
 	})
-
 	if err == nil {
-		t.Error("NewChargingSchedule() error = nil, want error for invalid unit")
+		t.Error(errScheduleWantInvUnit)
 	}
 }
 
@@ -181,12 +230,14 @@ func TestNewChargingSchedule_EmptyPeriods(t *testing.T) {
 	t.Parallel()
 
 	_, err := types.NewChargingSchedule(types.ChargingScheduleInput{
+		Duration:               nil,
 		ChargingRateUnit:       testScheduleRateUnit,
 		ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{},
+		MinChargingRate:        nil,
+		StartSchedule:          nil,
 	})
-
 	if err == nil {
-		t.Error("NewChargingSchedule() error = nil, want error for empty periods")
+		t.Error(errScheduleWantEmptyPer)
 	}
 }
 
@@ -194,30 +245,42 @@ func TestNewChargingSchedule_InvalidPeriod(t *testing.T) {
 	t.Parallel()
 
 	_, err := types.NewChargingSchedule(types.ChargingScheduleInput{
+		Duration:         nil,
 		ChargingRateUnit: testScheduleRateUnit,
 		ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{
-			{StartPeriod: -1, Limit: testScheduleLimit},
+			{
+				StartPeriod:  -1,
+				Limit:        testScheduleLimit,
+				NumberPhases: nil,
+			},
 		},
+		MinChargingRate: nil,
+		StartSchedule:   nil,
 	})
-
 	if err == nil {
-		t.Error("NewChargingSchedule() error = nil, want error for invalid period")
+		t.Error(errScheduleWantInvPer)
 	}
 }
 
 func TestNewChargingSchedule_NegativeMinChargingRate(t *testing.T) {
 	t.Parallel()
 
-	negativeRate := -1.0
+	negativeRate := testNegativeMinRate
+
 	_, err := types.NewChargingSchedule(types.ChargingScheduleInput{
+		Duration:         nil,
 		ChargingRateUnit: testScheduleRateUnit,
 		ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{
-			{StartPeriod: testScheduleStartPeriod, Limit: testScheduleLimit},
+			{
+				StartPeriod:  testScheduleStartPeriod,
+				Limit:        testScheduleLimit,
+				NumberPhases: nil,
+			},
 		},
 		MinChargingRate: &negativeRate,
+		StartSchedule:   nil,
 	})
-
 	if err == nil {
-		t.Error("NewChargingSchedule() error = nil, want error for negative rate")
+		t.Error(errScheduleWantNegRate)
 	}
 }
