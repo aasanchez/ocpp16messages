@@ -28,6 +28,8 @@ make test-coverage # Generate and open HTML coverage report
 make test-example  # Run example tests (documentation tests)
 make test-all      # Run all test types
 make test-fuzz     # Run fuzz tests in ./fuzz (requires Go 1.20+)
+make test-race     # Run race detector with the race build tag (opt-in)
+make test-bench    # Run benchmarks in ./benchmark (opt-in)
 
 # Run single test package
 go test -v ./types

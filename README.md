@@ -15,8 +15,8 @@ with strict validation, following Go best practices and the official OCPP 1.6
 specification. It is designed as a foundation for building OCPP-compliant
 charging station management systems and charge point implementations.
 
-**Status:** Active Development - 28/28 OCPP 1.6 JSON messages implemented
-  (Pre-1.0)
+**Status:** Stable - v1.0.0 (28/28 OCPP 1.6 JSON messages implemented)
+  - API follows SemVer; see [CHANGELOG](CHANGELOG.md) for release notes.
 
 **Search terms**: OCPP 1.6, Open Charge Point Protocol, EVSE, CSMS, charge
 station backend, Authorize.req, BootNotification, MeterValues, RemoteStart,
@@ -53,7 +53,7 @@ The library covers the full OCPP 1.6 message surface, including:
 go get github.com/aasanchez/ocpp16messages
 ```
 
-**Requirements:** Go 1.24 or later
+**Requirements:** Go 1.24.6 or later (CI and go.mod aligned)
 
 ## Project Structure
 
@@ -111,6 +111,12 @@ go get github.com/aasanchez/ocpp16messages
 ├── updateFirmware/             # UpdateFirmware message
 └── SECURITY.md                 # Security policy and vulnerability reporting
 ```
+
+## Versioning and support
+
+- Semantic Versioning: API surface follows SemVer starting with v1.0.0.
+- Supported Go versions: >= 1.24 (aligned with go.mod and CI).
+- Changelog: see [CHANGELOG](CHANGELOG.md) for releases and upgrade notes.
 
 ## Usage
 
@@ -185,7 +191,7 @@ that are immutable and thread-safe.
 - staticcheck
 - gci, gofumpt, golines (formatters)
 
-### Common Commands
+### Common Commands (including opt-in suites)
 
 ```bash
 # Install dependencies
@@ -196,6 +202,9 @@ make test                   # Unit tests with coverage
 make test-coverage          # Generate HTML coverage report
 make test-example           # Run example tests (documentation tests)
 make test-all               # Run all test types
+make test-race              # Run race detector with -race (opt-in)
+make test-fuzz              # Run fuzzers in ./fuzz (short budget, opt-in)
+make test-bench             # Run benchmarks in ./benchmark (opt-in)
 
 # Code quality
 make lint                   # Run all linters (golangci-lint, go vet, staticcheck)
