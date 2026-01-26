@@ -16,7 +16,10 @@ specification. It is designed as a foundation for building OCPP-compliant
 charging station management systems and charge point implementations.
 
 **Status:** Stable - v1.0.0 (28/28 OCPP 1.6 JSON messages implemented)
-  - API follows SemVer; see [CHANGELOG](CHANGELOG.md) for release notes.
+
+    - API follows SemVer; see [CHANGELOG](CHANGELOG.md) for release notes.
+    - Public API is frozen for all v1.x releases; breaking changes will bump
+        MAJOR.
 
 **Search terms**: OCPP 1.6, Open Charge Point Protocol, EVSE, CSMS, charge
 station backend, Authorize.req, BootNotification, MeterValues, RemoteStart,
@@ -49,68 +52,64 @@ The library covers the full OCPP 1.6 message surface, including:
 
 ## Installation
 
-```bash
-go get github.com/aasanchez/ocpp16messages
-```
+    go get github.com/aasanchez/ocpp16messages
 
 **Requirements:** Go 1.24.6 or later (CI and go.mod aligned)
 
 ## Project Structure
 
-```text
-.
-├── types/                      # Core OCPP data types (shared across messages)
-│   ├── cistring.go             # CiString20/25/50/255/500 types
-│   ├── datetime.go             # RFC3339 DateTime with UTC normalization
-│   ├── integer.go              # Validated uint16 Integer type
-│   ├── errors.go               # Shared error constants and sentinels
-│   ├── authorizationstatus.go  # AuthorizationStatus enum
-│   ├── idtoken.go              # IdToken type
-│   ├── idtaginfo.go            # IdTagInfo type
-│   ├── chargingprofilepurposetype.go  # ChargingProfilePurposeType enum
-│   ├── chargingrateunit.go     # ChargingRateUnit enum
-│   ├── chargingschedule.go     # ChargingSchedule type
-│   ├── chargingscheduleperiod.go  # ChargingSchedulePeriod type
-│   ├── metervalue.go           # MeterValue and MeterValueInput types
-│   ├── sampledvalue.go         # SampledValue and SampledValueInput types
-│   ├── measurand.go            # Measurand enum
-│   ├── readingcontext.go       # ReadingContext enum
-│   ├── valueformat.go          # ValueFormat enum
-│   ├── phase.go                # Phase enum
-│   ├── location.go             # Location enum
-│   ├── unitofmeasure.go        # UnitOfMeasure enum
-│   ├── doc.go                  # Package documentation
-│   └── tests/                  # Public API tests (black-box)
-├── authorize/                  # Authorize message
-├── bootNotification/           # BootNotification message
-├── cancelReservation/          # CancelReservation message
-├── changeAvailability/         # ChangeAvailability message
-├── changeConfiguration/        # ChangeConfiguration message
-├── clearCache/                 # ClearCache message
-├── clearChargingProfile/       # ClearChargingProfile message
-├── dataTransfer/               # DataTransfer message
-├── diagnosticsStatusNotification/  # DiagnosticsStatusNotification message
-├── firmwareStatusNotification/ # FirmwareStatusNotification message
-├── getCompositeSchedule/       # GetCompositeSchedule message
-├── getConfiguration/           # GetConfiguration message
-├── getDiagnostics/             # GetDiagnostics message
-├── getLocalListVersion/        # GetLocalListVersion message
-├── heartbeat/                  # Heartbeat message
-├── meterValues/                # MeterValues message
-├── remoteStartTransaction/     # RemoteStartTransaction message
-├── remoteStopTransaction/      # RemoteStopTransaction message
-├── reserveNow/                 # ReserveNow message
-├── reset/                      # Reset message
-├── sendLocalList/              # SendLocalList message
-├── setChargingProfile/         # SetChargingProfile message
-├── startTransaction/           # StartTransaction message
-├── statusNotification/         # StatusNotification message
-├── stopTransaction/            # StopTransaction message
-├── triggerMessage/             # TriggerMessage message
-├── unlockConnector/            # UnlockConnector message
-├── updateFirmware/             # UpdateFirmware message
-└── SECURITY.md                 # Security policy and vulnerability reporting
-```
+    .
+    ├── types/                      # Core OCPP data types (shared across messages)
+    │   ├── cistring.go             # CiString20/25/50/255/500 types
+    │   ├── datetime.go             # RFC3339 DateTime with UTC normalization
+    │   ├── integer.go              # Validated uint16 Integer type
+    │   ├── errors.go               # Shared error constants and sentinels
+    │   ├── authorizationstatus.go  # AuthorizationStatus enum
+    │   ├── idtoken.go              # IdToken type
+    │   ├── idtaginfo.go            # IdTagInfo type
+    │   ├── chargingprofilepurposetype.go  # ChargingProfilePurposeType enum
+    │   ├── chargingrateunit.go     # ChargingRateUnit enum
+    │   ├── chargingschedule.go     # ChargingSchedule type
+    │   ├── chargingscheduleperiod.go  # ChargingSchedulePeriod type
+    │   ├── metervalue.go           # MeterValue and MeterValueInput types
+    │   ├── sampledvalue.go         # SampledValue and SampledValueInput types
+    │   ├── measurand.go            # Measurand enum
+    │   ├── readingcontext.go       # ReadingContext enum
+    │   ├── valueformat.go          # ValueFormat enum
+    │   ├── phase.go                # Phase enum
+    │   ├── location.go             # Location enum
+    │   ├── unitofmeasure.go        # UnitOfMeasure enum
+    │   ├── doc.go                  # Package documentation
+    │   └── tests/                  # Public API tests (black-box)
+    ├── authorize/                  # Authorize message
+    ├── bootNotification/           # BootNotification message
+    ├── cancelReservation/          # CancelReservation message
+    ├── changeAvailability/         # ChangeAvailability message
+    ├── changeConfiguration/        # ChangeConfiguration message
+    ├── clearCache/                 # ClearCache message
+    ├── clearChargingProfile/       # ClearChargingProfile message
+    ├── dataTransfer/               # DataTransfer message
+    ├── diagnosticsStatusNotification/  # DiagnosticsStatusNotification message
+    ├── firmwareStatusNotification/ # FirmwareStatusNotification message
+    ├── getCompositeSchedule/       # GetCompositeSchedule message
+    ├── getConfiguration/           # GetConfiguration message
+    ├── getDiagnostics/             # GetDiagnostics message
+    ├── getLocalListVersion/        # GetLocalListVersion message
+    ├── heartbeat/                  # Heartbeat message
+    ├── meterValues/                # MeterValues message
+    ├── remoteStartTransaction/     # RemoteStartTransaction message
+    ├── remoteStopTransaction/      # RemoteStopTransaction message
+    ├── reserveNow/                 # ReserveNow message
+    ├── reset/                      # Reset message
+    ├── sendLocalList/              # SendLocalList message
+    ├── setChargingProfile/         # SetChargingProfile message
+    ├── startTransaction/           # StartTransaction message
+    ├── statusNotification/         # StatusNotification message
+    ├── stopTransaction/            # StopTransaction message
+    ├── triggerMessage/             # TriggerMessage message
+    ├── unlockConnector/            # UnlockConnector message
+    ├── updateFirmware/             # UpdateFirmware message
+    └── SECURITY.md                 # Security policy and vulnerability reporting
 
 ## Versioning and support
 
@@ -124,60 +123,54 @@ go get github.com/aasanchez/ocpp16messages
 
 The library provides validated OCPP 1.6 data types:
 
-```go
-import "github.com/aasanchez/ocpp16messages/types"
+    import "github.com/aasanchez/ocpp16messages/types"
 
-// CiString types (case-insensitive, ASCII printable, length-validated)
-idTag, err := types.NewCiString20Type("RFID-ABC123")
-if err != nil {
-    // Handle validation error (length > 20 or non-ASCII chars)
-}
+    // CiString types (case-insensitive, ASCII printable, length-validated)
+    idTag, err := types.NewCiString20Type("RFID-ABC123")
+    if err != nil {
+        // Handle validation error (length > 20 or non-ASCII chars)
+    }
 
-// DateTime (RFC3339, must be UTC)
-timestamp, err := types.NewDateTime("2025-01-02T15:04:05Z")
-if err != nil {
-    // Handle parsing error
-}
+    // DateTime (RFC3339, must be UTC)
+    timestamp, err := types.NewDateTime("2025-01-02T15:04:05Z")
+    if err != nil {
+        // Handle parsing error
+    }
 
-// Integer (validated uint16)
-retryCount, err := types.NewInteger(3)
-if err != nil {
-    // Handle conversion/range error
-}
-```
+    // Integer (validated uint16)
+    retryCount, err := types.NewInteger(3)
+    if err != nil {
+        // Handle conversion/range error
+    }
 
 ### Message Types
 
 Messages use OCPP terminology with `Req()` for requests and `Conf()` for responses:
 
-```go
-import "github.com/aasanchez/ocpp16messages/authorize"
+    import "github.com/aasanchez/ocpp16messages/authorize"
 
-// Create an Authorize.req message using the ReqInput struct
-// Validation happens automatically in the constructor
-req, err := authorize.Req(authorize.ReqInput{
-    IdTag: "RFID-ABC123",
-})
-if err != nil {
-    // Handle validation error (empty, too long, or invalid characters)
-}
+    // Create an Authorize.req message using the ReqInput struct
+    // Validation happens automatically in the constructor
+    req, err := authorize.Req(authorize.ReqInput{
+        IdTag: "RFID-ABC123",
+    })
+    if err != nil {
+        // Handle validation error (empty, too long, or invalid characters)
+    }
 
-// Access the validated IdTag
-fmt.Println(req.IdTag.String()) // "RFID-ABC123"
-```
+    // Access the validated IdTag
+    fmt.Println(req.IdTag.String()) // "RFID-ABC123"
 
-```go
-import "github.com/aasanchez/ocpp16messages/clearChargingProfile"
+    import "github.com/aasanchez/ocpp16messages/clearChargingProfile"
 
-// ClearChargingProfile.req with optional fields
-id := 123
-req, err := clearChargingProfile.Req(clearChargingProfile.ReqInput{
-    Id:                     &id,
-    ConnectorId:            nil,
-    ChargingProfilePurpose: nil,
-    StackLevel:             nil,
-})
-```
+    // ClearChargingProfile.req with optional fields
+    id := 123
+    req, err := clearChargingProfile.Req(clearChargingProfile.ReqInput{
+        Id:                     &id,
+        ConnectorId:            nil,
+        ChargingProfilePurpose: nil,
+        StackLevel:             nil,
+    })
 
 The `ReqMessage` type returned by `Req()` contains validated, typed fields
 that are immutable and thread-safe.
@@ -193,26 +186,28 @@ that are immutable and thread-safe.
 
 ### Common Commands (including opt-in suites)
 
-```bash
-# Install dependencies
-go mod tidy
+    # Install dependencies
+    go mod tidy
 
-# Run tests
-make test                   # Unit tests with coverage
-make test-coverage          # Generate HTML coverage report
-make test-example           # Run example tests (documentation tests)
-make test-all               # Run all test types
-make test-race              # Run race detector with -race (opt-in)
-make test-fuzz              # Run fuzzers in ./fuzz (short budget, opt-in)
-make test-bench             # Run benchmarks in ./benchmark (opt-in)
+    # Run tests
+    make test                   # Unit tests with coverage
+    make test-coverage          # Generate HTML coverage report
+    make test-example           # Run example tests (documentation tests)
+    make test-all               # Run all test types
+    make test-race              # Run race detector with -race (opt-in)
+    make test-fuzz              # Run fuzzers in ./fuzz (short budget, opt-in)
+    make test-bench             # Run benchmarks in ./benchmark (opt-in)
 
-# Code quality
-make lint                   # Run all linters (golangci-lint, go vet, staticcheck)
-make format                 # Format code (gci, gofumpt, golines, gofmt)
+    # Code quality
+    make lint                   # Run all linters (golangci-lint, go vet, staticcheck)
+    make format                 # Format code (gci, gofumpt, golines, gofmt)
 
-# Documentation
-make pkgsite                # Start local documentation server at http://localhost:8080
-```
+    # Documentation
+    make pkgsite                # Start local documentation server at http://localhost:8080
+
+    # Nightly CI (opt-in suites)
+    - Nightly workflow runs `make test-all`, `make test-race`, `make test-fuzz`,
+      and `make test-bench` to guard the opt-in suites.
 
 ### Test Coverage
 
