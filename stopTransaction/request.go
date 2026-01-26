@@ -121,7 +121,7 @@ func validateTransactionId(
 	transactionId int,
 	errs []error,
 ) (st.Integer, []error) {
-	val, err := st.NewIntegerFromInt(transactionId)
+	val, err := st.NewInteger(transactionId)
 	if err != nil {
 		return st.Integer{}, append(errs, fmt.Errorf("transactionId: %w", err))
 	}
@@ -143,7 +143,7 @@ func validateIdTag(idTag string, errs []error) (*st.IdToken, []error) {
 
 // validateMeterStop validates the meterStop field.
 func validateMeterStop(meterStop int, errs []error) (st.Integer, []error) {
-	val, err := st.NewIntegerFromInt(meterStop)
+	val, err := st.NewInteger(meterStop)
 	if err != nil {
 		return st.Integer{}, append(errs, fmt.Errorf("meterStop: %w", err))
 	}

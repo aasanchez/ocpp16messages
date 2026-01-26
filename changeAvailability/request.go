@@ -29,7 +29,7 @@ type ReqMessage struct {
 func Req(input ReqInput) (ReqMessage, error) {
 	var errs []error
 
-	connectorId, err := st.NewIntegerFromInt(input.ConnectorId)
+	connectorId, err := st.NewInteger(input.ConnectorId)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("connectorId: %w", err))
 	}

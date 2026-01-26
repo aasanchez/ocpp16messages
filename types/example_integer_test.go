@@ -6,8 +6,13 @@ import (
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
+const (
+	exampleIntegerValid   = 73
+	exampleIntegerInvalid = -1
+)
+
 func ExampleNewInteger() {
-	intVal, err := st.NewInteger("73")
+	intVal, err := st.NewInteger(exampleIntegerValid)
 	if err != nil {
 		fmt.Println(err)
 
@@ -21,7 +26,7 @@ func ExampleNewInteger() {
 }
 
 func ExampleNewInteger_invalid() {
-	_, err := st.NewInteger("abc")
+	_, err := st.NewInteger(exampleIntegerInvalid)
 	if err != nil {
 		fmt.Println("invalid integer input")
 	}

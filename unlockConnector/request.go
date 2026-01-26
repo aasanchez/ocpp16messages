@@ -34,7 +34,7 @@ func Req(input ReqInput) (ReqMessage, error) {
 		return ReqMessage{}, fmt.Errorf("connectorId: %w", st.ErrInvalidValue)
 	}
 
-	connectorId, err := st.NewIntegerFromInt(input.ConnectorId)
+	connectorId, err := st.NewInteger(input.ConnectorId)
 	if err != nil {
 		return ReqMessage{}, fmt.Errorf("connectorId: %w", err)
 	}

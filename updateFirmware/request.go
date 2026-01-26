@@ -82,7 +82,7 @@ func reqValidateRetries(retries *int) (*st.Integer, error) {
 		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
-	r, err := st.NewIntegerFromInt(*retries)
+	r, err := st.NewInteger(*retries)
 	if err != nil {
 		return nil, fmt.Errorf("retries: %w", err)
 	}
@@ -96,7 +96,7 @@ func reqValidateRetryInterval(retryInterval *int) (*st.Integer, error) {
 		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
-	ri, err := st.NewIntegerFromInt(*retryInterval)
+	ri, err := st.NewInteger(*retryInterval)
 	if err != nil {
 		return nil, fmt.Errorf("retryInterval: %w", err)
 	}

@@ -123,7 +123,7 @@ func validateOptionalFields(
 
 // validateConnectorId validates the connectorId field.
 func validateConnectorId(connectorId int, errs []error) (st.Integer, []error) {
-	val, err := st.NewIntegerFromInt(connectorId)
+	val, err := st.NewInteger(connectorId)
 	if err != nil {
 		return st.Integer{}, append(errs, fmt.Errorf("connectorId: %w", err))
 	}

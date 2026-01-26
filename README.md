@@ -134,7 +134,7 @@ if err != nil {
 }
 
 // Integer (validated uint16)
-retryCount, err := types.NewInteger("3")
+retryCount, err := types.NewInteger(3)
 if err != nil {
     // Handle conversion/range error
 }

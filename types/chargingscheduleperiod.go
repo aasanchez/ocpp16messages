@@ -40,7 +40,7 @@ type ChargingSchedulePeriod struct {
 func NewChargingSchedulePeriod(
 	input ChargingSchedulePeriodInput,
 ) (ChargingSchedulePeriod, error) {
-	startPeriod, err := NewIntegerFromInt(input.StartPeriod)
+	startPeriod, err := NewInteger(input.StartPeriod)
 	if err != nil {
 		return ChargingSchedulePeriod{}, fmt.Errorf("startPeriod: %w", err)
 	}
@@ -75,7 +75,7 @@ func validateNumberPhases(phases *int) (*Integer, error) {
 	}
 
 	// NewInteger cannot fail here: values 1-3 are always valid for uint16
-	np, _ := NewIntegerFromInt(*phases)
+	np, _ := NewInteger(*phases)
 
 	return &np, nil
 }

@@ -100,7 +100,7 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 
 // validateId validates the id field.
 func validateId(id int, errs []error) (*types.Integer, []error) {
-	val, err := types.NewIntegerFromInt(id)
+	val, err := types.NewInteger(id)
 	if err != nil {
 		return nil, append(errs, fmt.Errorf("id: %w", err))
 	}
@@ -113,7 +113,7 @@ func validateConnectorId(
 	connectorId int,
 	errs []error,
 ) (*types.Integer, []error) {
-	val, err := types.NewIntegerFromInt(connectorId)
+	val, err := types.NewInteger(connectorId)
 	if err != nil {
 		return nil, append(errs, fmt.Errorf("connectorId: %w", err))
 	}
@@ -142,7 +142,7 @@ func validateStackLevel(
 	stackLevel int,
 	errs []error,
 ) (*types.Integer, []error) {
-	val, err := types.NewIntegerFromInt(stackLevel)
+	val, err := types.NewInteger(stackLevel)
 	if err != nil {
 		return nil, append(errs, fmt.Errorf("stackLevel: %w", err))
 	}

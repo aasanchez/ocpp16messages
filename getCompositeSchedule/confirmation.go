@@ -92,7 +92,7 @@ func confValidateConnectorId(connectorId *int) (*types.Integer, error) {
 		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
-	cid, err := types.NewIntegerFromInt(*connectorId)
+	cid, err := types.NewInteger(*connectorId)
 	if err != nil {
 		return nil, fmt.Errorf("connectorId: %w", err)
 	}

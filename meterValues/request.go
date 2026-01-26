@@ -83,7 +83,7 @@ func validateReqConnectorId(
 	connectorId int,
 	errs []error,
 ) (st.Integer, []error) {
-	intVal, err := st.NewIntegerFromInt(connectorId)
+	intVal, err := st.NewInteger(connectorId)
 	if err != nil {
 		return st.Integer{}, append(
 			errs,
@@ -98,7 +98,7 @@ func validateReqTransactionId(
 	transactionId int,
 	errs []error,
 ) (*st.Integer, []error) {
-	intVal, err := st.NewIntegerFromInt(transactionId)
+	intVal, err := st.NewInteger(transactionId)
 	if err != nil {
 		return nil, append(
 			errs,

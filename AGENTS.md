@@ -59,8 +59,7 @@ make pkgsite # Start local documentation server at http://localhost:8080
 The library implements OCPP 1.6 strict type validation using constructor
 pattern:
 
-- **Integer**: Wraps uint16 with validation via
-  `NewInteger(string) (Integer, error)`
+- **Integer**: Wraps uint16 with validation via `NewInteger(int) (Integer, error)`
 - **DateTime**: RFC3339-compliant, UTC-only (non-UTC offsets rejected). Parsing
   uses `time.RFC3339`, output uses `time.RFC3339Nano`
   - Constructor: `NewDateTime(string) (DateTime, error)`

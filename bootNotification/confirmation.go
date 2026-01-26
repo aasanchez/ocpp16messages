@@ -109,7 +109,7 @@ func validateCurrentTime(
 
 // validateInterval validates the interval field.
 func validateInterval(interval int, errs []error) (st.Integer, []error) {
-	intVal, err := st.NewIntegerFromInt(interval)
+	intVal, err := st.NewInteger(interval)
 	if err != nil {
 		return st.Integer{}, append(
 			errs,

@@ -85,7 +85,7 @@ func validateReqListVersion(
 	listVersion int,
 	errs []error,
 ) (st.Integer, []error) {
-	intVal, err := st.NewIntegerFromInt(listVersion)
+	intVal, err := st.NewInteger(listVersion)
 	if err != nil {
 		return st.Integer{}, append(
 			errs,

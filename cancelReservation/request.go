@@ -21,7 +21,7 @@ type ReqMessage struct {
 // It validates all fields and returns an error if:
 //   - ReservationId is negative or exceeds uint16 max value (65535)
 func Req(input ReqInput) (ReqMessage, error) {
-	reservationId, err := st.NewIntegerFromInt(input.ReservationId)
+	reservationId, err := st.NewInteger(input.ReservationId)
 	if err != nil {
 		return ReqMessage{}, fmt.Errorf("reservationId: %w", err)
 	}

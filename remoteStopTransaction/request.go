@@ -23,7 +23,7 @@ type ReqMessage struct {
 // It validates all fields and returns an error if:
 //   - TransactionId is negative or exceeds uint16 max value (65535)
 func Req(input ReqInput) (ReqMessage, error) {
-	transactionId, err := st.NewIntegerFromInt(input.TransactionId)
+	transactionId, err := st.NewInteger(input.TransactionId)
 	if err != nil {
 		return ReqMessage{}, fmt.Errorf("transactionId: %w", err)
 	}

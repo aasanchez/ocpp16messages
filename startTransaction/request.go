@@ -76,7 +76,7 @@ func Req(input ReqInput) (ReqMessage, error) {
 
 // validateConnectorId validates the connectorId field.
 func validateConnectorId(connectorId int, errs []error) (st.Integer, []error) {
-	val, err := st.NewIntegerFromInt(connectorId)
+	val, err := st.NewInteger(connectorId)
 	if err != nil {
 		return st.Integer{}, append(errs, fmt.Errorf("connectorId: %w", err))
 	}
@@ -96,7 +96,7 @@ func validateIdTag(idTag string, errs []error) (st.IdToken, []error) {
 
 // validateMeterStart validates the meterStart field.
 func validateMeterStart(meterStart int, errs []error) (st.Integer, []error) {
-	val, err := st.NewIntegerFromInt(meterStart)
+	val, err := st.NewInteger(meterStart)
 	if err != nil {
 		return st.Integer{}, append(errs, fmt.Errorf("meterStart: %w", err))
 	}
@@ -119,7 +119,7 @@ func validateReservationId(
 	reservationId int,
 	errs []error,
 ) (*st.Integer, []error) {
-	val, err := st.NewIntegerFromInt(reservationId)
+	val, err := st.NewInteger(reservationId)
 	if err != nil {
 		return nil, append(errs, fmt.Errorf("reservationId: %w", err))
 	}
