@@ -1,5 +1,8 @@
 # Release Checklist (v1.x)
 
+- Prefer using the one-command script in `scripts/release.sh` (see
+  `RELEASING.md`). Use this checklist when you need to do the steps manually.
+
 - [ ] Update `CHANGELOG.md` with the new version entry.
 - [ ] Verify supported Go versions:
   - [ ] Minimum: Go 1.25.7 (`go.mod`)
