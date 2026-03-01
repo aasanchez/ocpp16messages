@@ -2,18 +2,23 @@ name: OpenSSF Scorecard
 
 on:
   workflow_dispatch:
+  branch_protection_rule:
   schedule:
     - cron: "0 4 * * 0" # 04:00 UTC weekly (Sunday)
+  push:
+    branches:
+      - main
 
-permissions:
-  contents: read
-  id-token: write
-  security-events: write
+permissions: read-all
 
 jobs:
   scorecard:
     name: Scorecard analysis
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      id-token: write
+
     steps:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
         with:
@@ -22,7 +27,9 @@ jobs:
       - name: Run scorecard
         uses: ossf/scorecard-action@99c09fe975337306107572b4fdf4db224cf8e2f2 # v2.4.3
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          # Optional: set SCORECARD_TOKEN to enable additional checks (see
+          # ossf/scorecard-action docs for fine-grained PAT requirements).
+          repo_token: ${{ secrets.SCORECARD_TOKEN }}
           results_file: results.sarif
           results_format: sarif
           publish_results: true
@@ -32,7 +39,7 @@ jobs:
         with:
           name: scorecard-results
           path: results.sarif
-          if-no-files-found: error
+          retention-days: 5
 
       - name: Upload SARIF to code scanning
         uses: github/codeql-action/upload-sarif@db2c8fe24a75c0f28f87ed1a6fe918a5ccf7b1e6 # v4.31.10
