@@ -15,6 +15,25 @@ and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
 
 - (Nothing yet.)
 
+## [1.0.3] - 2026-03-01
+
+### Added (1.0.3)
+
+- Expanded benchmark suite (opt-in) with high-value constructor benchmarks and
+  worst-case coverage for nested payloads and optional-field validation.
+
+### Changed (1.0.3)
+
+- Added comprehensive race test suite (opt-in) for all message constructors and
+  core constructors; hardened immutability by eliminating pointer/slice aliasing
+  and ensuring pointer/slice getters return defensive copies.
+- Renamed opt-in test directories:
+  - `./fuzz` -> `./tests_fuzz`
+  - `./race` -> `./tests_race`
+  - `./benchmark` -> `./tests_benchmark`
+- Updated `Makefile`, `README.md`, and VS Code `gopls` configuration to match
+  the new opt-in suite directory names and build tags.
+
 ## [1.0.2] - 2026-03-01
 
 ### Added (1.0.2)
@@ -63,7 +82,8 @@ and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
 [1.0.0]: https://github.com/aasanchez/ocpp16messages/releases/tag/v1.0.0
 [1.0.1]: https://github.com/aasanchez/ocpp16messages/releases/tag/v1.0.1
 [1.0.2]: https://github.com/aasanchez/ocpp16messages/releases/tag/v1.0.2
-[Unreleased]: https://github.com/aasanchez/ocpp16messages/compare/v1.0.2...HEAD
+[1.0.3]: https://github.com/aasanchez/ocpp16messages/releases/tag/v1.0.3
+[Unreleased]: https://github.com/aasanchez/ocpp16messages/compare/v1.0.3...HEAD
 
 ## [v0.11.0]
 

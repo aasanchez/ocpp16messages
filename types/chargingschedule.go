@@ -203,7 +203,10 @@ func (c ChargingSchedule) ChargingSchedulePeriod() []ChargingSchedulePeriod {
 		return nil
 	}
 
-	copiedPeriods := make([]ChargingSchedulePeriod, len(c.chargingSchedulePeriod))
+	copiedPeriods := make(
+		[]ChargingSchedulePeriod,
+		len(c.chargingSchedulePeriod),
+	)
 	copy(copiedPeriods, c.chargingSchedulePeriod)
 
 	return copiedPeriods
