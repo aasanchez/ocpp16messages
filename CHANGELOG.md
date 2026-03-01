@@ -73,7 +73,7 @@ and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
   fields.
 - Error handling aligned to shared sentinels and `errors.Join` aggregation.
 - MeterValues and StopTransaction constructors preserve empty vs nil slices.
-- CI and go.mod aligned on Go 1.24.6 (documented requirement).
+- CI and go.mod aligned on Go 1.25.7 (documented requirement).
 
 ### Removed (1.0.0)
 

@@ -8,7 +8,7 @@ with no binary build target.
 
 ## Prerequisites
 
-- Go >= 1.24
+- Go >= 1.25
 - Tools: golangci-lint, staticcheck, ripgrep (rg), gci, gofumpt, golines,
   pkgsite (optional), sonar-scanner (optional)
 

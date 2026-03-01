@@ -2,7 +2,7 @@
 
 - [ ] Update `CHANGELOG.md` with the new version entry.
 - [ ] Verify `go.mod` and CI workflows target the same Go version (current:
-      1.24.6).
+      1.25.7).
 - [ ] Run quality gates locally:
   - [ ] `make test`
   - [ ] `make test-all`

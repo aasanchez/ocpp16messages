@@ -54,7 +54,7 @@ The library covers the full OCPP 1.6 message surface, including:
 
     go get github.com/aasanchez/ocpp16messages
 
-**Requirements:** Go 1.24.6 or later (CI and go.mod aligned)
+**Requirements:** Go 1.25.7 or later (CI and go.mod aligned)
 
 ## Project Structure
 
@@ -114,7 +114,7 @@ The library covers the full OCPP 1.6 message surface, including:
 ## Versioning and support
 
 - Semantic Versioning: API surface follows SemVer starting with v1.0.0.
-- Supported Go versions: >= 1.24 (aligned with go.mod and CI).
+- Supported Go versions: >= 1.25 (aligned with go.mod and CI).
 - Changelog: see [CHANGELOG](CHANGELOG.md) for releases and upgrade notes.
 
 ## Usage
@@ -181,7 +181,7 @@ read-only** (they have exported fields, so consumers can mutate them).
 
 ### Prerequisites
 
-- Go 1.24+
+- Go 1.25+
 - golangci-lint
 - staticcheck
 - gci, gofumpt, golines (formatters)
