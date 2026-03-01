@@ -2,14 +2,22 @@
 
 ## Supported Versions
 
-We release patches for security vulnerabilities in the following versions:
+We release security fixes for supported versions only.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 0.x.x   | :white_check_mark: |
+| 1.0.x   | :white_check_mark: |
 
-**Note:** This project is currently in active development (pre-1.0). Security
-updates are provided for the latest version only.
+### Supported Versions Policy
+
+- **Scope:** Security fixes are released as patch versions (e.g., `1.0.4`).
+- **What we patch:** Confirmed vulnerabilities in this repository's code and
+  module dependencies (when a dependency upgrade is the appropriate fix).
+- **How long:** We support:
+  - The latest minor version for the latest major (e.g., `1.0.x` today).
+  - The previous minor version for **90 days** after a new minor is released
+    (e.g., after `1.1.0`, we support `1.0.x` for 90 days).
+  - We do not provide backports across major versions.
 
 ## Reporting a Vulnerability
 
@@ -30,7 +38,7 @@ methods:
    - Provide detailed information about the vulnerability
 
 1. **Email**
-   - Send details to the repository maintainer via GitHub email
+   - Send details to `aasanchez@gmail.com`
    - Include "SECURITY" in the subject line
 
 ### What to Include
@@ -86,12 +94,12 @@ applications. Security vulnerabilities in scope include:
 
 When using this library in your OCPP implementation:
 
-1. **Always validate input:** Use the provided `Validate()` methods on all
-   message types
+1. **Always validate input:** Use message constructors (`Req`, `Conf`) and
+   `New*` type constructors; they validate fields at construction time
 2. **Handle errors securely:** Don't expose internal error details to untrusted
    parties
 3. **Use type constructors:** Always use `New*()` constructors
-   (e.g., `NewIDToken()`) rather than direct struct initialization
+   (e.g., `NewIdToken`) rather than direct struct initialization
 4. **Bounds checking:** The library enforces OCPP 1.6 string length
    limits - don't bypass them
 5. **Sanitize logs:** Be careful when logging message contents that may contain
@@ -118,6 +126,8 @@ When using this library in your OCPP implementation:
 - All security updates will be documented in release notes with CVE identifiers
   when applicable
 - GitHub Security Advisories will be published for all confirmed vulnerabilities
+- We run weekly dependency and vulnerability checks in CI (govulncheck + module
+  verification)
 
 ## Acknowledgments
 
