@@ -123,11 +123,20 @@ jobs:
           go-version: 1.26.0
           cache: false
 
+      - run: mkdir -p reports
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@1e7e51e771db61008b38414a730f564565cf7c20 # v9.2.0
         with:
           version: v2.7
           args: --config golangci.yml --timeout=5m ./...
+
+      - name: Annotations
+        run: |
+          if [[ -f reports/golangci-lint.txt ]]; then
+            grep -E '^[^:]+:[0-9]+(:[0-9]+)?:' reports/golangci-lint.txt \
+              | bash scripts/annotate-go-diagnostics.sh error || true
+          fi
 
       - name: Report
         run: cat reports/golangci-lint.txt || true

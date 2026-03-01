@@ -1,0 +1,58 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - v*
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create GitHub release from CHANGELOG
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+        with:
+          fetch-depth: 0
+
+      - name: Verify tag is annotated
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          if [ "$(git cat-file -t "$tag")" != "tag" ]; then
+            echo "Tag '$tag' is not an annotated tag object."
+            echo "Create signed, annotated tags via: git tag -s $tag -m \"...\""
+            exit 1
+          fi
+
+      - name: Verify tag is signed
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          if ! git cat-file -p "$tag" | rg -q "BEGIN PGP SIGNATURE"; then
+            echo "Tag '$tag' is not signed."
+            echo "Create signed tags via: git tag -s $tag -m \"...\""
+            exit 1
+          fi
+
+      - name: Generate release notes from CHANGELOG
+        run: |
+          set -euo pipefail
+          tag="${GITHUB_REF_NAME}"
+          bash scripts/release-notes.sh "${tag}" > release-notes.md
+
+      - name: Create GitHub release (if missing)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          tag="${GITHUB_REF_NAME}"
+          title="${tag}"
+
+          if gh release view "${tag}" >/dev/null 2>&1; then
+            echo "Release already exists for '${tag}'. Skipping."
+            exit 0
+          fi
+
+          gh release create "${tag}" --title "${title}" --notes-file release-notes.md

@@ -1,9 +1,9 @@
 name: Benchstat
 
 on:
-  push:
-    tags:
-      - v*
+  release:
+    types:
+      - published
 
 permissions:
   contents: write
@@ -31,7 +31,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          tag="${GITHUB_REF_NAME}"
+          tag="${{ github.event.release.tag_name }}"
           prev="$(
             git tag --list 'v[0-9]*' --sort=-version:refname \
               | awk -v t="${tag}" '$0 == t {found=1; next} found {print; exit}'
@@ -71,7 +71,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: benchstat-${{ github.ref_name }}
+          name: benchstat-${{ github.event.release.tag_name }}
           path: |
             bench-new.txt
             bench-old.txt
@@ -83,7 +83,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          tag="${GITHUB_REF_NAME}"
+          tag="${{ github.event.release.tag_name }}"
 
           if ! gh release view "${tag}" >/dev/null 2>&1; then
             echo "No release found for '${tag}'. Skipping asset upload."
@@ -94,4 +94,3 @@ jobs:
           if [[ -f bench-old.txt ]]; then
             gh release upload "${tag}" bench-old.txt --clobber
           fi
-

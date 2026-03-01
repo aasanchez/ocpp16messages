@@ -1,9 +1,9 @@
 name: SBOM
 
 on:
-  push:
-    tags:
-      - v*
+  release:
+    types:
+      - published
 
 permissions:
   contents: write
@@ -35,7 +35,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          tag="${GITHUB_REF_NAME}"
+          tag="${{ github.event.release.tag_name }}"
           api="https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/tags/${tag}"
 
           if ! release="$(curl -fsSL -H "Authorization: Bearer ${GH_TOKEN}" -H "Accept: application/vnd.github+json" "${api}" 2>/dev/null)"; then
