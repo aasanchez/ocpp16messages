@@ -3,6 +3,7 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/aasanchez/ocpp16messages.svg)](https://pkg.go.dev/github.com/aasanchez/ocpp16messages)
 [![Go Report Card](https://goreportcard.com/badge/github.com/aasanchez/ocpp16messages)](https://goreportcard.com/report/github.com/aasanchez/ocpp16messages)
 [![codecov](https://codecov.io/gh/aasanchez/ocpp16messages/graph/badge.svg?token=1I9VVL7DWO)](https://codecov.io/gh/aasanchez/ocpp16messages)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/aasanchez/ocpp16messages/badge)](https://securityscorecards.dev/viewer/?uri=github.com/aasanchez/ocpp16messages)
 [![Supported Go versions](https://img.shields.io/badge/Go-1.25.7%20%7C%201.26.0-00ADD8?logo=go)](#versioning-and-support)
 [![Compatibility contract](https://img.shields.io/badge/compatibility-contract-blue)](COMPATIBILITY.md)
 

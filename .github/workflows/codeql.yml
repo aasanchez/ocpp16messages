@@ -1,0 +1,36 @@
+name: CodeQL
+
+on:
+  pull_request:
+  schedule:
+    - cron: "0 3 * * 0" # 03:00 UTC weekly (Sunday)
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    name: Analyze (Go)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@db2c8fe24a75c0f28f87ed1a6fe918a5ccf7b1e6 # v4.31.10
+        with:
+          languages: go
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@db2c8fe24a75c0f28f87ed1a6fe918a5ccf7b1e6 # v4.31.10
+
+      - name: Analyze
+        uses: github/codeql-action/analyze@db2c8fe24a75c0f28f87ed1a6fe918a5ccf7b1e6 # v4.31.10
+        with:
+          category: "/language:go"
+
