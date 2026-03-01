@@ -80,6 +80,11 @@ jobs:
       - name: Coverage summary
         run: go tool cover -func=reports/coverage.out
 
+      - name: Coverage annotation
+        run: |
+          total="$(go tool cover -func=reports/coverage.out | tail -n 1 | awk '{print $NF}')"
+          echo "::notice::Total coverage: ${total}"
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
