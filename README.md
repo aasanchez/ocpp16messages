@@ -197,8 +197,8 @@ read-only** (they have exported fields, so consumers can mutate them).
     make test-example           # Run example tests (documentation tests)
     make test-all               # Run all test types
     make test-race              # Run race detector with -race (opt-in)
-    make test-fuzz              # Run fuzzers in ./fuzz (short budget, opt-in)
-    make test-bench             # Run benchmarks in ./benchmark (opt-in)
+    make test-fuzz              # Run fuzzers in ./tests_fuzz (short budget, opt-in)
+    make test-bench             # Run benchmarks in ./tests_benchmark (opt-in)
 
     # Code quality
     make lint                   # Run all linters (golangci-lint, go vet, staticcheck)
@@ -230,7 +230,7 @@ that variable concurrently with reads of the returned message/type).
 
 #### Race tests (required for new high-value code)
 
-Race tests live in `./race` behind the `race` build tag (`//go:build race`).
+Race tests live in `./tests_race` behind the `race` build tag (`//go:build race`).
 They are not part of default `go test ./...`.
 
 - Add/update race tests for:
@@ -257,8 +257,8 @@ Run locally via:
 
 ### Fuzz testing
 
-Fuzzers live in `./fuzz` and are guarded by the `fuzz` build tag, so they do
-not run as part of `go test ./...`.
+Fuzzers live in `./tests_fuzz` and are guarded by the `fuzz` build tag, so they
+do not run as part of `go test ./...`.
 
 Run fuzzers via the project helper:
 
@@ -271,7 +271,7 @@ Tuning knobs:
 
 To run a single fuzzer directly:
 
-    go test -tags=fuzz -run=^$ -fuzz=^FuzzAuthorizeReq$ -fuzztime=10s ./fuzz
+    go test -tags=fuzz -run=^$ -fuzz=^FuzzAuthorizeReq$ -fuzztime=10s ./tests_fuzz
 
 #### What is covered
 
@@ -297,8 +297,8 @@ The fuzz suite is intentionally "high-scrutiny" (high-signal):
 #### Editor support (VS Code)
 
 For local development, `.vscode/settings.json` configures `gopls` to include
-`-tags=fuzz,race` so the `./fuzz` and `./race` test packages are indexed in the
-editor.
+`-tags=fuzz,race,bench` so the `./tests_fuzz`, `./tests_race`, and
+`./tests_benchmark` test packages are indexed in the editor.
 
 ### Weekly CI (opt-in suites)
 

@@ -26,23 +26,23 @@ test-example: ## Run documentation-based example tests to verify correctness of 
 	@echo "\n--- \033[1;32mTest Examples\033[0m ---"
 	@go test -mod=readonly -v -run '^Example' ./...
 
-test-all: test test-example
+test-all: lint test test-example test-fuzz test-bench test-race
 
 test-fuzz: ## Run fuzzers (requires Go 1.20+); uses fuzz build tag.
 	@echo "\n--- \033[1;32mRun fuzzers\033[0m ---"
-	@FUZZES=$$(go test -tags=fuzz -list Fuzz ./fuzz | grep '^Fuzz'); \
+	@FUZZES=$$(go test -tags=fuzz -list Fuzz ./tests_fuzz | grep '^Fuzz'); \
 	if [ -z "$$FUZZES" ]; then \
 		echo "No fuzz tests found"; \
 	else \
 		for fuzz in $$FUZZES; do \
 			echo "\n>>> Fuzzing $$fuzz"; \
-			GOMAXPROCS=$(FUZZPROCS) go test -tags=fuzz -run=^$$ -fuzz=^$$fuzz$$ -fuzztime=$(FUZZTIME) ./fuzz || exit $$?; \
+			GOMAXPROCS=$(FUZZPROCS) go test -tags=fuzz -run=^$$ -fuzz=^$$fuzz$$ -fuzztime=$(FUZZTIME) ./tests_fuzz || exit $$?; \
 		done; \
 	fi
 
-test-bench: ## Run benchmarks in ./benchmark with the bench build tag.
+test-bench: ## Run benchmarks in ./tests_benchmark with the bench build tag.
 	@echo "\n--- \033[1;32mRun benchmarks\033[0m ---"
-	@go test -tags=bench -run=^$$ -bench=. ./benchmark
+	@go test -tags=bench -run=^$$ -bench=. ./tests_benchmark
 
 test-race: ## Run full test suite with the race detector enabled (race tag optional).
 	@echo "\n--- \033[1;32mRun race detector\033[0m ---"
