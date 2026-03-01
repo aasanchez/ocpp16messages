@@ -9,13 +9,23 @@ and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
 
 ### Added (Unreleased)
 
+- (Nothing yet.)
+
+### Changed (Unreleased)
+
+- (Nothing yet.)
+
+## [1.0.2] - 2026-03-01
+
+### Added (1.0.2)
+
 - Comprehensive fuzz test suite under `./fuzz` (guarded by the `fuzz` build
   tag) covering all OCPP 1.6 message constructors (`Req`/`Conf`) and core
   validation types.
 - Strict membership fuzzers for every `IsValid()` enum in `types/` and all
   message subpackage `*/types` enums.
 
-### Changed (Unreleased)
+### Changed (1.0.2)
 
 - `make test-fuzz` hardened: exact fuzzer selection, configurable per-fuzzer
   time budget, and capped parallelism.
@@ -52,7 +62,8 @@ and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
 
 [1.0.0]: https://github.com/aasanchez/ocpp16messages/releases/tag/v1.0.0
 [1.0.1]: https://github.com/aasanchez/ocpp16messages/releases/tag/v1.0.1
-[Unreleased]: https://github.com/aasanchez/ocpp16messages/compare/v1.0.1...HEAD
+[1.0.2]: https://github.com/aasanchez/ocpp16messages/releases/tag/v1.0.2
+[Unreleased]: https://github.com/aasanchez/ocpp16messages/compare/v1.0.2...HEAD
 
 ## [v0.11.0]
 
