@@ -36,4 +36,3 @@ awk -v section="$section" '
     }
   }
 ' CHANGELOG.md
-

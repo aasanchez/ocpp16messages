@@ -1,0 +1,59 @@
+name: SBOM
+
+on:
+  push:
+    tags:
+      - v*
+
+permissions:
+  contents: write
+
+jobs:
+  sbom:
+    name: Generate + attach SBOM
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.26.0
+          cache: false
+
+      - name: Download modules
+        run: go mod download
+
+      - name: Install cyclonedx-gomod
+        run: go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest
+
+      - name: Generate CycloneDX SBOM (JSON)
+        run: cyclonedx-gomod mod -type library -output-version 1.6 -json -output sbom.cyclonedx.json .
+
+      - name: Attach SBOM to GitHub release (if present)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          tag="${GITHUB_REF_NAME}"
+          api="https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/tags/${tag}"
+
+          if ! release="$(curl -fsSL -H "Authorization: Bearer ${GH_TOKEN}" -H "Accept: application/vnd.github+json" "${api}" 2>/dev/null)"; then
+            echo "No release found for tag '${tag}'. Skipping asset upload."
+            exit 0
+          fi
+
+          upload_url="$(echo "${release}" | jq -r '.upload_url' | sed 's/{?name,label}$//')"
+          if [[ -z "${upload_url}" || "${upload_url}" == "null" ]]; then
+            echo "Release upload_url missing. Skipping asset upload."
+            exit 0
+          fi
+
+          asset_name="sbom.cyclonedx.json"
+          curl -fsSL \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "Content-Type: application/json" \
+            --data-binary "@${asset_name}" \
+            "${upload_url}?name=${asset_name}"
+
