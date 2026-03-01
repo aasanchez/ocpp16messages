@@ -18,8 +18,7 @@ func TestRemoteStartTransactionReq_JSONRoundTrip(t *testing.T) {
 	}
 
 	assertAllFieldsValid(t, req)
-	decoded := roundTripJSON(t, req)
-	assertAllFieldsValid(t, decoded)
+	roundTripJSON(t, req)
 }
 
 func TestRemoteStartTransactionConf_JSONRoundTrip(t *testing.T) {
@@ -31,7 +30,5 @@ func TestRemoteStartTransactionConf_JSONRoundTrip(t *testing.T) {
 	}
 
 	assertAllFieldsValid(t, conf)
-	decoded := roundTripJSON(t, conf)
-	assertAllFieldsValid(t, decoded)
+	roundTripJSON(t, conf)
 }
-

@@ -2,6 +2,7 @@ package tests_json_test
 
 import (
 	"encoding/json"
+	"fmt"
 	"reflect"
 	"strings"
 	"testing"
@@ -10,11 +11,11 @@ import (
 	"github.com/aasanchez/ocpp16messages/types"
 )
 
-var (
-	dateTimeType = reflect.TypeOf(types.DateTime{})
+const (
+	startIndex = 0
 )
 
-func roundTripJSON[T any](t *testing.T, value T) T {
+func roundTripJSON(t *testing.T, value any) {
 	t.Helper()
 
 	originalJSON, err := json.Marshal(value)
@@ -22,10 +23,12 @@ func roundTripJSON[T any](t *testing.T, value T) T {
 		t.Fatalf("json.Marshal(original): %v", err)
 	}
 
-	var decoded T
-	if err := json.Unmarshal(originalJSON, &decoded); err != nil {
+	decoded, err := unmarshalSameType(value, originalJSON)
+	if err != nil {
 		t.Fatalf("json.Unmarshal: %v (json=%s)", err, string(originalJSON))
 	}
+
+	assertAllFieldsValid(t, decoded)
 
 	decodedJSON, err := json.Marshal(decoded)
 	if err != nil {
@@ -33,20 +36,22 @@ func roundTripJSON[T any](t *testing.T, value T) T {
 	}
 
 	assertJSONSemanticallyEqual(t, originalJSON, decodedJSON)
-
-	return decoded
 }
 
 func assertJSONSemanticallyEqual(t *testing.T, left, right []byte) {
 	t.Helper()
 
 	var leftValue any
-	if err := json.Unmarshal(left, &leftValue); err != nil {
+
+	err := json.Unmarshal(left, &leftValue)
+	if err != nil {
 		t.Fatalf("json.Unmarshal(left): %v", err)
 	}
 
 	var rightValue any
-	if err := json.Unmarshal(right, &rightValue); err != nil {
+
+	err = json.Unmarshal(right, &rightValue)
+	if err != nil {
 		t.Fatalf("json.Unmarshal(right): %v", err)
 	}
 
@@ -62,82 +67,219 @@ func assertJSONSemanticallyEqual(t *testing.T, left, right []byte) {
 func assertAllFieldsValid(t *testing.T, value any) {
 	t.Helper()
 
-	visitedPointers := map[uintptr]bool{}
-	assertAllFieldsValidValue(t, reflect.ValueOf(value), visitedPointers)
+	visitedPointers := map[uintptr]struct{}{}
+	dateTimeType := reflect.TypeFor[types.DateTime]()
+
+	assertAllFieldsValidValue(
+		t,
+		reflect.ValueOf(value),
+		visitedPointers,
+		dateTimeType,
+	)
 }
 
 func assertAllFieldsValidValue(
 	t *testing.T,
 	value reflect.Value,
-	visitedPointers map[uintptr]bool,
+	visitedPointers map[uintptr]struct{},
+	dateTimeType reflect.Type,
 ) {
 	t.Helper()
 
+	value, ok := derefValue(value, visitedPointers)
+	if !ok {
+		return
+	}
+
+	if validateDateTime(t, value, dateTimeType) {
+		return
+	}
+
+	validateIsValid(t, value)
+
+	assertAllChildrenValid(t, value, visitedPointers, dateTimeType)
+}
+
+func unmarshalSameType(source any, rawJSON []byte) (any, error) {
+	sourceValue := reflect.ValueOf(source)
+	sourceType := sourceValue.Type()
+
+	decodeTarget := reflect.New(sourceType)
+
+	err := json.Unmarshal(rawJSON, decodeTarget.Interface())
+	if err != nil {
+		return nil, fmt.Errorf("json.Unmarshal: %w", err)
+	}
+
+	return decodeTarget.Elem().Interface(), nil
+}
+
+//nolint:revive // Complexity is acceptable for a test helper.
+func derefValue(
+	value reflect.Value,
+	visitedPointers map[uintptr]struct{},
+) (reflect.Value, bool) {
+	for {
+		dereferencedValue, didDereference := derefInterfaceValue(value)
+		if !didDereference {
+			return reflect.Value{}, false
+		}
+
+		value = dereferencedValue
+
+		dereferencedValue, didDereference = derefPointerValue(
+			value,
+			visitedPointers,
+		)
+		if !didDereference {
+			return reflect.Value{}, false
+		}
+
+		value = dereferencedValue
+
+		if value.Kind() != reflect.Interface && value.Kind() != reflect.Ptr {
+			return value, true
+		}
+	}
+}
+
+func derefInterfaceValue(value reflect.Value) (reflect.Value, bool) {
 	if !value.IsValid() {
+		return reflect.Value{}, false
+	}
+
+	if value.Kind() != reflect.Interface {
+		return value, true
+	}
+
+	if value.IsNil() {
+		return reflect.Value{}, false
+	}
+
+	return value.Elem(), true
+}
+
+func derefPointerValue(
+	value reflect.Value,
+	visitedPointers map[uintptr]struct{},
+) (reflect.Value, bool) {
+	if !value.IsValid() {
+		return reflect.Value{}, false
+	}
+
+	if value.Kind() != reflect.Ptr {
+		return value, true
+	}
+
+	if value.IsNil() {
+		return reflect.Value{}, false
+	}
+
+	ptr := value.Pointer()
+	if ptr != uintptr(startIndex) {
+		if _, ok := visitedPointers[ptr]; ok {
+			return reflect.Value{}, false
+		}
+
+		visitedPointers[ptr] = struct{}{}
+	}
+
+	return value.Elem(), true
+}
+
+func validateDateTime(
+	t *testing.T,
+	value reflect.Value,
+	dateTimeType reflect.Type,
+) bool {
+	t.Helper()
+
+	if value.Type() != dateTimeType {
+		return false
+	}
+
+	dateTime, ok := value.Interface().(types.DateTime)
+	if !ok {
+		t.Fatalf("expected types.DateTime, got %T", value.Interface())
+	}
+
+	dateTimeString := dateTime.String()
+
+	if !strings.HasSuffix(dateTimeString, "Z") {
+		t.Fatalf("DateTime not UTC: %q", dateTimeString)
+	}
+
+	parsed, err := time.Parse(time.RFC3339Nano, dateTimeString)
+	if err != nil {
+		t.Fatalf("DateTime not parseable: %q: %v", dateTimeString, err)
+	}
+
+	if parsed.Location() != time.UTC {
+		t.Fatalf("DateTime not UTC location: %q", dateTimeString)
+	}
+
+	return true
+}
+
+func validateIsValid(t *testing.T, value reflect.Value) {
+	t.Helper()
+
+	if !value.CanInterface() {
 		return
 	}
 
-	if value.Kind() == reflect.Interface {
-		if value.IsNil() {
-			return
-		}
-		assertAllFieldsValidValue(t, value.Elem(), visitedPointers)
+	type isValidInterface interface {
+		IsValid() bool
+	}
+
+	validator, ok := value.Interface().(isValidInterface)
+	if !ok {
 		return
 	}
 
-	if value.Kind() == reflect.Ptr {
-		if value.IsNil() {
-			return
-		}
-		ptr := value.Pointer()
-		if ptr != 0 {
-			if visitedPointers[ptr] {
-				return
-			}
-			visitedPointers[ptr] = true
-		}
-		assertAllFieldsValidValue(t, value.Elem(), visitedPointers)
-		return
+	if !validator.IsValid() {
+		t.Fatalf("IsValid() = false for %T", value.Interface())
 	}
+}
 
-	if value.Type() == dateTimeType {
-		dateTime := value.Interface().(types.DateTime)
-		dateTimeString := dateTime.String()
-		if !strings.HasSuffix(dateTimeString, "Z") {
-			t.Fatalf("DateTime not UTC: %q", dateTimeString)
-		}
-		parsed, err := time.Parse(time.RFC3339Nano, dateTimeString)
-		if err != nil {
-			t.Fatalf("DateTime not parseable: %q: %v", dateTimeString, err)
-		}
-		if parsed.Location() != time.UTC {
-			t.Fatalf("DateTime not UTC location: %q", dateTimeString)
-		}
-		return
-	}
+func assertAllChildrenValid(
+	t *testing.T,
+	value reflect.Value,
+	visitedPointers map[uintptr]struct{},
+	dateTimeType reflect.Type,
+) {
+	t.Helper()
 
-	if value.CanInterface() {
-		if validator, ok := value.Interface().(interface{ IsValid() bool }); ok {
-			if !validator.IsValid() {
-				t.Fatalf("IsValid() = false for %T", value.Interface())
-			}
-		}
-	}
-
+	//nolint:exhaustive
 	switch value.Kind() {
 	case reflect.Struct:
-		for fieldIndex := 0; fieldIndex < value.NumField(); fieldIndex++ {
+		fieldCount := value.NumField()
+
+		for fieldIndex := range fieldCount {
 			field := value.Field(fieldIndex)
-			assertAllFieldsValidValue(t, field, visitedPointers)
+			assertAllFieldsValidValue(t, field, visitedPointers, dateTimeType)
 		}
+
 	case reflect.Slice, reflect.Array:
-		for index := 0; index < value.Len(); index++ {
-			assertAllFieldsValidValue(t, value.Index(index), visitedPointers)
+		for index := startIndex; index < value.Len(); index++ {
+			assertAllFieldsValidValue(
+				t,
+				value.Index(index),
+				visitedPointers,
+				dateTimeType,
+			)
 		}
+
 	case reflect.Map:
 		for _, key := range value.MapKeys() {
-			assertAllFieldsValidValue(t, value.MapIndex(key), visitedPointers)
+			assertAllFieldsValidValue(
+				t,
+				value.MapIndex(key),
+				visitedPointers,
+				dateTimeType,
+			)
 		}
+
 	default:
 	}
 }

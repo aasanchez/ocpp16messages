@@ -15,8 +15,7 @@ func TestClearCacheReq_JSONRoundTrip(t *testing.T) {
 	}
 
 	assertAllFieldsValid(t, req)
-	decoded := roundTripJSON(t, req)
-	assertAllFieldsValid(t, decoded)
+	roundTripJSON(t, req)
 }
 
 func TestClearCacheConf_JSONRoundTrip(t *testing.T) {
@@ -28,7 +27,5 @@ func TestClearCacheConf_JSONRoundTrip(t *testing.T) {
 	}
 
 	assertAllFieldsValid(t, conf)
-	decoded := roundTripJSON(t, conf)
-	assertAllFieldsValid(t, decoded)
+	roundTripJSON(t, conf)
 }
-
