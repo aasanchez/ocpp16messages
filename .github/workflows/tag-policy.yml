@@ -1,0 +1,42 @@
+name: Tag Policy
+
+on:
+  push:
+    tags:
+      - v*
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Signed tag + CHANGELOG entry
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Verify tag is annotated
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          if [ "$(git cat-file -t "$tag")" != "tag" ]; then
+            echo "Tag '$tag' is not an annotated tag object."
+            echo "Create signed, annotated tags via: git tag -s $tag -m \"...\""
+            exit 1
+          fi
+
+      - name: Verify tag is signed
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          if ! git cat-file -p "$tag" | rg -q "BEGIN PGP SIGNATURE"; then
+            echo "Tag '$tag' is not signed."
+            echo "Create signed tags via: git tag -s $tag -m \"...\""
+            exit 1
+          fi
+
+      - name: Verify CHANGELOG entry exists
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          bash scripts/release-notes.sh "$tag" >/dev/null
+

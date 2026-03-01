@@ -1,0 +1,156 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test (${{ matrix.os }} / go${{ matrix.go }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+        go:
+          - 1.25.7
+          - 1.26.0
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go }}
+          cache: false
+
+      - name: Unit tests
+        run: go test -mod=readonly -v ./...
+
+  coverage:
+    name: Coverage (ubuntu / go1.26.0)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.26.0
+          cache: false
+
+      - run: mkdir -p reports
+
+      - name: Clean caches
+        run: go clean -cache -testcache -modcache
+
+      - name: Execute tests with coverage
+        run: |
+          go test -mod=readonly \
+              -coverpkg=./... \
+              -coverprofile=reports/coverage.out \
+              -v ./... | tee reports/unittest.txt
+
+      - name: Coverage summary
+        run: go tool cover -func=reports/coverage.out
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-artifacts-${{ github.run_number }}
+          path: reports
+          retention-days: 7
+
+  race:
+    name: Race (ubuntu / go1.26.0)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.26.0
+          cache: false
+
+      - name: Race suite (opt-in)
+        run: make test-race
+
+  golangci-lint:
+    name: golangci-lint (ubuntu / go1.26.0)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.26.0
+          cache: false
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v9.2.0
+        with:
+          version: v2.7
+          args: --config golangci.yml --timeout=5m ./...
+
+      - name: Report
+        run: cat reports/golangci-lint.txt || true
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: golangci-lint-artifacts-${{ github.run_number }}
+          include-hidden-files: true
+          path: reports/
+
+  staticcheck:
+    name: staticcheck (ubuntu / go1.26.0)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.26.0
+          cache: false
+
+      - run: mkdir -p reports
+
+      - uses: dominikh/staticcheck-action@v1
+        with:
+          version: "latest"
+          output-file: reports/staticcheck
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: staticcheck-artifacts-${{ github.run_number }}
+          include-hidden-files: true
+          path: reports/
+
+  vet:
+    name: go vet (ubuntu / go1.26.0)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.26.0
+          cache: false
+
+      - run: mkdir -p reports
+
+      - run: go vet ./... >reports/vet
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: govet-artifacts-${{ github.run_number }}
+          include-hidden-files: true
+          path: reports/
+
