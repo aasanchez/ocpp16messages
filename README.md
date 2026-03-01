@@ -188,6 +188,29 @@ read-only** (they have exported fields, so consumers can mutate them).
 - staticcheck
 - gci, gofumpt, golines (formatters)
 
+### Testing philosophy
+
+This repository uses a layered test strategy:
+
+- **Unit tests (default)**: fast, deterministic, run on every CI push/PR via
+  `go test ./...` and `make test`.
+- **Example tests (default)**: executable docs that demonstrate intended usage
+  (`go test -run '^Example' ./...` and `make test-example`).
+- **Fuzz tests (opt-in)**: invariants and validation hardening under
+  `./tests_fuzz` with build tag `fuzz` (`make test-fuzz`).
+- **Race tests (opt-in)**: immutability/aliasing and concurrency guarantees
+  under `./tests_race` with build tag `race` (`make test-race`).
+- **Benchmarks (opt-in)**: performance regression guards under
+  `./tests_benchmark` with build tag `bench` (`make test-bench`).
+
+Opt-in suites are not part of default `go test ./...` by design; they are
+heavier and run on a weekly schedule in CI (and on-demand locally).
+
+### Adding a new message type
+
+See `ADDING_MESSAGE.md` for a minimal, copy/paste-friendly template that
+matches the project's constructor + validation style and test organization.
+
 ### Common Commands (including opt-in suites)
 
     # Install dependencies
@@ -481,3 +504,4 @@ See [LICENSE](./LICENSE)
 - [Security Policy](SECURITY.md)
 - [Compatibility Contract](COMPATIBILITY.md)
 - [Development Guide](CLAUDE.md)
+- [Contributing](CONTRIBUTING.md)
