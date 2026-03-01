@@ -36,7 +36,8 @@ func Conf(input ConfInput) (ConfMessage, error) {
 	}
 
 	if input.Data != nil {
-		msg.Data = input.Data
+		copiedData := *input.Data
+		msg.Data = &copiedData
 	}
 
 	return msg, nil

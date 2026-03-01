@@ -240,7 +240,13 @@ func (c ChargingProfile) ChargingProfileId() st.Integer {
 
 // TransactionId returns the transaction ID, or nil if not specified.
 func (c ChargingProfile) TransactionId() *st.Integer {
-	return c.transactionId
+	if c.transactionId == nil {
+		return nil
+	}
+
+	copiedTransactionId := *c.transactionId
+
+	return &copiedTransactionId
 }
 
 // StackLevel returns the stack level of this profile.
@@ -262,17 +268,35 @@ func (c ChargingProfile) ChargingProfileKind() ChargingProfileKindType {
 
 // RecurrencyKind returns the recurrency kind, or nil if not specified.
 func (c ChargingProfile) RecurrencyKind() *RecurrencyKindType {
-	return c.recurrencyKind
+	if c.recurrencyKind == nil {
+		return nil
+	}
+
+	copiedRecurrencyKind := *c.recurrencyKind
+
+	return &copiedRecurrencyKind
 }
 
 // ValidFrom returns the valid from timestamp, or nil if not specified.
 func (c ChargingProfile) ValidFrom() *st.DateTime {
-	return c.validFrom
+	if c.validFrom == nil {
+		return nil
+	}
+
+	copiedValidFrom := *c.validFrom
+
+	return &copiedValidFrom
 }
 
 // ValidTo returns the valid to timestamp, or nil if not specified.
 func (c ChargingProfile) ValidTo() *st.DateTime {
-	return c.validTo
+	if c.validTo == nil {
+		return nil
+	}
+
+	copiedValidTo := *c.validTo
+
+	return &copiedValidTo
 }
 
 // ChargingSchedule returns the charging schedule for this profile.

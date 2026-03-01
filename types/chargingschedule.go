@@ -165,17 +165,31 @@ func validateMinChargingRate(rate *float64) (*float64, error) {
 		return nil, fmt.Errorf("minChargingRate: %w", ErrInvalidValue)
 	}
 
-	return rate, nil
+	copiedRate := *rate
+
+	return &copiedRate, nil
 }
 
 // Duration returns the duration in seconds, or nil if not specified.
 func (c ChargingSchedule) Duration() *Integer {
-	return c.duration
+	if c.duration == nil {
+		return nil
+	}
+
+	copiedDuration := *c.duration
+
+	return &copiedDuration
 }
 
 // StartSchedule returns the start schedule, or nil if not specified.
 func (c ChargingSchedule) StartSchedule() *DateTime {
-	return c.startSchedule
+	if c.startSchedule == nil {
+		return nil
+	}
+
+	copiedStartSchedule := *c.startSchedule
+
+	return &copiedStartSchedule
 }
 
 // ChargingRateUnit returns the unit of measure for the charging rate.
@@ -185,10 +199,23 @@ func (c ChargingSchedule) ChargingRateUnit() ChargingRateUnit {
 
 // ChargingSchedulePeriod returns the list of charging schedule periods.
 func (c ChargingSchedule) ChargingSchedulePeriod() []ChargingSchedulePeriod {
-	return c.chargingSchedulePeriod
+	if c.chargingSchedulePeriod == nil {
+		return nil
+	}
+
+	copiedPeriods := make([]ChargingSchedulePeriod, len(c.chargingSchedulePeriod))
+	copy(copiedPeriods, c.chargingSchedulePeriod)
+
+	return copiedPeriods
 }
 
 // MinChargingRate returns the minimum charging rate, or nil if not specified.
 func (c ChargingSchedule) MinChargingRate() *float64 {
-	return c.minChargingRate
+	if c.minChargingRate == nil {
+		return nil
+	}
+
+	copiedRate := *c.minChargingRate
+
+	return &copiedRate
 }

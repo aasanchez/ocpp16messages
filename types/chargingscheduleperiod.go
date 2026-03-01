@@ -93,5 +93,11 @@ func (c ChargingSchedulePeriod) Limit() float64 {
 // NumberPhases returns the number of phases to use for charging, or nil if not
 // specified.
 func (c ChargingSchedulePeriod) NumberPhases() *Integer {
-	return c.numberPhases
+	if c.numberPhases == nil {
+		return nil
+	}
+
+	copiedNumberPhases := *c.numberPhases
+
+	return &copiedNumberPhases
 }

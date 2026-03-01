@@ -86,7 +86,8 @@ func buildReqMessage(input ReqInput, validated reqValidation) ReqMessage {
 	}
 
 	if input.Data != nil {
-		msg.Data = input.Data
+		copiedData := *input.Data
+		msg.Data = &copiedData
 	}
 
 	return msg

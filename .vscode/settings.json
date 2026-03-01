@@ -1,6 +1,5 @@
 {
   "gopls": {
-    "buildFlags": ["-tags=fuzz"]
+    "buildFlags": ["-tags=fuzz,race"]
   }
 }
-

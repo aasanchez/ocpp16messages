@@ -4,7 +4,6 @@ package race
 
 import (
 	"fmt"
-	"sync"
 	"testing"
 
 	st "github.com/aasanchez/ocpp16messages/types"
@@ -19,24 +18,18 @@ const (
 func TestRace_NewCiString20Type(t *testing.T) {
 	t.Parallel()
 
-	var wg sync.WaitGroup
-	wg.Add(workers)
+	runConcurrent(t, workers, iterations, func(worker int, iteration int) error {
+		value, err := st.NewCiString20Type(
+			fmt.Sprintf(ciStringTemplate, worker, iteration),
+		)
+		if err != nil {
+			return fmt.Errorf("NewCiString20Type: %w", err)
+		}
 
-	for i := 0; i < workers; i++ {
-		go func(worker int) {
-			defer wg.Done()
-			for j := 0; j < iterations; j++ {
-				s := fmt.Sprintf(ciStringTemplate, worker, j)
-				value, err := st.NewCiString20Type(s)
-				if err != nil {
-					t.Fatalf("unexpected error: %v", err)
-				}
-				_ = value.String()
-			}
-		}(i)
-	}
+		_ = value.String()
 
-	wg.Wait()
+		return nil
+	})
 }
 
 func TestRace_NewInteger(t *testing.T) {
@@ -44,22 +37,15 @@ func TestRace_NewInteger(t *testing.T) {
 
 	const maxValue = 65535
 
-	var wg sync.WaitGroup
-	wg.Add(workers)
+	runConcurrent(t, workers, iterations, func(worker int, iteration int) error {
+		n := (worker + iteration) % maxValue
+		value, err := st.NewInteger(n)
+		if err != nil {
+			return fmt.Errorf("NewInteger: %w", err)
+		}
 
-	for i := 0; i < workers; i++ {
-		go func(worker int) {
-			defer wg.Done()
-			for j := 0; j < iterations; j++ {
-				n := (worker + j) % maxValue
-				value, err := st.NewInteger(n)
-				if err != nil {
-					t.Fatalf("unexpected error: %v", err)
-				}
-				_ = value.String()
-			}
-		}(i)
-	}
+		_ = value.String()
 
-	wg.Wait()
+		return nil
+	})
 }

@@ -78,5 +78,11 @@ func (k KeyValue) Readonly() bool {
 
 // Value returns the configuration value, or nil if not set.
 func (k KeyValue) Value() *st.CiString500Type {
-	return k.value
+	if k.value == nil {
+		return nil
+	}
+
+	copiedValue := *k.value
+
+	return &copiedValue
 }

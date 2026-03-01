@@ -172,8 +172,10 @@ Messages use OCPP terminology with `Req()` for requests and `Conf()` for respons
         StackLevel:             nil,
     })
 
-The `ReqMessage` type returned by `Req()` contains validated, typed fields
-that are immutable and thread-safe.
+The `ReqMessage` type returned by `Req()` contains validated, typed fields.
+Core value types in `types/` are immutable and thread-safe. Message structs
+are safe to share between goroutines **as long as they are treated as
+read-only** (they have exported fields, so consumers can mutate them).
 
 ## Development
 
@@ -204,6 +206,54 @@ that are immutable and thread-safe.
 
     # Documentation
     make pkgsite                # Start local documentation server at http://localhost:8080
+
+### Concurrency rules (and required race tests)
+
+This library is designed for safe concurrent use when values are treated as
+immutable. To keep this guarantee strong over time, any new public API or
+constructor changes must follow these rules.
+
+#### Immutability / aliasing rules
+
+- Never store pointers to caller-owned variables in returned values.
+  - Example: if an input field is `*string`, copy `*input` into a new local
+    variable and store a pointer to the copy.
+- Never expose internal slices directly.
+  - If a getter returns a slice, return a copy of the slice header/data.
+  - If a constructor stores a slice, allocate a new slice and copy elements.
+- Never expose internal pointers directly.
+  - If a getter returns a `*T`, return a pointer to a copy of `T`.
+
+These patterns prevent accidental mutation of internal state and eliminate
+real race hazards (e.g., aliasing an input pointer, then the caller mutating
+that variable concurrently with reads of the returned message/type).
+
+#### Race tests (required for new high-value code)
+
+Race tests live in `./race` behind the `race` build tag (`//go:build race`).
+They are not part of default `go test ./...`.
+
+- Add/update race tests for:
+  - Every new `Req()` / `Conf()` constructor.
+  - Every new exported `New*` constructor.
+  - Every new exported getter that returns a pointer or a slice.
+- Race tests should be high-signal:
+  - Use shared inputs across goroutines to catch unintended mutation.
+  - Include "immutability" tests that mutate a returned pointer/slice and
+    assert the original value is unchanged.
+  - Do not call `t.Fatal*` from goroutines. Use the shared concurrency helper
+    in `race/helpers_test.go` (`runConcurrent`).
+
+Run locally via:
+
+    make test-race
+
+#### TODO (future major redesign)
+
+- TODO(v2): Redesign `ReqMessage` / `ConfMessage` structs to be truly immutable
+  (unexported fields + getters and/or deep-copy semantics). Today, message
+  structs have exported fields, so they are concurrency-safe only when treated
+  as read-only.
 
 ### Fuzz testing
 
@@ -247,7 +297,8 @@ The fuzz suite is intentionally "high-scrutiny" (high-signal):
 #### Editor support (VS Code)
 
 For local development, `.vscode/settings.json` configures `gopls` to include
-`-tags=fuzz` so the fuzz package and tests are indexed in the editor.
+`-tags=fuzz,race` so the `./fuzz` and `./race` test packages are indexed in the
+editor.
 
 ### Weekly CI (opt-in suites)
 
