@@ -13,9 +13,9 @@ jobs:
     name: Module hygiene (ubuntu / go1.26.0)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version: 1.26.0
           cache: false
@@ -44,9 +44,9 @@ jobs:
           - 1.25.7
           - 1.26.0
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version: ${{ matrix.go }}
           cache: false
@@ -58,9 +58,9 @@ jobs:
     name: Coverage (ubuntu / go1.26.0)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version: 1.26.0
           cache: false
@@ -86,14 +86,14 @@ jobs:
           echo "::notice::Total coverage: ${total}"
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: coverage-artifacts-${{ github.run_number }}
           path: reports
           retention-days: 7
 
       - name: Upload to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5
         with:
           files: reports/coverage.out
           fail_ci_if_error: true
@@ -102,9 +102,9 @@ jobs:
     name: Race (ubuntu / go1.26.0)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version: 1.26.0
           cache: false
@@ -116,15 +116,15 @@ jobs:
     name: golangci-lint (ubuntu / go1.26.0)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version: 1.26.0
           cache: false
 
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v9.2.0
+        uses: golangci/golangci-lint-action@1e7e51e771db61008b38414a730f564565cf7c20 # v9.2.0
         with:
           version: v2.7
           args: --config golangci.yml --timeout=5m ./...
@@ -133,7 +133,7 @@ jobs:
         run: cat reports/golangci-lint.txt || true
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: golangci-lint-artifacts-${{ github.run_number }}
           include-hidden-files: true
@@ -143,9 +143,9 @@ jobs:
     name: staticcheck (ubuntu / go1.26.0)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version: 1.26.0
           cache: false
@@ -161,7 +161,7 @@ jobs:
           staticcheck ./... 2>&1 | tee reports/staticcheck.txt | bash scripts/annotate-go-diagnostics.sh error
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: staticcheck-artifacts-${{ github.run_number }}
           include-hidden-files: true
@@ -171,9 +171,9 @@ jobs:
     name: go vet (ubuntu / go1.26.0)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version: 1.26.0
           cache: false
@@ -186,7 +186,7 @@ jobs:
           go vet ./... 2>&1 | tee reports/vet.txt | bash scripts/annotate-go-diagnostics.sh error
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: govet-artifacts-${{ github.run_number }}
           include-hidden-files: true
@@ -196,9 +196,9 @@ jobs:
     name: Docs smoke (ubuntu / go1.26.0)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version: 1.26.0
           cache: false

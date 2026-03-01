@@ -202,6 +202,16 @@ messages.
 - staticcheck
 - gci, gofumpt, golines (formatters)
 
+### Private modules (GOPRIVATE / GONOSUMDB)
+
+If you work in an environment with private forks or private module dependencies,
+configure the Go toolchain so it does not use the public checksum database for
+those module paths:
+
+    export GOPRIVATE=github.com/<your-org>/*
+    export GONOSUMDB=$GOPRIVATE
+    export GONOPROXY=$GOPRIVATE
+
 ### Testing philosophy
 
 This repository uses a layered test strategy:
