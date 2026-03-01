@@ -86,7 +86,7 @@ jobs:
           echo "::notice::Total coverage: ${total}"
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: coverage-artifacts-${{ github.run_number }}
           path: reports
@@ -142,7 +142,7 @@ jobs:
         run: cat reports/golangci-lint.txt || true
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: golangci-lint-artifacts-${{ github.run_number }}
           include-hidden-files: true
@@ -170,7 +170,7 @@ jobs:
           staticcheck ./... 2>&1 | tee reports/staticcheck.txt | bash scripts/annotate-go-diagnostics.sh error
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: staticcheck-artifacts-${{ github.run_number }}
           include-hidden-files: true
@@ -195,7 +195,7 @@ jobs:
           go vet ./... 2>&1 | tee reports/vet.txt | bash scripts/annotate-go-diagnostics.sh error
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: govet-artifacts-${{ github.run_number }}
           include-hidden-files: true
