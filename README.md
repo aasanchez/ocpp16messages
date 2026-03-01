@@ -193,6 +193,43 @@ messages.
 - **Not stable:** exact error strings and formatting (including joined error
   order) may change between releases.
 
+### Common validation errors
+
+All validation happens at construction time. A non-nil error always means the
+value/message was not constructed.
+
+Detect the common failure modes via `errors.Is`:
+
+    import (
+        "errors"
+        "fmt"
+
+        "github.com/aasanchez/ocpp16messages/authorize"
+        "github.com/aasanchez/ocpp16messages/types"
+    )
+
+    req, err := authorize.Req(authorize.ReqInput{
+        IdTag: "",
+    })
+    if err != nil {
+        switch {
+        case errors.Is(err, types.ErrEmptyValue):
+            fmt.Println("missing required field")
+        case errors.Is(err, types.ErrInvalidValue):
+            fmt.Println("invalid value (length, charset, range, enum, etc.)")
+        default:
+            fmt.Println("unexpected error:", err)
+        }
+    }
+    _ = req
+
+Notes:
+
+- Many constructors aggregate multiple field errors with `errors.Join(...)`.
+  `errors.Is` still works against joined errors.
+- Avoid depending on exact error strings; they may change as long as
+  `errors.Is` behavior remains stable.
+
 ## Development
 
 ### Prerequisites
@@ -212,6 +249,19 @@ those module paths:
     export GONOSUMDB=$GOPRIVATE
     export GONOPROXY=$GOPRIVATE
 
+### FAQ
+
+- **Why does `NewDateTime` reject `+02:00` timestamps?**
+  - OCPP 1.6 requires UTC. This library enforces UTC-only dateTimes, so provide
+    values like `2025-01-02T15:04:05Z`.
+- **Nil vs empty slices: what's the difference?**
+  - Nil means "field omitted"; empty means "field present but empty". Message
+    constructors preserve this distinction.
+- **Are messages immutable?**
+  - Core types in `types/` are immutable. Message structs have exported fields,
+    so they are concurrency-safe only when treated as read-only. See
+    `ROADMAP.md` for the v2 plan to make messages structurally immutable.
+
 ### Testing philosophy
 
 This repository uses a layered test strategy:
@@ -229,6 +279,20 @@ This repository uses a layered test strategy:
 
 Opt-in suites are not part of default `go test ./...` by design; they are
 heavier and run on a weekly schedule in CI (and on-demand locally).
+
+### Performance discipline
+
+Benchmarks are opt-in and intended to catch regressions in high-value
+constructors and worst-case payloads.
+
+Local workflow:
+
+    make test-bench
+    go install golang.org/x/perf/cmd/benchstat@latest
+    benchstat old.txt new.txt
+
+On releases (tag pushes), CI generates a `benchstat` comparison against the
+previous tag and attaches it to the GitHub release assets.
 
 ### Adding a new message type
 

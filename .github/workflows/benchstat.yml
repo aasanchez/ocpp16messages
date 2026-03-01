@@ -1,0 +1,97 @@
+name: Benchstat
+
+on:
+  push:
+    tags:
+      - v*
+
+permissions:
+  contents: write
+
+jobs:
+  benchstat:
+    name: Benchstat (vs previous tag)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+        with:
+          go-version: 1.26.0
+          cache: false
+
+      - name: Install benchstat
+        run: go install golang.org/x/perf/cmd/benchstat@latest
+
+      - name: Detect previous tag
+        id: prev
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          tag="${GITHUB_REF_NAME}"
+          prev="$(
+            git tag --list 'v[0-9]*' --sort=-version:refname \
+              | awk -v t="${tag}" '$0 == t {found=1; next} found {print; exit}'
+          )"
+
+          echo "prev=${prev}" >>"${GITHUB_OUTPUT}"
+
+      - name: Run benchmarks (current tag)
+        run: |
+          set -euo pipefail
+          go test -tags=bench -run=^$ -bench=. -count=5 ./tests_benchmark | tee bench-new.txt
+
+      - name: Run benchmarks (previous tag)
+        if: ${{ steps.prev.outputs.prev != '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          prev="${{ steps.prev.outputs.prev }}"
+          worktree="$(mktemp -d)"
+          trap 'rm -rf "${worktree}"' EXIT
+
+          git worktree add "${worktree}" "${prev}"
+          pushd "${worktree}" >/dev/null
+          go test -tags=bench -run=^$ -bench=. -count=5 ./tests_benchmark | tee "${GITHUB_WORKSPACE}/bench-old.txt"
+          popd >/dev/null
+
+      - name: benchstat
+        if: ${{ steps.prev.outputs.prev != '' }}
+        run: benchstat bench-old.txt bench-new.txt | tee benchstat.txt
+
+      - name: Create benchstat (no previous tag)
+        if: ${{ steps.prev.outputs.prev == '' }}
+        run: |
+          printf '%s\n' "No previous tag found; only current benchmarks were run." | tee benchstat.txt
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: benchstat-${{ github.ref_name }}
+          path: |
+            bench-new.txt
+            bench-old.txt
+            benchstat.txt
+          if-no-files-found: ignore
+
+      - name: Attach to GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="${GITHUB_REF_NAME}"
+
+          if ! gh release view "${tag}" >/dev/null 2>&1; then
+            echo "No release found for '${tag}'. Skipping asset upload."
+            exit 0
+          fi
+
+          gh release upload "${tag}" benchstat.txt bench-new.txt --clobber
+          if [[ -f bench-old.txt ]]; then
+            gh release upload "${tag}" bench-old.txt --clobber
+          fi
+

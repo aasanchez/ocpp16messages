@@ -11,10 +11,12 @@ and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
 
 - Compatibility contract (`COMPATIBILITY.md`) defining SemVer guarantees,
   deprecation process, and what counts as breaking (API, behavior, validation).
+- Tag-only CI workflow generating `benchstat` comparisons for benchmarks and
+  attaching them to GitHub releases.
 
 ### Changed (Unreleased)
 
-- (Nothing yet.)
+- README: added common validation errors, FAQ, and performance guidance.
 
 ## [1.0.3] - 2026-03-01
 
