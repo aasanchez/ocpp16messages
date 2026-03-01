@@ -3,6 +3,8 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/aasanchez/ocpp16messages.svg)](https://pkg.go.dev/github.com/aasanchez/ocpp16messages)
 [![Go Report Card](https://goreportcard.com/badge/github.com/aasanchez/ocpp16messages)](https://goreportcard.com/report/github.com/aasanchez/ocpp16messages)
 [![codecov](https://codecov.io/gh/aasanchez/ocpp16messages/graph/badge.svg?token=1I9VVL7DWO)](https://codecov.io/gh/aasanchez/ocpp16messages)
+[![Supported Go versions](https://img.shields.io/badge/Go-1.25.7%20%7C%201.26.0-00ADD8?logo=go)](#versioning-and-support)
+[![Compatibility contract](https://img.shields.io/badge/compatibility-contract-blue)](COMPATIBILITY.md)
 
 A type-safe Go implementation of the Open Charge Point Protocol (OCPP) 1.6
 message set, with validated request/response structures for EV charge points
@@ -178,6 +180,18 @@ The `ReqMessage` type returned by `Req()` contains validated, typed fields.
 Core value types in `types/` are immutable and thread-safe. Message structs
 are safe to share between goroutines **as long as they are treated as
 read-only** (they have exported fields, so consumers can mutate them).
+
+### Error contract
+
+This library aims to provide stable error identities and flexible error
+messages.
+
+- **Stable:** use `errors.Is(err, types.ErrEmptyValue)` and
+  `errors.Is(err, types.ErrInvalidValue)` to detect validation failures.
+- **Stable:** constructors may return an aggregated error using `errors.Join`;
+  callers should use `errors.Is` rather than string matching.
+- **Not stable:** exact error strings and formatting (including joined error
+  order) may change between releases.
 
 ## Development
 
@@ -505,3 +519,4 @@ See [LICENSE](./LICENSE)
 - [Compatibility Contract](COMPATIBILITY.md)
 - [Development Guide](CLAUDE.md)
 - [Contributing](CONTRIBUTING.md)
+- [Roadmap](ROADMAP.md)

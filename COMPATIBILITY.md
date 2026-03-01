@@ -21,6 +21,28 @@ For the purposes of SemVer, the "public API" includes:
 - Validation behavior of constructors (`Req`, `Conf`, `New*`) and error
   semantics (see below).
 
+## Error contract
+
+Error handling is part of the compatibility contract. Callers should:
+
+- Use `errors.Is` for validation errors.
+- Avoid depending on exact error strings.
+
+### Stable guarantees
+
+- Validation failures from public constructors wrap one of:
+  - `types.ErrEmptyValue`
+  - `types.ErrInvalidValue`
+- Constructors may return `errors.Join(...)` to report multiple field errors;
+  `errors.Is` will still match the underlying sentinel errors.
+
+### Not guaranteed
+
+- Exact error messages, formatting, and field prefixes.
+- Ordering of joined errors.
+- Presence or absence of additional context wrapping (as long as `errors.Is`
+  behavior for the sentinels remains stable).
+
 ## Breaking changes (v1.x)
 
 In `v1.x`, we treat the following as breaking changes and require a MAJOR bump:
