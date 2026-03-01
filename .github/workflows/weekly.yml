@@ -1,9 +1,8 @@
-name: Nightly
+name: Weekly
 
 on:
   schedule:
-    - cron: "0 5 * * *" # 05:00 UTC daily
-  workflow_dispatch: {}
+    - cron: "0 5 * * 0" # 05:00 UTC weekly (Sunday)
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -31,7 +30,7 @@ jobs:
         run: make test-race
 
       - name: Run fuzzers (short)
-        run: make test-fuzz
+        run: FUZZPROCS=4 make test-fuzz
 
       - name: Run benchmarks (smoke)
         run: make test-bench
@@ -39,6 +38,7 @@ jobs:
       - name: Upload reports
         uses: actions/upload-artifact@v4
         with:
-          name: nightly-artifacts-${{ github.run_number }}
+          name: weekly-artifacts-${{ github.run_number }}
           path: reports/**
           if-no-files-found: ignore
+

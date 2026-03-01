@@ -42,6 +42,34 @@ go test -v ./authorize/...
 go test -v ./clearChargingProfile/...
 ```
 
+### Fuzz Testing
+
+Fuzz tests are high-value in this repo because most APIs accept raw, untrusted
+input and implement strict validation at construction time.
+
+Rules for fuzz tests:
+
+- Always place fuzzers under `./fuzz` and guard them with `//go:build fuzz`.
+- Always maximize scrutiny:
+  - If `err == nil`, assert strong invariants about the returned value
+    (UTC-only timestamps, enum `IsValid()`, nil vs empty slices, etc.).
+  - If `err != nil`, assert it wraps `types.ErrInvalidValue` and/or
+    `types.ErrEmptyValue` (as applicable).
+- Always seed boundary cases with `f.Add(...)`:
+  - Empty values, max length + 1, `-1`, `0`, `math.MaxUint16`, invalid enums,
+    invalid timestamps, and optional pointer fields set to `""`.
+- Always cap fuzz input sizes and skip pathological floats:
+  - Skip when strings exceed a reasonable length (e.g., 1024).
+  - Skip when floats are `NaN` or `Inf`.
+- Always target highest-value constructors first:
+  - Constructors and `Req`/`Conf` that parse timestamps, validate enums, join
+    multiple field errors, or validate nested slices/structures.
+
+Tips:
+
+- Use `FUZZTIME=30s make test-fuzz` to run longer locally.
+- Keep fuzzers deterministic and avoid `t.Parallel()` inside `f.Fuzz`.
+
 ### Linting and Formatting
 
 ```sh

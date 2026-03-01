@@ -1,4 +1,6 @@
 DATE := $(shell date +%Y)
+FUZZTIME ?= 5s
+FUZZPROCS ?= 4
 
 ##@ Helpers
 help: ## Display this help message, listing all available targets and their descriptions.
@@ -34,7 +36,7 @@ test-fuzz: ## Run fuzzers (requires Go 1.20+); uses fuzz build tag.
 	else \
 		for fuzz in $$FUZZES; do \
 			echo "\n>>> Fuzzing $$fuzz"; \
-			go test -tags=fuzz -run=^$$ -fuzz=$$fuzz -fuzztime=5s ./fuzz || exit $$?; \
+			GOMAXPROCS=$(FUZZPROCS) go test -tags=fuzz -run=^$$ -fuzz=^$$fuzz$$ -fuzztime=$(FUZZTIME) ./fuzz || exit $$?; \
 		done; \
 	fi
 

@@ -88,5 +88,3 @@ reports/
 .gocache
 testdata
 .claude/
-
-.vscode/

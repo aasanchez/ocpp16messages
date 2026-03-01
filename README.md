@@ -205,9 +205,53 @@ that are immutable and thread-safe.
     # Documentation
     make pkgsite                # Start local documentation server at http://localhost:8080
 
-### Nightly CI (opt-in suites)
+### Fuzz testing
 
-- Nightly workflow runs `make test-all`, `make test-race`, `make test-fuzz`,
+Fuzzers live in `./fuzz` and are guarded by the `fuzz` build tag, so they do
+not run as part of `go test ./...`.
+
+Run fuzzers via the project helper:
+
+    make test-fuzz
+
+Tuning knobs:
+
+- `FUZZTIME` (default `5s`): per-fuzzer time budget.
+- `FUZZPROCS` (default `4`): caps fuzz worker parallelism via `GOMAXPROCS`.
+
+To run a single fuzzer directly:
+
+    go test -tags=fuzz -run=^$ -fuzz=^FuzzAuthorizeReq$ -fuzztime=10s ./fuzz
+
+#### What is covered
+
+The fuzz suite is intentionally "high-scrutiny" (high-signal):
+
+- **All message constructors**: every OCPP operation package has fuzzers for
+  both `Req()` and `Conf()` (including empty constructors that must always
+  succeed).
+- **Core validation types**: fuzzers exist for constructors like `NewDateTime`,
+  `NewInteger`, all `NewCiString*Type` variants, `NewChargingSchedule` and
+  `NewChargingSchedulePeriod`, `NewIdTagInfo`, `NewSampledValue`, and
+  `NewMeterValue` (plus their message-scoped equivalents).
+- **Enum correctness**: strict membership fuzzers validate that every
+  `IsValid()` enum across `types/` and all `*/types` subpackages returns true
+  if and only if the input matches one of the OCPP-spec values.
+- **Error semantics**: when construction fails, fuzzers require the returned
+  error to wrap the shared sentinel validation errors
+  (`types.ErrEmptyValue` / `types.ErrInvalidValue`).
+- **Success invariants**: when construction succeeds, fuzzers assert strong
+  postconditions (range checks, nil vs empty slice preservation, UTC-only
+  `DateTime` values, and round-tripping of string/int fields).
+
+#### Editor support (VS Code)
+
+For local development, `.vscode/settings.json` configures `gopls` to include
+`-tags=fuzz` so the fuzz package and tests are indexed in the editor.
+
+### Weekly CI (opt-in suites)
+
+- Weekly workflow runs `make test-all`, `make test-race`, `make test-fuzz`,
   and `make test-bench` to guard the opt-in suites.
 
 ### Test Coverage

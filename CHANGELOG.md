@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added (Unreleased)
+
+- Comprehensive fuzz test suite under `./fuzz` (guarded by the `fuzz` build
+  tag) covering all OCPP 1.6 message constructors (`Req`/`Conf`) and core
+  validation types.
+- Strict membership fuzzers for every `IsValid()` enum in `types/` and all
+  message subpackage `*/types` enums.
+
+### Changed (Unreleased)
+
+- `make test-fuzz` hardened: exact fuzzer selection, configurable per-fuzzer
+  time budget, and capped parallelism.
+- Weekly GitHub Action schedule runs fuzzers (opt-in suite).
+
+## [1.0.1] - 2026-01-26
+
+### Changed (1.0.1)
+
+- Tests: adjust constants to satisfy revive `magic-number` lint.
+
 ## [1.0.0] - 2026-01-26
 
 ### Added (1.0.0)
@@ -29,6 +51,8 @@ and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
 - Legacy opt-in test filenames superseded by the normalized naming scheme.
 
 [1.0.0]: https://github.com/aasanchez/ocpp16messages/releases/tag/v1.0.0
+[1.0.1]: https://github.com/aasanchez/ocpp16messages/releases/tag/v1.0.1
+[Unreleased]: https://github.com/aasanchez/ocpp16messages/compare/v1.0.1...HEAD
 
 ## [v0.11.0]
 
