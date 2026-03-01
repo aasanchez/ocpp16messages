@@ -114,6 +114,8 @@ The library covers the full OCPP 1.6 message surface, including:
 ## Versioning and support
 
 - Semantic Versioning: API surface follows SemVer starting with v1.0.0.
+- Compatibility contract: see [COMPATIBILITY.md](COMPATIBILITY.md) for exact
+  SemVer guarantees, deprecation policy, and what counts as breaking.
 - Supported Go versions: >= 1.25 (aligned with go.mod and CI).
 - Changelog: see [CHANGELOG](CHANGELOG.md) for releases and upgrade notes.
 
@@ -477,4 +479,5 @@ See [LICENSE](./LICENSE)
 - [OCPP 1.6 Specification](https://www.openchargealliance.org/protocols/ocpp-16/)
 - [Go Package Documentation](https://pkg.go.dev/github.com/aasanchez/ocpp16messages)
 - [Security Policy](SECURITY.md)
+- [Compatibility Contract](COMPATIBILITY.md)
 - [Development Guide](CLAUDE.md)

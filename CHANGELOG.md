@@ -9,7 +9,8 @@ and the project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
 
 ### Added (Unreleased)
 
-- (Nothing yet.)
+- Compatibility contract (`COMPATIBILITY.md`) defining SemVer guarantees,
+  deprecation process, and what counts as breaking (API, behavior, validation).
 
 ### Changed (Unreleased)
 
