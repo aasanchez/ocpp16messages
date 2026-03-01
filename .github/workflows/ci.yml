@@ -208,3 +208,19 @@ jobs:
 
       - name: Example tests
         run: go test -mod=readonly -run '^Example' ./...
+
+  required:
+    name: Required
+    runs-on: ubuntu-latest
+    needs:
+      - module
+      - test
+      - coverage
+      - race
+      - golangci-lint
+      - staticcheck
+      - vet
+      - docs
+    steps:
+      - name: All required checks passed
+        run: echo "ok"
