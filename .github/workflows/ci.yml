@@ -92,11 +92,26 @@ jobs:
           path: reports
           retention-days: 7
 
-      - name: Upload to Codecov
+      - name: Codecov token notice
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && secrets.CODECOV_TOKEN == '' }}
+        run: |
+          echo "::warning::CODECOV_TOKEN is not set; Codecov uploads are skipped for protected branches."
+          echo "::warning::Add CODECOV_TOKEN in GitHub repo secrets to enable Codecov gating."
+
+      - name: Upload to Codecov (token)
+        if: ${{ secrets.CODECOV_TOKEN != '' }}
         uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5
         with:
           files: reports/coverage.out
           fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload to Codecov (no token)
+        if: ${{ secrets.CODECOV_TOKEN == '' }}
+        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5
+        with:
+          files: reports/coverage.out
+          fail_ci_if_error: false
 
   race:
     name: Race (ubuntu / go1.26.0)
