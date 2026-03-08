@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="560" viewBox="0 0 980 560">
+  <rect x="0" y="0" width="100%" height="100%" fill="white"/>
+  <text x="490" y="34" font-size="21" text-anchor="middle" font-family="Helvetica,Arial,sans-serif">GetConfigurationReq Scaling (ns/op)</text>
+  <line x1="95.00" y1="470.00" x2="930.00" y2="470.00" stroke="#222" stroke-width="1.5"/>
+  <line x1="95.00" y1="75.00" x2="95.00" y2="470.00" stroke="#222" stroke-width="1.5"/>
+  <line x1="95.00" y1="75.00" x2="95.00" y2="470.00" stroke="#eee"/>
+  <text x="95.00" y="494.00" font-size="12" text-anchor="middle" fill="#333" font-family="Helvetica,Arial,sans-serif">1</text>
+  <line x1="115.06" y1="75.00" x2="115.06" y2="470.00" stroke="#eee"/>
+  <text x="115.06" y="494.00" font-size="12" text-anchor="middle" fill="#333" font-family="Helvetica,Arial,sans-serif">25</text>
+  <line x1="177.75" y1="75.00" x2="177.75" y2="470.00" stroke="#eee"/>
+  <text x="177.75" y="494.00" font-size="12" text-anchor="middle" fill="#333" font-family="Helvetica,Arial,sans-serif">100</text>
+  <line x1="303.12" y1="75.00" x2="303.12" y2="470.00" stroke="#eee"/>
+  <text x="303.12" y="494.00" font-size="12" text-anchor="middle" fill="#333" font-family="Helvetica,Arial,sans-serif">250</text>
+  <line x1="512.08" y1="75.00" x2="512.08" y2="470.00" stroke="#eee"/>
+  <text x="512.08" y="494.00" font-size="12" text-anchor="middle" fill="#333" font-family="Helvetica,Arial,sans-serif">500</text>
+  <line x1="930.00" y1="75.00" x2="930.00" y2="470.00" stroke="#eee"/>
+  <text x="930.00" y="494.00" font-size="12" text-anchor="middle" fill="#333" font-family="Helvetica,Arial,sans-serif">1000</text>
+  <line x1="95.00" y1="470.00" x2="930.00" y2="470.00" stroke="#eee"/>
+  <text x="87.00" y="474.00" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">0.0</text>
+  <line x1="95.00" y1="404.17" x2="930.00" y2="404.17" stroke="#eee"/>
+  <text x="87.00" y="408.17" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">2841.1</text>
+  <line x1="95.00" y1="338.33" x2="930.00" y2="338.33" stroke="#eee"/>
+  <text x="87.00" y="342.33" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">5682.2</text>
+  <line x1="95.00" y1="272.50" x2="930.00" y2="272.50" stroke="#eee"/>
+  <text x="87.00" y="276.50" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">8523.4</text>
+  <line x1="95.00" y1="206.67" x2="930.00" y2="206.67" stroke="#eee"/>
+  <text x="87.00" y="210.67" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">11364.5</text>
+  <line x1="95.00" y1="140.83" x2="930.00" y2="140.83" stroke="#eee"/>
+  <text x="87.00" y="144.83" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">14205.6</text>
+  <line x1="95.00" y1="75.00" x2="930.00" y2="75.00" stroke="#eee"/>
+  <text x="87.00" y="79.00" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">17046.7</text>
+  <text x="512.50" y="522.00" font-size="13" text-anchor="middle" fill="#333" font-family="Helvetica,Arial,sans-serif">Input size</text>
+  <text x="28" y="272.50" font-size="13" text-anchor="middle" fill="#333" transform="rotate(-90 28 272.50)" font-family="Helvetica,Arial,sans-serif">ns/op</text>
+  <polyline points="95.00,469.37 115.06,456.37 177.75,425.44 303.12,375.60 512.08,285.90 930.00,110.91" fill="none" stroke="#d1495b" stroke-width="3"/>
+  <circle cx="95.00" cy="469.37" r="4.2" fill="#d1495b"/>
+  <circle cx="115.06" cy="456.37" r="4.2" fill="#d1495b"/>
+  <circle cx="177.75" cy="425.44" r="4.2" fill="#d1495b"/>
+  <circle cx="303.12" cy="375.60" r="4.2" fill="#d1495b"/>
+  <circle cx="512.08" cy="285.90" r="4.2" fill="#d1495b"/>
+  <circle cx="930.00" cy="110.91" r="4.2" fill="#d1495b"/>
+  <polyline points="95.00,469.99 115.06,469.99 177.75,469.99 303.12,469.99 512.08,469.99 930.00,469.99" fill="none" stroke="#2a9d8f" stroke-width="3"/>
+  <circle cx="95.00" cy="469.99" r="4.2" fill="#2a9d8f"/>
+  <circle cx="115.06" cy="469.99" r="4.2" fill="#2a9d8f"/>
+  <circle cx="177.75" cy="469.99" r="4.2" fill="#2a9d8f"/>
+  <circle cx="303.12" cy="469.99" r="4.2" fill="#2a9d8f"/>
+  <circle cx="512.08" cy="469.99" r="4.2" fill="#2a9d8f"/>
+  <circle cx="930.00" cy="469.99" r="4.2" fill="#2a9d8f"/>
+  <polyline points="95.00,469.82 115.06,466.32 177.75,456.25 303.12,433.81 512.08,400.62 930.00,334.10" fill="none" stroke="#1f77b4" stroke-width="3"/>
+  <circle cx="95.00" cy="469.82" r="4.2" fill="#1f77b4"/>
+  <circle cx="115.06" cy="466.32" r="4.2" fill="#1f77b4"/>
+  <circle cx="177.75" cy="456.25" r="4.2" fill="#1f77b4"/>
+  <circle cx="303.12" cy="433.81" r="4.2" fill="#1f77b4"/>
+  <circle cx="512.08" cy="400.62" r="4.2" fill="#1f77b4"/>
+  <circle cx="930.00" cy="334.10" r="4.2" fill="#1f77b4"/>
+  <line x1="640.00" y1="86.00" x2="670.00" y2="86.00" stroke="#d1495b" stroke-width="3"/>
+  <circle cx="655.00" cy="86.00" r="4" fill="#d1495b"/>
+  <text x="680.00" y="90.00" font-size="12" fill="#333" font-family="Helvetica,Arial,sans-serif">Custom</text>
+  <line x1="640.00" y1="106.00" x2="670.00" y2="106.00" stroke="#2a9d8f" stroke-width="3"/>
+  <circle cx="655.00" cy="106.00" r="4" fill="#2a9d8f"/>
+  <text x="680.00" y="110.00" font-size="12" fill="#333" font-family="Helvetica,Arial,sans-serif">PrimitiveDirect</text>
+  <line x1="640.00" y1="126.00" x2="670.00" y2="126.00" stroke="#1f77b4" stroke-width="3"/>
+  <circle cx="655.00" cy="126.00" r="4" fill="#1f77b4"/>
+  <text x="680.00" y="130.00" font-size="12" fill="#333" font-family="Helvetica,Arial,sans-serif">PrimitiveValidated</text>
+</svg>

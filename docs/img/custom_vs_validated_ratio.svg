@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="560" viewBox="0 0 980 560">
+  <rect x="0" y="0" width="100%" height="100%" fill="white"/>
+  <text x="490" y="34" font-size="21" text-anchor="middle" font-family="Helvetica,Arial,sans-serif">Custom / PrimitiveValidated Ratio (ns/op)</text>
+  <line x1="95.00" y1="450.00" x2="930.00" y2="450.00" stroke="#222" stroke-width="1.5"/>
+  <line x1="95.00" y1="75.00" x2="95.00" y2="450.00" stroke="#222" stroke-width="1.5"/>
+  <text x="178.50" y="474.00" font-size="12" text-anchor="middle" fill="#333" font-family="Helvetica,Arial,sans-serif">DateTime</text>
+  <text x="345.50" y="474.00" font-size="12" text-anchor="middle" fill="#333" font-family="Helvetica,Arial,sans-serif">ParentIdTag</text>
+  <text x="512.50" y="474.00" font-size="12" text-anchor="middle" fill="#333" font-family="Helvetica,Arial,sans-serif">StartTransactionReq</text>
+  <text x="679.50" y="474.00" font-size="12" text-anchor="middle" fill="#333" font-family="Helvetica,Arial,sans-serif">SendLocalListReq_1000</text>
+  <text x="846.50" y="474.00" font-size="12" text-anchor="middle" fill="#333" font-family="Helvetica,Arial,sans-serif">GetConfigurationReq_1000</text>
+  <line x1="95.00" y1="450.00" x2="930.00" y2="450.00" stroke="#eee"/>
+  <text x="87.00" y="454.00" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">0.00</text>
+  <line x1="95.00" y1="387.50" x2="930.00" y2="387.50" stroke="#eee"/>
+  <text x="87.00" y="391.50" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">0.96</text>
+  <line x1="95.00" y1="325.00" x2="930.00" y2="325.00" stroke="#eee"/>
+  <text x="87.00" y="329.00" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">1.91</text>
+  <line x1="95.00" y1="262.50" x2="930.00" y2="262.50" stroke="#eee"/>
+  <text x="87.00" y="266.50" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">2.87</text>
+  <line x1="95.00" y1="200.00" x2="930.00" y2="200.00" stroke="#eee"/>
+  <text x="87.00" y="204.00" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">3.83</text>
+  <line x1="95.00" y1="137.50" x2="930.00" y2="137.50" stroke="#eee"/>
+  <text x="87.00" y="141.50" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">4.78</text>
+  <line x1="95.00" y1="75.00" x2="930.00" y2="75.00" stroke="#eee"/>
+  <text x="87.00" y="79.00" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">5.74</text>
+  <text x="26" y="262.50" font-size="13" text-anchor="middle" fill="#333" transform="rotate(-90 26 262.50)" font-family="Helvetica,Arial,sans-serif">ratio</text>
+  <rect x="120.05" y="382.66" width="116.90" height="67.34" fill="#6c5ce7"/>
+  <rect x="287.05" y="350.11" width="116.90" height="99.89" fill="#6c5ce7"/>
+  <rect x="454.05" y="356.35" width="116.90" height="93.65" fill="#6c5ce7"/>
+  <rect x="621.05" y="109.09" width="116.90" height="340.91" fill="#6c5ce7"/>
+  <rect x="788.05" y="277.41" width="116.90" height="172.59" fill="#6c5ce7"/>
+  <line x1="640.00" y1="86.00" x2="670.00" y2="86.00" stroke="#6c5ce7" stroke-width="3"/>
+  <circle cx="655.00" cy="86.00" r="4" fill="#6c5ce7"/>
+  <text x="680.00" y="90.00" font-size="12" fill="#333" font-family="Helvetica,Arial,sans-serif">ratio</text>
+</svg>

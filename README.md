@@ -596,3 +596,28 @@ See [LICENSE](./LICENSE)
 - [Contributing](CONTRIBUTING.md)
 - [Roadmap](ROADMAP.md)
 - [Releasing](RELEASING.md)
+
+## Performance Analysis: Custom Types vs Primitives
+
+Condensed result:
+
+- `PrimitiveDirect` is fastest, but it skips safety checks.
+- `Custom` is slower in microbenchmarks, and the overhead is bounded and
+  predictable versus `PrimitiveValidated`.
+- For OCPP workloads, correctness and developer ergonomics generally justify
+  the cost of first-class datatypes.
+
+Single summary chart (`Custom / PrimitiveValidated`, lower is better):
+
+![Custom vs PrimitiveValidated ratio](docs/img/custom_vs_validated_ratio.svg)
+
+Full benchmark report with 6 charts and detailed analysis:
+[docs/benchmark.md](docs/benchmark.md)
+
+Reproduce:
+
+<!-- markdownlint-disable MD046 -->
+```sh
+go run ./scripts/benchreport.go
+```
+<!-- markdownlint-enable MD046 -->
