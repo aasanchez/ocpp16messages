@@ -4,7 +4,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/aasanchez/ocpp16messages)](https://goreportcard.com/report/github.com/aasanchez/ocpp16messages)
 [![codecov](https://codecov.io/gh/aasanchez/ocpp16messages/graph/badge.svg?token=1I9VVL7DWO)](https://codecov.io/gh/aasanchez/ocpp16messages)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/aasanchez/ocpp16messages/badge)](https://securityscorecards.dev/viewer/?uri=github.com/aasanchez/ocpp16messages)
-[![Supported Go versions](https://img.shields.io/badge/Go-1.25.7%20%7C%201.26.0-00ADD8?logo=go)](#versioning-and-support)
+[![Supported Go versions](https://img.shields.io/badge/Go-1.25.8%20%7C%201.26.1-00ADD8?logo=go)](#versioning-and-support)
 [![Compatibility contract](https://img.shields.io/badge/compatibility-contract-blue)](COMPATIBILITY.md)
 
 A type-safe Go implementation of the Open Charge Point Protocol (OCPP) 1.6
@@ -57,7 +57,7 @@ The library covers the full OCPP 1.6 message surface, including:
 
     go get github.com/aasanchez/ocpp16messages
 
-**Requirements:** Go 1.25.7 or later (CI and go.mod aligned)
+**Requirements:** Go 1.25.8 or later (CI and go.mod aligned)
 
 ## Project Structure
 

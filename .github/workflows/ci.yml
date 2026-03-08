@@ -10,14 +10,14 @@ concurrency:
 
 jobs:
   module:
-    name: Module hygiene (ubuntu / go1.26.0)
+    name: Module hygiene (ubuntu / go1.26.1)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
-          go-version: 1.26.0
+          go-version: 1.26.1
           cache: false
 
       - name: go mod verify
@@ -41,8 +41,8 @@ jobs:
           - macos-latest
           - windows-latest
         go:
-          - 1.25.7
-          - 1.26.0
+          - 1.25.8
+          - 1.26.1
     steps:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
@@ -55,7 +55,7 @@ jobs:
         run: go test -mod=readonly -v ./...
 
   coverage:
-    name: Coverage (ubuntu / go1.26.0)
+    name: Coverage (ubuntu / go1.26.1)
     runs-on: ubuntu-latest
     env:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
@@ -64,7 +64,7 @@ jobs:
 
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
-          go-version: 1.26.0
+          go-version: 1.26.1
           cache: false
 
       - run: mkdir -p reports
@@ -116,7 +116,7 @@ jobs:
           fail_ci_if_error: false
 
   apidiff:
-    name: API diff (ubuntu / go1.26.0)
+    name: API diff (ubuntu / go1.26.1)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
@@ -125,7 +125,7 @@ jobs:
 
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
-          go-version: 1.26.0
+          go-version: 1.26.1
           cache: false
 
       - run: mkdir -p reports
@@ -166,28 +166,28 @@ jobs:
           echo "::notice::No incompatible public API changes detected."
 
   race:
-    name: Race (ubuntu / go1.26.0)
+    name: Race (ubuntu / go1.26.1)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
-          go-version: 1.26.0
+          go-version: 1.26.1
           cache: false
 
       - name: Race suite (opt-in)
         run: make test-race
 
   golangci-lint:
-    name: golangci-lint (ubuntu / go1.26.0)
+    name: golangci-lint (ubuntu / go1.26.1)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
-          go-version: 1.26.0
+          go-version: 1.26.1
           cache: false
 
       - run: mkdir -p reports
@@ -216,14 +216,14 @@ jobs:
           path: reports/
 
   staticcheck:
-    name: staticcheck (ubuntu / go1.26.0)
+    name: staticcheck (ubuntu / go1.26.1)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
-          go-version: 1.26.0
+          go-version: 1.26.1
           cache: false
 
       - run: mkdir -p reports
@@ -244,14 +244,14 @@ jobs:
           path: reports/
 
   vet:
-    name: go vet (ubuntu / go1.26.0)
+    name: go vet (ubuntu / go1.26.1)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
-          go-version: 1.26.0
+          go-version: 1.26.1
           cache: false
 
       - run: mkdir -p reports
@@ -269,14 +269,14 @@ jobs:
           path: reports/
 
   docs:
-    name: Docs smoke (ubuntu / go1.26.0)
+    name: Docs smoke (ubuntu / go1.26.1)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
-          go-version: 1.26.0
+          go-version: 1.26.1
           cache: false
 
       - name: Package list

@@ -5,8 +5,8 @@
 
 - [ ] Update `CHANGELOG.md` with the new version entry.
 - [ ] Verify supported Go versions:
-  - [ ] Minimum: Go 1.25.7 (`go.mod`)
-  - [ ] Latest: Go 1.26.0 (CI matrix)
+  - [ ] Minimum: Go 1.25.8 (`go.mod`)
+  - [ ] Latest: Go 1.26.1 (CI matrix)
 - [ ] Run quality gates locally:
   - [ ] `make test`
   - [ ] `make test-all`
