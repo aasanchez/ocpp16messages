@@ -10,27 +10,27 @@
   <line x1="95.00" y1="450.00" x2="930.00" y2="450.00" stroke="#eee"/>
   <text x="87.00" y="454.00" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">0.00</text>
   <line x1="95.00" y1="387.50" x2="930.00" y2="387.50" stroke="#eee"/>
-  <text x="87.00" y="391.50" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">7.00</text>
+  <text x="87.00" y="391.50" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">7.33</text>
   <line x1="95.00" y1="325.00" x2="930.00" y2="325.00" stroke="#eee"/>
-  <text x="87.00" y="329.00" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">14.00</text>
+  <text x="87.00" y="329.00" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">14.66</text>
   <line x1="95.00" y1="262.50" x2="930.00" y2="262.50" stroke="#eee"/>
-  <text x="87.00" y="266.50" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">21.00</text>
+  <text x="87.00" y="266.50" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">21.99</text>
   <line x1="95.00" y1="200.00" x2="930.00" y2="200.00" stroke="#eee"/>
-  <text x="87.00" y="204.00" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">28.00</text>
+  <text x="87.00" y="204.00" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">29.32</text>
   <line x1="95.00" y1="137.50" x2="930.00" y2="137.50" stroke="#eee"/>
-  <text x="87.00" y="141.50" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">35.00</text>
+  <text x="87.00" y="141.50" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">36.65</text>
   <line x1="95.00" y1="75.00" x2="930.00" y2="75.00" stroke="#eee"/>
-  <text x="87.00" y="79.00" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">42.00</text>
+  <text x="87.00" y="79.00" font-size="12" text-anchor="end" fill="#333" font-family="Helvetica,Arial,sans-serif">43.98</text>
   <text x="26" y="262.50" font-size="13" text-anchor="middle" fill="#333" transform="rotate(-90 26 262.50)" font-family="Helvetica,Arial,sans-serif">ns/op</text>
-  <rect x="136.75" y="253.29" width="64.94" height="196.71" fill="#d1495b"/>
-  <rect x="201.69" y="444.74" width="64.94" height="5.26" fill="#2a9d8f"/>
-  <rect x="266.64" y="259.19" width="64.94" height="190.81" fill="#1f77b4"/>
-  <rect x="415.08" y="249.54" width="64.94" height="200.46" fill="#d1495b"/>
-  <rect x="480.03" y="356.60" width="64.94" height="93.40" fill="#2a9d8f"/>
-  <rect x="544.97" y="318.92" width="64.94" height="131.08" fill="#1f77b4"/>
+  <rect x="136.75" y="255.24" width="64.94" height="194.76" fill="#d1495b"/>
+  <rect x="201.69" y="444.44" width="64.94" height="5.56" fill="#2a9d8f"/>
+  <rect x="266.64" y="167.24" width="64.94" height="282.76" fill="#1f77b4"/>
+  <rect x="415.08" y="252.60" width="64.94" height="197.40" fill="#d1495b"/>
+  <rect x="480.03" y="364.30" width="64.94" height="85.70" fill="#2a9d8f"/>
+  <rect x="544.97" y="327.72" width="64.94" height="122.28" fill="#1f77b4"/>
   <rect x="693.42" y="109.09" width="64.94" height="340.91" fill="#d1495b"/>
-  <rect x="758.36" y="444.38" width="64.94" height="5.62" fill="#2a9d8f"/>
-  <rect x="823.31" y="212.22" width="64.94" height="237.78" fill="#1f77b4"/>
+  <rect x="758.36" y="444.62" width="64.94" height="5.38" fill="#2a9d8f"/>
+  <rect x="823.31" y="219.43" width="64.94" height="230.57" fill="#1f77b4"/>
   <line x1="640.00" y1="86.00" x2="670.00" y2="86.00" stroke="#d1495b" stroke-width="3"/>
   <circle cx="655.00" cy="86.00" r="4" fill="#d1495b"/>
   <text x="680.00" y="90.00" font-size="12" fill="#333" font-family="Helvetica,Arial,sans-serif">Custom</text>

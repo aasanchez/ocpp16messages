@@ -3,33 +3,58 @@
 package benchmark
 
 import (
-	"errors"
 	"testing"
 
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
-const parentIdTagSample = "PARENT-TAG-001"
-
-type primitiveIdTagInfo struct {
-	ParentIdTag *string
-}
-
 var (
-	errPrimitiveEmpty    = errors.New("parentIdTag cannot be empty")
-	errPrimitiveTooLong  = errors.New("parentIdTag exceeds max length")
-	errPrimitiveBadASCII = errors.New("parentIdTag contains invalid ASCII")
+	sinkDateTimeCustom    st.DateTime
+	sinkDateTimePrimitive string
 
 	sinkParentIdTagInfoCustom st.IdTagInfo
 	sinkParentIdTagInfoPrim   primitiveIdTagInfo
 	sinkParentIdTagValue      string
 )
 
+func BenchmarkDateTime_CustomType(b *testing.B) {
+	b.ReportAllocs()
+
+	for i := 0; i < b.N; i++ {
+		dt, err := st.NewDateTime(benchmarkTimestamp)
+		if err != nil {
+			b.Fatal(err)
+		}
+
+		sinkDateTimeCustom = dt
+	}
+}
+
+func BenchmarkDateTime_PrimitiveDirect(b *testing.B) {
+	b.ReportAllocs()
+
+	for i := 0; i < b.N; i++ {
+		sinkDateTimePrimitive = benchmarkTimestamp
+	}
+}
+
+func BenchmarkDateTime_PrimitiveValidated(b *testing.B) {
+	b.ReportAllocs()
+
+	for i := 0; i < b.N; i++ {
+		if err := validatePrimitiveTimestampUTC(benchmarkTimestamp); err != nil {
+			b.Fatal(err)
+		}
+
+		sinkDateTimePrimitive = benchmarkTimestamp
+	}
+}
+
 func BenchmarkParentIdTag_CustomChain(b *testing.B) {
 	b.ReportAllocs()
 
 	for i := 0; i < b.N; i++ {
-		idTagInfo, err := buildCustomParentIdTagInfo(parentIdTagSample)
+		idTagInfo, err := buildCustomParentIdTagInfo("PARENT-TAG-001")
 		if err != nil {
 			b.Fatal(err)
 		}
@@ -42,7 +67,7 @@ func BenchmarkParentIdTag_PrimitiveDirect(b *testing.B) {
 	b.ReportAllocs()
 
 	for i := 0; i < b.N; i++ {
-		parentIdTag := parentIdTagSample
+		parentIdTag := "PARENT-TAG-001"
 		idTagInfo := primitiveIdTagInfo{ParentIdTag: &parentIdTag}
 		sinkParentIdTagInfoPrim = idTagInfo
 	}
@@ -52,8 +77,8 @@ func BenchmarkParentIdTag_PrimitiveValidated(b *testing.B) {
 	b.ReportAllocs()
 
 	for i := 0; i < b.N; i++ {
-		parentIdTag := parentIdTagSample
-		if err := validatePrimitiveParentIdTag(parentIdTag); err != nil {
+		parentIdTag := "PARENT-TAG-001"
+		if err := validatePrimitiveCiString20(parentIdTag); err != nil {
 			b.Fatal(err)
 		}
 
@@ -65,7 +90,7 @@ func BenchmarkParentIdTag_PrimitiveValidated(b *testing.B) {
 func BenchmarkParentIdTag_CustomReadPrimitive(b *testing.B) {
 	b.ReportAllocs()
 
-	idTagInfo, err := buildCustomParentIdTagInfo(parentIdTagSample)
+	idTagInfo, err := buildCustomParentIdTagInfo("PARENT-TAG-001")
 	if err != nil {
 		b.Fatal(err)
 	}
@@ -80,7 +105,7 @@ func BenchmarkParentIdTag_CustomReadPrimitive(b *testing.B) {
 func BenchmarkParentIdTag_PrimitiveRead(b *testing.B) {
 	b.ReportAllocs()
 
-	parentIdTag := parentIdTagSample
+	parentIdTag := "PARENT-TAG-001"
 	idTagInfo := primitiveIdTagInfo{ParentIdTag: &parentIdTag}
 
 	b.ResetTimer()
@@ -104,23 +129,4 @@ func buildCustomParentIdTagInfo(parentIdTag string) (st.IdTagInfo, error) {
 	}
 
 	return idTagInfo.WithParentIdTag(idToken), nil
-}
-
-func validatePrimitiveParentIdTag(parentIdTag string) error {
-	if parentIdTag == "" {
-		return errPrimitiveEmpty
-	}
-
-	if len(parentIdTag) > st.CiString20Max {
-		return errPrimitiveTooLong
-	}
-
-	for index := 0; index < len(parentIdTag); index++ {
-		char := parentIdTag[index]
-		if char < 32 || char > 126 {
-			return errPrimitiveBadASCII
-		}
-	}
-
-	return nil
 }

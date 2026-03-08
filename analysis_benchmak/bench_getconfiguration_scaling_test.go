@@ -3,17 +3,10 @@
 package benchmark
 
 import (
-	"fmt"
-	"strconv"
 	"testing"
 
 	gconf "github.com/aasanchez/ocpp16messages/getConfiguration"
-	st "github.com/aasanchez/ocpp16messages/types"
 )
-
-type primitiveGetConfigurationReq struct {
-	Key []string
-}
 
 var (
 	sinkGetConfigurationCustom    gconf.ReqMessage
@@ -132,47 +125,4 @@ func benchmarkGetConfigurationPrimitiveValidated(b *testing.B, size int) {
 
 		sinkGetConfigurationPrimitive = input
 	}
-}
-
-func makeConfigurationKeys(size int) []string {
-	keys := make([]string, 0, size)
-
-	for index := 0; index < size; index++ {
-		keys = append(keys, "HeartbeatInterval"+strconv.Itoa(index%10))
-	}
-
-	return keys
-}
-
-func validatePrimitiveGetConfigurationReq(input primitiveGetConfigurationReq) error {
-	if len(input.Key) == 0 {
-		return nil
-	}
-
-	for index, key := range input.Key {
-		if err := validatePrimitiveCiString50(key); err != nil {
-			return fmt.Errorf("key[%d]: %w", index, err)
-		}
-	}
-
-	return nil
-}
-
-func validatePrimitiveCiString50(value string) error {
-	if value == "" {
-		return errPrimitiveEmpty
-	}
-
-	if len(value) > st.CiString50Max {
-		return errPrimitiveTooLong
-	}
-
-	for index := 0; index < len(value); index++ {
-		char := value[index]
-		if char < 32 || char > 126 {
-			return errPrimitiveBadASCII
-		}
-	}
-
-	return nil
 }

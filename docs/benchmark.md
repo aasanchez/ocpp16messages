@@ -46,9 +46,9 @@ go run ./scripts/benchreport.go
 
 | Case | Custom ns/op | PrimitiveValidated ns/op | Ratio |
 | ---- | -----------: | -----------------------: | ----: |
-| SendLocalListReq_1000 | 13810.00 | 2646.00 | 5.22x |
-| GetConfigurationReq_1000 | 15497.00 | 5865.00 | 2.64x |
-| StartTransactionReq | 38.18 | 26.63 | 1.43x |
+| SendLocalListReq_1000 | 10137.00 | 3066.00 | 3.31x |
+| GetConfigurationReq_1000 | 15948.00 | 6074.00 | 2.63x |
+| StartTransactionReq | 39.98 | 27.04 | 1.48x |
 
 ## Analysis
 

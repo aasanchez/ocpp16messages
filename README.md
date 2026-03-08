@@ -607,6 +607,19 @@ Condensed result:
 - For OCPP workloads, correctness and developer ergonomics generally justify
   the cost of first-class datatypes.
 
+Benchmark suite structure:
+
+- `analysis_benchmak/bench_micro_types_test.go`: constructor-level comparisons
+  (`DateTime`, `ParentIdTag` chain, read paths).
+- `analysis_benchmak/bench_macro_messages_test.go`: end-to-end message
+  constructor path (`StartTransactionReq`).
+- `analysis_benchmak/bench_scaling_sendlocallist_test.go`: slice-heavy scaling
+  (`SendLocalListReq`) at `1, 25, 100, 250, 500, 1000`.
+- `analysis_benchmak/bench_getconfiguration_scaling_test.go`: key-list scaling
+  (`GetConfigurationReq`) at `1, 25, 100, 250, 500, 1000`.
+- `analysis_benchmak/bench_common_test.go`: shared primitive baselines and
+  validation helpers to keep comparisons consistent.
+
 Single summary chart (`Custom / PrimitiveValidated`, lower is better):
 
 ![Custom vs PrimitiveValidated ratio](docs/img/custom_vs_validated_ratio.svg)
