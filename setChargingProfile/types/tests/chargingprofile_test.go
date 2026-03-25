@@ -157,6 +157,111 @@ func TestChargingProfile_ChargingSchedule(t *testing.T) {
 	}
 }
 
+func TestChargingProfile_RecurrencyKind_WhenNil(t *testing.T) {
+	t.Parallel()
+
+	profile, err := types.NewChargingProfile(types.ChargingProfileInput{
+		ChargingProfileId:      testChargingProfileId,
+		TransactionId:          nil,
+		StackLevel:             testStackLevel,
+		ChargingProfilePurpose: testPurposeTxProfile,
+		ChargingProfileKind:    testKindAbsolute,
+		RecurrencyKind:         nil,
+		ValidFrom:              nil,
+		ValidTo:                nil,
+		ChargingSchedule: st.ChargingScheduleInput{
+			Duration:         nil,
+			ChargingRateUnit: testChargingRateUnitA,
+			ChargingSchedulePeriod: []st.ChargingSchedulePeriodInput{
+				{
+					StartPeriod:  testStartPeriod,
+					Limit:        testLimit,
+					NumberPhases: nil,
+				},
+			},
+			MinChargingRate: nil,
+			StartSchedule:   nil,
+		},
+	})
+	if err != nil {
+		t.Fatalf("Failed to create ChargingProfile: %v", err)
+	}
+
+	if profile.RecurrencyKind() != nil {
+		t.Error("ChargingProfile.RecurrencyKind() = non-nil, want nil")
+	}
+}
+
+func TestChargingProfile_ValidFrom_WhenNil(t *testing.T) {
+	t.Parallel()
+
+	profile, err := types.NewChargingProfile(types.ChargingProfileInput{
+		ChargingProfileId:      testChargingProfileId,
+		TransactionId:          nil,
+		StackLevel:             testStackLevel,
+		ChargingProfilePurpose: testPurposeTxProfile,
+		ChargingProfileKind:    testKindAbsolute,
+		RecurrencyKind:         nil,
+		ValidFrom:              nil,
+		ValidTo:                nil,
+		ChargingSchedule: st.ChargingScheduleInput{
+			Duration:         nil,
+			ChargingRateUnit: testChargingRateUnitA,
+			ChargingSchedulePeriod: []st.ChargingSchedulePeriodInput{
+				{
+					StartPeriod:  testStartPeriod,
+					Limit:        testLimit,
+					NumberPhases: nil,
+				},
+			},
+			MinChargingRate: nil,
+			StartSchedule:   nil,
+		},
+	})
+	if err != nil {
+		t.Fatalf("Failed to create ChargingProfile: %v", err)
+	}
+
+	if profile.ValidFrom() != nil {
+		t.Error("ChargingProfile.ValidFrom() = non-nil, want nil")
+	}
+}
+
+func TestChargingProfile_ValidTo_WhenNil(t *testing.T) {
+	t.Parallel()
+
+	profile, err := types.NewChargingProfile(types.ChargingProfileInput{
+		ChargingProfileId:      testChargingProfileId,
+		TransactionId:          nil,
+		StackLevel:             testStackLevel,
+		ChargingProfilePurpose: testPurposeTxProfile,
+		ChargingProfileKind:    testKindAbsolute,
+		RecurrencyKind:         nil,
+		ValidFrom:              nil,
+		ValidTo:                nil,
+		ChargingSchedule: st.ChargingScheduleInput{
+			Duration:         nil,
+			ChargingRateUnit: testChargingRateUnitA,
+			ChargingSchedulePeriod: []st.ChargingSchedulePeriodInput{
+				{
+					StartPeriod:  testStartPeriod,
+					Limit:        testLimit,
+					NumberPhases: nil,
+				},
+			},
+			MinChargingRate: nil,
+			StartSchedule:   nil,
+		},
+	})
+	if err != nil {
+		t.Fatalf("Failed to create ChargingProfile: %v", err)
+	}
+
+	if profile.ValidTo() != nil {
+		t.Error("ChargingProfile.ValidTo() = non-nil, want nil")
+	}
+}
+
 func TestNewChargingProfile_InvalidChargingProfileId(t *testing.T) {
 	t.Parallel()
 

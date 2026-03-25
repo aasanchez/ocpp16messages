@@ -159,6 +159,20 @@ func TestChargingSchedule_MinChargingRate_WhenNil(t *testing.T) {
 	}
 }
 
+func TestChargingSchedule_ChargingSchedulePeriod_WhenNil(t *testing.T) {
+	t.Parallel()
+
+	var schedule types.ChargingSchedule
+	periods := schedule.ChargingSchedulePeriod()
+
+	if periods != nil {
+		t.Error(
+			"ChargingSchedule.ChargingSchedulePeriod() != nil" +
+				", want nil for zero-value",
+		)
+	}
+}
+
 func TestNewChargingSchedule_InvalidDuration(t *testing.T) {
 	t.Parallel()
 
