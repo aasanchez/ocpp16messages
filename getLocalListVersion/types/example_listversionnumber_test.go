@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/aasanchez/ocpp16messages/getLocalListVersion/types"
+	"github.com/aasanchez/ocpp16messages/getlocallistversion/types"
 )
 
 const exampleValueLabel = "Value:"

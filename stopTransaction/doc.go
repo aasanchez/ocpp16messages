@@ -1,4 +1,4 @@
-// Package stopTransaction implements the Open Charge Point Protocol (OCPP) 1.6
+// Package stoptransaction implements the Open Charge Point Protocol (OCPP) 1.6
 // StopTransaction message for EV charging.
 //
 // # Handling Rules
@@ -49,4 +49,4 @@
 // SHALL NOT withhold StopTransaction.conf. Failing to respond triggers
 // Charge Point retries according to transaction-related error handling
 // rules.
-package stopTransaction
+package stoptransaction

@@ -1,9 +1,9 @@
-package changeAvailability_test
+package changeavailability_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/changeAvailability"
+	"github.com/aasanchez/ocpp16messages/changeavailability"
 )
 
 const statusLabel = "Status:"
@@ -11,7 +11,7 @@ const statusLabel = "Status:"
 // ExampleConf demonstrates creating a valid ChangeAvailability.conf message
 // with an Accepted status.
 func ExampleConf() {
-	conf, err := changeAvailability.Conf(changeAvailability.ConfInput{
+	conf, err := changeavailability.Conf(changeavailability.ConfInput{
 		Status: "Accepted",
 	})
 	if err != nil {
@@ -28,7 +28,7 @@ func ExampleConf() {
 // ExampleConf_rejected demonstrates creating a ChangeAvailability.conf message
 // with a Rejected status.
 func ExampleConf_rejected() {
-	conf, err := changeAvailability.Conf(changeAvailability.ConfInput{
+	conf, err := changeavailability.Conf(changeavailability.ConfInput{
 		Status: "Rejected",
 	})
 	if err != nil {
@@ -45,7 +45,7 @@ func ExampleConf_rejected() {
 // ExampleConf_scheduled demonstrates creating a ChangeAvailability.conf message
 // with a Scheduled status (when a transaction is in progress).
 func ExampleConf_scheduled() {
-	conf, err := changeAvailability.Conf(changeAvailability.ConfInput{
+	conf, err := changeavailability.Conf(changeavailability.ConfInput{
 		Status: "Scheduled",
 	})
 	if err != nil {
@@ -62,7 +62,7 @@ func ExampleConf_scheduled() {
 // ExampleConf_invalidStatus demonstrates the error returned when
 // an invalid status is provided.
 func ExampleConf_invalidStatus() {
-	_, err := changeAvailability.Conf(changeAvailability.ConfInput{
+	_, err := changeavailability.Conf(changeavailability.ConfInput{
 		Status: "Unknown",
 	})
 	if err != nil {
@@ -75,7 +75,7 @@ func ExampleConf_invalidStatus() {
 // ExampleConf_emptyStatus demonstrates the error returned when
 // an empty status is provided.
 func ExampleConf_emptyStatus() {
-	_, err := changeAvailability.Conf(changeAvailability.ConfInput{
+	_, err := changeavailability.Conf(changeavailability.ConfInput{
 		Status: "",
 	})
 	if err != nil {

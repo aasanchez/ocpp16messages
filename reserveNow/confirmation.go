@@ -1,9 +1,9 @@
-package reserveNow
+package reservenow
 
 import (
 	"fmt"
 
-	rt "github.com/aasanchez/ocpp16messages/reserveNow/types"
+	rt "github.com/aasanchez/ocpp16messages/reservenow/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

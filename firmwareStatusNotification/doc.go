@@ -1,4 +1,4 @@
-// Package firmwareStatusNotification implements the Open Charge Point Protocol
+// Package firmwarestatusnotification implements the Open Charge Point Protocol
 // (OCPP) 1.6 FirmwareStatusNotification message for EV charging.
 //
 // # Handling Rules
@@ -15,4 +15,4 @@
 //
 // Upon receipt of FirmwareStatusNotification.req, the Central System
 // SHALL respond with FirmwareStatusNotification.conf.
-package firmwareStatusNotification
+package firmwarestatusnotification

@@ -1,15 +1,15 @@
-package cancelReservation_test
+package cancelreservation_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/cancelReservation"
+	"github.com/aasanchez/ocpp16messages/cancelreservation"
 )
 
 // ExampleConf demonstrates creating a valid CancelReservation.conf message
 // with an Accepted status.
 func ExampleConf() {
-	conf, err := cancelReservation.Conf(cancelReservation.ConfInput{
+	conf, err := cancelreservation.Conf(cancelreservation.ConfInput{
 		Status: "Accepted",
 	})
 	if err != nil {
@@ -26,7 +26,7 @@ func ExampleConf() {
 // ExampleConf_rejected demonstrates creating a CancelReservation.conf message
 // with a Rejected status.
 func ExampleConf_rejected() {
-	conf, err := cancelReservation.Conf(cancelReservation.ConfInput{
+	conf, err := cancelreservation.Conf(cancelreservation.ConfInput{
 		Status: "Rejected",
 	})
 	if err != nil {
@@ -43,7 +43,7 @@ func ExampleConf_rejected() {
 // ExampleConf_invalidStatus demonstrates the error returned when
 // an invalid status is provided.
 func ExampleConf_invalidStatus() {
-	_, err := cancelReservation.Conf(cancelReservation.ConfInput{
+	_, err := cancelreservation.Conf(cancelreservation.ConfInput{
 		Status: "Unknown",
 	})
 	if err != nil {
@@ -56,7 +56,7 @@ func ExampleConf_invalidStatus() {
 // ExampleConf_emptyStatus demonstrates the error returned when
 // an empty status is provided.
 func ExampleConf_emptyStatus() {
-	_, err := cancelReservation.Conf(cancelReservation.ConfInput{
+	_, err := cancelreservation.Conf(cancelreservation.ConfInput{
 		Status: "",
 	})
 	if err != nil {

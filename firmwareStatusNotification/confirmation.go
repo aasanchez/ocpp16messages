@@ -1,4 +1,4 @@
-package firmwareStatusNotification
+package firmwarestatusnotification
 
 // ConfInput represents the raw input data for creating a
 // FirmwareStatusNotification.conf message.

@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	slt "github.com/aasanchez/ocpp16messages/sendLocalList/types"
+	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

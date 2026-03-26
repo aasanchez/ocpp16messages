@@ -1,10 +1,10 @@
-package stopTransaction_test
+package stoptransaction_test
 
 import (
 	"fmt"
 
-	mt "github.com/aasanchez/ocpp16messages/meterValues/types"
-	"github.com/aasanchez/ocpp16messages/stopTransaction"
+	mt "github.com/aasanchez/ocpp16messages/metervalues/types"
+	"github.com/aasanchez/ocpp16messages/stoptransaction"
 )
 
 const (
@@ -18,7 +18,7 @@ const (
 
 // ExampleReq demonstrates creating a basic StopTransaction.req message.
 func ExampleReq() {
-	req, err := stopTransaction.Req(stopTransaction.ReqInput{
+	req, err := stoptransaction.Req(stoptransaction.ReqInput{
 		TransactionId:   exampleTxId,
 		IdTag:           nil,
 		MeterStop:       exampleMeterStop,
@@ -43,7 +43,7 @@ func ExampleReq() {
 func ExampleReq_withIdTag() {
 	idTag := "RFID-ABC123"
 
-	req, err := stopTransaction.Req(stopTransaction.ReqInput{
+	req, err := stoptransaction.Req(stoptransaction.ReqInput{
 		TransactionId:   exampleTxId,
 		IdTag:           &idTag,
 		MeterStop:       exampleMeterStop,
@@ -68,7 +68,7 @@ func ExampleReq_withIdTag() {
 func ExampleReq_withReason() {
 	reason := "Remote"
 
-	req, err := stopTransaction.Req(stopTransaction.ReqInput{
+	req, err := stoptransaction.Req(stoptransaction.ReqInput{
 		TransactionId:   exampleTxId,
 		IdTag:           nil,
 		MeterStop:       exampleMeterStop,
@@ -91,7 +91,7 @@ func ExampleReq_withReason() {
 
 // ExampleReq_withTransactionData shows including meter values in the request.
 func ExampleReq_withTransactionData() {
-	req, err := stopTransaction.Req(stopTransaction.ReqInput{
+	req, err := stoptransaction.Req(stoptransaction.ReqInput{
 		TransactionId: exampleTxId,
 		IdTag:         nil,
 		MeterStop:     exampleMeterStop,
@@ -129,7 +129,7 @@ func ExampleReq_withTransactionData() {
 
 // ExampleReq_invalidTimestamp demonstrates validation error for bad timestamp.
 func ExampleReq_invalidTimestamp() {
-	_, err := stopTransaction.Req(stopTransaction.ReqInput{
+	_, err := stoptransaction.Req(stoptransaction.ReqInput{
 		TransactionId:   exampleTxId,
 		IdTag:           nil,
 		MeterStop:       exampleMeterStop,

@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/cancelReservation"
-	ct "github.com/aasanchez/ocpp16messages/cancelReservation/types"
+	"github.com/aasanchez/ocpp16messages/cancelreservation"
+	ct "github.com/aasanchez/ocpp16messages/cancelreservation/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -21,7 +21,7 @@ func FuzzCancelReservationConf(f *testing.F) {
 			t.Skip()
 		}
 
-		conf, err := cancelReservation.Conf(cancelReservation.ConfInput{
+		conf, err := cancelreservation.Conf(cancelreservation.ConfInput{
 			Status: status,
 		})
 		if err != nil {

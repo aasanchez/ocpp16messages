@@ -1,20 +1,20 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/getConfiguration"
-	gct "github.com/aasanchez/ocpp16messages/getConfiguration/types"
+	"github.com/aasanchez/ocpp16messages/getconfiguration"
+	gct "github.com/aasanchez/ocpp16messages/getconfiguration/types"
 )
 
 func TestGetConfigurationReq_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
-	req, err := getConfiguration.Req(getConfiguration.ReqInput{
+	req, err := getconfiguration.Req(getconfiguration.ReqInput{
 		Key: []string{"HeartbeatInterval"},
 	})
 	if err != nil {
-		t.Fatalf("getConfiguration.Req: %v", err)
+		t.Fatalf("getconfiguration.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -26,7 +26,7 @@ func TestGetConfigurationConf_JSONRoundTrip(t *testing.T) {
 
 	value := "300"
 
-	conf, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: []gct.KeyValueInput{
 			{
 				Key:      "HeartbeatInterval",
@@ -37,7 +37,7 @@ func TestGetConfigurationConf_JSONRoundTrip(t *testing.T) {
 		UnknownKey: nil,
 	})
 	if err != nil {
-		t.Fatalf("getConfiguration.Conf: %v", err)
+		t.Fatalf("getconfiguration.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

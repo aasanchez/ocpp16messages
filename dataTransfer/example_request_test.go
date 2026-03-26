@@ -1,9 +1,9 @@
-package dataTransfer_test
+package datatransfer_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/dataTransfer"
+	"github.com/aasanchez/ocpp16messages/datatransfer"
 )
 
 const labelVendorId = "VendorId:"
@@ -11,7 +11,7 @@ const labelVendorId = "VendorId:"
 // ExampleReq demonstrates creating a valid DataTransfer.req message
 // with only the required vendorId field.
 func ExampleReq() {
-	req, err := dataTransfer.Req(dataTransfer.ReqInput{
+	req, err := datatransfer.Req(datatransfer.ReqInput{
 		VendorId:  "com.example.vendor",
 		MessageId: nil,
 		Data:      nil,
@@ -32,7 +32,7 @@ func ExampleReq() {
 func ExampleReq_withMessageId() {
 	messageId := "CustomMessage"
 
-	req, err := dataTransfer.Req(dataTransfer.ReqInput{
+	req, err := datatransfer.Req(datatransfer.ReqInput{
 		VendorId:  "com.example.vendor",
 		MessageId: &messageId,
 		Data:      nil,
@@ -55,7 +55,7 @@ func ExampleReq_withMessageId() {
 func ExampleReq_withData() {
 	data := `{"temperature": 25.5, "humidity": 60}`
 
-	req, err := dataTransfer.Req(dataTransfer.ReqInput{
+	req, err := datatransfer.Req(datatransfer.ReqInput{
 		VendorId:  "com.example.vendor",
 		MessageId: nil,
 		Data:      &data,
@@ -79,7 +79,7 @@ func ExampleReq_complete() {
 	messageId := "GetTemperature"
 	data := `{"sensorId": "temp-001"}`
 
-	req, err := dataTransfer.Req(dataTransfer.ReqInput{
+	req, err := datatransfer.Req(datatransfer.ReqInput{
 		VendorId:  "com.example.vendor",
 		MessageId: &messageId,
 		Data:      &data,
@@ -102,7 +102,7 @@ func ExampleReq_complete() {
 // ExampleReq_emptyVendorId demonstrates the error returned when
 // an empty vendorId is provided.
 func ExampleReq_emptyVendorId() {
-	_, err := dataTransfer.Req(dataTransfer.ReqInput{
+	_, err := datatransfer.Req(datatransfer.ReqInput{
 		VendorId:  "",
 		MessageId: nil,
 		Data:      nil,
@@ -117,7 +117,7 @@ func ExampleReq_emptyVendorId() {
 // ExampleReq_invalidVendorIdChars demonstrates the error returned when
 // the vendorId contains non-printable ASCII characters.
 func ExampleReq_invalidVendorIdChars() {
-	_, err := dataTransfer.Req(dataTransfer.ReqInput{
+	_, err := datatransfer.Req(datatransfer.ReqInput{
 		VendorId:  "vendor\x00id",
 		MessageId: nil,
 		Data:      nil,

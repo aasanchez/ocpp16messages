@@ -1,4 +1,4 @@
-package meterValues
+package metervalues
 
 // ConfInput represents the raw input data for creating a MeterValues.conf
 // message. The constructor Conf validates all fields automatically.

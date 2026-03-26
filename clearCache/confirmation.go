@@ -1,9 +1,9 @@
-package clearCache
+package clearcache
 
 import (
 	"fmt"
 
-	mct "github.com/aasanchez/ocpp16messages/clearCache/types"
+	mct "github.com/aasanchez/ocpp16messages/clearcache/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

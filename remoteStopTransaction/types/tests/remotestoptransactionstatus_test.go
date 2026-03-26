@@ -3,7 +3,7 @@ package types_test
 import (
 	"testing"
 
-	rt "github.com/aasanchez/ocpp16messages/remoteStopTransaction/types"
+	rt "github.com/aasanchez/ocpp16messages/remotestoptransaction/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

@@ -1,9 +1,9 @@
-package stopTransaction_test
+package stoptransaction_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/stopTransaction"
+	"github.com/aasanchez/ocpp16messages/stoptransaction"
 )
 
 const (
@@ -14,7 +14,7 @@ const (
 
 // ExampleConf demonstrates creating a StopTransaction.conf with no IdTagInfo.
 func ExampleConf() {
-	conf, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      nil,
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
@@ -36,7 +36,7 @@ func ExampleConf() {
 func ExampleConf_accepted() {
 	status := exampleStatusAccepted
 
-	conf, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
@@ -57,7 +57,7 @@ func ExampleConf_withExpiryDate() {
 	status := exampleStatusAccepted
 	expiryDate := "2025-12-31T23:59:59Z"
 
-	conf, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  &expiryDate,
 		ParentIdTag: nil,
@@ -80,7 +80,7 @@ func ExampleConf_withParentIdTag() {
 	status := exampleStatusAccepted
 	parentIdTag := "PARENT-123"
 
-	conf, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
 		ParentIdTag: &parentIdTag,
@@ -102,7 +102,7 @@ func ExampleConf_withParentIdTag() {
 func ExampleConf_invalidStatus() {
 	status := "InvalidStatus"
 
-	_, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	_, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
 		ParentIdTag: nil,

@@ -7,7 +7,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/clearChargingProfile"
+	"github.com/aasanchez/ocpp16messages/clearchargingprofile"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -52,7 +52,7 @@ func FuzzClearChargingProfileReq(f *testing.F) {
 			stackLevelPtr = &stackLevel
 		}
 
-		req, err := clearChargingProfile.Req(clearChargingProfile.ReqInput{
+		req, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
 			Id:                     idPtr,
 			ConnectorId:            connectorIdPtr,
 			ChargingProfilePurpose: purposePtr,

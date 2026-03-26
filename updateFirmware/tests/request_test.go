@@ -1,11 +1,11 @@
-package updateFirmware_test
+package updatefirmware_test
 
 import (
 	"strings"
 	"testing"
 
 	st "github.com/aasanchez/ocpp16messages/types"
-	uf "github.com/aasanchez/ocpp16messages/updateFirmware"
+	uf "github.com/aasanchez/ocpp16messages/updatefirmware"
 )
 
 const (

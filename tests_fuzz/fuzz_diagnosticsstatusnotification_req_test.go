@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/diagnosticsStatusNotification"
-	dt "github.com/aasanchez/ocpp16messages/diagnosticsStatusNotification/types"
+	"github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification"
+	dt "github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -23,8 +23,8 @@ func FuzzDiagnosticsStatusNotificationReq(f *testing.F) {
 			t.Skip()
 		}
 
-		req, err := diagnosticsStatusNotification.Req(
-			diagnosticsStatusNotification.ReqInput{
+		req, err := diagnosticsstatusnotification.Req(
+			diagnosticsstatusnotification.ReqInput{
 				Status: status,
 			},
 		)

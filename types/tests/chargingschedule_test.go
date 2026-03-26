@@ -163,6 +163,7 @@ func TestChargingSchedule_ChargingSchedulePeriod_WhenNil(t *testing.T) {
 	t.Parallel()
 
 	var schedule types.ChargingSchedule
+
 	periods := schedule.ChargingSchedulePeriod()
 
 	if periods != nil {

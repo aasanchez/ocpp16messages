@@ -5,19 +5,19 @@ package benchmark
 import (
 	"testing"
 
-	ccp "github.com/aasanchez/ocpp16messages/clearChargingProfile"
-	gconf "github.com/aasanchez/ocpp16messages/getConfiguration"
-	gd "github.com/aasanchez/ocpp16messages/getDiagnostics"
-	rn "github.com/aasanchez/ocpp16messages/reserveNow"
-	sll "github.com/aasanchez/ocpp16messages/sendLocalList"
-	slt "github.com/aasanchez/ocpp16messages/sendLocalList/types"
-	scp "github.com/aasanchez/ocpp16messages/setChargingProfile"
-	scpt "github.com/aasanchez/ocpp16messages/setChargingProfile/types"
-	stt "github.com/aasanchez/ocpp16messages/startTransaction"
-	sn "github.com/aasanchez/ocpp16messages/statusNotification"
-	stp "github.com/aasanchez/ocpp16messages/stopTransaction"
+	ccp "github.com/aasanchez/ocpp16messages/clearchargingprofile"
+	gconf "github.com/aasanchez/ocpp16messages/getconfiguration"
+	gd "github.com/aasanchez/ocpp16messages/getdiagnostics"
+	rn "github.com/aasanchez/ocpp16messages/reservenow"
+	sll "github.com/aasanchez/ocpp16messages/sendlocallist"
+	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
+	scp "github.com/aasanchez/ocpp16messages/setchargingprofile"
+	scpt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
+	stt "github.com/aasanchez/ocpp16messages/starttransaction"
+	sn "github.com/aasanchez/ocpp16messages/statusnotification"
+	stp "github.com/aasanchez/ocpp16messages/stoptransaction"
 	st "github.com/aasanchez/ocpp16messages/types"
-	uf "github.com/aasanchez/ocpp16messages/updateFirmware"
+	uf "github.com/aasanchez/ocpp16messages/updatefirmware"
 )
 
 func BenchmarkGetConfigurationReq_SingleKey(b *testing.B) {

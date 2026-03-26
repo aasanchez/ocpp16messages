@@ -1,10 +1,10 @@
-package dataTransfer_test
+package datatransfer_test
 
 import (
 	"errors"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/dataTransfer"
+	"github.com/aasanchez/ocpp16messages/datatransfer"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -19,7 +19,7 @@ const (
 func TestConf_ValidAccepted(t *testing.T) {
 	t.Parallel()
 
-	conf, err := dataTransfer.Conf(dataTransfer.ConfInput{
+	conf, err := datatransfer.Conf(datatransfer.ConfInput{
 		Status: statusAccepted,
 		Data:   nil,
 	})
@@ -39,7 +39,7 @@ func TestConf_ValidAccepted(t *testing.T) {
 func TestConf_ValidRejected(t *testing.T) {
 	t.Parallel()
 
-	conf, err := dataTransfer.Conf(dataTransfer.ConfInput{
+	conf, err := datatransfer.Conf(datatransfer.ConfInput{
 		Status: statusRejected,
 		Data:   nil,
 	})
@@ -55,7 +55,7 @@ func TestConf_ValidRejected(t *testing.T) {
 func TestConf_ValidUnknownMessageId(t *testing.T) {
 	t.Parallel()
 
-	conf, err := dataTransfer.Conf(dataTransfer.ConfInput{
+	conf, err := datatransfer.Conf(datatransfer.ConfInput{
 		Status: statusUnknownMessageId,
 		Data:   nil,
 	})
@@ -75,7 +75,7 @@ func TestConf_ValidUnknownMessageId(t *testing.T) {
 func TestConf_ValidUnknownVendor(t *testing.T) {
 	t.Parallel()
 
-	conf, err := dataTransfer.Conf(dataTransfer.ConfInput{
+	conf, err := datatransfer.Conf(datatransfer.ConfInput{
 		Status: statusUnknownVendor,
 		Data:   nil,
 	})
@@ -93,7 +93,7 @@ func TestConf_ValidWithData(t *testing.T) {
 
 	data := confTestData
 
-	conf, err := dataTransfer.Conf(dataTransfer.ConfInput{
+	conf, err := datatransfer.Conf(datatransfer.ConfInput{
 		Status: statusAccepted,
 		Data:   &data,
 	})
@@ -115,7 +115,7 @@ func TestConf_ValidWithData(t *testing.T) {
 func TestConf_InvalidStatus(t *testing.T) {
 	t.Parallel()
 
-	_, err := dataTransfer.Conf(dataTransfer.ConfInput{
+	_, err := datatransfer.Conf(datatransfer.ConfInput{
 		Status: "Invalid",
 		Data:   nil,
 	})
@@ -131,7 +131,7 @@ func TestConf_InvalidStatus(t *testing.T) {
 func TestConf_EmptyStatus(t *testing.T) {
 	t.Parallel()
 
-	_, err := dataTransfer.Conf(dataTransfer.ConfInput{
+	_, err := datatransfer.Conf(datatransfer.ConfInput{
 		Status: "",
 		Data:   nil,
 	})
@@ -147,7 +147,7 @@ func TestConf_EmptyStatus(t *testing.T) {
 func TestConf_LowercaseStatus(t *testing.T) {
 	t.Parallel()
 
-	_, err := dataTransfer.Conf(dataTransfer.ConfInput{
+	_, err := datatransfer.Conf(datatransfer.ConfInput{
 		Status: "accepted",
 		Data:   nil,
 	})

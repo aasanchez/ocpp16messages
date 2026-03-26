@@ -1,4 +1,4 @@
-package diagnosticsStatusNotification
+package diagnosticsstatusnotification
 
 // ConfInput represents the raw input data for creating a
 // DiagnosticsStatusNotification.conf message.

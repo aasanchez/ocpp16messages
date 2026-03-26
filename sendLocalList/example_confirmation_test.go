@@ -1,9 +1,9 @@
-package sendLocalList_test
+package sendlocallist_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/sendLocalList"
+	"github.com/aasanchez/ocpp16messages/sendlocallist"
 )
 
 const fmtStatusStr = "Status: %s\n"
@@ -11,7 +11,7 @@ const fmtStatusStr = "Status: %s\n"
 // ExampleConf demonstrates creating a valid SendLocalList.conf message
 // with an Accepted status.
 func ExampleConf() {
-	conf, err := sendLocalList.Conf(sendLocalList.ConfInput{
+	conf, err := sendlocallist.Conf(sendlocallist.ConfInput{
 		Status: "Accepted",
 	})
 	if err != nil {
@@ -28,7 +28,7 @@ func ExampleConf() {
 // ExampleConf_failed demonstrates creating a SendLocalList.conf message
 // with a Failed status.
 func ExampleConf_failed() {
-	conf, err := sendLocalList.Conf(sendLocalList.ConfInput{
+	conf, err := sendlocallist.Conf(sendlocallist.ConfInput{
 		Status: "Failed",
 	})
 	if err != nil {
@@ -45,7 +45,7 @@ func ExampleConf_failed() {
 // ExampleConf_versionMismatch demonstrates creating a SendLocalList.conf
 // message with a VersionMismatch status.
 func ExampleConf_versionMismatch() {
-	conf, err := sendLocalList.Conf(sendLocalList.ConfInput{
+	conf, err := sendlocallist.Conf(sendlocallist.ConfInput{
 		Status: "VersionMismatch",
 	})
 	if err != nil {
@@ -62,7 +62,7 @@ func ExampleConf_versionMismatch() {
 // ExampleConf_invalidStatus demonstrates the error returned when
 // an invalid status is provided.
 func ExampleConf_invalidStatus() {
-	_, err := sendLocalList.Conf(sendLocalList.ConfInput{
+	_, err := sendlocallist.Conf(sendlocallist.ConfInput{
 		Status: "Unknown",
 	})
 	if err != nil {

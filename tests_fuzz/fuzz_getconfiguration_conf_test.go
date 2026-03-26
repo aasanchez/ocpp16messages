@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	gc "github.com/aasanchez/ocpp16messages/getConfiguration"
-	gt "github.com/aasanchez/ocpp16messages/getConfiguration/types"
+	gc "github.com/aasanchez/ocpp16messages/getconfiguration"
+	gt "github.com/aasanchez/ocpp16messages/getconfiguration/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

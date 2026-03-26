@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/sendLocalList"
-	slt "github.com/aasanchez/ocpp16messages/sendLocalList/types"
+	"github.com/aasanchez/ocpp16messages/sendlocallist"
+	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -23,7 +23,7 @@ func FuzzSendLocalListConf(f *testing.F) {
 			t.Skip()
 		}
 
-		conf, err := sendLocalList.Conf(sendLocalList.ConfInput{
+		conf, err := sendlocallist.Conf(sendlocallist.ConfInput{
 			Status: status,
 		})
 		if err != nil {

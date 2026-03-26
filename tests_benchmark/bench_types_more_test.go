@@ -5,9 +5,9 @@ package benchmark
 import (
 	"testing"
 
-	gct "github.com/aasanchez/ocpp16messages/getConfiguration/types"
-	slt "github.com/aasanchez/ocpp16messages/sendLocalList/types"
-	scpt "github.com/aasanchez/ocpp16messages/setChargingProfile/types"
+	gct "github.com/aasanchez/ocpp16messages/getconfiguration/types"
+	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
+	scpt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

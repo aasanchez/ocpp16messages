@@ -3,7 +3,7 @@ package types_test
 import (
 	"testing"
 
-	mbt "github.com/aasanchez/ocpp16messages/bootNotification/types"
+	mbt "github.com/aasanchez/ocpp16messages/bootnotification/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

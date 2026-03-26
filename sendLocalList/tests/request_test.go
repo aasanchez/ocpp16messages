@@ -1,11 +1,11 @@
-package sendLocalList_test
+package sendlocallist_test
 
 import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/sendLocalList"
-	slt "github.com/aasanchez/ocpp16messages/sendLocalList/types"
+	"github.com/aasanchez/ocpp16messages/sendlocallist"
+	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -26,7 +26,7 @@ const (
 func TestReq_Valid_Full_EmptyList(t *testing.T) {
 	t.Parallel()
 
-	req, err := sendLocalList.Req(sendLocalList.ReqInput{
+	req, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion:            listVersionOne,
 		LocalAuthorizationList: nil,
 		UpdateType:             "Full",
@@ -47,7 +47,7 @@ func TestReq_Valid_Full_EmptyList(t *testing.T) {
 func TestReq_Valid_Differential_EmptyList(t *testing.T) {
 	t.Parallel()
 
-	req, err := sendLocalList.Req(sendLocalList.ReqInput{
+	req, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion:            listVersionOne,
 		LocalAuthorizationList: nil,
 		UpdateType:             "Differential",
@@ -68,7 +68,7 @@ func TestReq_Valid_Differential_EmptyList(t *testing.T) {
 func TestReq_Valid_ListVersionZero(t *testing.T) {
 	t.Parallel()
 
-	req, err := sendLocalList.Req(sendLocalList.ReqInput{
+	req, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion:            listVersionZero,
 		LocalAuthorizationList: nil,
 		UpdateType:             "Full",
@@ -89,7 +89,7 @@ func TestReq_Valid_ListVersionZero(t *testing.T) {
 func TestReq_Valid_WithAuthorizationList(t *testing.T) {
 	t.Parallel()
 
-	req, err := sendLocalList.Req(sendLocalList.ReqInput{
+	req, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion: listVersionOne,
 		LocalAuthorizationList: []slt.AuthorizationDataInput{
 			{
@@ -119,7 +119,7 @@ func TestReq_Valid_WithAuthorizationList(t *testing.T) {
 func TestReq_Valid_WithMultipleAuthorizationEntries(t *testing.T) {
 	t.Parallel()
 
-	req, err := sendLocalList.Req(sendLocalList.ReqInput{
+	req, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion: listVersionOne,
 		LocalAuthorizationList: []slt.AuthorizationDataInput{
 			{
@@ -161,7 +161,7 @@ func TestReq_Valid_WithMultipleAuthorizationEntries(t *testing.T) {
 func TestReq_Valid_WithEmptyAuthorizationList(t *testing.T) {
 	t.Parallel()
 
-	req, err := sendLocalList.Req(sendLocalList.ReqInput{
+	req, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion:            listVersionOne,
 		LocalAuthorizationList: []slt.AuthorizationDataInput{},
 		UpdateType:             "Full",
@@ -186,7 +186,7 @@ func TestReq_Valid_WithEmptyAuthorizationList(t *testing.T) {
 func TestReq_InvalidListVersion_Negative(t *testing.T) {
 	t.Parallel()
 
-	_, err := sendLocalList.Req(sendLocalList.ReqInput{
+	_, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion:            listVersionNegative,
 		LocalAuthorizationList: nil,
 		UpdateType:             "Full",
@@ -203,7 +203,7 @@ func TestReq_InvalidListVersion_Negative(t *testing.T) {
 func TestReq_InvalidUpdateType_Empty(t *testing.T) {
 	t.Parallel()
 
-	_, err := sendLocalList.Req(sendLocalList.ReqInput{
+	_, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion:            listVersionOne,
 		LocalAuthorizationList: nil,
 		UpdateType:             "",
@@ -220,7 +220,7 @@ func TestReq_InvalidUpdateType_Empty(t *testing.T) {
 func TestReq_InvalidUpdateType_Unknown(t *testing.T) {
 	t.Parallel()
 
-	_, err := sendLocalList.Req(sendLocalList.ReqInput{
+	_, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion:            listVersionOne,
 		LocalAuthorizationList: nil,
 		UpdateType:             "Unknown",
@@ -237,7 +237,7 @@ func TestReq_InvalidUpdateType_Unknown(t *testing.T) {
 func TestReq_InvalidUpdateType_Lowercase(t *testing.T) {
 	t.Parallel()
 
-	_, err := sendLocalList.Req(sendLocalList.ReqInput{
+	_, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion:            listVersionOne,
 		LocalAuthorizationList: nil,
 		UpdateType:             "full",
@@ -254,7 +254,7 @@ func TestReq_InvalidUpdateType_Lowercase(t *testing.T) {
 func TestReq_InvalidAuthorizationList_EmptyIdTag(t *testing.T) {
 	t.Parallel()
 
-	_, err := sendLocalList.Req(sendLocalList.ReqInput{
+	_, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion: listVersionOne,
 		LocalAuthorizationList: []slt.AuthorizationDataInput{
 			{IdTag: "", IdTagInfo: nil},
@@ -273,7 +273,7 @@ func TestReq_InvalidAuthorizationList_EmptyIdTag(t *testing.T) {
 func TestReq_InvalidAuthorizationList_InvalidStatus(t *testing.T) {
 	t.Parallel()
 
-	_, err := sendLocalList.Req(sendLocalList.ReqInput{
+	_, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion: listVersionOne,
 		LocalAuthorizationList: []slt.AuthorizationDataInput{
 			{
@@ -299,7 +299,7 @@ func TestReq_InvalidAuthorizationList_InvalidStatus(t *testing.T) {
 func TestReq_MultipleErrors_Accumulated(t *testing.T) {
 	t.Parallel()
 
-	_, err := sendLocalList.Req(sendLocalList.ReqInput{
+	_, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion:            listVersionNegative,
 		LocalAuthorizationList: nil,
 		UpdateType:             "Invalid",

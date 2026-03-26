@@ -1,15 +1,15 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/startTransaction"
+	"github.com/aasanchez/ocpp16messages/starttransaction"
 )
 
 func TestStartTransactionReq_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
-	req, err := startTransaction.Req(startTransaction.ReqInput{
+	req, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   1,
 		IdTag:         "RFID-TAG-12345",
 		MeterStart:    1000,
@@ -17,7 +17,7 @@ func TestStartTransactionReq_JSONRoundTrip(t *testing.T) {
 		ReservationId: nil,
 	})
 	if err != nil {
-		t.Fatalf("startTransaction.Req: %v", err)
+		t.Fatalf("starttransaction.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -27,14 +27,14 @@ func TestStartTransactionReq_JSONRoundTrip(t *testing.T) {
 func TestStartTransactionConf_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
-	conf, err := startTransaction.Conf(startTransaction.ConfInput{
+	conf, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: 12345,
 		Status:        "Accepted",
 		ExpiryDate:    nil,
 		ParentIdTag:   nil,
 	})
 	if err != nil {
-		t.Fatalf("startTransaction.Conf: %v", err)
+		t.Fatalf("starttransaction.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

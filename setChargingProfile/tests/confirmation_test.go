@@ -1,11 +1,11 @@
-package setChargingProfile_test
+package setchargingprofile_test
 
 import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/setChargingProfile"
-	spt "github.com/aasanchez/ocpp16messages/setChargingProfile/types"
+	"github.com/aasanchez/ocpp16messages/setchargingprofile"
+	spt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
 	"github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -14,7 +14,7 @@ const errStatus = "status"
 func TestConf_Valid_Accepted(t *testing.T) {
 	t.Parallel()
 
-	conf, err := setChargingProfile.Conf(setChargingProfile.ConfInput{
+	conf, err := setchargingprofile.Conf(setchargingprofile.ConfInput{
 		Status: "Accepted",
 	})
 	if err != nil {
@@ -33,7 +33,7 @@ func TestConf_Valid_Accepted(t *testing.T) {
 func TestConf_Valid_Rejected(t *testing.T) {
 	t.Parallel()
 
-	conf, err := setChargingProfile.Conf(setChargingProfile.ConfInput{
+	conf, err := setchargingprofile.Conf(setchargingprofile.ConfInput{
 		Status: "Rejected",
 	})
 	if err != nil {
@@ -52,7 +52,7 @@ func TestConf_Valid_Rejected(t *testing.T) {
 func TestConf_Valid_NotSupported(t *testing.T) {
 	t.Parallel()
 
-	conf, err := setChargingProfile.Conf(setChargingProfile.ConfInput{
+	conf, err := setchargingprofile.Conf(setchargingprofile.ConfInput{
 		Status: "NotSupported",
 	})
 	if err != nil {
@@ -71,7 +71,7 @@ func TestConf_Valid_NotSupported(t *testing.T) {
 func TestConf_Invalid_EmptyStatus(t *testing.T) {
 	t.Parallel()
 
-	_, err := setChargingProfile.Conf(setChargingProfile.ConfInput{
+	_, err := setchargingprofile.Conf(setchargingprofile.ConfInput{
 		Status: "",
 	})
 	if err == nil {
@@ -86,7 +86,7 @@ func TestConf_Invalid_EmptyStatus(t *testing.T) {
 func TestConf_Invalid_UnknownStatus(t *testing.T) {
 	t.Parallel()
 
-	_, err := setChargingProfile.Conf(setChargingProfile.ConfInput{
+	_, err := setchargingprofile.Conf(setchargingprofile.ConfInput{
 		Status: "Unknown",
 	})
 	if err == nil {
@@ -101,7 +101,7 @@ func TestConf_Invalid_UnknownStatus(t *testing.T) {
 func TestConf_Invalid_LowercaseStatus(t *testing.T) {
 	t.Parallel()
 
-	_, err := setChargingProfile.Conf(setChargingProfile.ConfInput{
+	_, err := setchargingprofile.Conf(setchargingprofile.ConfInput{
 		Status: "accepted",
 	})
 	if err == nil {

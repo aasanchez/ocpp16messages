@@ -1,9 +1,9 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	rst "github.com/aasanchez/ocpp16messages/remoteStartTransaction"
+	rst "github.com/aasanchez/ocpp16messages/remotestarttransaction"
 )
 
 func TestRemoteStartTransactionReq_JSONRoundTrip(t *testing.T) {
@@ -14,7 +14,7 @@ func TestRemoteStartTransactionReq_JSONRoundTrip(t *testing.T) {
 		ConnectorId: nil,
 	})
 	if err != nil {
-		t.Fatalf("remoteStartTransaction.Req: %v", err)
+		t.Fatalf("remotestarttransaction.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -26,7 +26,7 @@ func TestRemoteStartTransactionConf_JSONRoundTrip(t *testing.T) {
 
 	conf, err := rst.Conf(rst.ConfInput{Status: "Accepted"})
 	if err != nil {
-		t.Fatalf("remoteStartTransaction.Conf: %v", err)
+		t.Fatalf("remotestarttransaction.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

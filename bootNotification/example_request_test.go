@@ -1,15 +1,15 @@
-package bootNotification_test
+package bootnotification_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/bootNotification"
+	"github.com/aasanchez/ocpp16messages/bootnotification"
 )
 
 // ExampleReq demonstrates creating a valid BootNotification.req message
 // with only the required fields.
 func ExampleReq() {
-	req, err := bootNotification.Req(bootNotification.ReqInput{
+	req, err := bootnotification.Req(bootnotification.ReqInput{
 		ChargePointVendor:       "VendorABC",
 		ChargePointModel:        "ModelXYZ",
 		ChargePointSerialNumber: nil,
@@ -44,7 +44,7 @@ func ExampleReq_allFields() {
 	meterType := "ABB"
 	meterSerial := "MS12345"
 
-	req, err := bootNotification.Req(bootNotification.ReqInput{
+	req, err := bootnotification.Req(bootnotification.ReqInput{
 		ChargePointVendor:       "VendorABC",
 		ChargePointModel:        "ModelXYZ",
 		ChargePointSerialNumber: &serial,
@@ -75,7 +75,7 @@ func ExampleReq_allFields() {
 // ExampleReq_emptyVendor demonstrates the error returned when
 // the charge point vendor is empty.
 func ExampleReq_emptyVendor() {
-	_, err := bootNotification.Req(bootNotification.ReqInput{
+	_, err := bootnotification.Req(bootnotification.ReqInput{
 		ChargePointVendor:       "",
 		ChargePointModel:        "ModelXYZ",
 		ChargePointSerialNumber: nil,
@@ -98,7 +98,7 @@ func ExampleReq_emptyVendor() {
 func ExampleReq_multipleErrors() {
 	longSerial := "12345678901234567890123456" // 26 chars, max is 25
 
-	_, err := bootNotification.Req(bootNotification.ReqInput{
+	_, err := bootnotification.Req(bootnotification.ReqInput{
 		ChargePointVendor:       "",
 		ChargePointModel:        "",
 		ChargePointSerialNumber: &longSerial,

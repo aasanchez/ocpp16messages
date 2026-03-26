@@ -1,9 +1,9 @@
-package stopTransaction
+package stoptransaction
 
 import (
 	"testing"
 
-	mt "github.com/aasanchez/ocpp16messages/meterValues/types"
+	mt "github.com/aasanchez/ocpp16messages/metervalues/types"
 )
 
 func Test_validateTransactionData_EmptySlice(t *testing.T) {

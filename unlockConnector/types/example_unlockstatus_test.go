@@ -3,7 +3,7 @@ package types_test
 import (
 	"fmt"
 
-	ut "github.com/aasanchez/ocpp16messages/unlockConnector/types"
+	ut "github.com/aasanchez/ocpp16messages/unlockconnector/types"
 )
 
 const (

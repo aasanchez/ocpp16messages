@@ -1,9 +1,9 @@
-package statusNotification_test
+package statusnotification_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/statusNotification"
+	"github.com/aasanchez/ocpp16messages/statusnotification"
 )
 
 const (
@@ -15,7 +15,7 @@ const (
 // ExampleReq demonstrates creating a valid StatusNotification.req message
 // with required fields only.
 func ExampleReq() {
-	req, err := statusNotification.Req(statusNotification.ReqInput{
+	req, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     1,
 		ErrorCode:       "NoError",
 		Status:          "Available",
@@ -41,7 +41,7 @@ func ExampleReq() {
 
 // ExampleReq_charging demonstrates a Charging status notification.
 func ExampleReq_charging() {
-	req, err := statusNotification.Req(statusNotification.ReqInput{
+	req, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     2,
 		ErrorCode:       "NoError",
 		Status:          "Charging",
@@ -67,7 +67,7 @@ func ExampleReq_charging() {
 func ExampleReq_faulted() {
 	info := "Ground fault detected on connector"
 
-	req, err := statusNotification.Req(statusNotification.ReqInput{
+	req, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     1,
 		ErrorCode:       "GroundFailure",
 		Status:          "Faulted",
@@ -98,7 +98,7 @@ func ExampleReq_withAllFields() {
 	vendorId := "VendorX"
 	vendorErrorCode := "V001"
 
-	req, err := statusNotification.Req(statusNotification.ReqInput{
+	req, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     1,
 		ErrorCode:       "NoError",
 		Status:          "Charging",
@@ -126,7 +126,7 @@ func ExampleReq_withAllFields() {
 
 // ExampleReq_invalidStatus demonstrates the error for an invalid status.
 func ExampleReq_invalidStatus() {
-	_, err := statusNotification.Req(statusNotification.ReqInput{
+	_, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     1,
 		ErrorCode:       "NoError",
 		Status:          "InvalidStatus",
@@ -144,7 +144,7 @@ func ExampleReq_invalidStatus() {
 
 // ExampleReq_invalidErrorCode demonstrates the error for an invalid error code.
 func ExampleReq_invalidErrorCode() {
-	_, err := statusNotification.Req(statusNotification.ReqInput{
+	_, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     1,
 		ErrorCode:       "InvalidCode",
 		Status:          "Available",

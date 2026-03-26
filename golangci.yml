@@ -24,6 +24,9 @@ linters:
       rules:
         - name: package-directory-mismatch
           disabled: true
+        - name: package-naming
+          exclude:
+            - "/**/types/**"
         - name: var-naming
           arguments:
             - [ID] # allowlist - empty means use defaults

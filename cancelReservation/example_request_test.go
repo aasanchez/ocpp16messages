@@ -1,9 +1,9 @@
-package cancelReservation_test
+package cancelreservation_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/cancelReservation"
+	"github.com/aasanchez/ocpp16messages/cancelreservation"
 )
 
 const reservationIdLabel = "ReservationId:"
@@ -11,7 +11,7 @@ const reservationIdLabel = "ReservationId:"
 // ExampleReq demonstrates creating a valid CancelReservation.req message
 // with a reservation ID.
 func ExampleReq() {
-	req, err := cancelReservation.Req(cancelReservation.ReqInput{
+	req, err := cancelreservation.Req(cancelreservation.ReqInput{
 		ReservationId: 123,
 	})
 	if err != nil {
@@ -28,7 +28,7 @@ func ExampleReq() {
 // ExampleReq_negativeId demonstrates the error returned when
 // a negative reservation ID is provided.
 func ExampleReq_negativeId() {
-	_, err := cancelReservation.Req(cancelReservation.ReqInput{
+	_, err := cancelreservation.Req(cancelreservation.ReqInput{
 		ReservationId: -1,
 	})
 	if err != nil {
@@ -40,7 +40,7 @@ func ExampleReq_negativeId() {
 
 // ExampleReq_zeroId demonstrates that zero is a valid reservation ID.
 func ExampleReq_zeroId() {
-	req, err := cancelReservation.Req(cancelReservation.ReqInput{
+	req, err := cancelreservation.Req(cancelreservation.ReqInput{
 		ReservationId: 0,
 	})
 	if err != nil {
@@ -56,7 +56,7 @@ func ExampleReq_zeroId() {
 
 // ExampleReq_maxValue demonstrates the maximum valid reservation ID (65535).
 func ExampleReq_maxValue() {
-	req, err := cancelReservation.Req(cancelReservation.ReqInput{
+	req, err := cancelreservation.Req(cancelreservation.ReqInput{
 		ReservationId: 65535,
 	})
 	if err != nil {
@@ -73,7 +73,7 @@ func ExampleReq_maxValue() {
 // ExampleReq_exceedsMax demonstrates the error returned when
 // the reservation ID exceeds the maximum value (65535).
 func ExampleReq_exceedsMax() {
-	_, err := cancelReservation.Req(cancelReservation.ReqInput{
+	_, err := cancelreservation.Req(cancelreservation.ReqInput{
 		ReservationId: 65536,
 	})
 	if err != nil {

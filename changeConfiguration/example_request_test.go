@@ -1,9 +1,9 @@
-package changeConfiguration_test
+package changeconfiguration_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/changeConfiguration"
+	"github.com/aasanchez/ocpp16messages/changeconfiguration"
 )
 
 const (
@@ -14,7 +14,7 @@ const (
 // ExampleReq demonstrates creating a valid ChangeConfiguration.req message
 // to change the HeartbeatInterval configuration.
 func ExampleReq() {
-	req, err := changeConfiguration.Req(changeConfiguration.ReqInput{
+	req, err := changeconfiguration.Req(changeconfiguration.ReqInput{
 		Key:   "HeartbeatInterval",
 		Value: "900",
 	})
@@ -34,7 +34,7 @@ func ExampleReq() {
 // ExampleReq_emptyValue demonstrates the error returned when
 // an empty value is provided.
 func ExampleReq_emptyValue() {
-	_, err := changeConfiguration.Req(changeConfiguration.ReqInput{
+	_, err := changeconfiguration.Req(changeconfiguration.ReqInput{
 		Key:   "AuthorizationKey",
 		Value: "",
 	})
@@ -48,7 +48,7 @@ func ExampleReq_emptyValue() {
 // ExampleReq_emptyKey demonstrates the error returned when
 // an empty key is provided.
 func ExampleReq_emptyKey() {
-	_, err := changeConfiguration.Req(changeConfiguration.ReqInput{
+	_, err := changeconfiguration.Req(changeconfiguration.ReqInput{
 		Key:   "",
 		Value: "900",
 	})
@@ -62,7 +62,7 @@ func ExampleReq_emptyKey() {
 // ExampleReq_keyTooLong demonstrates the error returned when
 // the key exceeds 50 characters.
 func ExampleReq_keyTooLong() {
-	_, err := changeConfiguration.Req(changeConfiguration.ReqInput{
+	_, err := changeconfiguration.Req(changeconfiguration.ReqInput{
 		Key:   "ThisKeyIsWayTooLongAndExceedsTheFiftyCharacterLimit",
 		Value: "900",
 	})

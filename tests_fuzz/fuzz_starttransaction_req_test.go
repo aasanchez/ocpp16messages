@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	stt "github.com/aasanchez/ocpp16messages/startTransaction"
+	stt "github.com/aasanchez/ocpp16messages/starttransaction"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

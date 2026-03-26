@@ -1,9 +1,9 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	cc "github.com/aasanchez/ocpp16messages/changeConfiguration"
+	cc "github.com/aasanchez/ocpp16messages/changeconfiguration"
 )
 
 func TestChangeConfigurationReq_JSONRoundTrip(t *testing.T) {
@@ -14,7 +14,7 @@ func TestChangeConfigurationReq_JSONRoundTrip(t *testing.T) {
 		Value: "900",
 	})
 	if err != nil {
-		t.Fatalf("changeConfiguration.Req: %v", err)
+		t.Fatalf("changeconfiguration.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -26,7 +26,7 @@ func TestChangeConfigurationConf_JSONRoundTrip(t *testing.T) {
 
 	conf, err := cc.Conf(cc.ConfInput{Status: "Accepted"})
 	if err != nil {
-		t.Fatalf("changeConfiguration.Conf: %v", err)
+		t.Fatalf("changeconfiguration.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

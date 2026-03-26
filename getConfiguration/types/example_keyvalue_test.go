@@ -3,7 +3,7 @@ package types_test
 import (
 	"fmt"
 
-	gt "github.com/aasanchez/ocpp16messages/getConfiguration/types"
+	gt "github.com/aasanchez/ocpp16messages/getconfiguration/types"
 )
 
 const labelKey = "Key:"

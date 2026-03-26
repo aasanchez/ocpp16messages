@@ -1,15 +1,15 @@
-package clearChargingProfile_test
+package clearchargingprofile_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/clearChargingProfile"
+	"github.com/aasanchez/ocpp16messages/clearchargingprofile"
 )
 
 // ExampleConf demonstrates creating a valid ClearChargingProfile.conf message
 // with an Accepted status.
 func ExampleConf() {
-	conf, err := clearChargingProfile.Conf(clearChargingProfile.ConfInput{
+	conf, err := clearchargingprofile.Conf(clearchargingprofile.ConfInput{
 		Status: "Accepted",
 	})
 	if err != nil {
@@ -26,7 +26,7 @@ func ExampleConf() {
 // ExampleConf_unknown demonstrates creating a ClearChargingProfile.conf message
 // with an Unknown status.
 func ExampleConf_unknown() {
-	conf, err := clearChargingProfile.Conf(clearChargingProfile.ConfInput{
+	conf, err := clearchargingprofile.Conf(clearchargingprofile.ConfInput{
 		Status: "Unknown",
 	})
 	if err != nil {
@@ -43,7 +43,7 @@ func ExampleConf_unknown() {
 // ExampleConf_invalidStatus demonstrates the error returned when
 // an invalid status is provided.
 func ExampleConf_invalidStatus() {
-	_, err := clearChargingProfile.Conf(clearChargingProfile.ConfInput{
+	_, err := clearchargingprofile.Conf(clearchargingprofile.ConfInput{
 		Status: "Invalid",
 	})
 	if err != nil {
@@ -56,7 +56,7 @@ func ExampleConf_invalidStatus() {
 // ExampleConf_emptyStatus demonstrates the error returned when
 // an empty status is provided.
 func ExampleConf_emptyStatus() {
-	_, err := clearChargingProfile.Conf(clearChargingProfile.ConfInput{
+	_, err := clearchargingprofile.Conf(clearchargingprofile.ConfInput{
 		Status: "",
 	})
 	if err != nil {

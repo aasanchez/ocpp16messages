@@ -7,7 +7,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/cancelReservation"
+	"github.com/aasanchez/ocpp16messages/cancelreservation"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -18,7 +18,7 @@ func FuzzCancelReservationReq(f *testing.F) {
 	f.Add(math.MaxUint16 + 1)
 
 	f.Fuzz(func(t *testing.T, reservationId int) {
-		req, err := cancelReservation.Req(cancelReservation.ReqInput{
+		req, err := cancelreservation.Req(cancelreservation.ReqInput{
 			ReservationId: reservationId,
 		})
 		if err != nil {

@@ -3,7 +3,7 @@ package types_test
 import (
 	"testing"
 
-	tt "github.com/aasanchez/ocpp16messages/triggerMessage/types"
+	tt "github.com/aasanchez/ocpp16messages/triggermessage/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

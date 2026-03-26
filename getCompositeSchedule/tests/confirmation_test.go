@@ -1,11 +1,11 @@
-package getCompositeSchedule_test
+package getcompositeschedule_test
 
 import (
 	"strings"
 	"testing"
 
-	gcs "github.com/aasanchez/ocpp16messages/getCompositeSchedule"
-	gt "github.com/aasanchez/ocpp16messages/getCompositeSchedule/types"
+	gcs "github.com/aasanchez/ocpp16messages/getcompositeschedule"
+	gt "github.com/aasanchez/ocpp16messages/getcompositeschedule/types"
 	"github.com/aasanchez/ocpp16messages/types"
 )
 

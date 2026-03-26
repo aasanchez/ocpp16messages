@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	bn "github.com/aasanchez/ocpp16messages/bootNotification"
-	bnt "github.com/aasanchez/ocpp16messages/bootNotification/types"
+	bn "github.com/aasanchez/ocpp16messages/bootnotification"
+	bnt "github.com/aasanchez/ocpp16messages/bootnotification/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

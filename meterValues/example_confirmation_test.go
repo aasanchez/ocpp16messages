@@ -1,17 +1,17 @@
-package meterValues_test
+package metervalues_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/meterValues"
+	"github.com/aasanchez/ocpp16messages/metervalues"
 )
 
 // ExampleConf demonstrates creating a MeterValues.conf message.
 // MeterValues.conf is an empty confirmation message per OCPP 1.6 specification.
 func ExampleConf() {
-	input := meterValues.ConfInput{}
+	input := metervalues.ConfInput{}
 
-	_, err := meterValues.Conf(input)
+	_, err := metervalues.Conf(input)
 	if err != nil {
 		fmt.Println("Error:", err)
 

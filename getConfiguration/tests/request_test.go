@@ -1,11 +1,11 @@
-package getConfiguration_test
+package getconfiguration_test
 
 import (
 	"errors"
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/getConfiguration"
+	"github.com/aasanchez/ocpp16messages/getconfiguration"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -26,7 +26,7 @@ const (
 func TestReq_Valid_NilKeys(t *testing.T) {
 	t.Parallel()
 
-	req, err := getConfiguration.Req(getConfiguration.ReqInput{
+	req, err := getconfiguration.Req(getconfiguration.ReqInput{
 		Key: nil,
 	})
 	if err != nil {
@@ -41,7 +41,7 @@ func TestReq_Valid_NilKeys(t *testing.T) {
 func TestReq_Valid_EmptyKeys(t *testing.T) {
 	t.Parallel()
 
-	req, err := getConfiguration.Req(getConfiguration.ReqInput{
+	req, err := getconfiguration.Req(getconfiguration.ReqInput{
 		Key: []string{},
 	})
 	if err != nil {
@@ -56,7 +56,7 @@ func TestReq_Valid_EmptyKeys(t *testing.T) {
 func TestReq_Valid_SingleKey(t *testing.T) {
 	t.Parallel()
 
-	req, err := getConfiguration.Req(getConfiguration.ReqInput{
+	req, err := getconfiguration.Req(getconfiguration.ReqInput{
 		Key: []string{testValidKey},
 	})
 	if err != nil {
@@ -79,7 +79,7 @@ func TestReq_Valid_SingleKey(t *testing.T) {
 func TestReq_Valid_MultipleKeys(t *testing.T) {
 	t.Parallel()
 
-	req, err := getConfiguration.Req(getConfiguration.ReqInput{
+	req, err := getconfiguration.Req(getconfiguration.ReqInput{
 		Key: []string{testValidKey, testValidKeyTwo, testValidKeyThree},
 	})
 	if err != nil {
@@ -112,7 +112,7 @@ func TestReq_Valid_MaxLengthKey(t *testing.T) {
 
 	maxKey := strings.Repeat("k", keyMaxLength)
 
-	req, err := getConfiguration.Req(getConfiguration.ReqInput{
+	req, err := getconfiguration.Req(getconfiguration.ReqInput{
 		Key: []string{maxKey},
 	})
 	if err != nil {
@@ -127,7 +127,7 @@ func TestReq_Valid_MaxLengthKey(t *testing.T) {
 func TestReq_EmptyKeyInList(t *testing.T) {
 	t.Parallel()
 
-	_, err := getConfiguration.Req(getConfiguration.ReqInput{
+	_, err := getconfiguration.Req(getconfiguration.ReqInput{
 		Key: []string{testValidKey, ""},
 	})
 	if err == nil {
@@ -148,7 +148,7 @@ func TestReq_KeyTooLong(t *testing.T) {
 
 	longKey := strings.Repeat("k", keyMaxLengthPlusOne)
 
-	_, err := getConfiguration.Req(getConfiguration.ReqInput{
+	_, err := getconfiguration.Req(getconfiguration.ReqInput{
 		Key: []string{longKey},
 	})
 	if err == nil {
@@ -167,7 +167,7 @@ func TestReq_KeyTooLong(t *testing.T) {
 func TestReq_KeyInvalidChars(t *testing.T) {
 	t.Parallel()
 
-	_, err := getConfiguration.Req(getConfiguration.ReqInput{
+	_, err := getconfiguration.Req(getconfiguration.ReqInput{
 		Key: []string{"Invalid\x00Key"},
 	})
 	if err == nil {
@@ -182,7 +182,7 @@ func TestReq_KeyInvalidChars(t *testing.T) {
 func TestReq_MultipleInvalidKeys(t *testing.T) {
 	t.Parallel()
 
-	_, err := getConfiguration.Req(getConfiguration.ReqInput{
+	_, err := getconfiguration.Req(getconfiguration.ReqInput{
 		Key: []string{"", "Invalid\x00Key"},
 	})
 	if err == nil {
@@ -203,7 +203,7 @@ func TestReq_MultipleInvalidKeys(t *testing.T) {
 func TestReq_FirstKeyEmptyRestValid(t *testing.T) {
 	t.Parallel()
 
-	_, err := getConfiguration.Req(getConfiguration.ReqInput{
+	_, err := getconfiguration.Req(getconfiguration.ReqInput{
 		Key: []string{"", testValidKey},
 	})
 	if err == nil {

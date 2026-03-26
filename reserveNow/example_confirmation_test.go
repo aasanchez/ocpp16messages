@@ -1,15 +1,15 @@
-package reserveNow_test
+package reservenow_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/reserveNow"
+	"github.com/aasanchez/ocpp16messages/reservenow"
 )
 
 // ExampleConf demonstrates creating a valid ReserveNow.conf message with
 // Accepted status.
 func ExampleConf() {
-	conf, err := reserveNow.Conf(reserveNow.ConfInput{
+	conf, err := reservenow.Conf(reservenow.ConfInput{
 		Status: "Accepted",
 	})
 	if err != nil {
@@ -26,7 +26,7 @@ func ExampleConf() {
 // ExampleConf_occupied demonstrates creating a ReserveNow.conf message with
 // Occupied status.
 func ExampleConf_occupied() {
-	conf, err := reserveNow.Conf(reserveNow.ConfInput{
+	conf, err := reservenow.Conf(reservenow.ConfInput{
 		Status: "Occupied",
 	})
 	if err != nil {
@@ -43,7 +43,7 @@ func ExampleConf_occupied() {
 // ExampleConf_invalidStatus demonstrates the error returned when an invalid
 // status is provided.
 func ExampleConf_invalidStatus() {
-	_, err := reserveNow.Conf(reserveNow.ConfInput{
+	_, err := reservenow.Conf(reservenow.ConfInput{
 		Status: "Unknown",
 	})
 	if err != nil {

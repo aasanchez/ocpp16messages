@@ -5,7 +5,7 @@ package benchmark
 import (
 	"testing"
 
-	stt "github.com/aasanchez/ocpp16messages/startTransaction"
+	stt "github.com/aasanchez/ocpp16messages/starttransaction"
 )
 
 var (

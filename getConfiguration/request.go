@@ -1,4 +1,4 @@
-package getConfiguration
+package getconfiguration
 
 import (
 	"errors"

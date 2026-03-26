@@ -1,11 +1,11 @@
-package cancelReservation_test
+package cancelreservation_test
 
 import (
 	"strings"
 	"testing"
 
-	cr "github.com/aasanchez/ocpp16messages/cancelReservation"
-	mct "github.com/aasanchez/ocpp16messages/cancelReservation/types"
+	cr "github.com/aasanchez/ocpp16messages/cancelreservation"
+	mct "github.com/aasanchez/ocpp16messages/cancelreservation/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

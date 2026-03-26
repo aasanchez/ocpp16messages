@@ -3,7 +3,7 @@ package types_test
 import (
 	"fmt"
 
-	dn "github.com/aasanchez/ocpp16messages/diagnosticsStatusNotification/types"
+	dn "github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification/types"
 )
 
 const (

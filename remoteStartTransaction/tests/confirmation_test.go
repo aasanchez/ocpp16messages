@@ -1,11 +1,11 @@
-package remoteStartTransaction_test
+package remotestarttransaction_test
 
 import (
 	"strings"
 	"testing"
 
-	rst "github.com/aasanchez/ocpp16messages/remoteStartTransaction"
-	rt "github.com/aasanchez/ocpp16messages/remoteStartTransaction/types"
+	rst "github.com/aasanchez/ocpp16messages/remotestarttransaction"
+	rt "github.com/aasanchez/ocpp16messages/remotestarttransaction/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

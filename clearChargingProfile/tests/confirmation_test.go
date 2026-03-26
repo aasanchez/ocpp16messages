@@ -1,11 +1,11 @@
-package clearChargingProfile_test
+package clearchargingprofile_test
 
 import (
 	"strings"
 	"testing"
 
-	ccp "github.com/aasanchez/ocpp16messages/clearChargingProfile"
-	ct "github.com/aasanchez/ocpp16messages/clearChargingProfile/types"
+	ccp "github.com/aasanchez/ocpp16messages/clearchargingprofile"
+	ct "github.com/aasanchez/ocpp16messages/clearchargingprofile/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

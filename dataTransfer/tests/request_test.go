@@ -1,11 +1,11 @@
-package dataTransfer_test
+package datatransfer_test
 
 import (
 	"errors"
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/dataTransfer"
+	"github.com/aasanchez/ocpp16messages/datatransfer"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -23,7 +23,7 @@ const (
 func TestReq_Valid_VendorIdOnly(t *testing.T) {
 	t.Parallel()
 
-	req, err := dataTransfer.Req(dataTransfer.ReqInput{
+	req, err := datatransfer.Req(datatransfer.ReqInput{
 		VendorId:  testValidVendorId,
 		MessageId: nil,
 		Data:      nil,
@@ -50,7 +50,7 @@ func TestReq_Valid_WithMessageId(t *testing.T) {
 
 	messageId := testValidMessageId
 
-	req, err := dataTransfer.Req(dataTransfer.ReqInput{
+	req, err := datatransfer.Req(datatransfer.ReqInput{
 		VendorId:  testValidVendorId,
 		MessageId: &messageId,
 		Data:      nil,
@@ -75,7 +75,7 @@ func TestReq_Valid_WithData(t *testing.T) {
 
 	data := testValidData
 
-	req, err := dataTransfer.Req(dataTransfer.ReqInput{
+	req, err := datatransfer.Req(datatransfer.ReqInput{
 		VendorId:  testValidVendorId,
 		MessageId: nil,
 		Data:      &data,
@@ -101,7 +101,7 @@ func TestReq_Valid_Complete(t *testing.T) {
 	messageId := testValidMessageId
 	data := testValidData
 
-	req, err := dataTransfer.Req(dataTransfer.ReqInput{
+	req, err := datatransfer.Req(datatransfer.ReqInput{
 		VendorId:  testValidVendorId,
 		MessageId: &messageId,
 		Data:      &data,
@@ -138,7 +138,7 @@ func TestReq_Valid_Complete(t *testing.T) {
 func TestReq_EmptyVendorId(t *testing.T) {
 	t.Parallel()
 
-	_, err := dataTransfer.Req(dataTransfer.ReqInput{
+	_, err := datatransfer.Req(datatransfer.ReqInput{
 		VendorId:  "",
 		MessageId: nil,
 		Data:      nil,
@@ -158,7 +158,7 @@ func TestReq_VendorIdTooLong(t *testing.T) {
 	// Create a string longer than 255 characters
 	longVendorId := strings.Repeat("a", vendorIdMaxPlusOne)
 
-	_, err := dataTransfer.Req(dataTransfer.ReqInput{
+	_, err := datatransfer.Req(datatransfer.ReqInput{
 		VendorId:  longVendorId,
 		MessageId: nil,
 		Data:      nil,
@@ -179,7 +179,7 @@ func TestReq_VendorIdTooLong(t *testing.T) {
 func TestReq_VendorIdInvalidChars(t *testing.T) {
 	t.Parallel()
 
-	_, err := dataTransfer.Req(dataTransfer.ReqInput{
+	_, err := datatransfer.Req(datatransfer.ReqInput{
 		VendorId:  "vendor\x00id",
 		MessageId: nil,
 		Data:      nil,
@@ -198,7 +198,7 @@ func TestReq_EmptyMessageId(t *testing.T) {
 
 	emptyMessageId := ""
 
-	_, err := dataTransfer.Req(dataTransfer.ReqInput{
+	_, err := datatransfer.Req(datatransfer.ReqInput{
 		VendorId:  testValidVendorId,
 		MessageId: &emptyMessageId,
 		Data:      nil,
@@ -218,7 +218,7 @@ func TestReq_MessageIdTooLong(t *testing.T) {
 	// Create a string longer than 50 characters
 	longMessageId := strings.Repeat("m", messageIdMaxPlusOne)
 
-	_, err := dataTransfer.Req(dataTransfer.ReqInput{
+	_, err := datatransfer.Req(datatransfer.ReqInput{
 		VendorId:  testValidVendorId,
 		MessageId: &longMessageId,
 		Data:      nil,
@@ -241,7 +241,7 @@ func TestReq_MessageIdInvalidChars(t *testing.T) {
 
 	invalidMessageId := "msg\x00id"
 
-	_, err := dataTransfer.Req(dataTransfer.ReqInput{
+	_, err := datatransfer.Req(datatransfer.ReqInput{
 		VendorId:  testValidVendorId,
 		MessageId: &invalidMessageId,
 		Data:      nil,
@@ -260,7 +260,7 @@ func TestReq_MultipleErrors(t *testing.T) {
 
 	invalidMessageId := ""
 
-	_, err := dataTransfer.Req(dataTransfer.ReqInput{
+	_, err := datatransfer.Req(datatransfer.ReqInput{
 		VendorId:  "",
 		MessageId: &invalidMessageId,
 		Data:      nil,

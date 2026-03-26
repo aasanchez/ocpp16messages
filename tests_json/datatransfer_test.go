@@ -1,21 +1,21 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/dataTransfer"
+	"github.com/aasanchez/ocpp16messages/datatransfer"
 )
 
 func TestDataTransferReq_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
-	req, err := dataTransfer.Req(dataTransfer.ReqInput{
+	req, err := datatransfer.Req(datatransfer.ReqInput{
 		VendorId:  "com.example.vendor",
 		MessageId: nil,
 		Data:      nil,
 	})
 	if err != nil {
-		t.Fatalf("dataTransfer.Req: %v", err)
+		t.Fatalf("datatransfer.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -25,12 +25,12 @@ func TestDataTransferReq_JSONRoundTrip(t *testing.T) {
 func TestDataTransferConf_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
-	conf, err := dataTransfer.Conf(dataTransfer.ConfInput{
+	conf, err := datatransfer.Conf(datatransfer.ConfInput{
 		Status: "Accepted",
 		Data:   nil,
 	})
 	if err != nil {
-		t.Fatalf("dataTransfer.Conf: %v", err)
+		t.Fatalf("datatransfer.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

@@ -1,9 +1,9 @@
-package triggerMessage_test
+package triggermessage_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/triggerMessage"
+	"github.com/aasanchez/ocpp16messages/triggermessage"
 )
 
 const (
@@ -16,7 +16,7 @@ const (
 // ExampleReq demonstrates creating a valid TriggerMessage.req message
 // to trigger a Heartbeat message.
 func ExampleReq() {
-	req, err := triggerMessage.Req(triggerMessage.ReqInput{
+	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Heartbeat",
 		ConnectorId:      nil,
 	})
@@ -36,7 +36,7 @@ func ExampleReq() {
 func ExampleReq_withConnectorId() {
 	connectorId := connectorIdOne
 
-	req, err := triggerMessage.Req(triggerMessage.ReqInput{
+	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "StatusNotification",
 		ConnectorId:      &connectorId,
 	})
@@ -53,11 +53,11 @@ func ExampleReq_withConnectorId() {
 	// ConnectorId: 1
 }
 
-// ExampleReq_meterValues demonstrates triggering a MeterValues message.
-func ExampleReq_meterValues() {
+// ExampleReq_metervalues demonstrates triggering a MeterValues message.
+func ExampleReq_metervalues() {
 	connectorId := connectorIdZero
 
-	req, err := triggerMessage.Req(triggerMessage.ReqInput{
+	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "MeterValues",
 		ConnectorId:      &connectorId,
 	})
@@ -77,7 +77,7 @@ func ExampleReq_meterValues() {
 // ExampleReq_invalidMessage demonstrates the error returned when
 // an invalid message trigger is provided.
 func ExampleReq_invalidMessage() {
-	_, err := triggerMessage.Req(triggerMessage.ReqInput{
+	_, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Unknown",
 		ConnectorId:      nil,
 	})
@@ -91,7 +91,7 @@ func ExampleReq_invalidMessage() {
 // ExampleReq_emptyMessage demonstrates the error returned when
 // an empty message trigger is provided.
 func ExampleReq_emptyMessage() {
-	_, err := triggerMessage.Req(triggerMessage.ReqInput{
+	_, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "",
 		ConnectorId:      nil,
 	})

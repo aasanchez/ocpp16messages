@@ -1,11 +1,11 @@
-package setChargingProfile_test
+package setchargingprofile_test
 
 import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/setChargingProfile"
-	spt "github.com/aasanchez/ocpp16messages/setChargingProfile/types"
+	"github.com/aasanchez/ocpp16messages/setchargingprofile"
+	spt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
 	"github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -50,7 +50,7 @@ func validChargingProfileInput() spt.ChargingProfileInput {
 func TestReq_Valid_MinimalInput(t *testing.T) {
 	t.Parallel()
 
-	req, err := setChargingProfile.Req(setChargingProfile.ReqInput{
+	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId:        valueZero,
 		CsChargingProfiles: validChargingProfileInput(),
 	})
@@ -66,7 +66,7 @@ func TestReq_Valid_MinimalInput(t *testing.T) {
 func TestReq_Valid_WithConnectorId(t *testing.T) {
 	t.Parallel()
 
-	req, err := setChargingProfile.Req(setChargingProfile.ReqInput{
+	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId:        valueTwo,
 		CsChargingProfiles: validChargingProfileInput(),
 	})
@@ -82,7 +82,7 @@ func TestReq_Valid_WithConnectorId(t *testing.T) {
 func TestReq_Valid_ChargingProfileId(t *testing.T) {
 	t.Parallel()
 
-	req, err := setChargingProfile.Req(setChargingProfile.ReqInput{
+	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId:        valueZero,
 		CsChargingProfiles: validChargingProfileInput(),
 	})
@@ -102,7 +102,7 @@ func TestReq_Valid_ChargingProfileId(t *testing.T) {
 func TestReq_Valid_StackLevel(t *testing.T) {
 	t.Parallel()
 
-	req, err := setChargingProfile.Req(setChargingProfile.ReqInput{
+	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId:        valueZero,
 		CsChargingProfiles: validChargingProfileInput(),
 	})
@@ -122,7 +122,7 @@ func TestReq_Valid_StackLevel(t *testing.T) {
 func TestReq_Valid_ChargingProfilePurpose(t *testing.T) {
 	t.Parallel()
 
-	req, err := setChargingProfile.Req(setChargingProfile.ReqInput{
+	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId:        valueZero,
 		CsChargingProfiles: validChargingProfileInput(),
 	})
@@ -143,7 +143,7 @@ func TestReq_Valid_ChargingProfilePurpose(t *testing.T) {
 func TestReq_Valid_ChargingProfileKind(t *testing.T) {
 	t.Parallel()
 
-	req, err := setChargingProfile.Req(setChargingProfile.ReqInput{
+	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId:        valueZero,
 		CsChargingProfiles: validChargingProfileInput(),
 	})
@@ -164,7 +164,7 @@ func TestReq_Valid_ChargingProfileKind(t *testing.T) {
 func TestReq_Invalid_NegativeConnectorId(t *testing.T) {
 	t.Parallel()
 
-	_, err := setChargingProfile.Req(setChargingProfile.ReqInput{
+	_, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId:        valueNegative,
 		CsChargingProfiles: validChargingProfileInput(),
 	})
@@ -180,7 +180,7 @@ func TestReq_Invalid_NegativeConnectorId(t *testing.T) {
 func TestReq_Invalid_ConnectorIdExceedsMax(t *testing.T) {
 	t.Parallel()
 
-	_, err := setChargingProfile.Req(setChargingProfile.ReqInput{
+	_, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId:        valueExceedsMax,
 		CsChargingProfiles: validChargingProfileInput(),
 	})
@@ -199,7 +199,7 @@ func TestReq_Invalid_InvalidChargingProfilePurpose(t *testing.T) {
 	input := validChargingProfileInput()
 	input.ChargingProfilePurpose = "Invalid"
 
-	_, err := setChargingProfile.Req(setChargingProfile.ReqInput{
+	_, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId:        valueZero,
 		CsChargingProfiles: input,
 	})
@@ -218,7 +218,7 @@ func TestReq_Invalid_InvalidChargingProfileKind(t *testing.T) {
 	input := validChargingProfileInput()
 	input.ChargingProfileKind = "Invalid"
 
-	_, err := setChargingProfile.Req(setChargingProfile.ReqInput{
+	_, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId:        valueZero,
 		CsChargingProfiles: input,
 	})
@@ -237,7 +237,7 @@ func TestReq_Invalid_InvalidChargingRateUnit(t *testing.T) {
 	input := validChargingProfileInput()
 	input.ChargingSchedule.ChargingRateUnit = "X"
 
-	_, err := setChargingProfile.Req(setChargingProfile.ReqInput{
+	_, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId:        valueZero,
 		CsChargingProfiles: input,
 	})
@@ -256,7 +256,7 @@ func TestReq_Invalid_EmptyChargingSchedulePeriod(t *testing.T) {
 	input := validChargingProfileInput()
 	input.ChargingSchedule.ChargingSchedulePeriod = nil
 
-	_, err := setChargingProfile.Req(setChargingProfile.ReqInput{
+	_, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId:        valueZero,
 		CsChargingProfiles: input,
 	})

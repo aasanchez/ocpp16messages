@@ -1,9 +1,9 @@
-package clearChargingProfile
+package clearchargingprofile
 
 import (
 	"fmt"
 
-	ct "github.com/aasanchez/ocpp16messages/clearChargingProfile/types"
+	ct "github.com/aasanchez/ocpp16messages/clearchargingprofile/types"
 	"github.com/aasanchez/ocpp16messages/types"
 )
 

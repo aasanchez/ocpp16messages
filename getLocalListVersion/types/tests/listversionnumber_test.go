@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"testing"
 
-	mt "github.com/aasanchez/ocpp16messages/getLocalListVersion/types"
+	mt "github.com/aasanchez/ocpp16messages/getlocallistversion/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

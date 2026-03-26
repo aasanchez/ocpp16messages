@@ -6,29 +6,29 @@ import (
 	"fmt"
 	"testing"
 
-	bn "github.com/aasanchez/ocpp16messages/bootNotification"
-	ccp "github.com/aasanchez/ocpp16messages/clearChargingProfile"
-	dt "github.com/aasanchez/ocpp16messages/dataTransfer"
-	csc "github.com/aasanchez/ocpp16messages/getCompositeSchedule"
-	gconf "github.com/aasanchez/ocpp16messages/getConfiguration"
-	gct "github.com/aasanchez/ocpp16messages/getConfiguration/types"
-	gd "github.com/aasanchez/ocpp16messages/getDiagnostics"
-	mv "github.com/aasanchez/ocpp16messages/meterValues"
-	mvt "github.com/aasanchez/ocpp16messages/meterValues/types"
-	rst "github.com/aasanchez/ocpp16messages/remoteStartTransaction"
-	rn "github.com/aasanchez/ocpp16messages/reserveNow"
-	sl "github.com/aasanchez/ocpp16messages/sendLocalList"
-	slt "github.com/aasanchez/ocpp16messages/sendLocalList/types"
-	scp "github.com/aasanchez/ocpp16messages/setChargingProfile"
-	scpt "github.com/aasanchez/ocpp16messages/setChargingProfile/types"
-	stt "github.com/aasanchez/ocpp16messages/startTransaction"
-	sn "github.com/aasanchez/ocpp16messages/statusNotification"
-	snt "github.com/aasanchez/ocpp16messages/statusNotification/types"
-	stp "github.com/aasanchez/ocpp16messages/stopTransaction"
-	tm "github.com/aasanchez/ocpp16messages/triggerMessage"
-	tmt "github.com/aasanchez/ocpp16messages/triggerMessage/types"
+	bn "github.com/aasanchez/ocpp16messages/bootnotification"
+	ccp "github.com/aasanchez/ocpp16messages/clearchargingprofile"
+	dt "github.com/aasanchez/ocpp16messages/datatransfer"
+	csc "github.com/aasanchez/ocpp16messages/getcompositeschedule"
+	gconf "github.com/aasanchez/ocpp16messages/getconfiguration"
+	gct "github.com/aasanchez/ocpp16messages/getconfiguration/types"
+	gd "github.com/aasanchez/ocpp16messages/getdiagnostics"
+	mv "github.com/aasanchez/ocpp16messages/metervalues"
+	mvt "github.com/aasanchez/ocpp16messages/metervalues/types"
+	rst "github.com/aasanchez/ocpp16messages/remotestarttransaction"
+	rn "github.com/aasanchez/ocpp16messages/reservenow"
+	sl "github.com/aasanchez/ocpp16messages/sendlocallist"
+	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
+	scp "github.com/aasanchez/ocpp16messages/setchargingprofile"
+	scpt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
+	stt "github.com/aasanchez/ocpp16messages/starttransaction"
+	sn "github.com/aasanchez/ocpp16messages/statusnotification"
+	snt "github.com/aasanchez/ocpp16messages/statusnotification/types"
+	stp "github.com/aasanchez/ocpp16messages/stoptransaction"
+	tm "github.com/aasanchez/ocpp16messages/triggermessage"
+	tmt "github.com/aasanchez/ocpp16messages/triggermessage/types"
 	st "github.com/aasanchez/ocpp16messages/types"
-	uf "github.com/aasanchez/ocpp16messages/updateFirmware"
+	uf "github.com/aasanchez/ocpp16messages/updatefirmware"
 )
 
 func TestRace_BootNotificationReq(t *testing.T) {
@@ -44,7 +44,7 @@ func TestRace_BootNotificationReq(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := bn.Req(input)
 		if err != nil {
-			return fmt.Errorf("bootNotification.Req: %w", err)
+			return fmt.Errorf("bootnotification.Req: %w", err)
 		}
 		return nil
 	})
@@ -62,7 +62,7 @@ func TestRace_BootNotificationConf(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := bn.Conf(input)
 		if err != nil {
-			return fmt.Errorf("bootNotification.Conf: %w", err)
+			return fmt.Errorf("bootnotification.Conf: %w", err)
 		}
 		return nil
 	})
@@ -83,7 +83,7 @@ func TestRace_StartTransactionReq(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := stt.Req(input)
 		if err != nil {
-			return fmt.Errorf("startTransaction.Req: %w", err)
+			return fmt.Errorf("starttransaction.Req: %w", err)
 		}
 		return nil
 	})
@@ -104,7 +104,7 @@ func TestRace_StartTransactionConf(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := stt.Conf(input)
 		if err != nil {
-			return fmt.Errorf("startTransaction.Conf: %w", err)
+			return fmt.Errorf("starttransaction.Conf: %w", err)
 		}
 		return nil
 	})
@@ -136,7 +136,7 @@ func TestRace_StopTransactionReq(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := stp.Req(input)
 		if err != nil {
-			return fmt.Errorf("stopTransaction.Req: %w", err)
+			return fmt.Errorf("stoptransaction.Req: %w", err)
 		}
 		return nil
 	})
@@ -157,7 +157,7 @@ func TestRace_StopTransactionConf(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := stp.Conf(input)
 		if err != nil {
-			return fmt.Errorf("stopTransaction.Conf: %w", err)
+			return fmt.Errorf("stoptransaction.Conf: %w", err)
 		}
 		return nil
 	})
@@ -169,7 +169,7 @@ func TestRace_MeterValuesConf(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := mv.Conf(mv.ConfInput{})
 		if err != nil {
-			return fmt.Errorf("meterValues.Conf: %w", err)
+			return fmt.Errorf("metervalues.Conf: %w", err)
 		}
 		return nil
 	})
@@ -188,7 +188,7 @@ func TestRace_TriggerMessageReq(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := tm.Req(input)
 		if err != nil {
-			return fmt.Errorf("triggerMessage.Req: %w", err)
+			return fmt.Errorf("triggermessage.Req: %w", err)
 		}
 		return nil
 	})
@@ -208,7 +208,7 @@ func TestRace_DataTransferReq(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := dt.Req(input)
 		if err != nil {
-			return fmt.Errorf("dataTransfer.Req: %w", err)
+			return fmt.Errorf("datatransfer.Req: %w", err)
 		}
 		return nil
 	})
@@ -235,7 +235,7 @@ func TestRace_StatusNotificationReq(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := sn.Req(input)
 		if err != nil {
-			return fmt.Errorf("statusNotification.Req: %w", err)
+			return fmt.Errorf("statusnotification.Req: %w", err)
 		}
 		return nil
 	})
@@ -253,7 +253,7 @@ func TestRace_RemoteStartTransactionReq(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := rst.Req(input)
 		if err != nil {
-			return fmt.Errorf("remoteStartTransaction.Req: %w", err)
+			return fmt.Errorf("remotestarttransaction.Req: %w", err)
 		}
 		return nil
 	})
@@ -274,7 +274,7 @@ func TestRace_ReserveNowReq(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := rn.Req(input)
 		if err != nil {
-			return fmt.Errorf("reserveNow.Req: %w", err)
+			return fmt.Errorf("reservenow.Req: %w", err)
 		}
 		return nil
 	})
@@ -295,7 +295,7 @@ func TestRace_UpdateFirmwareReq(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := uf.Req(input)
 		if err != nil {
-			return fmt.Errorf("updateFirmware.Req: %w", err)
+			return fmt.Errorf("updatefirmware.Req: %w", err)
 		}
 		return nil
 	})
@@ -320,7 +320,7 @@ func TestRace_GetDiagnosticsReq(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := gd.Req(input)
 		if err != nil {
-			return fmt.Errorf("getDiagnostics.Req: %w", err)
+			return fmt.Errorf("getdiagnostics.Req: %w", err)
 		}
 		return nil
 	})
@@ -335,7 +335,7 @@ func TestRace_GetDiagnosticsConf(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := gd.Conf(input)
 		if err != nil {
-			return fmt.Errorf("getDiagnostics.Conf: %w", err)
+			return fmt.Errorf("getdiagnostics.Conf: %w", err)
 		}
 		return nil
 	})
@@ -350,7 +350,7 @@ func TestRace_GetConfigurationReq(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := gconf.Req(input)
 		if err != nil {
-			return fmt.Errorf("getConfiguration.Req: %w", err)
+			return fmt.Errorf("getconfiguration.Req: %w", err)
 		}
 		return nil
 	})
@@ -373,7 +373,7 @@ func TestRace_GetConfigurationConf(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := gconf.Conf(input)
 		if err != nil {
-			return fmt.Errorf("getConfiguration.Conf: %w", err)
+			return fmt.Errorf("getconfiguration.Conf: %w", err)
 		}
 		return nil
 	})
@@ -392,7 +392,7 @@ func TestRace_GetCompositeScheduleReq(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := csc.Req(input)
 		if err != nil {
-			return fmt.Errorf("getCompositeSchedule.Req: %w", err)
+			return fmt.Errorf("getcompositeschedule.Req: %w", err)
 		}
 		return nil
 	})
@@ -425,7 +425,7 @@ func TestRace_GetCompositeScheduleConf(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := csc.Conf(input)
 		if err != nil {
-			return fmt.Errorf("getCompositeSchedule.Conf: %w", err)
+			return fmt.Errorf("getcompositeschedule.Conf: %w", err)
 		}
 		return nil
 	})
@@ -449,7 +449,7 @@ func TestRace_ClearChargingProfileReq(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := ccp.Req(input)
 		if err != nil {
-			return fmt.Errorf("clearChargingProfile.Req: %w", err)
+			return fmt.Errorf("clearchargingprofile.Req: %w", err)
 		}
 		return nil
 	})
@@ -471,7 +471,7 @@ func TestRace_SendLocalListReq(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := sl.Req(input)
 		if err != nil {
-			return fmt.Errorf("sendLocalList.Req: %w", err)
+			return fmt.Errorf("sendlocallist.Req: %w", err)
 		}
 		return nil
 	})
@@ -485,7 +485,7 @@ func TestRace_SendLocalListConf(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := sl.Conf(input)
 		if err != nil {
-			return fmt.Errorf("sendLocalList.Conf: %w", err)
+			return fmt.Errorf("sendlocallist.Conf: %w", err)
 		}
 		return nil
 	})
@@ -527,7 +527,7 @@ func TestRace_SetChargingProfileReq(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := scp.Req(input)
 		if err != nil {
-			return fmt.Errorf("setChargingProfile.Req: %w", err)
+			return fmt.Errorf("setchargingprofile.Req: %w", err)
 		}
 		return nil
 	})
@@ -543,7 +543,7 @@ func TestRace_SetChargingProfileConf(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := scp.Conf(input)
 		if err != nil {
-			return fmt.Errorf("setChargingProfile.Conf: %w", err)
+			return fmt.Errorf("setchargingprofile.Conf: %w", err)
 		}
 		return nil
 	})

@@ -1,4 +1,4 @@
-package updateFirmware
+package updatefirmware
 
 import (
 	"errors"

@@ -1,9 +1,9 @@
-package sendLocalList
+package sendlocallist
 
 import (
 	"testing"
 
-	slt "github.com/aasanchez/ocpp16messages/sendLocalList/types"
+	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
 )
 
 func Test_validateReqAuthorizationList_EmptySlice(t *testing.T) {

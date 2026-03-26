@@ -1,11 +1,11 @@
-package startTransaction_test
+package starttransaction_test
 
 import (
 	"errors"
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/startTransaction"
+	"github.com/aasanchez/ocpp16messages/starttransaction"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -21,7 +21,7 @@ const (
 func TestConf_ValidAccepted(t *testing.T) {
 	t.Parallel()
 
-	conf, err := startTransaction.Conf(startTransaction.ConfInput{
+	conf, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: testTransactionId,
 		Status:        statusAccepted,
 		ExpiryDate:    nil,
@@ -52,7 +52,7 @@ func TestConf_ValidAccepted(t *testing.T) {
 func TestConf_ValidBlocked(t *testing.T) {
 	t.Parallel()
 
-	conf, err := startTransaction.Conf(startTransaction.ConfInput{
+	conf, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: testTransactionId,
 		Status:        "Blocked",
 		ExpiryDate:    nil,
@@ -70,7 +70,7 @@ func TestConf_ValidBlocked(t *testing.T) {
 func TestConf_ValidExpired(t *testing.T) {
 	t.Parallel()
 
-	conf, err := startTransaction.Conf(startTransaction.ConfInput{
+	conf, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: testTransactionId,
 		Status:        "Expired",
 		ExpiryDate:    nil,
@@ -88,7 +88,7 @@ func TestConf_ValidExpired(t *testing.T) {
 func TestConf_ValidInvalid(t *testing.T) {
 	t.Parallel()
 
-	conf, err := startTransaction.Conf(startTransaction.ConfInput{
+	conf, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: testTransactionId,
 		Status:        "Invalid",
 		ExpiryDate:    nil,
@@ -106,7 +106,7 @@ func TestConf_ValidInvalid(t *testing.T) {
 func TestConf_ValidConcurrentTx(t *testing.T) {
 	t.Parallel()
 
-	conf, err := startTransaction.Conf(startTransaction.ConfInput{
+	conf, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: testTransactionId,
 		Status:        "ConcurrentTx",
 		ExpiryDate:    nil,
@@ -128,7 +128,7 @@ func TestConf_ValidConcurrentTx(t *testing.T) {
 func TestConf_InvalidStatus(t *testing.T) {
 	t.Parallel()
 
-	_, err := startTransaction.Conf(startTransaction.ConfInput{
+	_, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: testTransactionId,
 		Status:        "Unknown",
 		ExpiryDate:    nil,
@@ -146,7 +146,7 @@ func TestConf_InvalidStatus(t *testing.T) {
 func TestConf_EmptyStatus(t *testing.T) {
 	t.Parallel()
 
-	_, err := startTransaction.Conf(startTransaction.ConfInput{
+	_, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: testTransactionId,
 		Status:        "",
 		ExpiryDate:    nil,
@@ -164,7 +164,7 @@ func TestConf_EmptyStatus(t *testing.T) {
 func TestConf_TransactionIdNegative(t *testing.T) {
 	t.Parallel()
 
-	_, err := startTransaction.Conf(startTransaction.ConfInput{
+	_, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: testValueNegativeOne,
 		Status:        statusAccepted,
 		ExpiryDate:    nil,
@@ -184,7 +184,7 @@ func TestConf_WithExpiryDate(t *testing.T) {
 
 	expiryDate := "2025-12-31T23:59:59Z"
 
-	conf, err := startTransaction.Conf(startTransaction.ConfInput{
+	conf, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: testTransactionId,
 		Status:        statusAccepted,
 		ExpiryDate:    &expiryDate,
@@ -204,7 +204,7 @@ func TestConf_WithInvalidExpiryDate(t *testing.T) {
 
 	invalidDate := "not-a-date"
 
-	_, err := startTransaction.Conf(startTransaction.ConfInput{
+	_, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: testTransactionId,
 		Status:        statusAccepted,
 		ExpiryDate:    &invalidDate,
@@ -224,7 +224,7 @@ func TestConf_WithParentIdTag(t *testing.T) {
 
 	parentTag := "PARENT-TAG-123"
 
-	conf, err := startTransaction.Conf(startTransaction.ConfInput{
+	conf, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: testTransactionId,
 		Status:        statusAccepted,
 		ExpiryDate:    nil,
@@ -252,7 +252,7 @@ func TestConf_WithParentIdTagTooLong(t *testing.T) {
 
 	longTag := "PARENT-TAG-123456789012345" // 26 chars, max is 20
 
-	_, err := startTransaction.Conf(startTransaction.ConfInput{
+	_, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: testTransactionId,
 		Status:        statusAccepted,
 		ExpiryDate:    nil,
@@ -272,7 +272,7 @@ func TestConf_WithEmptyParentIdTag(t *testing.T) {
 
 	emptyTag := ""
 
-	_, err := startTransaction.Conf(startTransaction.ConfInput{
+	_, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: testTransactionId,
 		Status:        statusAccepted,
 		ExpiryDate:    nil,
@@ -293,7 +293,7 @@ func TestConf_Complete(t *testing.T) {
 	expiryDate := "2025-12-31T23:59:59Z"
 	parentTag := "PARENT-123"
 
-	conf, err := startTransaction.Conf(startTransaction.ConfInput{
+	conf, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: testTransactionId2,
 		Status:        statusAccepted,
 		ExpiryDate:    &expiryDate,
@@ -343,7 +343,7 @@ func TestConf_MultipleErrors(t *testing.T) {
 	invalidDate := "not-a-date"
 	longTag := "THIS-TAG-IS-WAY-TOO-LONG-FOR-OCPP"
 
-	_, err := startTransaction.Conf(startTransaction.ConfInput{
+	_, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: testValueNegativeOne,
 		Status:        "Invalid-Status",
 		ExpiryDate:    &invalidDate,
@@ -377,7 +377,7 @@ func TestConf_MultipleErrors_StatusAndExpiryDate(t *testing.T) {
 
 	invalidDate := "invalid"
 
-	_, err := startTransaction.Conf(startTransaction.ConfInput{
+	_, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: testTransactionId,
 		Status:        "BadStatus",
 		ExpiryDate:    &invalidDate,

@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	rn "github.com/aasanchez/ocpp16messages/reserveNow"
+	rn "github.com/aasanchez/ocpp16messages/reservenow"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

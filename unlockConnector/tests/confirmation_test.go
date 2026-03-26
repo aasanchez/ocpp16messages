@@ -1,12 +1,12 @@
-package unlockConnector_test
+package unlockconnector_test
 
 import (
 	"strings"
 	"testing"
 
 	st "github.com/aasanchez/ocpp16messages/types"
-	"github.com/aasanchez/ocpp16messages/unlockConnector"
-	ut "github.com/aasanchez/ocpp16messages/unlockConnector/types"
+	"github.com/aasanchez/ocpp16messages/unlockconnector"
+	ut "github.com/aasanchez/ocpp16messages/unlockconnector/types"
 )
 
 const (
@@ -16,7 +16,7 @@ const (
 func TestConf_Valid_Unlocked(t *testing.T) {
 	t.Parallel()
 
-	conf, err := unlockConnector.Conf(unlockConnector.ConfInput{
+	conf, err := unlockconnector.Conf(unlockconnector.ConfInput{
 		Status: "Unlocked",
 	})
 	if err != nil {
@@ -35,7 +35,7 @@ func TestConf_Valid_Unlocked(t *testing.T) {
 func TestConf_Valid_UnlockFailed(t *testing.T) {
 	t.Parallel()
 
-	conf, err := unlockConnector.Conf(unlockConnector.ConfInput{
+	conf, err := unlockconnector.Conf(unlockconnector.ConfInput{
 		Status: "UnlockFailed",
 	})
 	if err != nil {
@@ -54,7 +54,7 @@ func TestConf_Valid_UnlockFailed(t *testing.T) {
 func TestConf_Valid_NotSupported(t *testing.T) {
 	t.Parallel()
 
-	conf, err := unlockConnector.Conf(unlockConnector.ConfInput{
+	conf, err := unlockconnector.Conf(unlockconnector.ConfInput{
 		Status: "NotSupported",
 	})
 	if err != nil {
@@ -73,7 +73,7 @@ func TestConf_Valid_NotSupported(t *testing.T) {
 func TestConf_EmptyStatus(t *testing.T) {
 	t.Parallel()
 
-	_, err := unlockConnector.Conf(unlockConnector.ConfInput{Status: ""})
+	_, err := unlockconnector.Conf(unlockconnector.ConfInput{Status: ""})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "empty status")
 	}
@@ -86,7 +86,7 @@ func TestConf_EmptyStatus(t *testing.T) {
 func TestConf_InvalidStatus_Unknown(t *testing.T) {
 	t.Parallel()
 
-	_, err := unlockConnector.Conf(unlockConnector.ConfInput{Status: "Unknown"})
+	_, err := unlockconnector.Conf(unlockconnector.ConfInput{Status: "Unknown"})
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "unknown status")
 	}
@@ -99,7 +99,7 @@ func TestConf_InvalidStatus_Unknown(t *testing.T) {
 func TestConf_InvalidStatus_Lowercase(t *testing.T) {
 	t.Parallel()
 
-	_, err := unlockConnector.Conf(unlockConnector.ConfInput{
+	_, err := unlockconnector.Conf(unlockconnector.ConfInput{
 		Status: "unlocked",
 	})
 	if err == nil {
@@ -114,7 +114,7 @@ func TestConf_InvalidStatus_Lowercase(t *testing.T) {
 func TestConf_InvalidStatus_Accepted(t *testing.T) {
 	t.Parallel()
 
-	_, err := unlockConnector.Conf(unlockConnector.ConfInput{
+	_, err := unlockconnector.Conf(unlockconnector.ConfInput{
 		Status: "Accepted",
 	})
 	if err == nil {

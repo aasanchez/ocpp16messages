@@ -7,8 +7,8 @@ import (
 	"math"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/changeAvailability"
-	ct "github.com/aasanchez/ocpp16messages/changeAvailability/types"
+	"github.com/aasanchez/ocpp16messages/changeavailability"
+	ct "github.com/aasanchez/ocpp16messages/changeavailability/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -24,7 +24,7 @@ func FuzzChangeAvailabilityReq(f *testing.F) {
 			t.Skip()
 		}
 
-		req, err := changeAvailability.Req(changeAvailability.ReqInput{
+		req, err := changeavailability.Req(changeavailability.ReqInput{
 			ConnectorId: connectorId,
 			Type:        availabilityType,
 		})

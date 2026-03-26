@@ -1,9 +1,9 @@
-package clearCache_test
+package clearcache_test
 
 import (
 	"testing"
 
-	cc "github.com/aasanchez/ocpp16messages/clearCache"
+	cc "github.com/aasanchez/ocpp16messages/clearcache"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

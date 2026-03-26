@@ -1,9 +1,9 @@
-package getDiagnostics_test
+package getdiagnostics_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/getDiagnostics"
+	"github.com/aasanchez/ocpp16messages/getdiagnostics"
 )
 
 const (
@@ -20,7 +20,7 @@ const (
 // ExampleReq demonstrates creating a GetDiagnostics.req message
 // with required fields only.
 func ExampleReq() {
-	req, err := getDiagnostics.Req(getDiagnostics.ReqInput{
+	req, err := getdiagnostics.Req(getdiagnostics.ReqInput{
 		Location:      exampleLocationValue,
 		Retries:       nil,
 		RetryInterval: nil,
@@ -43,7 +43,7 @@ func ExampleReq() {
 func ExampleReq_withRetries() {
 	retries := exampleRetriesValue
 
-	req, err := getDiagnostics.Req(getDiagnostics.ReqInput{
+	req, err := getdiagnostics.Req(getdiagnostics.ReqInput{
 		Location:      exampleLocationValue,
 		Retries:       &retries,
 		RetryInterval: nil,
@@ -71,7 +71,7 @@ func ExampleReq_withAllFields() {
 	startTime := exampleStartTimeValue
 	stopTime := exampleStopTimeValue
 
-	req, err := getDiagnostics.Req(getDiagnostics.ReqInput{
+	req, err := getdiagnostics.Req(getdiagnostics.ReqInput{
 		Location:      exampleLocationValue,
 		Retries:       &retries,
 		RetryInterval: &retryInterval,
@@ -96,7 +96,7 @@ func ExampleReq_withAllFields() {
 // ExampleReq_invalidLocation demonstrates the error returned when
 // an empty Location is provided.
 func ExampleReq_invalidLocation() {
-	_, err := getDiagnostics.Req(getDiagnostics.ReqInput{
+	_, err := getdiagnostics.Req(getdiagnostics.ReqInput{
 		Location:      "",
 		Retries:       nil,
 		RetryInterval: nil,
@@ -115,7 +115,7 @@ func ExampleReq_invalidLocation() {
 func ExampleReq_invalidRetries() {
 	retries := exampleNegativeValue
 
-	_, err := getDiagnostics.Req(getDiagnostics.ReqInput{
+	_, err := getdiagnostics.Req(getdiagnostics.ReqInput{
 		Location:      exampleLocationValue,
 		Retries:       &retries,
 		RetryInterval: nil,

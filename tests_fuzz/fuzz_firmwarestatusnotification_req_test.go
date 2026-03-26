@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/firmwareStatusNotification"
-	ft "github.com/aasanchez/ocpp16messages/firmwareStatusNotification/types"
+	"github.com/aasanchez/ocpp16messages/firmwarestatusnotification"
+	ft "github.com/aasanchez/ocpp16messages/firmwarestatusnotification/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -25,8 +25,8 @@ func FuzzFirmwareStatusNotificationReq(f *testing.F) {
 			t.Skip()
 		}
 
-		req, err := firmwareStatusNotification.Req(
-			firmwareStatusNotification.ReqInput{
+		req, err := firmwarestatusnotification.Req(
+			firmwarestatusnotification.ReqInput{
 				Status: status,
 			},
 		)

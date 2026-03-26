@@ -1,10 +1,10 @@
-package setChargingProfile
+package setchargingprofile
 
 import (
 	"errors"
 	"fmt"
 
-	spt "github.com/aasanchez/ocpp16messages/setChargingProfile/types"
+	spt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
 	"github.com/aasanchez/ocpp16messages/types"
 )
 

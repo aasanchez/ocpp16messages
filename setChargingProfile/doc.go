@@ -1,4 +1,4 @@
-// Package setChargingProfile implements the Open Charge Point Protocol
+// Package setchargingprofile implements the Open Charge Point Protocol
 // (OCPP) 1.6 SetChargingProfile message for EV charging.
 //
 // # Handling Rules
@@ -72,4 +72,4 @@
 //   - If recurrencyKind period is longer than schedule duration, Charge
 //     Point SHALL fall back to default behavior or lower stackLevel profile;
 //     if none available, normal charging is allowed.
-package setChargingProfile
+package setchargingprofile

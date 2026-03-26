@@ -1,9 +1,9 @@
-package getLocalListVersion
+package getlocallistversion
 
 import (
 	"fmt"
 
-	mt "github.com/aasanchez/ocpp16messages/getLocalListVersion/types"
+	mt "github.com/aasanchez/ocpp16messages/getlocallistversion/types"
 )
 
 // ConfInput represents the raw input data for creating a

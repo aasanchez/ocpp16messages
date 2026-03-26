@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"testing"
 
-	gct "github.com/aasanchez/ocpp16messages/getConfiguration/types"
-	gllt "github.com/aasanchez/ocpp16messages/getLocalListVersion/types"
-	mvt "github.com/aasanchez/ocpp16messages/meterValues/types"
-	slt "github.com/aasanchez/ocpp16messages/sendLocalList/types"
-	scpt "github.com/aasanchez/ocpp16messages/setChargingProfile/types"
+	gct "github.com/aasanchez/ocpp16messages/getconfiguration/types"
+	gllt "github.com/aasanchez/ocpp16messages/getlocallistversion/types"
+	mvt "github.com/aasanchez/ocpp16messages/metervalues/types"
+	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
+	scpt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -27,7 +27,7 @@ func TestRace_GetConfigurationNewKeyValue(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := gct.NewKeyValue(input)
 		if err != nil {
-			return fmt.Errorf("getConfiguration/types.NewKeyValue: %w", err)
+			return fmt.Errorf("getconfiguration/types.NewKeyValue: %w", err)
 		}
 		return nil
 	})
@@ -40,7 +40,7 @@ func TestRace_GetLocalListVersionNewListVersionNumber(t *testing.T) {
 		value := (worker + iteration) % 10
 		_, err := gllt.NewListVersionNumber(value)
 		if err != nil {
-			return fmt.Errorf("getLocalListVersion/types.NewListVersionNumber: %w", err)
+			return fmt.Errorf("getlocallistversion/types.NewListVersionNumber: %w", err)
 		}
 		return nil
 	})
@@ -54,7 +54,7 @@ func TestRace_SendLocalListNewAuthorizationData(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := slt.NewAuthorizationData(input)
 		if err != nil {
-			return fmt.Errorf("sendLocalList/types.NewAuthorizationData: %w", err)
+			return fmt.Errorf("sendlocallist/types.NewAuthorizationData: %w", err)
 		}
 		return nil
 	})
@@ -91,7 +91,7 @@ func TestRace_SetChargingProfileNewChargingProfile(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := scpt.NewChargingProfile(input)
 		if err != nil {
-			return fmt.Errorf("setChargingProfile/types.NewChargingProfile: %w", err)
+			return fmt.Errorf("setchargingprofile/types.NewChargingProfile: %w", err)
 		}
 		return nil
 	})
@@ -105,7 +105,7 @@ func TestRace_MeterValuesTypesNewSampledValue(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := mvt.NewSampledValue(input)
 		if err != nil {
-			return fmt.Errorf("meterValues/types.NewSampledValue: %w", err)
+			return fmt.Errorf("metervalues/types.NewSampledValue: %w", err)
 		}
 		return nil
 	})
@@ -123,7 +123,7 @@ func TestRace_MeterValuesTypesNewMeterValue(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := mvt.NewMeterValue(input)
 		if err != nil {
-			return fmt.Errorf("meterValues/types.NewMeterValue: %w", err)
+			return fmt.Errorf("metervalues/types.NewMeterValue: %w", err)
 		}
 		return nil
 	})

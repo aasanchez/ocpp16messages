@@ -1,9 +1,9 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	dsn "github.com/aasanchez/ocpp16messages/diagnosticsStatusNotification"
+	dsn "github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification"
 )
 
 func TestDiagnosticsStatusNotificationReq_JSONRoundTrip(t *testing.T) {
@@ -11,7 +11,7 @@ func TestDiagnosticsStatusNotificationReq_JSONRoundTrip(t *testing.T) {
 
 	req, err := dsn.Req(dsn.ReqInput{Status: "Idle"})
 	if err != nil {
-		t.Fatalf("diagnosticsStatusNotification.Req: %v", err)
+		t.Fatalf("diagnosticsstatusnotification.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -23,7 +23,7 @@ func TestDiagnosticsStatusNotificationConf_JSONRoundTrip(t *testing.T) {
 
 	conf, err := dsn.Conf(dsn.ConfInput{})
 	if err != nil {
-		t.Fatalf("diagnosticsStatusNotification.Conf: %v", err)
+		t.Fatalf("diagnosticsstatusnotification.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

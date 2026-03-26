@@ -1,9 +1,9 @@
-package updateFirmware_test
+package updatefirmware_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/updateFirmware"
+	"github.com/aasanchez/ocpp16messages/updatefirmware"
 )
 
 const (
@@ -19,7 +19,7 @@ const (
 // ExampleReq demonstrates creating an UpdateFirmware.req message
 // with required fields only.
 func ExampleReq() {
-	req, err := updateFirmware.Req(updateFirmware.ReqInput{
+	req, err := updatefirmware.Req(updatefirmware.ReqInput{
 		Location:      exampleLocationValue,
 		RetrieveDate:  exampleRetrieveDateValue,
 		Retries:       nil,
@@ -41,7 +41,7 @@ func ExampleReq() {
 func ExampleReq_withRetries() {
 	retries := exampleRetriesValue
 
-	req, err := updateFirmware.Req(updateFirmware.ReqInput{
+	req, err := updatefirmware.Req(updatefirmware.ReqInput{
 		Location:      exampleLocationValue,
 		RetrieveDate:  exampleRetrieveDateValue,
 		Retries:       &retries,
@@ -66,7 +66,7 @@ func ExampleReq_withAllFields() {
 	retries := exampleRetriesValue
 	retryInterval := exampleRetryIntValue
 
-	req, err := updateFirmware.Req(updateFirmware.ReqInput{
+	req, err := updatefirmware.Req(updatefirmware.ReqInput{
 		Location:      exampleLocationValue,
 		RetrieveDate:  exampleRetrieveDateValue,
 		Retries:       &retries,
@@ -90,7 +90,7 @@ func ExampleReq_withAllFields() {
 // ExampleReq_invalidLocation demonstrates the error returned when
 // an empty Location is provided.
 func ExampleReq_invalidLocation() {
-	_, err := updateFirmware.Req(updateFirmware.ReqInput{
+	_, err := updatefirmware.Req(updatefirmware.ReqInput{
 		Location:      "",
 		RetrieveDate:  exampleRetrieveDateValue,
 		Retries:       nil,
@@ -108,7 +108,7 @@ func ExampleReq_invalidLocation() {
 func ExampleReq_invalidRetries() {
 	retries := exampleNegativeValue
 
-	_, err := updateFirmware.Req(updateFirmware.ReqInput{
+	_, err := updatefirmware.Req(updatefirmware.ReqInput{
 		Location:      exampleLocationValue,
 		RetrieveDate:  exampleRetrieveDateValue,
 		Retries:       &retries,

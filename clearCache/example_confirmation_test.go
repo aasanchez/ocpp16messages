@@ -1,15 +1,15 @@
-package clearCache_test
+package clearcache_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/clearCache"
+	"github.com/aasanchez/ocpp16messages/clearcache"
 )
 
 // ExampleConf demonstrates creating a valid ClearCache.conf message
 // with an Accepted status.
 func ExampleConf() {
-	conf, err := clearCache.Conf(clearCache.ConfInput{
+	conf, err := clearcache.Conf(clearcache.ConfInput{
 		Status: "Accepted",
 	})
 	if err != nil {
@@ -26,7 +26,7 @@ func ExampleConf() {
 // ExampleConf_rejected demonstrates creating a ClearCache.conf message
 // with a Rejected status.
 func ExampleConf_rejected() {
-	conf, err := clearCache.Conf(clearCache.ConfInput{
+	conf, err := clearcache.Conf(clearcache.ConfInput{
 		Status: "Rejected",
 	})
 	if err != nil {
@@ -43,7 +43,7 @@ func ExampleConf_rejected() {
 // ExampleConf_invalidStatus demonstrates the error returned when
 // an invalid status is provided.
 func ExampleConf_invalidStatus() {
-	_, err := clearCache.Conf(clearCache.ConfInput{
+	_, err := clearcache.Conf(clearcache.ConfInput{
 		Status: "Unknown",
 	})
 	if err != nil {
@@ -56,7 +56,7 @@ func ExampleConf_invalidStatus() {
 // ExampleConf_emptyStatus demonstrates the error returned when
 // an empty status is provided.
 func ExampleConf_emptyStatus() {
-	_, err := clearCache.Conf(clearCache.ConfInput{
+	_, err := clearcache.Conf(clearcache.ConfInput{
 		Status: "",
 	})
 	if err != nil {

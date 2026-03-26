@@ -7,7 +7,7 @@ import (
 	"math"
 	"testing"
 
-	gc "github.com/aasanchez/ocpp16messages/getCompositeSchedule"
+	gc "github.com/aasanchez/ocpp16messages/getcompositeschedule"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

@@ -3,7 +3,7 @@ package types_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/remoteStartTransaction/types"
+	"github.com/aasanchez/ocpp16messages/remotestarttransaction/types"
 )
 
 // ExampleRemoteStartTransactionStatus demonstrates using the

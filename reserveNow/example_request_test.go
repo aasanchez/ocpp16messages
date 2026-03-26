@@ -1,9 +1,9 @@
-package reserveNow_test
+package reservenow_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/reserveNow"
+	"github.com/aasanchez/ocpp16messages/reservenow"
 )
 
 const (
@@ -17,7 +17,7 @@ const (
 // ExampleReq demonstrates creating a valid ReserveNow.req message with only
 // the required fields.
 func ExampleReq() {
-	req, err := reserveNow.Req(reserveNow.ReqInput{
+	req, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: exampleReservationId,
 		ConnectorId:   exampleConnectorId,
 		IdTag:         exampleIdTag,
@@ -44,7 +44,7 @@ func ExampleReq() {
 func ExampleReq_withParentIdTag() {
 	parentIdTag := exampleParentIdTag
 
-	req, err := reserveNow.Req(reserveNow.ReqInput{
+	req, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: exampleReservationId,
 		ConnectorId:   exampleConnectorId,
 		IdTag:         exampleIdTag,
@@ -67,7 +67,7 @@ func ExampleReq_withParentIdTag() {
 // ExampleReq_emptyIdTag demonstrates the error returned when an empty idTag
 // is provided.
 func ExampleReq_emptyIdTag() {
-	_, err := reserveNow.Req(reserveNow.ReqInput{
+	_, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: exampleReservationId,
 		ConnectorId:   exampleConnectorId,
 		IdTag:         "",
@@ -84,7 +84,7 @@ func ExampleReq_emptyIdTag() {
 // ExampleReq_invalidExpiryDate demonstrates the error returned when an invalid
 // expiry date is provided.
 func ExampleReq_invalidExpiryDate() {
-	_, err := reserveNow.Req(reserveNow.ReqInput{
+	_, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: exampleReservationId,
 		ConnectorId:   exampleConnectorId,
 		IdTag:         exampleIdTag,

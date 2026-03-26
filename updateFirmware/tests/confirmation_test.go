@@ -1,18 +1,18 @@
-package updateFirmware_test
+package updatefirmware_test
 
 import (
 	"testing"
 
 	st "github.com/aasanchez/ocpp16messages/types"
-	"github.com/aasanchez/ocpp16messages/updateFirmware"
+	"github.com/aasanchez/ocpp16messages/updatefirmware"
 )
 
 func TestConf_Success(t *testing.T) {
 	t.Parallel()
 
-	input := updateFirmware.ConfInput{}
+	input := updatefirmware.ConfInput{}
 
-	_, err := updateFirmware.Conf(input)
+	_, err := updatefirmware.Conf(input)
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
 	}
@@ -21,14 +21,14 @@ func TestConf_Success(t *testing.T) {
 func TestConf_ReturnsEmptyMessage(t *testing.T) {
 	t.Parallel()
 
-	input := updateFirmware.ConfInput{}
+	input := updatefirmware.ConfInput{}
 
-	conf, err := updateFirmware.Conf(input)
+	conf, err := updatefirmware.Conf(input)
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
 	}
 
-	expected := updateFirmware.ConfMessage{}
+	expected := updatefirmware.ConfMessage{}
 	if conf != expected {
 		t.Errorf(st.ErrorMismatchValue, expected, conf)
 	}

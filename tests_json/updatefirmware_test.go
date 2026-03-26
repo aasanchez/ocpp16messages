@@ -1,9 +1,9 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	uf "github.com/aasanchez/ocpp16messages/updateFirmware"
+	uf "github.com/aasanchez/ocpp16messages/updatefirmware"
 )
 
 func TestUpdateFirmwareReq_JSONRoundTrip(t *testing.T) {
@@ -16,7 +16,7 @@ func TestUpdateFirmwareReq_JSONRoundTrip(t *testing.T) {
 		RetryInterval: nil,
 	})
 	if err != nil {
-		t.Fatalf("updateFirmware.Req: %v", err)
+		t.Fatalf("updatefirmware.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -28,7 +28,7 @@ func TestUpdateFirmwareConf_JSONRoundTrip(t *testing.T) {
 
 	conf, err := uf.Conf(uf.ConfInput{})
 	if err != nil {
-		t.Fatalf("updateFirmware.Conf: %v", err)
+		t.Fatalf("updatefirmware.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

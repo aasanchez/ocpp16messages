@@ -1,15 +1,15 @@
-package getLocalListVersion_test
+package getlocallistversion_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/getLocalListVersion"
+	"github.com/aasanchez/ocpp16messages/getlocallistversion"
 )
 
 // ExampleReq demonstrates creating a valid GetLocalListVersion.req message.
 // GetLocalListVersion.req has no fields per OCPP 1.6 specification.
 func ExampleReq() {
-	_, err := getLocalListVersion.Req(getLocalListVersion.ReqInput{})
+	_, err := getlocallistversion.Req(getlocallistversion.ReqInput{})
 	if err != nil {
 		fmt.Println(err)
 

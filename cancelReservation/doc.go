@@ -1,4 +1,4 @@
-// Package cancelReservation implements the Open Charge Point Protocol
+// Package cancelreservation implements the Open Charge Point Protocol
 // (OCPP) 1.6 CancelReservation message for EV charging.
 //
 // # Handling Rules
@@ -9,4 +9,4 @@
 // If the Charge Point has an active reservation matching the provided
 // reservationId, it SHALL return status Accepted.
 // If no matching reservation exists, it SHALL return status Rejected.
-package cancelReservation
+package cancelreservation

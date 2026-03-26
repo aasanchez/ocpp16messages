@@ -9,7 +9,7 @@ import (
 	"time"
 
 	st "github.com/aasanchez/ocpp16messages/types"
-	uf "github.com/aasanchez/ocpp16messages/updateFirmware"
+	uf "github.com/aasanchez/ocpp16messages/updatefirmware"
 )
 
 func FuzzUpdateFirmwareReq(f *testing.F) {

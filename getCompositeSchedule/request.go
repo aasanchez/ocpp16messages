@@ -1,4 +1,4 @@
-package getCompositeSchedule
+package getcompositeschedule
 
 import (
 	"errors"

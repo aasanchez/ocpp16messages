@@ -1,10 +1,10 @@
-package statusNotification
+package statusnotification
 
 import (
 	"errors"
 	"fmt"
 
-	sn "github.com/aasanchez/ocpp16messages/statusNotification/types"
+	sn "github.com/aasanchez/ocpp16messages/statusnotification/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

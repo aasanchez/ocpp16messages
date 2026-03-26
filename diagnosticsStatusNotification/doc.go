@@ -1,4 +1,4 @@
-// Package diagnosticsStatusNotification implements the Open Charge Point
+// Package diagnosticsstatusnotification implements the Open Charge Point
 // Protocol (OCPP) 1.6 DiagnosticsStatusNotification message for EV charging.
 //
 // # Handling Rules
@@ -18,4 +18,4 @@
 // During the upload process, the Charge Point MUST send
 // DiagnosticsStatusNotification.req messages to keep the Central System
 // informed of the upload status.
-package diagnosticsStatusNotification
+package diagnosticsstatusnotification

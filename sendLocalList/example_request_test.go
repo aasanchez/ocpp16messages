@@ -1,10 +1,10 @@
-package sendLocalList_test
+package sendlocallist_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/sendLocalList"
-	slt "github.com/aasanchez/ocpp16messages/sendLocalList/types"
+	"github.com/aasanchez/ocpp16messages/sendlocallist"
+	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
 )
 
 const (
@@ -15,7 +15,7 @@ const (
 // ExampleReq demonstrates creating a valid SendLocalList.req message
 // with a full list replacement.
 func ExampleReq() {
-	req, err := sendLocalList.Req(sendLocalList.ReqInput{
+	req, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion: 1,
 		LocalAuthorizationList: []slt.AuthorizationDataInput{
 			{
@@ -47,7 +47,7 @@ func ExampleReq() {
 // ExampleReq_differential demonstrates creating a SendLocalList.req message
 // with a differential update.
 func ExampleReq_differential() {
-	req, err := sendLocalList.Req(sendLocalList.ReqInput{
+	req, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion: 2,
 		LocalAuthorizationList: []slt.AuthorizationDataInput{
 			{
@@ -73,7 +73,7 @@ func ExampleReq_differential() {
 // ExampleReq_clearList demonstrates clearing the local authorization list
 // by sending an empty list with Full update type.
 func ExampleReq_clearList() {
-	req, err := sendLocalList.Req(sendLocalList.ReqInput{
+	req, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion:            3,
 		LocalAuthorizationList: nil,
 		UpdateType:             "Full",
@@ -96,7 +96,7 @@ func ExampleReq_clearList() {
 // ExampleReq_invalidUpdateType demonstrates the error returned when
 // an invalid update type is provided.
 func ExampleReq_invalidUpdateType() {
-	_, err := sendLocalList.Req(sendLocalList.ReqInput{
+	_, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion:            1,
 		LocalAuthorizationList: nil,
 		UpdateType:             "Invalid",

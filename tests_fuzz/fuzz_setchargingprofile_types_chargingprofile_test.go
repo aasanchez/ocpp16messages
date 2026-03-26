@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	spt "github.com/aasanchez/ocpp16messages/setChargingProfile/types"
+	spt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

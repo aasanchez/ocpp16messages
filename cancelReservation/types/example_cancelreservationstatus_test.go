@@ -3,7 +3,7 @@ package types_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/cancelReservation/types"
+	"github.com/aasanchez/ocpp16messages/cancelreservation/types"
 )
 
 // ExampleCancelReservationStatus demonstrates using the CancelReservationStatus

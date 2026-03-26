@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/changeConfiguration"
-	ct "github.com/aasanchez/ocpp16messages/changeConfiguration/types"
+	"github.com/aasanchez/ocpp16messages/changeconfiguration"
+	ct "github.com/aasanchez/ocpp16messages/changeconfiguration/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -23,7 +23,7 @@ func FuzzChangeConfigurationConf(f *testing.F) {
 			t.Skip()
 		}
 
-		conf, err := changeConfiguration.Conf(changeConfiguration.ConfInput{
+		conf, err := changeconfiguration.Conf(changeconfiguration.ConfInput{
 			Status: status,
 		})
 		if err != nil {

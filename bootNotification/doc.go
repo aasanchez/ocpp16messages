@@ -1,4 +1,4 @@
-// Package bootNotification implements the Open Charge Point Protocol (OCPP) 1.6
+// Package bootnotification implements the Open Charge Point Protocol (OCPP) 1.6
 // BootNotification message for EV charging.
 //
 // # Handling Rules
@@ -30,4 +30,4 @@
 //
 // While in Pending state, RemoteStartTransaction.req and
 // RemoteStopTransaction.req are not allowed.
-package bootNotification
+package bootnotification

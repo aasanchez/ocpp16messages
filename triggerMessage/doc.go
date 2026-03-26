@@ -1,4 +1,4 @@
-// Package triggerMessage implements the Open Charge Point Protocol (OCPP) 1.6
+// Package triggermessage implements the Open Charge Point Protocol (OCPP) 1.6
 // TriggerMessage message for EV charging.
 //
 // # Handling Rules
@@ -45,4 +45,4 @@
 //   - StartTransaction and StopTransaction are not supported via
 //     TriggerMessage because they represent state transitions rather than
 //     current state.
-package triggerMessage
+package triggermessage

@@ -1,4 +1,4 @@
-// Package remoteStopTransaction implements the Open Charge Point Protocol
+// Package remotestoptransaction implements the Open Charge Point Protocol
 // (OCPP) 1.6 RemoteStopTransaction message for EV charging.
 //
 // # Handling Rules
@@ -16,4 +16,4 @@
 //   - Allow a CPO operator to assist an EV driver who has difficulty
 //     stopping a transaction.
 //   - Enable mobile apps to control the transaction via the Central System.
-package remoteStopTransaction
+package remotestoptransaction

@@ -1,9 +1,9 @@
-package diagnosticsStatusNotification_test
+package diagnosticsstatusnotification_test
 
 import (
 	"fmt"
 
-	dsn "github.com/aasanchez/ocpp16messages/diagnosticsStatusNotification"
+	dsn "github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification"
 )
 
 const labelStatus = "Status:"

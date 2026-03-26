@@ -1,9 +1,9 @@
-package clearChargingProfile_test
+package clearchargingprofile_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/clearChargingProfile"
+	"github.com/aasanchez/ocpp16messages/clearchargingprofile"
 )
 
 const (
@@ -19,7 +19,7 @@ const (
 // ExampleReq demonstrates creating a ClearChargingProfile.req message
 // with no optional fields (clears all charging profiles).
 func ExampleReq() {
-	_, err := clearChargingProfile.Req(clearChargingProfile.ReqInput{
+	_, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
 		Id:                     nil,
 		ConnectorId:            nil,
 		ChargingProfilePurpose: nil,
@@ -41,7 +41,7 @@ func ExampleReq() {
 func ExampleReq_withId() {
 	profileId := exampleIdValue
 
-	req, err := clearChargingProfile.Req(clearChargingProfile.ReqInput{
+	req, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
 		Id:                     &profileId,
 		ConnectorId:            nil,
 		ChargingProfilePurpose: nil,
@@ -63,7 +63,7 @@ func ExampleReq_withId() {
 func ExampleReq_withConnectorId() {
 	connectorId := exampleConnectorId
 
-	req, err := clearChargingProfile.Req(clearChargingProfile.ReqInput{
+	req, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
 		Id:                     nil,
 		ConnectorId:            &connectorId,
 		ChargingProfilePurpose: nil,
@@ -85,7 +85,7 @@ func ExampleReq_withConnectorId() {
 func ExampleReq_withPurpose() {
 	purpose := "TxProfile"
 
-	req, err := clearChargingProfile.Req(clearChargingProfile.ReqInput{
+	req, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
 		Id:                     nil,
 		ConnectorId:            nil,
 		ChargingProfilePurpose: &purpose,
@@ -107,7 +107,7 @@ func ExampleReq_withPurpose() {
 func ExampleReq_withStackLevel() {
 	stackLevel := exampleStackLevelZero
 
-	req, err := clearChargingProfile.Req(clearChargingProfile.ReqInput{
+	req, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
 		Id:                     nil,
 		ConnectorId:            nil,
 		ChargingProfilePurpose: nil,
@@ -132,7 +132,7 @@ func ExampleReq_withAllFields() {
 	purpose := "TxDefaultProfile"
 	stackLevel := exampleStackLevelThree
 
-	req, err := clearChargingProfile.Req(clearChargingProfile.ReqInput{
+	req, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
 		Id:                     &profileId,
 		ConnectorId:            &connectorId,
 		ChargingProfilePurpose: &purpose,
@@ -160,7 +160,7 @@ func ExampleReq_withAllFields() {
 func ExampleReq_invalidPurpose() {
 	purpose := "Invalid"
 
-	_, err := clearChargingProfile.Req(clearChargingProfile.ReqInput{
+	_, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
 		Id:                     nil,
 		ConnectorId:            nil,
 		ChargingProfilePurpose: &purpose,
@@ -178,7 +178,7 @@ func ExampleReq_invalidPurpose() {
 func ExampleReq_negativeId() {
 	profileId := exampleNegativeId
 
-	_, err := clearChargingProfile.Req(clearChargingProfile.ReqInput{
+	_, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
 		Id:                     &profileId,
 		ConnectorId:            nil,
 		ChargingProfilePurpose: nil,

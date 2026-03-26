@@ -1,9 +1,9 @@
-package getCompositeSchedule_test
+package getcompositeschedule_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/getCompositeSchedule"
+	"github.com/aasanchez/ocpp16messages/getcompositeschedule"
 )
 
 const (
@@ -20,7 +20,7 @@ const (
 // ExampleReq demonstrates creating a GetCompositeSchedule.req message
 // with required fields only.
 func ExampleReq() {
-	req, err := getCompositeSchedule.Req(getCompositeSchedule.ReqInput{
+	req, err := getcompositeschedule.Req(getcompositeschedule.ReqInput{
 		ConnectorId:      exampleConnectorIdOne,
 		Duration:         exampleDurationThreeHund,
 		ChargingRateUnit: nil,
@@ -43,7 +43,7 @@ func ExampleReq() {
 func ExampleReq_withChargingRateUnit() {
 	unit := "W"
 
-	req, err := getCompositeSchedule.Req(getCompositeSchedule.ReqInput{
+	req, err := getcompositeschedule.Req(getcompositeschedule.ReqInput{
 		ConnectorId:      exampleConnectorIdOne,
 		Duration:         exampleDurationSixHund,
 		ChargingRateUnit: &unit,
@@ -66,7 +66,7 @@ func ExampleReq_withChargingRateUnit() {
 // ExampleReq_entireChargePoint demonstrates requesting a composite schedule
 // for the entire Charge Point by using ConnectorId 0.
 func ExampleReq_entireChargePoint() {
-	req, err := getCompositeSchedule.Req(getCompositeSchedule.ReqInput{
+	req, err := getcompositeschedule.Req(getcompositeschedule.ReqInput{
 		ConnectorId:      exampleConnectorIdZero,
 		Duration:         exampleDurationThreeHund,
 		ChargingRateUnit: nil,
@@ -87,7 +87,7 @@ func ExampleReq_entireChargePoint() {
 // ExampleReq_invalidConnectorId demonstrates the error returned when
 // a negative ConnectorId is provided.
 func ExampleReq_invalidConnectorId() {
-	_, err := getCompositeSchedule.Req(getCompositeSchedule.ReqInput{
+	_, err := getcompositeschedule.Req(getcompositeschedule.ReqInput{
 		ConnectorId:      exampleNegativeValue,
 		Duration:         exampleDurationThreeHund,
 		ChargingRateUnit: nil,
@@ -104,7 +104,7 @@ func ExampleReq_invalidConnectorId() {
 func ExampleReq_invalidChargingRateUnit() {
 	unit := "X"
 
-	_, err := getCompositeSchedule.Req(getCompositeSchedule.ReqInput{
+	_, err := getcompositeschedule.Req(getcompositeschedule.ReqInput{
 		ConnectorId:      exampleConnectorIdOne,
 		Duration:         exampleDurationThreeHund,
 		ChargingRateUnit: &unit,

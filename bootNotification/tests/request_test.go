@@ -1,10 +1,10 @@
-package bootNotification_test
+package bootnotification_test
 
 import (
 	"strings"
 	"testing"
 
-	bn "github.com/aasanchez/ocpp16messages/bootNotification"
+	bn "github.com/aasanchez/ocpp16messages/bootnotification"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

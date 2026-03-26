@@ -1,10 +1,10 @@
-package changeAvailability
+package changeavailability
 
 import (
 	"errors"
 	"fmt"
 
-	mcat "github.com/aasanchez/ocpp16messages/changeAvailability/types"
+	mcat "github.com/aasanchez/ocpp16messages/changeavailability/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

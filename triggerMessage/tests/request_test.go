@@ -1,11 +1,11 @@
-package triggerMessage_test
+package triggermessage_test
 
 import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/triggerMessage"
-	tt "github.com/aasanchez/ocpp16messages/triggerMessage/types"
+	"github.com/aasanchez/ocpp16messages/triggermessage"
+	tt "github.com/aasanchez/ocpp16messages/triggermessage/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -23,7 +23,7 @@ const (
 func TestReq_Valid_BootNotification(t *testing.T) {
 	t.Parallel()
 
-	req, err := triggerMessage.Req(triggerMessage.ReqInput{
+	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "BootNotification",
 		ConnectorId:      nil,
 	})
@@ -43,7 +43,7 @@ func TestReq_Valid_BootNotification(t *testing.T) {
 func TestReq_Valid_DiagnosticsStatusNotification(t *testing.T) {
 	t.Parallel()
 
-	req, err := triggerMessage.Req(triggerMessage.ReqInput{
+	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "DiagnosticsStatusNotification",
 		ConnectorId:      nil,
 	})
@@ -63,7 +63,7 @@ func TestReq_Valid_DiagnosticsStatusNotification(t *testing.T) {
 func TestReq_Valid_FirmwareStatusNotification(t *testing.T) {
 	t.Parallel()
 
-	req, err := triggerMessage.Req(triggerMessage.ReqInput{
+	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "FirmwareStatusNotification",
 		ConnectorId:      nil,
 	})
@@ -83,7 +83,7 @@ func TestReq_Valid_FirmwareStatusNotification(t *testing.T) {
 func TestReq_Valid_Heartbeat(t *testing.T) {
 	t.Parallel()
 
-	req, err := triggerMessage.Req(triggerMessage.ReqInput{
+	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Heartbeat",
 		ConnectorId:      nil,
 	})
@@ -103,7 +103,7 @@ func TestReq_Valid_Heartbeat(t *testing.T) {
 func TestReq_Valid_MeterValues(t *testing.T) {
 	t.Parallel()
 
-	req, err := triggerMessage.Req(triggerMessage.ReqInput{
+	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "MeterValues",
 		ConnectorId:      nil,
 	})
@@ -123,7 +123,7 @@ func TestReq_Valid_MeterValues(t *testing.T) {
 func TestReq_Valid_StatusNotification(t *testing.T) {
 	t.Parallel()
 
-	req, err := triggerMessage.Req(triggerMessage.ReqInput{
+	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "StatusNotification",
 		ConnectorId:      nil,
 	})
@@ -145,7 +145,7 @@ func TestReq_Valid_WithConnectorIdZero(t *testing.T) {
 
 	connectorId := connectorIdZero
 
-	req, err := triggerMessage.Req(triggerMessage.ReqInput{
+	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "StatusNotification",
 		ConnectorId:      &connectorId,
 	})
@@ -171,7 +171,7 @@ func TestReq_Valid_WithConnectorIdOne(t *testing.T) {
 
 	connectorId := connectorIdOne
 
-	req, err := triggerMessage.Req(triggerMessage.ReqInput{
+	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "MeterValues",
 		ConnectorId:      &connectorId,
 	})
@@ -197,7 +197,7 @@ func TestReq_Valid_WithConnectorIdMax(t *testing.T) {
 
 	connectorId := connectorIdMax
 
-	req, err := triggerMessage.Req(triggerMessage.ReqInput{
+	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Heartbeat",
 		ConnectorId:      &connectorId,
 	})
@@ -221,7 +221,7 @@ func TestReq_Valid_WithConnectorIdMax(t *testing.T) {
 func TestReq_Valid_WithoutConnectorId(t *testing.T) {
 	t.Parallel()
 
-	req, err := triggerMessage.Req(triggerMessage.ReqInput{
+	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Heartbeat",
 		ConnectorId:      nil,
 	})
@@ -237,7 +237,7 @@ func TestReq_Valid_WithoutConnectorId(t *testing.T) {
 func TestReq_EmptyRequestedMessage(t *testing.T) {
 	t.Parallel()
 
-	_, err := triggerMessage.Req(triggerMessage.ReqInput{
+	_, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "",
 		ConnectorId:      nil,
 	})
@@ -253,7 +253,7 @@ func TestReq_EmptyRequestedMessage(t *testing.T) {
 func TestReq_InvalidRequestedMessage_Unknown(t *testing.T) {
 	t.Parallel()
 
-	_, err := triggerMessage.Req(triggerMessage.ReqInput{
+	_, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Unknown",
 		ConnectorId:      nil,
 	})
@@ -269,7 +269,7 @@ func TestReq_InvalidRequestedMessage_Unknown(t *testing.T) {
 func TestReq_InvalidRequestedMessage_Lowercase(t *testing.T) {
 	t.Parallel()
 
-	_, err := triggerMessage.Req(triggerMessage.ReqInput{
+	_, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "heartbeat",
 		ConnectorId:      nil,
 	})
@@ -285,7 +285,7 @@ func TestReq_InvalidRequestedMessage_Lowercase(t *testing.T) {
 func TestReq_InvalidRequestedMessage_StartTransaction(t *testing.T) {
 	t.Parallel()
 
-	_, err := triggerMessage.Req(triggerMessage.ReqInput{
+	_, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "StartTransaction",
 		ConnectorId:      nil,
 	})
@@ -303,7 +303,7 @@ func TestReq_InvalidConnectorId_Negative(t *testing.T) {
 
 	connectorId := connectorIdNegative
 
-	_, err := triggerMessage.Req(triggerMessage.ReqInput{
+	_, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Heartbeat",
 		ConnectorId:      &connectorId,
 	})
@@ -321,7 +321,7 @@ func TestReq_InvalidConnectorId_Overflow(t *testing.T) {
 
 	connectorId := connectorIdOverflow
 
-	_, err := triggerMessage.Req(triggerMessage.ReqInput{
+	_, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Heartbeat",
 		ConnectorId:      &connectorId,
 	})
@@ -339,7 +339,7 @@ func TestReq_MultipleErrors_InvalidMessageAndConnectorId(t *testing.T) {
 
 	connectorId := connectorIdNegative
 
-	_, err := triggerMessage.Req(triggerMessage.ReqInput{
+	_, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Unknown",
 		ConnectorId:      &connectorId,
 	})

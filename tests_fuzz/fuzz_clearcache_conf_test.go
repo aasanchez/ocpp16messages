@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/clearCache"
-	ct "github.com/aasanchez/ocpp16messages/clearCache/types"
+	"github.com/aasanchez/ocpp16messages/clearcache"
+	ct "github.com/aasanchez/ocpp16messages/clearcache/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -21,7 +21,7 @@ func FuzzClearCacheConf(f *testing.F) {
 			t.Skip()
 		}
 
-		conf, err := clearCache.Conf(clearCache.ConfInput{
+		conf, err := clearcache.Conf(clearcache.ConfInput{
 			Status: status,
 		})
 		if err != nil {

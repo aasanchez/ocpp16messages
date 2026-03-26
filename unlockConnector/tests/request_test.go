@@ -1,11 +1,11 @@
-package unlockConnector_test
+package unlockconnector_test
 
 import (
 	"strings"
 	"testing"
 
 	st "github.com/aasanchez/ocpp16messages/types"
-	uc "github.com/aasanchez/ocpp16messages/unlockConnector"
+	uc "github.com/aasanchez/ocpp16messages/unlockconnector"
 )
 
 const (

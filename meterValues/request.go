@@ -1,4 +1,4 @@
-package meterValues
+package metervalues
 
 import (
 	"errors"
@@ -109,13 +109,13 @@ func validateReqTransactionId(
 	return &intVal, errs
 }
 
-const meterValuesLenZero = 0
+const metervaluesLenZero = 0
 
 func validateReqMeterValues(
-	meterValues []st.MeterValueInput,
+	metervalues []st.MeterValueInput,
 	errs []error,
 ) ([]st.MeterValue, []error) {
-	if len(meterValues) == meterValuesLenZero {
+	if len(metervalues) == metervaluesLenZero {
 		return nil, append(
 			errs,
 			fmt.Errorf(st.ErrorFieldFormat, "MeterValue", st.ErrEmptyValue),
@@ -124,7 +124,7 @@ func validateReqMeterValues(
 
 	var validValues []st.MeterValue
 
-	for i, mvInput := range meterValues {
+	for i, mvInput := range metervalues {
 		meterValue, err := st.NewMeterValue(mvInput)
 		if err != nil {
 			errs = append(errs, fmt.Errorf("meterValue[%d]: %w", i, err))

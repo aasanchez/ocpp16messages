@@ -1,4 +1,4 @@
-package remoteStopTransaction
+package remotestoptransaction
 
 import (
 	"fmt"

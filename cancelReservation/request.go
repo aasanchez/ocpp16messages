@@ -1,4 +1,4 @@
-package cancelReservation
+package cancelreservation
 
 import (
 	"fmt"

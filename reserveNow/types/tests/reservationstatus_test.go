@@ -3,7 +3,7 @@ package types_test
 import (
 	"testing"
 
-	rt "github.com/aasanchez/ocpp16messages/reserveNow/types"
+	rt "github.com/aasanchez/ocpp16messages/reservenow/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

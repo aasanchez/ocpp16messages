@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/clearChargingProfile"
-	ct "github.com/aasanchez/ocpp16messages/clearChargingProfile/types"
+	"github.com/aasanchez/ocpp16messages/clearchargingprofile"
+	ct "github.com/aasanchez/ocpp16messages/clearchargingprofile/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -21,7 +21,7 @@ func FuzzClearChargingProfileConf(f *testing.F) {
 			t.Skip()
 		}
 
-		conf, err := clearChargingProfile.Conf(clearChargingProfile.ConfInput{
+		conf, err := clearchargingprofile.Conf(clearchargingprofile.ConfInput{
 			Status: status,
 		})
 		if err != nil {

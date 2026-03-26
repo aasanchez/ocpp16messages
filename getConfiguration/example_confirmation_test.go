@@ -1,10 +1,10 @@
-package getConfiguration_test
+package getconfiguration_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/getConfiguration"
-	gt "github.com/aasanchez/ocpp16messages/getConfiguration/types"
+	"github.com/aasanchez/ocpp16messages/getconfiguration"
+	gt "github.com/aasanchez/ocpp16messages/getconfiguration/types"
 )
 
 const (
@@ -18,7 +18,7 @@ const (
 func ExampleConf() {
 	value := "300"
 
-	conf, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: []gt.KeyValueInput{
 			{
 				Key:      "HeartbeatInterval",
@@ -50,7 +50,7 @@ func ExampleConf() {
 func ExampleConf_withReadonlyKey() {
 	value := "1.6"
 
-	conf, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: []gt.KeyValueInput{
 			{
 				Key:      "SupportedFeatureProfiles",
@@ -76,7 +76,7 @@ func ExampleConf_withReadonlyKey() {
 // ExampleConf_withUnknownKeys demonstrates creating a GetConfiguration.conf
 // message with unknown keys.
 func ExampleConf_withUnknownKeys() {
-	conf, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: nil,
 		UnknownKey:       []string{"NonExistentKey", "AnotherUnknown"},
 	})
@@ -96,7 +96,7 @@ func ExampleConf_withUnknownKeys() {
 // ExampleConf_withKeyNoValue demonstrates creating a GetConfiguration.conf
 // message with a known key that has no value set.
 func ExampleConf_withKeyNoValue() {
-	conf, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: []gt.KeyValueInput{
 			{
 				Key:      "AuthorizationKey",
@@ -124,7 +124,7 @@ func ExampleConf_withKeyNoValue() {
 func ExampleConf_complete() {
 	value := "60"
 
-	conf, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: []gt.KeyValueInput{
 			{
 				Key:      "HeartbeatInterval",
@@ -150,7 +150,7 @@ func ExampleConf_complete() {
 // ExampleConf_empty demonstrates creating an empty GetConfiguration.conf
 // message (valid when Charge Point has no configuration).
 func ExampleConf_empty() {
-	conf, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: nil,
 		UnknownKey:       nil,
 	})
@@ -170,7 +170,7 @@ func ExampleConf_empty() {
 // ExampleConf_invalidConfigKey demonstrates the error returned when
 // a configuration key is invalid.
 func ExampleConf_invalidConfigKey() {
-	_, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	_, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: []gt.KeyValueInput{
 			{
 				Key:      "",
@@ -190,7 +190,7 @@ func ExampleConf_invalidConfigKey() {
 // ExampleConf_invalidUnknownKey demonstrates the error returned when
 // an unknown key is invalid.
 func ExampleConf_invalidUnknownKey() {
-	_, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	_, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: nil,
 		UnknownKey:       []string{"ValidKey", ""},
 	})

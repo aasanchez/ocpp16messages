@@ -1,4 +1,4 @@
-package reserveNow
+package reservenow
 
 import (
 	"errors"

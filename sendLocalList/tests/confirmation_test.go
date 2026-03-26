@@ -1,11 +1,11 @@
-package sendLocalList_test
+package sendlocallist_test
 
 import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/sendLocalList"
-	slt "github.com/aasanchez/ocpp16messages/sendLocalList/types"
+	"github.com/aasanchez/ocpp16messages/sendlocallist"
+	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -16,7 +16,7 @@ const (
 func TestConf_Valid_Accepted(t *testing.T) {
 	t.Parallel()
 
-	conf, err := sendLocalList.Conf(sendLocalList.ConfInput{
+	conf, err := sendlocallist.Conf(sendlocallist.ConfInput{
 		Status: "Accepted",
 	})
 	if err != nil {
@@ -35,7 +35,7 @@ func TestConf_Valid_Accepted(t *testing.T) {
 func TestConf_Valid_Failed(t *testing.T) {
 	t.Parallel()
 
-	conf, err := sendLocalList.Conf(sendLocalList.ConfInput{
+	conf, err := sendlocallist.Conf(sendlocallist.ConfInput{
 		Status: "Failed",
 	})
 	if err != nil {
@@ -54,7 +54,7 @@ func TestConf_Valid_Failed(t *testing.T) {
 func TestConf_Valid_NotSupported(t *testing.T) {
 	t.Parallel()
 
-	conf, err := sendLocalList.Conf(sendLocalList.ConfInput{
+	conf, err := sendlocallist.Conf(sendlocallist.ConfInput{
 		Status: "NotSupported",
 	})
 	if err != nil {
@@ -73,7 +73,7 @@ func TestConf_Valid_NotSupported(t *testing.T) {
 func TestConf_Valid_VersionMismatch(t *testing.T) {
 	t.Parallel()
 
-	conf, err := sendLocalList.Conf(sendLocalList.ConfInput{
+	conf, err := sendlocallist.Conf(sendlocallist.ConfInput{
 		Status: "VersionMismatch",
 	})
 	if err != nil {
@@ -92,7 +92,7 @@ func TestConf_Valid_VersionMismatch(t *testing.T) {
 func TestConf_InvalidStatus_Empty(t *testing.T) {
 	t.Parallel()
 
-	_, err := sendLocalList.Conf(sendLocalList.ConfInput{
+	_, err := sendlocallist.Conf(sendlocallist.ConfInput{
 		Status: "",
 	})
 	if err == nil {
@@ -107,7 +107,7 @@ func TestConf_InvalidStatus_Empty(t *testing.T) {
 func TestConf_InvalidStatus_Unknown(t *testing.T) {
 	t.Parallel()
 
-	_, err := sendLocalList.Conf(sendLocalList.ConfInput{
+	_, err := sendlocallist.Conf(sendlocallist.ConfInput{
 		Status: "Unknown",
 	})
 	if err == nil {
@@ -122,7 +122,7 @@ func TestConf_InvalidStatus_Unknown(t *testing.T) {
 func TestConf_InvalidStatus_Lowercase(t *testing.T) {
 	t.Parallel()
 
-	_, err := sendLocalList.Conf(sendLocalList.ConfInput{
+	_, err := sendlocallist.Conf(sendlocallist.ConfInput{
 		Status: "accepted",
 	})
 	if err == nil {

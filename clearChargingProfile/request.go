@@ -1,4 +1,4 @@
-package clearChargingProfile
+package clearchargingprofile
 
 import (
 	"errors"

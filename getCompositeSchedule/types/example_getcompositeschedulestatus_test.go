@@ -3,7 +3,7 @@ package types_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/getCompositeSchedule/types"
+	"github.com/aasanchez/ocpp16messages/getcompositeschedule/types"
 )
 
 // ExampleGetCompositeScheduleStatus demonstrates using the

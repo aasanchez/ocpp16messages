@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"testing"
 
-	gct "github.com/aasanchez/ocpp16messages/getConfiguration/types"
-	gllt "github.com/aasanchez/ocpp16messages/getLocalListVersion/types"
-	scpt "github.com/aasanchez/ocpp16messages/setChargingProfile/types"
+	gct "github.com/aasanchez/ocpp16messages/getconfiguration/types"
+	gllt "github.com/aasanchez/ocpp16messages/getlocallistversion/types"
+	scpt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

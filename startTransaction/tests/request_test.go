@@ -1,11 +1,11 @@
-package startTransaction_test
+package starttransaction_test
 
 import (
 	"errors"
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/startTransaction"
+	"github.com/aasanchez/ocpp16messages/starttransaction"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -26,7 +26,7 @@ const (
 func TestReq_Valid(t *testing.T) {
 	t.Parallel()
 
-	req, err := startTransaction.Req(startTransaction.ReqInput{
+	req, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testValidIdTag,
 		MeterStart:    testMeterStart1000,
@@ -55,7 +55,7 @@ func TestReq_ValidWithReservation(t *testing.T) {
 
 	reservationId := testReservationId42
 
-	req, err := startTransaction.Req(startTransaction.ReqInput{
+	req, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testValidIdTag,
 		MeterStart:    testMeterStart1000,
@@ -83,7 +83,7 @@ func TestReq_ValidWithReservation(t *testing.T) {
 func TestReq_ConnectorIdZero(t *testing.T) {
 	t.Parallel()
 
-	req, err := startTransaction.Req(startTransaction.ReqInput{
+	req, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   testValueZero,
 		IdTag:         testValidIdTag,
 		MeterStart:    testMeterStart1000,
@@ -102,7 +102,7 @@ func TestReq_ConnectorIdZero(t *testing.T) {
 func TestReq_ConnectorIdNegative(t *testing.T) {
 	t.Parallel()
 
-	_, err := startTransaction.Req(startTransaction.ReqInput{
+	_, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   testValueNegativeOne,
 		IdTag:         testValidIdTag,
 		MeterStart:    testMeterStart1000,
@@ -121,7 +121,7 @@ func TestReq_ConnectorIdNegative(t *testing.T) {
 func TestReq_EmptyIdTag(t *testing.T) {
 	t.Parallel()
 
-	_, err := startTransaction.Req(startTransaction.ReqInput{
+	_, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         "",
 		MeterStart:    testMeterStart1000,
@@ -140,7 +140,7 @@ func TestReq_EmptyIdTag(t *testing.T) {
 func TestReq_IdTagTooLong(t *testing.T) {
 	t.Parallel()
 
-	_, err := startTransaction.Req(startTransaction.ReqInput{
+	_, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         "RFID-ABC123456789012345", // 23 chars, max is 20
 		MeterStart:    testMeterStart1000,
@@ -162,7 +162,7 @@ func TestReq_IdTagTooLong(t *testing.T) {
 func TestReq_IdTagInvalidCharacters(t *testing.T) {
 	t.Parallel()
 
-	_, err := startTransaction.Req(startTransaction.ReqInput{
+	_, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         "RFID\x00ABC",
 		MeterStart:    testMeterStart1000,
@@ -184,7 +184,7 @@ func TestReq_IdTagInvalidCharacters(t *testing.T) {
 func TestReq_MeterStartZero(t *testing.T) {
 	t.Parallel()
 
-	req, err := startTransaction.Req(startTransaction.ReqInput{
+	req, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testValidIdTag,
 		MeterStart:    testValueZero,
@@ -203,7 +203,7 @@ func TestReq_MeterStartZero(t *testing.T) {
 func TestReq_MeterStartNegative(t *testing.T) {
 	t.Parallel()
 
-	_, err := startTransaction.Req(startTransaction.ReqInput{
+	_, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testValidIdTag,
 		MeterStart:    testValueNegativeOne,
@@ -222,7 +222,7 @@ func TestReq_MeterStartNegative(t *testing.T) {
 func TestReq_InvalidTimestamp(t *testing.T) {
 	t.Parallel()
 
-	_, err := startTransaction.Req(startTransaction.ReqInput{
+	_, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testValidIdTag,
 		MeterStart:    testMeterStart1000,
@@ -241,7 +241,7 @@ func TestReq_InvalidTimestamp(t *testing.T) {
 func TestReq_EmptyTimestamp(t *testing.T) {
 	t.Parallel()
 
-	_, err := startTransaction.Req(startTransaction.ReqInput{
+	_, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testValidIdTag,
 		MeterStart:    testMeterStart1000,
@@ -262,7 +262,7 @@ func TestReq_ReservationIdNegative(t *testing.T) {
 
 	reservationId := testValueNegativeOne
 
-	_, err := startTransaction.Req(startTransaction.ReqInput{
+	_, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testValidIdTag,
 		MeterStart:    testMeterStart1000,
@@ -281,7 +281,7 @@ func TestReq_ReservationIdNegative(t *testing.T) {
 func TestReq_MultipleErrors(t *testing.T) {
 	t.Parallel()
 
-	_, err := startTransaction.Req(startTransaction.ReqInput{
+	_, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   testValueNegativeOne,
 		IdTag:         "",
 		MeterStart:    testValueNegativeOne,
@@ -316,7 +316,7 @@ func TestReq_MultipleErrorsWithReservation(t *testing.T) {
 
 	reservationId := testValueNegativeOne
 
-	_, err := startTransaction.Req(startTransaction.ReqInput{
+	_, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   testValueNegativeOne,
 		IdTag:         "",
 		MeterStart:    testValueNegativeOne,

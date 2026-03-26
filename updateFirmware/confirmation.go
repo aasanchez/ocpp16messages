@@ -1,4 +1,4 @@
-package updateFirmware
+package updatefirmware
 
 // ConfInput represents the raw input data for creating an UpdateFirmware.conf
 // message. This message has no fields per OCPP 1.6 specification.

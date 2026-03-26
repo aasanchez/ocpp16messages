@@ -1,4 +1,4 @@
-// Package dataTransfer implements the Open Charge Point Protocol (OCPP) 1.6
+// Package datatransfer implements the Open Charge Point Protocol (OCPP) 1.6
 // DataTransfer message for EV charging.
 //
 // # Handling Rules
@@ -24,4 +24,4 @@
 //
 // In all other cases, the meaning of status Accepted or Rejected and the usage
 // of the data field are defined by vendor-specific agreement.
-package dataTransfer
+package datatransfer

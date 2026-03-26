@@ -1,4 +1,4 @@
-package dataTransfer
+package datatransfer
 
 import (
 	"errors"

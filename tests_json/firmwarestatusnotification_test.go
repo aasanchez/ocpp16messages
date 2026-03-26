@@ -1,9 +1,9 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	fsn "github.com/aasanchez/ocpp16messages/firmwareStatusNotification"
+	fsn "github.com/aasanchez/ocpp16messages/firmwarestatusnotification"
 )
 
 func TestFirmwareStatusNotificationReq_JSONRoundTrip(t *testing.T) {
@@ -11,7 +11,7 @@ func TestFirmwareStatusNotificationReq_JSONRoundTrip(t *testing.T) {
 
 	req, err := fsn.Req(fsn.ReqInput{Status: "Idle"})
 	if err != nil {
-		t.Fatalf("firmwareStatusNotification.Req: %v", err)
+		t.Fatalf("firmwarestatusnotification.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -23,7 +23,7 @@ func TestFirmwareStatusNotificationConf_JSONRoundTrip(t *testing.T) {
 
 	conf, err := fsn.Conf(fsn.ConfInput{})
 	if err != nil {
-		t.Fatalf("firmwareStatusNotification.Conf: %v", err)
+		t.Fatalf("firmwarestatusnotification.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

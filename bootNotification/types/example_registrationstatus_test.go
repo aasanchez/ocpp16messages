@@ -3,7 +3,7 @@ package types_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/bootNotification/types"
+	"github.com/aasanchez/ocpp16messages/bootnotification/types"
 )
 
 // ExampleRegistrationStatus demonstrates using the RegistrationStatus

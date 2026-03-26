@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	st "github.com/aasanchez/ocpp16messages/types"
-	"github.com/aasanchez/ocpp16messages/unlockConnector"
+	"github.com/aasanchez/ocpp16messages/unlockconnector"
 )
 
 func FuzzUnlockConnectorReq(f *testing.F) {
@@ -18,7 +18,7 @@ func FuzzUnlockConnectorReq(f *testing.F) {
 	f.Add(math.MaxUint16 + 1)
 
 	f.Fuzz(func(t *testing.T, connectorId int) {
-		req, err := unlockConnector.Req(unlockConnector.ReqInput{
+		req, err := unlockconnector.Req(unlockconnector.ReqInput{
 			ConnectorId: connectorId,
 		})
 		if err != nil {

@@ -1,9 +1,9 @@
-package dataTransfer_test
+package datatransfer_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/dataTransfer"
+	"github.com/aasanchez/ocpp16messages/datatransfer"
 )
 
 const labelStatus = "Status:"
@@ -11,7 +11,7 @@ const labelStatus = "Status:"
 // ExampleConf demonstrates creating a valid DataTransfer.conf message
 // with an Accepted status.
 func ExampleConf() {
-	conf, err := dataTransfer.Conf(dataTransfer.ConfInput{
+	conf, err := datatransfer.Conf(datatransfer.ConfInput{
 		Status: "Accepted",
 		Data:   nil,
 	})
@@ -29,7 +29,7 @@ func ExampleConf() {
 // ExampleConf_rejected demonstrates creating a DataTransfer.conf message
 // with a Rejected status.
 func ExampleConf_rejected() {
-	conf, err := dataTransfer.Conf(dataTransfer.ConfInput{
+	conf, err := datatransfer.Conf(datatransfer.ConfInput{
 		Status: "Rejected",
 		Data:   nil,
 	})
@@ -47,7 +47,7 @@ func ExampleConf_rejected() {
 // ExampleConf_unknownVendor demonstrates creating a DataTransfer.conf message
 // with an UnknownVendor status, used when the vendorId is not recognized.
 func ExampleConf_unknownVendor() {
-	conf, err := dataTransfer.Conf(dataTransfer.ConfInput{
+	conf, err := datatransfer.Conf(datatransfer.ConfInput{
 		Status: "UnknownVendor",
 		Data:   nil,
 	})
@@ -65,7 +65,7 @@ func ExampleConf_unknownVendor() {
 // ExampleConf_unknownMessageId demonstrates creating a DataTransfer.conf
 // message with an UnknownMessageId status.
 func ExampleConf_unknownMessageId() {
-	conf, err := dataTransfer.Conf(dataTransfer.ConfInput{
+	conf, err := datatransfer.Conf(datatransfer.ConfInput{
 		Status: "UnknownMessageId",
 		Data:   nil,
 	})
@@ -85,7 +85,7 @@ func ExampleConf_unknownMessageId() {
 func ExampleConf_withData() {
 	data := `{"temperature": 25.5}`
 
-	conf, err := dataTransfer.Conf(dataTransfer.ConfInput{
+	conf, err := datatransfer.Conf(datatransfer.ConfInput{
 		Status: "Accepted",
 		Data:   &data,
 	})
@@ -105,7 +105,7 @@ func ExampleConf_withData() {
 // ExampleConf_invalidStatus demonstrates the error returned when
 // an invalid status is provided.
 func ExampleConf_invalidStatus() {
-	_, err := dataTransfer.Conf(dataTransfer.ConfInput{
+	_, err := datatransfer.Conf(datatransfer.ConfInput{
 		Status: "InvalidStatus",
 		Data:   nil,
 	})

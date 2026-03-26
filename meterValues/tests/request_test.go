@@ -1,10 +1,10 @@
-package meterValues_test
+package metervalues_test
 
 import (
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/meterValues"
+	"github.com/aasanchez/ocpp16messages/metervalues"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -31,7 +31,7 @@ func intPtr(i int) *int {
 func TestReq_ValidMinimalInput(t *testing.T) {
 	t.Parallel()
 
-	input := meterValues.ReqInput{
+	input := metervalues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: nil,
 		MeterValue: []st.MeterValueInput{
@@ -52,7 +52,7 @@ func TestReq_ValidMinimalInput(t *testing.T) {
 		},
 	}
 
-	req, err := meterValues.Req(input)
+	req, err := metervalues.Req(input)
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
 	}
@@ -77,7 +77,7 @@ func TestReq_ValidMinimalInput(t *testing.T) {
 func TestReq_ValidWithTransactionId(t *testing.T) {
 	t.Parallel()
 
-	input := meterValues.ReqInput{
+	input := metervalues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: intPtr(validTransactionId),
 		MeterValue: []st.MeterValueInput{
@@ -98,7 +98,7 @@ func TestReq_ValidWithTransactionId(t *testing.T) {
 		},
 	}
 
-	req, err := meterValues.Req(input)
+	req, err := metervalues.Req(input)
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
 	}
@@ -119,7 +119,7 @@ func TestReq_ValidWithTransactionId(t *testing.T) {
 func TestReq_ValidConnectorIdZero(t *testing.T) {
 	t.Parallel()
 
-	input := meterValues.ReqInput{
+	input := metervalues.ReqInput{
 		ConnectorId:   connectorIdZero,
 		TransactionId: nil,
 		MeterValue: []st.MeterValueInput{
@@ -140,7 +140,7 @@ func TestReq_ValidConnectorIdZero(t *testing.T) {
 		},
 	}
 
-	req, err := meterValues.Req(input)
+	req, err := metervalues.Req(input)
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
 	}
@@ -157,7 +157,7 @@ func TestReq_ValidConnectorIdZero(t *testing.T) {
 func TestReq_ValidMultipleMeterValues(t *testing.T) {
 	t.Parallel()
 
-	input := meterValues.ReqInput{
+	input := metervalues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: nil,
 		MeterValue: []st.MeterValueInput{
@@ -192,7 +192,7 @@ func TestReq_ValidMultipleMeterValues(t *testing.T) {
 		},
 	}
 
-	req, err := meterValues.Req(input)
+	req, err := metervalues.Req(input)
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
 	}
@@ -209,7 +209,7 @@ func TestReq_ValidMultipleMeterValues(t *testing.T) {
 func TestReq_NegativeConnectorId(t *testing.T) {
 	t.Parallel()
 
-	input := meterValues.ReqInput{
+	input := metervalues.ReqInput{
 		ConnectorId:   negativeConnectorId,
 		TransactionId: nil,
 		MeterValue: []st.MeterValueInput{
@@ -230,7 +230,7 @@ func TestReq_NegativeConnectorId(t *testing.T) {
 		},
 	}
 
-	_, err := meterValues.Req(input)
+	_, err := metervalues.Req(input)
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "negative connector id")
 	}
@@ -243,7 +243,7 @@ func TestReq_NegativeConnectorId(t *testing.T) {
 func TestReq_NegativeTransactionId(t *testing.T) {
 	t.Parallel()
 
-	input := meterValues.ReqInput{
+	input := metervalues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: intPtr(invalidTransactionId),
 		MeterValue: []st.MeterValueInput{
@@ -264,7 +264,7 @@ func TestReq_NegativeTransactionId(t *testing.T) {
 		},
 	}
 
-	_, err := meterValues.Req(input)
+	_, err := metervalues.Req(input)
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "negative transaction id")
 	}
@@ -277,13 +277,13 @@ func TestReq_NegativeTransactionId(t *testing.T) {
 func TestReq_EmptyMeterValue(t *testing.T) {
 	t.Parallel()
 
-	input := meterValues.ReqInput{
+	input := metervalues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: nil,
 		MeterValue:    []st.MeterValueInput{},
 	}
 
-	_, err := meterValues.Req(input)
+	_, err := metervalues.Req(input)
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "empty meter value")
 	}
@@ -296,13 +296,13 @@ func TestReq_EmptyMeterValue(t *testing.T) {
 func TestReq_NilMeterValue(t *testing.T) {
 	t.Parallel()
 
-	input := meterValues.ReqInput{
+	input := metervalues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: nil,
 		MeterValue:    nil,
 	}
 
-	_, err := meterValues.Req(input)
+	_, err := metervalues.Req(input)
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "nil meter value")
 	}
@@ -315,7 +315,7 @@ func TestReq_NilMeterValue(t *testing.T) {
 func TestReq_InvalidMeterValue(t *testing.T) {
 	t.Parallel()
 
-	input := meterValues.ReqInput{
+	input := metervalues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: nil,
 		MeterValue: []st.MeterValueInput{
@@ -336,7 +336,7 @@ func TestReq_InvalidMeterValue(t *testing.T) {
 		},
 	}
 
-	_, err := meterValues.Req(input)
+	_, err := metervalues.Req(input)
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "invalid meter value")
 	}
@@ -349,13 +349,13 @@ func TestReq_InvalidMeterValue(t *testing.T) {
 func TestReq_MultipleErrors(t *testing.T) {
 	t.Parallel()
 
-	input := meterValues.ReqInput{
+	input := metervalues.ReqInput{
 		ConnectorId:   negativeConnectorId,
 		TransactionId: intPtr(invalidTransactionId),
 		MeterValue:    nil,
 	}
 
-	_, err := meterValues.Req(input)
+	_, err := metervalues.Req(input)
 	if err == nil {
 		t.Errorf(st.ErrorWantNil, "multiple errors")
 	}

@@ -1,9 +1,9 @@
-package setChargingProfile_test
+package setchargingprofile_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/setChargingProfile"
+	"github.com/aasanchez/ocpp16messages/setchargingprofile"
 )
 
 const fmtStatus = "Status: %s\n"
@@ -11,7 +11,7 @@ const fmtStatus = "Status: %s\n"
 // ExampleConf demonstrates creating a valid SetChargingProfile.conf message
 // with an Accepted status.
 func ExampleConf() {
-	conf, err := setChargingProfile.Conf(setChargingProfile.ConfInput{
+	conf, err := setchargingprofile.Conf(setchargingprofile.ConfInput{
 		Status: "Accepted",
 	})
 	if err != nil {
@@ -28,7 +28,7 @@ func ExampleConf() {
 // ExampleConf_rejected demonstrates creating a SetChargingProfile.conf message
 // with a Rejected status.
 func ExampleConf_rejected() {
-	conf, err := setChargingProfile.Conf(setChargingProfile.ConfInput{
+	conf, err := setchargingprofile.Conf(setchargingprofile.ConfInput{
 		Status: "Rejected",
 	})
 	if err != nil {
@@ -45,7 +45,7 @@ func ExampleConf_rejected() {
 // ExampleConf_notSupported demonstrates creating a SetChargingProfile.conf
 // message with a NotSupported status.
 func ExampleConf_notSupported() {
-	conf, err := setChargingProfile.Conf(setChargingProfile.ConfInput{
+	conf, err := setchargingprofile.Conf(setchargingprofile.ConfInput{
 		Status: "NotSupported",
 	})
 	if err != nil {
@@ -62,7 +62,7 @@ func ExampleConf_notSupported() {
 // ExampleConf_invalidStatus demonstrates the error returned when
 // an invalid status is provided.
 func ExampleConf_invalidStatus() {
-	_, err := setChargingProfile.Conf(setChargingProfile.ConfInput{
+	_, err := setchargingprofile.Conf(setchargingprofile.ConfInput{
 		Status: "Unknown",
 	})
 	if err != nil {

@@ -1,10 +1,10 @@
-package setChargingProfile_test
+package setchargingprofile_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/setChargingProfile"
-	spt "github.com/aasanchez/ocpp16messages/setChargingProfile/types"
+	"github.com/aasanchez/ocpp16messages/setchargingprofile"
+	spt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
 	"github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -22,7 +22,7 @@ const (
 // ExampleReq demonstrates creating a valid SetChargingProfile.req message
 // with a basic charging profile.
 func ExampleReq() {
-	req, err := setChargingProfile.Req(setChargingProfile.ReqInput{
+	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId: exampleConnectorId,
 		CsChargingProfiles: spt.ChargingProfileInput{
 			ChargingProfileId:      exampleProfileId,
@@ -71,7 +71,7 @@ func ExampleReq() {
 // SetChargingProfile.req message with a ChargePointMaxProfile purpose
 // for limiting overall charge point power.
 func ExampleReq_chargePointMaxProfile() {
-	req, err := setChargingProfile.Req(setChargingProfile.ReqInput{
+	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId: 0,
 		CsChargingProfiles: spt.ChargingProfileInput{
 			ChargingProfileId:      exampleProfileId,
@@ -112,7 +112,7 @@ func ExampleReq_chargePointMaxProfile() {
 // ExampleReq_invalidConnectorId demonstrates the error returned when
 // a negative connector ID is provided.
 func ExampleReq_invalidConnectorId() {
-	_, err := setChargingProfile.Req(setChargingProfile.ReqInput{
+	_, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId: -1,
 		CsChargingProfiles: spt.ChargingProfileInput{
 			ChargingProfileId:      exampleProfileId,

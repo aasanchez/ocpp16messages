@@ -1,9 +1,9 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	uc "github.com/aasanchez/ocpp16messages/unlockConnector"
+	uc "github.com/aasanchez/ocpp16messages/unlockconnector"
 )
 
 func TestUnlockConnectorReq_JSONRoundTrip(t *testing.T) {
@@ -11,7 +11,7 @@ func TestUnlockConnectorReq_JSONRoundTrip(t *testing.T) {
 
 	req, err := uc.Req(uc.ReqInput{ConnectorId: 1})
 	if err != nil {
-		t.Fatalf("unlockConnector.Req: %v", err)
+		t.Fatalf("unlockconnector.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -25,7 +25,7 @@ func TestUnlockConnectorConf_JSONRoundTrip(t *testing.T) {
 		Status: "Unlocked",
 	})
 	if err != nil {
-		t.Fatalf("unlockConnector.Conf: %v", err)
+		t.Fatalf("unlockconnector.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

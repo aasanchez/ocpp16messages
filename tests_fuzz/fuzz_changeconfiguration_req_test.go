@@ -7,7 +7,7 @@ import (
 	"testing"
 	"unicode/utf8"
 
-	"github.com/aasanchez/ocpp16messages/changeConfiguration"
+	"github.com/aasanchez/ocpp16messages/changeconfiguration"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -28,7 +28,7 @@ func FuzzChangeConfigurationReq(f *testing.F) {
 			t.Skip()
 		}
 
-		req, err := changeConfiguration.Req(changeConfiguration.ReqInput{
+		req, err := changeconfiguration.Req(changeconfiguration.ReqInput{
 			Key:   key,
 			Value: value,
 		})

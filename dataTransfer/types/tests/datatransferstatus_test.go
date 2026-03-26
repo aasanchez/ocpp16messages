@@ -3,7 +3,7 @@ package types_test
 import (
 	"testing"
 
-	dt "github.com/aasanchez/ocpp16messages/dataTransfer/types"
+	dt "github.com/aasanchez/ocpp16messages/datatransfer/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

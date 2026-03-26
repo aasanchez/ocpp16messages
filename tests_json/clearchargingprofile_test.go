@@ -1,9 +1,9 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	ccp "github.com/aasanchez/ocpp16messages/clearChargingProfile"
+	ccp "github.com/aasanchez/ocpp16messages/clearchargingprofile"
 )
 
 func TestClearChargingProfileReq_JSONRoundTrip(t *testing.T) {
@@ -16,7 +16,7 @@ func TestClearChargingProfileReq_JSONRoundTrip(t *testing.T) {
 		StackLevel:             nil,
 	})
 	if err != nil {
-		t.Fatalf("clearChargingProfile.Req: %v", err)
+		t.Fatalf("clearchargingprofile.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -28,7 +28,7 @@ func TestClearChargingProfileConf_JSONRoundTrip(t *testing.T) {
 
 	conf, err := ccp.Conf(ccp.ConfInput{Status: "Accepted"})
 	if err != nil {
-		t.Fatalf("clearChargingProfile.Conf: %v", err)
+		t.Fatalf("clearchargingprofile.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

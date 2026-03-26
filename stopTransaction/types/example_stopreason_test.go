@@ -3,7 +3,7 @@ package types_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/stopTransaction/types"
+	"github.com/aasanchez/ocpp16messages/stoptransaction/types"
 )
 
 const (

@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	stp "github.com/aasanchez/ocpp16messages/stopTransaction"
+	stp "github.com/aasanchez/ocpp16messages/stoptransaction"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

@@ -1,18 +1,18 @@
-package meterValues_test
+package metervalues_test
 
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/meterValues"
+	"github.com/aasanchez/ocpp16messages/metervalues"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
 func TestConf_Success(t *testing.T) {
 	t.Parallel()
 
-	input := meterValues.ConfInput{}
+	input := metervalues.ConfInput{}
 
-	_, err := meterValues.Conf(input)
+	_, err := metervalues.Conf(input)
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
 	}
@@ -21,14 +21,14 @@ func TestConf_Success(t *testing.T) {
 func TestConf_ReturnsEmptyMessage(t *testing.T) {
 	t.Parallel()
 
-	input := meterValues.ConfInput{}
+	input := metervalues.ConfInput{}
 
-	conf, err := meterValues.Conf(input)
+	conf, err := metervalues.Conf(input)
 	if err != nil {
 		t.Errorf(st.ErrorUnexpectedError, err)
 	}
 
-	expected := meterValues.ConfMessage{}
+	expected := metervalues.ConfMessage{}
 	if conf != expected {
 		t.Errorf(st.ErrorMismatchValue, expected, conf)
 	}

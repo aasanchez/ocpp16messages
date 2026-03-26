@@ -1,9 +1,9 @@
-package startTransaction_test
+package starttransaction_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/startTransaction"
+	"github.com/aasanchez/ocpp16messages/starttransaction"
 )
 
 const testReservationId = 42
@@ -11,7 +11,7 @@ const testReservationId = 42
 // ExampleReq demonstrates creating a valid StartTransaction.req message
 // with all required fields.
 func ExampleReq() {
-	req, err := startTransaction.Req(startTransaction.ReqInput{
+	req, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   1,
 		IdTag:         "RFID-TAG-12345",
 		MeterStart:    1000,
@@ -38,7 +38,7 @@ func ExampleReq() {
 func ExampleReq_withReservation() {
 	reservationId := testReservationId
 
-	req, err := startTransaction.Req(startTransaction.ReqInput{
+	req, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   2,
 		IdTag:         "RFID-TAG-67890",
 		MeterStart:    500,
@@ -65,7 +65,7 @@ func ExampleReq_withReservation() {
 // ExampleReq_emptyIdTag demonstrates the error returned when
 // an empty ID tag is provided.
 func ExampleReq_emptyIdTag() {
-	_, err := startTransaction.Req(startTransaction.ReqInput{
+	_, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   1,
 		IdTag:         "",
 		MeterStart:    1000,
@@ -82,7 +82,7 @@ func ExampleReq_emptyIdTag() {
 // ExampleReq_invalidTimestamp demonstrates the error returned when
 // an invalid timestamp is provided.
 func ExampleReq_invalidTimestamp() {
-	_, err := startTransaction.Req(startTransaction.ReqInput{
+	_, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   1,
 		IdTag:         "RFID-TAG-12345",
 		MeterStart:    1000,
@@ -99,7 +99,7 @@ func ExampleReq_invalidTimestamp() {
 // ExampleReq_multipleErrors demonstrates that all validation errors
 // are returned at once, not just the first one encountered.
 func ExampleReq_multipleErrors() {
-	_, err := startTransaction.Req(startTransaction.ReqInput{
+	_, err := starttransaction.Req(starttransaction.ReqInput{
 		ConnectorId:   -1,
 		IdTag:         "",
 		MeterStart:    -1,

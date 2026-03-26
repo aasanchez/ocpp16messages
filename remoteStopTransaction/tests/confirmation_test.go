@@ -1,11 +1,11 @@
-package remoteStopTransaction_test
+package remotestoptransaction_test
 
 import (
 	"strings"
 	"testing"
 
-	rst "github.com/aasanchez/ocpp16messages/remoteStopTransaction"
-	rt "github.com/aasanchez/ocpp16messages/remoteStopTransaction/types"
+	rst "github.com/aasanchez/ocpp16messages/remotestoptransaction"
+	rt "github.com/aasanchez/ocpp16messages/remotestoptransaction/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

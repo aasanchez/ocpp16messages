@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	rst "github.com/aasanchez/ocpp16messages/remoteStartTransaction"
-	rtt "github.com/aasanchez/ocpp16messages/remoteStartTransaction/types"
+	rst "github.com/aasanchez/ocpp16messages/remotestarttransaction"
+	rtt "github.com/aasanchez/ocpp16messages/remotestarttransaction/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

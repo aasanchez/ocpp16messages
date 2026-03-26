@@ -3,7 +3,7 @@ package types_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/changeConfiguration/types"
+	"github.com/aasanchez/ocpp16messages/changeconfiguration/types"
 )
 
 // ExampleConfigurationStatus_IsValid demonstrates validating a

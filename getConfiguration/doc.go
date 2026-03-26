@@ -1,4 +1,4 @@
-// Package getConfiguration implements the Open Charge Point Protocol (OCPP) 1.6
+// Package getconfiguration implements the Open Charge Point Protocol (OCPP) 1.6
 // GetConfiguration message for EV charging.
 //
 // # Handling Rules
@@ -16,4 +16,4 @@
 // The number of keys that can be requested in a single PDU MAY be limited by
 // the Charge Point. The maximum number of keys can be retrieved via the
 // GetConfigurationMaxKeys configuration key.
-package getConfiguration
+package getconfiguration

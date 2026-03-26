@@ -1,10 +1,10 @@
-package getCompositeSchedule
+package getcompositeschedule
 
 import (
 	"errors"
 	"fmt"
 
-	gt "github.com/aasanchez/ocpp16messages/getCompositeSchedule/types"
+	gt "github.com/aasanchez/ocpp16messages/getcompositeschedule/types"
 	"github.com/aasanchez/ocpp16messages/types"
 )
 

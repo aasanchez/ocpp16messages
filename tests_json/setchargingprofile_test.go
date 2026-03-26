@@ -1,17 +1,17 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/setChargingProfile"
-	spt "github.com/aasanchez/ocpp16messages/setChargingProfile/types"
+	"github.com/aasanchez/ocpp16messages/setchargingprofile"
+	spt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
 	"github.com/aasanchez/ocpp16messages/types"
 )
 
 func TestSetChargingProfileReq_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
-	req, err := setChargingProfile.Req(setChargingProfile.ReqInput{
+	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId: 0,
 		CsChargingProfiles: spt.ChargingProfileInput{
 			ChargingProfileId:      1,
@@ -38,7 +38,7 @@ func TestSetChargingProfileReq_JSONRoundTrip(t *testing.T) {
 		},
 	})
 	if err != nil {
-		t.Fatalf("setChargingProfile.Req: %v", err)
+		t.Fatalf("setchargingprofile.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -48,11 +48,11 @@ func TestSetChargingProfileReq_JSONRoundTrip(t *testing.T) {
 func TestSetChargingProfileConf_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
-	conf, err := setChargingProfile.Conf(setChargingProfile.ConfInput{
+	conf, err := setchargingprofile.Conf(setchargingprofile.ConfInput{
 		Status: "Accepted",
 	})
 	if err != nil {
-		t.Fatalf("setChargingProfile.Conf: %v", err)
+		t.Fatalf("setchargingprofile.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

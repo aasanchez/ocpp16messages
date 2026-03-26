@@ -1,9 +1,9 @@
-package bootNotification_test
+package bootnotification_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/bootNotification"
+	"github.com/aasanchez/ocpp16messages/bootnotification"
 )
 
 const labelStatus = "Status:"
@@ -11,7 +11,7 @@ const labelStatus = "Status:"
 // ExampleConf demonstrates creating a valid BootNotification.conf message
 // with an Accepted status.
 func ExampleConf() {
-	conf, err := bootNotification.Conf(bootNotification.ConfInput{
+	conf, err := bootnotification.Conf(bootnotification.ConfInput{
 		Status:      "Accepted",
 		CurrentTime: "2025-01-15T12:00:00Z",
 		Interval:    300,
@@ -32,7 +32,7 @@ func ExampleConf() {
 // ExampleConf_pending demonstrates creating a BootNotification.conf message
 // with a Pending status.
 func ExampleConf_pending() {
-	conf, err := bootNotification.Conf(bootNotification.ConfInput{
+	conf, err := bootnotification.Conf(bootnotification.ConfInput{
 		Status:      "Pending",
 		CurrentTime: "2025-01-15T12:00:00Z",
 		Interval:    60,
@@ -51,7 +51,7 @@ func ExampleConf_pending() {
 // ExampleConf_rejected demonstrates creating a BootNotification.conf message
 // with a Rejected status.
 func ExampleConf_rejected() {
-	conf, err := bootNotification.Conf(bootNotification.ConfInput{
+	conf, err := bootnotification.Conf(bootnotification.ConfInput{
 		Status:      "Rejected",
 		CurrentTime: "2025-01-15T12:00:00Z",
 		Interval:    600,
@@ -72,7 +72,7 @@ func ExampleConf_rejected() {
 // ExampleConf_invalidStatus demonstrates the error returned when
 // an invalid status is provided.
 func ExampleConf_invalidStatus() {
-	_, err := bootNotification.Conf(bootNotification.ConfInput{
+	_, err := bootnotification.Conf(bootnotification.ConfInput{
 		Status:      "Unknown",
 		CurrentTime: "2025-01-15T12:00:00Z",
 		Interval:    300,
@@ -87,7 +87,7 @@ func ExampleConf_invalidStatus() {
 // ExampleConf_multipleErrors demonstrates that all validation errors
 // are returned at once, not just the first one encountered.
 func ExampleConf_multipleErrors() {
-	_, err := bootNotification.Conf(bootNotification.ConfInput{
+	_, err := bootnotification.Conf(bootnotification.ConfInput{
 		Status:      "Invalid-Status",
 		CurrentTime: "not-a-date",
 		Interval:    -1,

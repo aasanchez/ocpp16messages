@@ -1,4 +1,4 @@
-// Package reserveNow implements the Open Charge Point Protocol (OCPP) 1.6
+// Package reservenow implements the Open Charge Point Protocol (OCPP) 1.6
 // ReserveNow message for EV charging.
 //
 // # Handling Rules
@@ -59,4 +59,4 @@
 //
 //   - Validate the idTag with an Authorize.req after receiving
 //     ReserveNow.req and before starting a transaction.
-package reserveNow
+package reservenow

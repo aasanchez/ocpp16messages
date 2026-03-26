@@ -1,9 +1,9 @@
-package changeAvailability_test
+package changeavailability_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/changeAvailability"
+	"github.com/aasanchez/ocpp16messages/changeavailability"
 )
 
 const (
@@ -14,7 +14,7 @@ const (
 // ExampleReq demonstrates creating a valid ChangeAvailability.req message
 // to set a connector to Inoperative.
 func ExampleReq() {
-	req, err := changeAvailability.Req(changeAvailability.ReqInput{
+	req, err := changeavailability.Req(changeavailability.ReqInput{
 		ConnectorId: 1,
 		Type:        "Inoperative",
 	})
@@ -34,7 +34,7 @@ func ExampleReq() {
 // ExampleReq_operative demonstrates creating a ChangeAvailability.req message
 // to set a connector to Operative.
 func ExampleReq_operative() {
-	req, err := changeAvailability.Req(changeAvailability.ReqInput{
+	req, err := changeavailability.Req(changeavailability.ReqInput{
 		ConnectorId: 2,
 		Type:        "Operative",
 	})
@@ -54,7 +54,7 @@ func ExampleReq_operative() {
 // ExampleReq_entireChargePoint demonstrates creating a ChangeAvailability.req
 // message for the entire Charge Point (connectorId = 0).
 func ExampleReq_entireChargePoint() {
-	req, err := changeAvailability.Req(changeAvailability.ReqInput{
+	req, err := changeavailability.Req(changeavailability.ReqInput{
 		ConnectorId: 0,
 		Type:        "Inoperative",
 	})
@@ -74,7 +74,7 @@ func ExampleReq_entireChargePoint() {
 // ExampleReq_invalidType demonstrates the error returned when
 // an invalid availability type is provided.
 func ExampleReq_invalidType() {
-	_, err := changeAvailability.Req(changeAvailability.ReqInput{
+	_, err := changeavailability.Req(changeavailability.ReqInput{
 		ConnectorId: 1,
 		Type:        "Unknown",
 	})
@@ -88,7 +88,7 @@ func ExampleReq_invalidType() {
 // ExampleReq_negativeConnectorId demonstrates the error returned when
 // a negative connector ID is provided.
 func ExampleReq_negativeConnectorId() {
-	_, err := changeAvailability.Req(changeAvailability.ReqInput{
+	_, err := changeavailability.Req(changeavailability.ReqInput{
 		ConnectorId: -1,
 		Type:        "Operative",
 	})

@@ -1,18 +1,18 @@
-package updateFirmware_test
+package updatefirmware_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/updateFirmware"
+	"github.com/aasanchez/ocpp16messages/updatefirmware"
 )
 
 // ExampleConf demonstrates creating an UpdateFirmware.conf message.
 // UpdateFirmware.conf is an empty confirmation message per OCPP 1.6
 // specification.
 func ExampleConf() {
-	input := updateFirmware.ConfInput{}
+	input := updatefirmware.ConfInput{}
 
-	_, err := updateFirmware.Conf(input)
+	_, err := updatefirmware.Conf(input)
 	if err != nil {
 		fmt.Println("Error:", err)
 

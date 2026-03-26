@@ -1,9 +1,9 @@
-package dataTransfer
+package datatransfer
 
 import (
 	"fmt"
 
-	dt "github.com/aasanchez/ocpp16messages/dataTransfer/types"
+	dt "github.com/aasanchez/ocpp16messages/datatransfer/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

@@ -1,9 +1,9 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	cc "github.com/aasanchez/ocpp16messages/clearCache"
+	cc "github.com/aasanchez/ocpp16messages/clearcache"
 )
 
 func TestClearCacheReq_JSONRoundTrip(t *testing.T) {
@@ -11,7 +11,7 @@ func TestClearCacheReq_JSONRoundTrip(t *testing.T) {
 
 	req, err := cc.Req(cc.ReqInput{})
 	if err != nil {
-		t.Fatalf("clearCache.Req: %v", err)
+		t.Fatalf("clearcache.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -23,7 +23,7 @@ func TestClearCacheConf_JSONRoundTrip(t *testing.T) {
 
 	conf, err := cc.Conf(cc.ConfInput{Status: "Accepted"})
 	if err != nil {
-		t.Fatalf("clearCache.Conf: %v", err)
+		t.Fatalf("clearcache.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

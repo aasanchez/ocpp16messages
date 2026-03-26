@@ -1,4 +1,4 @@
-// Package statusNotification implements the Open Charge Point Protocol
+// Package statusnotification implements the Open Charge Point Protocol
 // (OCPP) 1.6 StatusNotification message for EV charging.
 //
 // # Handling Rules
@@ -25,4 +25,4 @@
 //
 // "EVSE" terminology is used in StatusNotification instead of "Socket" or
 // "Charge Point" for forward compatibility with future OCPP versions.
-package statusNotification
+package statusnotification

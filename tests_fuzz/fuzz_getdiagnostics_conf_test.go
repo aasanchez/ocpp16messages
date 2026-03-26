@@ -7,7 +7,7 @@ import (
 	"testing"
 	"unicode/utf8"
 
-	"github.com/aasanchez/ocpp16messages/getDiagnostics"
+	"github.com/aasanchez/ocpp16messages/getdiagnostics"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -32,7 +32,7 @@ func FuzzGetDiagnosticsConf(f *testing.F) {
 			fileNamePtr = &fileName
 		}
 
-		conf, err := getDiagnostics.Conf(getDiagnostics.ConfInput{
+		conf, err := getdiagnostics.Conf(getdiagnostics.ConfInput{
 			FileName: fileNamePtr,
 		})
 		if err != nil {

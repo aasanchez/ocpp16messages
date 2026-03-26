@@ -1,12 +1,12 @@
-package getConfiguration_test
+package getconfiguration_test
 
 import (
 	"errors"
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/getConfiguration"
-	gt "github.com/aasanchez/ocpp16messages/getConfiguration/types"
+	"github.com/aasanchez/ocpp16messages/getconfiguration"
+	gt "github.com/aasanchez/ocpp16messages/getconfiguration/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -34,7 +34,7 @@ const (
 func TestConf_Valid_Empty(t *testing.T) {
 	t.Parallel()
 
-	conf, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: nil,
 		UnknownKey:       nil,
 	})
@@ -64,7 +64,7 @@ func TestConf_Valid_SingleConfigKey(t *testing.T) {
 
 	value := testValidConfigValue
 
-	conf, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: []gt.KeyValueInput{
 			{
 				Key:      testValidConfigKey,
@@ -110,7 +110,7 @@ func TestConf_Valid_ReadonlyKey(t *testing.T) {
 
 	value := "Core"
 
-	conf, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: []gt.KeyValueInput{
 			{
 				Key:      "SupportedFeatureProfiles",
@@ -132,7 +132,7 @@ func TestConf_Valid_ReadonlyKey(t *testing.T) {
 func TestConf_Valid_KeyWithNoValue(t *testing.T) {
 	t.Parallel()
 
-	conf, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: []gt.KeyValueInput{
 			{
 				Key:      "AuthorizationKey",
@@ -154,7 +154,7 @@ func TestConf_Valid_KeyWithNoValue(t *testing.T) {
 func TestConf_Valid_SingleUnknownKey(t *testing.T) {
 	t.Parallel()
 
-	conf, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: nil,
 		UnknownKey:       []string{testUnknownKey},
 	})
@@ -176,7 +176,7 @@ func TestConf_Valid_SingleUnknownKey(t *testing.T) {
 func TestConf_Valid_MultipleUnknownKeys(t *testing.T) {
 	t.Parallel()
 
-	conf, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: nil,
 		UnknownKey:       []string{testUnknownKey, testUnknownKeyTwo},
 	})
@@ -194,7 +194,7 @@ func TestConf_Valid_Complete(t *testing.T) {
 
 	value := testValidConfigValue
 
-	conf, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: []gt.KeyValueInput{
 			{
 				Key:      testValidConfigKey,
@@ -226,7 +226,7 @@ func TestConf_Valid_MaxLengthValue(t *testing.T) {
 
 	maxValue := strings.Repeat("v", valueMaxLength)
 
-	conf, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: []gt.KeyValueInput{
 			{
 				Key:      testValidConfigKey,
@@ -249,7 +249,7 @@ func TestConf_Valid_MaxLengthValue(t *testing.T) {
 func TestConf_EmptyConfigKey(t *testing.T) {
 	t.Parallel()
 
-	_, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	_, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: []gt.KeyValueInput{
 			{
 				Key:      "",
@@ -277,7 +277,7 @@ func TestConf_ConfigKeyTooLong(t *testing.T) {
 
 	longKey := strings.Repeat("k", keyMaxLengthPlusOne)
 
-	_, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	_, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: []gt.KeyValueInput{
 			{
 				Key:      longKey,
@@ -305,7 +305,7 @@ func TestConf_ConfigValueTooLong(t *testing.T) {
 
 	longValue := strings.Repeat("v", valueMaxLengthPlusOne)
 
-	_, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	_, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: []gt.KeyValueInput{
 			{
 				Key:      testValidConfigKey,
@@ -331,7 +331,7 @@ func TestConf_ConfigValueTooLong(t *testing.T) {
 func TestConf_EmptyUnknownKey(t *testing.T) {
 	t.Parallel()
 
-	_, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	_, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: nil,
 		UnknownKey:       []string{"ValidKey", ""},
 	})
@@ -353,7 +353,7 @@ func TestConf_UnknownKeyTooLong(t *testing.T) {
 
 	longKey := strings.Repeat("k", keyMaxLengthPlusOne)
 
-	_, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	_, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: nil,
 		UnknownKey:       []string{longKey},
 	})
@@ -373,7 +373,7 @@ func TestConf_UnknownKeyTooLong(t *testing.T) {
 func TestConf_MultipleErrors(t *testing.T) {
 	t.Parallel()
 
-	_, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	_, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: []gt.KeyValueInput{
 			{
 				Key:      "",
@@ -401,7 +401,7 @@ func TestConf_MultipleErrors(t *testing.T) {
 func TestConf_ConfigKeyInvalidChars(t *testing.T) {
 	t.Parallel()
 
-	_, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	_, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: []gt.KeyValueInput{
 			{
 				Key:      "Invalid\x00Key",
@@ -423,7 +423,7 @@ func TestConf_ConfigKeyInvalidChars(t *testing.T) {
 func TestConf_UnknownKeyInvalidChars(t *testing.T) {
 	t.Parallel()
 
-	_, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	_, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: nil,
 		UnknownKey:       []string{"Invalid\x00Key"},
 	})
@@ -439,7 +439,7 @@ func TestConf_UnknownKeyInvalidChars(t *testing.T) {
 func TestConf_IndexedErrorMessages(t *testing.T) {
 	t.Parallel()
 
-	_, err := getConfiguration.Conf(getConfiguration.ConfInput{
+	_, err := getconfiguration.Conf(getconfiguration.ConfInput{
 		ConfigurationKey: []gt.KeyValueInput{
 			{Key: testValidConfigKey, Readonly: false, Value: nil},
 			{Key: "", Readonly: false, Value: nil},

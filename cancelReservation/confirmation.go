@@ -1,9 +1,9 @@
-package cancelReservation
+package cancelreservation
 
 import (
 	"fmt"
 
-	mct "github.com/aasanchez/ocpp16messages/cancelReservation/types"
+	mct "github.com/aasanchez/ocpp16messages/cancelreservation/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

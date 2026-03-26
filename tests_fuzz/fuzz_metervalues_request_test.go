@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	mv "github.com/aasanchez/ocpp16messages/meterValues"
+	mv "github.com/aasanchez/ocpp16messages/metervalues"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -38,9 +38,9 @@ func FuzzMeterValuesReq(f *testing.F) {
 			transactionIdPtr = &transactionId
 		}
 
-		var meterValues []st.MeterValueInput
+		var metervalues []st.MeterValueInput
 		if hasMeterValue {
-			meterValues = []st.MeterValueInput{
+			metervalues = []st.MeterValueInput{
 				{
 					Timestamp: timestamp,
 					SampledValue: []st.SampledValueInput{
@@ -53,7 +53,7 @@ func FuzzMeterValuesReq(f *testing.F) {
 		req, err := mv.Req(mv.ReqInput{
 			ConnectorId:   connectorId,
 			TransactionId: transactionIdPtr,
-			MeterValue:    meterValues,
+			MeterValue:    metervalues,
 		})
 		if err != nil {
 			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {

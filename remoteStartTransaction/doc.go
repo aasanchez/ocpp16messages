@@ -1,4 +1,4 @@
-// Package remoteStartTransaction implements the Open Charge Point Protocol
+// Package remotestarttransaction implements the Open Charge Point Protocol
 // (OCPP) 1.6 RemoteStartTransaction message for EV charging.
 //
 // # Handling Rules
@@ -32,4 +32,4 @@
 //     connector. A Charge Point MAY reject requests without a connectorId.
 //   - ChargingProfile: Optional. If provided and supported, SHALL be applied
 //     with purpose set to TxProfile. Unsupported profiles SHOULD be ignored.
-package remoteStartTransaction
+package remotestarttransaction

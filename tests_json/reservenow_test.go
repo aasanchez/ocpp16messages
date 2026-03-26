@@ -1,15 +1,15 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/reserveNow"
+	"github.com/aasanchez/ocpp16messages/reservenow"
 )
 
 func TestReserveNowReq_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
-	req, err := reserveNow.Req(reserveNow.ReqInput{
+	req, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: 1,
 		ConnectorId:   1,
 		IdTag:         "RFID-TAG-12345",
@@ -17,7 +17,7 @@ func TestReserveNowReq_JSONRoundTrip(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err != nil {
-		t.Fatalf("reserveNow.Req: %v", err)
+		t.Fatalf("reservenow.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -27,11 +27,11 @@ func TestReserveNowReq_JSONRoundTrip(t *testing.T) {
 func TestReserveNowConf_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
-	conf, err := reserveNow.Conf(reserveNow.ConfInput{
+	conf, err := reservenow.Conf(reservenow.ConfInput{
 		Status: "Accepted",
 	})
 	if err != nil {
-		t.Fatalf("reserveNow.Conf: %v", err)
+		t.Fatalf("reservenow.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

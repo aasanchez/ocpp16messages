@@ -1,9 +1,9 @@
-package getDiagnostics_test
+package getdiagnostics_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/getDiagnostics"
+	"github.com/aasanchez/ocpp16messages/getdiagnostics"
 )
 
 const (
@@ -16,7 +16,7 @@ const (
 // ExampleConf demonstrates creating a GetDiagnostics.conf message
 // with no file name (no diagnostics available).
 func ExampleConf() {
-	conf, err := getDiagnostics.Conf(getDiagnostics.ConfInput{
+	conf, err := getdiagnostics.Conf(getdiagnostics.ConfInput{
 		FileName: nil,
 	})
 	if err != nil {
@@ -37,7 +37,7 @@ func ExampleConf() {
 func ExampleConf_withFileName() {
 	fileName := exampleFileNameValue
 
-	conf, err := getDiagnostics.Conf(getDiagnostics.ConfInput{
+	conf, err := getdiagnostics.Conf(getdiagnostics.ConfInput{
 		FileName: &fileName,
 	})
 	if err != nil {
@@ -61,7 +61,7 @@ func ExampleConf_invalidFileName() {
 		longStrPart +
 		".zip"
 
-	_, err := getDiagnostics.Conf(getDiagnostics.ConfInput{
+	_, err := getdiagnostics.Conf(getdiagnostics.ConfInput{
 		FileName: &longFileName,
 	})
 	if err != nil {

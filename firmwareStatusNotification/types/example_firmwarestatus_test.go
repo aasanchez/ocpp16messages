@@ -3,7 +3,7 @@ package types_test
 import (
 	"fmt"
 
-	fn "github.com/aasanchez/ocpp16messages/firmwareStatusNotification/types"
+	fn "github.com/aasanchez/ocpp16messages/firmwarestatusnotification/types"
 )
 
 const (

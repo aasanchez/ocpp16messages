@@ -7,7 +7,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/getLocalListVersion"
+	"github.com/aasanchez/ocpp16messages/getlocallistversion"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -21,7 +21,7 @@ func FuzzGetLocalListVersionConf(f *testing.F) {
 	f.Add(math.MaxInt32 + 1)
 
 	f.Fuzz(func(t *testing.T, listVersion int) {
-		conf, err := getLocalListVersion.Conf(getLocalListVersion.ConfInput{
+		conf, err := getlocallistversion.Conf(getlocallistversion.ConfInput{
 			ListVersion: listVersion,
 		})
 		if err != nil {

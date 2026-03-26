@@ -1,9 +1,9 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	bn "github.com/aasanchez/ocpp16messages/bootNotification"
+	bn "github.com/aasanchez/ocpp16messages/bootnotification"
 )
 
 func TestBootNotificationReq_JSONRoundTrip(t *testing.T) {
@@ -21,7 +21,7 @@ func TestBootNotificationReq_JSONRoundTrip(t *testing.T) {
 		MeterSerialNumber:       nil,
 	})
 	if err != nil {
-		t.Fatalf("bootNotification.Req: %v", err)
+		t.Fatalf("bootnotification.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -37,7 +37,7 @@ func TestBootNotificationConf_JSONRoundTrip(t *testing.T) {
 		Interval:    300,
 	})
 	if err != nil {
-		t.Fatalf("bootNotification.Conf: %v", err)
+		t.Fatalf("bootnotification.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

@@ -1,4 +1,4 @@
-// Package getCompositeSchedule implements the Open Charge Point Protocol
+// Package getcompositeschedule implements the Open Charge Point Protocol
 // (OCPP) 1.6 GetCompositeSchedule message for EV charging.
 //
 // # Handling Rules
@@ -22,4 +22,4 @@
 //
 // If the Charge Point cannot report the requested schedule (e.g. unknown
 // ConnectorId), it SHALL respond with status Rejected.
-package getCompositeSchedule
+package getcompositeschedule

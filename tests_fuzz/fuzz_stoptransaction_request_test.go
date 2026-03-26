@@ -8,9 +8,9 @@ import (
 	"testing"
 	"time"
 
-	mt "github.com/aasanchez/ocpp16messages/meterValues/types"
-	stp "github.com/aasanchez/ocpp16messages/stopTransaction"
-	stt "github.com/aasanchez/ocpp16messages/stopTransaction/types"
+	mt "github.com/aasanchez/ocpp16messages/metervalues/types"
+	stp "github.com/aasanchez/ocpp16messages/stoptransaction"
+	stt "github.com/aasanchez/ocpp16messages/stoptransaction/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

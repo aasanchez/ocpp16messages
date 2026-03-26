@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/changeAvailability"
-	ct "github.com/aasanchez/ocpp16messages/changeAvailability/types"
+	"github.com/aasanchez/ocpp16messages/changeavailability"
+	ct "github.com/aasanchez/ocpp16messages/changeavailability/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -22,7 +22,7 @@ func FuzzChangeAvailabilityConf(f *testing.F) {
 			t.Skip()
 		}
 
-		conf, err := changeAvailability.Conf(changeAvailability.ConfInput{
+		conf, err := changeavailability.Conf(changeavailability.ConfInput{
 			Status: status,
 		})
 		if err != nil {

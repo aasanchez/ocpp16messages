@@ -1,17 +1,17 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/getLocalListVersion"
+	"github.com/aasanchez/ocpp16messages/getlocallistversion"
 )
 
 func TestGetLocalListVersionReq_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
-	req, err := getLocalListVersion.Req(getLocalListVersion.ReqInput{})
+	req, err := getlocallistversion.Req(getlocallistversion.ReqInput{})
 	if err != nil {
-		t.Fatalf("getLocalListVersion.Req: %v", err)
+		t.Fatalf("getlocallistversion.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -21,11 +21,11 @@ func TestGetLocalListVersionReq_JSONRoundTrip(t *testing.T) {
 func TestGetLocalListVersionConf_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
-	conf, err := getLocalListVersion.Conf(getLocalListVersion.ConfInput{
+	conf, err := getlocallistversion.Conf(getlocallistversion.ConfInput{
 		ListVersion: 5,
 	})
 	if err != nil {
-		t.Fatalf("getLocalListVersion.Conf: %v", err)
+		t.Fatalf("getlocallistversion.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

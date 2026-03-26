@@ -3,7 +3,7 @@ package types_test
 import (
 	"testing"
 
-	ct "github.com/aasanchez/ocpp16messages/clearChargingProfile/types"
+	ct "github.com/aasanchez/ocpp16messages/clearchargingprofile/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

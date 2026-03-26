@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"testing"
 
-	lt "github.com/aasanchez/ocpp16messages/getLocalListVersion/types"
+	lt "github.com/aasanchez/ocpp16messages/getlocallistversion/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

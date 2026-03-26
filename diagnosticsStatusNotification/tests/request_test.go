@@ -1,10 +1,10 @@
-package diagnosticsStatusNotification_test
+package diagnosticsstatusnotification_test
 
 import (
 	"errors"
 	"testing"
 
-	dsn "github.com/aasanchez/ocpp16messages/diagnosticsStatusNotification"
+	dsn "github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

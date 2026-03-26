@@ -1,4 +1,4 @@
-// Package getLocalListVersion implements the Open Charge Point Protocol
+// Package getlocallistversion implements the Open Charge Point Protocol
 // (OCPP) 1.6 GetLocalListVersion message for EV charging.
 //
 // # Handling Rules
@@ -12,4 +12,4 @@
 // Version numbers have the following meaning:
 //   - 0   : The local authorization list is empty.
 //   - -1  : The Charge Point does not support Local Authorization Lists.
-package getLocalListVersion
+package getlocallistversion

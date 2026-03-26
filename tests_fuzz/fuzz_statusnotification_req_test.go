@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	sn "github.com/aasanchez/ocpp16messages/statusNotification"
+	sn "github.com/aasanchez/ocpp16messages/statusnotification"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

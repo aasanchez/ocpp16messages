@@ -3,7 +3,7 @@ package types_test
 import (
 	"testing"
 
-	mct "github.com/aasanchez/ocpp16messages/cancelReservation/types"
+	mct "github.com/aasanchez/ocpp16messages/cancelreservation/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

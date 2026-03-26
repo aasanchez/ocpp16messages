@@ -3,7 +3,7 @@ package types_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/meterValues/types"
+	"github.com/aasanchez/ocpp16messages/metervalues/types"
 )
 
 const exampleTimestamp = "2025-01-02T15:00:00Z"

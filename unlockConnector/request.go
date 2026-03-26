@@ -1,4 +1,4 @@
-package unlockConnector
+package unlockconnector
 
 import (
 	"fmt"

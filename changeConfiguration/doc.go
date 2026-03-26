@@ -1,4 +1,4 @@
-// Package changeConfiguration implements the Open Charge Point Protocol
+// Package changeconfiguration implements the Open Charge Point Protocol
 // (OCPP) 1.6 ChangeConfiguration message for EV charging.
 //
 // # Handling Rules
@@ -25,4 +25,4 @@
 // by a [KeyName]MaxLength configuration key indicating the maximum number
 // of items allowed. If not present, a safe default of one (1) item SHOULD
 // be assumed.
-package changeConfiguration
+package changeconfiguration

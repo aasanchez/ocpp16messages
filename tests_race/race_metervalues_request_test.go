@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"testing"
 
-	mv "github.com/aasanchez/ocpp16messages/meterValues"
+	mv "github.com/aasanchez/ocpp16messages/metervalues"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -19,7 +19,7 @@ func TestRace_MeterValuesSingleReq(t *testing.T) {
 	t.Parallel()
 
 	sampledValues := []st.SampledValueInput{{Value: "100"}}
-	meterValues := []st.MeterValueInput{
+	metervalues := []st.MeterValueInput{
 		{
 			Timestamp:    "2025-01-02T15:00:00Z",
 			SampledValue: sampledValues,
@@ -29,7 +29,7 @@ func TestRace_MeterValuesSingleReq(t *testing.T) {
 	runConcurrent(t, mvWorkers, mvIterations, func(_, _ int) error {
 		_, err := mv.Req(mv.ReqInput{
 			ConnectorId:   1,
-			MeterValue:    meterValues,
+			MeterValue:    metervalues,
 			TransactionId: nil,
 		})
 		if err != nil {

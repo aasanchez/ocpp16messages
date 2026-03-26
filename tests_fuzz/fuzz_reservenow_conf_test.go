@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	rn "github.com/aasanchez/ocpp16messages/reserveNow"
-	rt "github.com/aasanchez/ocpp16messages/reserveNow/types"
+	rn "github.com/aasanchez/ocpp16messages/reservenow"
+	rt "github.com/aasanchez/ocpp16messages/reservenow/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

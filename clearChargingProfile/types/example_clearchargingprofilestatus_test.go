@@ -3,7 +3,7 @@ package types_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/clearChargingProfile/types"
+	"github.com/aasanchez/ocpp16messages/clearchargingprofile/types"
 )
 
 // ExampleClearChargingProfileStatus demonstrates using the

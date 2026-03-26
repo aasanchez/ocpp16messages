@@ -1,9 +1,9 @@
-package meterValues_test
+package metervalues_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/meterValues"
+	"github.com/aasanchez/ocpp16messages/metervalues"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -19,7 +19,7 @@ const (
 // ExampleReq demonstrates creating a valid MeterValues.req message with
 // a single meter value containing one sampled value.
 func ExampleReq() {
-	input := meterValues.ReqInput{
+	input := metervalues.ReqInput{
 		ConnectorId:   exampleConnectorId,
 		TransactionId: nil,
 		MeterValue: []st.MeterValueInput{
@@ -40,7 +40,7 @@ func ExampleReq() {
 		},
 	}
 
-	req, err := meterValues.Req(input)
+	req, err := metervalues.Req(input)
 	if err != nil {
 		fmt.Println(outputError, err)
 
@@ -59,7 +59,7 @@ func ExampleReq() {
 func ExampleReq_withTransactionId() {
 	transactionId := exampleTransactionId
 
-	input := meterValues.ReqInput{
+	input := metervalues.ReqInput{
 		ConnectorId:   exampleConnectorId,
 		TransactionId: &transactionId,
 		MeterValue: []st.MeterValueInput{
@@ -80,7 +80,7 @@ func ExampleReq_withTransactionId() {
 		},
 	}
 
-	req, err := meterValues.Req(input)
+	req, err := metervalues.Req(input)
 	if err != nil {
 		fmt.Println(outputError, err)
 
@@ -104,7 +104,7 @@ func ExampleReq_withOptionalFields() {
 	location := "Outlet"
 	unit := "Wh"
 
-	input := meterValues.ReqInput{
+	input := metervalues.ReqInput{
 		ConnectorId:   exampleConnectorId,
 		TransactionId: nil,
 		MeterValue: []st.MeterValueInput{
@@ -125,7 +125,7 @@ func ExampleReq_withOptionalFields() {
 		},
 	}
 
-	req, err := meterValues.Req(input)
+	req, err := metervalues.Req(input)
 	if err != nil {
 		fmt.Println(outputError, err)
 
@@ -141,13 +141,13 @@ func ExampleReq_withOptionalFields() {
 
 // ExampleReq_emptyMeterValue demonstrates the error when MeterValue is empty.
 func ExampleReq_emptyMeterValue() {
-	input := meterValues.ReqInput{
+	input := metervalues.ReqInput{
 		ConnectorId:   exampleConnectorId,
 		TransactionId: nil,
 		MeterValue:    []st.MeterValueInput{},
 	}
 
-	_, err := meterValues.Req(input)
+	_, err := metervalues.Req(input)
 	if err != nil {
 		fmt.Println("Error: MeterValue cannot be empty")
 	}

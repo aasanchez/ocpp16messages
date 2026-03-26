@@ -1,9 +1,9 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	gd "github.com/aasanchez/ocpp16messages/getDiagnostics"
+	gd "github.com/aasanchez/ocpp16messages/getdiagnostics"
 )
 
 func TestGetDiagnosticsReq_JSONRoundTrip(t *testing.T) {
@@ -17,7 +17,7 @@ func TestGetDiagnosticsReq_JSONRoundTrip(t *testing.T) {
 		StopTime:      nil,
 	})
 	if err != nil {
-		t.Fatalf("getDiagnostics.Req: %v", err)
+		t.Fatalf("getdiagnostics.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -33,7 +33,7 @@ func TestGetDiagnosticsConf_JSONRoundTrip(t *testing.T) {
 		FileName: &fileName,
 	})
 	if err != nil {
-		t.Fatalf("getDiagnostics.Conf: %v", err)
+		t.Fatalf("getdiagnostics.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

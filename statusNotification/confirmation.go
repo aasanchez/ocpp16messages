@@ -1,4 +1,4 @@
-package statusNotification
+package statusnotification
 
 // ConfInput represents the raw input data for creating a
 // StatusNotification.conf message.

@@ -1,4 +1,4 @@
-package stopTransaction
+package stoptransaction
 
 import (
 	"errors"

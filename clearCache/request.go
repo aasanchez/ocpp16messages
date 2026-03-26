@@ -1,4 +1,4 @@
-package clearCache
+package clearcache
 
 // ReqInput represents the raw input data for creating a ClearCache.req message.
 // ClearCache.req has no fields per OCPP 1.6 specification.

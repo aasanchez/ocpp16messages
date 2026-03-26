@@ -5,14 +5,14 @@ package fuzz
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/statusNotification"
+	"github.com/aasanchez/ocpp16messages/statusnotification"
 )
 
 func FuzzStatusNotificationConf(f *testing.F) {
 	f.Add(uint8(0))
 
 	f.Fuzz(func(t *testing.T, _ uint8) {
-		_, err := statusNotification.Conf(statusNotification.ConfInput{})
+		_, err := statusnotification.Conf(statusnotification.ConfInput{})
 		if err != nil {
 			t.Fatalf("error = %v, want nil", err)
 		}

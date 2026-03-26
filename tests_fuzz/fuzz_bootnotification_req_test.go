@@ -6,7 +6,7 @@ import (
 	"errors"
 	"testing"
 
-	bn "github.com/aasanchez/ocpp16messages/bootNotification"
+	bn "github.com/aasanchez/ocpp16messages/bootnotification"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

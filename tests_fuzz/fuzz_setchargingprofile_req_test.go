@@ -7,8 +7,8 @@ import (
 	"math"
 	"testing"
 
-	scp "github.com/aasanchez/ocpp16messages/setChargingProfile"
-	spt "github.com/aasanchez/ocpp16messages/setChargingProfile/types"
+	scp "github.com/aasanchez/ocpp16messages/setchargingprofile"
+	spt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

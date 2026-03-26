@@ -1,4 +1,4 @@
-// Package updateFirmware implements the Open Charge Point Protocol (OCPP) 1.6
+// Package updatefirmware implements the Open Charge Point Protocol (OCPP) 1.6
 // UpdateFirmware message for EV charging.
 //
 // # Handling Rules
@@ -33,4 +33,4 @@
 //   - Rebooting the Charge Point after installation before sending
 //     "Installed" status is recommended to verify connectivity and firmware
 //     integrity, but is not mandatory.
-package updateFirmware
+package updatefirmware

@@ -1,4 +1,4 @@
-package bootNotification
+package bootnotification
 
 import (
 	"errors"

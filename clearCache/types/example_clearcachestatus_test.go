@@ -3,7 +3,7 @@ package types_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/clearCache/types"
+	"github.com/aasanchez/ocpp16messages/clearcache/types"
 )
 
 // ExampleClearCacheStatus demonstrates using the ClearCacheStatus

@@ -1,11 +1,11 @@
-package stopTransaction_test
+package stoptransaction_test
 
 import (
 	"errors"
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/stopTransaction"
+	"github.com/aasanchez/ocpp16messages/stoptransaction"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -26,7 +26,7 @@ const (
 func TestConf_NoIdTagInfo(t *testing.T) {
 	t.Parallel()
 
-	conf, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      nil,
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
@@ -45,7 +45,7 @@ func TestConf_ValidAccepted(t *testing.T) {
 
 	status := statusAccepted
 
-	conf, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
@@ -74,7 +74,7 @@ func TestConf_ValidBlocked(t *testing.T) {
 
 	status := statusBlocked
 
-	conf, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
@@ -103,7 +103,7 @@ func TestConf_ValidExpired(t *testing.T) {
 
 	status := statusExpired
 
-	conf, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
@@ -132,7 +132,7 @@ func TestConf_ValidInvalid(t *testing.T) {
 
 	status := statusInvalid
 
-	conf, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
@@ -161,7 +161,7 @@ func TestConf_ValidConcurrentTx(t *testing.T) {
 
 	status := statusConcurrentTx
 
-	conf, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
@@ -190,7 +190,7 @@ func TestConf_InvalidStatus(t *testing.T) {
 
 	status := "Unknown"
 
-	_, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	_, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
@@ -209,7 +209,7 @@ func TestConf_EmptyStatus(t *testing.T) {
 
 	status := ""
 
-	_, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	_, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
 		ParentIdTag: nil,
@@ -229,7 +229,7 @@ func TestConf_WithExpiryDate(t *testing.T) {
 	status := statusAccepted
 	expiryDate := "2025-12-31T23:59:59Z"
 
-	conf, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  &expiryDate,
 		ParentIdTag: nil,
@@ -255,7 +255,7 @@ func TestConf_WithInvalidExpiryDate(t *testing.T) {
 	status := statusAccepted
 	invalidDate := "not-a-date"
 
-	_, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	_, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  &invalidDate,
 		ParentIdTag: nil,
@@ -275,7 +275,7 @@ func TestConf_WithParentIdTag(t *testing.T) {
 	status := statusAccepted
 	parentTag := "PARENT-TAG-123"
 
-	conf, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
 		ParentIdTag: &parentTag,
@@ -309,7 +309,7 @@ func TestConf_WithParentIdTagTooLong(t *testing.T) {
 	status := statusAccepted
 	longTag := "PARENT-TAG-123456789012345" // 26 chars, max is 20
 
-	_, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	_, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
 		ParentIdTag: &longTag,
@@ -329,7 +329,7 @@ func TestConf_WithEmptyParentIdTag(t *testing.T) {
 	status := statusAccepted
 	emptyTag := ""
 
-	_, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	_, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  nil,
 		ParentIdTag: &emptyTag,
@@ -350,7 +350,7 @@ func TestConf_Complete(t *testing.T) {
 	expiryDate := "2025-12-31T23:59:59Z"
 	parentTag := "PARENT-123"
 
-	conf, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	conf, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &status,
 		ExpiryDate:  &expiryDate,
 		ParentIdTag: &parentTag,
@@ -397,7 +397,7 @@ func TestConf_MultipleErrors(t *testing.T) {
 	invalidDate := "not-a-date"
 	longTag := "THIS-TAG-IS-WAY-TOO-LONG-FOR-OCPP"
 
-	_, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	_, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &invalidStatus,
 		ExpiryDate:  &invalidDate,
 		ParentIdTag: &longTag,
@@ -427,7 +427,7 @@ func TestConf_MultipleErrors_StatusAndExpiryDate(t *testing.T) {
 	invalidStatus := "BadStatus"
 	invalidDate := "invalid"
 
-	_, err := stopTransaction.Conf(stopTransaction.ConfInput{
+	_, err := stoptransaction.Conf(stoptransaction.ConfInput{
 		Status:      &invalidStatus,
 		ExpiryDate:  &invalidDate,
 		ParentIdTag: nil,

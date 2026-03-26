@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/remoteStopTransaction"
-	rt "github.com/aasanchez/ocpp16messages/remoteStopTransaction/types"
+	"github.com/aasanchez/ocpp16messages/remotestoptransaction"
+	rt "github.com/aasanchez/ocpp16messages/remotestoptransaction/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -21,7 +21,7 @@ func FuzzRemoteStopTransactionConf(f *testing.F) {
 			t.Skip()
 		}
 
-		conf, err := remoteStopTransaction.Conf(remoteStopTransaction.ConfInput{
+		conf, err := remotestoptransaction.Conf(remotestoptransaction.ConfInput{
 			Status: status,
 		})
 		if err != nil {

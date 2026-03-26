@@ -7,8 +7,8 @@ import (
 	"testing"
 
 	st "github.com/aasanchez/ocpp16messages/types"
-	"github.com/aasanchez/ocpp16messages/unlockConnector"
-	ut "github.com/aasanchez/ocpp16messages/unlockConnector/types"
+	"github.com/aasanchez/ocpp16messages/unlockconnector"
+	ut "github.com/aasanchez/ocpp16messages/unlockconnector/types"
 )
 
 func FuzzUnlockConnectorConf(f *testing.F) {
@@ -22,7 +22,7 @@ func FuzzUnlockConnectorConf(f *testing.F) {
 			t.Skip()
 		}
 
-		conf, err := unlockConnector.Conf(unlockConnector.ConfInput{
+		conf, err := unlockconnector.Conf(unlockconnector.ConfInput{
 			Status: status,
 		})
 		if err != nil {

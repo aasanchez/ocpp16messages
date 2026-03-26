@@ -1,9 +1,9 @@
-package changeConfiguration_test
+package changeconfiguration_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/changeConfiguration"
+	"github.com/aasanchez/ocpp16messages/changeconfiguration"
 )
 
 const statusLabel = "Status:"
@@ -11,7 +11,7 @@ const statusLabel = "Status:"
 // ExampleConf demonstrates creating a valid ChangeConfiguration.conf message
 // with an Accepted status.
 func ExampleConf() {
-	conf, err := changeConfiguration.Conf(changeConfiguration.ConfInput{
+	conf, err := changeconfiguration.Conf(changeconfiguration.ConfInput{
 		Status: "Accepted",
 	})
 	if err != nil {
@@ -28,7 +28,7 @@ func ExampleConf() {
 // ExampleConf_rejected demonstrates creating a ChangeConfiguration.conf
 // message with a Rejected status.
 func ExampleConf_rejected() {
-	conf, err := changeConfiguration.Conf(changeConfiguration.ConfInput{
+	conf, err := changeconfiguration.Conf(changeconfiguration.ConfInput{
 		Status: "Rejected",
 	})
 	if err != nil {
@@ -45,7 +45,7 @@ func ExampleConf_rejected() {
 // ExampleConf_rebootRequired demonstrates creating a ChangeConfiguration.conf
 // message with a RebootRequired status.
 func ExampleConf_rebootRequired() {
-	conf, err := changeConfiguration.Conf(changeConfiguration.ConfInput{
+	conf, err := changeconfiguration.Conf(changeconfiguration.ConfInput{
 		Status: "RebootRequired",
 	})
 	if err != nil {
@@ -62,7 +62,7 @@ func ExampleConf_rebootRequired() {
 // ExampleConf_notSupported demonstrates creating a ChangeConfiguration.conf
 // message with a NotSupported status.
 func ExampleConf_notSupported() {
-	conf, err := changeConfiguration.Conf(changeConfiguration.ConfInput{
+	conf, err := changeconfiguration.Conf(changeconfiguration.ConfInput{
 		Status: "NotSupported",
 	})
 	if err != nil {
@@ -79,7 +79,7 @@ func ExampleConf_notSupported() {
 // ExampleConf_invalidStatus demonstrates the error returned when
 // an invalid status is provided.
 func ExampleConf_invalidStatus() {
-	_, err := changeConfiguration.Conf(changeConfiguration.ConfInput{
+	_, err := changeconfiguration.Conf(changeconfiguration.ConfInput{
 		Status: "Unknown",
 	})
 	if err != nil {
@@ -92,7 +92,7 @@ func ExampleConf_invalidStatus() {
 // ExampleConf_emptyStatus demonstrates the error returned when
 // an empty status is provided.
 func ExampleConf_emptyStatus() {
-	_, err := changeConfiguration.Conf(changeConfiguration.ConfInput{
+	_, err := changeconfiguration.Conf(changeconfiguration.ConfInput{
 		Status: "",
 	})
 	if err != nil {

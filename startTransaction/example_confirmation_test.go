@@ -1,9 +1,9 @@
-package startTransaction_test
+package starttransaction_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/startTransaction"
+	"github.com/aasanchez/ocpp16messages/starttransaction"
 )
 
 const (
@@ -14,7 +14,7 @@ const (
 // ExampleConf demonstrates creating a valid StartTransaction.conf message
 // with an Accepted status.
 func ExampleConf() {
-	conf, err := startTransaction.Conf(startTransaction.ConfInput{
+	conf, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: 12345,
 		Status:        "Accepted",
 		ExpiryDate:    nil,
@@ -36,7 +36,7 @@ func ExampleConf() {
 // ExampleConf_blocked demonstrates creating a StartTransaction.conf message
 // with a Blocked status.
 func ExampleConf_blocked() {
-	conf, err := startTransaction.Conf(startTransaction.ConfInput{
+	conf, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: 12346,
 		Status:        "Blocked",
 		ExpiryDate:    nil,
@@ -60,7 +60,7 @@ func ExampleConf_blocked() {
 func ExampleConf_withExpiryDate() {
 	expiryDate := "2025-12-31T23:59:59Z"
 
-	conf, err := startTransaction.Conf(startTransaction.ConfInput{
+	conf, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: 12347,
 		Status:        "Accepted",
 		ExpiryDate:    &expiryDate,
@@ -86,7 +86,7 @@ func ExampleConf_withExpiryDate() {
 func ExampleConf_withParentIdTag() {
 	parentTag := "PARENT-123"
 
-	conf, err := startTransaction.Conf(startTransaction.ConfInput{
+	conf, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: 12348,
 		Status:        "Accepted",
 		ExpiryDate:    nil,
@@ -113,7 +113,7 @@ func ExampleConf_complete() {
 	expiryDate := "2025-12-31T23:59:59Z"
 	parentTag := "PARENT-123"
 
-	conf, err := startTransaction.Conf(startTransaction.ConfInput{
+	conf, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: 12349,
 		Status:        "Accepted",
 		ExpiryDate:    &expiryDate,
@@ -139,7 +139,7 @@ func ExampleConf_complete() {
 // ExampleConf_invalidStatus demonstrates the error returned when
 // an invalid status is provided.
 func ExampleConf_invalidStatus() {
-	_, err := startTransaction.Conf(startTransaction.ConfInput{
+	_, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: 12345,
 		Status:        "Unknown",
 		ExpiryDate:    nil,
@@ -158,7 +158,7 @@ func ExampleConf_multipleErrors() {
 	invalidDate := "not-a-date"
 	longTag := "THIS-TAG-IS-WAY-TOO-LONG-FOR-OCPP"
 
-	_, err := startTransaction.Conf(startTransaction.ConfInput{
+	_, err := starttransaction.Conf(starttransaction.ConfInput{
 		TransactionId: -1,
 		Status:        "Invalid-Status",
 		ExpiryDate:    &invalidDate,

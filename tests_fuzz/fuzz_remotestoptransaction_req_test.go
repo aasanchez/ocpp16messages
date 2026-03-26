@@ -7,7 +7,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/remoteStopTransaction"
+	"github.com/aasanchez/ocpp16messages/remotestoptransaction"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -18,7 +18,7 @@ func FuzzRemoteStopTransactionReq(f *testing.F) {
 	f.Add(math.MaxUint16 + 1)
 
 	f.Fuzz(func(t *testing.T, transactionId int) {
-		req, err := remoteStopTransaction.Req(remoteStopTransaction.ReqInput{
+		req, err := remotestoptransaction.Req(remotestoptransaction.ReqInput{
 			TransactionId: transactionId,
 		})
 		if err != nil {

@@ -1,9 +1,9 @@
-package firmwareStatusNotification_test
+package firmwarestatusnotification_test
 
 import (
 	"testing"
 
-	fsn "github.com/aasanchez/ocpp16messages/firmwareStatusNotification"
+	fsn "github.com/aasanchez/ocpp16messages/firmwarestatusnotification"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

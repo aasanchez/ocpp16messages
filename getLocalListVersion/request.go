@@ -1,4 +1,4 @@
-package getLocalListVersion
+package getlocallistversion
 
 // ReqInput represents the raw input data for creating a GetLocalListVersion.req
 // message. GetLocalListVersion.req has no fields per OCPP 1.6 specification.

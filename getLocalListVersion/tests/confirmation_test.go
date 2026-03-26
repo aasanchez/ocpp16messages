@@ -1,10 +1,10 @@
-package getLocalListVersion_test
+package getlocallistversion_test
 
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/getLocalListVersion"
-	mt "github.com/aasanchez/ocpp16messages/getLocalListVersion/types"
+	"github.com/aasanchez/ocpp16messages/getlocallistversion"
+	mt "github.com/aasanchez/ocpp16messages/getlocallistversion/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -18,7 +18,7 @@ const (
 func TestConf_Valid_PositiveVersion(t *testing.T) {
 	t.Parallel()
 
-	conf, err := getLocalListVersion.Conf(getLocalListVersion.ConfInput{
+	conf, err := getlocallistversion.Conf(getlocallistversion.ConfInput{
 		ListVersion: testVersionPositive,
 	})
 	if err != nil {
@@ -37,7 +37,7 @@ func TestConf_Valid_PositiveVersion(t *testing.T) {
 func TestConf_Valid_UnsupportedVersion(t *testing.T) {
 	t.Parallel()
 
-	conf, err := getLocalListVersion.Conf(getLocalListVersion.ConfInput{
+	conf, err := getlocallistversion.Conf(getlocallistversion.ConfInput{
 		ListVersion: testVersionUnsupport,
 	})
 	if err != nil {
@@ -60,7 +60,7 @@ func TestConf_Valid_UnsupportedVersion(t *testing.T) {
 func TestConf_Valid_EmptyListVersion(t *testing.T) {
 	t.Parallel()
 
-	conf, err := getLocalListVersion.Conf(getLocalListVersion.ConfInput{
+	conf, err := getlocallistversion.Conf(getlocallistversion.ConfInput{
 		ListVersion: testVersionEmpty,
 	})
 	if err != nil {
@@ -83,7 +83,7 @@ func TestConf_Valid_EmptyListVersion(t *testing.T) {
 func TestConf_Valid_ZeroValue(t *testing.T) {
 	t.Parallel()
 
-	conf, err := getLocalListVersion.Conf(getLocalListVersion.ConfInput{
+	conf, err := getlocallistversion.Conf(getlocallistversion.ConfInput{
 		ListVersion: testVersionEmpty,
 	})
 	if err != nil {
@@ -103,7 +103,7 @@ func TestConf_InvalidListVersion_ExceedsInt32(t *testing.T) {
 	t.Parallel()
 
 	// Value exceeds int32 max (2147483647), should cause overflow error
-	_, err := getLocalListVersion.Conf(getLocalListVersion.ConfInput{
+	_, err := getlocallistversion.Conf(getlocallistversion.ConfInput{
 		ListVersion: testVersionOverflow,
 	})
 	if err == nil {

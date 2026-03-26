@@ -1,20 +1,20 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/triggerMessage"
+	"github.com/aasanchez/ocpp16messages/triggermessage"
 )
 
 func TestTriggerMessageReq_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
-	req, err := triggerMessage.Req(triggerMessage.ReqInput{
+	req, err := triggermessage.Req(triggermessage.ReqInput{
 		RequestedMessage: "Heartbeat",
 		ConnectorId:      nil,
 	})
 	if err != nil {
-		t.Fatalf("triggerMessage.Req: %v", err)
+		t.Fatalf("triggermessage.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -24,11 +24,11 @@ func TestTriggerMessageReq_JSONRoundTrip(t *testing.T) {
 func TestTriggerMessageConf_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
-	conf, err := triggerMessage.Conf(triggerMessage.ConfInput{
+	conf, err := triggermessage.Conf(triggermessage.ConfInput{
 		Status: "Accepted",
 	})
 	if err != nil {
-		t.Fatalf("triggerMessage.Conf: %v", err)
+		t.Fatalf("triggermessage.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

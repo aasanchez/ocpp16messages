@@ -3,7 +3,7 @@ package types_test
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/setChargingProfile/types"
+	"github.com/aasanchez/ocpp16messages/setchargingprofile/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -22,6 +22,7 @@ const (
 	testInvalidTransactionId = -1
 	testOverflowStackLevel   = 65536
 	errWantError             = "NewChargingProfile() error = nil, want error"
+	errFailedCreateProfile   = "Failed to create ChargingProfile: %v"
 )
 
 func createValidChargingProfile(t *testing.T) types.ChargingProfile {
@@ -56,7 +57,7 @@ func createValidChargingProfile(t *testing.T) types.ChargingProfile {
 		},
 	})
 	if err != nil {
-		t.Fatalf("Failed to create valid ChargingProfile: %v", err)
+		t.Fatalf(errFailedCreateProfile, err)
 	}
 
 	return profile
@@ -100,7 +101,7 @@ func TestChargingProfile_TransactionId_WhenNil(t *testing.T) {
 		},
 	})
 	if err != nil {
-		t.Fatalf("Failed to create ChargingProfile: %v", err)
+		t.Fatalf(errFailedCreateProfile, err)
 	}
 
 	if profile.TransactionId() != nil {
@@ -184,7 +185,7 @@ func TestChargingProfile_RecurrencyKind_WhenNil(t *testing.T) {
 		},
 	})
 	if err != nil {
-		t.Fatalf("Failed to create ChargingProfile: %v", err)
+		t.Fatalf(errFailedCreateProfile, err)
 	}
 
 	if profile.RecurrencyKind() != nil {
@@ -219,7 +220,7 @@ func TestChargingProfile_ValidFrom_WhenNil(t *testing.T) {
 		},
 	})
 	if err != nil {
-		t.Fatalf("Failed to create ChargingProfile: %v", err)
+		t.Fatalf(errFailedCreateProfile, err)
 	}
 
 	if profile.ValidFrom() != nil {
@@ -254,7 +255,7 @@ func TestChargingProfile_ValidTo_WhenNil(t *testing.T) {
 		},
 	})
 	if err != nil {
-		t.Fatalf("Failed to create ChargingProfile: %v", err)
+		t.Fatalf(errFailedCreateProfile, err)
 	}
 
 	if profile.ValidTo() != nil {

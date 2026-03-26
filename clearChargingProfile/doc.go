@@ -1,4 +1,4 @@
-// Package clearChargingProfile implements the Open Charge Point Protocol
+// Package clearchargingprofile implements the Open Charge Point Protocol
 // (OCPP) 1.6 ClearChargingProfile message for EV charging.
 //
 // # Handling Rules
@@ -8,4 +8,4 @@
 //
 // The Charge Point SHALL respond with ClearChargingProfile.conf indicating
 // whether the request was successfully processed.
-package clearChargingProfile
+package clearchargingprofile

@@ -1,9 +1,9 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	cr "github.com/aasanchez/ocpp16messages/cancelReservation"
+	cr "github.com/aasanchez/ocpp16messages/cancelreservation"
 )
 
 func TestCancelReservationReq_JSONRoundTrip(t *testing.T) {
@@ -11,7 +11,7 @@ func TestCancelReservationReq_JSONRoundTrip(t *testing.T) {
 
 	req, err := cr.Req(cr.ReqInput{ReservationId: 0})
 	if err != nil {
-		t.Fatalf("cancelReservation.Req: %v", err)
+		t.Fatalf("cancelreservation.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -23,7 +23,7 @@ func TestCancelReservationConf_JSONRoundTrip(t *testing.T) {
 
 	conf, err := cr.Conf(cr.ConfInput{Status: "Accepted"})
 	if err != nil {
-		t.Fatalf("cancelReservation.Conf: %v", err)
+		t.Fatalf("cancelreservation.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

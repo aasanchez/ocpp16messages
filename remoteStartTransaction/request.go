@@ -1,4 +1,4 @@
-package remoteStartTransaction
+package remotestarttransaction
 
 import (
 	"errors"

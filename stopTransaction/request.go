@@ -1,11 +1,11 @@
-package stopTransaction
+package stoptransaction
 
 import (
 	"errors"
 	"fmt"
 
-	mt "github.com/aasanchez/ocpp16messages/meterValues/types"
-	stt "github.com/aasanchez/ocpp16messages/stopTransaction/types"
+	mt "github.com/aasanchez/ocpp16messages/metervalues/types"
+	stt "github.com/aasanchez/ocpp16messages/stoptransaction/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

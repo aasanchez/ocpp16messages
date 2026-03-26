@@ -1,4 +1,4 @@
-package changeConfiguration
+package changeconfiguration
 
 import (
 	"errors"

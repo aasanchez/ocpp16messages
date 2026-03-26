@@ -1,4 +1,4 @@
-// Package startTransaction implements the Open Charge Point Protocol (OCPP) 1.6
+// Package starttransaction implements the Open Charge Point Protocol (OCPP) 1.6
 // StartTransaction message for EV charging.
 //
 // # Handling Rules
@@ -32,4 +32,4 @@
 //     checks.
 //   - Failing to respond with StartTransaction.conf will cause the Charge
 //     Point to retry according to transaction-related error handling rules.
-package startTransaction
+package starttransaction

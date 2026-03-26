@@ -5,9 +5,9 @@ package benchmark
 import (
 	"testing"
 
-	mv "github.com/aasanchez/ocpp16messages/meterValues/types"
-	scpt "github.com/aasanchez/ocpp16messages/setChargingProfile/types"
-	stp "github.com/aasanchez/ocpp16messages/stopTransaction"
+	mv "github.com/aasanchez/ocpp16messages/metervalues/types"
+	scpt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
+	stp "github.com/aasanchez/ocpp16messages/stoptransaction"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -83,7 +83,7 @@ func BenchmarkSetChargingProfileNewChargingProfile_AllOptionals(b *testing.B) {
 func BenchmarkStopTransactionReq_LargeTransactionData(b *testing.B) {
 	b.ReportAllocs()
 
-	const meterValuesCount = 10
+	const metervaluesCount = 10
 	const sampledValuesCount = 10
 
 	var sampledValues []mv.SampledValueInput
@@ -92,7 +92,7 @@ func BenchmarkStopTransactionReq_LargeTransactionData(b *testing.B) {
 	}
 
 	var transactionData []mv.MeterValueInput
-	for i := 0; i < meterValuesCount; i++ {
+	for i := 0; i < metervaluesCount; i++ {
 		transactionData = append(transactionData, mv.MeterValueInput{
 			Timestamp:    sampleTimestamp,
 			SampledValue: sampledValues,

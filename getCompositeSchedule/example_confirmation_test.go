@@ -1,9 +1,9 @@
-package getCompositeSchedule_test
+package getcompositeschedule_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/getCompositeSchedule"
+	"github.com/aasanchez/ocpp16messages/getcompositeschedule"
 	"github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -21,7 +21,7 @@ const (
 // ExampleConf demonstrates creating a GetCompositeSchedule.conf message
 // with status Accepted and no optional fields.
 func ExampleConf() {
-	conf, err := getCompositeSchedule.Conf(getCompositeSchedule.ConfInput{
+	conf, err := getcompositeschedule.Conf(getcompositeschedule.ConfInput{
 		Status:           "Accepted",
 		ConnectorId:      nil,
 		ScheduleStart:    nil,
@@ -41,7 +41,7 @@ func ExampleConf() {
 // ExampleConf_rejected demonstrates creating a GetCompositeSchedule.conf
 // message with status Rejected.
 func ExampleConf_rejected() {
-	conf, err := getCompositeSchedule.Conf(getCompositeSchedule.ConfInput{
+	conf, err := getcompositeschedule.Conf(getcompositeschedule.ConfInput{
 		Status:           "Rejected",
 		ConnectorId:      nil,
 		ScheduleStart:    nil,
@@ -65,7 +65,7 @@ func ExampleConf_withAllFields() {
 	scheduleStart := exampleScheduleStartConf
 	duration := exampleDurationConf
 
-	conf, err := getCompositeSchedule.Conf(getCompositeSchedule.ConfInput{
+	conf, err := getcompositeschedule.Conf(getcompositeschedule.ConfInput{
 		Status:        "Accepted",
 		ConnectorId:   &connectorId,
 		ScheduleStart: &scheduleStart,
@@ -106,7 +106,7 @@ func ExampleConf_withAllFields() {
 // ExampleConf_invalidStatus demonstrates the error returned when
 // an invalid status is provided.
 func ExampleConf_invalidStatus() {
-	_, err := getCompositeSchedule.Conf(getCompositeSchedule.ConfInput{
+	_, err := getcompositeschedule.Conf(getcompositeschedule.ConfInput{
 		Status:           "Invalid",
 		ConnectorId:      nil,
 		ScheduleStart:    nil,

@@ -1,15 +1,15 @@
-package getConfiguration_test
+package getconfiguration_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/getConfiguration"
+	"github.com/aasanchez/ocpp16messages/getconfiguration"
 )
 
 // ExampleReq demonstrates creating a valid GetConfiguration.req message
 // without specifying any keys (requests all configuration settings).
 func ExampleReq() {
-	req, err := getConfiguration.Req(getConfiguration.ReqInput{
+	req, err := getconfiguration.Req(getconfiguration.ReqInput{
 		Key: nil,
 	})
 	if err != nil {
@@ -26,7 +26,7 @@ func ExampleReq() {
 // ExampleReq_withEmptyKeys demonstrates creating a GetConfiguration.req
 // message with an empty key list (equivalent to requesting all settings).
 func ExampleReq_withEmptyKeys() {
-	req, err := getConfiguration.Req(getConfiguration.ReqInput{
+	req, err := getconfiguration.Req(getconfiguration.ReqInput{
 		Key: []string{},
 	})
 	if err != nil {
@@ -43,7 +43,7 @@ func ExampleReq_withEmptyKeys() {
 // ExampleReq_withSingleKey demonstrates creating a GetConfiguration.req
 // message requesting a single configuration key.
 func ExampleReq_withSingleKey() {
-	req, err := getConfiguration.Req(getConfiguration.ReqInput{
+	req, err := getconfiguration.Req(getconfiguration.ReqInput{
 		Key: []string{"HeartbeatInterval"},
 	})
 	if err != nil {
@@ -62,7 +62,7 @@ func ExampleReq_withSingleKey() {
 // ExampleReq_withMultipleKeys demonstrates creating a GetConfiguration.req
 // message requesting multiple configuration keys.
 func ExampleReq_withMultipleKeys() {
-	req, err := getConfiguration.Req(getConfiguration.ReqInput{
+	req, err := getconfiguration.Req(getconfiguration.ReqInput{
 		Key: []string{
 			"HeartbeatInterval",
 			"ConnectionTimeOut",
@@ -83,7 +83,7 @@ func ExampleReq_withMultipleKeys() {
 // ExampleReq_emptyKey demonstrates the error returned when
 // a key in the list is empty.
 func ExampleReq_emptyKey() {
-	_, err := getConfiguration.Req(getConfiguration.ReqInput{
+	_, err := getconfiguration.Req(getconfiguration.ReqInput{
 		Key: []string{"HeartbeatInterval", ""},
 	})
 	if err != nil {
@@ -96,7 +96,7 @@ func ExampleReq_emptyKey() {
 // ExampleReq_invalidKeyChars demonstrates the error returned when
 // a key contains non-printable ASCII characters.
 func ExampleReq_invalidKeyChars() {
-	_, err := getConfiguration.Req(getConfiguration.ReqInput{
+	_, err := getconfiguration.Req(getconfiguration.ReqInput{
 		Key: []string{"Invalid\x00Key"},
 	})
 	if err != nil {

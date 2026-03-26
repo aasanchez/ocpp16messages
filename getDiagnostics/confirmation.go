@@ -1,4 +1,4 @@
-package getDiagnostics
+package getdiagnostics
 
 import (
 	"fmt"

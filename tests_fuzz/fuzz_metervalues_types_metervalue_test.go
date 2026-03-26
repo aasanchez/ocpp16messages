@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	mt "github.com/aasanchez/ocpp16messages/meterValues/types"
+	mt "github.com/aasanchez/ocpp16messages/metervalues/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

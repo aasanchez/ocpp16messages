@@ -1,4 +1,4 @@
-// Package changeAvailability implements the Open Charge Point Protocol
+// Package changeavailability implements the Open Charge Point Protocol
 // (OCPP) 1.6 ChangeAvailability message for EV charging.
 //
 // # Handling Rules
@@ -22,4 +22,4 @@
 //
 // Once the availability change has taken effect, the Charge Point SHALL
 // notify the Central System by sending StatusNotification.req.
-package changeAvailability
+package changeavailability

@@ -7,7 +7,7 @@ import (
 	"testing"
 	"unicode/utf8"
 
-	"github.com/aasanchez/ocpp16messages/getConfiguration"
+	"github.com/aasanchez/ocpp16messages/getconfiguration"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -42,7 +42,7 @@ func FuzzGetConfigurationReq(f *testing.F) {
 			keys = []string{key0, key1}
 		}
 
-		req, err := getConfiguration.Req(getConfiguration.ReqInput{
+		req, err := getconfiguration.Req(getconfiguration.ReqInput{
 			Key: keys,
 		})
 		if err != nil {

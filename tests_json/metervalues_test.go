@@ -1,16 +1,16 @@
-package tests_json_test
+package testsjson_test
 
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/meterValues"
+	"github.com/aasanchez/ocpp16messages/metervalues"
 	"github.com/aasanchez/ocpp16messages/types"
 )
 
 func TestMeterValuesReq_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
-	req, err := meterValues.Req(meterValues.ReqInput{
+	req, err := metervalues.Req(metervalues.ReqInput{
 		ConnectorId:   1,
 		TransactionId: nil,
 		MeterValue: []types.MeterValueInput{
@@ -31,7 +31,7 @@ func TestMeterValuesReq_JSONRoundTrip(t *testing.T) {
 		},
 	})
 	if err != nil {
-		t.Fatalf("meterValues.Req: %v", err)
+		t.Fatalf("metervalues.Req: %v", err)
 	}
 
 	assertAllFieldsValid(t, req)
@@ -41,9 +41,9 @@ func TestMeterValuesReq_JSONRoundTrip(t *testing.T) {
 func TestMeterValuesConf_JSONRoundTrip(t *testing.T) {
 	t.Parallel()
 
-	conf, err := meterValues.Conf(meterValues.ConfInput{})
+	conf, err := metervalues.Conf(metervalues.ConfInput{})
 	if err != nil {
-		t.Fatalf("meterValues.Conf: %v", err)
+		t.Fatalf("metervalues.Conf: %v", err)
 	}
 
 	assertAllFieldsValid(t, conf)

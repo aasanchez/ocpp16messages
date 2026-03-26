@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	st "github.com/aasanchez/ocpp16messages/types"
-	ut "github.com/aasanchez/ocpp16messages/unlockConnector/types"
+	ut "github.com/aasanchez/ocpp16messages/unlockconnector/types"
 )
 
 const (

@@ -3,7 +3,7 @@ package types_test
 import (
 	"testing"
 
-	gt "github.com/aasanchez/ocpp16messages/getCompositeSchedule/types"
+	gt "github.com/aasanchez/ocpp16messages/getcompositeschedule/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

@@ -3,7 +3,7 @@ package types_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/changeAvailability/types"
+	"github.com/aasanchez/ocpp16messages/changeavailability/types"
 )
 
 // ExampleAvailabilityType_IsValid demonstrates validating an AvailabilityType.

@@ -1,10 +1,10 @@
-package unlockConnector
+package unlockconnector
 
 import (
 	"fmt"
 
 	st "github.com/aasanchez/ocpp16messages/types"
-	ut "github.com/aasanchez/ocpp16messages/unlockConnector/types"
+	ut "github.com/aasanchez/ocpp16messages/unlockconnector/types"
 )
 
 // ConfInput represents the raw input data for creating an UnlockConnector.conf

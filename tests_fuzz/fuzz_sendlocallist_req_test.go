@@ -7,8 +7,8 @@ import (
 	"math"
 	"testing"
 
-	sl "github.com/aasanchez/ocpp16messages/sendLocalList"
-	slt "github.com/aasanchez/ocpp16messages/sendLocalList/types"
+	sl "github.com/aasanchez/ocpp16messages/sendlocallist"
+	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

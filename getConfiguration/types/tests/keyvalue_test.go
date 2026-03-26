@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	gt "github.com/aasanchez/ocpp16messages/getConfiguration/types"
+	gt "github.com/aasanchez/ocpp16messages/getconfiguration/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

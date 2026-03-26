@@ -3,7 +3,7 @@ package types_test
 import (
 	"testing"
 
-	dn "github.com/aasanchez/ocpp16messages/diagnosticsStatusNotification/types"
+	dn "github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

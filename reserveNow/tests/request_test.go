@@ -1,11 +1,11 @@
-package reserveNow_test
+package reservenow_test
 
 import (
 	"errors"
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/reserveNow"
+	"github.com/aasanchez/ocpp16messages/reservenow"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -42,7 +42,7 @@ const (
 func TestReq_Valid_RequiredFieldsOnly(t *testing.T) {
 	t.Parallel()
 
-	req, err := reserveNow.Req(reserveNow.ReqInput{
+	req, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: testReservationIdOne,
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testValidIdTag,
@@ -83,7 +83,7 @@ func TestReq_Valid_WithParentIdTag(t *testing.T) {
 
 	parentIdTag := testValidParentIdTag
 
-	req, err := reserveNow.Req(reserveNow.ReqInput{
+	req, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: testReservationIdOne,
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testValidIdTag,
@@ -110,7 +110,7 @@ func TestReq_Valid_WithParentIdTag(t *testing.T) {
 func TestReq_Valid_ReservationIdZero(t *testing.T) {
 	t.Parallel()
 
-	req, err := reserveNow.Req(reserveNow.ReqInput{
+	req, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: testReservationIdZero,
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testValidIdTag,
@@ -133,7 +133,7 @@ func TestReq_Valid_ReservationIdZero(t *testing.T) {
 func TestReq_Valid_ReservationIdMax(t *testing.T) {
 	t.Parallel()
 
-	req, err := reserveNow.Req(reserveNow.ReqInput{
+	req, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: testReservationIdMax,
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testValidIdTag,
@@ -156,7 +156,7 @@ func TestReq_Valid_ReservationIdMax(t *testing.T) {
 func TestReq_Valid_ConnectorIdZero(t *testing.T) {
 	t.Parallel()
 
-	req, err := reserveNow.Req(reserveNow.ReqInput{
+	req, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: testReservationIdOne,
 		ConnectorId:   testConnectorIdZero,
 		IdTag:         testValidIdTag,
@@ -179,7 +179,7 @@ func TestReq_Valid_ConnectorIdZero(t *testing.T) {
 func TestReq_Valid_ConnectorIdMax(t *testing.T) {
 	t.Parallel()
 
-	req, err := reserveNow.Req(reserveNow.ReqInput{
+	req, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: testReservationIdOne,
 		ConnectorId:   testConnectorIdMax,
 		IdTag:         testValidIdTag,
@@ -202,7 +202,7 @@ func TestReq_Valid_ConnectorIdMax(t *testing.T) {
 func TestReq_ReservationIdNegative(t *testing.T) {
 	t.Parallel()
 
-	_, err := reserveNow.Req(reserveNow.ReqInput{
+	_, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: testReservationIdNeg,
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testValidIdTag,
@@ -221,7 +221,7 @@ func TestReq_ReservationIdNegative(t *testing.T) {
 func TestReq_ReservationIdExceedsMax(t *testing.T) {
 	t.Parallel()
 
-	_, err := reserveNow.Req(reserveNow.ReqInput{
+	_, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: testReservationIdOver,
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testValidIdTag,
@@ -240,7 +240,7 @@ func TestReq_ReservationIdExceedsMax(t *testing.T) {
 func TestReq_ConnectorIdNegative(t *testing.T) {
 	t.Parallel()
 
-	_, err := reserveNow.Req(reserveNow.ReqInput{
+	_, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: testReservationIdOne,
 		ConnectorId:   testConnectorIdNeg,
 		IdTag:         testValidIdTag,
@@ -259,7 +259,7 @@ func TestReq_ConnectorIdNegative(t *testing.T) {
 func TestReq_ConnectorIdExceedsMax(t *testing.T) {
 	t.Parallel()
 
-	_, err := reserveNow.Req(reserveNow.ReqInput{
+	_, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: testReservationIdOne,
 		ConnectorId:   testConnectorIdOver,
 		IdTag:         testValidIdTag,
@@ -278,7 +278,7 @@ func TestReq_ConnectorIdExceedsMax(t *testing.T) {
 func TestReq_EmptyIdTag(t *testing.T) {
 	t.Parallel()
 
-	_, err := reserveNow.Req(reserveNow.ReqInput{
+	_, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: testReservationIdOne,
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         "",
@@ -297,7 +297,7 @@ func TestReq_EmptyIdTag(t *testing.T) {
 func TestReq_IdTagTooLong(t *testing.T) {
 	t.Parallel()
 
-	_, err := reserveNow.Req(reserveNow.ReqInput{
+	_, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: testReservationIdOne,
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testIdTagTooLong,
@@ -316,7 +316,7 @@ func TestReq_IdTagTooLong(t *testing.T) {
 func TestReq_IdTagInvalidCharacters(t *testing.T) {
 	t.Parallel()
 
-	_, err := reserveNow.Req(reserveNow.ReqInput{
+	_, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: testReservationIdOne,
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testIdTagWithNullByte,
@@ -335,7 +335,7 @@ func TestReq_IdTagInvalidCharacters(t *testing.T) {
 func TestReq_InvalidExpiryDate(t *testing.T) {
 	t.Parallel()
 
-	_, err := reserveNow.Req(reserveNow.ReqInput{
+	_, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: testReservationIdOne,
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testValidIdTag,
@@ -356,7 +356,7 @@ func TestReq_ParentIdTagTooLong(t *testing.T) {
 
 	parentIdTag := testParentIdTagTooLong
 
-	_, err := reserveNow.Req(reserveNow.ReqInput{
+	_, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: testReservationIdOne,
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testValidIdTag,
@@ -377,7 +377,7 @@ func TestReq_ParentIdTagInvalidCharacters(t *testing.T) {
 
 	parentIdTag := testParentTagWithNullByte
 
-	_, err := reserveNow.Req(reserveNow.ReqInput{
+	_, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: testReservationIdOne,
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testValidIdTag,
@@ -396,7 +396,7 @@ func TestReq_ParentIdTagInvalidCharacters(t *testing.T) {
 func TestReq_MultipleErrors_AllFieldsInvalid(t *testing.T) {
 	t.Parallel()
 
-	_, err := reserveNow.Req(reserveNow.ReqInput{
+	_, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: testReservationIdNeg,
 		ConnectorId:   testConnectorIdNeg,
 		IdTag:         "",
@@ -429,7 +429,7 @@ func TestReq_MultipleErrors_WithInvalidParentIdTag(t *testing.T) {
 
 	parentIdTag := testParentIdTagTooLong
 
-	_, err := reserveNow.Req(reserveNow.ReqInput{
+	_, err := reservenow.Req(reservenow.ReqInput{
 		ReservationId: testReservationIdNeg,
 		ConnectorId:   testConnectorIdOne,
 		IdTag:         testValidIdTag,

@@ -1,10 +1,10 @@
-package changeConfiguration_test
+package changeconfiguration_test
 
 import (
 	"strings"
 	"testing"
 
-	cc "github.com/aasanchez/ocpp16messages/changeConfiguration"
+	cc "github.com/aasanchez/ocpp16messages/changeconfiguration"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

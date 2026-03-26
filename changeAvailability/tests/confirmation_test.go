@@ -1,11 +1,11 @@
-package changeAvailability_test
+package changeavailability_test
 
 import (
 	"strings"
 	"testing"
 
-	ca "github.com/aasanchez/ocpp16messages/changeAvailability"
-	mcat "github.com/aasanchez/ocpp16messages/changeAvailability/types"
+	ca "github.com/aasanchez/ocpp16messages/changeavailability"
+	mcat "github.com/aasanchez/ocpp16messages/changeavailability/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

@@ -1,4 +1,4 @@
-// Package meterValues implements the Open Charge Point Protocol (OCPP) 1.6
+// Package metervalues implements the Open Charge Point Protocol (OCPP) 1.6
 // MeterValues message for EV charging.
 //
 // # Handling Rules
@@ -50,4 +50,4 @@
 // MeterValues.conf. Sanity checks MAY be applied, but SHALL NOT prevent
 // sending the confirmation. Failure to respond would cause the Charge Point
 // to retry the message according to transaction-related error handling.
-package meterValues
+package metervalues

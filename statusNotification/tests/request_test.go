@@ -1,11 +1,11 @@
-package statusNotification_test
+package statusnotification_test
 
 import (
 	"errors"
 	"strings"
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/statusNotification"
+	"github.com/aasanchez/ocpp16messages/statusnotification"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
@@ -27,7 +27,7 @@ const (
 func TestReq_Valid(t *testing.T) {
 	t.Parallel()
 
-	req, err := statusNotification.Req(statusNotification.ReqInput{
+	req, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     testConnectorIdOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
@@ -56,7 +56,7 @@ func TestReq_Valid(t *testing.T) {
 func TestReq_ValidConnectorIdZero(t *testing.T) {
 	t.Parallel()
 
-	req, err := statusNotification.Req(statusNotification.ReqInput{
+	req, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     testConnectorIdZero,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
@@ -77,7 +77,7 @@ func TestReq_ValidConnectorIdZero(t *testing.T) {
 func TestReq_ValidCharging(t *testing.T) {
 	t.Parallel()
 
-	req, err := statusNotification.Req(statusNotification.ReqInput{
+	req, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     testConnectorIdOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusCharging,
@@ -100,7 +100,7 @@ func TestReq_ValidWithInfo(t *testing.T) {
 
 	info := "Ground fault detected"
 
-	req, err := statusNotification.Req(statusNotification.ReqInput{
+	req, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     testConnectorIdOne,
 		ErrorCode:       "GroundFailure",
 		Status:          "Faulted",
@@ -127,7 +127,7 @@ func TestReq_ValidWithTimestamp(t *testing.T) {
 
 	timestamp := "2025-01-15T10:30:00Z"
 
-	req, err := statusNotification.Req(statusNotification.ReqInput{
+	req, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     testConnectorIdOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
@@ -151,7 +151,7 @@ func TestReq_ValidWithVendorFields(t *testing.T) {
 	vendorId := "VendorX"
 	vendorErrorCode := "V001"
 
-	req, err := statusNotification.Req(statusNotification.ReqInput{
+	req, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     testConnectorIdOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
@@ -180,7 +180,7 @@ func TestReq_ValidWithVendorFields(t *testing.T) {
 func TestReq_ConnectorIdNegative(t *testing.T) {
 	t.Parallel()
 
-	_, err := statusNotification.Req(statusNotification.ReqInput{
+	_, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     testValueNegativeOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
@@ -201,7 +201,7 @@ func TestReq_ConnectorIdNegative(t *testing.T) {
 func TestReq_InvalidStatus(t *testing.T) {
 	t.Parallel()
 
-	_, err := statusNotification.Req(statusNotification.ReqInput{
+	_, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     testConnectorIdOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          "InvalidStatus",
@@ -226,7 +226,7 @@ func TestReq_InvalidStatus(t *testing.T) {
 func TestReq_EmptyStatus(t *testing.T) {
 	t.Parallel()
 
-	_, err := statusNotification.Req(statusNotification.ReqInput{
+	_, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     testConnectorIdOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          "",
@@ -247,7 +247,7 @@ func TestReq_EmptyStatus(t *testing.T) {
 func TestReq_InvalidErrorCode(t *testing.T) {
 	t.Parallel()
 
-	_, err := statusNotification.Req(statusNotification.ReqInput{
+	_, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     testConnectorIdOne,
 		ErrorCode:       "InvalidCode",
 		Status:          testStatusAvailable,
@@ -272,7 +272,7 @@ func TestReq_InvalidErrorCode(t *testing.T) {
 func TestReq_EmptyErrorCode(t *testing.T) {
 	t.Parallel()
 
-	_, err := statusNotification.Req(statusNotification.ReqInput{
+	_, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     testConnectorIdOne,
 		ErrorCode:       "",
 		Status:          testStatusAvailable,
@@ -295,7 +295,7 @@ func TestReq_InvalidTimestamp(t *testing.T) {
 
 	invalidTimestamp := "not-a-timestamp"
 
-	_, err := statusNotification.Req(statusNotification.ReqInput{
+	_, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     testConnectorIdOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
@@ -319,7 +319,7 @@ func TestReq_InfoTooLong(t *testing.T) {
 	// 51 chars, max is 50
 	longInfo := "This info string is way too long for the OCPP spec!"
 
-	_, err := statusNotification.Req(statusNotification.ReqInput{
+	_, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     testConnectorIdOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
@@ -342,7 +342,7 @@ func TestReq_MultipleErrors(t *testing.T) {
 
 	invalidTimestamp := "invalid"
 
-	_, err := statusNotification.Req(statusNotification.ReqInput{
+	_, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     testValueNegativeOne,
 		ErrorCode:       "InvalidCode",
 		Status:          "InvalidStatus",
@@ -390,7 +390,7 @@ func TestReq_AllStatuses(t *testing.T) {
 	}
 
 	for _, status := range statuses {
-		req, err := statusNotification.Req(statusNotification.ReqInput{
+		req, err := statusnotification.Req(statusnotification.ReqInput{
 			ConnectorId:     testConnectorIdOne,
 			ErrorCode:       testErrorCodeNoError,
 			Status:          status,
@@ -432,7 +432,7 @@ func TestReq_AllErrorCodes(t *testing.T) {
 	}
 
 	for _, errorCode := range errorCodes {
-		req, err := statusNotification.Req(statusNotification.ReqInput{
+		req, err := statusnotification.Req(statusnotification.ReqInput{
 			ConnectorId:     testConnectorIdOne,
 			ErrorCode:       errorCode,
 			Status:          testStatusAvailable,
@@ -457,7 +457,7 @@ func TestReq_InvalidVendorId(t *testing.T) {
 	// VendorId must be valid CiString255, test with invalid ASCII
 	invalidVendorId := "Vendor\x00Id"
 
-	_, err := statusNotification.Req(statusNotification.ReqInput{
+	_, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     testConnectorIdOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,
@@ -481,7 +481,7 @@ func TestReq_InvalidVendorErrorCode(t *testing.T) {
 	// VendorErrorCode must be valid CiString50, test with invalid ASCII
 	invalidVendorErrorCode := "Error\x00Code"
 
-	_, err := statusNotification.Req(statusNotification.ReqInput{
+	_, err := statusnotification.Req(statusnotification.ReqInput{
 		ConnectorId:     testConnectorIdOne,
 		ErrorCode:       testErrorCodeNoError,
 		Status:          testStatusAvailable,

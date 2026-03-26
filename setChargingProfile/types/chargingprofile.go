@@ -65,7 +65,7 @@ type ChargingProfile struct {
 //   - ValidTo (if provided) is not a valid RFC3339 timestamp
 //   - ChargingSchedule is invalid
 //
-//nolint:cyclop,revive,funlen // validation requires checking many fields
+//nolint:cyclop,funlen,revive // validation requires checking many fields
 func NewChargingProfile(input ChargingProfileInput) (ChargingProfile, error) {
 	var errs []error
 

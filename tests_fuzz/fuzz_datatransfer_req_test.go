@@ -6,7 +6,7 @@ import (
 	"errors"
 	"testing"
 
-	dt "github.com/aasanchez/ocpp16messages/dataTransfer"
+	dt "github.com/aasanchez/ocpp16messages/datatransfer"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

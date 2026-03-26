@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	gc "github.com/aasanchez/ocpp16messages/getCompositeSchedule"
-	gt "github.com/aasanchez/ocpp16messages/getCompositeSchedule/types"
+	gc "github.com/aasanchez/ocpp16messages/getcompositeschedule"
+	gt "github.com/aasanchez/ocpp16messages/getcompositeschedule/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

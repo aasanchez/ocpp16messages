@@ -3,7 +3,7 @@ package types_test
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/reserveNow/types"
+	"github.com/aasanchez/ocpp16messages/reservenow/types"
 )
 
 // ExampleReservationStatus demonstrates using the ReservationStatus enumeration

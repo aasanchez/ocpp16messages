@@ -3,7 +3,7 @@ package types_test
 import (
 	"testing"
 
-	"github.com/aasanchez/ocpp16messages/stopTransaction/types"
+	"github.com/aasanchez/ocpp16messages/stoptransaction/types"
 )
 
 const errReasonStringFormat = "Reason.String() = %v, want %v"

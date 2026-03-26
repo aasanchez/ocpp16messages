@@ -1,9 +1,9 @@
-package triggerMessage_test
+package triggermessage_test
 
 import (
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/triggerMessage"
+	"github.com/aasanchez/ocpp16messages/triggermessage"
 )
 
 const (
@@ -13,7 +13,7 @@ const (
 // ExampleConf demonstrates creating a valid TriggerMessage.conf message
 // with an Accepted status.
 func ExampleConf() {
-	conf, err := triggerMessage.Conf(triggerMessage.ConfInput{
+	conf, err := triggermessage.Conf(triggermessage.ConfInput{
 		Status: "Accepted",
 	})
 	if err != nil {
@@ -30,7 +30,7 @@ func ExampleConf() {
 // ExampleConf_rejected demonstrates creating a TriggerMessage.conf message
 // with a Rejected status.
 func ExampleConf_rejected() {
-	conf, err := triggerMessage.Conf(triggerMessage.ConfInput{
+	conf, err := triggermessage.Conf(triggermessage.ConfInput{
 		Status: "Rejected",
 	})
 	if err != nil {
@@ -47,7 +47,7 @@ func ExampleConf_rejected() {
 // ExampleConf_notImplemented demonstrates creating a TriggerMessage.conf
 // message with a NotImplemented status.
 func ExampleConf_notImplemented() {
-	conf, err := triggerMessage.Conf(triggerMessage.ConfInput{
+	conf, err := triggermessage.Conf(triggermessage.ConfInput{
 		Status: "NotImplemented",
 	})
 	if err != nil {
@@ -64,7 +64,7 @@ func ExampleConf_notImplemented() {
 // ExampleConf_invalidStatus demonstrates the error returned when
 // an invalid status is provided.
 func ExampleConf_invalidStatus() {
-	_, err := triggerMessage.Conf(triggerMessage.ConfInput{
+	_, err := triggermessage.Conf(triggermessage.ConfInput{
 		Status: "Unknown",
 	})
 	if err != nil {
@@ -77,7 +77,7 @@ func ExampleConf_invalidStatus() {
 // ExampleConf_emptyStatus demonstrates the error returned when
 // an empty status is provided.
 func ExampleConf_emptyStatus() {
-	_, err := triggerMessage.Conf(triggerMessage.ConfInput{
+	_, err := triggermessage.Conf(triggermessage.ConfInput{
 		Status: "",
 	})
 	if err != nil {

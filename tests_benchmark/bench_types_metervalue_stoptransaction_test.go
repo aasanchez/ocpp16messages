@@ -5,9 +5,9 @@ package benchmark
 import (
 	"testing"
 
-	mv "github.com/aasanchez/ocpp16messages/meterValues"
-	mt "github.com/aasanchez/ocpp16messages/meterValues/types"
-	stp "github.com/aasanchez/ocpp16messages/stopTransaction"
+	mv "github.com/aasanchez/ocpp16messages/metervalues"
+	mt "github.com/aasanchez/ocpp16messages/metervalues/types"
+	stp "github.com/aasanchez/ocpp16messages/stoptransaction"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

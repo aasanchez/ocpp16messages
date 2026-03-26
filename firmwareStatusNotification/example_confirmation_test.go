@@ -1,9 +1,9 @@
-package firmwareStatusNotification_test
+package firmwarestatusnotification_test
 
 import (
 	"fmt"
 
-	fsn "github.com/aasanchez/ocpp16messages/firmwareStatusNotification"
+	fsn "github.com/aasanchez/ocpp16messages/firmwarestatusnotification"
 )
 
 // ExampleConf demonstrates creating a valid FirmwareStatusNotification.conf

@@ -1,4 +1,4 @@
-// Package unlockConnector implements the Open Charge Point Protocol (OCPP) 1.6
+// Package unlockconnector implements the Open Charge Point Protocol (OCPP) 1.6
 // UnlockConnector message for EV charging.
 //
 // # Handling Rules
@@ -27,4 +27,4 @@
 //   - UnlockConnector.req only affects the cable retention lock on the
 //     connector. It does not unlock a connector access door or other
 //     enclosure.
-package unlockConnector
+package unlockconnector

@@ -1,9 +1,9 @@
-package changeConfiguration
+package changeconfiguration
 
 import (
 	"fmt"
 
-	cct "github.com/aasanchez/ocpp16messages/changeConfiguration/types"
+	cct "github.com/aasanchez/ocpp16messages/changeconfiguration/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

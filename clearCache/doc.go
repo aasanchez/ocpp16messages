@@ -1,4 +1,4 @@
-// Package clearCache implements the Open Charge Point Protocol (OCPP) 1.6
+// Package clearcache implements the Open Charge Point Protocol (OCPP) 1.6
 // ClearCache message for EV charging.
 //
 // # Handling Rules
@@ -9,4 +9,4 @@
 // Upon receipt of ClearCache.req, the Charge Point SHALL respond with
 // ClearCache.conf indicating whether the Authorization Cache was
 // successfully cleared.
-package clearCache
+package clearcache

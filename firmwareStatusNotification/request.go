@@ -1,9 +1,9 @@
-package firmwareStatusNotification
+package firmwarestatusnotification
 
 import (
 	"fmt"
 
-	fn "github.com/aasanchez/ocpp16messages/firmwareStatusNotification/types"
+	fn "github.com/aasanchez/ocpp16messages/firmwarestatusnotification/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

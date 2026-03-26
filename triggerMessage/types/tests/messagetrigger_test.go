@@ -3,17 +3,17 @@ package types_test
 import (
 	"testing"
 
-	tt "github.com/aasanchez/ocpp16messages/triggerMessage/types"
+	tt "github.com/aasanchez/ocpp16messages/triggermessage/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
 const (
-	bootNotificationStr              = "BootNotification"
-	diagnosticsStatusNotificationStr = "DiagnosticsStatusNotification"
-	firmwareStatusNotificationStr    = "FirmwareStatusNotification"
+	bootnotificationStr              = "BootNotification"
+	diagnosticsstatusnotificationStr = "DiagnosticsStatusNotification"
+	firmwarestatusnotificationStr    = "FirmwareStatusNotification"
 	heartbeatStr                     = "Heartbeat"
-	meterValuesStr                   = "MeterValues"
-	statusNotificationStr            = "StatusNotification"
+	metervaluesStr                   = "MeterValues"
+	statusnotificationStr            = "StatusNotification"
 	methodStringName                 = "MessageTrigger.String()"
 )
 
@@ -123,12 +123,12 @@ func TestMessageTrigger_String_BootNotification(t *testing.T) {
 	t.Parallel()
 
 	got := tt.MessageTriggerBootNotification.String()
-	if got != bootNotificationStr {
+	if got != bootnotificationStr {
 		t.Errorf(
 			st.ErrorMethodMismatch,
 			methodStringName,
 			got,
-			bootNotificationStr,
+			bootnotificationStr,
 		)
 	}
 }
@@ -137,12 +137,12 @@ func TestMessageTrigger_String_DiagnosticsStatusNotification(t *testing.T) {
 	t.Parallel()
 
 	got := tt.MessageTriggerDiagnosticsStatusNotification.String()
-	if got != diagnosticsStatusNotificationStr {
+	if got != diagnosticsstatusnotificationStr {
 		t.Errorf(
 			st.ErrorMethodMismatch,
 			methodStringName,
 			got,
-			diagnosticsStatusNotificationStr,
+			diagnosticsstatusnotificationStr,
 		)
 	}
 }
@@ -151,12 +151,12 @@ func TestMessageTrigger_String_FirmwareStatusNotification(t *testing.T) {
 	t.Parallel()
 
 	got := tt.MessageTriggerFirmwareStatusNotification.String()
-	if got != firmwareStatusNotificationStr {
+	if got != firmwarestatusnotificationStr {
 		t.Errorf(
 			st.ErrorMethodMismatch,
 			methodStringName,
 			got,
-			firmwareStatusNotificationStr,
+			firmwarestatusnotificationStr,
 		)
 	}
 }
@@ -179,12 +179,12 @@ func TestMessageTrigger_String_MeterValues(t *testing.T) {
 	t.Parallel()
 
 	got := tt.MessageTriggerMeterValues.String()
-	if got != meterValuesStr {
+	if got != metervaluesStr {
 		t.Errorf(
 			st.ErrorMethodMismatch,
 			methodStringName,
 			got,
-			meterValuesStr,
+			metervaluesStr,
 		)
 	}
 }
@@ -193,12 +193,12 @@ func TestMessageTrigger_String_StatusNotification(t *testing.T) {
 	t.Parallel()
 
 	got := tt.MessageTriggerStatusNotification.String()
-	if got != statusNotificationStr {
+	if got != statusnotificationStr {
 		t.Errorf(
 			st.ErrorMethodMismatch,
 			methodStringName,
 			got,
-			statusNotificationStr,
+			statusnotificationStr,
 		)
 	}
 }

@@ -7,8 +7,8 @@ import (
 	"math"
 	"testing"
 
-	tm "github.com/aasanchez/ocpp16messages/triggerMessage"
-	tt "github.com/aasanchez/ocpp16messages/triggerMessage/types"
+	tm "github.com/aasanchez/ocpp16messages/triggermessage"
+	tt "github.com/aasanchez/ocpp16messages/triggermessage/types"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 

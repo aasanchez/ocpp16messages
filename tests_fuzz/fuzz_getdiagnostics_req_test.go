@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	gd "github.com/aasanchez/ocpp16messages/getDiagnostics"
+	gd "github.com/aasanchez/ocpp16messages/getdiagnostics"
 	st "github.com/aasanchez/ocpp16messages/types"
 )
 
