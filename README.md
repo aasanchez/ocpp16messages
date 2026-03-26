@@ -475,8 +475,8 @@ Reports are generated in the `reports/` directory:
 
 #### Message-Specific Types
 
-| Package                         | Type                           | Description                        |
-|---------------------------------|--------------------------------|------------------------------------|
+| Package                               | Type                           | Description                        |
+|---------------------------------------|--------------------------------|------------------------------------|
 | `bootnotification/types`              | `RegistrationStatus`           | Accepted, Pending, Rejected        |
 | `cancelreservation/types`             | `CancelReservationStatus`      | Accepted, Rejected                 |
 | `changeavailability/types`            | `AvailabilityType`             | Inoperative, Operative             |
