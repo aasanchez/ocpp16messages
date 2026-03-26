@@ -12,7 +12,7 @@ test: ## Run all tests starting with "Test" and collect coverage.
 	@rm -rf reports && mkdir -p reports
 	@go clean -cache -testcache -modcache
 	@go test -mod=readonly \
-		-coverpkg=$$(go list ./... | grep -v /scripts | tr '\n' ',') \
+		-coverpkg=$$(go list ./... | grep -v -e /scripts -e /tests -e tests_ | tr '\n' ',' | sed 's/,$$//') \
 		-coverprofile=reports/coverage.out \
 		-v ./... >reports/test.txt
 	@echo "\n--- \033[32mCoverage Percentage\033[0m:"
