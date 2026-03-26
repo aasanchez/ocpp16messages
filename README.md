@@ -5,7 +5,6 @@
 [![codecov](https://codecov.io/gh/aasanchez/ocpp16messages/graph/badge.svg?token=1I9VVL7DWO)](https://codecov.io/gh/aasanchez/ocpp16messages)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/aasanchez/ocpp16messages/badge)](https://securityscorecards.dev/viewer/?uri=github.com/aasanchez/ocpp16messages)
 [![Supported Go versions](https://img.shields.io/badge/Go-1.25.8%20%7C%201.26.1-00ADD8?logo=go)](#versioning-and-support)
-[![Compatibility contract](https://img.shields.io/badge/compatibility-contract-blue)](COMPATIBILITY.md)
 [![CLA assistant](https://cla-assistant.io/readme/badge/aasanchez/ocpp16messages)](https://cla-assistant.io/aasanchez/ocpp16messages)
 
 A type-safe Go implementation of the Open Charge Point Protocol (OCPP) 1.6
