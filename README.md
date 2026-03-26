@@ -85,34 +85,34 @@ The library covers the full OCPP 1.6 message surface, including:
     │   ├── unitofmeasure.go        # UnitOfMeasure enum
     │   ├── doc.go                  # Package documentation
     │   └── tests/                  # Public API tests (black-box)
-    ├── authorize/                  # Authorize message
-    ├── bootNotification/           # BootNotification message
-    ├── cancelReservation/          # CancelReservation message
-    ├── changeAvailability/         # ChangeAvailability message
-    ├── changeConfiguration/        # ChangeConfiguration message
-    ├── clearCache/                 # ClearCache message
-    ├── clearChargingProfile/       # ClearChargingProfile message
-    ├── dataTransfer/               # DataTransfer message
-    ├── diagnosticsStatusNotification/  # DiagnosticsStatusNotification message
-    ├── firmwareStatusNotification/ # FirmwareStatusNotification message
-    ├── getCompositeSchedule/       # GetCompositeSchedule message
-    ├── getConfiguration/           # GetConfiguration message
-    ├── getDiagnostics/             # GetDiagnostics message
-    ├── getLocalListVersion/        # GetLocalListVersion message
-    ├── heartbeat/                  # Heartbeat message
-    ├── meterValues/                # MeterValues message
-    ├── remoteStartTransaction/     # RemoteStartTransaction message
-    ├── remoteStopTransaction/      # RemoteStopTransaction message
-    ├── reserveNow/                 # ReserveNow message
-    ├── reset/                      # Reset message
-    ├── sendLocalList/              # SendLocalList message
-    ├── setChargingProfile/         # SetChargingProfile message
-    ├── startTransaction/           # StartTransaction message
-    ├── statusNotification/         # StatusNotification message
-    ├── stopTransaction/            # StopTransaction message
-    ├── triggerMessage/             # TriggerMessage message
-    ├── unlockConnector/            # UnlockConnector message
-    ├── updateFirmware/             # UpdateFirmware message
+    ├── authorize/                       # Authorize message
+    ├── bootnotification/                # BootNotification message
+    ├── cancelreservation/               # CancelReservation message
+    ├── changeavailability/              # ChangeAvailability message
+    ├── changeconfiguration/             # ChangeConfiguration message
+    ├── clearcache/                      # ClearCache message
+    ├── clearchargingprofile/            # ClearChargingProfile message
+    ├── datatransfer/                    # DataTransfer message
+    ├── diagnosticsstatusnotification/   # DiagnosticsStatusNotification message
+    ├── firmwarestatusnotification/      # FirmwareStatusNotification message
+    ├── getcompositeschedule/            # GetCompositeSchedule message
+    ├── getconfiguration/                # GetConfiguration message
+    ├── getdiagnostics/                  # GetDiagnostics message
+    ├── getlocallistversion/             # GetLocalListVersion message
+    ├── heartbeat/                       # Heartbeat message
+    ├── metervalues/                     # MeterValues message
+    ├── remotestarttransaction/          # RemoteStartTransaction message
+    ├── remotestoptransaction/           # RemoteStopTransaction message
+    ├── reservenow/                      # ReserveNow message
+    ├── reset/                           # Reset message
+    ├── sendlocallist/                   # SendLocalList message
+    ├── setchargingprofile/              # SetChargingProfile message
+    ├── starttransaction/                # StartTransaction message
+    ├── statusnotification/              # StatusNotification message
+    ├── stoptransaction/                 # StopTransaction message
+    ├── triggermessage/                  # TriggerMessage message
+    ├── unlockconnector/                 # UnlockConnector message
+    ├── updatefirmware/                  # UpdateFirmware message
     └── SECURITY.md                 # Security policy and vulnerability reporting
 
 ## Versioning and support
@@ -167,11 +167,11 @@ Messages use OCPP terminology with `Req()` for requests and `Conf()` for respons
     // Access the validated IdTag
     fmt.Println(req.IdTag.String()) // "RFID-ABC123"
 
-    import "github.com/aasanchez/ocpp16messages/clearChargingProfile"
+    import "github.com/aasanchez/ocpp16messages/clearchargingprofile"
 
     // ClearChargingProfile.req with optional fields
     id := 123
-    req, err := clearChargingProfile.Req(clearChargingProfile.ReqInput{
+    req, err := clearchargingprofile.Req(clearchargingprofile.ReqInput{
         Id:                     &id,
         ConnectorId:            nil,
         ChargingProfilePurpose: nil,
@@ -477,70 +477,70 @@ Reports are generated in the `reports/` directory:
 
 | Package                         | Type                           | Description                        |
 |---------------------------------|--------------------------------|------------------------------------|
-| `bootNotification/types`        | `RegistrationStatus`           | Accepted, Pending, Rejected        |
-| `cancelReservation/types`       | `CancelReservationStatus`      | Accepted, Rejected                 |
-| `changeAvailability/types`      | `AvailabilityType`             | Inoperative, Operative             |
-| `changeAvailability/types`      | `AvailabilityStatus`           | Accepted, Rejected, Scheduled      |
-| `changeConfiguration/types`     | `ConfigurationStatus`          | Accepted, Rejected, etc            |
-| `clearCache/types`              | `ClearCacheStatus`             | Accepted, Rejected                 |
-| `clearChargingProfile/types`    | `ClearChargingProfileStatus`   | Accepted, Unknown                  |
-| `dataTransfer/types`            | `DataTransferStatus`           | Accepted, Rejected, etc            |
-| `diagnosticsStatusNotification` | `DiagnosticsStatus`            | Idle, Uploaded, UploadFailed, etc  |
-| `firmwareStatusNotification`    | `FirmwareStatus`               | Downloaded, Installing, etc        |
-| `getCompositeSchedule/types`    | `GetCompositeScheduleStatus`   | Accepted, Rejected                 |
-| `getConfiguration/types`        | `KeyValue`                     | Configuration key-value pair       |
-| `getLocalListVersion/types`     | `ListVersionNumber`            | Local list version number          |
-| `remoteStartTransaction/types`  | `RemoteStartTransactionStatus` | Accepted, Rejected                 |
-| `remoteStopTransaction/types`   | `RemoteStopTransactionStatus`  | Accepted, Rejected                 |
-| `reserveNow/types`              | `ReservationStatus`            | Accepted, Faulted, Occupied, etc   |
-| `reset/types`                   | `ResetType`                    | Hard, Soft                         |
-| `reset/types`                   | `ResetStatus`                  | Accepted, Rejected                 |
-| `sendLocalList/types`           | `UpdateType`                   | Differential, Full                 |
-| `sendLocalList/types`           | `UpdateStatus`                 | Accepted, Failed, etc              |
-| `sendLocalList/types`           | `AuthorizationData`            | IdTag + IdTagInfo                  |
-| `setChargingProfile/types`      | `ChargingProfile`              | Complete charging profile          |
-| `setChargingProfile/types`      | `ChargingProfileKindType`      | Absolute, Recurring, Relative      |
-| `setChargingProfile/types`      | `ChargingProfileStatus`        | Accepted, Rejected, etc            |
-| `setChargingProfile/types`      | `RecurrencyKindType`           | Daily, Weekly                      |
-| `statusNotification/types`      | `ChargePointErrorCode`         | ConnectorLockFailure, etc          |
-| `statusNotification/types`      | `ChargePointStatus`            | Available, Charging, Faulted, etc  |
-| `stopTransaction/types`         | `StopReason`                   | EmergencyStop, EVDisconnected, etc |
-| `triggerMessage/types`          | `MessageTrigger`               | BootNotification, Heartbeat, etc   |
-| `triggerMessage/types`          | `TriggerMessageStatus`         | Accepted, Rejected, NotImplemented |
-| `unlockConnector/types`         | `UnlockStatus`                 | Unlocked, UnlockFailed, etc        |
+| `bootnotification/types`              | `RegistrationStatus`           | Accepted, Pending, Rejected        |
+| `cancelreservation/types`             | `CancelReservationStatus`      | Accepted, Rejected                 |
+| `changeavailability/types`            | `AvailabilityType`             | Inoperative, Operative             |
+| `changeavailability/types`            | `AvailabilityStatus`           | Accepted, Rejected, Scheduled      |
+| `changeconfiguration/types`           | `ConfigurationStatus`          | Accepted, Rejected, etc            |
+| `clearcache/types`                    | `ClearCacheStatus`             | Accepted, Rejected                 |
+| `clearchargingprofile/types`          | `ClearChargingProfileStatus`   | Accepted, Unknown                  |
+| `datatransfer/types`                  | `DataTransferStatus`           | Accepted, Rejected, etc            |
+| `diagnosticsstatusnotification/types` | `DiagnosticsStatus`            | Idle, Uploaded, UploadFailed, etc  |
+| `firmwarestatusnotification/types`    | `FirmwareStatus`               | Downloaded, Installing, etc        |
+| `getcompositeschedule/types`          | `GetCompositeScheduleStatus`   | Accepted, Rejected                 |
+| `getconfiguration/types`              | `KeyValue`                     | Configuration key-value pair       |
+| `getlocallistversion/types`           | `ListVersionNumber`            | Local list version number          |
+| `remotestarttransaction/types`        | `RemoteStartTransactionStatus` | Accepted, Rejected                 |
+| `remotestoptransaction/types`         | `RemoteStopTransactionStatus`  | Accepted, Rejected                 |
+| `reservenow/types`                    | `ReservationStatus`            | Accepted, Faulted, Occupied, etc   |
+| `reset/types`                         | `ResetType`                    | Hard, Soft                         |
+| `reset/types`                         | `ResetStatus`                  | Accepted, Rejected                 |
+| `sendlocallist/types`                 | `UpdateType`                   | Differential, Full                 |
+| `sendlocallist/types`                 | `UpdateStatus`                 | Accepted, Failed, etc              |
+| `sendlocallist/types`                 | `AuthorizationData`            | IdTag + IdTagInfo                  |
+| `setchargingprofile/types`            | `ChargingProfile`              | Complete charging profile          |
+| `setchargingprofile/types`            | `ChargingProfileKindType`      | Absolute, Recurring, Relative      |
+| `setchargingprofile/types`            | `ChargingProfileStatus`        | Accepted, Rejected, etc            |
+| `setchargingprofile/types`            | `RecurrencyKindType`           | Daily, Weekly                      |
+| `statusnotification/types`            | `ChargePointErrorCode`         | ConnectorLockFailure, etc          |
+| `statusnotification/types`            | `ChargePointStatus`            | Available, Charging, Faulted, etc  |
+| `stoptransaction/types`               | `StopReason`                   | EmergencyStop, EVDisconnected, etc |
+| `triggermessage/types`                | `MessageTrigger`               | BootNotification, Heartbeat, etc   |
+| `triggermessage/types`                | `TriggerMessageStatus`         | Accepted, Rejected, NotImplemented |
+| `unlockconnector/types`               | `UnlockStatus`                 | Unlocked, UnlockFailed, etc        |
 
 ### Message Implementation Status
 
 | Message                       | Request | Confirmation | Package                         |
 |-------------------------------|---------|--------------|---------------------------------|
 | Authorize                     | Done    | Done         | `authorize`                     |
-| BootNotification              | Done    | Done         | `bootNotification`              |
-| CancelReservation             | Done    | Done         | `cancelReservation`             |
-| ChangeAvailability            | Done    | Done         | `changeAvailability`            |
-| ChangeConfiguration           | Done    | Done         | `changeConfiguration`           |
-| ClearCache                    | Done    | Done         | `clearCache`                    |
-| ClearChargingProfile          | Done    | Done         | `clearChargingProfile`          |
-| DataTransfer                  | Done    | Done         | `dataTransfer`                  |
-| DiagnosticsStatusNotification | Done    | Done         | `diagnosticsStatusNotification` |
-| FirmwareStatusNotification    | Done    | Done         | `firmwareStatusNotification`    |
-| GetCompositeSchedule          | Done    | Done         | `getCompositeSchedule`          |
-| GetConfiguration              | Done    | Done         | `getConfiguration`              |
-| GetDiagnostics                | Done    | Done         | `getDiagnostics`                |
-| GetLocalListVersion           | Done    | Done         | `getLocalListVersion`           |
+| BootNotification              | Done    | Done         | `bootnotification`              |
+| CancelReservation             | Done    | Done         | `cancelreservation`             |
+| ChangeAvailability            | Done    | Done         | `changeavailability`            |
+| ChangeConfiguration           | Done    | Done         | `changeconfiguration`           |
+| ClearCache                    | Done    | Done         | `clearcache`                    |
+| ClearChargingProfile          | Done    | Done         | `clearchargingprofile`          |
+| DataTransfer                  | Done    | Done         | `datatransfer`                  |
+| DiagnosticsStatusNotification | Done    | Done         | `diagnosticsstatusnotification` |
+| FirmwareStatusNotification    | Done    | Done         | `firmwarestatusnotification`    |
+| GetCompositeSchedule          | Done    | Done         | `getcompositeschedule`          |
+| GetConfiguration              | Done    | Done         | `getconfiguration`              |
+| GetDiagnostics                | Done    | Done         | `getdiagnostics`                |
+| GetLocalListVersion           | Done    | Done         | `getlocallistversion`           |
 | Heartbeat                     | Done    | Done         | `heartbeat`                     |
-| MeterValues                   | Done    | Done         | `meterValues`                   |
-| RemoteStartTransaction        | Done    | Done         | `remoteStartTransaction`        |
-| RemoteStopTransaction         | Done    | Done         | `remoteStopTransaction`         |
-| ReserveNow                    | Done    | Done         | `reserveNow`                    |
+| MeterValues                   | Done    | Done         | `metervalues`                   |
+| RemoteStartTransaction        | Done    | Done         | `remotestarttransaction`        |
+| RemoteStopTransaction         | Done    | Done         | `remotestoptransaction`         |
+| ReserveNow                    | Done    | Done         | `reservenow`                    |
 | Reset                         | Done    | Done         | `reset`                         |
-| SendLocalList                 | Done    | Done         | `sendLocalList`                 |
-| SetChargingProfile            | Done    | Done         | `setChargingProfile`            |
-| StartTransaction              | Done    | Done         | `startTransaction`              |
-| StatusNotification            | Done    | Done         | `statusNotification`            |
-| StopTransaction               | Done    | Done         | `stopTransaction`               |
-| TriggerMessage                | Done    | Done         | `triggerMessage`                |
-| UnlockConnector               | Done    | Done         | `unlockConnector`               |
-| UpdateFirmware                | Done    | Done         | `updateFirmware`                |
+| SendLocalList                 | Done    | Done         | `sendlocallist`                 |
+| SetChargingProfile            | Done    | Done         | `setchargingprofile`            |
+| StartTransaction              | Done    | Done         | `starttransaction`              |
+| StatusNotification            | Done    | Done         | `statusnotification`            |
+| StopTransaction               | Done    | Done         | `stoptransaction`               |
+| TriggerMessage                | Done    | Done         | `triggermessage`                |
+| UnlockConnector               | Done    | Done         | `unlockconnector`               |
+| UpdateFirmware                | Done    | Done         | `updatefirmware`                |
 
 ### Design Principles
 
