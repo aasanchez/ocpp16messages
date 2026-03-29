@@ -38,7 +38,9 @@ func TestReq_Valid(t *testing.T) {
 	}
 
 	if req.ConnectorId.Value() != testConnectorIdOne {
-		t.Errorf(types.ErrorMismatch, testConnectorIdOne, req.ConnectorId.Value())
+		t.Errorf(
+			types.ErrorMismatch, testConnectorIdOne, req.ConnectorId.Value(),
+		)
 	}
 
 	if req.IdTag.String() != testValidIdTag {
@@ -46,7 +48,9 @@ func TestReq_Valid(t *testing.T) {
 	}
 
 	if req.MeterStart.Value() != testMeterStart1000 {
-		t.Errorf(types.ErrorMismatch, testMeterStart1000, req.MeterStart.Value())
+		t.Errorf(
+			types.ErrorMismatch, testMeterStart1000, req.MeterStart.Value(),
+		)
 	}
 }
 

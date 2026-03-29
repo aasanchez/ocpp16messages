@@ -121,7 +121,9 @@ func validateTransactionId(
 ) (types.Integer, []error) {
 	val, err := types.NewInteger(transactionId)
 	if err != nil {
-		return types.Integer{}, append(errs, fmt.Errorf("transactionId: %w", err))
+		return types.Integer{}, append(
+			errs, fmt.Errorf("transactionId: %w", err),
+		)
 	}
 
 	return val, errs
@@ -150,7 +152,9 @@ func validateMeterStop(meterStop int, errs []error) (types.Integer, []error) {
 }
 
 // validateTimestamp validates the timestamp field.
-func validateTimestamp(timestamp string, errs []error) (types.DateTime, []error) {
+func validateTimestamp(
+	timestamp string, errs []error,
+) (types.DateTime, []error) {
 	val, err := types.NewDateTime(timestamp)
 	if err != nil {
 		return types.DateTime{}, append(errs, fmt.Errorf("timestamp: %w", err))

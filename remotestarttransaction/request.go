@@ -61,7 +61,10 @@ func Req(input ReqInput) (ReqMessage, error) {
 }
 
 // validateConnectorId validates the connectorId field.
-func validateConnectorId(connectorId int, errs []error) (*types.Integer, []error) {
+func validateConnectorId(
+	connectorId int,
+	errs []error,
+) (*types.Integer, []error) {
 	val, err := types.NewInteger(connectorId)
 	if err != nil {
 		return nil, append(errs, fmt.Errorf("connectorId: %w", err))

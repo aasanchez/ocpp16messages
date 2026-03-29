@@ -75,7 +75,10 @@ func Req(input ReqInput) (ReqMessage, error) {
 }
 
 // validateConnectorId validates the connectorId field.
-func validateConnectorId(connectorId int, errs []error) (types.Integer, []error) {
+func validateConnectorId(
+	connectorId int,
+	errs []error,
+) (types.Integer, []error) {
 	val, err := types.NewInteger(connectorId)
 	if err != nil {
 		return types.Integer{}, append(errs, fmt.Errorf("connectorId: %w", err))
@@ -105,7 +108,10 @@ func validateMeterStart(meterStart int, errs []error) (types.Integer, []error) {
 }
 
 // validateTimestamp validates the timestamp field.
-func validateTimestamp(timestamp string, errs []error) (types.DateTime, []error) {
+func validateTimestamp(
+	timestamp string,
+	errs []error,
+) (types.DateTime, []error) {
 	val, err := types.NewDateTime(timestamp)
 	if err != nil {
 		return types.DateTime{}, append(errs, fmt.Errorf("timestamp: %w", err))

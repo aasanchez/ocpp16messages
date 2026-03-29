@@ -50,7 +50,8 @@ func TestReq_Valid_DiagnosticsStatusNotification(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.RequestedMessage != types.MessageTriggerDiagnosticsStatusNotification {
+	if req.RequestedMessage !=
+		types.MessageTriggerDiagnosticsStatusNotification {
 		t.Errorf(
 			types.ErrorMismatch,
 			types.MessageTriggerDiagnosticsStatusNotification,
@@ -289,7 +290,10 @@ func TestReq_InvalidRequestedMessage_StartTransaction(t *testing.T) {
 		ConnectorId:      nil,
 	})
 	if err == nil {
-		t.Errorf(types.ErrorWantNil, "StartTransaction (not valid per OCPP 1.6)")
+		t.Errorf(
+			types.ErrorWantNil,
+			"StartTransaction (not valid per OCPP 1.6)",
+		)
 	}
 
 	if !strings.Contains(err.Error(), errRequestedMessage) {

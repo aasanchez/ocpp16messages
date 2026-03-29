@@ -56,7 +56,9 @@ func TestReq_Valid_ConnectorOne_Operative(t *testing.T) {
 	}
 
 	if req.ConnectorId.Value() != valuePositive {
-		t.Errorf(types.ErrorMismatchValue, valuePositive, req.ConnectorId.Value())
+		t.Errorf(
+			types.ErrorMismatchValue, valuePositive, req.ConnectorId.Value(),
+		)
 	}
 
 	if req.Type != types.AvailabilityTypeOperative {
@@ -79,7 +81,9 @@ func TestReq_Valid_MaxConnectorId(t *testing.T) {
 	}
 
 	if req.ConnectorId.Value() != valueMaxUint16 {
-		t.Errorf(types.ErrorMismatchValue, valueMaxUint16, req.ConnectorId.Value())
+		t.Errorf(
+			types.ErrorMismatchValue, valueMaxUint16, req.ConnectorId.Value(),
+		)
 	}
 }
 

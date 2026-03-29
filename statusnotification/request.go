@@ -121,7 +121,10 @@ func validateOptionalFields(
 }
 
 // validateConnectorId validates the connectorId field.
-func validateConnectorId(connectorId int, errs []error) (types.Integer, []error) {
+func validateConnectorId(
+	connectorId int,
+	errs []error,
+) (types.Integer, []error) {
 	val, err := types.NewInteger(connectorId)
 	if err != nil {
 		return types.Integer{}, append(errs, fmt.Errorf("connectorId: %w", err))
@@ -138,7 +141,9 @@ func validateErrorCode(
 	code := types.ChargePointErrorCode(errorCode)
 
 	if !code.IsValid() {
-		return "", append(errs, fmt.Errorf("errorCode: %w", types.ErrInvalidValue))
+		return "", append(
+			errs, fmt.Errorf("errorCode: %w", types.ErrInvalidValue),
+		)
 	}
 
 	return code, errs
@@ -169,7 +174,10 @@ func validateInfo(info string, errs []error) (types.CiString50Type, []error) {
 }
 
 // validateTimestamp validates the timestamp field.
-func validateTimestamp(timestamp string, errs []error) (types.DateTime, []error) {
+func validateTimestamp(
+	timestamp string,
+	errs []error,
+) (types.DateTime, []error) {
 	val, err := types.NewDateTime(timestamp)
 	if err != nil {
 		return types.DateTime{}, append(errs, fmt.Errorf("timestamp: %w", err))

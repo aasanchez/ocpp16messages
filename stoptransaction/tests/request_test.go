@@ -225,7 +225,9 @@ func TestReq_ValidWithEmptyTransactionData(t *testing.T) {
 	}
 
 	if len(req.TransactionData) != testTxDataLenZero {
-		t.Errorf(types.ErrorMismatch, testTxDataLenZero, len(req.TransactionData))
+		t.Errorf(
+			types.ErrorMismatch, testTxDataLenZero, len(req.TransactionData),
+		)
 	}
 }
 

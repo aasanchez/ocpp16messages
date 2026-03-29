@@ -261,7 +261,9 @@ func TestConf_Complete(t *testing.T) {
 	}
 
 	if conf.IdTagInfo.Status.String() != "Accepted" {
-		t.Errorf(types.ErrorMismatch, "Accepted", conf.IdTagInfo.Status.String())
+		t.Errorf(
+			types.ErrorMismatch, "Accepted", conf.IdTagInfo.Status.String(),
+		)
 	}
 
 	if conf.IdTagInfo.ExpiryDate == nil {

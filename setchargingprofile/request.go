@@ -41,7 +41,9 @@ func Req(input ReqInput) (ReqMessage, error) {
 		errs = append(errs, fmt.Errorf("connectorId: %w", err))
 	}
 
-	csChargingProfiles, err := types.NewChargingProfile(input.CsChargingProfiles)
+	csChargingProfiles, err := types.NewChargingProfile(
+		input.CsChargingProfiles,
+	)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("csChargingProfiles: %w", err))
 	}

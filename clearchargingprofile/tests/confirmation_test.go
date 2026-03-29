@@ -90,7 +90,9 @@ func TestConf_InvalidStatus_Rejected(t *testing.T) {
 
 	_, err := ccp.Conf(ccp.ConfInput{Status: "Rejected"})
 	if err == nil {
-		t.Errorf(types.ErrorWantNil, "Rejected (invalid for ClearChargingProfile)")
+		t.Errorf(
+			types.ErrorWantNil, "Rejected (invalid for ClearChargingProfile)",
+		)
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {

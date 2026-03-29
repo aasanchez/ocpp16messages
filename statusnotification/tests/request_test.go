@@ -41,11 +41,15 @@ func TestReq_Valid(t *testing.T) {
 	}
 
 	if req.ConnectorId.Value() != testConnectorIdOne {
-		t.Errorf(types.ErrorMismatch, testConnectorIdOne, req.ConnectorId.Value())
+		t.Errorf(
+			types.ErrorMismatch, testConnectorIdOne, req.ConnectorId.Value(),
+		)
 	}
 
 	if req.ErrorCode.String() != testErrorCodeNoError {
-		t.Errorf(types.ErrorMismatch, testErrorCodeNoError, req.ErrorCode.String())
+		t.Errorf(
+			types.ErrorMismatch, testErrorCodeNoError, req.ErrorCode.String(),
+		)
 	}
 
 	if req.Status.String() != testStatusAvailable {
@@ -70,7 +74,9 @@ func TestReq_ValidConnectorIdZero(t *testing.T) {
 	}
 
 	if req.ConnectorId.Value() != testConnectorIdZero {
-		t.Errorf(types.ErrorMismatch, testConnectorIdZero, req.ConnectorId.Value())
+		t.Errorf(
+			types.ErrorMismatch, testConnectorIdZero, req.ConnectorId.Value(),
+		)
 	}
 }
 

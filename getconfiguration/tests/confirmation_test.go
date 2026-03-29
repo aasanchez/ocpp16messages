@@ -168,7 +168,9 @@ func TestConf_Valid_SingleUnknownKey(t *testing.T) {
 	}
 
 	if conf.UnknownKey[0].Value() != testUnknownKey {
-		t.Errorf(types.ErrorMismatch, testUnknownKey, conf.UnknownKey[0].Value())
+		t.Errorf(
+			types.ErrorMismatch, testUnknownKey, conf.UnknownKey[0].Value(),
+		)
 	}
 }
 

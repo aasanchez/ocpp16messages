@@ -124,7 +124,10 @@ func TestConf_InvalidStatus_Scheduled(t *testing.T) {
 
 	_, err := cc.Conf(cc.ConfInput{Status: "Scheduled"})
 	if err == nil {
-		t.Errorf(types.ErrorWantNil, "Scheduled (invalid for ChangeConfiguration)")
+		t.Errorf(
+			types.ErrorWantNil,
+			"Scheduled (invalid for ChangeConfiguration)",
+		)
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {

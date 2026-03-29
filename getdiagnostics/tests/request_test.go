@@ -140,7 +140,11 @@ func TestReq_Valid_WithRetryInterval(t *testing.T) {
 	}
 
 	if req.RetryInterval.Value() != valueSixty {
-		t.Errorf(types.ErrorMismatchValue, valueSixty, req.RetryInterval.Value())
+		t.Errorf(
+			types.ErrorMismatchValue,
+			valueSixty,
+			req.RetryInterval.Value(),
+		)
 	}
 }
 

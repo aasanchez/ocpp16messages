@@ -91,7 +91,9 @@ func validateTransactionId(
 ) (types.Integer, []error) {
 	val, err := types.NewInteger(transactionId)
 	if err != nil {
-		return types.Integer{}, append(errs, fmt.Errorf("transactionId: %w", err))
+		return types.Integer{}, append(
+			errs, fmt.Errorf("transactionId: %w", err),
+		)
 	}
 
 	return val, errs

@@ -91,7 +91,9 @@ func validateRequestedMessage(
 }
 
 // validateConnectorId validates the connectorId field.
-func validateConnectorId(connectorId int, errs []error) (types.Integer, []error) {
+func validateConnectorId(
+	connectorId int, errs []error,
+) (types.Integer, []error) {
 	val, err := types.NewInteger(connectorId)
 	if err != nil {
 		return types.Integer{}, append(errs, fmt.Errorf("connectorId: %w", err))

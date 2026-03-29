@@ -118,7 +118,9 @@ func validateReqMeterValues(
 	if len(metervalues) == metervaluesLenZero {
 		return nil, append(
 			errs,
-			fmt.Errorf(types.ErrorFieldFormat, "MeterValue", types.ErrEmptyValue),
+			fmt.Errorf(
+				types.ErrorFieldFormat, "MeterValue", types.ErrEmptyValue,
+			),
 		)
 	}
 

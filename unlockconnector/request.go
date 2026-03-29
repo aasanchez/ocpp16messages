@@ -31,7 +31,9 @@ type ReqMessage struct {
 // itself, not a physical connector.
 func Req(input ReqInput) (ReqMessage, error) {
 	if input.ConnectorId <= connectorIdMinValue {
-		return ReqMessage{}, fmt.Errorf("connectorId: %w", types.ErrInvalidValue)
+		return ReqMessage{}, fmt.Errorf(
+			"connectorId: %w", types.ErrInvalidValue,
+		)
 	}
 
 	connectorId, err := types.NewInteger(input.ConnectorId)

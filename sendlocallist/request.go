@@ -104,7 +104,11 @@ func validateReqUpdateType(
 	if !updateTypeVal.IsValid() {
 		return "", append(
 			errs,
-			fmt.Errorf(types.ErrorFieldFormat, "UpdateType", types.ErrInvalidValue),
+			fmt.Errorf(
+				types.ErrorFieldFormat,
+				"UpdateType",
+				types.ErrInvalidValue,
+			),
 		)
 	}
 
