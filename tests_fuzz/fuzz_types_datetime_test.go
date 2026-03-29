@@ -33,5 +33,29 @@ func FuzzNewDateTime(f *testing.F) {
 		if _, parseErr := time.Parse(time.RFC3339Nano, roundTrip); parseErr != nil {
 			t.Fatalf("String() not RFC3339Nano: %v", parseErr)
 		}
+
+		// String() determinism
+		if dt.String() != roundTrip {
+			t.Fatalf(
+				"String() not deterministic: %q vs %q",
+				dt.String(), roundTrip,
+			)
+		}
+
+		// Round-trip closure
+		dt2, rtErr := types.NewDateTime(roundTrip)
+		if rtErr != nil {
+			t.Fatalf(
+				"round-trip NewDateTime(%q) = %v",
+				roundTrip, rtErr,
+			)
+		}
+
+		if !dt2.Value().Equal(dt.Value()) {
+			t.Fatalf(
+				"round-trip mismatch: %v vs %v",
+				dt2.Value(), dt.Value(),
+			)
+		}
 	})
 }

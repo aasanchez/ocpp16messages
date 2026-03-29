@@ -9,9 +9,7 @@ import (
 	types "github.com/aasanchez/ocpp16types"
 )
 
-const (
-	maxFuzzInputLen = 1024
-)
+const maxFuzzInputLen = maxFuzzLen
 
 func FuzzNewKeyValue(f *testing.F) {
 	f.Add("", false, "", false)

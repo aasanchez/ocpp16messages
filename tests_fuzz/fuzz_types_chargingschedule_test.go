@@ -11,7 +11,9 @@ import (
 	types "github.com/aasanchez/ocpp16types"
 )
 
-const maxFuzzStringLen = 1024
+// maxFuzzStringLen is kept for backward compatibility;
+// new tests should use maxFuzzLen from fuzz_helpers_test.go.
+const maxFuzzStringLen = maxFuzzLen
 
 func FuzzNewChargingSchedule(f *testing.F) {
 	f.Add(false, 0, "W", true, 0, 0.0, false, 0, false, 0.0, false, "")

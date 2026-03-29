@@ -46,5 +46,28 @@ func FuzzNewInteger(f *testing.F) {
 		if uint16(parsed) != integer.Value() {
 			t.Fatalf("String() parsed = %d, want %d", parsed, integer.Value())
 		}
+
+		// String() determinism
+		if integer.String() != integer.String() {
+			t.Fatal("String() not deterministic")
+		}
+
+		// Round-trip via Value()
+		integer2, rtErr := types.NewInteger(
+			int(integer.Value()),
+		)
+		if rtErr != nil {
+			t.Fatalf(
+				"round-trip NewInteger(%d) = %v",
+				integer.Value(), rtErr,
+			)
+		}
+
+		if integer2.Value() != integer.Value() {
+			t.Fatalf(
+				"round-trip: %d != %d",
+				integer2.Value(), integer.Value(),
+			)
+		}
 	})
 }
