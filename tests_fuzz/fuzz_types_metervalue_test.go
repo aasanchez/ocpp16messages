@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzNewMeterValue(f *testing.F) {
@@ -21,14 +21,14 @@ func FuzzNewMeterValue(f *testing.F) {
 			t.Skip()
 		}
 
-		meterValue, err := st.NewMeterValue(st.MeterValueInput{
+		meterValue, err := types.NewMeterValue(types.MeterValueInput{
 			Timestamp: timestamp,
-			SampledValue: []st.SampledValueInput{
+			SampledValue: []types.SampledValueInput{
 				{Value: value},
 			},
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

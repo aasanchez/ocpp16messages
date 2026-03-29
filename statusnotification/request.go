@@ -4,8 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	sn "github.com/aasanchez/ocpp16messages/statusnotification/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -35,24 +34,24 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 StatusNotification.req message.
 type ReqMessage struct {
-	ConnectorId     st.Integer
-	ErrorCode       sn.ChargePointErrorCode
-	Status          sn.ChargePointStatus
-	Info            *st.CiString50Type
-	Timestamp       *st.DateTime
-	VendorId        *st.CiString255Type
-	VendorErrorCode *st.CiString50Type
+	ConnectorId     types.Integer
+	ErrorCode       types.ChargePointErrorCode
+	Status          types.ChargePointStatus
+	Info            *types.CiString50Type
+	Timestamp       *types.DateTime
+	VendorId        *types.CiString255Type
+	VendorErrorCode *types.CiString50Type
 }
 
 // reqValidation holds validated fields during Req construction.
 type reqValidation struct {
-	connectorId     st.Integer
-	errorCode       sn.ChargePointErrorCode
-	status          sn.ChargePointStatus
-	info            st.CiString50Type
-	timestamp       st.DateTime
-	vendorId        st.CiString255Type
-	vendorErrorCode st.CiString50Type
+	connectorId     types.Integer
+	errorCode       types.ChargePointErrorCode
+	status          types.ChargePointStatus
+	info            types.CiString50Type
+	timestamp       types.DateTime
+	vendorId        types.CiString255Type
+	vendorErrorCode types.CiString50Type
 }
 
 // Req creates a StatusNotification.req message from the given input.
@@ -122,10 +121,10 @@ func validateOptionalFields(
 }
 
 // validateConnectorId validates the connectorId field.
-func validateConnectorId(connectorId int, errs []error) (st.Integer, []error) {
-	val, err := st.NewInteger(connectorId)
+func validateConnectorId(connectorId int, errs []error) (types.Integer, []error) {
+	val, err := types.NewInteger(connectorId)
 	if err != nil {
-		return st.Integer{}, append(errs, fmt.Errorf("connectorId: %w", err))
+		return types.Integer{}, append(errs, fmt.Errorf("connectorId: %w", err))
 	}
 
 	return val, errs
@@ -135,11 +134,11 @@ func validateConnectorId(connectorId int, errs []error) (st.Integer, []error) {
 func validateErrorCode(
 	errorCode string,
 	errs []error,
-) (sn.ChargePointErrorCode, []error) {
-	code := sn.ChargePointErrorCode(errorCode)
+) (types.ChargePointErrorCode, []error) {
+	code := types.ChargePointErrorCode(errorCode)
 
 	if !code.IsValid() {
-		return "", append(errs, fmt.Errorf("errorCode: %w", st.ErrInvalidValue))
+		return "", append(errs, fmt.Errorf("errorCode: %w", types.ErrInvalidValue))
 	}
 
 	return code, errs
@@ -149,31 +148,31 @@ func validateErrorCode(
 func validateStatus(
 	status string,
 	errs []error,
-) (sn.ChargePointStatus, []error) {
-	chargePointStatus := sn.ChargePointStatus(status)
+) (types.ChargePointStatus, []error) {
+	chargePointStatus := types.ChargePointStatus(status)
 
 	if !chargePointStatus.IsValid() {
-		return "", append(errs, fmt.Errorf("status: %w", st.ErrInvalidValue))
+		return "", append(errs, fmt.Errorf("status: %w", types.ErrInvalidValue))
 	}
 
 	return chargePointStatus, errs
 }
 
 // validateInfo validates the info field.
-func validateInfo(info string, errs []error) (st.CiString50Type, []error) {
-	val, err := st.NewCiString50Type(info)
+func validateInfo(info string, errs []error) (types.CiString50Type, []error) {
+	val, err := types.NewCiString50Type(info)
 	if err != nil {
-		return st.CiString50Type{}, append(errs, fmt.Errorf("info: %w", err))
+		return types.CiString50Type{}, append(errs, fmt.Errorf("info: %w", err))
 	}
 
 	return val, errs
 }
 
 // validateTimestamp validates the timestamp field.
-func validateTimestamp(timestamp string, errs []error) (st.DateTime, []error) {
-	val, err := st.NewDateTime(timestamp)
+func validateTimestamp(timestamp string, errs []error) (types.DateTime, []error) {
+	val, err := types.NewDateTime(timestamp)
 	if err != nil {
-		return st.DateTime{}, append(errs, fmt.Errorf("timestamp: %w", err))
+		return types.DateTime{}, append(errs, fmt.Errorf("timestamp: %w", err))
 	}
 
 	return val, errs
@@ -183,10 +182,10 @@ func validateTimestamp(timestamp string, errs []error) (st.DateTime, []error) {
 func validateVendorId(
 	vendorId string,
 	errs []error,
-) (st.CiString255Type, []error) {
-	val, err := st.NewCiString255Type(vendorId)
+) (types.CiString255Type, []error) {
+	val, err := types.NewCiString255Type(vendorId)
 	if err != nil {
-		return st.CiString255Type{}, append(
+		return types.CiString255Type{}, append(
 			errs,
 			fmt.Errorf("vendorId: %w", err),
 		)
@@ -199,10 +198,10 @@ func validateVendorId(
 func validateVendorErrorCode(
 	vendorErrorCode string,
 	errs []error,
-) (st.CiString50Type, []error) {
-	val, err := st.NewCiString50Type(vendorErrorCode)
+) (types.CiString50Type, []error) {
+	val, err := types.NewCiString50Type(vendorErrorCode)
 	if err != nil {
-		return st.CiString50Type{}, append(
+		return types.CiString50Type{}, append(
 			errs,
 			fmt.Errorf("vendorErrorCode: %w", err),
 		)

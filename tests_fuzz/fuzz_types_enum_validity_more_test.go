@@ -5,14 +5,14 @@ package fuzz
 import (
 	"testing"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzChargingProfilePurposeTypeIsValid(f *testing.F) {
 	allowed := map[string]struct{}{
-		st.ChargePointMaxProfile.String(): {},
-		st.TxDefaultProfile.String():      {},
-		st.TxProfile.String():             {},
+		types.ChargePointMaxProfile.String(): {},
+		types.TxDefaultProfile.String():      {},
+		types.TxProfile.String():             {},
 	}
 
 	for value := range allowed {
@@ -28,7 +28,7 @@ func FuzzChargingProfilePurposeTypeIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		purpose := st.ChargingProfilePurposeType(input)
+		purpose := types.ChargingProfilePurposeType(input)
 
 		if got := purpose.IsValid(); got {
 			if _, ok := allowed[input]; !ok {
@@ -44,28 +44,28 @@ func FuzzChargingProfilePurposeTypeIsValid(f *testing.F) {
 
 func FuzzMeasurandIsValid(f *testing.F) {
 	allowed := map[string]struct{}{
-		st.MeasurandCurrentExport.String():                {},
-		st.MeasurandCurrentImport.String():                {},
-		st.MeasurandCurrentOffered.String():               {},
-		st.MeasurandEnergyActiveExportRegister.String():   {},
-		st.MeasurandEnergyActiveImportRegister.String():   {},
-		st.MeasurandEnergyReactiveExportRegister.String(): {},
-		st.MeasurandEnergyReactiveImportRegister.String(): {},
-		st.MeasurandEnergyActiveExportInterval.String():   {},
-		st.MeasurandEnergyActiveImportInterval.String():   {},
-		st.MeasurandEnergyReactiveExportInterval.String(): {},
-		st.MeasurandEnergyReactiveImportInterval.String(): {},
-		st.MeasurandFrequency.String():                    {},
-		st.MeasurandPowerActiveExport.String():            {},
-		st.MeasurandPowerActiveImport.String():            {},
-		st.MeasurandPowerFactor.String():                  {},
-		st.MeasurandPowerOffered.String():                 {},
-		st.MeasurandPowerReactiveExport.String():          {},
-		st.MeasurandPowerReactiveImport.String():          {},
-		st.MeasurandRPM.String():                          {},
-		st.MeasurandSoC.String():                          {},
-		st.MeasurandTemperature.String():                  {},
-		st.MeasurandVoltage.String():                      {},
+		types.MeasurandCurrentExport.String():                {},
+		types.MeasurandCurrentImport.String():                {},
+		types.MeasurandCurrentOffered.String():               {},
+		types.MeasurandEnergyActiveExportRegister.String():   {},
+		types.MeasurandEnergyActiveImportRegister.String():   {},
+		types.MeasurandEnergyReactiveExportRegister.String(): {},
+		types.MeasurandEnergyReactiveImportRegister.String(): {},
+		types.MeasurandEnergyActiveExportInterval.String():   {},
+		types.MeasurandEnergyActiveImportInterval.String():   {},
+		types.MeasurandEnergyReactiveExportInterval.String(): {},
+		types.MeasurandEnergyReactiveImportInterval.String(): {},
+		types.MeasurandFrequency.String():                    {},
+		types.MeasurandPowerActiveExport.String():            {},
+		types.MeasurandPowerActiveImport.String():            {},
+		types.MeasurandPowerFactor.String():                  {},
+		types.MeasurandPowerOffered.String():                 {},
+		types.MeasurandPowerReactiveExport.String():          {},
+		types.MeasurandPowerReactiveImport.String():          {},
+		types.MeasurandRPM.String():                          {},
+		types.MeasurandSoC.String():                          {},
+		types.MeasurandTemperature.String():                  {},
+		types.MeasurandVoltage.String():                      {},
 	}
 
 	for value := range allowed {
@@ -81,7 +81,7 @@ func FuzzMeasurandIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		measurand := st.Measurand(input)
+		measurand := types.Measurand(input)
 
 		if got := measurand.IsValid(); got {
 			if _, ok := allowed[input]; !ok {
@@ -97,16 +97,16 @@ func FuzzMeasurandIsValid(f *testing.F) {
 
 func FuzzPhaseIsValid(f *testing.F) {
 	allowed := map[string]struct{}{
-		st.PhaseL1.String():   {},
-		st.PhaseL2.String():   {},
-		st.PhaseL3.String():   {},
-		st.PhaseN.String():    {},
-		st.PhaseL1N.String():  {},
-		st.PhaseL2N.String():  {},
-		st.PhaseL3N.String():  {},
-		st.PhaseL1L2.String(): {},
-		st.PhaseL2L3.String(): {},
-		st.PhaseL3L1.String(): {},
+		types.PhaseL1.String():   {},
+		types.PhaseL2.String():   {},
+		types.PhaseL3.String():   {},
+		types.PhaseN.String():    {},
+		types.PhaseL1N.String():  {},
+		types.PhaseL2N.String():  {},
+		types.PhaseL3N.String():  {},
+		types.PhaseL1L2.String(): {},
+		types.PhaseL2L3.String(): {},
+		types.PhaseL3L1.String(): {},
 	}
 
 	for value := range allowed {
@@ -122,7 +122,7 @@ func FuzzPhaseIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		phase := st.Phase(input)
+		phase := types.Phase(input)
 
 		if got := phase.IsValid(); got {
 			if _, ok := allowed[input]; !ok {

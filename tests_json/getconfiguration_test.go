@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/getconfiguration"
-	gct "github.com/aasanchez/ocpp16messages/getconfiguration/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func TestGetConfigurationReq_JSONRoundTrip(t *testing.T) {
@@ -27,7 +27,7 @@ func TestGetConfigurationConf_JSONRoundTrip(t *testing.T) {
 	value := "300"
 
 	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
-		ConfigurationKey: []gct.KeyValueInput{
+		ConfigurationKey: []types.KeyValueInput{
 			{
 				Key:      "HeartbeatInterval",
 				Readonly: false,

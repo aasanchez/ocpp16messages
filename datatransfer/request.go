@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ReqInput represents the raw input data for creating a DataTransfer.req
@@ -17,15 +17,15 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 DataTransfer.req message.
 type ReqMessage struct {
-	VendorId  st.CiString255Type
-	MessageId *st.CiString50Type
+	VendorId  types.CiString255Type
+	MessageId *types.CiString50Type
 	Data      *string
 }
 
 // reqValidation holds validated fields during Req construction.
 type reqValidation struct {
-	vendorId  st.CiString255Type
-	messageId st.CiString50Type
+	vendorId  types.CiString255Type
+	messageId types.CiString50Type
 }
 
 // Req creates a DataTransfer.req message from the given input.
@@ -53,7 +53,7 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 	var validated reqValidation
 
 	// Validate vendorId (required)
-	vendorId, err := st.NewCiString255Type(input.VendorId)
+	vendorId, err := types.NewCiString255Type(input.VendorId)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("vendorId: %w", err))
 	} else {
@@ -62,7 +62,7 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 
 	// Validate messageId (optional)
 	if input.MessageId != nil {
-		messageId, err := st.NewCiString50Type(*input.MessageId)
+		messageId, err := types.NewCiString50Type(*input.MessageId)
 		if err != nil {
 			errs = append(errs, fmt.Errorf("messageId: %w", err))
 		} else {

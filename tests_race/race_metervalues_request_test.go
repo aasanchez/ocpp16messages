@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	mv "github.com/aasanchez/ocpp16messages/metervalues"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -18,8 +18,8 @@ const (
 func TestRace_MeterValuesSingleReq(t *testing.T) {
 	t.Parallel()
 
-	sampledValues := []st.SampledValueInput{{Value: "100"}}
-	metervalues := []st.MeterValueInput{
+	sampledValues := []types.SampledValueInput{{Value: "100"}}
+	metervalues := []types.MeterValueInput{
 		{
 			Timestamp:    "2025-01-02T15:00:00Z",
 			SampledValue: sampledValues,

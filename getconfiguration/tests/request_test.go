@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/getconfiguration"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -30,7 +30,7 @@ func TestReq_Valid_NilKeys(t *testing.T) {
 		Key: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Key != nil {
@@ -45,7 +45,7 @@ func TestReq_Valid_EmptyKeys(t *testing.T) {
 		Key: []string{},
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Key != nil {
@@ -60,7 +60,7 @@ func TestReq_Valid_SingleKey(t *testing.T) {
 		Key: []string{testValidKey},
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if len(req.Key) != expectedKeyCountOne {
@@ -72,7 +72,7 @@ func TestReq_Valid_SingleKey(t *testing.T) {
 	}
 
 	if req.Key[0].Value() != testValidKey {
-		t.Errorf(st.ErrorMismatch, testValidKey, req.Key[0].Value())
+		t.Errorf(types.ErrorMismatch, testValidKey, req.Key[0].Value())
 	}
 }
 
@@ -83,7 +83,7 @@ func TestReq_Valid_MultipleKeys(t *testing.T) {
 		Key: []string{testValidKey, testValidKeyTwo, testValidKeyThree},
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if len(req.Key) != expectedKeyCountThree {
@@ -95,15 +95,15 @@ func TestReq_Valid_MultipleKeys(t *testing.T) {
 	}
 
 	if req.Key[0].Value() != testValidKey {
-		t.Errorf(st.ErrorMismatch, testValidKey, req.Key[0].Value())
+		t.Errorf(types.ErrorMismatch, testValidKey, req.Key[0].Value())
 	}
 
 	if req.Key[1].Value() != testValidKeyTwo {
-		t.Errorf(st.ErrorMismatch, testValidKeyTwo, req.Key[1].Value())
+		t.Errorf(types.ErrorMismatch, testValidKeyTwo, req.Key[1].Value())
 	}
 
 	if req.Key[2].Value() != testValidKeyThree {
-		t.Errorf(st.ErrorMismatch, testValidKeyThree, req.Key[2].Value())
+		t.Errorf(types.ErrorMismatch, testValidKeyThree, req.Key[2].Value())
 	}
 }
 
@@ -116,11 +116,11 @@ func TestReq_Valid_MaxLengthKey(t *testing.T) {
 		Key: []string{maxKey},
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Key[0].Value() != maxKey {
-		t.Errorf(st.ErrorMismatch, maxKey, req.Key[0].Value())
+		t.Errorf(types.ErrorMismatch, maxKey, req.Key[0].Value())
 	}
 }
 
@@ -134,12 +134,12 @@ func TestReq_EmptyKeyInList(t *testing.T) {
 		t.Error("Req() error = nil, want error for empty key in list")
 	}
 
-	if !errors.Is(err, st.ErrEmptyValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrEmptyValue)
+	if !errors.Is(err, types.ErrEmptyValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrEmptyValue)
 	}
 
 	if !strings.Contains(err.Error(), errIndexKeyOne) {
-		t.Errorf(st.ErrorWantContains, err, errIndexKeyOne)
+		t.Errorf(types.ErrorWantContains, err, errIndexKeyOne)
 	}
 }
 
@@ -156,11 +156,11 @@ func TestReq_KeyTooLong(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldKey) {
-		t.Errorf(st.ErrorWantContains, err, errFieldKey)
+		t.Errorf(types.ErrorWantContains, err, errFieldKey)
 	}
 
 	if !strings.Contains(err.Error(), errExceedsMaxLength) {
-		t.Errorf(st.ErrorWantContains, err, errExceedsMaxLength)
+		t.Errorf(types.ErrorWantContains, err, errExceedsMaxLength)
 	}
 }
 
@@ -175,7 +175,7 @@ func TestReq_KeyInvalidChars(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldKey) {
-		t.Errorf(st.ErrorWantContains, err, errFieldKey)
+		t.Errorf(types.ErrorWantContains, err, errFieldKey)
 	}
 }
 
@@ -192,11 +192,11 @@ func TestReq_MultipleInvalidKeys(t *testing.T) {
 	errStr := err.Error()
 
 	if !strings.Contains(errStr, errIndexKeyZero) {
-		t.Errorf(st.ErrorWantContains, err, errIndexKeyZero)
+		t.Errorf(types.ErrorWantContains, err, errIndexKeyZero)
 	}
 
 	if !strings.Contains(errStr, errIndexKeyOne) {
-		t.Errorf(st.ErrorWantContains, err, errIndexKeyOne)
+		t.Errorf(types.ErrorWantContains, err, errIndexKeyOne)
 	}
 }
 
@@ -211,6 +211,6 @@ func TestReq_FirstKeyEmptyRestValid(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errIndexKeyZero) {
-		t.Errorf(st.ErrorWantContains, err, errIndexKeyZero)
+		t.Errorf(types.ErrorWantContains, err, errIndexKeyZero)
 	}
 }

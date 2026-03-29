@@ -4,8 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	tt "github.com/aasanchez/ocpp16messages/triggermessage/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -25,14 +24,14 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 TriggerMessage.req message.
 type ReqMessage struct {
-	RequestedMessage tt.MessageTrigger
-	ConnectorId      *st.Integer
+	RequestedMessage types.MessageTrigger
+	ConnectorId      *types.Integer
 }
 
 // reqValidation holds validated fields during Req construction.
 type reqValidation struct {
-	requestedMessage tt.MessageTrigger
-	connectorId      st.Integer
+	requestedMessage types.MessageTrigger
+	connectorId      types.Integer
 }
 
 // Req creates a TriggerMessage.req message from the given input.
@@ -78,13 +77,13 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 func validateRequestedMessage(
 	requestedMessage string,
 	errs []error,
-) (tt.MessageTrigger, []error) {
-	messageTrigger := tt.MessageTrigger(requestedMessage)
+) (types.MessageTrigger, []error) {
+	messageTrigger := types.MessageTrigger(requestedMessage)
 
 	if !messageTrigger.IsValid() {
 		return "", append(
 			errs,
-			fmt.Errorf("requestedMessage: %w", st.ErrInvalidValue),
+			fmt.Errorf("requestedMessage: %w", types.ErrInvalidValue),
 		)
 	}
 
@@ -92,10 +91,10 @@ func validateRequestedMessage(
 }
 
 // validateConnectorId validates the connectorId field.
-func validateConnectorId(connectorId int, errs []error) (st.Integer, []error) {
-	val, err := st.NewInteger(connectorId)
+func validateConnectorId(connectorId int, errs []error) (types.Integer, []error) {
+	val, err := types.NewInteger(connectorId)
 	if err != nil {
-		return st.Integer{}, append(errs, fmt.Errorf("connectorId: %w", err))
+		return types.Integer{}, append(errs, fmt.Errorf("connectorId: %w", err))
 	}
 
 	return val, errs

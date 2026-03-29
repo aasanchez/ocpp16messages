@@ -6,7 +6,7 @@ import (
 	"errors"
 	"testing"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzNewSharedTypeSampledValue(f *testing.F) {
@@ -14,17 +14,17 @@ func FuzzNewSharedTypeSampledValue(f *testing.F) {
 	f.Add(
 		"100",
 		true,
-		st.ReadingContextSamplePeriodic.String(),
+		types.ReadingContextSamplePeriodic.String(),
 		true,
-		st.ValueFormatRaw.String(),
+		types.ValueFormatRaw.String(),
 		true,
-		st.MeasurandEnergyActiveImportRegister.String(),
+		types.MeasurandEnergyActiveImportRegister.String(),
 		true,
-		st.PhaseL1.String(),
+		types.PhaseL1.String(),
 		true,
-		st.LocationOutlet.String(),
+		types.LocationOutlet.String(),
 		true,
-		st.UnitWh.String(),
+		types.UnitWh.String(),
 	)
 	f.Add("bad\x01", false, "", false, "", false, "", false, "", false, "", false, "")
 
@@ -84,7 +84,7 @@ func FuzzNewSharedTypeSampledValue(f *testing.F) {
 			unitPtr = &unit
 		}
 
-		sampledValue, err := st.NewSampledValue(st.SampledValueInput{
+		sampledValue, err := types.NewSampledValue(types.SampledValueInput{
 			Value:     value,
 			Context:   contextPtr,
 			Format:    formatPtr,
@@ -94,7 +94,7 @@ func FuzzNewSharedTypeSampledValue(f *testing.F) {
 			Unit:      unitPtr,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrEmptyValue) && !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrEmptyValue) && !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

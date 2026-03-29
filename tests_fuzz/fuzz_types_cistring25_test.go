@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzNewCiString25Type(f *testing.F) {
@@ -15,17 +15,17 @@ func FuzzNewCiString25Type(f *testing.F) {
 	f.Add("")
 	f.Add(" ")
 	f.Add("\x00")
-	f.Add(strings.Repeat("a", st.CiString25Max))
-	f.Add(strings.Repeat("a", st.CiString25Max+1))
+	f.Add(strings.Repeat("a", types.CiString25Max))
+	f.Add(strings.Repeat("a", types.CiString25Max+1))
 
 	f.Fuzz(func(t *testing.T, input string) {
 		if len(input) > maxFuzzStringLen {
 			t.Skip()
 		}
 
-		cis, err := st.NewCiString25Type(input)
+		cis, err := types.NewCiString25Type(input)
 		if err != nil {
-			if !errors.Is(err, st.ErrEmptyValue) && !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrEmptyValue) && !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,
@@ -38,7 +38,7 @@ func FuzzNewCiString25Type(f *testing.F) {
 		if input == "" {
 			t.Fatal("NewCiString25Type succeeded with empty input")
 		}
-		if len(input) > st.CiString25Max {
+		if len(input) > types.CiString25Max {
 			t.Fatalf("NewCiString25Type succeeded with len=%d", len(input))
 		}
 

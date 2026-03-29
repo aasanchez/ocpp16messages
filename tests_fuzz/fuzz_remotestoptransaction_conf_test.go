@@ -7,13 +7,12 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/remotestoptransaction"
-	rt "github.com/aasanchez/ocpp16messages/remotestoptransaction/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzRemoteStopTransactionConf(f *testing.F) {
-	f.Add(rt.RemoteStopTransactionStatusAccepted.String())
-	f.Add(rt.RemoteStopTransactionStatusRejected.String())
+	f.Add(types.RemoteStopTransactionStatusAccepted.String())
+	f.Add(types.RemoteStopTransactionStatusRejected.String())
 	f.Add("bad-status")
 
 	f.Fuzz(func(t *testing.T, status string) {
@@ -25,7 +24,7 @@ func FuzzRemoteStopTransactionConf(f *testing.F) {
 			Status: status,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

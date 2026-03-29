@@ -7,15 +7,14 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification"
-	dt "github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzDiagnosticsStatusNotificationReq(f *testing.F) {
-	f.Add(dt.DiagnosticsStatusIdle.String())
-	f.Add(dt.DiagnosticsStatusUploaded.String())
-	f.Add(dt.DiagnosticsStatusUploading.String())
-	f.Add(dt.DiagnosticsStatusUploadFailed.String())
+	f.Add(types.DiagnosticsStatusIdle.String())
+	f.Add(types.DiagnosticsStatusUploaded.String())
+	f.Add(types.DiagnosticsStatusUploading.String())
+	f.Add(types.DiagnosticsStatusUploadFailed.String())
 	f.Add("bad-status")
 
 	f.Fuzz(func(t *testing.T, status string) {
@@ -29,7 +28,7 @@ func FuzzDiagnosticsStatusNotificationReq(f *testing.F) {
 			},
 		)
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

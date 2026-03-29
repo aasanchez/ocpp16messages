@@ -4,8 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ReqInput represents the raw input data for creating a SendLocalList.req
@@ -15,23 +14,23 @@ type ReqInput struct {
 	ListVersion int
 	// Optional: Authorization data entries to update.
 	// When empty with Full updateType, the local list is cleared.
-	LocalAuthorizationList []slt.AuthorizationDataInput
+	LocalAuthorizationList []types.AuthorizationDataInput
 	// Required: Type of update ("Full" or "Differential").
 	UpdateType string
 }
 
 // ReqMessage represents an OCPP 1.6 SendLocalList.req message.
 type ReqMessage struct {
-	ListVersion            st.Integer
-	LocalAuthorizationList []slt.AuthorizationData
-	UpdateType             slt.UpdateType
+	ListVersion            types.Integer
+	LocalAuthorizationList []types.AuthorizationData
+	UpdateType             types.UpdateType
 }
 
 // reqValidation holds validated fields during construction.
 type reqValidation struct {
-	listVersion            st.Integer
-	localAuthorizationList []slt.AuthorizationData
-	updateType             slt.UpdateType
+	listVersion            types.Integer
+	localAuthorizationList []types.AuthorizationData
+	updateType             types.UpdateType
 }
 
 // Req creates a SendLocalList.req message from the given input.
@@ -45,7 +44,7 @@ func Req(input ReqInput) (ReqMessage, error) {
 
 	if errs != nil {
 		return ReqMessage{
-			ListVersion:            st.Integer{},
+			ListVersion:            types.Integer{},
 			LocalAuthorizationList: nil,
 			UpdateType:             "",
 		}, errors.Join(errs...)
@@ -84,12 +83,12 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 func validateReqListVersion(
 	listVersion int,
 	errs []error,
-) (st.Integer, []error) {
-	intVal, err := st.NewInteger(listVersion)
+) (types.Integer, []error) {
+	intVal, err := types.NewInteger(listVersion)
 	if err != nil {
-		return st.Integer{}, append(
+		return types.Integer{}, append(
 			errs,
-			fmt.Errorf(st.ErrorFieldFormat, "ListVersion", err),
+			fmt.Errorf(types.ErrorFieldFormat, "ListVersion", err),
 		)
 	}
 
@@ -99,13 +98,13 @@ func validateReqListVersion(
 func validateReqUpdateType(
 	updateType string,
 	errs []error,
-) (slt.UpdateType, []error) {
-	updateTypeVal := slt.UpdateType(updateType)
+) (types.UpdateType, []error) {
+	updateTypeVal := types.UpdateType(updateType)
 
 	if !updateTypeVal.IsValid() {
 		return "", append(
 			errs,
-			fmt.Errorf(st.ErrorFieldFormat, "UpdateType", st.ErrInvalidValue),
+			fmt.Errorf(types.ErrorFieldFormat, "UpdateType", types.ErrInvalidValue),
 		)
 	}
 
@@ -115,21 +114,21 @@ func validateReqUpdateType(
 const authListLenZero = 0
 
 func validateReqAuthorizationList(
-	authList []slt.AuthorizationDataInput,
+	authList []types.AuthorizationDataInput,
 	errs []error,
-) ([]slt.AuthorizationData, []error) {
+) ([]types.AuthorizationData, []error) {
 	if authList == nil {
 		return nil, errs
 	}
 
 	if len(authList) == authListLenZero {
-		return []slt.AuthorizationData{}, errs
+		return []types.AuthorizationData{}, errs
 	}
 
-	var validEntries []slt.AuthorizationData
+	var validEntries []types.AuthorizationData
 
 	for i, entry := range authList {
-		authData, err := slt.NewAuthorizationData(entry)
+		authData, err := types.NewAuthorizationData(entry)
 		if err != nil {
 			errs = append(errs, fmt.Errorf(
 				"localAuthorizationList[%d]: %w",

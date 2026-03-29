@@ -4,8 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	mcat "github.com/aasanchez/ocpp16messages/changeavailability/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ReqInput represents the raw input data for creating a ChangeAvailability.req
@@ -17,8 +16,8 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 ChangeAvailability.req message.
 type ReqMessage struct {
-	ConnectorId st.Integer
-	Type        mcat.AvailabilityType
+	ConnectorId types.Integer
+	Type        types.AvailabilityType
 }
 
 // Req creates a ChangeAvailability.req message from the given input.
@@ -29,14 +28,14 @@ type ReqMessage struct {
 func Req(input ReqInput) (ReqMessage, error) {
 	var errs []error
 
-	connectorId, err := st.NewInteger(input.ConnectorId)
+	connectorId, err := types.NewInteger(input.ConnectorId)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("connectorId: %w", err))
 	}
 
-	availabilityType := mcat.AvailabilityType(input.Type)
+	availabilityType := types.AvailabilityType(input.Type)
 	if !availabilityType.IsValid() {
-		errs = append(errs, fmt.Errorf("type: %w", st.ErrInvalidValue))
+		errs = append(errs, fmt.Errorf("type: %w", types.ErrInvalidValue))
 	}
 
 	if errs != nil {

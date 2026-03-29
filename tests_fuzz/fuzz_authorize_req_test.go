@@ -8,7 +8,7 @@ import (
 	"unicode/utf8"
 
 	"github.com/aasanchez/ocpp16messages/authorize"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzAuthorizeReq(f *testing.F) {
@@ -31,7 +31,7 @@ func FuzzAuthorizeReq(f *testing.F) {
 			IdTag: idTag,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrEmptyValue) && !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrEmptyValue) && !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,
@@ -44,7 +44,7 @@ func FuzzAuthorizeReq(f *testing.F) {
 		if idTag == "" {
 			t.Fatal("Req succeeded with empty IdTag")
 		}
-		if len(idTag) > st.CiString20Max {
+		if len(idTag) > types.CiString20Max {
 			t.Fatalf("Req succeeded with IdTag len=%d", len(idTag))
 		}
 

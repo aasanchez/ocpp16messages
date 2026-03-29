@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ReqInput represents the raw input data for creating a BootNotification.req
@@ -26,28 +26,28 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 BootNotification.req message.
 type ReqMessage struct {
-	ChargePointVendor       st.CiString20Type
-	ChargePointModel        st.CiString20Type
-	ChargePointSerialNumber *st.CiString25Type
-	ChargeBoxSerialNumber   *st.CiString25Type
-	FirmwareVersion         *st.CiString50Type
-	Iccid                   *st.CiString20Type
-	Imsi                    *st.CiString20Type
-	MeterType               *st.CiString25Type
-	MeterSerialNumber       *st.CiString25Type
+	ChargePointVendor       types.CiString20Type
+	ChargePointModel        types.CiString20Type
+	ChargePointSerialNumber *types.CiString25Type
+	ChargeBoxSerialNumber   *types.CiString25Type
+	FirmwareVersion         *types.CiString50Type
+	Iccid                   *types.CiString20Type
+	Imsi                    *types.CiString20Type
+	MeterType               *types.CiString25Type
+	MeterSerialNumber       *types.CiString25Type
 }
 
 // reqValidation holds validated fields during Req construction.
 type reqValidation struct {
-	chargePointVendor       st.CiString20Type
-	chargePointModel        st.CiString20Type
-	chargePointSerialNumber st.CiString25Type
-	chargeBoxSerialNumber   st.CiString25Type
-	firmwareVersion         st.CiString50Type
-	iccid                   st.CiString20Type
-	imsi                    st.CiString20Type
-	meterType               st.CiString25Type
-	meterSerialNumber       st.CiString25Type
+	chargePointVendor       types.CiString20Type
+	chargePointModel        types.CiString20Type
+	chargePointSerialNumber types.CiString25Type
+	chargeBoxSerialNumber   types.CiString25Type
+	firmwareVersion         types.CiString50Type
+	iccid                   types.CiString20Type
+	imsi                    types.CiString20Type
+	meterType               types.CiString25Type
+	meterSerialNumber       types.CiString25Type
 }
 
 // Req creates a BootNotification.req message from the given input.
@@ -62,8 +62,8 @@ func Req(input ReqInput) (ReqMessage, error) {
 
 	if errs != nil {
 		return ReqMessage{
-			ChargePointVendor:       st.CiString20Type{},
-			ChargePointModel:        st.CiString20Type{},
+			ChargePointVendor:       types.CiString20Type{},
+			ChargePointModel:        types.CiString20Type{},
 			ChargePointSerialNumber: nil,
 			ChargeBoxSerialNumber:   nil,
 			FirmwareVersion:         nil,
@@ -168,10 +168,10 @@ func validateOptionalFields(
 func validateChargePointVendor(
 	vendor string,
 	errs []error,
-) (st.CiString20Type, []error) {
-	ciStr, err := st.NewCiString20Type(vendor)
+) (types.CiString20Type, []error) {
+	ciStr, err := types.NewCiString20Type(vendor)
 	if err != nil {
-		return st.CiString20Type{}, append(
+		return types.CiString20Type{}, append(
 			errs,
 			fmt.Errorf("chargePointVendor: %w", err),
 		)
@@ -184,10 +184,10 @@ func validateChargePointVendor(
 func validateChargePointModel(
 	model string,
 	errs []error,
-) (st.CiString20Type, []error) {
-	ciStr, err := st.NewCiString20Type(model)
+) (types.CiString20Type, []error) {
+	ciStr, err := types.NewCiString20Type(model)
 	if err != nil {
-		return st.CiString20Type{}, append(
+		return types.CiString20Type{}, append(
 			errs,
 			fmt.Errorf("chargePointModel: %w", err),
 		)
@@ -201,10 +201,10 @@ func validateCiString20(
 	value string,
 	fieldName string,
 	errs []error,
-) (st.CiString20Type, []error) {
-	ciStr, err := st.NewCiString20Type(value)
+) (types.CiString20Type, []error) {
+	ciStr, err := types.NewCiString20Type(value)
 	if err != nil {
-		return st.CiString20Type{}, append(
+		return types.CiString20Type{}, append(
 			errs,
 			fmt.Errorf("%s: %w", fieldName, err),
 		)
@@ -218,10 +218,10 @@ func validateCiString25(
 	value string,
 	fieldName string,
 	errs []error,
-) (st.CiString25Type, []error) {
-	ciStr, err := st.NewCiString25Type(value)
+) (types.CiString25Type, []error) {
+	ciStr, err := types.NewCiString25Type(value)
 	if err != nil {
-		return st.CiString25Type{}, append(
+		return types.CiString25Type{}, append(
 			errs,
 			fmt.Errorf("%s: %w", fieldName, err),
 		)
@@ -234,10 +234,10 @@ func validateCiString25(
 func validateFirmwareVersion(
 	version string,
 	errs []error,
-) (st.CiString50Type, []error) {
-	ciStr, err := st.NewCiString50Type(version)
+) (types.CiString50Type, []error) {
+	ciStr, err := types.NewCiString50Type(version)
 	if err != nil {
-		return st.CiString50Type{}, append(
+		return types.CiString50Type{}, append(
 			errs,
 			fmt.Errorf("firmwareVersion: %w", err),
 		)

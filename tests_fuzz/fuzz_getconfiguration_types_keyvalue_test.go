@@ -6,8 +6,7 @@ import (
 	"errors"
 	"testing"
 
-	gt "github.com/aasanchez/ocpp16messages/getconfiguration/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -38,16 +37,16 @@ func FuzzNewKeyValue(f *testing.F) {
 			valuePtr = &value
 		}
 
-		keyValue, err := gt.NewKeyValue(
-			gt.KeyValueInput{
+		keyValue, err := types.NewKeyValue(
+			types.KeyValueInput{
 				Key:      key,
 				Readonly: readonly,
 				Value:    valuePtr,
 			},
 		)
 		if err != nil {
-			if !errors.Is(err, st.ErrEmptyValue) &&
-				!errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrEmptyValue) &&
+				!errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,
@@ -61,11 +60,11 @@ func FuzzNewKeyValue(f *testing.F) {
 			t.Fatal("error = nil, want error for empty key")
 		}
 
-		if len(key) > st.CiString50Max {
+		if len(key) > types.CiString50Max {
 			t.Fatalf(
 				"len(key) = %d, want <= %d",
 				len(key),
-				st.CiString50Max,
+				types.CiString50Max,
 			)
 		}
 

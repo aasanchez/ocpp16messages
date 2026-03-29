@@ -11,24 +11,18 @@ import (
 	dt "github.com/aasanchez/ocpp16messages/datatransfer"
 	csc "github.com/aasanchez/ocpp16messages/getcompositeschedule"
 	gconf "github.com/aasanchez/ocpp16messages/getconfiguration"
-	gct "github.com/aasanchez/ocpp16messages/getconfiguration/types"
 	gd "github.com/aasanchez/ocpp16messages/getdiagnostics"
 	mv "github.com/aasanchez/ocpp16messages/metervalues"
-	mvt "github.com/aasanchez/ocpp16messages/metervalues/types"
 	rst "github.com/aasanchez/ocpp16messages/remotestarttransaction"
 	rn "github.com/aasanchez/ocpp16messages/reservenow"
 	sl "github.com/aasanchez/ocpp16messages/sendlocallist"
-	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
 	scp "github.com/aasanchez/ocpp16messages/setchargingprofile"
-	scpt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
 	stt "github.com/aasanchez/ocpp16messages/starttransaction"
 	sn "github.com/aasanchez/ocpp16messages/statusnotification"
-	snt "github.com/aasanchez/ocpp16messages/statusnotification/types"
 	stp "github.com/aasanchez/ocpp16messages/stoptransaction"
 	tm "github.com/aasanchez/ocpp16messages/triggermessage"
-	tmt "github.com/aasanchez/ocpp16messages/triggermessage/types"
-	st "github.com/aasanchez/ocpp16messages/types"
 	uf "github.com/aasanchez/ocpp16messages/updatefirmware"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func TestRace_BootNotificationReq(t *testing.T) {
@@ -116,8 +110,8 @@ func TestRace_StopTransactionReq(t *testing.T) {
 	idTag := "TAG-1"
 	reason := "Local"
 
-	sampledValues := []mvt.SampledValueInput{{Value: "100"}}
-	transactionData := []mvt.MeterValueInput{
+	sampledValues := []types.SampledValueInput{{Value: "100"}}
+	transactionData := []types.MeterValueInput{
 		{
 			Timestamp:    "2025-01-02T15:00:00Z",
 			SampledValue: sampledValues,
@@ -178,7 +172,7 @@ func TestRace_MeterValuesConf(t *testing.T) {
 func TestRace_TriggerMessageReq(t *testing.T) {
 	t.Parallel()
 
-	requestedMessage := tmt.MessageTriggerHeartbeat.String()
+	requestedMessage := types.MessageTriggerHeartbeat.String()
 	connectorId := 1
 	input := tm.ReqInput{
 		RequestedMessage: requestedMessage,
@@ -224,8 +218,8 @@ func TestRace_StatusNotificationReq(t *testing.T) {
 
 	input := sn.ReqInput{
 		ConnectorId:     0,
-		ErrorCode:       snt.ErrCodeNoError.String(),
-		Status:          snt.ChargePointStatusAvailable.String(),
+		ErrorCode:       types.ErrCodeNoError.String(),
+		Status:          types.ChargePointStatusAvailable.String(),
 		Info:            &info,
 		Timestamp:       &timestamp,
 		VendorId:        &vendorId,
@@ -360,7 +354,7 @@ func TestRace_GetConfigurationConf(t *testing.T) {
 	t.Parallel()
 
 	value := "60"
-	configKeys := []gct.KeyValueInput{
+	configKeys := []types.KeyValueInput{
 		{Key: "HeartbeatInterval", Readonly: false, Value: &value},
 	}
 	unknownKeys := []string{"UnknownKey"}
@@ -382,7 +376,7 @@ func TestRace_GetConfigurationConf(t *testing.T) {
 func TestRace_GetCompositeScheduleReq(t *testing.T) {
 	t.Parallel()
 
-	unit := st.ChargingRateUnitWatts.String()
+	unit := types.ChargingRateUnitWatts.String()
 	input := csc.ReqInput{
 		ConnectorId:      0,
 		Duration:         60,
@@ -406,10 +400,10 @@ func TestRace_GetCompositeScheduleConf(t *testing.T) {
 
 	duration := 60
 	minChargingRate := 0.0
-	periods := []st.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
-	chargingScheduleInput := st.ChargingScheduleInput{
+	periods := []types.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
+	chargingScheduleInput := types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        &minChargingRate,
 		StartSchedule:          &scheduleStart,
@@ -437,7 +431,7 @@ func TestRace_ClearChargingProfileReq(t *testing.T) {
 	id := 1
 	connectorId := 0
 	stackLevel := 0
-	purpose := st.TxProfile.String()
+	purpose := types.TxProfile.String()
 
 	input := ccp.ReqInput{
 		Id:                     &id,
@@ -458,14 +452,14 @@ func TestRace_ClearChargingProfileReq(t *testing.T) {
 func TestRace_SendLocalListReq(t *testing.T) {
 	t.Parallel()
 
-	authList := []slt.AuthorizationDataInput{
+	authList := []types.AuthorizationDataInput{
 		{IdTag: "TAG-1"},
 	}
 
 	input := sl.ReqInput{
 		ListVersion:            1,
 		LocalAuthorizationList: authList,
-		UpdateType:             slt.UpdateTypeFull.String(),
+		UpdateType:             types.UpdateTypeFull.String(),
 	}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
@@ -480,7 +474,7 @@ func TestRace_SendLocalListReq(t *testing.T) {
 func TestRace_SendLocalListConf(t *testing.T) {
 	t.Parallel()
 
-	input := sl.ConfInput{Status: slt.UpdateStatusAccepted.String()}
+	input := sl.ConfInput{Status: types.UpdateStatusAccepted.String()}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := sl.Conf(input)
@@ -497,22 +491,22 @@ func TestRace_SetChargingProfileReq(t *testing.T) {
 	duration := 60
 	scheduleStart := "2025-01-02T15:00:00Z"
 	minChargingRate := 0.0
-	periods := []st.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
+	periods := []types.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
 
-	scheduleInput := st.ChargingScheduleInput{
+	scheduleInput := types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        &minChargingRate,
 		StartSchedule:          &scheduleStart,
 	}
 
-	profileInput := scpt.ChargingProfileInput{
+	profileInput := types.ChargingProfileInput{
 		ChargingProfileId:      1,
 		TransactionId:          nil,
 		StackLevel:             0,
-		ChargingProfilePurpose: st.TxProfile.String(),
-		ChargingProfileKind:    scpt.ChargingProfileKindAbsolute.String(),
+		ChargingProfilePurpose: types.TxProfile.String(),
+		ChargingProfileKind:    types.ChargingProfileKindAbsolute.String(),
 		RecurrencyKind:         nil,
 		ValidFrom:              nil,
 		ValidTo:                nil,
@@ -537,7 +531,7 @@ func TestRace_SetChargingProfileConf(t *testing.T) {
 	t.Parallel()
 
 	input := scp.ConfInput{
-		Status: scpt.ChargingProfileStatusAccepted.String(),
+		Status: types.ChargingProfileStatusAccepted.String(),
 	}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {

@@ -3,8 +3,7 @@ package datatransfer
 import (
 	"fmt"
 
-	dt "github.com/aasanchez/ocpp16messages/datatransfer/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ConfInput represents the raw input data for creating a DataTransfer.conf
@@ -16,7 +15,7 @@ type ConfInput struct {
 
 // ConfMessage represents an OCPP 1.6 DataTransfer.conf message.
 type ConfMessage struct {
-	Status dt.DataTransferStatus
+	Status types.DataTransferStatus
 	Data   *string
 }
 
@@ -24,10 +23,10 @@ type ConfMessage struct {
 // It validates all fields and returns an error if:
 //   - Status is not a valid DataTransferStatus value
 func Conf(input ConfInput) (ConfMessage, error) {
-	status := dt.DataTransferStatus(input.Status)
+	status := types.DataTransferStatus(input.Status)
 
 	if !status.IsValid() {
-		return ConfMessage{}, fmt.Errorf("status: %w", st.ErrInvalidValue)
+		return ConfMessage{}, fmt.Errorf("status: %w", types.ErrInvalidValue)
 	}
 
 	msg := ConfMessage{

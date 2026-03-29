@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -28,10 +28,10 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 UpdateFirmware.req message.
 type ReqMessage struct {
-	Location      st.CiString255Type
-	RetrieveDate  st.DateTime
-	Retries       *st.Integer
-	RetryInterval *st.Integer
+	Location      types.CiString255Type
+	RetrieveDate  types.DateTime
+	Retries       *types.Integer
+	RetryInterval *types.Integer
 }
 
 // Req creates an UpdateFirmware.req message from the given input.
@@ -44,12 +44,12 @@ type ReqMessage struct {
 func Req(input ReqInput) (ReqMessage, error) {
 	var errs []error
 
-	location, err := st.NewCiString255Type(input.Location)
+	location, err := types.NewCiString255Type(input.Location)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("location: %w", err))
 	}
 
-	retrieveDate, err := st.NewDateTime(input.RetrieveDate)
+	retrieveDate, err := types.NewDateTime(input.RetrieveDate)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("retrieveDate: %w", err))
 	}
@@ -77,12 +77,12 @@ func Req(input ReqInput) (ReqMessage, error) {
 }
 
 // reqValidateRetries validates the optional retries field.
-func reqValidateRetries(retries *int) (*st.Integer, error) {
+func reqValidateRetries(retries *int) (*types.Integer, error) {
 	if retries == nil {
 		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
-	r, err := st.NewInteger(*retries)
+	r, err := types.NewInteger(*retries)
 	if err != nil {
 		return nil, fmt.Errorf("retries: %w", err)
 	}
@@ -91,12 +91,12 @@ func reqValidateRetries(retries *int) (*st.Integer, error) {
 }
 
 // reqValidateRetryInterval validates the optional retry interval field.
-func reqValidateRetryInterval(retryInterval *int) (*st.Integer, error) {
+func reqValidateRetryInterval(retryInterval *int) (*types.Integer, error) {
 	if retryInterval == nil {
 		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
-	ri, err := st.NewInteger(*retryInterval)
+	ri, err := types.NewInteger(*retryInterval)
 	if err != nil {
 		return nil, fmt.Errorf("retryInterval: %w", err)
 	}

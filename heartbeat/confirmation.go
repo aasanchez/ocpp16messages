@@ -3,7 +3,7 @@ package heartbeat
 import (
 	"fmt"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ConfInput represents the raw input data for creating a Heartbeat.conf
@@ -14,7 +14,7 @@ type ConfInput struct {
 
 // ConfMessage represents an OCPP 1.6 Heartbeat.conf message.
 type ConfMessage struct {
-	CurrentTime st.DateTime
+	CurrentTime types.DateTime
 }
 
 // Conf creates a Heartbeat.conf message from the given input.
@@ -22,7 +22,7 @@ type ConfMessage struct {
 //   - CurrentTime is empty
 //   - CurrentTime is not a valid RFC3339 date
 func Conf(input ConfInput) (ConfMessage, error) {
-	currentTime, err := st.NewDateTime(input.CurrentTime)
+	currentTime, err := types.NewDateTime(input.CurrentTime)
 	if err != nil {
 		return ConfMessage{}, fmt.Errorf("currentTime: %w", err)
 	}

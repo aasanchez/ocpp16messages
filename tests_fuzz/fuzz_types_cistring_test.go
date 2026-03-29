@@ -7,7 +7,7 @@ import (
 	"testing"
 	"unicode/utf8"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzNewCiString20Type(f *testing.F) {
@@ -17,15 +17,15 @@ func FuzzNewCiString20Type(f *testing.F) {
 	f.Add("bad\x01")
 
 	f.Fuzz(func(t *testing.T, input string) {
-		value, err := st.NewCiString20Type(input)
+		value, err := types.NewCiString20Type(input)
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf("unexpected error sentinel for %q: %v", input, err)
 			}
 			return
 		}
 
-		if utf8.RuneCountInString(value.Value()) > st.CiString20Max {
+		if utf8.RuneCountInString(value.Value()) > types.CiString20Max {
 			t.Fatalf("len(%q) exceeded max", value.Value())
 		}
 

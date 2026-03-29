@@ -7,14 +7,13 @@ import (
 	"testing"
 
 	tm "github.com/aasanchez/ocpp16messages/triggermessage"
-	tt "github.com/aasanchez/ocpp16messages/triggermessage/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzTriggerMessageConf(f *testing.F) {
-	f.Add(tt.TriggerMessageStatusAccepted.String())
-	f.Add(tt.TriggerMessageStatusRejected.String())
-	f.Add(tt.TriggerMessageStatusNotImplemented.String())
+	f.Add(types.TriggerMessageStatusAccepted.String())
+	f.Add(types.TriggerMessageStatusRejected.String())
+	f.Add(types.TriggerMessageStatusNotImplemented.String())
 	f.Add("")
 	f.Add("invalid-status")
 
@@ -25,7 +24,7 @@ func FuzzTriggerMessageConf(f *testing.F) {
 
 		conf, err := tm.Conf(tm.ConfInput{Status: status})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

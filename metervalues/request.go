@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ReqInput represents the raw input data for creating a MeterValues.req
@@ -16,21 +16,21 @@ type ReqInput struct {
 	// Optional: The transaction ID for which meter values are reported.
 	TransactionId *int
 	// Required: One or more meter value sets.
-	MeterValue []st.MeterValueInput
+	MeterValue []types.MeterValueInput
 }
 
 // ReqMessage represents an OCPP 1.6 MeterValues.req message.
 type ReqMessage struct {
-	ConnectorId   st.Integer
-	TransactionId *st.Integer
-	MeterValue    []st.MeterValue
+	ConnectorId   types.Integer
+	TransactionId *types.Integer
+	MeterValue    []types.MeterValue
 }
 
 // reqValidation holds validated fields during construction.
 type reqValidation struct {
-	connectorId   st.Integer
-	transactionId *st.Integer
-	meterValue    []st.MeterValue
+	connectorId   types.Integer
+	transactionId *types.Integer
+	meterValue    []types.MeterValue
 }
 
 // Req creates a MeterValues.req message from the given input.
@@ -44,7 +44,7 @@ func Req(input ReqInput) (ReqMessage, error) {
 
 	if errs != nil {
 		return ReqMessage{
-			ConnectorId:   st.Integer{},
+			ConnectorId:   types.Integer{},
 			TransactionId: nil,
 			MeterValue:    nil,
 		}, errors.Join(errs...)
@@ -82,12 +82,12 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 func validateReqConnectorId(
 	connectorId int,
 	errs []error,
-) (st.Integer, []error) {
-	intVal, err := st.NewInteger(connectorId)
+) (types.Integer, []error) {
+	intVal, err := types.NewInteger(connectorId)
 	if err != nil {
-		return st.Integer{}, append(
+		return types.Integer{}, append(
 			errs,
-			fmt.Errorf(st.ErrorFieldFormat, "ConnectorId", err),
+			fmt.Errorf(types.ErrorFieldFormat, "ConnectorId", err),
 		)
 	}
 
@@ -97,12 +97,12 @@ func validateReqConnectorId(
 func validateReqTransactionId(
 	transactionId int,
 	errs []error,
-) (*st.Integer, []error) {
-	intVal, err := st.NewInteger(transactionId)
+) (*types.Integer, []error) {
+	intVal, err := types.NewInteger(transactionId)
 	if err != nil {
 		return nil, append(
 			errs,
-			fmt.Errorf(st.ErrorFieldFormat, "TransactionId", err),
+			fmt.Errorf(types.ErrorFieldFormat, "TransactionId", err),
 		)
 	}
 
@@ -112,20 +112,20 @@ func validateReqTransactionId(
 const metervaluesLenZero = 0
 
 func validateReqMeterValues(
-	metervalues []st.MeterValueInput,
+	metervalues []types.MeterValueInput,
 	errs []error,
-) ([]st.MeterValue, []error) {
+) ([]types.MeterValue, []error) {
 	if len(metervalues) == metervaluesLenZero {
 		return nil, append(
 			errs,
-			fmt.Errorf(st.ErrorFieldFormat, "MeterValue", st.ErrEmptyValue),
+			fmt.Errorf(types.ErrorFieldFormat, "MeterValue", types.ErrEmptyValue),
 		)
 	}
 
-	var validValues []st.MeterValue
+	var validValues []types.MeterValue
 
 	for i, mvInput := range metervalues {
-		meterValue, err := st.NewMeterValue(mvInput)
+		meterValue, err := types.NewMeterValue(mvInput)
 		if err != nil {
 			errs = append(errs, fmt.Errorf("meterValue[%d]: %w", i, err))
 		} else {

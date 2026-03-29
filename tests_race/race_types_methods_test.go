@@ -6,30 +6,27 @@ import (
 	"fmt"
 	"testing"
 
-	gct "github.com/aasanchez/ocpp16messages/getconfiguration/types"
-	gllt "github.com/aasanchez/ocpp16messages/getlocallistversion/types"
-	scpt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func TestRace_IdTagInfoWithAndString(t *testing.T) {
 	t.Parallel()
 
-	base, err := st.NewIdTagInfo(st.AuthorizationStatusAccepted)
+	base, err := types.NewIdTagInfo(types.AuthorizationStatusAccepted)
 	if err != nil {
 		t.Fatalf("NewIdTagInfo: %v", err)
 	}
 
-	expiry, err := st.NewDateTime("2025-01-02T15:00:00Z")
+	expiry, err := types.NewDateTime("2025-01-02T15:00:00Z")
 	if err != nil {
 		t.Fatalf("NewDateTime: %v", err)
 	}
 
-	ciTag, err := st.NewCiString20Type("PARENT-1")
+	ciTag, err := types.NewCiString20Type("PARENT-1")
 	if err != nil {
 		t.Fatalf("NewCiString20Type: %v", err)
 	}
-	parent := st.NewIdToken(ciTag)
+	parent := types.NewIdToken(ciTag)
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_ = base.String()
@@ -48,7 +45,7 @@ func TestRace_ChargingScheduleGetters(t *testing.T) {
 	startSchedule := "2025-01-02T15:00:00Z"
 	minChargingRate := 0.0
 
-	periods := []st.ChargingSchedulePeriodInput{
+	periods := []types.ChargingSchedulePeriodInput{
 		{
 			StartPeriod:  0,
 			Limit:        16,
@@ -56,15 +53,15 @@ func TestRace_ChargingScheduleGetters(t *testing.T) {
 		},
 	}
 
-	input := st.ChargingScheduleInput{
+	input := types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        &minChargingRate,
 		StartSchedule:          &startSchedule,
 	}
 
-	schedule, err := st.NewChargingSchedule(input)
+	schedule, err := types.NewChargingSchedule(input)
 	if err != nil {
 		t.Fatalf("NewChargingSchedule: %v", err)
 	}
@@ -101,22 +98,22 @@ func TestRace_SetChargingProfileChargingProfileGetters(t *testing.T) {
 	duration := 60
 	scheduleStart := "2025-01-02T15:00:00Z"
 	minChargingRate := 0.0
-	periods := []st.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
+	periods := []types.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
 
-	scheduleInput := st.ChargingScheduleInput{
+	scheduleInput := types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        &minChargingRate,
 		StartSchedule:          &scheduleStart,
 	}
 
-	profile, err := scpt.NewChargingProfile(scpt.ChargingProfileInput{
+	profile, err := types.NewChargingProfile(types.ChargingProfileInput{
 		ChargingProfileId:      1,
 		TransactionId:          nil,
 		StackLevel:             0,
-		ChargingProfilePurpose: st.TxProfile.String(),
-		ChargingProfileKind:    scpt.ChargingProfileKindAbsolute.String(),
+		ChargingProfilePurpose: types.TxProfile.String(),
+		ChargingProfileKind:    types.ChargingProfileKindAbsolute.String(),
 		RecurrencyKind:         nil,
 		ValidFrom:              nil,
 		ValidTo:                nil,
@@ -162,7 +159,7 @@ func TestRace_GetConfigurationKeyValueGetters(t *testing.T) {
 	t.Parallel()
 
 	value := "60"
-	keyValue, err := gct.NewKeyValue(gct.KeyValueInput{
+	keyValue, err := types.NewKeyValue(types.KeyValueInput{
 		Key:      "HeartbeatInterval",
 		Readonly: false,
 		Value:    &value,
@@ -187,7 +184,7 @@ func TestRace_ListVersionNumberMethods(t *testing.T) {
 	runConcurrent(t, raceWorkers, raceIterations, func(worker int, iteration int) error {
 		value := ((worker + iteration) % 3) - 1
 
-		listVersion, err := gllt.NewListVersionNumber(value)
+		listVersion, err := types.NewListVersionNumber(value)
 		if err != nil {
 			return fmt.Errorf("NewListVersionNumber: %w", err)
 		}

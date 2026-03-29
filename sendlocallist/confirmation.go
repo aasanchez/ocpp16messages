@@ -3,8 +3,7 @@ package sendlocallist
 import (
 	"fmt"
 
-	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ConfInput represents the raw input data for creating a SendLocalList.conf
@@ -16,17 +15,17 @@ type ConfInput struct {
 
 // ConfMessage represents an OCPP 1.6 SendLocalList.conf message.
 type ConfMessage struct {
-	Status slt.UpdateStatus
+	Status types.UpdateStatus
 }
 
 // Conf creates a SendLocalList.conf message from the given input.
 // It validates all fields and returns an error if:
 //   - Status is not a valid UpdateStatus value
 func Conf(input ConfInput) (ConfMessage, error) {
-	status := slt.UpdateStatus(input.Status)
+	status := types.UpdateStatus(input.Status)
 
 	if !status.IsValid() {
-		return ConfMessage{}, fmt.Errorf("status: %w", st.ErrInvalidValue)
+		return ConfMessage{}, fmt.Errorf("status: %w", types.ErrInvalidValue)
 	}
 
 	return ConfMessage{Status: status}, nil

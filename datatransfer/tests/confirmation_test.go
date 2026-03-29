@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/datatransfer"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -24,11 +24,11 @@ func TestConf_ValidAccepted(t *testing.T) {
 		Data:   nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.Status.String() != statusAccepted {
-		t.Errorf(st.ErrorMismatch, statusAccepted, conf.Status.String())
+		t.Errorf(types.ErrorMismatch, statusAccepted, conf.Status.String())
 	}
 
 	if conf.Data != nil {
@@ -44,11 +44,11 @@ func TestConf_ValidRejected(t *testing.T) {
 		Data:   nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.Status.String() != statusRejected {
-		t.Errorf(st.ErrorMismatch, statusRejected, conf.Status.String())
+		t.Errorf(types.ErrorMismatch, statusRejected, conf.Status.String())
 	}
 }
 
@@ -60,12 +60,12 @@ func TestConf_ValidUnknownMessageId(t *testing.T) {
 		Data:   nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.Status.String() != statusUnknownMessageId {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			statusUnknownMessageId,
 			conf.Status.String(),
 		)
@@ -80,11 +80,11 @@ func TestConf_ValidUnknownVendor(t *testing.T) {
 		Data:   nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.Status.String() != statusUnknownVendor {
-		t.Errorf(st.ErrorMismatch, statusUnknownVendor, conf.Status.String())
+		t.Errorf(types.ErrorMismatch, statusUnknownVendor, conf.Status.String())
 	}
 }
 
@@ -98,7 +98,7 @@ func TestConf_ValidWithData(t *testing.T) {
 		Data:   &data,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.Data == nil {
@@ -108,7 +108,7 @@ func TestConf_ValidWithData(t *testing.T) {
 	}
 
 	if *conf.Data != confTestData {
-		t.Errorf(st.ErrorMismatch, confTestData, *conf.Data)
+		t.Errorf(types.ErrorMismatch, confTestData, *conf.Data)
 	}
 }
 
@@ -123,8 +123,8 @@ func TestConf_InvalidStatus(t *testing.T) {
 		t.Error("Conf() error = nil, want error for invalid status")
 	}
 
-	if !errors.Is(err, st.ErrInvalidValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrInvalidValue)
+	if !errors.Is(err, types.ErrInvalidValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrInvalidValue)
 	}
 }
 
@@ -139,8 +139,8 @@ func TestConf_EmptyStatus(t *testing.T) {
 		t.Error("Conf() error = nil, want error for empty status")
 	}
 
-	if !errors.Is(err, st.ErrInvalidValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrInvalidValue)
+	if !errors.Is(err, types.ErrInvalidValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrInvalidValue)
 	}
 }
 
@@ -155,7 +155,7 @@ func TestConf_LowercaseStatus(t *testing.T) {
 		t.Error("Conf() error = nil, want error for lowercase status")
 	}
 
-	if !errors.Is(err, st.ErrInvalidValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrInvalidValue)
+	if !errors.Is(err, types.ErrInvalidValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrInvalidValue)
 	}
 }

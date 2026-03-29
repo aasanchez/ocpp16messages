@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	bn "github.com/aasanchez/ocpp16messages/bootnotification"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -36,15 +36,15 @@ func TestReq_Valid_RequiredOnly(t *testing.T) {
 		MeterSerialNumber:       nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ChargePointVendor.Value() != vendorABC {
-		t.Errorf(st.ErrorMismatch, vendorABC, req.ChargePointVendor.Value())
+		t.Errorf(types.ErrorMismatch, vendorABC, req.ChargePointVendor.Value())
 	}
 
 	if req.ChargePointModel.Value() != modelXYZ {
-		t.Errorf(st.ErrorMismatch, modelXYZ, req.ChargePointModel.Value())
+		t.Errorf(types.ErrorMismatch, modelXYZ, req.ChargePointModel.Value())
 	}
 }
 
@@ -71,7 +71,7 @@ func TestReq_Valid_AllFields(t *testing.T) {
 		MeterSerialNumber:       &meterSerial,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	verifyAllFieldsNotNil(t, req)
@@ -81,31 +81,31 @@ func verifyAllFieldsNotNil(t *testing.T, req bn.ReqMessage) {
 	t.Helper()
 
 	if req.ChargePointSerialNumber == nil {
-		t.Errorf(st.ErrorWantNonNil, "ChargePointSerialNumber")
+		t.Errorf(types.ErrorWantNonNil, "ChargePointSerialNumber")
 	}
 
 	if req.ChargeBoxSerialNumber == nil {
-		t.Errorf(st.ErrorWantNonNil, "ChargeBoxSerialNumber")
+		t.Errorf(types.ErrorWantNonNil, "ChargeBoxSerialNumber")
 	}
 
 	if req.FirmwareVersion == nil {
-		t.Errorf(st.ErrorWantNonNil, "FirmwareVersion")
+		t.Errorf(types.ErrorWantNonNil, "FirmwareVersion")
 	}
 
 	if req.Iccid == nil {
-		t.Errorf(st.ErrorWantNonNil, "Iccid")
+		t.Errorf(types.ErrorWantNonNil, "Iccid")
 	}
 
 	if req.Imsi == nil {
-		t.Errorf(st.ErrorWantNonNil, "Imsi")
+		t.Errorf(types.ErrorWantNonNil, "Imsi")
 	}
 
 	if req.MeterType == nil {
-		t.Errorf(st.ErrorWantNonNil, "MeterType")
+		t.Errorf(types.ErrorWantNonNil, "MeterType")
 	}
 
 	if req.MeterSerialNumber == nil {
-		t.Errorf(st.ErrorWantNonNil, "MeterSerialNumber")
+		t.Errorf(types.ErrorWantNonNil, "MeterSerialNumber")
 	}
 }
 
@@ -124,11 +124,11 @@ func TestReq_EmptyVendor(t *testing.T) {
 		MeterSerialNumber:       nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty vendor")
+		t.Errorf(types.ErrorWantNil, "empty vendor")
 	}
 
 	if !strings.Contains(err.Error(), errVendor) {
-		t.Errorf(st.ErrorWantContains, err, errVendor)
+		t.Errorf(types.ErrorWantContains, err, errVendor)
 	}
 }
 
@@ -147,11 +147,11 @@ func TestReq_EmptyModel(t *testing.T) {
 		MeterSerialNumber:       nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty model")
+		t.Errorf(types.ErrorWantNil, "empty model")
 	}
 
 	if !strings.Contains(err.Error(), errModel) {
-		t.Errorf(st.ErrorWantContains, err, errModel)
+		t.Errorf(types.ErrorWantContains, err, errModel)
 	}
 }
 
@@ -170,11 +170,11 @@ func TestReq_VendorTooLong(t *testing.T) {
 		MeterSerialNumber:       nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "vendor too long")
+		t.Errorf(types.ErrorWantNil, "vendor too long")
 	}
 
 	if !strings.Contains(err.Error(), errVendor) {
-		t.Errorf(st.ErrorWantContains, err, errVendor)
+		t.Errorf(types.ErrorWantContains, err, errVendor)
 	}
 }
 
@@ -193,11 +193,11 @@ func TestReq_ModelTooLong(t *testing.T) {
 		MeterSerialNumber:       nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "model too long")
+		t.Errorf(types.ErrorWantNil, "model too long")
 	}
 
 	if !strings.Contains(err.Error(), errModel) {
-		t.Errorf(st.ErrorWantContains, err, errModel)
+		t.Errorf(types.ErrorWantContains, err, errModel)
 	}
 }
 
@@ -218,11 +218,11 @@ func TestReq_SerialNumberTooLong(t *testing.T) {
 		MeterSerialNumber:       nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "serial number too long")
+		t.Errorf(types.ErrorWantNil, "serial number too long")
 	}
 
 	if !strings.Contains(err.Error(), errSerial) {
-		t.Errorf(st.ErrorWantContains, err, errSerial)
+		t.Errorf(types.ErrorWantContains, err, errSerial)
 	}
 }
 
@@ -243,11 +243,11 @@ func TestReq_FirmwareVersionTooLong(t *testing.T) {
 		MeterSerialNumber:       nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "firmware version too long")
+		t.Errorf(types.ErrorWantNil, "firmware version too long")
 	}
 
 	if !strings.Contains(err.Error(), errFirmware) {
-		t.Errorf(st.ErrorWantContains, err, errFirmware)
+		t.Errorf(types.ErrorWantContains, err, errFirmware)
 	}
 }
 
@@ -268,11 +268,11 @@ func TestReq_IccidTooLong(t *testing.T) {
 		MeterSerialNumber:       nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "iccid too long")
+		t.Errorf(types.ErrorWantNil, "iccid too long")
 	}
 
 	if !strings.Contains(err.Error(), errIccid) {
-		t.Errorf(st.ErrorWantContains, err, errIccid)
+		t.Errorf(types.ErrorWantContains, err, errIccid)
 	}
 }
 
@@ -300,19 +300,19 @@ func TestReq_MultipleErrors(t *testing.T) {
 	errStr := err.Error()
 
 	if !strings.Contains(errStr, errVendor) {
-		t.Errorf(st.ErrorWantContains, err, errVendor)
+		t.Errorf(types.ErrorWantContains, err, errVendor)
 	}
 
 	if !strings.Contains(errStr, errModel) {
-		t.Errorf(st.ErrorWantContains, err, errModel)
+		t.Errorf(types.ErrorWantContains, err, errModel)
 	}
 
 	if !strings.Contains(errStr, errSerial) {
-		t.Errorf(st.ErrorWantContains, err, errSerial)
+		t.Errorf(types.ErrorWantContains, err, errSerial)
 	}
 
 	if !strings.Contains(errStr, errIccid) {
-		t.Errorf(st.ErrorWantContains, err, errIccid)
+		t.Errorf(types.ErrorWantContains, err, errIccid)
 	}
 }
 
@@ -331,10 +331,10 @@ func TestReq_InvalidCharacters(t *testing.T) {
 		MeterSerialNumber:       nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "invalid characters in vendor")
+		t.Errorf(types.ErrorWantNil, "invalid characters in vendor")
 	}
 
 	if !strings.Contains(err.Error(), errVendor) {
-		t.Errorf(st.ErrorWantContains, err, errVendor)
+		t.Errorf(types.ErrorWantContains, err, errVendor)
 	}
 }

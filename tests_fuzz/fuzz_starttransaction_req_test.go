@@ -9,7 +9,7 @@ import (
 	"time"
 
 	stt "github.com/aasanchez/ocpp16messages/starttransaction"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzStartTransactionReq(f *testing.F) {
@@ -46,7 +46,7 @@ func FuzzStartTransactionReq(f *testing.F) {
 			ReservationId: reservationIdPtr,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

@@ -7,15 +7,14 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/changeconfiguration"
-	ct "github.com/aasanchez/ocpp16messages/changeconfiguration/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzChangeConfigurationConf(f *testing.F) {
-	f.Add(ct.ConfigurationStatusAccepted.String())
-	f.Add(ct.ConfigurationStatusRejected.String())
-	f.Add(ct.ConfigurationStatusRebootRequired.String())
-	f.Add(ct.ConfigurationStatusNotSupported.String())
+	f.Add(types.ConfigurationStatusAccepted.String())
+	f.Add(types.ConfigurationStatusRejected.String())
+	f.Add(types.ConfigurationStatusRebootRequired.String())
+	f.Add(types.ConfigurationStatusNotSupported.String())
 	f.Add("bad-status")
 
 	f.Fuzz(func(t *testing.T, status string) {
@@ -27,7 +26,7 @@ func FuzzChangeConfigurationConf(f *testing.F) {
 			Status: status,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

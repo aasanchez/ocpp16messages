@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ConfInput represents the raw input data for creating a StopTransaction.conf
@@ -22,14 +22,14 @@ type ConfInput struct {
 
 // ConfMessage represents an OCPP 1.6 StopTransaction.conf message.
 type ConfMessage struct {
-	IdTagInfo *st.IdTagInfo
+	IdTagInfo *types.IdTagInfo
 }
 
 // confValidation holds validated fields during Conf construction.
 type confValidation struct {
-	idTagInfo     st.IdTagInfo
-	expiryDate    st.DateTime
-	parentIdToken st.IdToken
+	idTagInfo     types.IdTagInfo
+	expiryDate    types.DateTime
+	parentIdToken types.IdToken
 	hasIdTagInfo  bool
 }
 
@@ -79,10 +79,10 @@ func validateConfInput(input ConfInput) (confValidation, []error) {
 }
 
 // validateStatus validates the status field and returns the IdTagInfo.
-func validateStatus(status string, errs []error) (st.IdTagInfo, []error) {
-	info, err := st.NewIdTagInfo(st.AuthorizationStatus(status))
+func validateStatus(status string, errs []error) (types.IdTagInfo, []error) {
+	info, err := types.NewIdTagInfo(types.AuthorizationStatus(status))
 	if err != nil {
-		return st.IdTagInfo{
+		return types.IdTagInfo{
 			Status:      "",
 			ExpiryDate:  nil,
 			ParentIdTag: nil,
@@ -93,23 +93,23 @@ func validateStatus(status string, errs []error) (st.IdTagInfo, []error) {
 }
 
 // validateExpiryDate validates the expiry date string and returns the DateTime.
-func validateExpiryDate(date string, errs []error) (st.DateTime, []error) {
-	expiryDate, err := st.NewDateTime(date)
+func validateExpiryDate(date string, errs []error) (types.DateTime, []error) {
+	expiryDate, err := types.NewDateTime(date)
 	if err != nil {
-		return st.DateTime{}, append(errs, fmt.Errorf("expiryDate: %w", err))
+		return types.DateTime{}, append(errs, fmt.Errorf("expiryDate: %w", err))
 	}
 
 	return expiryDate, errs
 }
 
 // validateParentIdTag validates the parent ID tag and returns the token.
-func validateParentIdTag(tag string, errs []error) (st.IdToken, []error) {
-	ciStr, err := st.NewCiString20Type(tag)
+func validateParentIdTag(tag string, errs []error) (types.IdToken, []error) {
+	ciStr, err := types.NewCiString20Type(tag)
 	if err != nil {
-		return st.IdToken{}, append(errs, fmt.Errorf("parentIdTag: %w", err))
+		return types.IdToken{}, append(errs, fmt.Errorf("parentIdTag: %w", err))
 	}
 
-	return st.NewIdToken(ciStr), errs
+	return types.NewIdToken(ciStr), errs
 }
 
 // buildConfMessage constructs the final ConfMessage with validated fields.

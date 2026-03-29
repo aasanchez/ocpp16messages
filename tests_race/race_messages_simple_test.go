@@ -11,9 +11,7 @@ import (
 	cac "github.com/aasanchez/ocpp16messages/changeavailability"
 	cconf "github.com/aasanchez/ocpp16messages/changeconfiguration"
 	clc "github.com/aasanchez/ocpp16messages/clearcache"
-	cs "github.com/aasanchez/ocpp16messages/clearcache/types"
 	cpt "github.com/aasanchez/ocpp16messages/clearchargingprofile"
-	cchp "github.com/aasanchez/ocpp16messages/clearchargingprofile/types"
 	dt "github.com/aasanchez/ocpp16messages/datatransfer"
 	dsn "github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification"
 	fn "github.com/aasanchez/ocpp16messages/firmwarestatusnotification"
@@ -27,6 +25,7 @@ import (
 	tm "github.com/aasanchez/ocpp16messages/triggermessage"
 	uc "github.com/aasanchez/ocpp16messages/unlockconnector"
 	uf "github.com/aasanchez/ocpp16messages/updatefirmware"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func TestRace_ClearCacheReq(t *testing.T) {
@@ -44,7 +43,7 @@ func TestRace_ClearCacheReq(t *testing.T) {
 func TestRace_ClearCacheConf(t *testing.T) {
 	t.Parallel()
 
-	input := clc.ConfInput{Status: cs.ClearCacheStatusAccepted.String()}
+	input := clc.ConfInput{Status: types.ClearCacheStatusAccepted.String()}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := clc.Conf(input)
@@ -298,7 +297,7 @@ func TestRace_ResetConf(t *testing.T) {
 func TestRace_ClearChargingProfileConf(t *testing.T) {
 	t.Parallel()
 
-	input := cpt.ConfInput{Status: cchp.ClearChargingProfileStatusAccepted.String()}
+	input := cpt.ConfInput{Status: types.ClearChargingProfileStatusAccepted.String()}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
 		_, err := cpt.Conf(input)

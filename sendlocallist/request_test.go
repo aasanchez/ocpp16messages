@@ -3,7 +3,7 @@ package sendlocallist
 import (
 	"testing"
 
-	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func Test_validateReqAuthorizationList_EmptySlice(t *testing.T) {
@@ -11,7 +11,7 @@ func Test_validateReqAuthorizationList_EmptySlice(t *testing.T) {
 
 	const expectedLenZero = 0
 
-	authList := []slt.AuthorizationDataInput{}
+	authList := []types.AuthorizationDataInput{}
 
 	validated, errs := validateReqAuthorizationList(authList, nil)
 

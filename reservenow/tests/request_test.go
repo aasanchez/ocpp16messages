@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/reservenow"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -50,12 +50,12 @@ func TestReq_Valid_RequiredFieldsOnly(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ReservationId.Value() != uint16(testReservationIdOne) {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			uint16(testReservationIdOne),
 			req.ReservationId.Value(),
 		)
@@ -63,18 +63,18 @@ func TestReq_Valid_RequiredFieldsOnly(t *testing.T) {
 
 	if req.ConnectorId.Value() != uint16(testConnectorIdOne) {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			uint16(testConnectorIdOne),
 			req.ConnectorId.Value(),
 		)
 	}
 
 	if req.IdTag.Value() != testValidIdTag {
-		t.Errorf(st.ErrorMismatch, testValidIdTag, req.IdTag.Value())
+		t.Errorf(types.ErrorMismatch, testValidIdTag, req.IdTag.Value())
 	}
 
 	if req.ParentIdTag != nil {
-		t.Errorf(st.ErrorWantNonNil, wantParentIdTagNilMsg)
+		t.Errorf(types.ErrorWantNonNil, wantParentIdTagNilMsg)
 	}
 }
 
@@ -91,16 +91,16 @@ func TestReq_Valid_WithParentIdTag(t *testing.T) {
 		ParentIdTag:   &parentIdTag,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ParentIdTag == nil {
-		t.Errorf(st.ErrorWantNonNil, fieldNameParentIdTag)
+		t.Errorf(types.ErrorWantNonNil, fieldNameParentIdTag)
 	}
 
 	if req.ParentIdTag.Value() != testValidParentIdTag {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			testValidParentIdTag,
 			req.ParentIdTag.Value(),
 		)
@@ -118,12 +118,12 @@ func TestReq_Valid_ReservationIdZero(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ReservationId.Value() != uint16(testReservationIdZero) {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			uint16(testReservationIdZero),
 			req.ReservationId.Value(),
 		)
@@ -141,12 +141,12 @@ func TestReq_Valid_ReservationIdMax(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ReservationId.Value() != uint16(testReservationIdMax) {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			uint16(testReservationIdMax),
 			req.ReservationId.Value(),
 		)
@@ -164,12 +164,12 @@ func TestReq_Valid_ConnectorIdZero(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId.Value() != uint16(testConnectorIdZero) {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			uint16(testConnectorIdZero),
 			req.ConnectorId.Value(),
 		)
@@ -187,12 +187,12 @@ func TestReq_Valid_ConnectorIdMax(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId.Value() != uint16(testConnectorIdMax) {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			uint16(testConnectorIdMax),
 			req.ConnectorId.Value(),
 		)
@@ -210,11 +210,11 @@ func TestReq_ReservationIdNegative(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "negative reservationId")
+		t.Errorf(types.ErrorWantNil, "negative reservationId")
 	}
 
 	if !strings.Contains(err.Error(), errReservationId) {
-		t.Errorf(st.ErrorWantContains, err, errReservationId)
+		t.Errorf(types.ErrorWantContains, err, errReservationId)
 	}
 }
 
@@ -229,11 +229,11 @@ func TestReq_ReservationIdExceedsMax(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "reservationId exceeds max")
+		t.Errorf(types.ErrorWantNil, "reservationId exceeds max")
 	}
 
 	if !strings.Contains(err.Error(), errReservationId) {
-		t.Errorf(st.ErrorWantContains, err, errReservationId)
+		t.Errorf(types.ErrorWantContains, err, errReservationId)
 	}
 }
 
@@ -248,11 +248,11 @@ func TestReq_ConnectorIdNegative(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "negative connectorId")
+		t.Errorf(types.ErrorWantNil, "negative connectorId")
 	}
 
 	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errConnectorId)
 	}
 }
 
@@ -267,11 +267,11 @@ func TestReq_ConnectorIdExceedsMax(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "connectorId exceeds max")
+		t.Errorf(types.ErrorWantNil, "connectorId exceeds max")
 	}
 
 	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errConnectorId)
 	}
 }
 
@@ -286,11 +286,11 @@ func TestReq_EmptyIdTag(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty idTag")
+		t.Errorf(types.ErrorWantNil, "empty idTag")
 	}
 
-	if !errors.Is(err, st.ErrEmptyValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrEmptyValue)
+	if !errors.Is(err, types.ErrEmptyValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrEmptyValue)
 	}
 }
 
@@ -305,11 +305,11 @@ func TestReq_IdTagTooLong(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "IdTag too long")
+		t.Errorf(types.ErrorWantNil, "IdTag too long")
 	}
 
 	if !strings.Contains(err.Error(), errExceedsMaxLength) {
-		t.Errorf(st.ErrorWantContains, err, errExceedsMaxLength)
+		t.Errorf(types.ErrorWantContains, err, errExceedsMaxLength)
 	}
 }
 
@@ -324,11 +324,11 @@ func TestReq_IdTagInvalidCharacters(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "non-printable chars in idTag")
+		t.Errorf(types.ErrorWantNil, "non-printable chars in idTag")
 	}
 
 	if !strings.Contains(err.Error(), errNonPrintableASCII) {
-		t.Errorf(st.ErrorWantContains, err, errNonPrintableASCII)
+		t.Errorf(types.ErrorWantContains, err, errNonPrintableASCII)
 	}
 }
 
@@ -343,11 +343,11 @@ func TestReq_InvalidExpiryDate(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "invalid expiryDate")
+		t.Errorf(types.ErrorWantNil, "invalid expiryDate")
 	}
 
 	if !strings.Contains(err.Error(), errExpiryDate) {
-		t.Errorf(st.ErrorWantContains, err, errExpiryDate)
+		t.Errorf(types.ErrorWantContains, err, errExpiryDate)
 	}
 }
 
@@ -364,11 +364,11 @@ func TestReq_ParentIdTagTooLong(t *testing.T) {
 		ParentIdTag:   &parentIdTag,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "ParentIdTag too long")
+		t.Errorf(types.ErrorWantNil, "ParentIdTag too long")
 	}
 
 	if !strings.Contains(err.Error(), errExceedsMaxLength) {
-		t.Errorf(st.ErrorWantContains, err, errExceedsMaxLength)
+		t.Errorf(types.ErrorWantContains, err, errExceedsMaxLength)
 	}
 }
 
@@ -385,11 +385,11 @@ func TestReq_ParentIdTagInvalidCharacters(t *testing.T) {
 		ParentIdTag:   &parentIdTag,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "non-printable chars in parentIdTag")
+		t.Errorf(types.ErrorWantNil, "non-printable chars in parentIdTag")
 	}
 
 	if !strings.Contains(err.Error(), errNonPrintableASCII) {
-		t.Errorf(st.ErrorWantContains, err, errNonPrintableASCII)
+		t.Errorf(types.ErrorWantContains, err, errNonPrintableASCII)
 	}
 }
 
@@ -404,23 +404,23 @@ func TestReq_MultipleErrors_AllFieldsInvalid(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "all fields invalid")
+		t.Errorf(types.ErrorWantNil, "all fields invalid")
 	}
 
 	if !strings.Contains(err.Error(), errReservationId) {
-		t.Errorf(st.ErrorWantContains, err, errReservationId)
+		t.Errorf(types.ErrorWantContains, err, errReservationId)
 	}
 
 	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errConnectorId)
 	}
 
 	if !strings.Contains(err.Error(), errIdTag) {
-		t.Errorf(st.ErrorWantContains, err, errIdTag)
+		t.Errorf(types.ErrorWantContains, err, errIdTag)
 	}
 
 	if !strings.Contains(err.Error(), errExpiryDate) {
-		t.Errorf(st.ErrorWantContains, err, errExpiryDate)
+		t.Errorf(types.ErrorWantContains, err, errExpiryDate)
 	}
 }
 
@@ -437,14 +437,14 @@ func TestReq_MultipleErrors_WithInvalidParentIdTag(t *testing.T) {
 		ParentIdTag:   &parentIdTag,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "reservationId and parentIdTag invalid")
+		t.Errorf(types.ErrorWantNil, "reservationId and parentIdTag invalid")
 	}
 
 	if !strings.Contains(err.Error(), errReservationId) {
-		t.Errorf(st.ErrorWantContains, err, errReservationId)
+		t.Errorf(types.ErrorWantContains, err, errReservationId)
 	}
 
 	if !strings.Contains(err.Error(), errParentIdTag) {
-		t.Errorf(st.ErrorWantContains, err, errParentIdTag)
+		t.Errorf(types.ErrorWantContains, err, errParentIdTag)
 	}
 }

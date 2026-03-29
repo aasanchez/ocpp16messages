@@ -8,12 +8,12 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/clearchargingprofile"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzClearChargingProfileReq(f *testing.F) {
 	f.Add(false, 0, false, 0, false, "", false, 0)
-	f.Add(true, 1, true, 0, true, st.TxProfile.String(), true, 1)
+	f.Add(true, 1, true, 0, true, types.TxProfile.String(), true, 1)
 	f.Add(true, -1, false, 0, false, "", false, 0)
 	f.Add(false, 0, false, 0, true, "bad-purpose", false, 0)
 
@@ -59,7 +59,7 @@ func FuzzClearChargingProfileReq(f *testing.F) {
 			StackLevel:             stackLevelPtr,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

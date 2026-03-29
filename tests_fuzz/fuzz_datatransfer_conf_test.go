@@ -7,14 +7,13 @@ import (
 	"testing"
 
 	dt "github.com/aasanchez/ocpp16messages/datatransfer"
-	dtt "github.com/aasanchez/ocpp16messages/datatransfer/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzDataTransferConf(f *testing.F) {
-	f.Add(dtt.DataTransferStatusAccepted.String(), false, "")
+	f.Add(types.DataTransferStatusAccepted.String(), false, "")
 	f.Add("invalid-status", false, "")
-	f.Add(dtt.DataTransferStatusRejected.String(), true, "payload")
+	f.Add(types.DataTransferStatusRejected.String(), true, "payload")
 
 	f.Fuzz(func(t *testing.T, status string, hasData bool, data string) {
 		if len(status) > maxFuzzStringLen || len(data) > maxFuzzStringLen {
@@ -31,7 +30,7 @@ func FuzzDataTransferConf(f *testing.F) {
 			Data:   dataPtr,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

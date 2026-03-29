@@ -4,8 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	mbt "github.com/aasanchez/ocpp16messages/bootnotification/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ConfInput represents the raw input data for creating a BootNotification.conf
@@ -18,16 +17,16 @@ type ConfInput struct {
 
 // ConfMessage represents an OCPP 1.6 BootNotification.conf message.
 type ConfMessage struct {
-	Status      mbt.RegistrationStatus
-	CurrentTime st.DateTime
-	Interval    st.Integer
+	Status      types.RegistrationStatus
+	CurrentTime types.DateTime
+	Interval    types.Integer
 }
 
 // confValidation holds validated fields during Conf construction.
 type confValidation struct {
-	status      mbt.RegistrationStatus
-	currentTime st.DateTime
-	interval    st.Integer
+	status      types.RegistrationStatus
+	currentTime types.DateTime
+	interval    types.Integer
 }
 
 // Conf creates a BootNotification.conf message from the given input.
@@ -43,8 +42,8 @@ func Conf(input ConfInput) (ConfMessage, error) {
 	if errs != nil {
 		return ConfMessage{
 			Status:      "",
-			CurrentTime: st.DateTime{},
-			Interval:    st.Integer{},
+			CurrentTime: types.DateTime{},
+			Interval:    types.Integer{},
 		}, errors.Join(errs...)
 	}
 
@@ -78,13 +77,13 @@ func validateConfInput(input ConfInput) (confValidation, []error) {
 func validateStatus(
 	status string,
 	errs []error,
-) (mbt.RegistrationStatus, []error) {
-	regStatus := mbt.RegistrationStatus(status)
+) (types.RegistrationStatus, []error) {
+	regStatus := types.RegistrationStatus(status)
 
 	if !regStatus.IsValid() {
 		return "", append(
 			errs,
-			fmt.Errorf("status: %w", st.ErrInvalidValue),
+			fmt.Errorf("status: %w", types.ErrInvalidValue),
 		)
 	}
 
@@ -95,10 +94,10 @@ func validateStatus(
 func validateCurrentTime(
 	timeStr string,
 	errs []error,
-) (st.DateTime, []error) {
-	dateTime, err := st.NewDateTime(timeStr)
+) (types.DateTime, []error) {
+	dateTime, err := types.NewDateTime(timeStr)
 	if err != nil {
-		return st.DateTime{}, append(
+		return types.DateTime{}, append(
 			errs,
 			fmt.Errorf("currentTime: %w", err),
 		)
@@ -108,10 +107,10 @@ func validateCurrentTime(
 }
 
 // validateInterval validates the interval field.
-func validateInterval(interval int, errs []error) (st.Integer, []error) {
-	intVal, err := st.NewInteger(interval)
+func validateInterval(interval int, errs []error) (types.Integer, []error) {
+	intVal, err := types.NewInteger(interval)
 	if err != nil {
-		return st.Integer{}, append(
+		return types.Integer{}, append(
 			errs,
 			fmt.Errorf("interval: %w", err),
 		)

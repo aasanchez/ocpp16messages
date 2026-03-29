@@ -3,8 +3,7 @@ package remotestoptransaction
 import (
 	"fmt"
 
-	rt "github.com/aasanchez/ocpp16messages/remotestoptransaction/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ConfInput represents the raw input data for creating a
@@ -17,17 +16,17 @@ type ConfInput struct {
 
 // ConfMessage represents an OCPP 1.6 RemoteStopTransaction.conf message.
 type ConfMessage struct {
-	Status rt.RemoteStopTransactionStatus
+	Status types.RemoteStopTransactionStatus
 }
 
 // Conf creates a RemoteStopTransaction.conf message from the given input.
 // It validates all fields and returns an error if:
 //   - Status is not a valid RemoteStopTransactionStatus value
 func Conf(input ConfInput) (ConfMessage, error) {
-	status := rt.RemoteStopTransactionStatus(input.Status)
+	status := types.RemoteStopTransactionStatus(input.Status)
 
 	if !status.IsValid() {
-		return ConfMessage{}, fmt.Errorf("status: %w", st.ErrInvalidValue)
+		return ConfMessage{}, fmt.Errorf("status: %w", types.ErrInvalidValue)
 	}
 
 	return ConfMessage{Status: status}, nil

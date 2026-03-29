@@ -8,22 +8,21 @@ import (
 	"strconv"
 	"testing"
 
-	lt "github.com/aasanchez/ocpp16messages/getlocallistversion/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzNewListVersionNumber(f *testing.F) {
-	f.Add(lt.ListVersionUnsupported)
-	f.Add(lt.ListVersionEmpty)
+	f.Add(types.ListVersionUnsupported)
+	f.Add(types.ListVersionEmpty)
 	f.Add(int(math.MinInt32))
 	f.Add(int(math.MaxInt32))
 	f.Add(int(math.MinInt32) - 1)
 	f.Add(int(math.MaxInt32) + 1)
 
 	f.Fuzz(func(t *testing.T, value int) {
-		listVersion, err := lt.NewListVersionNumber(value)
+		listVersion, err := types.NewListVersionNumber(value)
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 
@@ -38,11 +37,11 @@ func FuzzNewListVersionNumber(f *testing.F) {
 			t.Fatalf("Value() = %d, want %d", got, value)
 		}
 
-		if listVersion.IsUnsupported() != (listVersion.Value() == lt.ListVersionUnsupported) {
+		if listVersion.IsUnsupported() != (listVersion.Value() == types.ListVersionUnsupported) {
 			t.Fatal("IsUnsupported() mismatch")
 		}
 
-		if listVersion.IsEmpty() != (listVersion.Value() == lt.ListVersionEmpty) {
+		if listVersion.IsEmpty() != (listVersion.Value() == types.ListVersionEmpty) {
 			t.Fatal("IsEmpty() mismatch")
 		}
 

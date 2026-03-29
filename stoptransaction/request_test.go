@@ -3,7 +3,7 @@ package stoptransaction
 import (
 	"testing"
 
-	mt "github.com/aasanchez/ocpp16messages/metervalues/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func Test_validateTransactionData_EmptySlice(t *testing.T) {
@@ -11,7 +11,7 @@ func Test_validateTransactionData_EmptySlice(t *testing.T) {
 
 	const expectedLenZero = 0
 
-	transactionData := []mt.MeterValueInput{}
+	transactionData := []types.MeterValueInput{}
 
 	validated, errs := validateTransactionData(transactionData, nil)
 

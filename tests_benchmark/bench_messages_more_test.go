@@ -10,14 +10,12 @@ import (
 	gd "github.com/aasanchez/ocpp16messages/getdiagnostics"
 	rn "github.com/aasanchez/ocpp16messages/reservenow"
 	sll "github.com/aasanchez/ocpp16messages/sendlocallist"
-	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
 	scp "github.com/aasanchez/ocpp16messages/setchargingprofile"
-	scpt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
 	stt "github.com/aasanchez/ocpp16messages/starttransaction"
 	sn "github.com/aasanchez/ocpp16messages/statusnotification"
 	stp "github.com/aasanchez/ocpp16messages/stoptransaction"
-	st "github.com/aasanchez/ocpp16messages/types"
 	uf "github.com/aasanchez/ocpp16messages/updatefirmware"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func BenchmarkGetConfigurationReq_SingleKey(b *testing.B) {
@@ -56,7 +54,7 @@ func BenchmarkClearChargingProfileReq_AllFields(b *testing.B) {
 	id := 1
 	connectorId := 0
 	stackLevel := 0
-	purpose := st.TxProfile.String()
+	purpose := types.TxProfile.String()
 
 	input := ccp.ReqInput{
 		Id:                     &id,
@@ -234,7 +232,7 @@ func BenchmarkStopTransactionConf_AllOptionals(b *testing.B) {
 func BenchmarkSendLocalListConf(b *testing.B) {
 	b.ReportAllocs()
 
-	input := sll.ConfInput{Status: slt.UpdateStatusAccepted.String()}
+	input := sll.ConfInput{Status: types.UpdateStatusAccepted.String()}
 
 	for i := 0; i < b.N; i++ {
 		if _, err := sll.Conf(input); err != nil {
@@ -246,7 +244,7 @@ func BenchmarkSendLocalListConf(b *testing.B) {
 func BenchmarkSetChargingProfileConf(b *testing.B) {
 	b.ReportAllocs()
 
-	input := scp.ConfInput{Status: scpt.ChargingProfileStatusAccepted.String()}
+	input := scp.ConfInput{Status: types.ChargingProfileStatusAccepted.String()}
 
 	for i := 0; i < b.N; i++ {
 		if _, err := scp.Conf(input); err != nil {

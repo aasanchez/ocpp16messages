@@ -4,8 +4,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/setchargingprofile"
-	spt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
-	"github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func TestSetChargingProfileReq_JSONRoundTrip(t *testing.T) {
@@ -13,7 +12,7 @@ func TestSetChargingProfileReq_JSONRoundTrip(t *testing.T) {
 
 	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId: 0,
-		CsChargingProfiles: spt.ChargingProfileInput{
+		CsChargingProfiles: types.ChargingProfileInput{
 			ChargingProfileId:      1,
 			TransactionId:          nil,
 			StackLevel:             0,

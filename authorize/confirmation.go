@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ConfInput represents the raw input data for creating an Authorize.conf

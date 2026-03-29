@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/stoptransaction"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -32,7 +32,7 @@ func TestConf_NoIdTagInfo(t *testing.T) {
 		ParentIdTag: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.IdTagInfo != nil {
@@ -51,7 +51,7 @@ func TestConf_ValidAccepted(t *testing.T) {
 		ParentIdTag: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.IdTagInfo == nil {
@@ -62,7 +62,7 @@ func TestConf_ValidAccepted(t *testing.T) {
 
 	if conf.IdTagInfo.Status.String() != statusAccepted {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			statusAccepted,
 			conf.IdTagInfo.Status.String(),
 		)
@@ -80,7 +80,7 @@ func TestConf_ValidBlocked(t *testing.T) {
 		ParentIdTag: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.IdTagInfo == nil {
@@ -91,7 +91,7 @@ func TestConf_ValidBlocked(t *testing.T) {
 
 	if conf.IdTagInfo.Status.String() != statusBlocked {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			statusBlocked,
 			conf.IdTagInfo.Status.String(),
 		)
@@ -109,7 +109,7 @@ func TestConf_ValidExpired(t *testing.T) {
 		ParentIdTag: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.IdTagInfo == nil {
@@ -120,7 +120,7 @@ func TestConf_ValidExpired(t *testing.T) {
 
 	if conf.IdTagInfo.Status.String() != statusExpired {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			statusExpired,
 			conf.IdTagInfo.Status.String(),
 		)
@@ -138,7 +138,7 @@ func TestConf_ValidInvalid(t *testing.T) {
 		ParentIdTag: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.IdTagInfo == nil {
@@ -149,7 +149,7 @@ func TestConf_ValidInvalid(t *testing.T) {
 
 	if conf.IdTagInfo.Status.String() != statusInvalid {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			statusInvalid,
 			conf.IdTagInfo.Status.String(),
 		)
@@ -167,7 +167,7 @@ func TestConf_ValidConcurrentTx(t *testing.T) {
 		ParentIdTag: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.IdTagInfo == nil {
@@ -178,7 +178,7 @@ func TestConf_ValidConcurrentTx(t *testing.T) {
 
 	if conf.IdTagInfo.Status.String() != statusConcurrentTx {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			statusConcurrentTx,
 			conf.IdTagInfo.Status.String(),
 		)
@@ -199,7 +199,7 @@ func TestConf_InvalidStatus(t *testing.T) {
 		t.Error("Conf() error = nil, want error for invalid status")
 	}
 
-	if !errors.Is(err, st.ErrInvalidValue) {
+	if !errors.Is(err, types.ErrInvalidValue) {
 		t.Errorf("Conf() error = %v, want ErrInvalidValue", err)
 	}
 }
@@ -218,7 +218,7 @@ func TestConf_EmptyStatus(t *testing.T) {
 		t.Error("Conf() error = nil, want error for empty status")
 	}
 
-	if !errors.Is(err, st.ErrInvalidValue) {
+	if !errors.Is(err, types.ErrInvalidValue) {
 		t.Errorf("Conf() error = %v, want ErrInvalidValue", err)
 	}
 }
@@ -235,7 +235,7 @@ func TestConf_WithExpiryDate(t *testing.T) {
 		ParentIdTag: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.IdTagInfo == nil {
@@ -265,7 +265,7 @@ func TestConf_WithInvalidExpiryDate(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errConfExpiryDate) {
-		t.Errorf(st.ErrorWantContains, err, errConfExpiryDate)
+		t.Errorf(types.ErrorWantContains, err, errConfExpiryDate)
 	}
 }
 
@@ -281,7 +281,7 @@ func TestConf_WithParentIdTag(t *testing.T) {
 		ParentIdTag: &parentTag,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.IdTagInfo == nil {
@@ -296,7 +296,7 @@ func TestConf_WithParentIdTag(t *testing.T) {
 
 	if conf.IdTagInfo.ParentIdTag.String() != parentTag {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			parentTag,
 			conf.IdTagInfo.ParentIdTag.String(),
 		)
@@ -319,7 +319,7 @@ func TestConf_WithParentIdTagTooLong(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errConfParentId) {
-		t.Errorf(st.ErrorWantContains, err, errConfParentId)
+		t.Errorf(types.ErrorWantContains, err, errConfParentId)
 	}
 }
 
@@ -339,7 +339,7 @@ func TestConf_WithEmptyParentIdTag(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errConfParentId) {
-		t.Errorf(st.ErrorWantContains, err, errConfParentId)
+		t.Errorf(types.ErrorWantContains, err, errConfParentId)
 	}
 }
 
@@ -356,7 +356,7 @@ func TestConf_Complete(t *testing.T) {
 		ParentIdTag: &parentTag,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.IdTagInfo == nil {
@@ -367,7 +367,7 @@ func TestConf_Complete(t *testing.T) {
 
 	if conf.IdTagInfo.Status.String() != statusAccepted {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			statusAccepted,
 			conf.IdTagInfo.Status.String(),
 		)
@@ -383,7 +383,7 @@ func TestConf_Complete(t *testing.T) {
 
 	if conf.IdTagInfo.ParentIdTag.String() != parentTag {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			parentTag,
 			conf.IdTagInfo.ParentIdTag.String(),
 		)
@@ -409,15 +409,15 @@ func TestConf_MultipleErrors(t *testing.T) {
 	errStr := err.Error()
 
 	if !strings.Contains(errStr, errConfStatus) {
-		t.Errorf(st.ErrorWantContains, err, errConfStatus)
+		t.Errorf(types.ErrorWantContains, err, errConfStatus)
 	}
 
 	if !strings.Contains(errStr, errConfExpiryDate) {
-		t.Errorf(st.ErrorWantContains, err, errConfExpiryDate)
+		t.Errorf(types.ErrorWantContains, err, errConfExpiryDate)
 	}
 
 	if !strings.Contains(errStr, errConfParentId) {
-		t.Errorf(st.ErrorWantContains, err, errConfParentId)
+		t.Errorf(types.ErrorWantContains, err, errConfParentId)
 	}
 }
 
@@ -439,10 +439,10 @@ func TestConf_MultipleErrors_StatusAndExpiryDate(t *testing.T) {
 	errStr := err.Error()
 
 	if !strings.Contains(errStr, errConfStatus) {
-		t.Errorf(st.ErrorWantContains, err, errConfStatus)
+		t.Errorf(types.ErrorWantContains, err, errConfStatus)
 	}
 
 	if !strings.Contains(errStr, errConfExpiryDate) {
-		t.Errorf(st.ErrorWantContains, err, errConfExpiryDate)
+		t.Errorf(types.ErrorWantContains, err, errConfExpiryDate)
 	}
 }

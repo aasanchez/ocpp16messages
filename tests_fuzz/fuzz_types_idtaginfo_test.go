@@ -6,22 +6,22 @@ import (
 	"errors"
 	"testing"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzNewIdTagInfo(f *testing.F) {
-	f.Add(st.AuthorizationStatusAccepted.String())
-	f.Add(st.AuthorizationStatusBlocked.String())
-	f.Add(st.AuthorizationStatusExpired.String())
-	f.Add(st.AuthorizationStatusInvalid.String())
-	f.Add(st.AuthorizationStatusConcurrentTx.String())
+	f.Add(types.AuthorizationStatusAccepted.String())
+	f.Add(types.AuthorizationStatusBlocked.String())
+	f.Add(types.AuthorizationStatusExpired.String())
+	f.Add(types.AuthorizationStatusInvalid.String())
+	f.Add(types.AuthorizationStatusConcurrentTx.String())
 	f.Add("")
 	f.Add("invalid-status")
 
 	f.Fuzz(func(t *testing.T, status string) {
-		idTagInfo, err := st.NewIdTagInfo(st.AuthorizationStatus(status))
+		idTagInfo, err := types.NewIdTagInfo(types.AuthorizationStatus(status))
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

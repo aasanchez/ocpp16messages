@@ -4,8 +4,7 @@ import (
 	"fmt"
 
 	"github.com/aasanchez/ocpp16messages/setchargingprofile"
-	spt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
-	"github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -24,7 +23,7 @@ const (
 func ExampleReq() {
 	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId: exampleConnectorId,
-		CsChargingProfiles: spt.ChargingProfileInput{
+		CsChargingProfiles: types.ChargingProfileInput{
 			ChargingProfileId:      exampleProfileId,
 			TransactionId:          nil,
 			StackLevel:             exampleStackLevel,
@@ -73,7 +72,7 @@ func ExampleReq() {
 func ExampleReq_chargePointMaxProfile() {
 	req, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId: 0,
-		CsChargingProfiles: spt.ChargingProfileInput{
+		CsChargingProfiles: types.ChargingProfileInput{
 			ChargingProfileId:      exampleProfileId,
 			TransactionId:          nil,
 			StackLevel:             exampleStackLevel,
@@ -114,7 +113,7 @@ func ExampleReq_chargePointMaxProfile() {
 func ExampleReq_invalidConnectorId() {
 	_, err := setchargingprofile.Req(setchargingprofile.ReqInput{
 		ConnectorId: -1,
-		CsChargingProfiles: spt.ChargingProfileInput{
+		CsChargingProfiles: types.ChargingProfileInput{
 			ChargingProfileId:      exampleProfileId,
 			TransactionId:          nil,
 			StackLevel:             exampleStackLevel,

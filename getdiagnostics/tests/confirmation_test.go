@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	gd "github.com/aasanchez/ocpp16messages/getdiagnostics"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -27,7 +27,7 @@ func TestConf_Valid_NoFileName(t *testing.T) {
 		FileName: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.FileName != nil {
@@ -42,7 +42,7 @@ func TestConf_Valid_NilFileName(t *testing.T) {
 		FileName: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.FileName != nil {
@@ -59,7 +59,7 @@ func TestConf_Valid_WithFileName(t *testing.T) {
 		FileName: &fileName,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.FileName == nil {
@@ -67,7 +67,7 @@ func TestConf_Valid_WithFileName(t *testing.T) {
 	}
 
 	if conf.FileName.Value() != validFileNameValue {
-		t.Errorf(st.ErrorMismatch, validFileNameValue, conf.FileName.Value())
+		t.Errorf(types.ErrorMismatch, validFileNameValue, conf.FileName.Value())
 	}
 }
 
@@ -80,7 +80,7 @@ func TestConf_Valid_WithShortFileName(t *testing.T) {
 		FileName: &fileName,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.FileName == nil {
@@ -88,7 +88,7 @@ func TestConf_Valid_WithShortFileName(t *testing.T) {
 	}
 
 	if conf.FileName.Value() != shortFileNameValue {
-		t.Errorf(st.ErrorMismatch, shortFileNameValue, conf.FileName.Value())
+		t.Errorf(types.ErrorMismatch, shortFileNameValue, conf.FileName.Value())
 	}
 }
 
@@ -101,11 +101,11 @@ func TestConf_Invalid_EmptyFileName(t *testing.T) {
 		FileName: &fileName,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty FileName")
+		t.Errorf(types.ErrorWantNil, "empty FileName")
 	}
 
 	if !strings.Contains(err.Error(), errFileName) {
-		t.Errorf(st.ErrorWantContains, err, errFileName)
+		t.Errorf(types.ErrorWantContains, err, errFileName)
 	}
 }
 
@@ -124,10 +124,10 @@ func TestConf_Invalid_FileNameExceedsMax(t *testing.T) {
 		FileName: &longFileName,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "FileName exceeds max length")
+		t.Errorf(types.ErrorWantNil, "FileName exceeds max length")
 	}
 
 	if !strings.Contains(err.Error(), errFileName) {
-		t.Errorf(st.ErrorWantContains, err, errFileName)
+		t.Errorf(types.ErrorWantContains, err, errFileName)
 	}
 }

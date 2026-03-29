@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"testing"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -19,7 +19,7 @@ func TestRace_NewCiString20Type(t *testing.T) {
 	t.Parallel()
 
 	runConcurrent(t, workers, iterations, func(worker int, iteration int) error {
-		value, err := st.NewCiString20Type(
+		value, err := types.NewCiString20Type(
 			fmt.Sprintf(ciStringTemplate, worker, iteration),
 		)
 		if err != nil {
@@ -39,7 +39,7 @@ func TestRace_NewInteger(t *testing.T) {
 
 	runConcurrent(t, workers, iterations, func(worker int, iteration int) error {
 		n := (worker + iteration) % maxValue
-		value, err := st.NewInteger(n)
+		value, err := types.NewInteger(n)
 		if err != nil {
 			return fmt.Errorf("NewInteger: %w", err)
 		}

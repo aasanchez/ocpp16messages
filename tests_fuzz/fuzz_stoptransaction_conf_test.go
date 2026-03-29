@@ -8,12 +8,12 @@ import (
 	"time"
 
 	stp "github.com/aasanchez/ocpp16messages/stoptransaction"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzStopTransactionConf(f *testing.F) {
 	f.Add(false, "", false, "", false, "")
-	f.Add(true, st.AuthorizationStatusAccepted.String(), false, "", false, "")
+	f.Add(true, types.AuthorizationStatusAccepted.String(), false, "", false, "")
 	f.Add(true, "invalid-status", false, "", false, "")
 	f.Add(false, "", true, "bad-timestamp", false, "")
 	f.Add(false, "", false, "", true, "bad\x01")
@@ -54,7 +54,7 @@ func FuzzStopTransactionConf(f *testing.F) {
 			ParentIdTag: parentIdTagPtr,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

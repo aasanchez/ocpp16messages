@@ -10,14 +10,10 @@ import (
 	dt "github.com/aasanchez/ocpp16messages/datatransfer"
 	gcs "github.com/aasanchez/ocpp16messages/getcompositeschedule"
 	gconf "github.com/aasanchez/ocpp16messages/getconfiguration"
-	gct "github.com/aasanchez/ocpp16messages/getconfiguration/types"
 	sll "github.com/aasanchez/ocpp16messages/sendlocallist"
-	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
 	scp "github.com/aasanchez/ocpp16messages/setchargingprofile"
-	scpt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
 	tm "github.com/aasanchez/ocpp16messages/triggermessage"
-	tmt "github.com/aasanchez/ocpp16messages/triggermessage/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func BenchmarkAuthorizeReq(b *testing.B) {
@@ -38,7 +34,7 @@ func BenchmarkAuthorizeConf(b *testing.B) {
 	expiry := sampleTimestamp
 	parent := "PARENT-1"
 	input := ar.ConfInput{
-		Status:      st.AuthorizationStatusAccepted.String(),
+		Status:      types.AuthorizationStatusAccepted.String(),
 		ExpiryDate:  &expiry,
 		ParentIdTag: &parent,
 	}
@@ -121,7 +117,7 @@ func BenchmarkDataTransferConf(b *testing.B) {
 func BenchmarkGetCompositeScheduleReq(b *testing.B) {
 	b.ReportAllocs()
 
-	unit := st.ChargingRateUnitWatts.String()
+	unit := types.ChargingRateUnitWatts.String()
 	input := gcs.ReqInput{
 		ConnectorId:      0,
 		Duration:         60,
@@ -143,11 +139,11 @@ func BenchmarkGetCompositeScheduleConf_WithSchedule(b *testing.B) {
 
 	duration := 60
 	minChargingRate := 0.0
-	periods := []st.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
+	periods := []types.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
 
-	chargingScheduleInput := st.ChargingScheduleInput{
+	chargingScheduleInput := types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        &minChargingRate,
 		StartSchedule:          &scheduleStart,
@@ -172,9 +168,9 @@ func BenchmarkGetConfigurationConf_ManyKeys(b *testing.B) {
 
 	value := "60"
 
-	var configurationKeys []gct.KeyValueInput
+	var configurationKeys []types.KeyValueInput
 	for i := 0; i < 25; i++ {
-		configurationKeys = append(configurationKeys, gct.KeyValueInput{
+		configurationKeys = append(configurationKeys, types.KeyValueInput{
 			Key:      "HeartbeatInterval",
 			Readonly: false,
 			Value:    &value,
@@ -201,15 +197,15 @@ func BenchmarkGetConfigurationConf_ManyKeys(b *testing.B) {
 func BenchmarkSendLocalListReq_ManyEntries(b *testing.B) {
 	b.ReportAllocs()
 
-	var entries []slt.AuthorizationDataInput
+	var entries []types.AuthorizationDataInput
 	for i := 0; i < 25; i++ {
-		entries = append(entries, slt.AuthorizationDataInput{IdTag: "TAG-1"})
+		entries = append(entries, types.AuthorizationDataInput{IdTag: "TAG-1"})
 	}
 
 	input := sll.ReqInput{
 		ListVersion:            1,
 		LocalAuthorizationList: entries,
-		UpdateType:             slt.UpdateTypeFull.String(),
+		UpdateType:             types.UpdateTypeFull.String(),
 	}
 
 	for i := 0; i < b.N; i++ {
@@ -225,22 +221,22 @@ func BenchmarkSetChargingProfileReq(b *testing.B) {
 	duration := 60
 	scheduleStart := sampleTimestamp
 	minChargingRate := 0.0
-	periods := []st.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
+	periods := []types.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
 
-	scheduleInput := st.ChargingScheduleInput{
+	scheduleInput := types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        &minChargingRate,
 		StartSchedule:          &scheduleStart,
 	}
 
-	profileInput := scpt.ChargingProfileInput{
+	profileInput := types.ChargingProfileInput{
 		ChargingProfileId:      1,
 		TransactionId:          nil,
 		StackLevel:             0,
-		ChargingProfilePurpose: st.TxProfile.String(),
-		ChargingProfileKind:    scpt.ChargingProfileKindAbsolute.String(),
+		ChargingProfilePurpose: types.TxProfile.String(),
+		ChargingProfileKind:    types.ChargingProfileKindAbsolute.String(),
 		RecurrencyKind:         nil,
 		ValidFrom:              nil,
 		ValidTo:                nil,
@@ -262,7 +258,7 @@ func BenchmarkSetChargingProfileReq(b *testing.B) {
 func BenchmarkTriggerMessageReq(b *testing.B) {
 	b.ReportAllocs()
 
-	requestedMessage := tmt.MessageTriggerHeartbeat.String()
+	requestedMessage := types.MessageTriggerHeartbeat.String()
 	connectorId := 1
 
 	input := tm.ReqInput{

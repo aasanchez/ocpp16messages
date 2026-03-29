@@ -4,8 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	spt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
-	"github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -20,13 +19,13 @@ type ReqInput struct {
 	// connectorId 0 is associated with the entire Charge Point.
 	ConnectorId int
 	// Required: The charging profile to be set at the Charge Point.
-	CsChargingProfiles spt.ChargingProfileInput
+	CsChargingProfiles types.ChargingProfileInput
 }
 
 // ReqMessage represents an OCPP 1.6 SetChargingProfile.req message.
 type ReqMessage struct {
 	ConnectorId        types.Integer
-	CsChargingProfiles spt.ChargingProfile
+	CsChargingProfiles types.ChargingProfile
 }
 
 // Req creates a SetChargingProfile.req message from the given input.
@@ -42,7 +41,7 @@ func Req(input ReqInput) (ReqMessage, error) {
 		errs = append(errs, fmt.Errorf("connectorId: %w", err))
 	}
 
-	csChargingProfiles, err := spt.NewChargingProfile(input.CsChargingProfiles)
+	csChargingProfiles, err := types.NewChargingProfile(input.CsChargingProfiles)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("csChargingProfiles: %w", err))
 	}

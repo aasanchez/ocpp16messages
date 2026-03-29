@@ -8,17 +8,16 @@ import (
 	"testing"
 
 	scp "github.com/aasanchez/ocpp16messages/setchargingprofile"
-	spt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzSetChargingProfileReq(f *testing.F) {
-	f.Add(0, 1, 0, st.ChargePointMaxProfile.String(), "Absolute")
-	f.Add(1, 1, 0, st.TxProfile.String(), "Relative")
-	f.Add(-1, 1, 0, st.ChargePointMaxProfile.String(), "Absolute")
-	f.Add(1, -1, 0, st.ChargePointMaxProfile.String(), "Absolute")
+	f.Add(0, 1, 0, types.ChargePointMaxProfile.String(), "Absolute")
+	f.Add(1, 1, 0, types.TxProfile.String(), "Relative")
+	f.Add(-1, 1, 0, types.ChargePointMaxProfile.String(), "Absolute")
+	f.Add(1, -1, 0, types.ChargePointMaxProfile.String(), "Absolute")
 	f.Add(1, 1, 0, "invalid-purpose", "Absolute")
-	f.Add(1, 1, 0, st.ChargePointMaxProfile.String(), "invalid-kind")
+	f.Add(1, 1, 0, types.ChargePointMaxProfile.String(), "invalid-kind")
 
 	f.Fuzz(func(
 		t *testing.T,
@@ -34,7 +33,7 @@ func FuzzSetChargingProfileReq(f *testing.F) {
 
 		req, err := scp.Req(scp.ReqInput{
 			ConnectorId: connectorId,
-			CsChargingProfiles: spt.ChargingProfileInput{
+			CsChargingProfiles: types.ChargingProfileInput{
 				ChargingProfileId:      chargingProfileId,
 				TransactionId:          nil,
 				StackLevel:             stackLevel,
@@ -43,9 +42,9 @@ func FuzzSetChargingProfileReq(f *testing.F) {
 				RecurrencyKind:         nil,
 				ValidFrom:              nil,
 				ValidTo:                nil,
-				ChargingSchedule: st.ChargingScheduleInput{
-					ChargingRateUnit: st.ChargingRateUnitWatts.String(),
-					ChargingSchedulePeriod: []st.ChargingSchedulePeriodInput{
+				ChargingSchedule: types.ChargingScheduleInput{
+					ChargingRateUnit: types.ChargingRateUnitWatts.String(),
+					ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{
 						{
 							StartPeriod:  0,
 							Limit:        0,
@@ -56,7 +55,7 @@ func FuzzSetChargingProfileReq(f *testing.F) {
 			},
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

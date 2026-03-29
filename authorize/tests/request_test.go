@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/authorize"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const testValidIdTag = "RFID-TAG-12345"
@@ -16,11 +16,11 @@ func TestReq_Valid(t *testing.T) {
 
 	req, err := authorize.Req(authorize.ReqInput{IdTag: testValidIdTag})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.IdTag.String() != testValidIdTag {
-		t.Errorf(st.ErrorMismatch, testValidIdTag, req.IdTag.String())
+		t.Errorf(types.ErrorMismatch, testValidIdTag, req.IdTag.String())
 	}
 }
 
@@ -32,8 +32,8 @@ func TestReq_EmptyIdTag(t *testing.T) {
 		t.Error("Req() error = nil, want error for empty idTag")
 	}
 
-	if !errors.Is(err, st.ErrEmptyValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrEmptyValue)
+	if !errors.Is(err, types.ErrEmptyValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrEmptyValue)
 	}
 }
 

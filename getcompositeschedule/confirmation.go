@@ -4,8 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	gt "github.com/aasanchez/ocpp16messages/getcompositeschedule/types"
-	"github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ConfInput represents the raw input data for creating a
@@ -24,7 +23,7 @@ type ConfInput struct {
 
 // ConfMessage represents an OCPP 1.6 GetCompositeSchedule.conf message.
 type ConfMessage struct {
-	Status           gt.GetCompositeScheduleStatus
+	Status           types.GetCompositeScheduleStatus
 	ConnectorId      *types.Integer
 	ScheduleStart    *types.DateTime
 	ChargingSchedule *types.ChargingSchedule
@@ -77,8 +76,8 @@ func Conf(input ConfInput) (ConfMessage, error) {
 // confValidateStatus validates the status field.
 func confValidateStatus(
 	statusStr string,
-) (gt.GetCompositeScheduleStatus, error) {
-	status := gt.GetCompositeScheduleStatus(statusStr)
+) (types.GetCompositeScheduleStatus, error) {
+	status := types.GetCompositeScheduleStatus(statusStr)
 	if !status.IsValid() {
 		return "", fmt.Errorf("status: %w", types.ErrInvalidValue)
 	}

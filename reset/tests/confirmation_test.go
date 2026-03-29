@@ -5,8 +5,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/reset"
-	rt "github.com/aasanchez/ocpp16messages/reset/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -18,13 +17,13 @@ func TestConf_Valid_Accepted(t *testing.T) {
 
 	conf, err := reset.Conf(reset.ConfInput{Status: "Accepted"})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != rt.ResetStatusAccepted {
+	if conf.Status != types.ResetStatusAccepted {
 		t.Errorf(
-			st.ErrorMismatch,
-			rt.ResetStatusAccepted,
+			types.ErrorMismatch,
+			types.ResetStatusAccepted,
 			conf.Status,
 		)
 	}
@@ -35,13 +34,13 @@ func TestConf_Valid_Rejected(t *testing.T) {
 
 	conf, err := reset.Conf(reset.ConfInput{Status: "Rejected"})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != rt.ResetStatusRejected {
+	if conf.Status != types.ResetStatusRejected {
 		t.Errorf(
-			st.ErrorMismatch,
-			rt.ResetStatusRejected,
+			types.ErrorMismatch,
+			types.ResetStatusRejected,
 			conf.Status,
 		)
 	}
@@ -52,11 +51,11 @@ func TestConf_EmptyStatus(t *testing.T) {
 
 	_, err := reset.Conf(reset.ConfInput{Status: ""})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty status")
+		t.Errorf(types.ErrorWantNil, "empty status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -65,11 +64,11 @@ func TestConf_InvalidStatus_Unknown(t *testing.T) {
 
 	_, err := reset.Conf(reset.ConfInput{Status: "Unknown"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "unknown status")
+		t.Errorf(types.ErrorWantNil, "unknown status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -78,11 +77,11 @@ func TestConf_InvalidStatus_Lowercase(t *testing.T) {
 
 	_, err := reset.Conf(reset.ConfInput{Status: "accepted"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "lowercase status")
+		t.Errorf(types.ErrorWantNil, "lowercase status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -91,10 +90,10 @@ func TestConf_InvalidStatus_Pending(t *testing.T) {
 
 	_, err := reset.Conf(reset.ConfInput{Status: "Pending"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "Pending (invalid for Reset)")
+		t.Errorf(types.ErrorWantNil, "Pending (invalid for Reset)")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }

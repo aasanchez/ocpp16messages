@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -29,11 +29,11 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 ReserveNow.req message.
 type ReqMessage struct {
-	ReservationId st.Integer
-	ConnectorId   st.Integer
-	IdTag         st.CiString20Type
-	ExpiryDate    st.DateTime
-	ParentIdTag   *st.CiString20Type
+	ReservationId types.Integer
+	ConnectorId   types.Integer
+	IdTag         types.CiString20Type
+	ExpiryDate    types.DateTime
+	ParentIdTag   *types.CiString20Type
 }
 
 // Req creates a ReserveNow.req message from the given input.
@@ -50,27 +50,27 @@ type ReqMessage struct {
 func Req(input ReqInput) (ReqMessage, error) {
 	var errs []error
 
-	reservationId, err := st.NewInteger(input.ReservationId)
+	reservationId, err := types.NewInteger(input.ReservationId)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("reservationId: %w", err))
 	}
 
-	connectorId, err := st.NewInteger(input.ConnectorId)
+	connectorId, err := types.NewInteger(input.ConnectorId)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("connectorId: %w", err))
 	}
 
-	idTag, err := st.NewCiString20Type(input.IdTag)
+	idTag, err := types.NewCiString20Type(input.IdTag)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("idTag: %w", err))
 	}
 
-	expiryDate, err := st.NewDateTime(input.ExpiryDate)
+	expiryDate, err := types.NewDateTime(input.ExpiryDate)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("expiryDate: %w", err))
 	}
 
-	var parentIdTag *st.CiString20Type
+	var parentIdTag *types.CiString20Type
 
 	if input.ParentIdTag != nil {
 		parentIdTag, errs = validateParentIdTag(*input.ParentIdTag, errs)
@@ -93,8 +93,8 @@ func Req(input ReqInput) (ReqMessage, error) {
 func validateParentIdTag(
 	parentIdTag string,
 	errs []error,
-) (*st.CiString20Type, []error) {
-	val, err := st.NewCiString20Type(parentIdTag)
+) (*types.CiString20Type, []error) {
+	val, err := types.NewCiString20Type(parentIdTag)
 	if err != nil {
 		return nil, append(errs, fmt.Errorf("parentIdTag: %w", err))
 	}

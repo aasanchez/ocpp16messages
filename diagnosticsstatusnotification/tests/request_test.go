@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	dsn "github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -20,11 +20,11 @@ func TestReq_ValidIdle(t *testing.T) {
 
 	req, err := dsn.Req(dsn.ReqInput{Status: statusIdle})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Status.String() != statusIdle {
-		t.Errorf(st.ErrorMismatch, statusIdle, req.Status.String())
+		t.Errorf(types.ErrorMismatch, statusIdle, req.Status.String())
 	}
 }
 
@@ -33,11 +33,11 @@ func TestReq_ValidUploaded(t *testing.T) {
 
 	req, err := dsn.Req(dsn.ReqInput{Status: statusUploaded})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Status.String() != statusUploaded {
-		t.Errorf(st.ErrorMismatch, statusUploaded, req.Status.String())
+		t.Errorf(types.ErrorMismatch, statusUploaded, req.Status.String())
 	}
 }
 
@@ -46,11 +46,11 @@ func TestReq_ValidUploadFailed(t *testing.T) {
 
 	req, err := dsn.Req(dsn.ReqInput{Status: statusUploadFailed})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Status.String() != statusUploadFailed {
-		t.Errorf(st.ErrorMismatch, statusUploadFailed, req.Status.String())
+		t.Errorf(types.ErrorMismatch, statusUploadFailed, req.Status.String())
 	}
 }
 
@@ -59,11 +59,11 @@ func TestReq_ValidUploading(t *testing.T) {
 
 	req, err := dsn.Req(dsn.ReqInput{Status: statusUploading})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Status.String() != statusUploading {
-		t.Errorf(st.ErrorMismatch, statusUploading, req.Status.String())
+		t.Errorf(types.ErrorMismatch, statusUploading, req.Status.String())
 	}
 }
 
@@ -75,8 +75,8 @@ func TestReq_InvalidStatus(t *testing.T) {
 		t.Error("Req() error = nil, want error for invalid status")
 	}
 
-	if !errors.Is(err, st.ErrInvalidValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrInvalidValue)
+	if !errors.Is(err, types.ErrInvalidValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrInvalidValue)
 	}
 }
 
@@ -88,8 +88,8 @@ func TestReq_EmptyStatus(t *testing.T) {
 		t.Error("Req() error = nil, want error for empty status")
 	}
 
-	if !errors.Is(err, st.ErrInvalidValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrInvalidValue)
+	if !errors.Is(err, types.ErrInvalidValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrInvalidValue)
 	}
 }
 
@@ -101,7 +101,7 @@ func TestReq_LowercaseStatus(t *testing.T) {
 		t.Error("Req() error = nil, want error for lowercase status")
 	}
 
-	if !errors.Is(err, st.ErrInvalidValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrInvalidValue)
+	if !errors.Is(err, types.ErrInvalidValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrInvalidValue)
 	}
 }

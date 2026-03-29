@@ -3,7 +3,7 @@ package getdiagnostics
 import (
 	"fmt"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ConfInput represents the raw input data for creating a GetDiagnostics.conf
@@ -16,7 +16,7 @@ type ConfInput struct {
 
 // ConfMessage represents an OCPP 1.6 GetDiagnostics.conf message.
 type ConfMessage struct {
-	FileName *st.CiString255Type
+	FileName *types.CiString255Type
 }
 
 // Conf creates a GetDiagnostics.conf message from the given input.
@@ -36,12 +36,12 @@ func Conf(input ConfInput) (ConfMessage, error) {
 }
 
 // confValidateFileName validates the optional file name field.
-func confValidateFileName(fileName *string) (*st.CiString255Type, error) {
+func confValidateFileName(fileName *string) (*types.CiString255Type, error) {
 	if fileName == nil {
 		return nil, nil //nolint:nilnil // nil is valid for optional field
 	}
 
-	fn, err := st.NewCiString255Type(*fileName)
+	fn, err := types.NewCiString255Type(*fileName)
 	if err != nil {
 		return nil, fmt.Errorf("fileName: %w", err)
 	}

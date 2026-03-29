@@ -8,13 +8,12 @@ import (
 	"time"
 
 	gc "github.com/aasanchez/ocpp16messages/getcompositeschedule"
-	gt "github.com/aasanchez/ocpp16messages/getcompositeschedule/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzGetCompositeScheduleConf(f *testing.F) {
 	f.Add(
-		gt.GetCompositeScheduleStatusAccepted.String(),
+		types.GetCompositeScheduleStatusAccepted.String(),
 		false,
 		0,
 		false,
@@ -23,13 +22,13 @@ func FuzzGetCompositeScheduleConf(f *testing.F) {
 		"",
 	)
 	f.Add(
-		gt.GetCompositeScheduleStatusRejected.String(),
+		types.GetCompositeScheduleStatusRejected.String(),
 		true,
 		1,
 		true,
 		"2025-01-15T10:30:00Z",
 		true,
-		st.ChargingRateUnitWatts.String(),
+		types.ChargingRateUnitWatts.String(),
 	)
 	f.Add(
 		"invalid-status",
@@ -41,7 +40,7 @@ func FuzzGetCompositeScheduleConf(f *testing.F) {
 		"",
 	)
 	f.Add(
-		gt.GetCompositeScheduleStatusAccepted.String(),
+		types.GetCompositeScheduleStatusAccepted.String(),
 		true,
 		-1,
 		true,
@@ -76,11 +75,11 @@ func FuzzGetCompositeScheduleConf(f *testing.F) {
 			scheduleStartPtr = &scheduleStart
 		}
 
-		var chargingSchedulePtr *st.ChargingScheduleInput
+		var chargingSchedulePtr *types.ChargingScheduleInput
 		if hasChargingSchedule {
-			chargingSchedule := st.ChargingScheduleInput{
+			chargingSchedule := types.ChargingScheduleInput{
 				ChargingRateUnit: chargingRateUnit,
-				ChargingSchedulePeriod: []st.ChargingSchedulePeriodInput{
+				ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{
 					{
 						StartPeriod:  0,
 						Limit:        0,
@@ -98,7 +97,7 @@ func FuzzGetCompositeScheduleConf(f *testing.F) {
 			ChargingSchedule: chargingSchedulePtr,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

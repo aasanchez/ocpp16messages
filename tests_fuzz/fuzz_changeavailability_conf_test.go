@@ -7,14 +7,13 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/changeavailability"
-	ct "github.com/aasanchez/ocpp16messages/changeavailability/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzChangeAvailabilityConf(f *testing.F) {
-	f.Add(ct.AvailabilityStatusAccepted.String())
-	f.Add(ct.AvailabilityStatusRejected.String())
-	f.Add(ct.AvailabilityStatusScheduled.String())
+	f.Add(types.AvailabilityStatusAccepted.String())
+	f.Add(types.AvailabilityStatusRejected.String())
+	f.Add(types.AvailabilityStatusScheduled.String())
 	f.Add("bad-status")
 
 	f.Fuzz(func(t *testing.T, status string) {
@@ -26,7 +25,7 @@ func FuzzChangeAvailabilityConf(f *testing.F) {
 			Status: status,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

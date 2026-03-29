@@ -6,26 +6,21 @@ import (
 	"fmt"
 	"testing"
 
-	gct "github.com/aasanchez/ocpp16messages/getconfiguration/types"
-	gllt "github.com/aasanchez/ocpp16messages/getlocallistversion/types"
-	mvt "github.com/aasanchez/ocpp16messages/metervalues/types"
-	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
-	scpt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func TestRace_GetConfigurationNewKeyValue(t *testing.T) {
 	t.Parallel()
 
 	value := "60"
-	input := gct.KeyValueInput{
+	input := types.KeyValueInput{
 		Key:      "HeartbeatInterval",
 		Readonly: false,
 		Value:    &value,
 	}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
-		_, err := gct.NewKeyValue(input)
+		_, err := types.NewKeyValue(input)
 		if err != nil {
 			return fmt.Errorf("getconfiguration/types.NewKeyValue: %w", err)
 		}
@@ -38,7 +33,7 @@ func TestRace_GetLocalListVersionNewListVersionNumber(t *testing.T) {
 
 	runConcurrent(t, raceWorkers, raceIterations, func(worker int, iteration int) error {
 		value := (worker + iteration) % 10
-		_, err := gllt.NewListVersionNumber(value)
+		_, err := types.NewListVersionNumber(value)
 		if err != nil {
 			return fmt.Errorf("getlocallistversion/types.NewListVersionNumber: %w", err)
 		}
@@ -49,10 +44,10 @@ func TestRace_GetLocalListVersionNewListVersionNumber(t *testing.T) {
 func TestRace_SendLocalListNewAuthorizationData(t *testing.T) {
 	t.Parallel()
 
-	input := slt.AuthorizationDataInput{IdTag: "TAG-1", IdTagInfo: nil}
+	input := types.AuthorizationDataInput{IdTag: "TAG-1", IdTagInfo: nil}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
-		_, err := slt.NewAuthorizationData(input)
+		_, err := types.NewAuthorizationData(input)
 		if err != nil {
 			return fmt.Errorf("sendlocallist/types.NewAuthorizationData: %w", err)
 		}
@@ -66,22 +61,22 @@ func TestRace_SetChargingProfileNewChargingProfile(t *testing.T) {
 	duration := 60
 	scheduleStart := "2025-01-02T15:00:00Z"
 	minChargingRate := 0.0
-	periods := []st.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
+	periods := []types.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
 
-	scheduleInput := st.ChargingScheduleInput{
+	scheduleInput := types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        &minChargingRate,
 		StartSchedule:          &scheduleStart,
 	}
 
-	input := scpt.ChargingProfileInput{
+	input := types.ChargingProfileInput{
 		ChargingProfileId:      1,
 		TransactionId:          nil,
 		StackLevel:             0,
-		ChargingProfilePurpose: st.TxProfile.String(),
-		ChargingProfileKind:    scpt.ChargingProfileKindAbsolute.String(),
+		ChargingProfilePurpose: types.TxProfile.String(),
+		ChargingProfileKind:    types.ChargingProfileKindAbsolute.String(),
 		RecurrencyKind:         nil,
 		ValidFrom:              nil,
 		ValidTo:                nil,
@@ -89,7 +84,7 @@ func TestRace_SetChargingProfileNewChargingProfile(t *testing.T) {
 	}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
-		_, err := scpt.NewChargingProfile(input)
+		_, err := types.NewChargingProfile(input)
 		if err != nil {
 			return fmt.Errorf("setchargingprofile/types.NewChargingProfile: %w", err)
 		}
@@ -100,10 +95,10 @@ func TestRace_SetChargingProfileNewChargingProfile(t *testing.T) {
 func TestRace_MeterValuesTypesNewSampledValue(t *testing.T) {
 	t.Parallel()
 
-	input := mvt.SampledValueInput{Value: "100"}
+	input := types.SampledValueInput{Value: "100"}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
-		_, err := mvt.NewSampledValue(input)
+		_, err := types.NewSampledValue(input)
 		if err != nil {
 			return fmt.Errorf("metervalues/types.NewSampledValue: %w", err)
 		}
@@ -114,14 +109,14 @@ func TestRace_MeterValuesTypesNewSampledValue(t *testing.T) {
 func TestRace_MeterValuesTypesNewMeterValue(t *testing.T) {
 	t.Parallel()
 
-	sampledValues := []mvt.SampledValueInput{{Value: "100"}}
-	input := mvt.MeterValueInput{
+	sampledValues := []types.SampledValueInput{{Value: "100"}}
+	input := types.MeterValueInput{
 		Timestamp:    "2025-01-02T15:00:00Z",
 		SampledValue: sampledValues,
 	}
 
 	runConcurrent(t, raceWorkers, raceIterations, func(_, _ int) error {
-		_, err := mvt.NewMeterValue(input)
+		_, err := types.NewMeterValue(input)
 		if err != nil {
 			return fmt.Errorf("metervalues/types.NewMeterValue: %w", err)
 		}

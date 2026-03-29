@@ -4,8 +4,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/getlocallistversion"
-	mt "github.com/aasanchez/ocpp16messages/getlocallistversion/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -22,12 +21,12 @@ func TestConf_Valid_PositiveVersion(t *testing.T) {
 		ListVersion: testVersionPositive,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.ListVersion.Value() != testVersionPositive {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			testVersionPositive,
 			conf.ListVersion.Value(),
 		)
@@ -41,13 +40,13 @@ func TestConf_Valid_UnsupportedVersion(t *testing.T) {
 		ListVersion: testVersionUnsupport,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.ListVersion.Value() != mt.ListVersionUnsupported {
+	if conf.ListVersion.Value() != types.ListVersionUnsupported {
 		t.Errorf(
-			st.ErrorMismatchValue,
-			mt.ListVersionUnsupported,
+			types.ErrorMismatchValue,
+			types.ListVersionUnsupported,
 			conf.ListVersion.Value(),
 		)
 	}
@@ -64,13 +63,13 @@ func TestConf_Valid_EmptyListVersion(t *testing.T) {
 		ListVersion: testVersionEmpty,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.ListVersion.Value() != mt.ListVersionEmpty {
+	if conf.ListVersion.Value() != types.ListVersionEmpty {
 		t.Errorf(
-			st.ErrorMismatchValue,
-			mt.ListVersionEmpty,
+			types.ErrorMismatchValue,
+			types.ListVersionEmpty,
 			conf.ListVersion.Value(),
 		)
 	}
@@ -87,12 +86,12 @@ func TestConf_Valid_ZeroValue(t *testing.T) {
 		ListVersion: testVersionEmpty,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.ListVersion.Value() != testVersionEmpty {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			testVersionEmpty,
 			conf.ListVersion.Value(),
 		)

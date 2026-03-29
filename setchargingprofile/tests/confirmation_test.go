@@ -5,8 +5,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/setchargingprofile"
-	spt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
-	"github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const errStatus = "status"
@@ -21,10 +20,10 @@ func TestConf_Valid_Accepted(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != spt.ChargingProfileStatusAccepted {
+	if conf.Status != types.ChargingProfileStatusAccepted {
 		t.Errorf(
 			types.ErrorMismatch,
-			spt.ChargingProfileStatusAccepted,
+			types.ChargingProfileStatusAccepted,
 			conf.Status,
 		)
 	}
@@ -40,10 +39,10 @@ func TestConf_Valid_Rejected(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != spt.ChargingProfileStatusRejected {
+	if conf.Status != types.ChargingProfileStatusRejected {
 		t.Errorf(
 			types.ErrorMismatch,
-			spt.ChargingProfileStatusRejected,
+			types.ChargingProfileStatusRejected,
 			conf.Status,
 		)
 	}
@@ -59,10 +58,10 @@ func TestConf_Valid_NotSupported(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != spt.ChargingProfileStatusNotSupported {
+	if conf.Status != types.ChargingProfileStatusNotSupported {
 		t.Errorf(
 			types.ErrorMismatch,
-			spt.ChargingProfileStatusNotSupported,
+			types.ChargingProfileStatusNotSupported,
 			conf.Status,
 		)
 	}

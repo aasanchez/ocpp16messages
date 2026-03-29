@@ -7,13 +7,12 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/reset"
-	rt "github.com/aasanchez/ocpp16messages/reset/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzResetReq(f *testing.F) {
-	f.Add(rt.ResetTypeHard.String())
-	f.Add(rt.ResetTypeSoft.String())
+	f.Add(types.ResetTypeHard.String())
+	f.Add(types.ResetTypeSoft.String())
 	f.Add("bad-type")
 
 	f.Fuzz(func(t *testing.T, resetType string) {
@@ -25,7 +24,7 @@ func FuzzResetReq(f *testing.F) {
 			Type: resetType,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

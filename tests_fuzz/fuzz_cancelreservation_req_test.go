@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/cancelreservation"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzCancelReservationReq(f *testing.F) {
@@ -22,7 +22,7 @@ func FuzzCancelReservationReq(f *testing.F) {
 			ReservationId: reservationId,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

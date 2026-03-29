@@ -6,15 +6,14 @@ import (
 	"errors"
 	"testing"
 
-	st "github.com/aasanchez/ocpp16messages/types"
 	"github.com/aasanchez/ocpp16messages/unlockconnector"
-	ut "github.com/aasanchez/ocpp16messages/unlockconnector/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzUnlockConnectorConf(f *testing.F) {
-	f.Add(ut.UnlockStatusUnlocked.String())
-	f.Add(ut.UnlockStatusUnlockFailed.String())
-	f.Add(ut.UnlockStatusNotSupported.String())
+	f.Add(types.UnlockStatusUnlocked.String())
+	f.Add(types.UnlockStatusUnlockFailed.String())
+	f.Add(types.UnlockStatusNotSupported.String())
 	f.Add("bad-status")
 
 	f.Fuzz(func(t *testing.T, status string) {
@@ -26,7 +25,7 @@ func FuzzUnlockConnectorConf(f *testing.F) {
 			Status: status,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"testing"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzNewInteger(f *testing.F) {
@@ -21,9 +21,9 @@ func FuzzNewInteger(f *testing.F) {
 	f.Add(math.MinInt)
 
 	f.Fuzz(func(t *testing.T, value int) {
-		integer, err := st.NewInteger(value)
+		integer, err := types.NewInteger(value)
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

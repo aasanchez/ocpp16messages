@@ -5,8 +5,7 @@ import (
 	"testing"
 
 	cc "github.com/aasanchez/ocpp16messages/changeconfiguration"
-	cct "github.com/aasanchez/ocpp16messages/changeconfiguration/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -18,13 +17,13 @@ func TestConf_Valid_Accepted(t *testing.T) {
 
 	conf, err := cc.Conf(cc.ConfInput{Status: "Accepted"})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != cct.ConfigurationStatusAccepted {
+	if conf.Status != types.ConfigurationStatusAccepted {
 		t.Errorf(
-			st.ErrorMismatch,
-			cct.ConfigurationStatusAccepted,
+			types.ErrorMismatch,
+			types.ConfigurationStatusAccepted,
 			conf.Status,
 		)
 	}
@@ -35,13 +34,13 @@ func TestConf_Valid_Rejected(t *testing.T) {
 
 	conf, err := cc.Conf(cc.ConfInput{Status: "Rejected"})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != cct.ConfigurationStatusRejected {
+	if conf.Status != types.ConfigurationStatusRejected {
 		t.Errorf(
-			st.ErrorMismatch,
-			cct.ConfigurationStatusRejected,
+			types.ErrorMismatch,
+			types.ConfigurationStatusRejected,
 			conf.Status,
 		)
 	}
@@ -52,13 +51,13 @@ func TestConf_Valid_RebootRequired(t *testing.T) {
 
 	conf, err := cc.Conf(cc.ConfInput{Status: "RebootRequired"})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != cct.ConfigurationStatusRebootRequired {
+	if conf.Status != types.ConfigurationStatusRebootRequired {
 		t.Errorf(
-			st.ErrorMismatch,
-			cct.ConfigurationStatusRebootRequired,
+			types.ErrorMismatch,
+			types.ConfigurationStatusRebootRequired,
 			conf.Status,
 		)
 	}
@@ -69,13 +68,13 @@ func TestConf_Valid_NotSupported(t *testing.T) {
 
 	conf, err := cc.Conf(cc.ConfInput{Status: "NotSupported"})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != cct.ConfigurationStatusNotSupported {
+	if conf.Status != types.ConfigurationStatusNotSupported {
 		t.Errorf(
-			st.ErrorMismatch,
-			cct.ConfigurationStatusNotSupported,
+			types.ErrorMismatch,
+			types.ConfigurationStatusNotSupported,
 			conf.Status,
 		)
 	}
@@ -86,11 +85,11 @@ func TestConf_EmptyStatus(t *testing.T) {
 
 	_, err := cc.Conf(cc.ConfInput{Status: ""})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty status")
+		t.Errorf(types.ErrorWantNil, "empty status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -99,11 +98,11 @@ func TestConf_InvalidStatus_Unknown(t *testing.T) {
 
 	_, err := cc.Conf(cc.ConfInput{Status: "Unknown"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "unknown status")
+		t.Errorf(types.ErrorWantNil, "unknown status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -112,11 +111,11 @@ func TestConf_InvalidStatus_Lowercase(t *testing.T) {
 
 	_, err := cc.Conf(cc.ConfInput{Status: "accepted"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "lowercase status")
+		t.Errorf(types.ErrorWantNil, "lowercase status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -125,10 +124,10 @@ func TestConf_InvalidStatus_Scheduled(t *testing.T) {
 
 	_, err := cc.Conf(cc.ConfInput{Status: "Scheduled"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "Scheduled (invalid for ChangeConfiguration)")
+		t.Errorf(types.ErrorWantNil, "Scheduled (invalid for ChangeConfiguration)")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }

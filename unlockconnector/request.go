@@ -3,7 +3,7 @@ package unlockconnector
 import (
 	"fmt"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -20,7 +20,7 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 UnlockConnector.req message.
 type ReqMessage struct {
-	ConnectorId st.Integer
+	ConnectorId types.Integer
 }
 
 // Req creates an UnlockConnector.req message from the given input.
@@ -31,10 +31,10 @@ type ReqMessage struct {
 // itself, not a physical connector.
 func Req(input ReqInput) (ReqMessage, error) {
 	if input.ConnectorId <= connectorIdMinValue {
-		return ReqMessage{}, fmt.Errorf("connectorId: %w", st.ErrInvalidValue)
+		return ReqMessage{}, fmt.Errorf("connectorId: %w", types.ErrInvalidValue)
 	}
 
-	connectorId, err := st.NewInteger(input.ConnectorId)
+	connectorId, err := types.NewInteger(input.ConnectorId)
 	if err != nil {
 		return ReqMessage{}, fmt.Errorf("connectorId: %w", err)
 	}

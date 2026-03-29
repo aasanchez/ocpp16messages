@@ -7,13 +7,12 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/clearchargingprofile"
-	ct "github.com/aasanchez/ocpp16messages/clearchargingprofile/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzClearChargingProfileConf(f *testing.F) {
-	f.Add(ct.ClearChargingProfileStatusAccepted.String())
-	f.Add(ct.ClearChargingProfileStatusUnknown.String())
+	f.Add(types.ClearChargingProfileStatusAccepted.String())
+	f.Add(types.ClearChargingProfileStatusUnknown.String())
 	f.Add("bad-status")
 
 	f.Fuzz(func(t *testing.T, status string) {
@@ -25,7 +24,7 @@ func FuzzClearChargingProfileConf(f *testing.F) {
 			Status: status,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

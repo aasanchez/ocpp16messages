@@ -8,8 +8,7 @@ import (
 	"strconv"
 	"time"
 
-	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -58,11 +57,11 @@ type primitiveGetConfigurationReq struct {
 	Key []string
 }
 
-func makeAuthorizationInputs(size int) []slt.AuthorizationDataInput {
-	entries := make([]slt.AuthorizationDataInput, 0, size)
+func makeAuthorizationInputs(size int) []types.AuthorizationDataInput {
+	entries := make([]types.AuthorizationDataInput, 0, size)
 
 	for index := 0; index < size; index++ {
-		entries = append(entries, slt.AuthorizationDataInput{
+		entries = append(entries, types.AuthorizationDataInput{
 			IdTag: "TAG-" + strconv.Itoa(index),
 		})
 	}
@@ -105,7 +104,7 @@ func validatePrimitiveCiString20(value string) error {
 		return errPrimitiveEmpty
 	}
 
-	if len(value) > st.CiString20Max {
+	if len(value) > types.CiString20Max {
 		return errPrimitiveTooLong
 	}
 
@@ -124,7 +123,7 @@ func validatePrimitiveCiString50(value string) error {
 		return errPrimitiveEmpty
 	}
 
-	if len(value) > st.CiString50Max {
+	if len(value) > types.CiString50Max {
 		return errPrimitiveTooLong
 	}
 
@@ -145,14 +144,14 @@ func validatePrimitiveTimestampUTC(value string) error {
 
 	timestamp, err := time.Parse(time.RFC3339, value)
 	if err != nil {
-		return fmt.Errorf("%w: %w", st.ErrInvalidValue, err)
+		return fmt.Errorf("%w: %w", types.ErrInvalidValue, err)
 	}
 
 	_, offset := timestamp.Zone()
 	if offset != 0 {
 		return fmt.Errorf(
 			"%w: expected UTC offset, got %s",
-			st.ErrInvalidValue,
+			types.ErrInvalidValue,
 			timestamp.Format("Z07:00"),
 		)
 	}
@@ -191,9 +190,9 @@ func validatePrimitiveSendLocalListReq(input primitiveSendLocalListReq) error {
 		return fmt.Errorf("listVersion: %w", err)
 	}
 
-	if input.UpdateType != slt.UpdateTypeFull.String() &&
-		input.UpdateType != slt.UpdateTypeDifferential.String() {
-		return fmt.Errorf("updateType: %w", st.ErrInvalidValue)
+	if input.UpdateType != types.UpdateTypeFull.String() &&
+		input.UpdateType != types.UpdateTypeDifferential.String() {
+		return fmt.Errorf("updateType: %w", types.ErrInvalidValue)
 	}
 
 	if input.LocalAuthorizationList == nil {

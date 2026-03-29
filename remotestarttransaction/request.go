@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -25,8 +25,8 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 RemoteStartTransaction.req message.
 type ReqMessage struct {
-	IdTag       st.CiString20Type
-	ConnectorId *st.Integer
+	IdTag       types.CiString20Type
+	ConnectorId *types.Integer
 }
 
 // Req creates a RemoteStartTransaction.req message from the given input.
@@ -39,12 +39,12 @@ type ReqMessage struct {
 func Req(input ReqInput) (ReqMessage, error) {
 	var errs []error
 
-	idTag, err := st.NewCiString20Type(input.IdTag)
+	idTag, err := types.NewCiString20Type(input.IdTag)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("idTag: %w", err))
 	}
 
-	var connectorId *st.Integer
+	var connectorId *types.Integer
 
 	if input.ConnectorId != nil {
 		connectorId, errs = validateConnectorId(*input.ConnectorId, errs)
@@ -61,8 +61,8 @@ func Req(input ReqInput) (ReqMessage, error) {
 }
 
 // validateConnectorId validates the connectorId field.
-func validateConnectorId(connectorId int, errs []error) (*st.Integer, []error) {
-	val, err := st.NewInteger(connectorId)
+func validateConnectorId(connectorId int, errs []error) (*types.Integer, []error) {
+	val, err := types.NewInteger(connectorId)
 	if err != nil {
 		return nil, append(errs, fmt.Errorf("connectorId: %w", err))
 	}

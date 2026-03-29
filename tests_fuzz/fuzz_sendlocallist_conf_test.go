@@ -7,15 +7,14 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/sendlocallist"
-	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzSendLocalListConf(f *testing.F) {
-	f.Add(slt.UpdateStatusAccepted.String())
-	f.Add(slt.UpdateStatusFailed.String())
-	f.Add(slt.UpdateStatusNotSupported.String())
-	f.Add(slt.UpdateStatusVersionMismatch.String())
+	f.Add(types.UpdateStatusAccepted.String())
+	f.Add(types.UpdateStatusFailed.String())
+	f.Add(types.UpdateStatusNotSupported.String())
+	f.Add(types.UpdateStatusVersionMismatch.String())
 	f.Add("bad-status")
 
 	f.Fuzz(func(t *testing.T, status string) {
@@ -27,7 +26,7 @@ func FuzzSendLocalListConf(f *testing.F) {
 			Status: status,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

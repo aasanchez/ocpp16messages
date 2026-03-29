@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/statusnotification"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -37,19 +37,19 @@ func TestReq_Valid(t *testing.T) {
 		VendorErrorCode: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId.Value() != testConnectorIdOne {
-		t.Errorf(st.ErrorMismatch, testConnectorIdOne, req.ConnectorId.Value())
+		t.Errorf(types.ErrorMismatch, testConnectorIdOne, req.ConnectorId.Value())
 	}
 
 	if req.ErrorCode.String() != testErrorCodeNoError {
-		t.Errorf(st.ErrorMismatch, testErrorCodeNoError, req.ErrorCode.String())
+		t.Errorf(types.ErrorMismatch, testErrorCodeNoError, req.ErrorCode.String())
 	}
 
 	if req.Status.String() != testStatusAvailable {
-		t.Errorf(st.ErrorMismatch, testStatusAvailable, req.Status.String())
+		t.Errorf(types.ErrorMismatch, testStatusAvailable, req.Status.String())
 	}
 }
 
@@ -66,11 +66,11 @@ func TestReq_ValidConnectorIdZero(t *testing.T) {
 		VendorErrorCode: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId.Value() != testConnectorIdZero {
-		t.Errorf(st.ErrorMismatch, testConnectorIdZero, req.ConnectorId.Value())
+		t.Errorf(types.ErrorMismatch, testConnectorIdZero, req.ConnectorId.Value())
 	}
 }
 
@@ -87,11 +87,11 @@ func TestReq_ValidCharging(t *testing.T) {
 		VendorErrorCode: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Status.String() != testStatusCharging {
-		t.Errorf(st.ErrorMismatch, testStatusCharging, req.Status.String())
+		t.Errorf(types.ErrorMismatch, testStatusCharging, req.Status.String())
 	}
 }
 
@@ -110,7 +110,7 @@ func TestReq_ValidWithInfo(t *testing.T) {
 		VendorErrorCode: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Info == nil {
@@ -118,7 +118,7 @@ func TestReq_ValidWithInfo(t *testing.T) {
 	}
 
 	if req.Info.Value() != info {
-		t.Errorf(st.ErrorMismatch, info, req.Info.Value())
+		t.Errorf(types.ErrorMismatch, info, req.Info.Value())
 	}
 }
 
@@ -137,7 +137,7 @@ func TestReq_ValidWithTimestamp(t *testing.T) {
 		VendorErrorCode: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Timestamp == nil {
@@ -161,7 +161,7 @@ func TestReq_ValidWithVendorFields(t *testing.T) {
 		VendorErrorCode: &vendorErrorCode,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.VendorId == nil {
@@ -173,7 +173,7 @@ func TestReq_ValidWithVendorFields(t *testing.T) {
 	}
 
 	if req.VendorId.Value() != vendorId {
-		t.Errorf(st.ErrorMismatch, vendorId, req.VendorId.Value())
+		t.Errorf(types.ErrorMismatch, vendorId, req.VendorId.Value())
 	}
 }
 
@@ -194,7 +194,7 @@ func TestReq_ConnectorIdNegative(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errFieldConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errFieldConnectorId)
 	}
 }
 
@@ -214,12 +214,12 @@ func TestReq_InvalidStatus(t *testing.T) {
 		t.Error("Req() error = nil, want error for invalid status")
 	}
 
-	if !errors.Is(err, st.ErrInvalidValue) {
+	if !errors.Is(err, types.ErrInvalidValue) {
 		t.Errorf(errWantInvalidValue, err)
 	}
 
 	if !strings.Contains(err.Error(), errFieldStatus) {
-		t.Errorf(st.ErrorWantContains, err, errFieldStatus)
+		t.Errorf(types.ErrorWantContains, err, errFieldStatus)
 	}
 }
 
@@ -239,7 +239,7 @@ func TestReq_EmptyStatus(t *testing.T) {
 		t.Error("Req() error = nil, want error for empty status")
 	}
 
-	if !errors.Is(err, st.ErrInvalidValue) {
+	if !errors.Is(err, types.ErrInvalidValue) {
 		t.Errorf(errWantInvalidValue, err)
 	}
 }
@@ -260,12 +260,12 @@ func TestReq_InvalidErrorCode(t *testing.T) {
 		t.Error("Req() error = nil, want error for invalid errorCode")
 	}
 
-	if !errors.Is(err, st.ErrInvalidValue) {
+	if !errors.Is(err, types.ErrInvalidValue) {
 		t.Errorf(errWantInvalidValue, err)
 	}
 
 	if !strings.Contains(err.Error(), errFieldErrorCode) {
-		t.Errorf(st.ErrorWantContains, err, errFieldErrorCode)
+		t.Errorf(types.ErrorWantContains, err, errFieldErrorCode)
 	}
 }
 
@@ -285,7 +285,7 @@ func TestReq_EmptyErrorCode(t *testing.T) {
 		t.Error("Req() error = nil, want error for empty errorCode")
 	}
 
-	if !errors.Is(err, st.ErrInvalidValue) {
+	if !errors.Is(err, types.ErrInvalidValue) {
 		t.Errorf(errWantInvalidValue, err)
 	}
 }
@@ -309,7 +309,7 @@ func TestReq_InvalidTimestamp(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldTimestamp) {
-		t.Errorf(st.ErrorWantContains, err, errFieldTimestamp)
+		t.Errorf(types.ErrorWantContains, err, errFieldTimestamp)
 	}
 }
 
@@ -333,7 +333,7 @@ func TestReq_InfoTooLong(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldInfo) {
-		t.Errorf(st.ErrorWantContains, err, errFieldInfo)
+		t.Errorf(types.ErrorWantContains, err, errFieldInfo)
 	}
 }
 
@@ -358,19 +358,19 @@ func TestReq_MultipleErrors(t *testing.T) {
 	errStr := err.Error()
 
 	if !strings.Contains(errStr, errFieldConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errFieldConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errFieldConnectorId)
 	}
 
 	if !strings.Contains(errStr, errFieldErrorCode) {
-		t.Errorf(st.ErrorWantContains, err, errFieldErrorCode)
+		t.Errorf(types.ErrorWantContains, err, errFieldErrorCode)
 	}
 
 	if !strings.Contains(errStr, errFieldStatus) {
-		t.Errorf(st.ErrorWantContains, err, errFieldStatus)
+		t.Errorf(types.ErrorWantContains, err, errFieldStatus)
 	}
 
 	if !strings.Contains(errStr, errFieldTimestamp) {
-		t.Errorf(st.ErrorWantContains, err, errFieldTimestamp)
+		t.Errorf(types.ErrorWantContains, err, errFieldTimestamp)
 	}
 }
 
@@ -404,7 +404,7 @@ func TestReq_AllStatuses(t *testing.T) {
 		}
 
 		if req.Status.String() != status {
-			t.Errorf(st.ErrorMismatch, status, req.Status.String())
+			t.Errorf(types.ErrorMismatch, status, req.Status.String())
 		}
 	}
 }
@@ -446,7 +446,7 @@ func TestReq_AllErrorCodes(t *testing.T) {
 		}
 
 		if req.ErrorCode.String() != errorCode {
-			t.Errorf(st.ErrorMismatch, errorCode, req.ErrorCode.String())
+			t.Errorf(types.ErrorMismatch, errorCode, req.ErrorCode.String())
 		}
 	}
 }
@@ -471,7 +471,7 @@ func TestReq_InvalidVendorId(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), "vendorId") {
-		t.Errorf(st.ErrorWantContains, err, "vendorId")
+		t.Errorf(types.ErrorWantContains, err, "vendorId")
 	}
 }
 
@@ -495,6 +495,6 @@ func TestReq_InvalidVendorErrorCode(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), "vendorErrorCode") {
-		t.Errorf(st.ErrorWantContains, err, "vendorErrorCode")
+		t.Errorf(types.ErrorWantContains, err, "vendorErrorCode")
 	}
 }

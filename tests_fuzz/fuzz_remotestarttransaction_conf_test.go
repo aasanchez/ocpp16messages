@@ -7,13 +7,12 @@ import (
 	"testing"
 
 	rst "github.com/aasanchez/ocpp16messages/remotestarttransaction"
-	rtt "github.com/aasanchez/ocpp16messages/remotestarttransaction/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzRemoteStartTransactionConf(f *testing.F) {
-	f.Add(rtt.RemoteStartTransactionStatusAccepted.String())
-	f.Add(rtt.RemoteStartTransactionStatusRejected.String())
+	f.Add(types.RemoteStartTransactionStatusAccepted.String())
+	f.Add(types.RemoteStartTransactionStatusRejected.String())
 	f.Add("")
 	f.Add("invalid-status")
 
@@ -24,7 +23,7 @@ func FuzzRemoteStartTransactionConf(f *testing.F) {
 
 		conf, err := rst.Conf(rst.ConfInput{Status: status})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

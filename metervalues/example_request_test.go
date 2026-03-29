@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/aasanchez/ocpp16messages/metervalues"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -22,10 +22,10 @@ func ExampleReq() {
 	input := metervalues.ReqInput{
 		ConnectorId:   exampleConnectorId,
 		TransactionId: nil,
-		MeterValue: []st.MeterValueInput{
+		MeterValue: []types.MeterValueInput{
 			{
 				Timestamp: exampleTimestamp,
-				SampledValue: []st.SampledValueInput{
+				SampledValue: []types.SampledValueInput{
 					{
 						Value:     exampleValue,
 						Context:   nil,
@@ -62,10 +62,10 @@ func ExampleReq_withTransactionId() {
 	input := metervalues.ReqInput{
 		ConnectorId:   exampleConnectorId,
 		TransactionId: &transactionId,
-		MeterValue: []st.MeterValueInput{
+		MeterValue: []types.MeterValueInput{
 			{
 				Timestamp: exampleTimestamp,
-				SampledValue: []st.SampledValueInput{
+				SampledValue: []types.SampledValueInput{
 					{
 						Value:     exampleValue,
 						Context:   nil,
@@ -107,10 +107,10 @@ func ExampleReq_withOptionalFields() {
 	input := metervalues.ReqInput{
 		ConnectorId:   exampleConnectorId,
 		TransactionId: nil,
-		MeterValue: []st.MeterValueInput{
+		MeterValue: []types.MeterValueInput{
 			{
 				Timestamp: exampleTimestamp,
-				SampledValue: []st.SampledValueInput{
+				SampledValue: []types.SampledValueInput{
 					{
 						Value:     exampleValue,
 						Context:   &context,
@@ -144,7 +144,7 @@ func ExampleReq_emptyMeterValue() {
 	input := metervalues.ReqInput{
 		ConnectorId:   exampleConnectorId,
 		TransactionId: nil,
-		MeterValue:    []st.MeterValueInput{},
+		MeterValue:    []types.MeterValueInput{},
 	}
 
 	_, err := metervalues.Req(input)

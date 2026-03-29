@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	dt "github.com/aasanchez/ocpp16messages/datatransfer"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func TestRace_ChargingSchedulePeriodIsolatedFromMutation(t *testing.T) {
@@ -16,13 +16,13 @@ func TestRace_ChargingSchedulePeriodIsolatedFromMutation(t *testing.T) {
 	duration := 60
 	startSchedule := "2025-01-02T15:00:00Z"
 	minChargingRate := 0.0
-	periods := []st.ChargingSchedulePeriodInput{
+	periods := []types.ChargingSchedulePeriodInput{
 		{StartPeriod: 0, Limit: 16},
 	}
 
-	schedule, err := st.NewChargingSchedule(st.ChargingScheduleInput{
+	schedule, err := types.NewChargingSchedule(types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        &minChargingRate,
 		StartSchedule:          &startSchedule,
@@ -31,8 +31,8 @@ func TestRace_ChargingSchedulePeriodIsolatedFromMutation(t *testing.T) {
 		t.Fatalf("NewChargingSchedule: %v", err)
 	}
 
-	alternatePeriod, err := st.NewChargingSchedulePeriod(
-		st.ChargingSchedulePeriodInput{
+	alternatePeriod, err := types.NewChargingSchedulePeriod(
+		types.ChargingSchedulePeriodInput{
 			StartPeriod: 0,
 			Limit:       1,
 		},
@@ -64,13 +64,13 @@ func TestRace_ChargingScheduleMinChargingRateIsolatedFromInputPointer(t *testing
 
 	duration := 60
 	minChargingRate := 1.0
-	periods := []st.ChargingSchedulePeriodInput{
+	periods := []types.ChargingSchedulePeriodInput{
 		{StartPeriod: 0, Limit: 16},
 	}
 
-	schedule, err := st.NewChargingSchedule(st.ChargingScheduleInput{
+	schedule, err := types.NewChargingSchedule(types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        &minChargingRate,
 		StartSchedule:          nil,
@@ -105,13 +105,13 @@ func TestRace_ChargingScheduleMinChargingRateGetterReturnsCopy(t *testing.T) {
 
 	duration := 60
 	minChargingRate := 1.0
-	periods := []st.ChargingSchedulePeriodInput{
+	periods := []types.ChargingSchedulePeriodInput{
 		{StartPeriod: 0, Limit: 16},
 	}
 
-	schedule, err := st.NewChargingSchedule(st.ChargingScheduleInput{
+	schedule, err := types.NewChargingSchedule(types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        &minChargingRate,
 		StartSchedule:          nil,

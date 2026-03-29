@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -22,7 +22,7 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 GetConfiguration.req message.
 type ReqMessage struct {
-	Key []st.CiString50Type
+	Key []types.CiString50Type
 }
 
 // Req creates a GetConfiguration.req message from the given input.
@@ -37,10 +37,10 @@ func Req(input ReqInput) (ReqMessage, error) {
 
 	var errs []error
 
-	var keys []st.CiString50Type
+	var keys []types.CiString50Type
 
 	for i, keyStr := range input.Key {
-		key, err := st.NewCiString50Type(keyStr)
+		key, err := types.NewCiString50Type(keyStr)
 		if err != nil {
 			errs = append(errs, fmt.Errorf("key[%d]: %w", i, err))
 		} else {

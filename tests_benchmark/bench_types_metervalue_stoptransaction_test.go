@@ -6,9 +6,8 @@ import (
 	"testing"
 
 	mv "github.com/aasanchez/ocpp16messages/metervalues"
-	mt "github.com/aasanchez/ocpp16messages/metervalues/types"
 	stp "github.com/aasanchez/ocpp16messages/stoptransaction"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -22,7 +21,7 @@ func BenchmarkNewDateTime(b *testing.B) {
 	b.ReportAllocs()
 
 	for i := 0; i < b.N; i++ {
-		if _, err := st.NewDateTime(sampleTimestamp); err != nil {
+		if _, err := types.NewDateTime(sampleTimestamp); err != nil {
 			b.Fatal(err)
 		}
 	}
@@ -31,7 +30,7 @@ func BenchmarkNewDateTime(b *testing.B) {
 func BenchmarkDateTimeString(b *testing.B) {
 	b.ReportAllocs()
 
-	dt, _ := st.NewDateTime(sampleTimestamp)
+	dt, _ := types.NewDateTime(sampleTimestamp)
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -46,7 +45,7 @@ func BenchmarkNewSampledValue(b *testing.B) {
 	unit := unitWh
 	ctx := "Sample.Periodic"
 
-	input := st.SampledValueInput{
+	input := types.SampledValueInput{
 		Value:     sampleValue,
 		Context:   &ctx,
 		Measurand: &measurand,
@@ -54,7 +53,7 @@ func BenchmarkNewSampledValue(b *testing.B) {
 	}
 
 	for i := 0; i < b.N; i++ {
-		if _, err := st.NewSampledValue(input); err != nil {
+		if _, err := types.NewSampledValue(input); err != nil {
 			b.Fatal(err)
 		}
 	}
@@ -63,15 +62,15 @@ func BenchmarkNewSampledValue(b *testing.B) {
 func BenchmarkNewMeterValue_Single(b *testing.B) {
 	b.ReportAllocs()
 
-	input := st.MeterValueInput{
+	input := types.MeterValueInput{
 		Timestamp: sampleTimestamp,
-		SampledValue: []st.SampledValueInput{
+		SampledValue: []types.SampledValueInput{
 			{Value: sampleValue},
 		},
 	}
 
 	for i := 0; i < b.N; i++ {
-		if _, err := st.NewMeterValue(input); err != nil {
+		if _, err := types.NewMeterValue(input); err != nil {
 			b.Fatal(err)
 		}
 	}
@@ -80,20 +79,20 @@ func BenchmarkNewMeterValue_Single(b *testing.B) {
 func BenchmarkNewMeterValue_ManySampled(b *testing.B) {
 	b.ReportAllocs()
 
-	var samples []st.SampledValueInput
+	var samples []types.SampledValueInput
 	for i := 0; i < 10; i++ {
-		samples = append(samples, st.SampledValueInput{
+		samples = append(samples, types.SampledValueInput{
 			Value: sampleValue,
 		})
 	}
 
-	input := st.MeterValueInput{
+	input := types.MeterValueInput{
 		Timestamp:    sampleTimestamp,
 		SampledValue: samples,
 	}
 
 	for i := 0; i < b.N; i++ {
-		if _, err := st.NewMeterValue(input); err != nil {
+		if _, err := types.NewMeterValue(input); err != nil {
 			b.Fatal(err)
 		}
 	}
@@ -104,10 +103,10 @@ func BenchmarkMeterValuesReq_SingleValue(b *testing.B) {
 
 	reqInput := mv.ReqInput{
 		ConnectorId: 1,
-		MeterValue: []st.MeterValueInput{
+		MeterValue: []types.MeterValueInput{
 			{
 				Timestamp: sampleTimestamp,
-				SampledValue: []st.SampledValueInput{
+				SampledValue: []types.SampledValueInput{
 					{Value: sampleValue},
 				},
 			},
@@ -124,16 +123,16 @@ func BenchmarkMeterValuesReq_SingleValue(b *testing.B) {
 func BenchmarkMeterValuesReq_ManySampledValues(b *testing.B) {
 	b.ReportAllocs()
 
-	var samples []st.SampledValueInput
+	var samples []types.SampledValueInput
 	for i := 0; i < 10; i++ {
-		samples = append(samples, st.SampledValueInput{
+		samples = append(samples, types.SampledValueInput{
 			Value: sampleValue,
 		})
 	}
 
 	reqInput := mv.ReqInput{
 		ConnectorId: 1,
-		MeterValue: []st.MeterValueInput{
+		MeterValue: []types.MeterValueInput{
 			{
 				Timestamp:    sampleTimestamp,
 				SampledValue: samples,
@@ -152,7 +151,7 @@ func BenchmarkNewCiString25Type(b *testing.B) {
 	const sample = "RFID-ABC1234567890123"
 
 	for i := 0; i < b.N; i++ {
-		if _, err := st.NewCiString25Type(sample); err != nil {
+		if _, err := types.NewCiString25Type(sample); err != nil {
 			b.Fatal(err)
 		}
 	}
@@ -162,7 +161,7 @@ func BenchmarkNewCiString50Type(b *testing.B) {
 	const sample = "RFID-ABC1234567890123456789012345678901234567890"
 
 	for i := 0; i < b.N; i++ {
-		if _, err := st.NewCiString50Type(sample); err != nil {
+		if _, err := types.NewCiString50Type(sample); err != nil {
 			b.Fatal(err)
 		}
 	}
@@ -175,7 +174,7 @@ func BenchmarkNewCiString255Type(b *testing.B) {
 	}
 
 	for i := 0; i < b.N; i++ {
-		if _, err := st.NewCiString255Type(string(long)); err != nil {
+		if _, err := types.NewCiString255Type(string(long)); err != nil {
 			b.Fatal(err)
 		}
 	}
@@ -184,11 +183,11 @@ func BenchmarkNewCiString255Type(b *testing.B) {
 func BenchmarkNewIdToken(b *testing.B) {
 	b.ReportAllocs()
 
-	ci, _ := st.NewCiString20Type(ciStringSample)
+	ci, _ := types.NewCiString20Type(ciStringSample)
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_ = st.NewIdToken(ci)
+		_ = types.NewIdToken(ci)
 	}
 }
 
@@ -196,7 +195,7 @@ func BenchmarkNewIdTagInfo(b *testing.B) {
 	b.ReportAllocs()
 
 	for i := 0; i < b.N; i++ {
-		if _, err := st.NewIdTagInfo(st.AuthorizationStatusAccepted); err != nil {
+		if _, err := types.NewIdTagInfo(types.AuthorizationStatusAccepted); err != nil {
 			b.Fatal(err)
 		}
 	}
@@ -225,10 +224,10 @@ func BenchmarkStopTransactionReq_WithTransactionData(b *testing.B) {
 		TransactionId: 1,
 		MeterStop:     100,
 		Timestamp:     sampleTimestamp,
-		TransactionData: []mt.MeterValueInput{
+		TransactionData: []types.MeterValueInput{
 			{
 				Timestamp: sampleTimestamp,
-				SampledValue: []mt.SampledValueInput{
+				SampledValue: []types.SampledValueInput{
 					{Value: sampleValue},
 				},
 			},

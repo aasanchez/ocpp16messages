@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	st "github.com/aasanchez/ocpp16messages/types"
 	uf "github.com/aasanchez/ocpp16messages/updatefirmware"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzUpdateFirmwareReq(f *testing.F) {
@@ -48,7 +48,7 @@ func FuzzUpdateFirmwareReq(f *testing.F) {
 			RetryInterval: retryIntervalPtr,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

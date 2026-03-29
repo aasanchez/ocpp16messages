@@ -9,15 +9,15 @@ import (
 	"time"
 
 	stt "github.com/aasanchez/ocpp16messages/starttransaction"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzStartTransactionConf(f *testing.F) {
-	f.Add(1, st.AuthorizationStatusAccepted.String(), false, "", false, "")
-	f.Add(-1, st.AuthorizationStatusAccepted.String(), false, "", false, "")
+	f.Add(1, types.AuthorizationStatusAccepted.String(), false, "", false, "")
+	f.Add(-1, types.AuthorizationStatusAccepted.String(), false, "", false, "")
 	f.Add(1, "invalid-status", false, "", false, "")
-	f.Add(1, st.AuthorizationStatusAccepted.String(), true, "bad-timestamp", false, "")
-	f.Add(1, st.AuthorizationStatusAccepted.String(), false, "", true, "")
+	f.Add(1, types.AuthorizationStatusAccepted.String(), true, "bad-timestamp", false, "")
+	f.Add(1, types.AuthorizationStatusAccepted.String(), false, "", true, "")
 
 	f.Fuzz(func(
 		t *testing.T,
@@ -51,7 +51,7 @@ func FuzzStartTransactionConf(f *testing.F) {
 			ParentIdTag:   parentIdTagPtr,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

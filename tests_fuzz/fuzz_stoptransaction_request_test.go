@@ -8,10 +8,8 @@ import (
 	"testing"
 	"time"
 
-	mt "github.com/aasanchez/ocpp16messages/metervalues/types"
 	stp "github.com/aasanchez/ocpp16messages/stoptransaction"
-	stt "github.com/aasanchez/ocpp16messages/stoptransaction/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzStopTransactionReq(f *testing.F) {
@@ -23,7 +21,7 @@ func FuzzStopTransactionReq(f *testing.F) {
 		true,
 		"RFID-ABC123",
 		true,
-		stt.ReasonLocal.String(),
+		types.ReasonLocal.String(),
 		uint8(2),
 	)
 	f.Add(-1, -1, "bad-timestamp", false, "", false, "", uint8(2))
@@ -57,18 +55,18 @@ func FuzzStopTransactionReq(f *testing.F) {
 			reasonPtr = &reason
 		}
 
-		var transactionData []mt.MeterValueInput
+		var transactionData []types.MeterValueInput
 
 		switch transactionDataMode % 3 {
 		case 0:
 			transactionData = nil
 		case 1:
-			transactionData = []mt.MeterValueInput{}
+			transactionData = []types.MeterValueInput{}
 		default:
-			transactionData = []mt.MeterValueInput{
+			transactionData = []types.MeterValueInput{
 				{
 					Timestamp: timestamp,
-					SampledValue: []mt.SampledValueInput{
+					SampledValue: []types.SampledValueInput{
 						{Value: "100"},
 					},
 				},
@@ -84,7 +82,7 @@ func FuzzStopTransactionReq(f *testing.F) {
 			TransactionData: transactionData,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

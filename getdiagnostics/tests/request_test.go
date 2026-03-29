@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	gd "github.com/aasanchez/ocpp16messages/getdiagnostics"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -51,11 +51,11 @@ func TestReq_Valid_RequiredFieldsOnly(t *testing.T) {
 		StopTime:      nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Location.Value() != validLocationValue {
-		t.Errorf(st.ErrorMismatch, validLocationValue, req.Location.Value())
+		t.Errorf(types.ErrorMismatch, validLocationValue, req.Location.Value())
 	}
 
 	if req.Retries != nil {
@@ -86,7 +86,7 @@ func TestReq_Valid_WithRetries(t *testing.T) {
 		StopTime:      nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Retries == nil {
@@ -94,7 +94,7 @@ func TestReq_Valid_WithRetries(t *testing.T) {
 	}
 
 	if req.Retries.Value() != valueThree {
-		t.Errorf(st.ErrorMismatchValue, valueThree, req.Retries.Value())
+		t.Errorf(types.ErrorMismatchValue, valueThree, req.Retries.Value())
 	}
 }
 
@@ -109,7 +109,7 @@ func TestReq_Valid_WithRetriesZero(t *testing.T) {
 		StopTime:      nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Retries == nil {
@@ -117,7 +117,7 @@ func TestReq_Valid_WithRetriesZero(t *testing.T) {
 	}
 
 	if req.Retries.Value() != valueZero {
-		t.Errorf(st.ErrorMismatchValue, valueZero, req.Retries.Value())
+		t.Errorf(types.ErrorMismatchValue, valueZero, req.Retries.Value())
 	}
 }
 
@@ -132,7 +132,7 @@ func TestReq_Valid_WithRetryInterval(t *testing.T) {
 		StopTime:      nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.RetryInterval == nil {
@@ -140,7 +140,7 @@ func TestReq_Valid_WithRetryInterval(t *testing.T) {
 	}
 
 	if req.RetryInterval.Value() != valueSixty {
-		t.Errorf(st.ErrorMismatchValue, valueSixty, req.RetryInterval.Value())
+		t.Errorf(types.ErrorMismatchValue, valueSixty, req.RetryInterval.Value())
 	}
 }
 
@@ -155,7 +155,7 @@ func TestReq_Valid_WithStartTime(t *testing.T) {
 		StopTime:      nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.StartTime == nil {
@@ -174,7 +174,7 @@ func TestReq_Valid_WithStopTime(t *testing.T) {
 		StopTime:      strPtr(validStopTimeValue),
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.StopTime == nil {
@@ -193,11 +193,11 @@ func TestReq_Valid_WithAllFields(t *testing.T) {
 		StopTime:      strPtr(validStopTimeValue),
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Location.Value() != validLocationValue {
-		t.Errorf(st.ErrorMismatch, validLocationValue, req.Location.Value())
+		t.Errorf(types.ErrorMismatch, validLocationValue, req.Location.Value())
 	}
 
 	if req.Retries == nil {
@@ -228,11 +228,11 @@ func TestReq_Invalid_EmptyLocation(t *testing.T) {
 		StopTime:      nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty Location")
+		t.Errorf(types.ErrorWantNil, "empty Location")
 	}
 
 	if !strings.Contains(err.Error(), errLocation) {
-		t.Errorf(st.ErrorWantContains, err, errLocation)
+		t.Errorf(types.ErrorWantContains, err, errLocation)
 	}
 }
 
@@ -247,11 +247,11 @@ func TestReq_Invalid_NegativeRetries(t *testing.T) {
 		StopTime:      nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "negative Retries")
+		t.Errorf(types.ErrorWantNil, "negative Retries")
 	}
 
 	if !strings.Contains(err.Error(), errRetries) {
-		t.Errorf(st.ErrorWantContains, err, errRetries)
+		t.Errorf(types.ErrorWantContains, err, errRetries)
 	}
 }
 
@@ -266,11 +266,11 @@ func TestReq_Invalid_RetriesExceedsMax(t *testing.T) {
 		StopTime:      nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "Retries exceeds max")
+		t.Errorf(types.ErrorWantNil, "Retries exceeds max")
 	}
 
 	if !strings.Contains(err.Error(), errRetries) {
-		t.Errorf(st.ErrorWantContains, err, errRetries)
+		t.Errorf(types.ErrorWantContains, err, errRetries)
 	}
 }
 
@@ -285,11 +285,11 @@ func TestReq_Invalid_NegativeRetryInterval(t *testing.T) {
 		StopTime:      nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "negative RetryInterval")
+		t.Errorf(types.ErrorWantNil, "negative RetryInterval")
 	}
 
 	if !strings.Contains(err.Error(), errRetryInterval) {
-		t.Errorf(st.ErrorWantContains, err, errRetryInterval)
+		t.Errorf(types.ErrorWantContains, err, errRetryInterval)
 	}
 }
 
@@ -304,11 +304,11 @@ func TestReq_Invalid_RetryIntervalExceedsMax(t *testing.T) {
 		StopTime:      nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "RetryInterval exceeds max")
+		t.Errorf(types.ErrorWantNil, "RetryInterval exceeds max")
 	}
 
 	if !strings.Contains(err.Error(), errRetryInterval) {
-		t.Errorf(st.ErrorWantContains, err, errRetryInterval)
+		t.Errorf(types.ErrorWantContains, err, errRetryInterval)
 	}
 }
 
@@ -323,11 +323,11 @@ func TestReq_Invalid_InvalidStartTime(t *testing.T) {
 		StopTime:      nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "invalid StartTime")
+		t.Errorf(types.ErrorWantNil, "invalid StartTime")
 	}
 
 	if !strings.Contains(err.Error(), errStartTime) {
-		t.Errorf(st.ErrorWantContains, err, errStartTime)
+		t.Errorf(types.ErrorWantContains, err, errStartTime)
 	}
 }
 
@@ -342,11 +342,11 @@ func TestReq_Invalid_InvalidStopTime(t *testing.T) {
 		StopTime:      strPtr(invalidTimeValue),
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "invalid StopTime")
+		t.Errorf(types.ErrorWantNil, "invalid StopTime")
 	}
 
 	if !strings.Contains(err.Error(), errStopTime) {
-		t.Errorf(st.ErrorWantContains, err, errStopTime)
+		t.Errorf(types.ErrorWantContains, err, errStopTime)
 	}
 }
 
@@ -361,26 +361,26 @@ func TestReq_Invalid_MultipleErrors(t *testing.T) {
 		StopTime:      strPtr(invalidTimeValue),
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "multiple invalid fields")
+		t.Errorf(types.ErrorWantNil, "multiple invalid fields")
 	}
 
 	if !strings.Contains(err.Error(), errLocation) {
-		t.Errorf(st.ErrorWantContains, err, errLocation)
+		t.Errorf(types.ErrorWantContains, err, errLocation)
 	}
 
 	if !strings.Contains(err.Error(), errRetries) {
-		t.Errorf(st.ErrorWantContains, err, errRetries)
+		t.Errorf(types.ErrorWantContains, err, errRetries)
 	}
 
 	if !strings.Contains(err.Error(), errRetryInterval) {
-		t.Errorf(st.ErrorWantContains, err, errRetryInterval)
+		t.Errorf(types.ErrorWantContains, err, errRetryInterval)
 	}
 
 	if !strings.Contains(err.Error(), errStartTime) {
-		t.Errorf(st.ErrorWantContains, err, errStartTime)
+		t.Errorf(types.ErrorWantContains, err, errStartTime)
 	}
 
 	if !strings.Contains(err.Error(), errStopTime) {
-		t.Errorf(st.ErrorWantContains, err, errStopTime)
+		t.Errorf(types.ErrorWantContains, err, errStopTime)
 	}
 }

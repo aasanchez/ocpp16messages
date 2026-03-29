@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (

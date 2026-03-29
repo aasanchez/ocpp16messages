@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const maxFuzzStringLen = 1024
@@ -59,13 +59,13 @@ func FuzzNewChargingSchedule(f *testing.F) {
 			numberPhasesPtr = &numberPhases
 		}
 
-		var periods []st.ChargingSchedulePeriodInput
+		var periods []types.ChargingSchedulePeriodInput
 		if hasPeriod {
 			if math.IsNaN(limit) || math.IsInf(limit, 0) {
 				t.Skip()
 			}
 
-			periods = []st.ChargingSchedulePeriodInput{
+			periods = []types.ChargingSchedulePeriodInput{
 				{
 					StartPeriod:  startPeriod,
 					Limit:        limit,
@@ -74,7 +74,7 @@ func FuzzNewChargingSchedule(f *testing.F) {
 			}
 		}
 
-		schedule, err := st.NewChargingSchedule(st.ChargingScheduleInput{
+		schedule, err := types.NewChargingSchedule(types.ChargingScheduleInput{
 			Duration:               durationPtr,
 			ChargingRateUnit:       chargingRateUnit,
 			ChargingSchedulePeriod: periods,
@@ -82,7 +82,7 @@ func FuzzNewChargingSchedule(f *testing.F) {
 			StartSchedule:          startSchedulePtr,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

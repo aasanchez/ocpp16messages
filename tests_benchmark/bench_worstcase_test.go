@@ -5,23 +5,21 @@ package benchmark
 import (
 	"testing"
 
-	mv "github.com/aasanchez/ocpp16messages/metervalues/types"
-	scpt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
 	stp "github.com/aasanchez/ocpp16messages/stoptransaction"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func BenchmarkNewSampledValue_AllOptionals(b *testing.B) {
 	b.ReportAllocs()
 
-	context := st.ReadingContextSamplePeriodic.String()
-	format := st.ValueFormatRaw.String()
-	measurand := st.MeasurandEnergyActiveImportRegister.String()
-	phase := st.PhaseL1.String()
-	location := st.LocationOutlet.String()
-	unit := st.UnitWh.String()
+	context := types.ReadingContextSamplePeriodic.String()
+	format := types.ValueFormatRaw.String()
+	measurand := types.MeasurandEnergyActiveImportRegister.String()
+	phase := types.PhaseL1.String()
+	location := types.LocationOutlet.String()
+	unit := types.UnitWh.String()
 
-	input := st.SampledValueInput{
+	input := types.SampledValueInput{
 		Value:     sampleValue,
 		Context:   &context,
 		Format:    &format,
@@ -32,7 +30,7 @@ func BenchmarkNewSampledValue_AllOptionals(b *testing.B) {
 	}
 
 	for i := 0; i < b.N; i++ {
-		if _, err := st.NewSampledValue(input); err != nil {
+		if _, err := types.NewSampledValue(input); err != nil {
 			b.Fatal(err)
 		}
 	}
@@ -43,7 +41,7 @@ func BenchmarkSetChargingProfileNewChargingProfile_AllOptionals(b *testing.B) {
 
 	transactionId := 1
 
-	recurrencyKind := scpt.RecurrencyKindDaily.String()
+	recurrencyKind := types.RecurrencyKindDaily.String()
 	validFrom := sampleTimestamp
 	validTo := "2025-01-02T16:00:00Z"
 
@@ -51,22 +49,22 @@ func BenchmarkSetChargingProfileNewChargingProfile_AllOptionals(b *testing.B) {
 	scheduleStart := sampleTimestamp
 	minChargingRate := 0.0
 
-	periods := []st.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
+	periods := []types.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
 
-	scheduleInput := st.ChargingScheduleInput{
+	scheduleInput := types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        &minChargingRate,
 		StartSchedule:          &scheduleStart,
 	}
 
-	input := scpt.ChargingProfileInput{
+	input := types.ChargingProfileInput{
 		ChargingProfileId:      1,
 		TransactionId:          &transactionId,
 		StackLevel:             0,
-		ChargingProfilePurpose: st.TxProfile.String(),
-		ChargingProfileKind:    scpt.ChargingProfileKindRecurring.String(),
+		ChargingProfilePurpose: types.TxProfile.String(),
+		ChargingProfileKind:    types.ChargingProfileKindRecurring.String(),
 		RecurrencyKind:         &recurrencyKind,
 		ValidFrom:              &validFrom,
 		ValidTo:                &validTo,
@@ -74,7 +72,7 @@ func BenchmarkSetChargingProfileNewChargingProfile_AllOptionals(b *testing.B) {
 	}
 
 	for i := 0; i < b.N; i++ {
-		if _, err := scpt.NewChargingProfile(input); err != nil {
+		if _, err := types.NewChargingProfile(input); err != nil {
 			b.Fatal(err)
 		}
 	}
@@ -86,14 +84,14 @@ func BenchmarkStopTransactionReq_LargeTransactionData(b *testing.B) {
 	const metervaluesCount = 10
 	const sampledValuesCount = 10
 
-	var sampledValues []mv.SampledValueInput
+	var sampledValues []types.SampledValueInput
 	for i := 0; i < sampledValuesCount; i++ {
-		sampledValues = append(sampledValues, mv.SampledValueInput{Value: sampleValue})
+		sampledValues = append(sampledValues, types.SampledValueInput{Value: sampleValue})
 	}
 
-	var transactionData []mv.MeterValueInput
+	var transactionData []types.MeterValueInput
 	for i := 0; i < metervaluesCount; i++ {
-		transactionData = append(transactionData, mv.MeterValueInput{
+		transactionData = append(transactionData, types.MeterValueInput{
 			Timestamp:    sampleTimestamp,
 			SampledValue: sampledValues,
 		})

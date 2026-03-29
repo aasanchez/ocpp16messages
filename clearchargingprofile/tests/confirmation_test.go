@@ -5,8 +5,7 @@ import (
 	"testing"
 
 	ccp "github.com/aasanchez/ocpp16messages/clearchargingprofile"
-	ct "github.com/aasanchez/ocpp16messages/clearchargingprofile/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -18,13 +17,13 @@ func TestConf_Valid_Accepted(t *testing.T) {
 
 	conf, err := ccp.Conf(ccp.ConfInput{Status: "Accepted"})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != ct.ClearChargingProfileStatusAccepted {
+	if conf.Status != types.ClearChargingProfileStatusAccepted {
 		t.Errorf(
-			st.ErrorMismatch,
-			ct.ClearChargingProfileStatusAccepted,
+			types.ErrorMismatch,
+			types.ClearChargingProfileStatusAccepted,
 			conf.Status,
 		)
 	}
@@ -35,13 +34,13 @@ func TestConf_Valid_Unknown(t *testing.T) {
 
 	conf, err := ccp.Conf(ccp.ConfInput{Status: "Unknown"})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != ct.ClearChargingProfileStatusUnknown {
+	if conf.Status != types.ClearChargingProfileStatusUnknown {
 		t.Errorf(
-			st.ErrorMismatch,
-			ct.ClearChargingProfileStatusUnknown,
+			types.ErrorMismatch,
+			types.ClearChargingProfileStatusUnknown,
 			conf.Status,
 		)
 	}
@@ -52,11 +51,11 @@ func TestConf_EmptyStatus(t *testing.T) {
 
 	_, err := ccp.Conf(ccp.ConfInput{Status: ""})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty status")
+		t.Errorf(types.ErrorWantNil, "empty status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -65,11 +64,11 @@ func TestConf_InvalidStatus_Invalid(t *testing.T) {
 
 	_, err := ccp.Conf(ccp.ConfInput{Status: "Invalid"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "invalid status")
+		t.Errorf(types.ErrorWantNil, "invalid status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -78,11 +77,11 @@ func TestConf_InvalidStatus_Lowercase(t *testing.T) {
 
 	_, err := ccp.Conf(ccp.ConfInput{Status: "accepted"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "lowercase status")
+		t.Errorf(types.ErrorWantNil, "lowercase status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -91,10 +90,10 @@ func TestConf_InvalidStatus_Rejected(t *testing.T) {
 
 	_, err := ccp.Conf(ccp.ConfInput{Status: "Rejected"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "Rejected (invalid for ClearChargingProfile)")
+		t.Errorf(types.ErrorWantNil, "Rejected (invalid for ClearChargingProfile)")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }

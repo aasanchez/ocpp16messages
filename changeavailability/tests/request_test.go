@@ -5,8 +5,7 @@ import (
 	"testing"
 
 	ca "github.com/aasanchez/ocpp16messages/changeavailability"
-	mcat "github.com/aasanchez/ocpp16messages/changeavailability/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -30,17 +29,17 @@ func TestReq_Valid_ConnectorZero_Inoperative(t *testing.T) {
 
 	req, err := ca.Req(input)
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId.Value() != valueZero {
-		t.Errorf(st.ErrorMismatchValue, valueZero, req.ConnectorId.Value())
+		t.Errorf(types.ErrorMismatchValue, valueZero, req.ConnectorId.Value())
 	}
 
-	if req.Type != mcat.AvailabilityTypeInoperative {
+	if req.Type != types.AvailabilityTypeInoperative {
 		t.Errorf(
-			st.ErrorMismatchValue,
-			mcat.AvailabilityTypeInoperative,
+			types.ErrorMismatchValue,
+			types.AvailabilityTypeInoperative,
 			req.Type,
 		)
 	}
@@ -53,17 +52,17 @@ func TestReq_Valid_ConnectorOne_Operative(t *testing.T) {
 
 	req, err := ca.Req(input)
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId.Value() != valuePositive {
-		t.Errorf(st.ErrorMismatchValue, valuePositive, req.ConnectorId.Value())
+		t.Errorf(types.ErrorMismatchValue, valuePositive, req.ConnectorId.Value())
 	}
 
-	if req.Type != mcat.AvailabilityTypeOperative {
+	if req.Type != types.AvailabilityTypeOperative {
 		t.Errorf(
-			st.ErrorMismatchValue,
-			mcat.AvailabilityTypeOperative,
+			types.ErrorMismatchValue,
+			types.AvailabilityTypeOperative,
 			req.Type,
 		)
 	}
@@ -76,11 +75,11 @@ func TestReq_Valid_MaxConnectorId(t *testing.T) {
 
 	req, err := ca.Req(input)
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId.Value() != valueMaxUint16 {
-		t.Errorf(st.ErrorMismatchValue, valueMaxUint16, req.ConnectorId.Value())
+		t.Errorf(types.ErrorMismatchValue, valueMaxUint16, req.ConnectorId.Value())
 	}
 }
 
@@ -91,11 +90,11 @@ func TestReq_NegativeConnectorId(t *testing.T) {
 
 	_, err := ca.Req(input)
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "negative connector ID")
+		t.Errorf(types.ErrorWantNil, "negative connector ID")
 	}
 
 	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errConnectorId)
 	}
 }
 
@@ -106,11 +105,11 @@ func TestReq_ExceedsMaxConnectorId(t *testing.T) {
 
 	_, err := ca.Req(input)
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "connector ID exceeds max")
+		t.Errorf(types.ErrorWantNil, "connector ID exceeds max")
 	}
 
 	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errConnectorId)
 	}
 }
 
@@ -119,11 +118,11 @@ func TestReq_InvalidType_Empty(t *testing.T) {
 
 	_, err := ca.Req(ca.ReqInput{ConnectorId: valuePositive, Type: ""})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty type")
+		t.Errorf(types.ErrorWantNil, "empty type")
 	}
 
 	if !strings.Contains(err.Error(), errType) {
-		t.Errorf(st.ErrorWantContains, err, errType)
+		t.Errorf(types.ErrorWantContains, err, errType)
 	}
 }
 
@@ -132,11 +131,11 @@ func TestReq_InvalidType_Unknown(t *testing.T) {
 
 	_, err := ca.Req(ca.ReqInput{ConnectorId: valuePositive, Type: "Unknown"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "unknown type")
+		t.Errorf(types.ErrorWantNil, "unknown type")
 	}
 
 	if !strings.Contains(err.Error(), errType) {
-		t.Errorf(st.ErrorWantContains, err, errType)
+		t.Errorf(types.ErrorWantContains, err, errType)
 	}
 }
 
@@ -145,11 +144,11 @@ func TestReq_InvalidType_Lowercase(t *testing.T) {
 
 	_, err := ca.Req(ca.ReqInput{ConnectorId: valuePositive, Type: "operative"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "lowercase type")
+		t.Errorf(types.ErrorWantNil, "lowercase type")
 	}
 
 	if !strings.Contains(err.Error(), errType) {
-		t.Errorf(st.ErrorWantContains, err, errType)
+		t.Errorf(types.ErrorWantContains, err, errType)
 	}
 }
 
@@ -158,14 +157,14 @@ func TestReq_MultipleErrors_NegativeConnectorAndInvalidType(t *testing.T) {
 
 	_, err := ca.Req(ca.ReqInput{ConnectorId: valueNegative, Type: "Unknown"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "multiple invalid fields")
+		t.Errorf(types.ErrorWantNil, "multiple invalid fields")
 	}
 
 	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errConnectorId)
 	}
 
 	if !strings.Contains(err.Error(), errType) {
-		t.Errorf(st.ErrorWantContains, err, errType)
+		t.Errorf(types.ErrorWantContains, err, errType)
 	}
 }

@@ -5,14 +5,14 @@ package benchmark
 import (
 	"testing"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 var (
-	sinkDateTimeCustom    st.DateTime
+	sinkDateTimeCustom    types.DateTime
 	sinkDateTimePrimitive string
 
-	sinkParentIdTagInfoCustom st.IdTagInfo
+	sinkParentIdTagInfoCustom types.IdTagInfo
 	sinkParentIdTagInfoPrim   primitiveIdTagInfo
 	sinkParentIdTagValue      string
 )
@@ -21,7 +21,7 @@ func BenchmarkDateTime_CustomType(b *testing.B) {
 	b.ReportAllocs()
 
 	for i := 0; i < b.N; i++ {
-		dt, err := st.NewDateTime(benchmarkTimestamp)
+		dt, err := types.NewDateTime(benchmarkTimestamp)
 		if err != nil {
 			b.Fatal(err)
 		}
@@ -115,17 +115,17 @@ func BenchmarkParentIdTag_PrimitiveRead(b *testing.B) {
 	}
 }
 
-func buildCustomParentIdTagInfo(parentIdTag string) (st.IdTagInfo, error) {
-	ciString, err := st.NewCiString20Type(parentIdTag)
+func buildCustomParentIdTagInfo(parentIdTag string) (types.IdTagInfo, error) {
+	ciString, err := types.NewCiString20Type(parentIdTag)
 	if err != nil {
-		return st.IdTagInfo{}, err
+		return types.IdTagInfo{}, err
 	}
 
-	idToken := st.NewIdToken(ciString)
+	idToken := types.NewIdToken(ciString)
 
-	idTagInfo, err := st.NewIdTagInfo(st.AuthorizationStatusAccepted)
+	idTagInfo, err := types.NewIdTagInfo(types.AuthorizationStatusAccepted)
 	if err != nil {
-		return st.IdTagInfo{}, err
+		return types.IdTagInfo{}, err
 	}
 
 	return idTagInfo.WithParentIdTag(idToken), nil

@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/statusnotification"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func TestConf_Valid(t *testing.T) {
@@ -12,7 +12,7 @@ func TestConf_Valid(t *testing.T) {
 
 	_, err := statusnotification.Conf(statusnotification.ConfInput{})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 }
 
@@ -22,7 +22,7 @@ func TestConf_AlwaysSucceeds(t *testing.T) {
 	// StatusNotification.conf has no fields, so it should always succeed
 	conf, err := statusnotification.Conf(statusnotification.ConfInput{})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	// Verify the message type is returned

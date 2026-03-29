@@ -5,9 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	mt "github.com/aasanchez/ocpp16messages/metervalues/types"
 	"github.com/aasanchez/ocpp16messages/stoptransaction"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -45,13 +44,13 @@ func TestReq_Valid(t *testing.T) {
 		TransactionData: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	expectedTransactionId := uint16(testTransactionId12345)
 	if req.TransactionId.Value() != expectedTransactionId {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			expectedTransactionId,
 			req.TransactionId.Value(),
 		)
@@ -59,7 +58,7 @@ func TestReq_Valid(t *testing.T) {
 
 	expectedMeterStop := uint16(testMeterStop5000)
 	if req.MeterStop.Value() != expectedMeterStop {
-		t.Errorf(st.ErrorMismatch, expectedMeterStop, req.MeterStop.Value())
+		t.Errorf(types.ErrorMismatch, expectedMeterStop, req.MeterStop.Value())
 	}
 }
 
@@ -77,7 +76,7 @@ func TestReq_ValidWithIdTag(t *testing.T) {
 		TransactionData: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.IdTag == nil {
@@ -85,7 +84,7 @@ func TestReq_ValidWithIdTag(t *testing.T) {
 	}
 
 	if req.IdTag.String() != testValidIdTag {
-		t.Errorf(st.ErrorMismatch, testValidIdTag, req.IdTag.String())
+		t.Errorf(types.ErrorMismatch, testValidIdTag, req.IdTag.String())
 	}
 }
 
@@ -103,7 +102,7 @@ func TestReq_ValidWithReasonLocal(t *testing.T) {
 		TransactionData: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Reason == nil {
@@ -111,7 +110,7 @@ func TestReq_ValidWithReasonLocal(t *testing.T) {
 	}
 
 	if req.Reason.String() != reason {
-		t.Errorf(st.ErrorMismatch, reason, req.Reason.String())
+		t.Errorf(types.ErrorMismatch, reason, req.Reason.String())
 	}
 }
 
@@ -129,7 +128,7 @@ func TestReq_ValidWithReasonRemote(t *testing.T) {
 		TransactionData: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Reason == nil {
@@ -137,7 +136,7 @@ func TestReq_ValidWithReasonRemote(t *testing.T) {
 	}
 
 	if req.Reason.String() != reason {
-		t.Errorf(st.ErrorMismatch, reason, req.Reason.String())
+		t.Errorf(types.ErrorMismatch, reason, req.Reason.String())
 	}
 }
 
@@ -155,7 +154,7 @@ func TestReq_ValidWithReasonEVDisconnected(t *testing.T) {
 		TransactionData: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Reason == nil {
@@ -163,7 +162,7 @@ func TestReq_ValidWithReasonEVDisconnected(t *testing.T) {
 	}
 
 	if req.Reason.String() != reason {
-		t.Errorf(st.ErrorMismatch, reason, req.Reason.String())
+		t.Errorf(types.ErrorMismatch, reason, req.Reason.String())
 	}
 }
 
@@ -176,10 +175,10 @@ func TestReq_ValidWithTransactionData(t *testing.T) {
 		MeterStop:     testMeterStop5000,
 		Timestamp:     testValidTimestamp,
 		Reason:        nil,
-		TransactionData: []mt.MeterValueInput{
+		TransactionData: []types.MeterValueInput{
 			{
 				Timestamp: testValidTimestamp,
-				SampledValue: []mt.SampledValueInput{
+				SampledValue: []types.SampledValueInput{
 					{
 						Value:     "5000",
 						Context:   nil,
@@ -194,12 +193,12 @@ func TestReq_ValidWithTransactionData(t *testing.T) {
 		},
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if len(req.TransactionData) != testExpectedTxDataLen {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			testExpectedTxDataLen,
 			len(req.TransactionData),
 		)
@@ -215,10 +214,10 @@ func TestReq_ValidWithEmptyTransactionData(t *testing.T) {
 		MeterStop:       testMeterStop5000,
 		Timestamp:       testValidTimestamp,
 		Reason:          nil,
-		TransactionData: []mt.MeterValueInput{},
+		TransactionData: []types.MeterValueInput{},
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.TransactionData == nil {
@@ -226,7 +225,7 @@ func TestReq_ValidWithEmptyTransactionData(t *testing.T) {
 	}
 
 	if len(req.TransactionData) != testTxDataLenZero {
-		t.Errorf(st.ErrorMismatch, testTxDataLenZero, len(req.TransactionData))
+		t.Errorf(types.ErrorMismatch, testTxDataLenZero, len(req.TransactionData))
 	}
 }
 
@@ -242,11 +241,11 @@ func TestReq_TransactionIdZero(t *testing.T) {
 		TransactionData: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.TransactionId.Value() != testValueZero {
-		t.Errorf(st.ErrorMismatch, testValueZero, req.TransactionId.Value())
+		t.Errorf(types.ErrorMismatch, testValueZero, req.TransactionId.Value())
 	}
 }
 
@@ -266,7 +265,7 @@ func TestReq_TransactionIdNegative(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldTransactionId) {
-		t.Errorf(st.ErrorWantContains, err, errFieldTransactionId)
+		t.Errorf(types.ErrorWantContains, err, errFieldTransactionId)
 	}
 }
 
@@ -282,11 +281,11 @@ func TestReq_MeterStopZero(t *testing.T) {
 		TransactionData: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.MeterStop.Value() != testValueZero {
-		t.Errorf(st.ErrorMismatch, testValueZero, req.MeterStop.Value())
+		t.Errorf(types.ErrorMismatch, testValueZero, req.MeterStop.Value())
 	}
 }
 
@@ -306,7 +305,7 @@ func TestReq_MeterStopNegative(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldMeterStop) {
-		t.Errorf(st.ErrorWantContains, err, errFieldMeterStop)
+		t.Errorf(types.ErrorWantContains, err, errFieldMeterStop)
 	}
 }
 
@@ -326,7 +325,7 @@ func TestReq_InvalidTimestamp(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldTimestamp) {
-		t.Errorf(st.ErrorWantContains, err, errFieldTimestamp)
+		t.Errorf(types.ErrorWantContains, err, errFieldTimestamp)
 	}
 }
 
@@ -346,7 +345,7 @@ func TestReq_EmptyTimestamp(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldTimestamp) {
-		t.Errorf(st.ErrorWantContains, err, errFieldTimestamp)
+		t.Errorf(types.ErrorWantContains, err, errFieldTimestamp)
 	}
 }
 
@@ -367,8 +366,8 @@ func TestReq_EmptyIdTag(t *testing.T) {
 		t.Error("Req() error = nil, want error for empty idTag")
 	}
 
-	if !errors.Is(err, st.ErrEmptyValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrEmptyValue)
+	if !errors.Is(err, types.ErrEmptyValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrEmptyValue)
 	}
 }
 
@@ -434,11 +433,11 @@ func TestReq_InvalidReason(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldReason) {
-		t.Errorf(st.ErrorWantContains, err, errFieldReason)
+		t.Errorf(types.ErrorWantContains, err, errFieldReason)
 	}
 
-	if !errors.Is(err, st.ErrInvalidValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrInvalidValue)
+	if !errors.Is(err, types.ErrInvalidValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrInvalidValue)
 	}
 }
 
@@ -451,10 +450,10 @@ func TestReq_InvalidTransactionData(t *testing.T) {
 		MeterStop:     testMeterStop5000,
 		Timestamp:     testValidTimestamp,
 		Reason:        nil,
-		TransactionData: []mt.MeterValueInput{
+		TransactionData: []types.MeterValueInput{
 			{
 				Timestamp:    "invalid-timestamp",
-				SampledValue: []mt.SampledValueInput{},
+				SampledValue: []types.SampledValueInput{},
 			},
 		},
 	})
@@ -463,7 +462,7 @@ func TestReq_InvalidTransactionData(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errMsgInvalidTxData) {
-		t.Errorf(st.ErrorWantContains, err, errMsgInvalidTxData)
+		t.Errorf(types.ErrorWantContains, err, errMsgInvalidTxData)
 	}
 }
 
@@ -488,23 +487,23 @@ func TestReq_MultipleErrors(t *testing.T) {
 	errStr := err.Error()
 
 	if !strings.Contains(errStr, errFieldTransactionId) {
-		t.Errorf(st.ErrorWantContains, err, errFieldTransactionId)
+		t.Errorf(types.ErrorWantContains, err, errFieldTransactionId)
 	}
 
 	if !strings.Contains(errStr, errFieldIdTag) {
-		t.Errorf(st.ErrorWantContains, err, errFieldIdTag)
+		t.Errorf(types.ErrorWantContains, err, errFieldIdTag)
 	}
 
 	if !strings.Contains(errStr, errFieldMeterStop) {
-		t.Errorf(st.ErrorWantContains, err, errFieldMeterStop)
+		t.Errorf(types.ErrorWantContains, err, errFieldMeterStop)
 	}
 
 	if !strings.Contains(errStr, errFieldTimestamp) {
-		t.Errorf(st.ErrorWantContains, err, errFieldTimestamp)
+		t.Errorf(types.ErrorWantContains, err, errFieldTimestamp)
 	}
 
 	if !strings.Contains(errStr, errFieldReason) {
-		t.Errorf(st.ErrorWantContains, err, errFieldReason)
+		t.Errorf(types.ErrorWantContains, err, errFieldReason)
 	}
 }
 
@@ -523,12 +522,12 @@ func TestReq_Complete(t *testing.T) {
 		TransactionData: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	expectedTxId := uint16(testTransactionId12345)
 	if req.TransactionId.Value() != expectedTxId {
-		t.Errorf(st.ErrorMismatch, expectedTxId, req.TransactionId.Value())
+		t.Errorf(types.ErrorMismatch, expectedTxId, req.TransactionId.Value())
 	}
 
 	if req.IdTag == nil {
@@ -537,7 +536,7 @@ func TestReq_Complete(t *testing.T) {
 
 	expectedMeterStop := uint16(testMeterStop5000)
 	if req.MeterStop.Value() != expectedMeterStop {
-		t.Errorf(st.ErrorMismatch, expectedMeterStop, req.MeterStop.Value())
+		t.Errorf(types.ErrorMismatch, expectedMeterStop, req.MeterStop.Value())
 	}
 
 	if req.Reason == nil {

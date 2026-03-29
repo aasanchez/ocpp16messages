@@ -6,20 +6,18 @@ import (
 	"fmt"
 	"testing"
 
-	gct "github.com/aasanchez/ocpp16messages/getconfiguration/types"
-	scpt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func TestRace_ChargingScheduleDurationGetterReturnsCopy(t *testing.T) {
 	t.Parallel()
 
 	duration := 60
-	periods := []st.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
+	periods := []types.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
 
-	schedule, err := st.NewChargingSchedule(st.ChargingScheduleInput{
+	schedule, err := types.NewChargingSchedule(types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        nil,
 		StartSchedule:          nil,
@@ -35,7 +33,7 @@ func TestRace_ChargingScheduleDurationGetterReturnsCopy(t *testing.T) {
 		}
 
 		if worker == 0 {
-			mutated, err := st.NewInteger(iteration)
+			mutated, err := types.NewInteger(iteration)
 			if err != nil {
 				return fmt.Errorf("NewInteger: %w", err)
 			}
@@ -57,11 +55,11 @@ func TestRace_ChargingScheduleStartScheduleGetterReturnsCopy(t *testing.T) {
 
 	duration := 60
 	startSchedule := "2025-01-02T15:00:00Z"
-	periods := []st.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
+	periods := []types.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
 
-	schedule, err := st.NewChargingSchedule(st.ChargingScheduleInput{
+	schedule, err := types.NewChargingSchedule(types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        nil,
 		StartSchedule:          &startSchedule,
@@ -77,7 +75,7 @@ func TestRace_ChargingScheduleStartScheduleGetterReturnsCopy(t *testing.T) {
 		}
 
 		if worker == 0 {
-			mutated, err := st.NewDateTime(
+			mutated, err := types.NewDateTime(
 				fmt.Sprintf("2025-01-%02dT00:00:00Z", (iteration%28)+1),
 			)
 			if err != nil {
@@ -100,7 +98,7 @@ func TestRace_ChargingSchedulePeriodNumberPhasesGetterReturnsCopy(t *testing.T) 
 	t.Parallel()
 
 	phases := 3
-	period, err := st.NewChargingSchedulePeriod(st.ChargingSchedulePeriodInput{
+	period, err := types.NewChargingSchedulePeriod(types.ChargingSchedulePeriodInput{
 		StartPeriod:  0,
 		Limit:        16,
 		NumberPhases: &phases,
@@ -116,7 +114,7 @@ func TestRace_ChargingSchedulePeriodNumberPhasesGetterReturnsCopy(t *testing.T) 
 		}
 
 		if worker == 0 {
-			mutated, err := st.NewInteger((iteration % 3) + 1)
+			mutated, err := types.NewInteger((iteration % 3) + 1)
 			if err != nil {
 				return fmt.Errorf("NewInteger: %w", err)
 			}
@@ -137,7 +135,7 @@ func TestRace_GetConfigurationKeyValueValueGetterReturnsCopy(t *testing.T) {
 	t.Parallel()
 
 	value := "60"
-	keyValue, err := gct.NewKeyValue(gct.KeyValueInput{
+	keyValue, err := types.NewKeyValue(types.KeyValueInput{
 		Key:      "HeartbeatInterval",
 		Readonly: false,
 		Value:    &value,
@@ -153,7 +151,7 @@ func TestRace_GetConfigurationKeyValueValueGetterReturnsCopy(t *testing.T) {
 		}
 
 		if worker == 0 {
-			mutated, err := st.NewCiString500Type(fmt.Sprintf("mutated-%d", iteration))
+			mutated, err := types.NewCiString500Type(fmt.Sprintf("mutated-%d", iteration))
 			if err != nil {
 				return fmt.Errorf("NewCiString500Type: %w", err)
 			}
@@ -175,22 +173,22 @@ func TestRace_SetChargingProfileTransactionIdGetterReturnsCopy(t *testing.T) {
 
 	transactionId := 1
 	duration := 60
-	periods := []st.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
+	periods := []types.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
 
-	scheduleInput := st.ChargingScheduleInput{
+	scheduleInput := types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        nil,
 		StartSchedule:          nil,
 	}
 
-	profile, err := scpt.NewChargingProfile(scpt.ChargingProfileInput{
+	profile, err := types.NewChargingProfile(types.ChargingProfileInput{
 		ChargingProfileId:      1,
 		TransactionId:          &transactionId,
 		StackLevel:             0,
-		ChargingProfilePurpose: st.TxProfile.String(),
-		ChargingProfileKind:    scpt.ChargingProfileKindAbsolute.String(),
+		ChargingProfilePurpose: types.TxProfile.String(),
+		ChargingProfileKind:    types.ChargingProfileKindAbsolute.String(),
 		RecurrencyKind:         nil,
 		ValidFrom:              nil,
 		ValidTo:                nil,
@@ -207,7 +205,7 @@ func TestRace_SetChargingProfileTransactionIdGetterReturnsCopy(t *testing.T) {
 		}
 
 		if worker == 0 {
-			mutated, err := st.NewInteger(iteration)
+			mutated, err := types.NewInteger(iteration)
 			if err != nil {
 				return fmt.Errorf("NewInteger: %w", err)
 			}

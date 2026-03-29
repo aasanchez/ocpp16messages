@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"testing"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // Benchmarks are opt-in; run with `make test-bench`.
@@ -34,7 +34,7 @@ func BenchmarkNewCiString20Type_InvalidNonASCII(b *testing.B) {
 	const sample = "bad\x01value"
 
 	for i := 0; i < b.N; i++ {
-		_, _ = st.NewCiString20Type(sample)
+		_, _ = types.NewCiString20Type(sample)
 	}
 }
 
@@ -49,12 +49,12 @@ func BenchmarkNewInteger(b *testing.B) {
 
 func BenchmarkNewInteger_OutOfRange(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		_, _ = st.NewInteger(outOfRangeBase + (i % outOfRangeModulo))
+		_, _ = types.NewInteger(outOfRangeBase + (i % outOfRangeModulo))
 	}
 }
 
 func BenchmarkIntegerString(b *testing.B) {
-	val, _ := st.NewInteger(integerSample)
+	val, _ := types.NewInteger(integerSample)
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -63,7 +63,7 @@ func BenchmarkIntegerString(b *testing.B) {
 }
 
 func BenchmarkCiStringString(b *testing.B) {
-	cs, _ := st.NewCiString20Type(ciStringSample)
+	cs, _ := types.NewCiString20Type(ciStringSample)
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -93,11 +93,11 @@ func parseStringToInt(s string) int {
 }
 
 func runBenchmarkCiString(value string) error {
-	_, err := st.NewCiString20Type(value)
+	_, err := types.NewCiString20Type(value)
 	return err
 }
 
 func runBenchmarkInteger(value int) error {
-	_, err := st.NewInteger(value)
+	_, err := types.NewInteger(value)
 	return err
 }

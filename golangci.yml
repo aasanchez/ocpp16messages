@@ -24,9 +24,6 @@ linters:
       rules:
         - name: package-directory-mismatch
           disabled: true
-        - name: package-naming
-          exclude:
-            - "/**/types/**"
         - name: var-naming
           arguments:
             - [ID] # allowlist - empty means use defaults
@@ -41,6 +38,7 @@ linters:
           allow:
             - $gostd
             - github.com/aasanchez/ocpp16messages
+            - github.com/aasanchez/ocpp16types
 
 output:
   formats:

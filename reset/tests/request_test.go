@@ -5,8 +5,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/reset"
-	rt "github.com/aasanchez/ocpp16messages/reset/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -18,13 +17,13 @@ func TestReq_Valid_Hard(t *testing.T) {
 
 	req, err := reset.Req(reset.ReqInput{Type: "Hard"})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.Type != rt.ResetTypeHard {
+	if req.Type != types.ResetTypeHard {
 		t.Errorf(
-			st.ErrorMismatch,
-			rt.ResetTypeHard,
+			types.ErrorMismatch,
+			types.ResetTypeHard,
 			req.Type,
 		)
 	}
@@ -35,13 +34,13 @@ func TestReq_Valid_Soft(t *testing.T) {
 
 	req, err := reset.Req(reset.ReqInput{Type: "Soft"})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if req.Type != rt.ResetTypeSoft {
+	if req.Type != types.ResetTypeSoft {
 		t.Errorf(
-			st.ErrorMismatch,
-			rt.ResetTypeSoft,
+			types.ErrorMismatch,
+			types.ResetTypeSoft,
 			req.Type,
 		)
 	}
@@ -52,11 +51,11 @@ func TestReq_EmptyType(t *testing.T) {
 
 	_, err := reset.Req(reset.ReqInput{Type: ""})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty type")
+		t.Errorf(types.ErrorWantNil, "empty type")
 	}
 
 	if !strings.Contains(err.Error(), errType) {
-		t.Errorf(st.ErrorWantContains, err, errType)
+		t.Errorf(types.ErrorWantContains, err, errType)
 	}
 }
 
@@ -65,11 +64,11 @@ func TestReq_InvalidType_Unknown(t *testing.T) {
 
 	_, err := reset.Req(reset.ReqInput{Type: "Unknown"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "unknown type")
+		t.Errorf(types.ErrorWantNil, "unknown type")
 	}
 
 	if !strings.Contains(err.Error(), errType) {
-		t.Errorf(st.ErrorWantContains, err, errType)
+		t.Errorf(types.ErrorWantContains, err, errType)
 	}
 }
 
@@ -78,10 +77,10 @@ func TestReq_InvalidType_Lowercase(t *testing.T) {
 
 	_, err := reset.Req(reset.ReqInput{Type: "hard"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "lowercase type")
+		t.Errorf(types.ErrorWantNil, "lowercase type")
 	}
 
 	if !strings.Contains(err.Error(), errType) {
-		t.Errorf(st.ErrorWantContains, err, errType)
+		t.Errorf(types.ErrorWantContains, err, errType)
 	}
 }

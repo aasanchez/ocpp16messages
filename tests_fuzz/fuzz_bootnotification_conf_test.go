@@ -9,15 +9,14 @@ import (
 	"time"
 
 	bn "github.com/aasanchez/ocpp16messages/bootnotification"
-	bnt "github.com/aasanchez/ocpp16messages/bootnotification/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzBootNotificationConf(f *testing.F) {
-	f.Add(bnt.RegistrationStatusAccepted.String(), "2025-01-15T10:30:00Z", 60)
+	f.Add(types.RegistrationStatusAccepted.String(), "2025-01-15T10:30:00Z", 60)
 	f.Add("invalid-status", "2025-01-15T10:30:00Z", 60)
-	f.Add(bnt.RegistrationStatusAccepted.String(), "bad-time", 60)
-	f.Add(bnt.RegistrationStatusAccepted.String(), "2025-01-15T10:30:00Z", -1)
+	f.Add(types.RegistrationStatusAccepted.String(), "bad-time", 60)
+	f.Add(types.RegistrationStatusAccepted.String(), "2025-01-15T10:30:00Z", -1)
 
 	f.Fuzz(func(t *testing.T, status string, currentTime string, interval int) {
 		if len(status) > maxFuzzStringLen || len(currentTime) > maxFuzzStringLen {
@@ -30,7 +29,7 @@ func FuzzBootNotificationConf(f *testing.F) {
 			Interval:    interval,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

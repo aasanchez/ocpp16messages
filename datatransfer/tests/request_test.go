@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/datatransfer"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -29,11 +29,11 @@ func TestReq_Valid_VendorIdOnly(t *testing.T) {
 		Data:      nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.VendorId.Value() != testValidVendorId {
-		t.Errorf(st.ErrorMismatch, testValidVendorId, req.VendorId.Value())
+		t.Errorf(types.ErrorMismatch, testValidVendorId, req.VendorId.Value())
 	}
 
 	if req.MessageId != nil {
@@ -56,7 +56,7 @@ func TestReq_Valid_WithMessageId(t *testing.T) {
 		Data:      nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.MessageId == nil {
@@ -66,7 +66,7 @@ func TestReq_Valid_WithMessageId(t *testing.T) {
 	}
 
 	if req.MessageId.Value() != testValidMessageId {
-		t.Errorf(st.ErrorMismatch, testValidMessageId, req.MessageId.Value())
+		t.Errorf(types.ErrorMismatch, testValidMessageId, req.MessageId.Value())
 	}
 }
 
@@ -81,7 +81,7 @@ func TestReq_Valid_WithData(t *testing.T) {
 		Data:      &data,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Data == nil {
@@ -91,7 +91,7 @@ func TestReq_Valid_WithData(t *testing.T) {
 	}
 
 	if *req.Data != testValidData {
-		t.Errorf(st.ErrorMismatch, testValidData, *req.Data)
+		t.Errorf(types.ErrorMismatch, testValidData, *req.Data)
 	}
 }
 
@@ -107,11 +107,11 @@ func TestReq_Valid_Complete(t *testing.T) {
 		Data:      &data,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.VendorId.Value() != testValidVendorId {
-		t.Errorf(st.ErrorMismatch, testValidVendorId, req.VendorId.Value())
+		t.Errorf(types.ErrorMismatch, testValidVendorId, req.VendorId.Value())
 	}
 
 	if req.MessageId == nil {
@@ -121,7 +121,7 @@ func TestReq_Valid_Complete(t *testing.T) {
 	}
 
 	if req.MessageId.Value() != testValidMessageId {
-		t.Errorf(st.ErrorMismatch, testValidMessageId, req.MessageId.Value())
+		t.Errorf(types.ErrorMismatch, testValidMessageId, req.MessageId.Value())
 	}
 
 	if req.Data == nil {
@@ -131,7 +131,7 @@ func TestReq_Valid_Complete(t *testing.T) {
 	}
 
 	if *req.Data != testValidData {
-		t.Errorf(st.ErrorMismatch, testValidData, *req.Data)
+		t.Errorf(types.ErrorMismatch, testValidData, *req.Data)
 	}
 }
 
@@ -147,8 +147,8 @@ func TestReq_EmptyVendorId(t *testing.T) {
 		t.Error("Req() error = nil, want error for empty vendorId")
 	}
 
-	if !errors.Is(err, st.ErrEmptyValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrEmptyValue)
+	if !errors.Is(err, types.ErrEmptyValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrEmptyValue)
 	}
 }
 
@@ -168,11 +168,11 @@ func TestReq_VendorIdTooLong(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldVendorId) {
-		t.Errorf(st.ErrorWantContains, err, errFieldVendorId)
+		t.Errorf(types.ErrorWantContains, err, errFieldVendorId)
 	}
 
 	if !strings.Contains(err.Error(), errExceedsMaxLength) {
-		t.Errorf(st.ErrorWantContains, err, errExceedsMaxLength)
+		t.Errorf(types.ErrorWantContains, err, errExceedsMaxLength)
 	}
 }
 
@@ -189,7 +189,7 @@ func TestReq_VendorIdInvalidChars(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldVendorId) {
-		t.Errorf(st.ErrorWantContains, err, errFieldVendorId)
+		t.Errorf(types.ErrorWantContains, err, errFieldVendorId)
 	}
 }
 
@@ -208,7 +208,7 @@ func TestReq_EmptyMessageId(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldMessageId) {
-		t.Errorf(st.ErrorWantContains, err, errFieldMessageId)
+		t.Errorf(types.ErrorWantContains, err, errFieldMessageId)
 	}
 }
 
@@ -228,11 +228,11 @@ func TestReq_MessageIdTooLong(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldMessageId) {
-		t.Errorf(st.ErrorWantContains, err, errFieldMessageId)
+		t.Errorf(types.ErrorWantContains, err, errFieldMessageId)
 	}
 
 	if !strings.Contains(err.Error(), errExceedsMaxLength) {
-		t.Errorf(st.ErrorWantContains, err, errExceedsMaxLength)
+		t.Errorf(types.ErrorWantContains, err, errExceedsMaxLength)
 	}
 }
 
@@ -251,7 +251,7 @@ func TestReq_MessageIdInvalidChars(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldMessageId) {
-		t.Errorf(st.ErrorWantContains, err, errFieldMessageId)
+		t.Errorf(types.ErrorWantContains, err, errFieldMessageId)
 	}
 }
 
@@ -271,10 +271,10 @@ func TestReq_MultipleErrors(t *testing.T) {
 
 	errStr := err.Error()
 	if !strings.Contains(errStr, errFieldVendorId) {
-		t.Errorf(st.ErrorWantContains, err, errFieldVendorId)
+		t.Errorf(types.ErrorWantContains, err, errFieldVendorId)
 	}
 
 	if !strings.Contains(errStr, errFieldMessageId) {
-		t.Errorf(st.ErrorWantContains, err, errFieldMessageId)
+		t.Errorf(types.ErrorWantContains, err, errFieldMessageId)
 	}
 }

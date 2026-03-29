@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/getlocallistversion"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzGetLocalListVersionConf(f *testing.F) {
@@ -25,7 +25,7 @@ func FuzzGetLocalListVersionConf(f *testing.F) {
 			ListVersion: listVersion,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

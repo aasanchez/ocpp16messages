@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzNewDateTime(f *testing.F) {
@@ -16,7 +16,7 @@ func FuzzNewDateTime(f *testing.F) {
 	f.Add("2025-01-15T10:30:00+02:00")
 
 	f.Fuzz(func(t *testing.T, input string) {
-		dt, err := st.NewDateTime(input)
+		dt, err := types.NewDateTime(input)
 		if err != nil {
 			return
 		}

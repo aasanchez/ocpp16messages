@@ -7,8 +7,8 @@ import (
 	"math"
 	"testing"
 
-	st "github.com/aasanchez/ocpp16messages/types"
 	"github.com/aasanchez/ocpp16messages/unlockconnector"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzUnlockConnectorReq(f *testing.F) {
@@ -22,7 +22,7 @@ func FuzzUnlockConnectorReq(f *testing.F) {
 			ConnectorId: connectorId,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

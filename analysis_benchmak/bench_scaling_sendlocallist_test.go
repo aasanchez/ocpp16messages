@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	sll "github.com/aasanchez/ocpp16messages/sendlocallist"
-	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 var (
@@ -93,7 +93,7 @@ func benchmarkSendLocalListCustom(b *testing.B, size int) {
 	input := sll.ReqInput{
 		ListVersion:            1,
 		LocalAuthorizationList: makeAuthorizationInputs(size),
-		UpdateType:             slt.UpdateTypeFull.String(),
+		UpdateType:             types.UpdateTypeFull.String(),
 	}
 
 	for i := 0; i < b.N; i++ {
@@ -113,7 +113,7 @@ func benchmarkSendLocalListPrimitiveDirect(b *testing.B, size int) {
 	input := primitiveSendLocalListReq{
 		ListVersion:            1,
 		LocalAuthorizationList: makePrimitiveAuthorizationInputs(size),
-		UpdateType:             slt.UpdateTypeFull.String(),
+		UpdateType:             types.UpdateTypeFull.String(),
 	}
 
 	for i := 0; i < b.N; i++ {
@@ -128,7 +128,7 @@ func benchmarkSendLocalListPrimitiveValidated(b *testing.B, size int) {
 	input := primitiveSendLocalListReq{
 		ListVersion:            1,
 		LocalAuthorizationList: makePrimitiveAuthorizationInputs(size),
-		UpdateType:             slt.UpdateTypeFull.String(),
+		UpdateType:             types.UpdateTypeFull.String(),
 	}
 
 	for i := 0; i < b.N; i++ {

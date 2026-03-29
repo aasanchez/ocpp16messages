@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/starttransaction"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -28,13 +28,13 @@ func TestConf_ValidAccepted(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	expectedTransactionId := uint16(testTransactionId)
 	if conf.TransactionId.Value() != expectedTransactionId {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			expectedTransactionId,
 			conf.TransactionId.Value(),
 		)
@@ -42,7 +42,7 @@ func TestConf_ValidAccepted(t *testing.T) {
 
 	if conf.IdTagInfo.Status.String() != statusAccepted {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			statusAccepted,
 			conf.IdTagInfo.Status.String(),
 		)
@@ -59,11 +59,11 @@ func TestConf_ValidBlocked(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.IdTagInfo.Status.String() != "Blocked" {
-		t.Errorf(st.ErrorMismatch, "Blocked", conf.IdTagInfo.Status.String())
+		t.Errorf(types.ErrorMismatch, "Blocked", conf.IdTagInfo.Status.String())
 	}
 }
 
@@ -77,11 +77,11 @@ func TestConf_ValidExpired(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.IdTagInfo.Status.String() != "Expired" {
-		t.Errorf(st.ErrorMismatch, "Expired", conf.IdTagInfo.Status.String())
+		t.Errorf(types.ErrorMismatch, "Expired", conf.IdTagInfo.Status.String())
 	}
 }
 
@@ -95,11 +95,11 @@ func TestConf_ValidInvalid(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.IdTagInfo.Status.String() != "Invalid" {
-		t.Errorf(st.ErrorMismatch, "Invalid", conf.IdTagInfo.Status.String())
+		t.Errorf(types.ErrorMismatch, "Invalid", conf.IdTagInfo.Status.String())
 	}
 }
 
@@ -113,12 +113,12 @@ func TestConf_ValidConcurrentTx(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.IdTagInfo.Status.String() != "ConcurrentTx" {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			"ConcurrentTx",
 			conf.IdTagInfo.Status.String(),
 		)
@@ -138,7 +138,7 @@ func TestConf_InvalidStatus(t *testing.T) {
 		t.Error("Conf() error = nil, want error for invalid status")
 	}
 
-	if !errors.Is(err, st.ErrInvalidValue) {
+	if !errors.Is(err, types.ErrInvalidValue) {
 		t.Errorf("Conf() error = %v, want ErrInvalidValue", err)
 	}
 }
@@ -156,7 +156,7 @@ func TestConf_EmptyStatus(t *testing.T) {
 		t.Error("Conf() error = nil, want error for empty status")
 	}
 
-	if !errors.Is(err, st.ErrInvalidValue) {
+	if !errors.Is(err, types.ErrInvalidValue) {
 		t.Errorf("Conf() error = %v, want ErrInvalidValue", err)
 	}
 }
@@ -175,7 +175,7 @@ func TestConf_TransactionIdNegative(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errTransactionId) {
-		t.Errorf(st.ErrorWantContains, err, errTransactionId)
+		t.Errorf(types.ErrorWantContains, err, errTransactionId)
 	}
 }
 
@@ -191,7 +191,7 @@ func TestConf_WithExpiryDate(t *testing.T) {
 		ParentIdTag:   nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.IdTagInfo.ExpiryDate == nil {
@@ -215,7 +215,7 @@ func TestConf_WithInvalidExpiryDate(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errExpiryDate) {
-		t.Errorf(st.ErrorWantContains, err, errExpiryDate)
+		t.Errorf(types.ErrorWantContains, err, errExpiryDate)
 	}
 }
 
@@ -231,7 +231,7 @@ func TestConf_WithParentIdTag(t *testing.T) {
 		ParentIdTag:   &parentTag,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.IdTagInfo.ParentIdTag == nil {
@@ -240,7 +240,7 @@ func TestConf_WithParentIdTag(t *testing.T) {
 
 	if conf.IdTagInfo.ParentIdTag.String() != parentTag {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			parentTag,
 			conf.IdTagInfo.ParentIdTag.String(),
 		)
@@ -263,7 +263,7 @@ func TestConf_WithParentIdTagTooLong(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errParentIdTag) {
-		t.Errorf(st.ErrorWantContains, err, errParentIdTag)
+		t.Errorf(types.ErrorWantContains, err, errParentIdTag)
 	}
 }
 
@@ -283,7 +283,7 @@ func TestConf_WithEmptyParentIdTag(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errParentIdTag) {
-		t.Errorf(st.ErrorWantContains, err, errParentIdTag)
+		t.Errorf(types.ErrorWantContains, err, errParentIdTag)
 	}
 }
 
@@ -300,13 +300,13 @@ func TestConf_Complete(t *testing.T) {
 		ParentIdTag:   &parentTag,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	expectedTransactionId := uint16(testTransactionId2)
 	if conf.TransactionId.Value() != expectedTransactionId {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			expectedTransactionId,
 			conf.TransactionId.Value(),
 		)
@@ -314,7 +314,7 @@ func TestConf_Complete(t *testing.T) {
 
 	if conf.IdTagInfo.Status.String() != statusAccepted {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			statusAccepted,
 			conf.IdTagInfo.Status.String(),
 		)
@@ -330,7 +330,7 @@ func TestConf_Complete(t *testing.T) {
 
 	if conf.IdTagInfo.ParentIdTag.String() != parentTag {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			parentTag,
 			conf.IdTagInfo.ParentIdTag.String(),
 		)
@@ -356,7 +356,7 @@ func TestConf_MultipleErrors(t *testing.T) {
 	errStr := err.Error()
 
 	if !strings.Contains(errStr, errTransactionId) {
-		t.Errorf(st.ErrorWantContains, err, errTransactionId)
+		t.Errorf(types.ErrorWantContains, err, errTransactionId)
 	}
 
 	if !strings.Contains(errStr, "status") {
@@ -364,11 +364,11 @@ func TestConf_MultipleErrors(t *testing.T) {
 	}
 
 	if !strings.Contains(errStr, errExpiryDate) {
-		t.Errorf(st.ErrorWantContains, err, errExpiryDate)
+		t.Errorf(types.ErrorWantContains, err, errExpiryDate)
 	}
 
 	if !strings.Contains(errStr, errParentIdTag) {
-		t.Errorf(st.ErrorWantContains, err, errParentIdTag)
+		t.Errorf(types.ErrorWantContains, err, errParentIdTag)
 	}
 }
 
@@ -394,6 +394,6 @@ func TestConf_MultipleErrors_StatusAndExpiryDate(t *testing.T) {
 	}
 
 	if !strings.Contains(errStr, errExpiryDate) {
-		t.Errorf(st.ErrorWantContains, err, errExpiryDate)
+		t.Errorf(types.ErrorWantContains, err, errExpiryDate)
 	}
 }

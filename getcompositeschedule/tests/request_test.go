@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	gcs "github.com/aasanchez/ocpp16messages/getcompositeschedule"
-	"github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (

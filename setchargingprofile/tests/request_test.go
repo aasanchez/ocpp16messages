@@ -5,8 +5,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/setchargingprofile"
-	spt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
-	"github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -21,8 +20,8 @@ const (
 	valueLimitThirty = 30.0
 )
 
-func validChargingProfileInput() spt.ChargingProfileInput {
-	return spt.ChargingProfileInput{
+func validChargingProfileInput() types.ChargingProfileInput {
+	return types.ChargingProfileInput{
 		ChargingProfileId:      valueOne,
 		TransactionId:          nil,
 		StackLevel:             valueZero,
@@ -152,10 +151,10 @@ func TestReq_Valid_ChargingProfileKind(t *testing.T) {
 	}
 
 	if req.CsChargingProfiles.ChargingProfileKind() !=
-		spt.ChargingProfileKindAbsolute {
+		types.ChargingProfileKindAbsolute {
 		t.Errorf(
 			types.ErrorMismatch,
-			spt.ChargingProfileKindAbsolute,
+			types.ChargingProfileKindAbsolute,
 			req.CsChargingProfiles.ChargingProfileKind(),
 		)
 	}

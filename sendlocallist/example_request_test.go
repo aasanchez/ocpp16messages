@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/aasanchez/ocpp16messages/sendlocallist"
-	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -17,10 +17,10 @@ const (
 func ExampleReq() {
 	req, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion: 1,
-		LocalAuthorizationList: []slt.AuthorizationDataInput{
+		LocalAuthorizationList: []types.AuthorizationDataInput{
 			{
 				IdTag: "RFID12345",
-				IdTagInfo: &slt.IdTagInfoInput{
+				IdTagInfo: &types.IdTagInfoInput{
 					Status:      "Accepted",
 					ExpiryDate:  nil,
 					ParentIdTag: nil,
@@ -49,7 +49,7 @@ func ExampleReq() {
 func ExampleReq_differential() {
 	req, err := sendlocallist.Req(sendlocallist.ReqInput{
 		ListVersion: 2,
-		LocalAuthorizationList: []slt.AuthorizationDataInput{
+		LocalAuthorizationList: []types.AuthorizationDataInput{
 			{
 				IdTag:     "RFID99999",
 				IdTagInfo: nil,

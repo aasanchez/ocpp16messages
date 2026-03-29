@@ -9,7 +9,7 @@ import (
 	"time"
 
 	rn "github.com/aasanchez/ocpp16messages/reservenow"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzReserveNowReq(f *testing.F) {
@@ -48,7 +48,7 @@ func FuzzReserveNowReq(f *testing.F) {
 			ParentIdTag:   parentIdTagPtr,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

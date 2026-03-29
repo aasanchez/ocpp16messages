@@ -9,7 +9,7 @@ import (
 	"time"
 
 	mv "github.com/aasanchez/ocpp16messages/metervalues"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzMeterValuesReq(f *testing.F) {
@@ -38,12 +38,12 @@ func FuzzMeterValuesReq(f *testing.F) {
 			transactionIdPtr = &transactionId
 		}
 
-		var metervalues []st.MeterValueInput
+		var metervalues []types.MeterValueInput
 		if hasMeterValue {
-			metervalues = []st.MeterValueInput{
+			metervalues = []types.MeterValueInput{
 				{
 					Timestamp: timestamp,
-					SampledValue: []st.SampledValueInput{
+					SampledValue: []types.SampledValueInput{
 						{Value: value},
 					},
 				},
@@ -56,7 +56,7 @@ func FuzzMeterValuesReq(f *testing.F) {
 			MeterValue:    metervalues,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	dt "github.com/aasanchez/ocpp16messages/datatransfer"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzDataTransferReq(f *testing.F) {
@@ -46,7 +46,7 @@ func FuzzDataTransferReq(f *testing.F) {
 			Data:      dataPtr,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

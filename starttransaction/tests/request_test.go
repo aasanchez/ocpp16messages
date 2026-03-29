@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/starttransaction"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -34,19 +34,19 @@ func TestReq_Valid(t *testing.T) {
 		ReservationId: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId.Value() != testConnectorIdOne {
-		t.Errorf(st.ErrorMismatch, testConnectorIdOne, req.ConnectorId.Value())
+		t.Errorf(types.ErrorMismatch, testConnectorIdOne, req.ConnectorId.Value())
 	}
 
 	if req.IdTag.String() != testValidIdTag {
-		t.Errorf(st.ErrorMismatch, testValidIdTag, req.IdTag.String())
+		t.Errorf(types.ErrorMismatch, testValidIdTag, req.IdTag.String())
 	}
 
 	if req.MeterStart.Value() != testMeterStart1000 {
-		t.Errorf(st.ErrorMismatch, testMeterStart1000, req.MeterStart.Value())
+		t.Errorf(types.ErrorMismatch, testMeterStart1000, req.MeterStart.Value())
 	}
 }
 
@@ -63,7 +63,7 @@ func TestReq_ValidWithReservation(t *testing.T) {
 		ReservationId: &reservationId,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ReservationId == nil {
@@ -73,7 +73,7 @@ func TestReq_ValidWithReservation(t *testing.T) {
 	expectedReservationId := uint16(testReservationId42)
 	if req.ReservationId.Value() != expectedReservationId {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			expectedReservationId,
 			req.ReservationId.Value(),
 		)
@@ -91,11 +91,11 @@ func TestReq_ConnectorIdZero(t *testing.T) {
 		ReservationId: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId.Value() != testValueZero {
-		t.Errorf(st.ErrorMismatch, testValueZero, req.ConnectorId.Value())
+		t.Errorf(types.ErrorMismatch, testValueZero, req.ConnectorId.Value())
 	}
 }
 
@@ -114,7 +114,7 @@ func TestReq_ConnectorIdNegative(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errFieldConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errFieldConnectorId)
 	}
 }
 
@@ -132,8 +132,8 @@ func TestReq_EmptyIdTag(t *testing.T) {
 		t.Error("Req() error = nil, want error for empty idTag")
 	}
 
-	if !errors.Is(err, st.ErrEmptyValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrEmptyValue)
+	if !errors.Is(err, types.ErrEmptyValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrEmptyValue)
 	}
 }
 
@@ -192,11 +192,11 @@ func TestReq_MeterStartZero(t *testing.T) {
 		ReservationId: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.MeterStart.Value() != testValueZero {
-		t.Errorf(st.ErrorMismatch, testValueZero, req.MeterStart.Value())
+		t.Errorf(types.ErrorMismatch, testValueZero, req.MeterStart.Value())
 	}
 }
 
@@ -215,7 +215,7 @@ func TestReq_MeterStartNegative(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldMeterStart) {
-		t.Errorf(st.ErrorWantContains, err, errFieldMeterStart)
+		t.Errorf(types.ErrorWantContains, err, errFieldMeterStart)
 	}
 }
 
@@ -234,7 +234,7 @@ func TestReq_InvalidTimestamp(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldTimestamp) {
-		t.Errorf(st.ErrorWantContains, err, errFieldTimestamp)
+		t.Errorf(types.ErrorWantContains, err, errFieldTimestamp)
 	}
 }
 
@@ -253,7 +253,7 @@ func TestReq_EmptyTimestamp(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldTimestamp) {
-		t.Errorf(st.ErrorWantContains, err, errFieldTimestamp)
+		t.Errorf(types.ErrorWantContains, err, errFieldTimestamp)
 	}
 }
 
@@ -274,7 +274,7 @@ func TestReq_ReservationIdNegative(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldReservationId) {
-		t.Errorf(st.ErrorWantContains, err, errFieldReservationId)
+		t.Errorf(types.ErrorWantContains, err, errFieldReservationId)
 	}
 }
 
@@ -295,19 +295,19 @@ func TestReq_MultipleErrors(t *testing.T) {
 	errStr := err.Error()
 
 	if !strings.Contains(errStr, errFieldConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errFieldConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errFieldConnectorId)
 	}
 
 	if !strings.Contains(errStr, "idTag") {
-		t.Errorf(st.ErrorWantContains, err, "idTag")
+		t.Errorf(types.ErrorWantContains, err, "idTag")
 	}
 
 	if !strings.Contains(errStr, errFieldMeterStart) {
-		t.Errorf(st.ErrorWantContains, err, errFieldMeterStart)
+		t.Errorf(types.ErrorWantContains, err, errFieldMeterStart)
 	}
 
 	if !strings.Contains(errStr, errFieldTimestamp) {
-		t.Errorf(st.ErrorWantContains, err, errFieldTimestamp)
+		t.Errorf(types.ErrorWantContains, err, errFieldTimestamp)
 	}
 }
 
@@ -330,10 +330,10 @@ func TestReq_MultipleErrorsWithReservation(t *testing.T) {
 	errStr := err.Error()
 
 	if !strings.Contains(errStr, errFieldConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errFieldConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errFieldConnectorId)
 	}
 
 	if !strings.Contains(errStr, errFieldReservationId) {
-		t.Errorf(st.ErrorWantContains, err, errFieldReservationId)
+		t.Errorf(types.ErrorWantContains, err, errFieldReservationId)
 	}
 }

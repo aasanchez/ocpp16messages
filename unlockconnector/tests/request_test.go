@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	st "github.com/aasanchez/ocpp16messages/types"
 	uc "github.com/aasanchez/ocpp16messages/unlockconnector"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -23,12 +23,12 @@ func TestReq_Valid(t *testing.T) {
 
 	req, err := uc.Req(uc.ReqInput{ConnectorId: testConnectorIdValid})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId.Value() != uint16(testConnectorIdValid) {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			uint16(testConnectorIdValid),
 			req.ConnectorId.Value(),
 		)
@@ -40,12 +40,12 @@ func TestReq_Valid_ConnectorTwo(t *testing.T) {
 
 	req, err := uc.Req(uc.ReqInput{ConnectorId: testConnectorIdTwo})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId.Value() != uint16(testConnectorIdTwo) {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			uint16(testConnectorIdTwo),
 			req.ConnectorId.Value(),
 		)
@@ -57,12 +57,12 @@ func TestReq_Valid_Max(t *testing.T) {
 
 	req, err := uc.Req(uc.ReqInput{ConnectorId: testConnectorIdMax})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId.Value() != uint16(testConnectorIdMax) {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			uint16(testConnectorIdMax),
 			req.ConnectorId.Value(),
 		)
@@ -74,11 +74,11 @@ func TestReq_Invalid_ConnectorIdZero(t *testing.T) {
 
 	_, err := uc.Req(uc.ReqInput{ConnectorId: testConnectorIdZero})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "connectorId zero")
+		t.Errorf(types.ErrorWantNil, "connectorId zero")
 	}
 
 	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errConnectorId)
 	}
 }
 
@@ -87,11 +87,11 @@ func TestReq_Invalid_ConnectorIdNegative(t *testing.T) {
 
 	_, err := uc.Req(uc.ReqInput{ConnectorId: testConnectorIdNeg})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "negative connectorId")
+		t.Errorf(types.ErrorWantNil, "negative connectorId")
 	}
 
 	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errConnectorId)
 	}
 }
 
@@ -100,10 +100,10 @@ func TestReq_Invalid_ConnectorIdExceedsMax(t *testing.T) {
 
 	_, err := uc.Req(uc.ReqInput{ConnectorId: testConnectorIdOver})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "connectorId exceeds max")
+		t.Errorf(types.ErrorWantNil, "connectorId exceeds max")
 	}
 
 	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errConnectorId)
 	}
 }

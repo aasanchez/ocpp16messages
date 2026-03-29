@@ -3,7 +3,7 @@ package cancelreservation
 import (
 	"fmt"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ReqInput represents the raw input data for creating a CancelReservation.req
@@ -14,14 +14,14 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 CancelReservation.req message.
 type ReqMessage struct {
-	ReservationId st.Integer
+	ReservationId types.Integer
 }
 
 // Req creates a CancelReservation.req message from the given input.
 // It validates all fields and returns an error if:
 //   - ReservationId is negative or exceeds uint16 max value (65535)
 func Req(input ReqInput) (ReqMessage, error) {
-	reservationId, err := st.NewInteger(input.ReservationId)
+	reservationId, err := types.NewInteger(input.ReservationId)
 	if err != nil {
 		return ReqMessage{}, fmt.Errorf("reservationId: %w", err)
 	}

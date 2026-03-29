@@ -7,14 +7,13 @@ import (
 	"testing"
 
 	scp "github.com/aasanchez/ocpp16messages/setchargingprofile"
-	spt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzSetChargingProfileConf(f *testing.F) {
-	f.Add(spt.ChargingProfileStatusAccepted.String())
-	f.Add(spt.ChargingProfileStatusRejected.String())
-	f.Add(spt.ChargingProfileStatusNotSupported.String())
+	f.Add(types.ChargingProfileStatusAccepted.String())
+	f.Add(types.ChargingProfileStatusRejected.String())
+	f.Add(types.ChargingProfileStatusNotSupported.String())
 	f.Add("")
 	f.Add("invalid-status")
 
@@ -25,7 +24,7 @@ func FuzzSetChargingProfileConf(f *testing.F) {
 
 		conf, err := scp.Conf(scp.ConfInput{Status: status})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

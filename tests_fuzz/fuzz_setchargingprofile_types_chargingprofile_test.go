@@ -8,8 +8,7 @@ import (
 	"testing"
 	"time"
 
-	spt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzNewChargingProfile(f *testing.F) {
@@ -113,7 +112,7 @@ func FuzzNewChargingProfile(f *testing.F) {
 			validToPtr = &validTo
 		}
 
-		profile, err := spt.NewChargingProfile(spt.ChargingProfileInput{
+		profile, err := types.NewChargingProfile(types.ChargingProfileInput{
 			ChargingProfileId:      chargingProfileId,
 			TransactionId:          transactionIdPtr,
 			StackLevel:             stackLevel,
@@ -122,9 +121,9 @@ func FuzzNewChargingProfile(f *testing.F) {
 			RecurrencyKind:         recurrencyKindPtr,
 			ValidFrom:              validFromPtr,
 			ValidTo:                validToPtr,
-			ChargingSchedule: st.ChargingScheduleInput{
-				ChargingRateUnit: st.ChargingRateUnitWatts.String(),
-				ChargingSchedulePeriod: []st.ChargingSchedulePeriodInput{
+			ChargingSchedule: types.ChargingScheduleInput{
+				ChargingRateUnit: types.ChargingRateUnitWatts.String(),
+				ChargingSchedulePeriod: []types.ChargingSchedulePeriodInput{
 					{
 						StartPeriod:  0,
 						Limit:        0,
@@ -134,7 +133,7 @@ func FuzzNewChargingProfile(f *testing.F) {
 			},
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

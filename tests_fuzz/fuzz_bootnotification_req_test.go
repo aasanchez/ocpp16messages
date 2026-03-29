@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	bn "github.com/aasanchez/ocpp16messages/bootnotification"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzBootNotificationReq(f *testing.F) {
@@ -55,7 +55,7 @@ func FuzzBootNotificationReq(f *testing.F) {
 			MeterSerialNumber:       nil,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

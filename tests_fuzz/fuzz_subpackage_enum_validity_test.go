@@ -5,27 +5,7 @@ package fuzz
 import (
 	"testing"
 
-	bn "github.com/aasanchez/ocpp16messages/bootnotification/types"
-	cn "github.com/aasanchez/ocpp16messages/cancelreservation/types"
-	av "github.com/aasanchez/ocpp16messages/changeavailability/types"
-	cg "github.com/aasanchez/ocpp16messages/changeconfiguration/types"
-	cc "github.com/aasanchez/ocpp16messages/clearcache/types"
-	cp "github.com/aasanchez/ocpp16messages/clearchargingprofile/types"
-	dt "github.com/aasanchez/ocpp16messages/datatransfer/types"
-	ds "github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification/types"
-	fs "github.com/aasanchez/ocpp16messages/firmwarestatusnotification/types"
-	gc "github.com/aasanchez/ocpp16messages/getcompositeschedule/types"
-	mv "github.com/aasanchez/ocpp16messages/metervalues/types"
-	rs "github.com/aasanchez/ocpp16messages/remotestarttransaction/types"
-	rt "github.com/aasanchez/ocpp16messages/remotestoptransaction/types"
-	rn "github.com/aasanchez/ocpp16messages/reservenow/types"
-	re "github.com/aasanchez/ocpp16messages/reset/types"
-	sl "github.com/aasanchez/ocpp16messages/sendlocallist/types"
-	sc "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
-	sn "github.com/aasanchez/ocpp16messages/statusnotification/types"
-	sr "github.com/aasanchez/ocpp16messages/stoptransaction/types"
-	tm "github.com/aasanchez/ocpp16messages/triggermessage/types"
-	uc "github.com/aasanchez/ocpp16messages/unlockconnector/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func assertIsValidMatchesSet(
@@ -66,7 +46,7 @@ func FuzzBootNotificationRegistrationStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := bn.RegistrationStatus(input)
+		status := types.RegistrationStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }
@@ -89,7 +69,7 @@ func FuzzCancelReservationStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := cn.CancelReservationStatus(input)
+		status := types.CancelReservationStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }
@@ -113,7 +93,7 @@ func FuzzChangeAvailabilityStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := av.AvailabilityStatus(input)
+		status := types.AvailabilityStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }
@@ -136,7 +116,7 @@ func FuzzChangeAvailabilityTypeIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		typ := av.AvailabilityType(input)
+		typ := types.AvailabilityType(input)
 		assertIsValidMatchesSet(t, input, allowed, typ.IsValid())
 	})
 }
@@ -161,7 +141,7 @@ func FuzzChangeConfigurationStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := cg.ConfigurationStatus(input)
+		status := types.ConfigurationStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }
@@ -183,7 +163,7 @@ func FuzzClearCacheStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := cc.ClearCacheStatus(input)
+		status := types.ClearCacheStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }
@@ -206,7 +186,7 @@ func FuzzClearChargingProfileStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := cp.ClearChargingProfileStatus(input)
+		status := types.ClearChargingProfileStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }
@@ -231,7 +211,7 @@ func FuzzDataTransferStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := dt.DataTransferStatus(input)
+		status := types.DataTransferStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }
@@ -256,7 +236,7 @@ func FuzzDiagnosticsStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := ds.DiagnosticsStatus(input)
+		status := types.DiagnosticsStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }
@@ -284,7 +264,7 @@ func FuzzFirmwareStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := fs.FirmwareStatus(input)
+		status := types.FirmwareStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }
@@ -307,7 +287,7 @@ func FuzzGetCompositeScheduleStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := gc.GetCompositeScheduleStatus(input)
+		status := types.GetCompositeScheduleStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }
@@ -333,7 +313,7 @@ func FuzzMeterValuesLocationIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		loc := mv.Location(input)
+		loc := types.Location(input)
 		assertIsValidMatchesSet(t, input, allowed, loc.IsValid())
 	})
 }
@@ -376,7 +356,7 @@ func FuzzMeterValuesMeasurandIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		measurand := mv.Measurand(input)
+		measurand := types.Measurand(input)
 		assertIsValidMatchesSet(t, input, allowed, measurand.IsValid())
 	})
 }
@@ -407,7 +387,7 @@ func FuzzMeterValuesPhaseIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		phase := mv.Phase(input)
+		phase := types.Phase(input)
 		assertIsValidMatchesSet(t, input, allowed, phase.IsValid())
 	})
 }
@@ -436,7 +416,7 @@ func FuzzMeterValuesReadingContextIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		ctx := mv.ReadingContext(input)
+		ctx := types.ReadingContext(input)
 		assertIsValidMatchesSet(t, input, allowed, ctx.IsValid())
 	})
 }
@@ -473,7 +453,7 @@ func FuzzMeterValuesUnitOfMeasureIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		unit := mv.UnitOfMeasure(input)
+		unit := types.UnitOfMeasure(input)
 		assertIsValidMatchesSet(t, input, allowed, unit.IsValid())
 	})
 }
@@ -496,7 +476,7 @@ func FuzzMeterValuesValueFormatIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		format := mv.ValueFormat(input)
+		format := types.ValueFormat(input)
 		assertIsValidMatchesSet(t, input, allowed, format.IsValid())
 	})
 }
@@ -518,7 +498,7 @@ func FuzzRemoteStartTransactionStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := rs.RemoteStartTransactionStatus(input)
+		status := types.RemoteStartTransactionStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }
@@ -540,7 +520,7 @@ func FuzzRemoteStopTransactionStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := rt.RemoteStopTransactionStatus(input)
+		status := types.RemoteStopTransactionStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }
@@ -566,7 +546,7 @@ func FuzzReservationStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := rn.ReservationStatus(input)
+		status := types.ReservationStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }
@@ -588,7 +568,7 @@ func FuzzResetStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := re.ResetStatus(input)
+		status := types.ResetStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }
@@ -611,7 +591,7 @@ func FuzzResetTypeIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		typ := re.ResetType(input)
+		typ := types.ResetType(input)
 		assertIsValidMatchesSet(t, input, allowed, typ.IsValid())
 	})
 }
@@ -636,7 +616,7 @@ func FuzzSendLocalListUpdateStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := sl.UpdateStatus(input)
+		status := types.UpdateStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }
@@ -659,7 +639,7 @@ func FuzzSendLocalListUpdateTypeIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		typ := sl.UpdateType(input)
+		typ := types.UpdateType(input)
 		assertIsValidMatchesSet(t, input, allowed, typ.IsValid())
 	})
 }
@@ -683,7 +663,7 @@ func FuzzChargingProfileKindTypeIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		kind := sc.ChargingProfileKindType(input)
+		kind := types.ChargingProfileKindType(input)
 		assertIsValidMatchesSet(t, input, allowed, kind.IsValid())
 	})
 }
@@ -707,7 +687,7 @@ func FuzzChargingProfileStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := sc.ChargingProfileStatus(input)
+		status := types.ChargingProfileStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }
@@ -730,7 +710,7 @@ func FuzzRecurrencyKindTypeIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		kind := sc.RecurrencyKindType(input)
+		kind := types.RecurrencyKindType(input)
 		assertIsValidMatchesSet(t, input, allowed, kind.IsValid())
 	})
 }
@@ -767,7 +747,7 @@ func FuzzChargePointErrorCodeIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		code := sn.ChargePointErrorCode(input)
+		code := types.ChargePointErrorCode(input)
 		assertIsValidMatchesSet(t, input, allowed, code.IsValid())
 	})
 }
@@ -797,7 +777,7 @@ func FuzzChargePointStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := sn.ChargePointStatus(input)
+		status := types.ChargePointStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }
@@ -829,7 +809,7 @@ func FuzzStopReasonIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		reason := sr.Reason(input)
+		reason := types.Reason(input)
 		assertIsValidMatchesSet(t, input, allowed, reason.IsValid())
 	})
 }
@@ -856,7 +836,7 @@ func FuzzMessageTriggerIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		trigger := tm.MessageTrigger(input)
+		trigger := types.MessageTrigger(input)
 		assertIsValidMatchesSet(t, input, allowed, trigger.IsValid())
 	})
 }
@@ -880,7 +860,7 @@ func FuzzTriggerMessageStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := tm.TriggerMessageStatus(input)
+		status := types.TriggerMessageStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }
@@ -904,7 +884,7 @@ func FuzzUnlockStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := uc.UnlockStatus(input)
+		status := types.UnlockStatus(input)
 		assertIsValidMatchesSet(t, input, allowed, status.IsValid())
 	})
 }

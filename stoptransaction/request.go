@@ -4,9 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	mt "github.com/aasanchez/ocpp16messages/metervalues/types"
-	stt "github.com/aasanchez/ocpp16messages/stoptransaction/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -29,27 +27,27 @@ type ReqInput struct {
 	// May be omitted if the transaction ended normally (Local).
 	Reason *string
 	// Optional: Transaction-related meter values.
-	TransactionData []mt.MeterValueInput
+	TransactionData []types.MeterValueInput
 }
 
 // ReqMessage represents an OCPP 1.6 StopTransaction.req message.
 type ReqMessage struct {
-	TransactionId   st.Integer
-	IdTag           *st.IdToken
-	MeterStop       st.Integer
-	Timestamp       st.DateTime
-	Reason          *stt.Reason
-	TransactionData []mt.MeterValue
+	TransactionId   types.Integer
+	IdTag           *types.IdToken
+	MeterStop       types.Integer
+	Timestamp       types.DateTime
+	Reason          *types.Reason
+	TransactionData []types.MeterValue
 }
 
 // reqValidation holds validated fields during Req construction.
 type reqValidation struct {
-	transactionId   st.Integer
-	idTag           *st.IdToken
-	meterStop       st.Integer
-	timestamp       st.DateTime
-	reason          *stt.Reason
-	transactionData []mt.MeterValue
+	transactionId   types.Integer
+	idTag           *types.IdToken
+	meterStop       types.Integer
+	timestamp       types.DateTime
+	reason          *types.Reason
+	transactionData []types.MeterValue
 }
 
 // Req creates a StopTransaction.req message from the given input.
@@ -66,10 +64,10 @@ func Req(input ReqInput) (ReqMessage, error) {
 
 	if len(errs) > errCountZero {
 		return ReqMessage{
-			TransactionId:   st.Integer{},
+			TransactionId:   types.Integer{},
 			IdTag:           nil,
-			MeterStop:       st.Integer{},
-			Timestamp:       st.DateTime{},
+			MeterStop:       types.Integer{},
+			Timestamp:       types.DateTime{},
 			Reason:          nil,
 			TransactionData: nil,
 		}, errors.Join(errs...)
@@ -120,54 +118,54 @@ func validateReqInput(input ReqInput) (reqValidation, []error) {
 func validateTransactionId(
 	transactionId int,
 	errs []error,
-) (st.Integer, []error) {
-	val, err := st.NewInteger(transactionId)
+) (types.Integer, []error) {
+	val, err := types.NewInteger(transactionId)
 	if err != nil {
-		return st.Integer{}, append(errs, fmt.Errorf("transactionId: %w", err))
+		return types.Integer{}, append(errs, fmt.Errorf("transactionId: %w", err))
 	}
 
 	return val, errs
 }
 
 // validateIdTag validates the idTag field.
-func validateIdTag(idTag string, errs []error) (*st.IdToken, []error) {
-	ciStr, err := st.NewCiString20Type(idTag)
+func validateIdTag(idTag string, errs []error) (*types.IdToken, []error) {
+	ciStr, err := types.NewCiString20Type(idTag)
 	if err != nil {
 		return nil, append(errs, fmt.Errorf("idTag: %w", err))
 	}
 
-	token := st.NewIdToken(ciStr)
+	token := types.NewIdToken(ciStr)
 
 	return &token, errs
 }
 
 // validateMeterStop validates the meterStop field.
-func validateMeterStop(meterStop int, errs []error) (st.Integer, []error) {
-	val, err := st.NewInteger(meterStop)
+func validateMeterStop(meterStop int, errs []error) (types.Integer, []error) {
+	val, err := types.NewInteger(meterStop)
 	if err != nil {
-		return st.Integer{}, append(errs, fmt.Errorf("meterStop: %w", err))
+		return types.Integer{}, append(errs, fmt.Errorf("meterStop: %w", err))
 	}
 
 	return val, errs
 }
 
 // validateTimestamp validates the timestamp field.
-func validateTimestamp(timestamp string, errs []error) (st.DateTime, []error) {
-	val, err := st.NewDateTime(timestamp)
+func validateTimestamp(timestamp string, errs []error) (types.DateTime, []error) {
+	val, err := types.NewDateTime(timestamp)
 	if err != nil {
-		return st.DateTime{}, append(errs, fmt.Errorf("timestamp: %w", err))
+		return types.DateTime{}, append(errs, fmt.Errorf("timestamp: %w", err))
 	}
 
 	return val, errs
 }
 
 // validateReason validates the reason field.
-func validateReason(reason string, errs []error) (*stt.Reason, []error) {
-	reasonVal := stt.Reason(reason)
+func validateReason(reason string, errs []error) (*types.Reason, []error) {
+	reasonVal := types.Reason(reason)
 	if !reasonVal.IsValid() {
 		return nil, append(
 			errs,
-			fmt.Errorf("reason: %w: %s", st.ErrInvalidValue, reason),
+			fmt.Errorf("reason: %w: %s", types.ErrInvalidValue, reason),
 		)
 	}
 
@@ -176,19 +174,19 @@ func validateReason(reason string, errs []error) (*stt.Reason, []error) {
 
 // validateTransactionData validates the transactionData field.
 func validateTransactionData(
-	transactionData []mt.MeterValueInput,
+	transactionData []types.MeterValueInput,
 	errs []error,
-) ([]mt.MeterValue, []error) {
+) ([]types.MeterValue, []error) {
 	const transactionDataEmpty = 0
 
 	if transactionData == nil {
 		return nil, errs
 	}
 
-	var validValues []mt.MeterValue
+	var validValues []types.MeterValue
 
 	for i, mvInput := range transactionData {
-		meterValue, err := mt.NewMeterValue(mvInput)
+		meterValue, err := types.NewMeterValue(mvInput)
 		if err != nil {
 			errs = append(errs, fmt.Errorf("transactionData[%d]: %w", i, err))
 		} else {
@@ -197,7 +195,7 @@ func validateTransactionData(
 	}
 
 	if len(transactionData) == transactionDataEmpty {
-		return []mt.MeterValue{}, errs
+		return []types.MeterValue{}, errs
 	}
 
 	return validValues, errs

@@ -3,8 +3,7 @@ package diagnosticsstatusnotification
 import (
 	"fmt"
 
-	dn "github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ReqInput represents the raw input data for creating a
@@ -16,17 +15,17 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 DiagnosticsStatusNotification.req message.
 type ReqMessage struct {
-	Status dn.DiagnosticsStatus
+	Status types.DiagnosticsStatus
 }
 
 // Req creates a DiagnosticsStatusNotification.req message from the given input.
 // It validates all fields and returns an error if:
 //   - Status is not a valid DiagnosticsStatus value
 func Req(input ReqInput) (ReqMessage, error) {
-	status := dn.DiagnosticsStatus(input.Status)
+	status := types.DiagnosticsStatus(input.Status)
 
 	if !status.IsValid() {
-		return ReqMessage{}, fmt.Errorf("status: %w", st.ErrInvalidValue)
+		return ReqMessage{}, fmt.Errorf("status: %w", types.ErrInvalidValue)
 	}
 
 	return ReqMessage{Status: status}, nil

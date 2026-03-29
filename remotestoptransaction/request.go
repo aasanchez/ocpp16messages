@@ -3,7 +3,7 @@ package remotestoptransaction
 import (
 	"fmt"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ReqInput represents the raw input data for creating a
@@ -16,14 +16,14 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 RemoteStopTransaction.req message.
 type ReqMessage struct {
-	TransactionId st.Integer
+	TransactionId types.Integer
 }
 
 // Req creates a RemoteStopTransaction.req message from the given input.
 // It validates all fields and returns an error if:
 //   - TransactionId is negative or exceeds uint16 max value (65535)
 func Req(input ReqInput) (ReqMessage, error) {
-	transactionId, err := st.NewInteger(input.TransactionId)
+	transactionId, err := types.NewInteger(input.TransactionId)
 	if err != nil {
 		return ReqMessage{}, fmt.Errorf("transactionId: %w", err)
 	}

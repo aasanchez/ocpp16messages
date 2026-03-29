@@ -7,8 +7,7 @@ import (
 	"testing"
 
 	gc "github.com/aasanchez/ocpp16messages/getconfiguration"
-	gt "github.com/aasanchez/ocpp16messages/getconfiguration/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzGetConfigurationConf(f *testing.F) {
@@ -35,19 +34,19 @@ func FuzzGetConfigurationConf(f *testing.F) {
 			t.Skip()
 		}
 
-		var configurationKey []gt.KeyValueInput
+		var configurationKey []types.KeyValueInput
 		switch configMode % 3 {
 		case 0:
 			configurationKey = nil
 		case 1:
-			configurationKey = []gt.KeyValueInput{}
+			configurationKey = []types.KeyValueInput{}
 		default:
 			var valuePtr *string
 			if hasValue {
 				valuePtr = &value
 			}
 
-			configurationKey = []gt.KeyValueInput{
+			configurationKey = []types.KeyValueInput{
 				{
 					Key:      key,
 					Readonly: readonly,
@@ -71,7 +70,7 @@ func FuzzGetConfigurationConf(f *testing.F) {
 			UnknownKey:       unknownKeys,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

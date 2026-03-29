@@ -3,7 +3,7 @@ package getlocallistversion
 import (
 	"fmt"
 
-	mt "github.com/aasanchez/ocpp16messages/getlocallistversion/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ConfInput represents the raw input data for creating a
@@ -19,14 +19,14 @@ type ConfInput struct {
 
 // ConfMessage represents an OCPP 1.6 GetLocalListVersion.conf message.
 type ConfMessage struct {
-	ListVersion mt.ListVersionNumber
+	ListVersion types.ListVersionNumber
 }
 
 // Conf creates a GetLocalListVersion.conf message from the given input.
 // It validates all fields and returns an error if:
 //   - ListVersion cannot be converted to a valid int32
 func Conf(input ConfInput) (ConfMessage, error) {
-	listVersion, err := mt.NewListVersionNumber(input.ListVersion)
+	listVersion, err := types.NewListVersionNumber(input.ListVersion)
 	if err != nil {
 		return ConfMessage{}, fmt.Errorf("listVersion: %w", err)
 	}

@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/metervalues"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -34,10 +34,10 @@ func TestReq_ValidMinimalInput(t *testing.T) {
 	input := metervalues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: nil,
-		MeterValue: []st.MeterValueInput{
+		MeterValue: []types.MeterValueInput{
 			{
 				Timestamp: validTimestampReq,
-				SampledValue: []st.SampledValueInput{
+				SampledValue: []types.SampledValueInput{
 					{
 						Value:     validValueReq,
 						Context:   nil,
@@ -54,12 +54,12 @@ func TestReq_ValidMinimalInput(t *testing.T) {
 
 	req, err := metervalues.Req(input)
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId.Value() != validConnectorId {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			validConnectorId,
 			req.ConnectorId.Value(),
 		)
@@ -67,7 +67,7 @@ func TestReq_ValidMinimalInput(t *testing.T) {
 
 	if len(req.MeterValue) != expectedMeterCount1 {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			expectedMeterCount1,
 			len(req.MeterValue),
 		)
@@ -80,10 +80,10 @@ func TestReq_ValidWithTransactionId(t *testing.T) {
 	input := metervalues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: intPtr(validTransactionId),
-		MeterValue: []st.MeterValueInput{
+		MeterValue: []types.MeterValueInput{
 			{
 				Timestamp: validTimestampReq,
-				SampledValue: []st.SampledValueInput{
+				SampledValue: []types.SampledValueInput{
 					{
 						Value:     validValueReq,
 						Context:   nil,
@@ -100,16 +100,16 @@ func TestReq_ValidWithTransactionId(t *testing.T) {
 
 	req, err := metervalues.Req(input)
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.TransactionId == nil {
-		t.Errorf(st.ErrorWantNonNil, "TransactionId")
+		t.Errorf(types.ErrorWantNonNil, "TransactionId")
 	}
 
 	if req.TransactionId.Value() != validTransactionId {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			validTransactionId,
 			req.TransactionId.Value(),
 		)
@@ -122,10 +122,10 @@ func TestReq_ValidConnectorIdZero(t *testing.T) {
 	input := metervalues.ReqInput{
 		ConnectorId:   connectorIdZero,
 		TransactionId: nil,
-		MeterValue: []st.MeterValueInput{
+		MeterValue: []types.MeterValueInput{
 			{
 				Timestamp: validTimestampReq,
-				SampledValue: []st.SampledValueInput{
+				SampledValue: []types.SampledValueInput{
 					{
 						Value:     validValueReq,
 						Context:   nil,
@@ -142,12 +142,12 @@ func TestReq_ValidConnectorIdZero(t *testing.T) {
 
 	req, err := metervalues.Req(input)
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId.Value() != connectorIdZero {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			connectorIdZero,
 			req.ConnectorId.Value(),
 		)
@@ -160,10 +160,10 @@ func TestReq_ValidMultipleMeterValues(t *testing.T) {
 	input := metervalues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: nil,
-		MeterValue: []st.MeterValueInput{
+		MeterValue: []types.MeterValueInput{
 			{
 				Timestamp: "2025-01-02T15:00:00Z",
-				SampledValue: []st.SampledValueInput{
+				SampledValue: []types.SampledValueInput{
 					{
 						Value:     "100",
 						Context:   nil,
@@ -177,7 +177,7 @@ func TestReq_ValidMultipleMeterValues(t *testing.T) {
 			},
 			{
 				Timestamp: "2025-01-02T15:05:00Z",
-				SampledValue: []st.SampledValueInput{
+				SampledValue: []types.SampledValueInput{
 					{
 						Value:     "150",
 						Context:   nil,
@@ -194,12 +194,12 @@ func TestReq_ValidMultipleMeterValues(t *testing.T) {
 
 	req, err := metervalues.Req(input)
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if len(req.MeterValue) != expectedMeterCount2 {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			expectedMeterCount2,
 			len(req.MeterValue),
 		)
@@ -212,10 +212,10 @@ func TestReq_NegativeConnectorId(t *testing.T) {
 	input := metervalues.ReqInput{
 		ConnectorId:   negativeConnectorId,
 		TransactionId: nil,
-		MeterValue: []st.MeterValueInput{
+		MeterValue: []types.MeterValueInput{
 			{
 				Timestamp: validTimestampReq,
-				SampledValue: []st.SampledValueInput{
+				SampledValue: []types.SampledValueInput{
 					{
 						Value:     validValueReq,
 						Context:   nil,
@@ -232,11 +232,11 @@ func TestReq_NegativeConnectorId(t *testing.T) {
 
 	_, err := metervalues.Req(input)
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "negative connector id")
+		t.Errorf(types.ErrorWantNil, "negative connector id")
 	}
 
 	if !strings.Contains(err.Error(), fieldConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, fieldConnectorId)
+		t.Errorf(types.ErrorWantContains, err, fieldConnectorId)
 	}
 }
 
@@ -246,10 +246,10 @@ func TestReq_NegativeTransactionId(t *testing.T) {
 	input := metervalues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: intPtr(invalidTransactionId),
-		MeterValue: []st.MeterValueInput{
+		MeterValue: []types.MeterValueInput{
 			{
 				Timestamp: validTimestampReq,
-				SampledValue: []st.SampledValueInput{
+				SampledValue: []types.SampledValueInput{
 					{
 						Value:     validValueReq,
 						Context:   nil,
@@ -266,11 +266,11 @@ func TestReq_NegativeTransactionId(t *testing.T) {
 
 	_, err := metervalues.Req(input)
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "negative transaction id")
+		t.Errorf(types.ErrorWantNil, "negative transaction id")
 	}
 
 	if !strings.Contains(err.Error(), fieldTransactionId) {
-		t.Errorf(st.ErrorWantContains, err, fieldTransactionId)
+		t.Errorf(types.ErrorWantContains, err, fieldTransactionId)
 	}
 }
 
@@ -280,16 +280,16 @@ func TestReq_EmptyMeterValue(t *testing.T) {
 	input := metervalues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: nil,
-		MeterValue:    []st.MeterValueInput{},
+		MeterValue:    []types.MeterValueInput{},
 	}
 
 	_, err := metervalues.Req(input)
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty meter value")
+		t.Errorf(types.ErrorWantNil, "empty meter value")
 	}
 
 	if !strings.Contains(err.Error(), fieldMeterValue) {
-		t.Errorf(st.ErrorWantContains, err, fieldMeterValue)
+		t.Errorf(types.ErrorWantContains, err, fieldMeterValue)
 	}
 }
 
@@ -304,11 +304,11 @@ func TestReq_NilMeterValue(t *testing.T) {
 
 	_, err := metervalues.Req(input)
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "nil meter value")
+		t.Errorf(types.ErrorWantNil, "nil meter value")
 	}
 
 	if !strings.Contains(err.Error(), fieldMeterValue) {
-		t.Errorf(st.ErrorWantContains, err, fieldMeterValue)
+		t.Errorf(types.ErrorWantContains, err, fieldMeterValue)
 	}
 }
 
@@ -318,10 +318,10 @@ func TestReq_InvalidMeterValue(t *testing.T) {
 	input := metervalues.ReqInput{
 		ConnectorId:   validConnectorId,
 		TransactionId: nil,
-		MeterValue: []st.MeterValueInput{
+		MeterValue: []types.MeterValueInput{
 			{
 				Timestamp: "invalid-timestamp",
-				SampledValue: []st.SampledValueInput{
+				SampledValue: []types.SampledValueInput{
 					{
 						Value:     validValueReq,
 						Context:   nil,
@@ -338,11 +338,11 @@ func TestReq_InvalidMeterValue(t *testing.T) {
 
 	_, err := metervalues.Req(input)
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "invalid meter value")
+		t.Errorf(types.ErrorWantNil, "invalid meter value")
 	}
 
 	if !strings.Contains(err.Error(), "meterValue[0]") {
-		t.Errorf(st.ErrorWantContains, err, "meterValue[0]")
+		t.Errorf(types.ErrorWantContains, err, "meterValue[0]")
 	}
 }
 
@@ -357,18 +357,18 @@ func TestReq_MultipleErrors(t *testing.T) {
 
 	_, err := metervalues.Req(input)
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "multiple errors")
+		t.Errorf(types.ErrorWantNil, "multiple errors")
 	}
 
 	if !strings.Contains(err.Error(), fieldConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, fieldConnectorId)
+		t.Errorf(types.ErrorWantContains, err, fieldConnectorId)
 	}
 
 	if !strings.Contains(err.Error(), fieldTransactionId) {
-		t.Errorf(st.ErrorWantContains, err, fieldTransactionId)
+		t.Errorf(types.ErrorWantContains, err, fieldTransactionId)
 	}
 
 	if !strings.Contains(err.Error(), fieldMeterValue) {
-		t.Errorf(st.ErrorWantContains, err, fieldMeterValue)
+		t.Errorf(types.ErrorWantContains, err, fieldMeterValue)
 	}
 }

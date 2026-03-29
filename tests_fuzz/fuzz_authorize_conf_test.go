@@ -8,16 +8,16 @@ import (
 	"time"
 
 	"github.com/aasanchez/ocpp16messages/authorize"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzAuthorizeConf(f *testing.F) {
-	f.Add(st.AuthorizationStatusAccepted.String(), false, "", false, "")
-	f.Add(st.AuthorizationStatusAccepted.String(), true, "2025-01-15T10:30:00Z", false, "")
-	f.Add(st.AuthorizationStatusAccepted.String(), false, "", true, "PARENT-123")
-	f.Add(st.AuthorizationStatusInvalid.String(), false, "", false, "")
-	f.Add(st.AuthorizationStatusAccepted.String(), true, "bad-time", false, "")
-	f.Add(st.AuthorizationStatusAccepted.String(), false, "", true, "")
+	f.Add(types.AuthorizationStatusAccepted.String(), false, "", false, "")
+	f.Add(types.AuthorizationStatusAccepted.String(), true, "2025-01-15T10:30:00Z", false, "")
+	f.Add(types.AuthorizationStatusAccepted.String(), false, "", true, "PARENT-123")
+	f.Add(types.AuthorizationStatusInvalid.String(), false, "", false, "")
+	f.Add(types.AuthorizationStatusAccepted.String(), true, "bad-time", false, "")
+	f.Add(types.AuthorizationStatusAccepted.String(), false, "", true, "")
 
 	f.Fuzz(func(
 		t *testing.T,
@@ -49,7 +49,7 @@ func FuzzAuthorizeConf(f *testing.F) {
 			ParentIdTag: parentIdTagPtr,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrEmptyValue) && !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrEmptyValue) && !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

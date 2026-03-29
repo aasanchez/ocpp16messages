@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	cc "github.com/aasanchez/ocpp16messages/changeconfiguration"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -31,15 +31,15 @@ func TestReq_Valid_SimpleKeyValue(t *testing.T) {
 
 	req, err := cc.Req(input)
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Key.Value() != validKey {
-		t.Errorf(st.ErrorMismatchValue, validKey, req.Key.Value())
+		t.Errorf(types.ErrorMismatchValue, validKey, req.Key.Value())
 	}
 
 	if req.Value.Value() != validValue {
-		t.Errorf(st.ErrorMismatchValue, validValue, req.Value.Value())
+		t.Errorf(types.ErrorMismatchValue, validValue, req.Value.Value())
 	}
 }
 
@@ -50,11 +50,11 @@ func TestReq_EmptyValue(t *testing.T) {
 
 	_, err := cc.Req(input)
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty value")
+		t.Errorf(types.ErrorWantNil, "empty value")
 	}
 
 	if !strings.Contains(err.Error(), errValue) {
-		t.Errorf(st.ErrorWantContains, err, errValue)
+		t.Errorf(types.ErrorWantContains, err, errValue)
 	}
 }
 
@@ -66,11 +66,11 @@ func TestReq_Valid_MaxKeyLength(t *testing.T) {
 
 	req, err := cc.Req(input)
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Key.Value() != maxKey {
-		t.Errorf(st.ErrorMismatchValue, maxKey, req.Key.Value())
+		t.Errorf(types.ErrorMismatchValue, maxKey, req.Key.Value())
 	}
 }
 
@@ -82,11 +82,11 @@ func TestReq_Valid_MaxValueLength(t *testing.T) {
 
 	req, err := cc.Req(input)
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.Value.Value() != maxValue {
-		t.Errorf(st.ErrorMismatchValue, maxValue, req.Value.Value())
+		t.Errorf(types.ErrorMismatchValue, maxValue, req.Value.Value())
 	}
 }
 
@@ -97,11 +97,11 @@ func TestReq_EmptyKey(t *testing.T) {
 
 	_, err := cc.Req(input)
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty key")
+		t.Errorf(types.ErrorWantNil, "empty key")
 	}
 
 	if !strings.Contains(err.Error(), errKey) {
-		t.Errorf(st.ErrorWantContains, err, errKey)
+		t.Errorf(types.ErrorWantContains, err, errKey)
 	}
 }
 
@@ -113,11 +113,11 @@ func TestReq_KeyTooLong(t *testing.T) {
 
 	_, err := cc.Req(input)
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "key too long")
+		t.Errorf(types.ErrorWantNil, "key too long")
 	}
 
 	if !strings.Contains(err.Error(), errKey) {
-		t.Errorf(st.ErrorWantContains, err, errKey)
+		t.Errorf(types.ErrorWantContains, err, errKey)
 	}
 }
 
@@ -129,11 +129,11 @@ func TestReq_ValueTooLong(t *testing.T) {
 
 	_, err := cc.Req(input)
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "value too long")
+		t.Errorf(types.ErrorWantNil, "value too long")
 	}
 
 	if !strings.Contains(err.Error(), errValue) {
-		t.Errorf(st.ErrorWantContains, err, errValue)
+		t.Errorf(types.ErrorWantContains, err, errValue)
 	}
 }
 
@@ -144,11 +144,11 @@ func TestReq_KeyWithNonPrintableChar(t *testing.T) {
 
 	_, err := cc.Req(input)
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "key with non-printable char")
+		t.Errorf(types.ErrorWantNil, "key with non-printable char")
 	}
 
 	if !strings.Contains(err.Error(), errKey) {
-		t.Errorf(st.ErrorWantContains, err, errKey)
+		t.Errorf(types.ErrorWantContains, err, errKey)
 	}
 }
 
@@ -159,11 +159,11 @@ func TestReq_ValueWithNonPrintableChar(t *testing.T) {
 
 	_, err := cc.Req(input)
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "value with non-printable char")
+		t.Errorf(types.ErrorWantNil, "value with non-printable char")
 	}
 
 	if !strings.Contains(err.Error(), errValue) {
-		t.Errorf(st.ErrorWantContains, err, errValue)
+		t.Errorf(types.ErrorWantContains, err, errValue)
 	}
 }
 
@@ -175,14 +175,14 @@ func TestReq_MultipleErrors_EmptyKeyAndValueTooLong(t *testing.T) {
 
 	_, err := cc.Req(input)
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "multiple invalid fields")
+		t.Errorf(types.ErrorWantNil, "multiple invalid fields")
 	}
 
 	if !strings.Contains(err.Error(), errKey) {
-		t.Errorf(st.ErrorWantContains, err, errKey)
+		t.Errorf(types.ErrorWantContains, err, errKey)
 	}
 
 	if !strings.Contains(err.Error(), errValue) {
-		t.Errorf(st.ErrorWantContains, err, errValue)
+		t.Errorf(types.ErrorWantContains, err, errValue)
 	}
 }

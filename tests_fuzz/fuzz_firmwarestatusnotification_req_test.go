@@ -7,17 +7,16 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/firmwarestatusnotification"
-	ft "github.com/aasanchez/ocpp16messages/firmwarestatusnotification/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzFirmwareStatusNotificationReq(f *testing.F) {
-	f.Add(ft.FirmwareStatusDownloaded.String())
-	f.Add(ft.FirmwareStatusDownloadFailed.String())
-	f.Add(ft.FirmwareStatusDownloading.String())
-	f.Add(ft.FirmwareStatusInstalled.String())
-	f.Add(ft.FirmwareStatusInstallationFailed.String())
-	f.Add(ft.FirmwareStatusInstalling.String())
+	f.Add(types.FirmwareStatusDownloaded.String())
+	f.Add(types.FirmwareStatusDownloadFailed.String())
+	f.Add(types.FirmwareStatusDownloading.String())
+	f.Add(types.FirmwareStatusInstalled.String())
+	f.Add(types.FirmwareStatusInstallationFailed.String())
+	f.Add(types.FirmwareStatusInstalling.String())
 	f.Add("bad-status")
 
 	f.Fuzz(func(t *testing.T, status string) {
@@ -31,7 +30,7 @@ func FuzzFirmwareStatusNotificationReq(f *testing.F) {
 			},
 		)
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

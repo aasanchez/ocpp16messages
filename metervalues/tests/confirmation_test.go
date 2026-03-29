@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/metervalues"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func TestConf_Success(t *testing.T) {
@@ -14,7 +14,7 @@ func TestConf_Success(t *testing.T) {
 
 	_, err := metervalues.Conf(input)
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 }
 
@@ -25,11 +25,11 @@ func TestConf_ReturnsEmptyMessage(t *testing.T) {
 
 	conf, err := metervalues.Conf(input)
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	expected := metervalues.ConfMessage{}
 	if conf != expected {
-		t.Errorf(st.ErrorMismatchValue, expected, conf)
+		t.Errorf(types.ErrorMismatchValue, expected, conf)
 	}
 }

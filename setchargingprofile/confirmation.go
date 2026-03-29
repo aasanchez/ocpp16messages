@@ -3,8 +3,7 @@ package setchargingprofile
 import (
 	"fmt"
 
-	spt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
-	"github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ConfInput represents the raw input data for creating a
@@ -18,14 +17,14 @@ type ConfInput struct {
 
 // ConfMessage represents an OCPP 1.6 SetChargingProfile.conf message.
 type ConfMessage struct {
-	Status spt.ChargingProfileStatus
+	Status types.ChargingProfileStatus
 }
 
 // Conf creates a SetChargingProfile.conf message from the given input.
 // It validates all fields and returns an error if:
 //   - Status is not a valid ChargingProfileStatus value
 func Conf(input ConfInput) (ConfMessage, error) {
-	status := spt.ChargingProfileStatus(input.Status)
+	status := types.ChargingProfileStatus(input.Status)
 
 	if !status.IsValid() {
 		return ConfMessage{}, fmt.Errorf("status: %w", types.ErrInvalidValue)

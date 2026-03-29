@@ -5,8 +5,7 @@ import (
 	"testing"
 
 	gcs "github.com/aasanchez/ocpp16messages/getcompositeschedule"
-	gt "github.com/aasanchez/ocpp16messages/getcompositeschedule/types"
-	"github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -42,10 +41,10 @@ func TestConf_Valid_AcceptedOnly(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != gt.GetCompositeScheduleStatusAccepted {
+	if conf.Status != types.GetCompositeScheduleStatusAccepted {
 		t.Errorf(
 			types.ErrorMismatch,
-			gt.GetCompositeScheduleStatusAccepted,
+			types.GetCompositeScheduleStatusAccepted,
 			conf.Status,
 		)
 	}
@@ -79,10 +78,10 @@ func TestConf_Valid_RejectedOnly(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != gt.GetCompositeScheduleStatusRejected {
+	if conf.Status != types.GetCompositeScheduleStatusRejected {
 		t.Errorf(
 			types.ErrorMismatch,
-			gt.GetCompositeScheduleStatusRejected,
+			types.GetCompositeScheduleStatusRejected,
 			conf.Status,
 		)
 	}
@@ -218,10 +217,10 @@ func TestConf_Valid_WithAllFields(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != gt.GetCompositeScheduleStatusAccepted {
+	if conf.Status != types.GetCompositeScheduleStatusAccepted {
 		t.Errorf(
 			types.ErrorMismatch,
-			gt.GetCompositeScheduleStatusAccepted,
+			types.GetCompositeScheduleStatusAccepted,
 			conf.Status,
 		)
 	}

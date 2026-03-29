@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/metervalues"
-	"github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func TestMeterValuesReq_JSONRoundTrip(t *testing.T) {

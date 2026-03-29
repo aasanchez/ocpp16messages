@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ReqInput represents the raw input data for creating a ChangeConfiguration.req
@@ -16,8 +16,8 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 ChangeConfiguration.req message.
 type ReqMessage struct {
-	Key   st.CiString50Type
-	Value st.CiString500Type
+	Key   types.CiString50Type
+	Value types.CiString500Type
 }
 
 // Req creates a ChangeConfiguration.req message from the given input.
@@ -30,12 +30,12 @@ type ReqMessage struct {
 func Req(input ReqInput) (ReqMessage, error) {
 	var errs []error
 
-	key, err := st.NewCiString50Type(input.Key)
+	key, err := types.NewCiString50Type(input.Key)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("key: %w", err))
 	}
 
-	value, err := st.NewCiString500Type(input.Value)
+	value, err := types.NewCiString500Type(input.Value)
 	if err != nil {
 		errs = append(errs, fmt.Errorf("value: %w", err))
 	}

@@ -8,15 +8,14 @@ import (
 	"testing"
 
 	tm "github.com/aasanchez/ocpp16messages/triggermessage"
-	tt "github.com/aasanchez/ocpp16messages/triggermessage/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzTriggerMessageReq(f *testing.F) {
-	f.Add(tt.MessageTriggerBootNotification.String(), false, 0)
-	f.Add(tt.MessageTriggerHeartbeat.String(), true, 1)
+	f.Add(types.MessageTriggerBootNotification.String(), false, 0)
+	f.Add(types.MessageTriggerHeartbeat.String(), true, 1)
 	f.Add("invalid-trigger", false, 0)
-	f.Add(tt.MessageTriggerMeterValues.String(), true, -1)
+	f.Add(types.MessageTriggerMeterValues.String(), true, -1)
 
 	f.Fuzz(func(
 		t *testing.T,
@@ -38,7 +37,7 @@ func FuzzTriggerMessageReq(f *testing.F) {
 			ConnectorId:      connectorIdPtr,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

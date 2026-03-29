@@ -5,8 +5,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/sendlocallist"
-	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -20,13 +19,13 @@ func TestConf_Valid_Accepted(t *testing.T) {
 		Status: "Accepted",
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != slt.UpdateStatusAccepted {
+	if conf.Status != types.UpdateStatusAccepted {
 		t.Errorf(
-			st.ErrorMismatch,
-			slt.UpdateStatusAccepted,
+			types.ErrorMismatch,
+			types.UpdateStatusAccepted,
 			conf.Status,
 		)
 	}
@@ -39,13 +38,13 @@ func TestConf_Valid_Failed(t *testing.T) {
 		Status: "Failed",
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != slt.UpdateStatusFailed {
+	if conf.Status != types.UpdateStatusFailed {
 		t.Errorf(
-			st.ErrorMismatch,
-			slt.UpdateStatusFailed,
+			types.ErrorMismatch,
+			types.UpdateStatusFailed,
 			conf.Status,
 		)
 	}
@@ -58,13 +57,13 @@ func TestConf_Valid_NotSupported(t *testing.T) {
 		Status: "NotSupported",
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != slt.UpdateStatusNotSupported {
+	if conf.Status != types.UpdateStatusNotSupported {
 		t.Errorf(
-			st.ErrorMismatch,
-			slt.UpdateStatusNotSupported,
+			types.ErrorMismatch,
+			types.UpdateStatusNotSupported,
 			conf.Status,
 		)
 	}
@@ -77,13 +76,13 @@ func TestConf_Valid_VersionMismatch(t *testing.T) {
 		Status: "VersionMismatch",
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != slt.UpdateStatusVersionMismatch {
+	if conf.Status != types.UpdateStatusVersionMismatch {
 		t.Errorf(
-			st.ErrorMismatch,
-			slt.UpdateStatusVersionMismatch,
+			types.ErrorMismatch,
+			types.UpdateStatusVersionMismatch,
 			conf.Status,
 		)
 	}
@@ -96,11 +95,11 @@ func TestConf_InvalidStatus_Empty(t *testing.T) {
 		Status: "",
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty status")
+		t.Errorf(types.ErrorWantNil, "empty status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -111,11 +110,11 @@ func TestConf_InvalidStatus_Unknown(t *testing.T) {
 		Status: "Unknown",
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "unknown status")
+		t.Errorf(types.ErrorWantNil, "unknown status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -126,10 +125,10 @@ func TestConf_InvalidStatus_Lowercase(t *testing.T) {
 		Status: "accepted",
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "lowercase status")
+		t.Errorf(types.ErrorWantNil, "lowercase status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }

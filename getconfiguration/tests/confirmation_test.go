@@ -6,8 +6,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/getconfiguration"
-	gt "github.com/aasanchez/ocpp16messages/getconfiguration/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -39,7 +38,7 @@ func TestConf_Valid_Empty(t *testing.T) {
 		UnknownKey:       nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if len(conf.ConfigurationKey) != expectedCountZero {
@@ -65,7 +64,7 @@ func TestConf_Valid_SingleConfigKey(t *testing.T) {
 	value := testValidConfigValue
 
 	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
-		ConfigurationKey: []gt.KeyValueInput{
+		ConfigurationKey: []types.KeyValueInput{
 			{
 				Key:      testValidConfigKey,
 				Readonly: false,
@@ -75,7 +74,7 @@ func TestConf_Valid_SingleConfigKey(t *testing.T) {
 		UnknownKey: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if len(conf.ConfigurationKey) != expectedCountOne {
@@ -90,7 +89,7 @@ func TestConf_Valid_SingleConfigKey(t *testing.T) {
 
 	if conf.ConfigurationKey[0].Key().Value() != testValidConfigKey {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			testValidConfigKey,
 			conf.ConfigurationKey[0].Key().Value(),
 		)
@@ -98,7 +97,7 @@ func TestConf_Valid_SingleConfigKey(t *testing.T) {
 
 	if conf.ConfigurationKey[0].Value().Value() != testValidConfigValue {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			testValidConfigValue,
 			conf.ConfigurationKey[0].Value().Value(),
 		)
@@ -111,7 +110,7 @@ func TestConf_Valid_ReadonlyKey(t *testing.T) {
 	value := "Core"
 
 	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
-		ConfigurationKey: []gt.KeyValueInput{
+		ConfigurationKey: []types.KeyValueInput{
 			{
 				Key:      "SupportedFeatureProfiles",
 				Readonly: true,
@@ -121,7 +120,7 @@ func TestConf_Valid_ReadonlyKey(t *testing.T) {
 		UnknownKey: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if !conf.ConfigurationKey[0].Readonly() {
@@ -133,7 +132,7 @@ func TestConf_Valid_KeyWithNoValue(t *testing.T) {
 	t.Parallel()
 
 	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
-		ConfigurationKey: []gt.KeyValueInput{
+		ConfigurationKey: []types.KeyValueInput{
 			{
 				Key:      "AuthorizationKey",
 				Readonly: false,
@@ -143,7 +142,7 @@ func TestConf_Valid_KeyWithNoValue(t *testing.T) {
 		UnknownKey: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if conf.ConfigurationKey[0].Value() != nil {
@@ -159,7 +158,7 @@ func TestConf_Valid_SingleUnknownKey(t *testing.T) {
 		UnknownKey:       []string{testUnknownKey},
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if len(conf.UnknownKey) != expectedCountOne {
@@ -169,7 +168,7 @@ func TestConf_Valid_SingleUnknownKey(t *testing.T) {
 	}
 
 	if conf.UnknownKey[0].Value() != testUnknownKey {
-		t.Errorf(st.ErrorMismatch, testUnknownKey, conf.UnknownKey[0].Value())
+		t.Errorf(types.ErrorMismatch, testUnknownKey, conf.UnknownKey[0].Value())
 	}
 }
 
@@ -181,7 +180,7 @@ func TestConf_Valid_MultipleUnknownKeys(t *testing.T) {
 		UnknownKey:       []string{testUnknownKey, testUnknownKeyTwo},
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if len(conf.UnknownKey) != expectedCountTwo {
@@ -195,7 +194,7 @@ func TestConf_Valid_Complete(t *testing.T) {
 	value := testValidConfigValue
 
 	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
-		ConfigurationKey: []gt.KeyValueInput{
+		ConfigurationKey: []types.KeyValueInput{
 			{
 				Key:      testValidConfigKey,
 				Readonly: false,
@@ -205,7 +204,7 @@ func TestConf_Valid_Complete(t *testing.T) {
 		UnknownKey: []string{testUnknownKey},
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if len(conf.ConfigurationKey) != expectedCountOne {
@@ -227,7 +226,7 @@ func TestConf_Valid_MaxLengthValue(t *testing.T) {
 	maxValue := strings.Repeat("v", valueMaxLength)
 
 	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
-		ConfigurationKey: []gt.KeyValueInput{
+		ConfigurationKey: []types.KeyValueInput{
 			{
 				Key:      testValidConfigKey,
 				Readonly: false,
@@ -237,12 +236,12 @@ func TestConf_Valid_MaxLengthValue(t *testing.T) {
 		UnknownKey: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	configValue := conf.ConfigurationKey[0].Value().Value()
 	if configValue != maxValue {
-		t.Errorf(st.ErrorMismatch, maxValue, configValue)
+		t.Errorf(types.ErrorMismatch, maxValue, configValue)
 	}
 }
 
@@ -250,7 +249,7 @@ func TestConf_EmptyConfigKey(t *testing.T) {
 	t.Parallel()
 
 	_, err := getconfiguration.Conf(getconfiguration.ConfInput{
-		ConfigurationKey: []gt.KeyValueInput{
+		ConfigurationKey: []types.KeyValueInput{
 			{
 				Key:      "",
 				Readonly: false,
@@ -263,12 +262,12 @@ func TestConf_EmptyConfigKey(t *testing.T) {
 		t.Error("Conf() error = nil, want error for empty config key")
 	}
 
-	if !errors.Is(err, st.ErrEmptyValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrEmptyValue)
+	if !errors.Is(err, types.ErrEmptyValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrEmptyValue)
 	}
 
 	if !strings.Contains(err.Error(), errFieldConfigKey) {
-		t.Errorf(st.ErrorWantContains, err, errFieldConfigKey)
+		t.Errorf(types.ErrorWantContains, err, errFieldConfigKey)
 	}
 }
 
@@ -278,7 +277,7 @@ func TestConf_ConfigKeyTooLong(t *testing.T) {
 	longKey := strings.Repeat("k", keyMaxLengthPlusOne)
 
 	_, err := getconfiguration.Conf(getconfiguration.ConfInput{
-		ConfigurationKey: []gt.KeyValueInput{
+		ConfigurationKey: []types.KeyValueInput{
 			{
 				Key:      longKey,
 				Readonly: false,
@@ -292,11 +291,11 @@ func TestConf_ConfigKeyTooLong(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldConfigKey) {
-		t.Errorf(st.ErrorWantContains, err, errFieldConfigKey)
+		t.Errorf(types.ErrorWantContains, err, errFieldConfigKey)
 	}
 
 	if !strings.Contains(err.Error(), errExceedsMaxLength) {
-		t.Errorf(st.ErrorWantContains, err, errExceedsMaxLength)
+		t.Errorf(types.ErrorWantContains, err, errExceedsMaxLength)
 	}
 }
 
@@ -306,7 +305,7 @@ func TestConf_ConfigValueTooLong(t *testing.T) {
 	longValue := strings.Repeat("v", valueMaxLengthPlusOne)
 
 	_, err := getconfiguration.Conf(getconfiguration.ConfInput{
-		ConfigurationKey: []gt.KeyValueInput{
+		ConfigurationKey: []types.KeyValueInput{
 			{
 				Key:      testValidConfigKey,
 				Readonly: false,
@@ -320,11 +319,11 @@ func TestConf_ConfigValueTooLong(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldConfigKey) {
-		t.Errorf(st.ErrorWantContains, err, errFieldConfigKey)
+		t.Errorf(types.ErrorWantContains, err, errFieldConfigKey)
 	}
 
 	if !strings.Contains(err.Error(), errExceedsMaxLength) {
-		t.Errorf(st.ErrorWantContains, err, errExceedsMaxLength)
+		t.Errorf(types.ErrorWantContains, err, errExceedsMaxLength)
 	}
 }
 
@@ -339,12 +338,12 @@ func TestConf_EmptyUnknownKey(t *testing.T) {
 		t.Error("Conf() error = nil, want error for empty unknown key")
 	}
 
-	if !errors.Is(err, st.ErrEmptyValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrEmptyValue)
+	if !errors.Is(err, types.ErrEmptyValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrEmptyValue)
 	}
 
 	if !strings.Contains(err.Error(), errFieldUnknownKey) {
-		t.Errorf(st.ErrorWantContains, err, errFieldUnknownKey)
+		t.Errorf(types.ErrorWantContains, err, errFieldUnknownKey)
 	}
 }
 
@@ -362,11 +361,11 @@ func TestConf_UnknownKeyTooLong(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldUnknownKey) {
-		t.Errorf(st.ErrorWantContains, err, errFieldUnknownKey)
+		t.Errorf(types.ErrorWantContains, err, errFieldUnknownKey)
 	}
 
 	if !strings.Contains(err.Error(), errExceedsMaxLength) {
-		t.Errorf(st.ErrorWantContains, err, errExceedsMaxLength)
+		t.Errorf(types.ErrorWantContains, err, errExceedsMaxLength)
 	}
 }
 
@@ -374,7 +373,7 @@ func TestConf_MultipleErrors(t *testing.T) {
 	t.Parallel()
 
 	_, err := getconfiguration.Conf(getconfiguration.ConfInput{
-		ConfigurationKey: []gt.KeyValueInput{
+		ConfigurationKey: []types.KeyValueInput{
 			{
 				Key:      "",
 				Readonly: false,
@@ -390,11 +389,11 @@ func TestConf_MultipleErrors(t *testing.T) {
 	errStr := err.Error()
 
 	if !strings.Contains(errStr, errFieldConfigKey) {
-		t.Errorf(st.ErrorWantContains, err, errFieldConfigKey)
+		t.Errorf(types.ErrorWantContains, err, errFieldConfigKey)
 	}
 
 	if !strings.Contains(errStr, errFieldUnknownKey) {
-		t.Errorf(st.ErrorWantContains, err, errFieldUnknownKey)
+		t.Errorf(types.ErrorWantContains, err, errFieldUnknownKey)
 	}
 }
 
@@ -402,7 +401,7 @@ func TestConf_ConfigKeyInvalidChars(t *testing.T) {
 	t.Parallel()
 
 	_, err := getconfiguration.Conf(getconfiguration.ConfInput{
-		ConfigurationKey: []gt.KeyValueInput{
+		ConfigurationKey: []types.KeyValueInput{
 			{
 				Key:      "Invalid\x00Key",
 				Readonly: false,
@@ -416,7 +415,7 @@ func TestConf_ConfigKeyInvalidChars(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldConfigKey) {
-		t.Errorf(st.ErrorWantContains, err, errFieldConfigKey)
+		t.Errorf(types.ErrorWantContains, err, errFieldConfigKey)
 	}
 }
 
@@ -432,7 +431,7 @@ func TestConf_UnknownKeyInvalidChars(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldUnknownKey) {
-		t.Errorf(st.ErrorWantContains, err, errFieldUnknownKey)
+		t.Errorf(types.ErrorWantContains, err, errFieldUnknownKey)
 	}
 }
 
@@ -440,7 +439,7 @@ func TestConf_IndexedErrorMessages(t *testing.T) {
 	t.Parallel()
 
 	_, err := getconfiguration.Conf(getconfiguration.ConfInput{
-		ConfigurationKey: []gt.KeyValueInput{
+		ConfigurationKey: []types.KeyValueInput{
 			{Key: testValidConfigKey, Readonly: false, Value: nil},
 			{Key: "", Readonly: false, Value: nil},
 		},
@@ -453,10 +452,10 @@ func TestConf_IndexedErrorMessages(t *testing.T) {
 	errStr := err.Error()
 
 	if !strings.Contains(errStr, errIndexedConfigKey) {
-		t.Errorf(st.ErrorWantContains, err, errIndexedConfigKey)
+		t.Errorf(types.ErrorWantContains, err, errIndexedConfigKey)
 	}
 
 	if !strings.Contains(errStr, errIndexedUnknownKey) {
-		t.Errorf(st.ErrorWantContains, err, errIndexedUnknownKey)
+		t.Errorf(types.ErrorWantContains, err, errIndexedUnknownKey)
 	}
 }

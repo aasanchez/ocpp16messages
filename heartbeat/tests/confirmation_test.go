@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/aasanchez/ocpp16messages/heartbeat"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -22,13 +22,13 @@ func TestConf_Valid(t *testing.T) {
 		CurrentTime: testValidCurrentTime,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	expectedTime, _ := time.Parse(time.RFC3339, testValidCurrentTime)
 	if !conf.CurrentTime.Value().Equal(expectedTime) {
 		t.Errorf(
-			st.ErrorMismatch,
+			types.ErrorMismatch,
 			expectedTime,
 			conf.CurrentTime.Value(),
 		)
@@ -44,7 +44,7 @@ func TestConf_EmptyCurrentTime(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldCurrentTime) {
-		t.Errorf(st.ErrorWantContains, err, errFieldCurrentTime)
+		t.Errorf(types.ErrorWantContains, err, errFieldCurrentTime)
 	}
 }
 
@@ -57,7 +57,7 @@ func TestConf_InvalidCurrentTime(t *testing.T) {
 	}
 
 	if !strings.Contains(err.Error(), errFieldCurrentTime) {
-		t.Errorf(st.ErrorWantContains, err, errFieldCurrentTime)
+		t.Errorf(types.ErrorWantContains, err, errFieldCurrentTime)
 	}
 }
 
@@ -79,7 +79,7 @@ func TestConf_CurrentTimeWithNanoseconds(t *testing.T) {
 		CurrentTime: "2025-01-15T10:30:00.123456789Z",
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	// Verify nanoseconds are preserved

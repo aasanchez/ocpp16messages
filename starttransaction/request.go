@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -32,11 +32,11 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 StartTransaction.req message.
 type ReqMessage struct {
-	ConnectorId   st.Integer
-	IdTag         st.IdToken
-	MeterStart    st.Integer
-	Timestamp     st.DateTime
-	ReservationId *st.Integer
+	ConnectorId   types.Integer
+	IdTag         types.IdToken
+	MeterStart    types.Integer
+	Timestamp     types.DateTime
+	ReservationId *types.Integer
 }
 
 // Req creates a StartTransaction.req message from the given input.
@@ -55,7 +55,7 @@ func Req(input ReqInput) (ReqMessage, error) {
 	meterStart, errs := validateMeterStart(input.MeterStart, errs)
 	timestamp, errs := validateTimestamp(input.Timestamp, errs)
 
-	var reservationId *st.Integer
+	var reservationId *types.Integer
 
 	if input.ReservationId != nil {
 		reservationId, errs = validateReservationId(*input.ReservationId, errs)
@@ -75,40 +75,40 @@ func Req(input ReqInput) (ReqMessage, error) {
 }
 
 // validateConnectorId validates the connectorId field.
-func validateConnectorId(connectorId int, errs []error) (st.Integer, []error) {
-	val, err := st.NewInteger(connectorId)
+func validateConnectorId(connectorId int, errs []error) (types.Integer, []error) {
+	val, err := types.NewInteger(connectorId)
 	if err != nil {
-		return st.Integer{}, append(errs, fmt.Errorf("connectorId: %w", err))
+		return types.Integer{}, append(errs, fmt.Errorf("connectorId: %w", err))
 	}
 
 	return val, errs
 }
 
 // validateIdTag validates the idTag field.
-func validateIdTag(idTag string, errs []error) (st.IdToken, []error) {
-	ciStr, err := st.NewCiString20Type(idTag)
+func validateIdTag(idTag string, errs []error) (types.IdToken, []error) {
+	ciStr, err := types.NewCiString20Type(idTag)
 	if err != nil {
-		return st.IdToken{}, append(errs, fmt.Errorf("idTag: %w", err))
+		return types.IdToken{}, append(errs, fmt.Errorf("idTag: %w", err))
 	}
 
-	return st.NewIdToken(ciStr), errs
+	return types.NewIdToken(ciStr), errs
 }
 
 // validateMeterStart validates the meterStart field.
-func validateMeterStart(meterStart int, errs []error) (st.Integer, []error) {
-	val, err := st.NewInteger(meterStart)
+func validateMeterStart(meterStart int, errs []error) (types.Integer, []error) {
+	val, err := types.NewInteger(meterStart)
 	if err != nil {
-		return st.Integer{}, append(errs, fmt.Errorf("meterStart: %w", err))
+		return types.Integer{}, append(errs, fmt.Errorf("meterStart: %w", err))
 	}
 
 	return val, errs
 }
 
 // validateTimestamp validates the timestamp field.
-func validateTimestamp(timestamp string, errs []error) (st.DateTime, []error) {
-	val, err := st.NewDateTime(timestamp)
+func validateTimestamp(timestamp string, errs []error) (types.DateTime, []error) {
+	val, err := types.NewDateTime(timestamp)
 	if err != nil {
-		return st.DateTime{}, append(errs, fmt.Errorf("timestamp: %w", err))
+		return types.DateTime{}, append(errs, fmt.Errorf("timestamp: %w", err))
 	}
 
 	return val, errs
@@ -118,8 +118,8 @@ func validateTimestamp(timestamp string, errs []error) (st.DateTime, []error) {
 func validateReservationId(
 	reservationId int,
 	errs []error,
-) (*st.Integer, []error) {
-	val, err := st.NewInteger(reservationId)
+) (*types.Integer, []error) {
+	val, err := types.NewInteger(reservationId)
 	if err != nil {
 		return nil, append(errs, fmt.Errorf("reservationId: %w", err))
 	}

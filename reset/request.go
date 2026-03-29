@@ -3,8 +3,7 @@ package reset
 import (
 	"fmt"
 
-	rt "github.com/aasanchez/ocpp16messages/reset/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ReqInput represents the raw input data for creating a Reset.req message.
@@ -16,17 +15,17 @@ type ReqInput struct {
 
 // ReqMessage represents an OCPP 1.6 Reset.req message.
 type ReqMessage struct {
-	Type rt.ResetType
+	Type types.ResetType
 }
 
 // Req creates a Reset.req message from the given input.
 // It validates all fields and returns an error if:
 //   - Type is not a valid ResetType value
 func Req(input ReqInput) (ReqMessage, error) {
-	resetType := rt.ResetType(input.Type)
+	resetType := types.ResetType(input.Type)
 
 	if !resetType.IsValid() {
-		return ReqMessage{}, fmt.Errorf("type: %w", st.ErrInvalidValue)
+		return ReqMessage{}, fmt.Errorf("type: %w", types.ErrInvalidValue)
 	}
 
 	return ReqMessage{Type: resetType}, nil

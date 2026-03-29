@@ -8,17 +8,16 @@ import (
 	"testing"
 
 	sl "github.com/aasanchez/ocpp16messages/sendlocallist"
-	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzSendLocalListReq(f *testing.F) {
-	f.Add(0, slt.UpdateTypeFull.String(), uint8(0), "")
-	f.Add(1, slt.UpdateTypeDifferential.String(), uint8(1), "")
-	f.Add(1, slt.UpdateTypeFull.String(), uint8(2), "RFID-ABC123")
-	f.Add(-1, slt.UpdateTypeFull.String(), uint8(0), "")
+	f.Add(0, types.UpdateTypeFull.String(), uint8(0), "")
+	f.Add(1, types.UpdateTypeDifferential.String(), uint8(1), "")
+	f.Add(1, types.UpdateTypeFull.String(), uint8(2), "RFID-ABC123")
+	f.Add(-1, types.UpdateTypeFull.String(), uint8(0), "")
 	f.Add(1, "invalid-update-type", uint8(0), "")
-	f.Add(1, slt.UpdateTypeFull.String(), uint8(2), "")
+	f.Add(1, types.UpdateTypeFull.String(), uint8(2), "")
 
 	f.Fuzz(func(
 		t *testing.T,
@@ -31,15 +30,15 @@ func FuzzSendLocalListReq(f *testing.F) {
 			t.Skip()
 		}
 
-		var localAuthorizationList []slt.AuthorizationDataInput
+		var localAuthorizationList []types.AuthorizationDataInput
 
 		switch listMode % 3 {
 		case 0:
 			localAuthorizationList = nil
 		case 1:
-			localAuthorizationList = []slt.AuthorizationDataInput{}
+			localAuthorizationList = []types.AuthorizationDataInput{}
 		default:
-			localAuthorizationList = []slt.AuthorizationDataInput{
+			localAuthorizationList = []types.AuthorizationDataInput{
 				{
 					IdTag:     idTag,
 					IdTagInfo: nil,
@@ -53,7 +52,7 @@ func FuzzSendLocalListReq(f *testing.F) {
 			UpdateType:             updateType,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

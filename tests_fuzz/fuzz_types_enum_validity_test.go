@@ -5,16 +5,16 @@ package fuzz
 import (
 	"testing"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzAuthorizationStatusIsValid(f *testing.F) {
 	allowed := map[string]struct{}{
-		st.AuthorizationStatusAccepted.String():     {},
-		st.AuthorizationStatusBlocked.String():      {},
-		st.AuthorizationStatusExpired.String():      {},
-		st.AuthorizationStatusInvalid.String():      {},
-		st.AuthorizationStatusConcurrentTx.String(): {},
+		types.AuthorizationStatusAccepted.String():     {},
+		types.AuthorizationStatusBlocked.String():      {},
+		types.AuthorizationStatusExpired.String():      {},
+		types.AuthorizationStatusInvalid.String():      {},
+		types.AuthorizationStatusConcurrentTx.String(): {},
 	}
 
 	for value := range allowed {
@@ -30,7 +30,7 @@ func FuzzAuthorizationStatusIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		status := st.AuthorizationStatus(input)
+		status := types.AuthorizationStatus(input)
 
 		if got := status.IsValid(); got {
 			if _, ok := allowed[input]; !ok {
@@ -46,8 +46,8 @@ func FuzzAuthorizationStatusIsValid(f *testing.F) {
 
 func FuzzChargingRateUnitIsValid(f *testing.F) {
 	allowed := map[string]struct{}{
-		st.ChargingRateUnitWatts.String():   {},
-		st.ChargingRateUnitAmperes.String(): {},
+		types.ChargingRateUnitWatts.String():   {},
+		types.ChargingRateUnitAmperes.String(): {},
 	}
 
 	for value := range allowed {
@@ -63,7 +63,7 @@ func FuzzChargingRateUnitIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		unit := st.ChargingRateUnit(input)
+		unit := types.ChargingRateUnit(input)
 
 		if got := unit.IsValid(); got {
 			if _, ok := allowed[input]; !ok {
@@ -79,11 +79,11 @@ func FuzzChargingRateUnitIsValid(f *testing.F) {
 
 func FuzzLocationIsValid(f *testing.F) {
 	allowed := map[string]struct{}{
-		st.LocationBody.String():   {},
-		st.LocationCable.String():  {},
-		st.LocationEV.String():     {},
-		st.LocationInlet.String():  {},
-		st.LocationOutlet.String(): {},
+		types.LocationBody.String():   {},
+		types.LocationCable.String():  {},
+		types.LocationEV.String():     {},
+		types.LocationInlet.String():  {},
+		types.LocationOutlet.String(): {},
 	}
 
 	for value := range allowed {
@@ -99,7 +99,7 @@ func FuzzLocationIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		loc := st.Location(input)
+		loc := types.Location(input)
 
 		if got := loc.IsValid(); got {
 			if _, ok := allowed[input]; !ok {
@@ -115,14 +115,14 @@ func FuzzLocationIsValid(f *testing.F) {
 
 func FuzzReadingContextIsValid(f *testing.F) {
 	allowed := map[string]struct{}{
-		st.ReadingContextInterruptionBegin.String(): {},
-		st.ReadingContextInterruptionEnd.String():   {},
-		st.ReadingContextOther.String():             {},
-		st.ReadingContextSampleClock.String():       {},
-		st.ReadingContextSamplePeriodic.String():    {},
-		st.ReadingContextTransactionBegin.String():  {},
-		st.ReadingContextTransactionEnd.String():    {},
-		st.ReadingContextTrigger.String():           {},
+		types.ReadingContextInterruptionBegin.String(): {},
+		types.ReadingContextInterruptionEnd.String():   {},
+		types.ReadingContextOther.String():             {},
+		types.ReadingContextSampleClock.String():       {},
+		types.ReadingContextSamplePeriodic.String():    {},
+		types.ReadingContextTransactionBegin.String():  {},
+		types.ReadingContextTransactionEnd.String():    {},
+		types.ReadingContextTrigger.String():           {},
 	}
 
 	for value := range allowed {
@@ -138,7 +138,7 @@ func FuzzReadingContextIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		ctx := st.ReadingContext(input)
+		ctx := types.ReadingContext(input)
 
 		if got := ctx.IsValid(); got {
 			if _, ok := allowed[input]; !ok {
@@ -154,22 +154,22 @@ func FuzzReadingContextIsValid(f *testing.F) {
 
 func FuzzUnitOfMeasureIsValid(f *testing.F) {
 	allowed := map[string]struct{}{
-		st.UnitWh.String():         {},
-		st.UnitKWh.String():        {},
-		st.UnitVarh.String():       {},
-		st.UnitKvarh.String():      {},
-		st.UnitW.String():          {},
-		st.UnitKW.String():         {},
-		st.UnitVA.String():         {},
-		st.UnitKVA.String():        {},
-		st.UnitVar.String():        {},
-		st.UnitKvar.String():       {},
-		st.UnitA.String():          {},
-		st.UnitV.String():          {},
-		st.UnitCelsius.String():    {},
-		st.UnitFahrenheit.String(): {},
-		st.UnitK.String():          {},
-		st.UnitPercent.String():    {},
+		types.UnitWh.String():         {},
+		types.UnitKWh.String():        {},
+		types.UnitVarh.String():       {},
+		types.UnitKvarh.String():      {},
+		types.UnitW.String():          {},
+		types.UnitKW.String():         {},
+		types.UnitVA.String():         {},
+		types.UnitKVA.String():        {},
+		types.UnitVar.String():        {},
+		types.UnitKvar.String():       {},
+		types.UnitA.String():          {},
+		types.UnitV.String():          {},
+		types.UnitCelsius.String():    {},
+		types.UnitFahrenheit.String(): {},
+		types.UnitK.String():          {},
+		types.UnitPercent.String():    {},
 	}
 
 	for value := range allowed {
@@ -185,7 +185,7 @@ func FuzzUnitOfMeasureIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		unit := st.UnitOfMeasure(input)
+		unit := types.UnitOfMeasure(input)
 
 		if got := unit.IsValid(); got {
 			if _, ok := allowed[input]; !ok {
@@ -201,8 +201,8 @@ func FuzzUnitOfMeasureIsValid(f *testing.F) {
 
 func FuzzValueFormatIsValid(f *testing.F) {
 	allowed := map[string]struct{}{
-		st.ValueFormatRaw.String():        {},
-		st.ValueFormatSignedData.String(): {},
+		types.ValueFormatRaw.String():        {},
+		types.ValueFormatSignedData.String(): {},
 	}
 
 	for value := range allowed {
@@ -218,7 +218,7 @@ func FuzzValueFormatIsValid(f *testing.F) {
 			t.Skip()
 		}
 
-		format := st.ValueFormat(input)
+		format := types.ValueFormat(input)
 
 		if got := format.IsValid(); got {
 			if _, ok := allowed[input]; !ok {

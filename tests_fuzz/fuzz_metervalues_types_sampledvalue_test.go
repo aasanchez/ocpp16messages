@@ -6,8 +6,7 @@ import (
 	"errors"
 	"testing"
 
-	mt "github.com/aasanchez/ocpp16messages/metervalues/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzNewMeterValuesTypeSampledValue(f *testing.F) {
@@ -15,17 +14,17 @@ func FuzzNewMeterValuesTypeSampledValue(f *testing.F) {
 	f.Add(
 		"100",
 		true,
-		mt.SamplePeriodic.String(),
+		types.SamplePeriodic.String(),
 		true,
-		mt.Raw.String(),
+		types.Raw.String(),
 		true,
-		mt.EnergyActiveImportRegister.String(),
+		types.EnergyActiveImportRegister.String(),
 		true,
-		mt.L1.String(),
+		types.L1.String(),
 		true,
-		mt.Outlet.String(),
+		types.Outlet.String(),
 		true,
-		mt.Wh.String(),
+		types.Wh.String(),
 	)
 	f.Add("bad\x01", false, "", false, "", false, "", false, "", false, "", false, "")
 	f.Add(
@@ -100,7 +99,7 @@ func FuzzNewMeterValuesTypeSampledValue(f *testing.F) {
 			unitPtr = &unit
 		}
 
-		sampledValue, err := mt.NewSampledValue(mt.SampledValueInput{
+		sampledValue, err := types.NewSampledValue(types.SampledValueInput{
 			Value:     value,
 			Context:   contextPtr,
 			Format:    formatPtr,
@@ -110,7 +109,7 @@ func FuzzNewMeterValuesTypeSampledValue(f *testing.F) {
 			Unit:      unitPtr,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrEmptyValue) && !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrEmptyValue) && !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	rst "github.com/aasanchez/ocpp16messages/remotestarttransaction"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzRemoteStartTransactionReq(f *testing.F) {
@@ -32,7 +32,7 @@ func FuzzRemoteStartTransactionReq(f *testing.F) {
 			ConnectorId: connectorIdPtr,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

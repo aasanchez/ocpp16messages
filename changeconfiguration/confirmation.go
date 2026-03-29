@@ -3,8 +3,7 @@ package changeconfiguration
 import (
 	"fmt"
 
-	cct "github.com/aasanchez/ocpp16messages/changeconfiguration/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ConfInput represents the raw input data for creating a
@@ -18,17 +17,17 @@ type ConfInput struct {
 
 // ConfMessage represents an OCPP 1.6 ChangeConfiguration.conf message.
 type ConfMessage struct {
-	Status cct.ConfigurationStatus
+	Status types.ConfigurationStatus
 }
 
 // Conf creates a ChangeConfiguration.conf message from the given input.
 // It validates all fields and returns an error if:
 //   - Status is not a valid ConfigurationStatus value
 func Conf(input ConfInput) (ConfMessage, error) {
-	status := cct.ConfigurationStatus(input.Status)
+	status := types.ConfigurationStatus(input.Status)
 
 	if !status.IsValid() {
-		return ConfMessage{}, fmt.Errorf("status: %w", st.ErrInvalidValue)
+		return ConfMessage{}, fmt.Errorf("status: %w", types.ErrInvalidValue)
 	}
 
 	return ConfMessage{Status: status}, nil

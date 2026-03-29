@@ -7,7 +7,7 @@ import (
 	"math"
 	"testing"
 
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzNewChargingSchedulePeriod(f *testing.F) {
@@ -35,13 +35,13 @@ func FuzzNewChargingSchedulePeriod(f *testing.F) {
 			numberPhasesPtr = &numberPhases
 		}
 
-		period, err := st.NewChargingSchedulePeriod(st.ChargingSchedulePeriodInput{
+		period, err := types.NewChargingSchedulePeriod(types.ChargingSchedulePeriodInput{
 			StartPeriod:  startPeriod,
 			Limit:        limit,
 			NumberPhases: numberPhasesPtr,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) && !errors.Is(err, st.ErrEmptyValue) {
+			if !errors.Is(err, types.ErrInvalidValue) && !errors.Is(err, types.ErrEmptyValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

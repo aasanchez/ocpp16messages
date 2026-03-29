@@ -7,8 +7,7 @@ import (
 	"testing"
 	"time"
 
-	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzNewAuthorizationData(f *testing.F) {
@@ -17,7 +16,7 @@ func FuzzNewAuthorizationData(f *testing.F) {
 	f.Add(
 		"RFID-ABC123",
 		true,
-		st.AuthorizationStatusAccepted.String(),
+		types.AuthorizationStatusAccepted.String(),
 		true,
 		"2025-01-15T10:30:00Z",
 		true,
@@ -43,7 +42,7 @@ func FuzzNewAuthorizationData(f *testing.F) {
 			t.Skip()
 		}
 
-		var idTagInfoPtr *slt.IdTagInfoInput
+		var idTagInfoPtr *types.IdTagInfoInput
 		if hasIdTagInfo {
 			var expiryDatePtr *string
 			if hasExpiryDate {
@@ -55,19 +54,19 @@ func FuzzNewAuthorizationData(f *testing.F) {
 				parentIdTagPtr = &parentIdTag
 			}
 
-			idTagInfoPtr = &slt.IdTagInfoInput{
+			idTagInfoPtr = &types.IdTagInfoInput{
 				Status:      status,
 				ExpiryDate:  expiryDatePtr,
 				ParentIdTag: parentIdTagPtr,
 			}
 		}
 
-		authData, err := slt.NewAuthorizationData(slt.AuthorizationDataInput{
+		authData, err := types.NewAuthorizationData(types.AuthorizationDataInput{
 			IdTag:     idTag,
 			IdTagInfo: idTagInfoPtr,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrEmptyValue) && !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrEmptyValue) && !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,

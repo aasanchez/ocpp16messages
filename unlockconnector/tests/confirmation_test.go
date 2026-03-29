@@ -4,9 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	st "github.com/aasanchez/ocpp16messages/types"
 	"github.com/aasanchez/ocpp16messages/unlockconnector"
-	ut "github.com/aasanchez/ocpp16messages/unlockconnector/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -20,13 +19,13 @@ func TestConf_Valid_Unlocked(t *testing.T) {
 		Status: "Unlocked",
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != ut.UnlockStatusUnlocked {
+	if conf.Status != types.UnlockStatusUnlocked {
 		t.Errorf(
-			st.ErrorMismatch,
-			ut.UnlockStatusUnlocked,
+			types.ErrorMismatch,
+			types.UnlockStatusUnlocked,
 			conf.Status,
 		)
 	}
@@ -39,13 +38,13 @@ func TestConf_Valid_UnlockFailed(t *testing.T) {
 		Status: "UnlockFailed",
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != ut.UnlockStatusUnlockFailed {
+	if conf.Status != types.UnlockStatusUnlockFailed {
 		t.Errorf(
-			st.ErrorMismatch,
-			ut.UnlockStatusUnlockFailed,
+			types.ErrorMismatch,
+			types.UnlockStatusUnlockFailed,
 			conf.Status,
 		)
 	}
@@ -58,13 +57,13 @@ func TestConf_Valid_NotSupported(t *testing.T) {
 		Status: "NotSupported",
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != ut.UnlockStatusNotSupported {
+	if conf.Status != types.UnlockStatusNotSupported {
 		t.Errorf(
-			st.ErrorMismatch,
-			ut.UnlockStatusNotSupported,
+			types.ErrorMismatch,
+			types.UnlockStatusNotSupported,
 			conf.Status,
 		)
 	}
@@ -75,11 +74,11 @@ func TestConf_EmptyStatus(t *testing.T) {
 
 	_, err := unlockconnector.Conf(unlockconnector.ConfInput{Status: ""})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty status")
+		t.Errorf(types.ErrorWantNil, "empty status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -88,11 +87,11 @@ func TestConf_InvalidStatus_Unknown(t *testing.T) {
 
 	_, err := unlockconnector.Conf(unlockconnector.ConfInput{Status: "Unknown"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "unknown status")
+		t.Errorf(types.ErrorWantNil, "unknown status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -103,11 +102,11 @@ func TestConf_InvalidStatus_Lowercase(t *testing.T) {
 		Status: "unlocked",
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "lowercase status")
+		t.Errorf(types.ErrorWantNil, "lowercase status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -118,10 +117,10 @@ func TestConf_InvalidStatus_Accepted(t *testing.T) {
 		Status: "Accepted",
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "Accepted (invalid for UnlockConnector)")
+		t.Errorf(types.ErrorWantNil, "Accepted (invalid for UnlockConnector)")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }

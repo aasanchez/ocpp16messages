@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	dsn "github.com/aasanchez/ocpp16messages/diagnosticsstatusnotification"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const repeatCount = 3
@@ -14,7 +14,7 @@ func TestConf_Valid(t *testing.T) {
 
 	_, err := dsn.Conf(dsn.ConfInput{})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 }
 
@@ -25,7 +25,7 @@ func TestConf_AlwaysSucceeds(t *testing.T) {
 	for range repeatCount {
 		_, err := dsn.Conf(dsn.ConfInput{})
 		if err != nil {
-			t.Errorf(st.ErrorUnexpectedError, err)
+			t.Errorf(types.ErrorUnexpectedError, err)
 		}
 	}
 }

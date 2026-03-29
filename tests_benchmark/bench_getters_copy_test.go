@@ -5,27 +5,25 @@ package benchmark
 import (
 	"testing"
 
-	gct "github.com/aasanchez/ocpp16messages/getconfiguration/types"
-	scpt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 var (
-	sinkInteger      *st.Integer
-	sinkDateTime     *st.DateTime
+	sinkInteger      *types.Integer
+	sinkDateTime     *types.DateTime
 	sinkFloat64      *float64
-	sinkCiString500  *st.CiString500Type
-	sinkScheduleList []st.ChargingSchedulePeriod
+	sinkCiString500  *types.CiString500Type
+	sinkScheduleList []types.ChargingSchedulePeriod
 )
 
 func BenchmarkChargingScheduleDurationGetter_Copy(b *testing.B) {
 	b.ReportAllocs()
 
 	duration := 60
-	periods := []st.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
-	schedule, err := st.NewChargingSchedule(st.ChargingScheduleInput{
+	periods := []types.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
+	schedule, err := types.NewChargingSchedule(types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        nil,
 		StartSchedule:          nil,
@@ -45,11 +43,11 @@ func BenchmarkChargingScheduleStartScheduleGetter_Copy(b *testing.B) {
 
 	duration := 60
 	startSchedule := sampleTimestamp
-	periods := []st.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
+	periods := []types.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
 
-	schedule, err := st.NewChargingSchedule(st.ChargingScheduleInput{
+	schedule, err := types.NewChargingSchedule(types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        nil,
 		StartSchedule:          &startSchedule,
@@ -69,11 +67,11 @@ func BenchmarkChargingScheduleMinChargingRateGetter_Copy(b *testing.B) {
 
 	duration := 60
 	minChargingRate := 1.0
-	periods := []st.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
+	periods := []types.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
 
-	schedule, err := st.NewChargingSchedule(st.ChargingScheduleInput{
+	schedule, err := types.NewChargingSchedule(types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        &minChargingRate,
 		StartSchedule:          nil,
@@ -92,16 +90,16 @@ func BenchmarkChargingScheduleChargingSchedulePeriodGetter_Copy(b *testing.B) {
 	b.ReportAllocs()
 
 	duration := 60
-	periods := []st.ChargingSchedulePeriodInput{
+	periods := []types.ChargingSchedulePeriodInput{
 		{StartPeriod: 0, Limit: 16},
 		{StartPeriod: 10, Limit: 8},
 		{StartPeriod: 20, Limit: 6},
 		{StartPeriod: 30, Limit: 4},
 	}
 
-	schedule, err := st.NewChargingSchedule(st.ChargingScheduleInput{
+	schedule, err := types.NewChargingSchedule(types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        nil,
 		StartSchedule:          nil,
@@ -120,7 +118,7 @@ func BenchmarkGetConfigurationKeyValueValueGetter_Copy(b *testing.B) {
 	b.ReportAllocs()
 
 	value := "60"
-	keyValue, err := gct.NewKeyValue(gct.KeyValueInput{
+	keyValue, err := types.NewKeyValue(types.KeyValueInput{
 		Key:      "HeartbeatInterval",
 		Readonly: false,
 		Value:    &value,
@@ -141,21 +139,21 @@ func BenchmarkSetChargingProfileTransactionIdGetter_Copy(b *testing.B) {
 	transactionId := 1
 
 	duration := 60
-	periods := []st.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
-	scheduleInput := st.ChargingScheduleInput{
+	periods := []types.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
+	scheduleInput := types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        nil,
 		StartSchedule:          nil,
 	}
 
-	profile, err := scpt.NewChargingProfile(scpt.ChargingProfileInput{
+	profile, err := types.NewChargingProfile(types.ChargingProfileInput{
 		ChargingProfileId:      1,
 		TransactionId:          &transactionId,
 		StackLevel:             0,
-		ChargingProfilePurpose: st.TxProfile.String(),
-		ChargingProfileKind:    scpt.ChargingProfileKindAbsolute.String(),
+		ChargingProfilePurpose: types.TxProfile.String(),
+		ChargingProfileKind:    types.ChargingProfileKindAbsolute.String(),
 		RecurrencyKind:         nil,
 		ValidFrom:              nil,
 		ValidTo:                nil,

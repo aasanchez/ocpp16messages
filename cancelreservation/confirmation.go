@@ -3,8 +3,7 @@ package cancelreservation
 import (
 	"fmt"
 
-	mct "github.com/aasanchez/ocpp16messages/cancelreservation/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 // ConfInput represents the raw input data for creating a CancelReservation.conf
@@ -16,17 +15,17 @@ type ConfInput struct {
 
 // ConfMessage represents an OCPP 1.6 CancelReservation.conf message.
 type ConfMessage struct {
-	Status mct.CancelReservationStatus
+	Status types.CancelReservationStatus
 }
 
 // Conf creates a CancelReservation.conf message from the given input.
 // It validates all fields and returns an error if:
 //   - Status is not a valid CancelReservationStatus value
 func Conf(input ConfInput) (ConfMessage, error) {
-	status := mct.CancelReservationStatus(input.Status)
+	status := types.CancelReservationStatus(input.Status)
 
 	if !status.IsValid() {
-		return ConfMessage{}, fmt.Errorf("status: %w", st.ErrInvalidValue)
+		return ConfMessage{}, fmt.Errorf("status: %w", types.ErrInvalidValue)
 	}
 
 	return ConfMessage{Status: status}, nil

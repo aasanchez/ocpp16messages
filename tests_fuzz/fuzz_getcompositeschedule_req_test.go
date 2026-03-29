@@ -8,13 +8,13 @@ import (
 	"testing"
 
 	gc "github.com/aasanchez/ocpp16messages/getcompositeschedule"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzGetCompositeScheduleReq(f *testing.F) {
 	f.Add(0, 0, false, "")
-	f.Add(1, 60, true, st.ChargingRateUnitWatts.String())
-	f.Add(1, 60, true, st.ChargingRateUnitAmperes.String())
+	f.Add(1, 60, true, types.ChargingRateUnitWatts.String())
+	f.Add(1, 60, true, types.ChargingRateUnitAmperes.String())
 	f.Add(-1, 60, false, "")
 	f.Add(1, -1, false, "")
 	f.Add(1, 60, true, "invalid-unit")
@@ -41,7 +41,7 @@ func FuzzGetCompositeScheduleReq(f *testing.F) {
 			ChargingRateUnit: chargingRateUnitPtr,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf("error = %v, want wrapping ErrInvalidValue", err)
 			}
 

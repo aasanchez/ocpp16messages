@@ -3,8 +3,8 @@ package stoptransaction_test
 import (
 	"fmt"
 
-	mt "github.com/aasanchez/ocpp16messages/metervalues/types"
 	"github.com/aasanchez/ocpp16messages/stoptransaction"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -97,10 +97,10 @@ func ExampleReq_withTransactionData() {
 		MeterStop:     exampleMeterStop,
 		Timestamp:     exampleTimestamp,
 		Reason:        nil,
-		TransactionData: []mt.MeterValueInput{
+		TransactionData: []types.MeterValueInput{
 			{
 				Timestamp: exampleTimestamp,
-				SampledValue: []mt.SampledValueInput{
+				SampledValue: []types.SampledValueInput{
 					{
 						Value:     "50000",
 						Context:   nil,

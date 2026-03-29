@@ -5,8 +5,7 @@ import (
 	"testing"
 
 	ca "github.com/aasanchez/ocpp16messages/changeavailability"
-	mcat "github.com/aasanchez/ocpp16messages/changeavailability/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -18,13 +17,13 @@ func TestConf_Valid_Accepted(t *testing.T) {
 
 	conf, err := ca.Conf(ca.ConfInput{Status: "Accepted"})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != mcat.AvailabilityStatusAccepted {
+	if conf.Status != types.AvailabilityStatusAccepted {
 		t.Errorf(
-			st.ErrorMismatch,
-			mcat.AvailabilityStatusAccepted,
+			types.ErrorMismatch,
+			types.AvailabilityStatusAccepted,
 			conf.Status,
 		)
 	}
@@ -35,13 +34,13 @@ func TestConf_Valid_Rejected(t *testing.T) {
 
 	conf, err := ca.Conf(ca.ConfInput{Status: "Rejected"})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != mcat.AvailabilityStatusRejected {
+	if conf.Status != types.AvailabilityStatusRejected {
 		t.Errorf(
-			st.ErrorMismatch,
-			mcat.AvailabilityStatusRejected,
+			types.ErrorMismatch,
+			types.AvailabilityStatusRejected,
 			conf.Status,
 		)
 	}
@@ -52,13 +51,13 @@ func TestConf_Valid_Scheduled(t *testing.T) {
 
 	conf, err := ca.Conf(ca.ConfInput{Status: "Scheduled"})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != mcat.AvailabilityStatusScheduled {
+	if conf.Status != types.AvailabilityStatusScheduled {
 		t.Errorf(
-			st.ErrorMismatch,
-			mcat.AvailabilityStatusScheduled,
+			types.ErrorMismatch,
+			types.AvailabilityStatusScheduled,
 			conf.Status,
 		)
 	}
@@ -69,11 +68,11 @@ func TestConf_EmptyStatus(t *testing.T) {
 
 	_, err := ca.Conf(ca.ConfInput{Status: ""})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty status")
+		t.Errorf(types.ErrorWantNil, "empty status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -82,11 +81,11 @@ func TestConf_InvalidStatus_Unknown(t *testing.T) {
 
 	_, err := ca.Conf(ca.ConfInput{Status: "Unknown"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "unknown status")
+		t.Errorf(types.ErrorWantNil, "unknown status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -95,11 +94,11 @@ func TestConf_InvalidStatus_Lowercase(t *testing.T) {
 
 	_, err := ca.Conf(ca.ConfInput{Status: "accepted"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "lowercase status")
+		t.Errorf(types.ErrorWantNil, "lowercase status")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }
 
@@ -108,10 +107,10 @@ func TestConf_InvalidStatus_Pending(t *testing.T) {
 
 	_, err := ca.Conf(ca.ConfInput{Status: "Pending"})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "Pending (invalid for ChangeAvailability)")
+		t.Errorf(types.ErrorWantNil, "Pending (invalid for ChangeAvailability)")
 	}
 
 	if !strings.Contains(err.Error(), errStatus) {
-		t.Errorf(st.ErrorWantContains, err, errStatus)
+		t.Errorf(types.ErrorWantContains, err, errStatus)
 	}
 }

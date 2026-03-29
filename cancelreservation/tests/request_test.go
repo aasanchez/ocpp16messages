@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	cr "github.com/aasanchez/ocpp16messages/cancelreservation"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -24,11 +24,11 @@ func TestReq_Valid_Zero(t *testing.T) {
 
 	req, err := cr.Req(cr.ReqInput{ReservationId: valueZero})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ReservationId.Value() != valueZero {
-		t.Errorf(st.ErrorMismatchValue, valueZero, req.ReservationId.Value())
+		t.Errorf(types.ErrorMismatchValue, valueZero, req.ReservationId.Value())
 	}
 }
 
@@ -37,12 +37,12 @@ func TestReq_Valid_PositiveValue(t *testing.T) {
 
 	req, err := cr.Req(cr.ReqInput{ReservationId: valuePositive})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ReservationId.Value() != valuePositive {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			valuePositive,
 			req.ReservationId.Value(),
 		)
@@ -54,12 +54,12 @@ func TestReq_Valid_MaxValue(t *testing.T) {
 
 	req, err := cr.Req(cr.ReqInput{ReservationId: valueMaxUint16})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ReservationId.Value() != valueMaxUint16 {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			valueMaxUint16,
 			req.ReservationId.Value(),
 		)
@@ -71,11 +71,11 @@ func TestReq_NegativeValue(t *testing.T) {
 
 	_, err := cr.Req(cr.ReqInput{ReservationId: valueNegative})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "negative reservation ID")
+		t.Errorf(types.ErrorWantNil, "negative reservation ID")
 	}
 
 	if !strings.Contains(err.Error(), errReservationId) {
-		t.Errorf(st.ErrorWantContains, err, errReservationId)
+		t.Errorf(types.ErrorWantContains, err, errReservationId)
 	}
 }
 
@@ -84,11 +84,11 @@ func TestReq_ExceedsMaxValue(t *testing.T) {
 
 	_, err := cr.Req(cr.ReqInput{ReservationId: valueExceedsMax})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "reservation ID exceeds max")
+		t.Errorf(types.ErrorWantNil, "reservation ID exceeds max")
 	}
 
 	if !strings.Contains(err.Error(), errReservationId) {
-		t.Errorf(st.ErrorWantContains, err, errReservationId)
+		t.Errorf(types.ErrorWantContains, err, errReservationId)
 	}
 }
 
@@ -97,10 +97,10 @@ func TestReq_LargeNegativeValue(t *testing.T) {
 
 	_, err := cr.Req(cr.ReqInput{ReservationId: valueLargeNegativ})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "large negative reservation ID")
+		t.Errorf(types.ErrorWantNil, "large negative reservation ID")
 	}
 
 	if !strings.Contains(err.Error(), errReservationId) {
-		t.Errorf(st.ErrorWantContains, err, errReservationId)
+		t.Errorf(types.ErrorWantContains, err, errReservationId)
 	}
 }

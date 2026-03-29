@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	cc "github.com/aasanchez/ocpp16messages/clearcache"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func TestReq_Valid_EmptyInput(t *testing.T) {
@@ -12,7 +12,7 @@ func TestReq_Valid_EmptyInput(t *testing.T) {
 
 	_, err := cc.Req(cc.ReqInput{})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 }
 
@@ -21,12 +21,12 @@ func TestReq_AlwaysSucceeds(t *testing.T) {
 
 	req, err := cc.Req(cc.ReqInput{})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	// Verify the returned message is the zero value
 	expected := cc.ReqMessage{}
 	if req != expected {
-		t.Errorf(st.ErrorMismatchValue, expected, req)
+		t.Errorf(types.ErrorMismatchValue, expected, req)
 	}
 }

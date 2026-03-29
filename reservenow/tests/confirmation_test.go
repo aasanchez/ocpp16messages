@@ -5,8 +5,7 @@ import (
 	"testing"
 
 	"github.com/aasanchez/ocpp16messages/reservenow"
-	rt "github.com/aasanchez/ocpp16messages/reservenow/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -27,13 +26,13 @@ func TestConf_Valid_Accepted(t *testing.T) {
 		Status: testStatusAccepted,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != rt.ReservationStatusAccepted {
+	if conf.Status != types.ReservationStatusAccepted {
 		t.Errorf(
-			st.ErrorMismatch,
-			rt.ReservationStatusAccepted,
+			types.ErrorMismatch,
+			types.ReservationStatusAccepted,
 			conf.Status,
 		)
 	}
@@ -46,13 +45,13 @@ func TestConf_Valid_Faulted(t *testing.T) {
 		Status: testStatusFaulted,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != rt.ReservationStatusFaulted {
+	if conf.Status != types.ReservationStatusFaulted {
 		t.Errorf(
-			st.ErrorMismatch,
-			rt.ReservationStatusFaulted,
+			types.ErrorMismatch,
+			types.ReservationStatusFaulted,
 			conf.Status,
 		)
 	}
@@ -65,13 +64,13 @@ func TestConf_Valid_Occupied(t *testing.T) {
 		Status: testStatusOccupied,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != rt.ReservationStatusOccupied {
+	if conf.Status != types.ReservationStatusOccupied {
 		t.Errorf(
-			st.ErrorMismatch,
-			rt.ReservationStatusOccupied,
+			types.ErrorMismatch,
+			types.ReservationStatusOccupied,
 			conf.Status,
 		)
 	}
@@ -84,13 +83,13 @@ func TestConf_Valid_Rejected(t *testing.T) {
 		Status: testStatusRejected,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != rt.ReservationStatusRejected {
+	if conf.Status != types.ReservationStatusRejected {
 		t.Errorf(
-			st.ErrorMismatch,
-			rt.ReservationStatusRejected,
+			types.ErrorMismatch,
+			types.ReservationStatusRejected,
 			conf.Status,
 		)
 	}
@@ -103,13 +102,13 @@ func TestConf_Valid_Unavailable(t *testing.T) {
 		Status: testStatusUnavailable,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.Status != rt.ReservationStatusUnavailable {
+	if conf.Status != types.ReservationStatusUnavailable {
 		t.Errorf(
-			st.ErrorMismatch,
-			rt.ReservationStatusUnavailable,
+			types.ErrorMismatch,
+			types.ReservationStatusUnavailable,
 			conf.Status,
 		)
 	}
@@ -122,11 +121,11 @@ func TestConf_InvalidStatus(t *testing.T) {
 		Status: testStatusInvalid,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "invalid status")
+		t.Errorf(types.ErrorWantNil, "invalid status")
 	}
 
-	if !errors.Is(err, st.ErrInvalidValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrInvalidValue)
+	if !errors.Is(err, types.ErrInvalidValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrInvalidValue)
 	}
 }
 
@@ -137,11 +136,11 @@ func TestConf_EmptyStatus(t *testing.T) {
 		Status: testStatusEmpty,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty status")
+		t.Errorf(types.ErrorWantNil, "empty status")
 	}
 
-	if !errors.Is(err, st.ErrInvalidValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrInvalidValue)
+	if !errors.Is(err, types.ErrInvalidValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrInvalidValue)
 	}
 }
 
@@ -152,10 +151,10 @@ func TestConf_LowercaseStatus(t *testing.T) {
 		Status: testStatusLowercase,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "lowercase status")
+		t.Errorf(types.ErrorWantNil, "lowercase status")
 	}
 
-	if !errors.Is(err, st.ErrInvalidValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrInvalidValue)
+	if !errors.Is(err, types.ErrInvalidValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrInvalidValue)
 	}
 }

@@ -5,24 +5,21 @@ package benchmark
 import (
 	"testing"
 
-	gct "github.com/aasanchez/ocpp16messages/getconfiguration/types"
-	slt "github.com/aasanchez/ocpp16messages/sendlocallist/types"
-	scpt "github.com/aasanchez/ocpp16messages/setchargingprofile/types"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func BenchmarkNewChargingSchedulePeriod_WithNumberPhases(b *testing.B) {
 	b.ReportAllocs()
 
 	phases := 3
-	input := st.ChargingSchedulePeriodInput{
+	input := types.ChargingSchedulePeriodInput{
 		StartPeriod:  0,
 		Limit:        16,
 		NumberPhases: &phases,
 	}
 
 	for i := 0; i < b.N; i++ {
-		if _, err := st.NewChargingSchedulePeriod(input); err != nil {
+		if _, err := types.NewChargingSchedulePeriod(input); err != nil {
 			b.Fatal(err)
 		}
 	}
@@ -31,14 +28,14 @@ func BenchmarkNewChargingSchedulePeriod_WithNumberPhases(b *testing.B) {
 func BenchmarkGetConfigurationNewKeyValue_ValueNil(b *testing.B) {
 	b.ReportAllocs()
 
-	input := gct.KeyValueInput{
+	input := types.KeyValueInput{
 		Key:      "HeartbeatInterval",
 		Readonly: false,
 		Value:    nil,
 	}
 
 	for i := 0; i < b.N; i++ {
-		if _, err := gct.NewKeyValue(input); err != nil {
+		if _, err := types.NewKeyValue(input); err != nil {
 			b.Fatal(err)
 		}
 	}
@@ -48,14 +45,14 @@ func BenchmarkGetConfigurationNewKeyValue_ValueSet(b *testing.B) {
 	b.ReportAllocs()
 
 	value := "60"
-	input := gct.KeyValueInput{
+	input := types.KeyValueInput{
 		Key:      "HeartbeatInterval",
 		Readonly: false,
 		Value:    &value,
 	}
 
 	for i := 0; i < b.N; i++ {
-		if _, err := gct.NewKeyValue(input); err != nil {
+		if _, err := types.NewKeyValue(input); err != nil {
 			b.Fatal(err)
 		}
 	}
@@ -67,17 +64,17 @@ func BenchmarkSendLocalListNewAuthorizationData_WithIdTagInfo(b *testing.B) {
 	expiry := sampleTimestamp
 	parentIdTag := "PARENT-1"
 
-	input := slt.AuthorizationDataInput{
+	input := types.AuthorizationDataInput{
 		IdTag: "TAG-1",
-		IdTagInfo: &slt.IdTagInfoInput{
-			Status:      st.AuthorizationStatusAccepted.String(),
+		IdTagInfo: &types.IdTagInfoInput{
+			Status:      types.AuthorizationStatusAccepted.String(),
 			ExpiryDate:  &expiry,
 			ParentIdTag: &parentIdTag,
 		},
 	}
 
 	for i := 0; i < b.N; i++ {
-		if _, err := slt.NewAuthorizationData(input); err != nil {
+		if _, err := types.NewAuthorizationData(input); err != nil {
 			b.Fatal(err)
 		}
 	}
@@ -89,22 +86,22 @@ func BenchmarkSetChargingProfileNewChargingProfile(b *testing.B) {
 	duration := 60
 	scheduleStart := sampleTimestamp
 	minChargingRate := 0.0
-	periods := []st.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
+	periods := []types.ChargingSchedulePeriodInput{{StartPeriod: 0, Limit: 16}}
 
-	scheduleInput := st.ChargingScheduleInput{
+	scheduleInput := types.ChargingScheduleInput{
 		Duration:               &duration,
-		ChargingRateUnit:       st.ChargingRateUnitWatts.String(),
+		ChargingRateUnit:       types.ChargingRateUnitWatts.String(),
 		ChargingSchedulePeriod: periods,
 		MinChargingRate:        &minChargingRate,
 		StartSchedule:          &scheduleStart,
 	}
 
-	input := scpt.ChargingProfileInput{
+	input := types.ChargingProfileInput{
 		ChargingProfileId:      1,
 		TransactionId:          nil,
 		StackLevel:             0,
-		ChargingProfilePurpose: st.TxProfile.String(),
-		ChargingProfileKind:    scpt.ChargingProfileKindAbsolute.String(),
+		ChargingProfilePurpose: types.TxProfile.String(),
+		ChargingProfileKind:    types.ChargingProfileKindAbsolute.String(),
 		RecurrencyKind:         nil,
 		ValidFrom:              nil,
 		ValidTo:                nil,
@@ -112,7 +109,7 @@ func BenchmarkSetChargingProfileNewChargingProfile(b *testing.B) {
 	}
 
 	for i := 0; i < b.N; i++ {
-		if _, err := scpt.NewChargingProfile(input); err != nil {
+		if _, err := types.NewChargingProfile(input); err != nil {
 			b.Fatal(err)
 		}
 	}

@@ -8,7 +8,7 @@ import (
 	"unicode/utf8"
 
 	"github.com/aasanchez/ocpp16messages/changeconfiguration"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 func FuzzChangeConfigurationReq(f *testing.F) {
@@ -33,7 +33,7 @@ func FuzzChangeConfigurationReq(f *testing.F) {
 			Value: value,
 		})
 		if err != nil {
-			if !errors.Is(err, st.ErrEmptyValue) && !errors.Is(err, st.ErrInvalidValue) {
+			if !errors.Is(err, types.ErrEmptyValue) && !errors.Is(err, types.ErrInvalidValue) {
 				t.Fatalf(
 					"error = %v, want wrapping ErrEmptyValue or ErrInvalidValue",
 					err,
@@ -49,10 +49,10 @@ func FuzzChangeConfigurationReq(f *testing.F) {
 		if value == "" {
 			t.Fatal("Req succeeded with empty Value")
 		}
-		if len(key) > st.CiString50Max {
+		if len(key) > types.CiString50Max {
 			t.Fatalf("Req succeeded with Key len=%d", len(key))
 		}
-		if len(value) > st.CiString500Max {
+		if len(value) > types.CiString500Max {
 			t.Fatalf("Req succeeded with Value len=%d", len(value))
 		}
 

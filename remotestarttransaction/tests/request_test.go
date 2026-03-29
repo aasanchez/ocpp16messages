@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	rst "github.com/aasanchez/ocpp16messages/remotestarttransaction"
-	st "github.com/aasanchez/ocpp16messages/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -32,15 +32,15 @@ func TestReq_Valid_IdTagOnly(t *testing.T) {
 		ConnectorId: nil,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.IdTag.Value() != testValidIdTag {
-		t.Errorf(st.ErrorMismatch, testValidIdTag, req.IdTag.Value())
+		t.Errorf(types.ErrorMismatch, testValidIdTag, req.IdTag.Value())
 	}
 
 	if req.ConnectorId != nil {
-		t.Errorf(st.ErrorWantNonNil, wantConnectorIdNilMsg)
+		t.Errorf(types.ErrorWantNonNil, wantConnectorIdNilMsg)
 	}
 }
 
@@ -54,20 +54,20 @@ func TestReq_Valid_WithConnectorId(t *testing.T) {
 		ConnectorId: &connectorId,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.IdTag.Value() != testValidIdTag {
-		t.Errorf(st.ErrorMismatch, testValidIdTag, req.IdTag.Value())
+		t.Errorf(types.ErrorMismatch, testValidIdTag, req.IdTag.Value())
 	}
 
 	if req.ConnectorId == nil {
-		t.Errorf(st.ErrorWantNonNil, fieldNameConnectorId)
+		t.Errorf(types.ErrorWantNonNil, fieldNameConnectorId)
 	}
 
 	if req.ConnectorId.Value() != uint16(testConnectorIdOne) {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			uint16(testConnectorIdOne),
 			req.ConnectorId.Value(),
 		)
@@ -84,16 +84,16 @@ func TestReq_Valid_ConnectorIdZero(t *testing.T) {
 		ConnectorId: &connectorId,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId == nil {
-		t.Errorf(st.ErrorWantNonNil, fieldNameConnectorId)
+		t.Errorf(types.ErrorWantNonNil, fieldNameConnectorId)
 	}
 
 	if req.ConnectorId.Value() != uint16(testConnectorIdZero) {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			uint16(testConnectorIdZero),
 			req.ConnectorId.Value(),
 		)
@@ -110,16 +110,16 @@ func TestReq_Valid_ConnectorIdMax(t *testing.T) {
 		ConnectorId: &connectorId,
 	})
 	if err != nil {
-		t.Errorf(st.ErrorUnexpectedError, err)
+		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
 	if req.ConnectorId == nil {
-		t.Errorf(st.ErrorWantNonNil, fieldNameConnectorId)
+		t.Errorf(types.ErrorWantNonNil, fieldNameConnectorId)
 	}
 
 	if req.ConnectorId.Value() != uint16(testConnectorIdMax) {
 		t.Errorf(
-			st.ErrorMismatchValue,
+			types.ErrorMismatchValue,
 			uint16(testConnectorIdMax),
 			req.ConnectorId.Value(),
 		)
@@ -131,11 +131,11 @@ func TestReq_EmptyIdTag(t *testing.T) {
 
 	_, err := rst.Req(rst.ReqInput{IdTag: "", ConnectorId: nil})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty idTag")
+		t.Errorf(types.ErrorWantNil, "empty idTag")
 	}
 
-	if !errors.Is(err, st.ErrEmptyValue) {
-		t.Errorf(st.ErrorWrapping, err, st.ErrEmptyValue)
+	if !errors.Is(err, types.ErrEmptyValue) {
+		t.Errorf(types.ErrorWrapping, err, types.ErrEmptyValue)
 	}
 }
 
@@ -148,11 +148,11 @@ func TestReq_IdTagTooLong(t *testing.T) {
 		ConnectorId: nil,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "IdTag too long")
+		t.Errorf(types.ErrorWantNil, "IdTag too long")
 	}
 
 	if !strings.Contains(err.Error(), errExceedsMaxLength) {
-		t.Errorf(st.ErrorWantContains, err, errExceedsMaxLength)
+		t.Errorf(types.ErrorWantContains, err, errExceedsMaxLength)
 	}
 }
 
@@ -162,11 +162,11 @@ func TestReq_IdTagInvalidCharacters(t *testing.T) {
 	// Contains null byte
 	_, err := rst.Req(rst.ReqInput{IdTag: "RFID\x00ABC", ConnectorId: nil})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "non-printable chars in idTag")
+		t.Errorf(types.ErrorWantNil, "non-printable chars in idTag")
 	}
 
 	if !strings.Contains(err.Error(), errNonPrintableASCII) {
-		t.Errorf(st.ErrorWantContains, err, errNonPrintableASCII)
+		t.Errorf(types.ErrorWantContains, err, errNonPrintableASCII)
 	}
 }
 
@@ -180,11 +180,11 @@ func TestReq_ConnectorIdNegative(t *testing.T) {
 		ConnectorId: &connectorId,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "negative connectorId")
+		t.Errorf(types.ErrorWantNil, "negative connectorId")
 	}
 
 	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errConnectorId)
 	}
 }
 
@@ -198,11 +198,11 @@ func TestReq_ConnectorIdExceedsMax(t *testing.T) {
 		ConnectorId: &connectorId,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "connectorId exceeds max")
+		t.Errorf(types.ErrorWantNil, "connectorId exceeds max")
 	}
 
 	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errConnectorId)
 	}
 }
 
@@ -216,15 +216,15 @@ func TestReq_MultipleErrors_EmptyIdTagAndInvalidConnectorId(t *testing.T) {
 		ConnectorId: &connectorId,
 	})
 	if err == nil {
-		t.Errorf(st.ErrorWantNil, "empty idTag and negative connectorId")
+		t.Errorf(types.ErrorWantNil, "empty idTag and negative connectorId")
 	}
 
 	// Should contain both errors
 	if !strings.Contains(err.Error(), errIdTag) {
-		t.Errorf(st.ErrorWantContains, err, errIdTag)
+		t.Errorf(types.ErrorWantContains, err, errIdTag)
 	}
 
 	if !strings.Contains(err.Error(), errConnectorId) {
-		t.Errorf(st.ErrorWantContains, err, errConnectorId)
+		t.Errorf(types.ErrorWantContains, err, errConnectorId)
 	}
 }

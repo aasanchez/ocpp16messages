@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/aasanchez/ocpp16messages/getconfiguration"
-	gt "github.com/aasanchez/ocpp16messages/getconfiguration/types"
+	types "github.com/aasanchez/ocpp16types"
 )
 
 const (
@@ -19,7 +19,7 @@ func ExampleConf() {
 	value := "300"
 
 	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
-		ConfigurationKey: []gt.KeyValueInput{
+		ConfigurationKey: []types.KeyValueInput{
 			{
 				Key:      "HeartbeatInterval",
 				Readonly: false,
@@ -51,7 +51,7 @@ func ExampleConf_withReadonlyKey() {
 	value := "1.6"
 
 	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
-		ConfigurationKey: []gt.KeyValueInput{
+		ConfigurationKey: []types.KeyValueInput{
 			{
 				Key:      "SupportedFeatureProfiles",
 				Readonly: true,
@@ -97,7 +97,7 @@ func ExampleConf_withUnknownKeys() {
 // message with a known key that has no value set.
 func ExampleConf_withKeyNoValue() {
 	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
-		ConfigurationKey: []gt.KeyValueInput{
+		ConfigurationKey: []types.KeyValueInput{
 			{
 				Key:      "AuthorizationKey",
 				Readonly: false,
@@ -125,7 +125,7 @@ func ExampleConf_complete() {
 	value := "60"
 
 	conf, err := getconfiguration.Conf(getconfiguration.ConfInput{
-		ConfigurationKey: []gt.KeyValueInput{
+		ConfigurationKey: []types.KeyValueInput{
 			{
 				Key:      "HeartbeatInterval",
 				Readonly: false,
@@ -171,7 +171,7 @@ func ExampleConf_empty() {
 // a configuration key is invalid.
 func ExampleConf_invalidConfigKey() {
 	_, err := getconfiguration.Conf(getconfiguration.ConfInput{
-		ConfigurationKey: []gt.KeyValueInput{
+		ConfigurationKey: []types.KeyValueInput{
 			{
 				Key:      "",
 				Readonly: false,
