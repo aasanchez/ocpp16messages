@@ -242,6 +242,7 @@ func validateIsValid(t *testing.T, value reflect.Value) {
 	}
 }
 
+//nolint:revive // cognitive-complexity: switch over reflect kinds is inherently branchy.
 func assertAllChildrenValid(
 	t *testing.T,
 	value reflect.Value,

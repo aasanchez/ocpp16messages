@@ -48,8 +48,9 @@ func TestConf_ValidBlocked(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo.Status().String() != "Blocked" {
-		t.Errorf(types.ErrorMismatch, "Blocked", conf.IdTagInfo.Status().String())
+	status := conf.IdTagInfo.Status().String()
+	if status != "Blocked" {
+		t.Errorf(types.ErrorMismatch, "Blocked", status)
 	}
 }
 
@@ -65,8 +66,9 @@ func TestConf_ValidExpired(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo.Status().String() != "Expired" {
-		t.Errorf(types.ErrorMismatch, "Expired", conf.IdTagInfo.Status().String())
+	status := conf.IdTagInfo.Status().String()
+	if status != "Expired" {
+		t.Errorf(types.ErrorMismatch, "Expired", status)
 	}
 }
 
@@ -82,8 +84,9 @@ func TestConf_ValidInvalid(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo.Status().String() != "Invalid" {
-		t.Errorf(types.ErrorMismatch, "Invalid", conf.IdTagInfo.Status().String())
+	status := conf.IdTagInfo.Status().String()
+	if status != "Invalid" {
+		t.Errorf(types.ErrorMismatch, "Invalid", status)
 	}
 }
 
