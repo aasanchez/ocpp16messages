@@ -256,6 +256,10 @@ func assertAllChildrenValid(
 		fieldCount := value.NumField()
 
 		for fieldIndex := range fieldCount {
+			if !value.Type().Field(fieldIndex).IsExported() {
+				continue
+			}
+
 			field := value.Field(fieldIndex)
 			assertAllFieldsValidValue(t, field, visitedPointers, dateTimeType)
 		}

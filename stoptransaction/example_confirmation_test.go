@@ -47,7 +47,7 @@ func ExampleConf_accepted() {
 		return
 	}
 
-	fmt.Println(exampleStatusLabel, conf.IdTagInfo.Status.String())
+	fmt.Println(exampleStatusLabel, conf.IdTagInfo.Status().String())
 	// Output:
 	// Status: Accepted
 }
@@ -68,8 +68,8 @@ func ExampleConf_withExpiryDate() {
 		return
 	}
 
-	fmt.Println(exampleStatusLabel, conf.IdTagInfo.Status.String())
-	fmt.Println("Has expiry date:", conf.IdTagInfo.ExpiryDate != nil)
+	fmt.Println(exampleStatusLabel, conf.IdTagInfo.Status().String())
+	fmt.Println("Has expiry date:", conf.IdTagInfo.ExpiryDate() != nil)
 	// Output:
 	// Status: Accepted
 	// Has expiry date: true
@@ -91,8 +91,8 @@ func ExampleConf_withParentIdTag() {
 		return
 	}
 
-	fmt.Println(exampleStatusLabel, conf.IdTagInfo.Status.String())
-	fmt.Println("ParentIdTag:", conf.IdTagInfo.ParentIdTag.String())
+	fmt.Println(exampleStatusLabel, conf.IdTagInfo.Status().String())
+	fmt.Println("ParentIdTag:", conf.IdTagInfo.ParentIdTag().String())
 	// Output:
 	// Status: Accepted
 	// ParentIdTag: PARENT-123

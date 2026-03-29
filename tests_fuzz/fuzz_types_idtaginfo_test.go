@@ -29,15 +29,15 @@ func FuzzNewIdTagInfo(f *testing.F) {
 			return
 		}
 
-		if !idTagInfo.Status.IsValid() {
-			t.Fatalf("Status = %q, want valid", idTagInfo.Status.String())
+		if !idTagInfo.Status().IsValid() {
+			t.Fatalf("Status = %q, want valid", idTagInfo.Status().String())
 		}
 
-		if idTagInfo.ExpiryDate != nil {
+		if idTagInfo.ExpiryDate() != nil {
 			t.Fatal("ExpiryDate != nil, want nil")
 		}
 
-		if idTagInfo.ParentIdTag != nil {
+		if idTagInfo.ParentIdTag() != nil {
 			t.Fatal("ParentIdTag != nil, want nil")
 		}
 

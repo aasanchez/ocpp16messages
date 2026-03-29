@@ -133,7 +133,7 @@ func ExampleReq_withOptionalFields() {
 	}
 
 	fmt.Println(outputConnectorId, req.ConnectorId.Value())
-	fmt.Println("Value:", req.MeterValue[0].SampledValue[0].Value.Value())
+	fmt.Println("Value:", req.MeterValue[0].SampledValue()[0].Value().Value())
 	// Output:
 	// ConnectorId: 1
 	// Value: 12500

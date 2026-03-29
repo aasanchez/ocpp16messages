@@ -27,7 +27,7 @@ func ExampleConf() {
 	}
 
 	fmt.Println(labelTransactionId, conf.TransactionId.Value())
-	fmt.Println(labelStatus, conf.IdTagInfo.Status.String())
+	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
 	// Output:
 	// TransactionId: 12345
 	// Status: Accepted
@@ -49,7 +49,7 @@ func ExampleConf_blocked() {
 	}
 
 	fmt.Println(labelTransactionId, conf.TransactionId.Value())
-	fmt.Println(labelStatus, conf.IdTagInfo.Status.String())
+	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
 	// Output:
 	// TransactionId: 12346
 	// Status: Blocked
@@ -73,8 +73,8 @@ func ExampleConf_withExpiryDate() {
 	}
 
 	fmt.Println(labelTransactionId, conf.TransactionId.Value())
-	fmt.Println(labelStatus, conf.IdTagInfo.Status.String())
-	fmt.Println("HasExpiryDate:", conf.IdTagInfo.ExpiryDate != nil)
+	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
+	fmt.Println("HasExpiryDate:", conf.IdTagInfo.ExpiryDate() != nil)
 	// Output:
 	// TransactionId: 12347
 	// Status: Accepted
@@ -99,8 +99,8 @@ func ExampleConf_withParentIdTag() {
 	}
 
 	fmt.Println(labelTransactionId, conf.TransactionId.Value())
-	fmt.Println(labelStatus, conf.IdTagInfo.Status.String())
-	fmt.Println("ParentIdTag:", conf.IdTagInfo.ParentIdTag.String())
+	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
+	fmt.Println("ParentIdTag:", conf.IdTagInfo.ParentIdTag().String())
 	// Output:
 	// TransactionId: 12348
 	// Status: Accepted
@@ -126,9 +126,9 @@ func ExampleConf_complete() {
 	}
 
 	fmt.Println(labelTransactionId, conf.TransactionId.Value())
-	fmt.Println(labelStatus, conf.IdTagInfo.Status.String())
-	fmt.Println("HasExpiryDate:", conf.IdTagInfo.ExpiryDate != nil)
-	fmt.Println("ParentIdTag:", conf.IdTagInfo.ParentIdTag.String())
+	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
+	fmt.Println("HasExpiryDate:", conf.IdTagInfo.ExpiryDate() != nil)
+	fmt.Println("ParentIdTag:", conf.IdTagInfo.ParentIdTag().String())
 	// Output:
 	// TransactionId: 12349
 	// Status: Accepted

@@ -22,7 +22,7 @@ func ExampleConf() {
 		return
 	}
 
-	fmt.Println(labelStatus, conf.IdTagInfo.Status.String())
+	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
 	// Output:
 	// Status: Accepted
 }
@@ -41,7 +41,7 @@ func ExampleConf_blocked() {
 		return
 	}
 
-	fmt.Println(labelStatus, conf.IdTagInfo.Status.String())
+	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
 	// Output:
 	// Status: Blocked
 }
@@ -62,8 +62,8 @@ func ExampleConf_withExpiryDate() {
 		return
 	}
 
-	fmt.Println(labelStatus, conf.IdTagInfo.Status.String())
-	fmt.Println("HasExpiryDate:", conf.IdTagInfo.ExpiryDate != nil)
+	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
+	fmt.Println("HasExpiryDate:", conf.IdTagInfo.ExpiryDate() != nil)
 	// Output:
 	// Status: Accepted
 	// HasExpiryDate: true
@@ -85,8 +85,8 @@ func ExampleConf_withParentIdTag() {
 		return
 	}
 
-	fmt.Println(labelStatus, conf.IdTagInfo.Status.String())
-	fmt.Println("ParentIdTag:", conf.IdTagInfo.ParentIdTag.String())
+	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
+	fmt.Println("ParentIdTag:", conf.IdTagInfo.ParentIdTag().String())
 	// Output:
 	// Status: Accepted
 	// ParentIdTag: PARENT-123
@@ -109,9 +109,9 @@ func ExampleConf_complete() {
 		return
 	}
 
-	fmt.Println(labelStatus, conf.IdTagInfo.Status.String())
-	fmt.Println("HasExpiryDate:", conf.IdTagInfo.ExpiryDate != nil)
-	fmt.Println("ParentIdTag:", conf.IdTagInfo.ParentIdTag.String())
+	fmt.Println(labelStatus, conf.IdTagInfo.Status().String())
+	fmt.Println("HasExpiryDate:", conf.IdTagInfo.ExpiryDate() != nil)
+	fmt.Println("ParentIdTag:", conf.IdTagInfo.ParentIdTag().String())
 	// Output:
 	// Status: Accepted
 	// HasExpiryDate: true

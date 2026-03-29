@@ -27,11 +27,11 @@ func TestConf_ValidAccepted(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo.Status.String() != StatusAccepted {
+	if conf.IdTagInfo.Status().String() != StatusAccepted {
 		t.Errorf(
 			types.ErrorMismatch,
 			StatusAccepted,
-			conf.IdTagInfo.Status.String(),
+			conf.IdTagInfo.Status().String(),
 		)
 	}
 }
@@ -48,8 +48,8 @@ func TestConf_ValidBlocked(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo.Status.String() != "Blocked" {
-		t.Errorf(types.ErrorMismatch, "Blocked", conf.IdTagInfo.Status.String())
+	if conf.IdTagInfo.Status().String() != "Blocked" {
+		t.Errorf(types.ErrorMismatch, "Blocked", conf.IdTagInfo.Status().String())
 	}
 }
 
@@ -65,8 +65,8 @@ func TestConf_ValidExpired(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo.Status.String() != "Expired" {
-		t.Errorf(types.ErrorMismatch, "Expired", conf.IdTagInfo.Status.String())
+	if conf.IdTagInfo.Status().String() != "Expired" {
+		t.Errorf(types.ErrorMismatch, "Expired", conf.IdTagInfo.Status().String())
 	}
 }
 
@@ -82,8 +82,8 @@ func TestConf_ValidInvalid(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo.Status.String() != "Invalid" {
-		t.Errorf(types.ErrorMismatch, "Invalid", conf.IdTagInfo.Status.String())
+	if conf.IdTagInfo.Status().String() != "Invalid" {
+		t.Errorf(types.ErrorMismatch, "Invalid", conf.IdTagInfo.Status().String())
 	}
 }
 
@@ -99,11 +99,11 @@ func TestConf_ValidConcurrentTx(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo.Status.String() != "ConcurrentTx" {
+	if conf.IdTagInfo.Status().String() != "ConcurrentTx" {
 		t.Errorf(
 			types.ErrorMismatch,
 			"ConcurrentTx",
-			conf.IdTagInfo.Status.String(),
+			conf.IdTagInfo.Status().String(),
 		)
 	}
 }
@@ -156,7 +156,7 @@ func TestConf_WithExpiryDate(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo.ExpiryDate == nil {
+	if conf.IdTagInfo.ExpiryDate() == nil {
 		t.Error("Conf() ExpiryDate = nil, want non-nil")
 	}
 }
@@ -194,15 +194,15 @@ func TestConf_WithParentIdTag(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo.ParentIdTag == nil {
+	if conf.IdTagInfo.ParentIdTag() == nil {
 		t.Error("Conf() ParentIdTag = nil, want non-nil")
 	}
 
-	if conf.IdTagInfo.ParentIdTag.String() != parentTag {
+	if conf.IdTagInfo.ParentIdTag().String() != parentTag {
 		t.Errorf(
 			types.ErrorMismatch,
 			parentTag,
-			conf.IdTagInfo.ParentIdTag.String(),
+			conf.IdTagInfo.ParentIdTag().String(),
 		)
 	}
 }
@@ -260,25 +260,25 @@ func TestConf_Complete(t *testing.T) {
 		t.Errorf(types.ErrorUnexpectedError, err)
 	}
 
-	if conf.IdTagInfo.Status.String() != "Accepted" {
+	if conf.IdTagInfo.Status().String() != "Accepted" {
 		t.Errorf(
-			types.ErrorMismatch, "Accepted", conf.IdTagInfo.Status.String(),
+			types.ErrorMismatch, "Accepted", conf.IdTagInfo.Status().String(),
 		)
 	}
 
-	if conf.IdTagInfo.ExpiryDate == nil {
+	if conf.IdTagInfo.ExpiryDate() == nil {
 		t.Error("Conf() ExpiryDate = nil, want non-nil")
 	}
 
-	if conf.IdTagInfo.ParentIdTag == nil {
+	if conf.IdTagInfo.ParentIdTag() == nil {
 		t.Error("Conf() ParentIdTag = nil, want non-nil")
 	}
 
-	if conf.IdTagInfo.ParentIdTag.String() != parentTag {
+	if conf.IdTagInfo.ParentIdTag().String() != parentTag {
 		t.Errorf(
 			types.ErrorMismatch,
 			parentTag,
-			conf.IdTagInfo.ParentIdTag.String(),
+			conf.IdTagInfo.ParentIdTag().String(),
 		)
 	}
 }

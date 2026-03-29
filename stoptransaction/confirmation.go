@@ -82,11 +82,7 @@ func validateConfInput(input ConfInput) (confValidation, []error) {
 func validateStatus(status string, errs []error) (types.IdTagInfo, []error) {
 	info, err := types.NewIdTagInfo(types.AuthorizationStatus(status))
 	if err != nil {
-		return types.IdTagInfo{
-			Status:      "",
-			ExpiryDate:  nil,
-			ParentIdTag: nil,
-		}, append(errs, fmt.Errorf("status: %w", err))
+		return types.IdTagInfo{}, append(errs, fmt.Errorf("status: %w", err))
 	}
 
 	return info, errs

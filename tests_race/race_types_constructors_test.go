@@ -212,7 +212,7 @@ func TestRace_NewSharedTypeSampledValue(t *testing.T) {
 			return fmt.Errorf("NewSampledValue: %w", err)
 		}
 
-		_ = sv.Value.String()
+		_ = sv.Value().String()
 
 		return nil
 	})
@@ -238,9 +238,9 @@ func TestRace_NewSharedTypeMeterValue(t *testing.T) {
 			return fmt.Errorf("NewMeterValue: %w", err)
 		}
 
-		_ = mv.Timestamp.String()
-		for _, value := range mv.SampledValue {
-			_ = value.Value.String()
+		_ = mv.Timestamp().String()
+		for _, value := range mv.SampledValue() {
+			_ = value.Value().String()
 		}
 
 		return nil

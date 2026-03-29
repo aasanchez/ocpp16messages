@@ -60,11 +60,11 @@ func TestConf_ValidAccepted(t *testing.T) {
 		return
 	}
 
-	if conf.IdTagInfo.Status.String() != statusAccepted {
+	if conf.IdTagInfo.Status().String() != statusAccepted {
 		t.Errorf(
 			types.ErrorMismatch,
 			statusAccepted,
-			conf.IdTagInfo.Status.String(),
+			conf.IdTagInfo.Status().String(),
 		)
 	}
 }
@@ -89,11 +89,11 @@ func TestConf_ValidBlocked(t *testing.T) {
 		return
 	}
 
-	if conf.IdTagInfo.Status.String() != statusBlocked {
+	if conf.IdTagInfo.Status().String() != statusBlocked {
 		t.Errorf(
 			types.ErrorMismatch,
 			statusBlocked,
-			conf.IdTagInfo.Status.String(),
+			conf.IdTagInfo.Status().String(),
 		)
 	}
 }
@@ -118,11 +118,11 @@ func TestConf_ValidExpired(t *testing.T) {
 		return
 	}
 
-	if conf.IdTagInfo.Status.String() != statusExpired {
+	if conf.IdTagInfo.Status().String() != statusExpired {
 		t.Errorf(
 			types.ErrorMismatch,
 			statusExpired,
-			conf.IdTagInfo.Status.String(),
+			conf.IdTagInfo.Status().String(),
 		)
 	}
 }
@@ -147,11 +147,11 @@ func TestConf_ValidInvalid(t *testing.T) {
 		return
 	}
 
-	if conf.IdTagInfo.Status.String() != statusInvalid {
+	if conf.IdTagInfo.Status().String() != statusInvalid {
 		t.Errorf(
 			types.ErrorMismatch,
 			statusInvalid,
-			conf.IdTagInfo.Status.String(),
+			conf.IdTagInfo.Status().String(),
 		)
 	}
 }
@@ -176,11 +176,11 @@ func TestConf_ValidConcurrentTx(t *testing.T) {
 		return
 	}
 
-	if conf.IdTagInfo.Status.String() != statusConcurrentTx {
+	if conf.IdTagInfo.Status().String() != statusConcurrentTx {
 		t.Errorf(
 			types.ErrorMismatch,
 			statusConcurrentTx,
-			conf.IdTagInfo.Status.String(),
+			conf.IdTagInfo.Status().String(),
 		)
 	}
 }
@@ -244,7 +244,7 @@ func TestConf_WithExpiryDate(t *testing.T) {
 		return
 	}
 
-	if conf.IdTagInfo.ExpiryDate == nil {
+	if conf.IdTagInfo.ExpiryDate() == nil {
 		t.Error(errConfExpiryDateNil)
 	}
 }
@@ -290,15 +290,15 @@ func TestConf_WithParentIdTag(t *testing.T) {
 		return
 	}
 
-	if conf.IdTagInfo.ParentIdTag == nil {
+	if conf.IdTagInfo.ParentIdTag() == nil {
 		t.Error(errConfParentIdNil)
 	}
 
-	if conf.IdTagInfo.ParentIdTag.String() != parentTag {
+	if conf.IdTagInfo.ParentIdTag().String() != parentTag {
 		t.Errorf(
 			types.ErrorMismatch,
 			parentTag,
-			conf.IdTagInfo.ParentIdTag.String(),
+			conf.IdTagInfo.ParentIdTag().String(),
 		)
 	}
 }
@@ -365,27 +365,27 @@ func TestConf_Complete(t *testing.T) {
 		return
 	}
 
-	if conf.IdTagInfo.Status.String() != statusAccepted {
+	if conf.IdTagInfo.Status().String() != statusAccepted {
 		t.Errorf(
 			types.ErrorMismatch,
 			statusAccepted,
-			conf.IdTagInfo.Status.String(),
+			conf.IdTagInfo.Status().String(),
 		)
 	}
 
-	if conf.IdTagInfo.ExpiryDate == nil {
+	if conf.IdTagInfo.ExpiryDate() == nil {
 		t.Error(errConfExpiryDateNil)
 	}
 
-	if conf.IdTagInfo.ParentIdTag == nil {
+	if conf.IdTagInfo.ParentIdTag() == nil {
 		t.Error(errConfParentIdNil)
 	}
 
-	if conf.IdTagInfo.ParentIdTag.String() != parentTag {
+	if conf.IdTagInfo.ParentIdTag().String() != parentTag {
 		t.Errorf(
 			types.ErrorMismatch,
 			parentTag,
-			conf.IdTagInfo.ParentIdTag.String(),
+			conf.IdTagInfo.ParentIdTag().String(),
 		)
 	}
 }
