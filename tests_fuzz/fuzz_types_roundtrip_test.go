@@ -39,8 +39,13 @@ func FuzzCiStringRoundTrip(f *testing.F) {
 				)
 			}
 
-			if ci20.String() != ci20.String() {
-				t.Fatal("CiString20 String() not deterministic")
+			s1 := ci20.String()
+			s2 := ci20.String()
+
+			if s1 != s2 {
+				t.Fatal(
+					"CiString20 String() not deterministic",
+				)
 			}
 		}
 
@@ -53,8 +58,13 @@ func FuzzCiStringRoundTrip(f *testing.F) {
 				)
 			}
 
-			if ci25.String() != ci25.String() {
-				t.Fatal("CiString25 String() not deterministic")
+			s1 := ci25.String()
+			s2 := ci25.String()
+
+			if s1 != s2 {
+				t.Fatal(
+					"CiString25 String() not deterministic",
+				)
 			}
 		}
 
@@ -67,8 +77,13 @@ func FuzzCiStringRoundTrip(f *testing.F) {
 				)
 			}
 
-			if ci50.String() != ci50.String() {
-				t.Fatal("CiString50 String() not deterministic")
+			s1 := ci50.String()
+			s2 := ci50.String()
+
+			if s1 != s2 {
+				t.Fatal(
+					"CiString50 String() not deterministic",
+				)
 			}
 		}
 
@@ -81,7 +96,10 @@ func FuzzCiStringRoundTrip(f *testing.F) {
 				)
 			}
 
-			if ci255.String() != ci255.String() {
+			s1 := ci255.String()
+			s2 := ci255.String()
+
+			if s1 != s2 {
 				t.Fatal(
 					"CiString255 String() not deterministic",
 				)
@@ -97,7 +115,10 @@ func FuzzCiStringRoundTrip(f *testing.F) {
 				)
 			}
 
-			if ci500.String() != ci500.String() {
+			s1 := ci500.String()
+			s2 := ci500.String()
+
+			if s1 != s2 {
 				t.Fatal(
 					"CiString500 String() not deterministic",
 				)

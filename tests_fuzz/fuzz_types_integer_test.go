@@ -48,8 +48,14 @@ func FuzzNewInteger(f *testing.F) {
 		}
 
 		// String() determinism
-		if integer.String() != integer.String() {
-			t.Fatal("String() not deterministic")
+		strFirst := integer.String()
+		strSecond := integer.String()
+
+		if strFirst != strSecond {
+			t.Fatalf(
+				"String() not deterministic: %q vs %q",
+				strFirst, strSecond,
+			)
 		}
 
 		// Round-trip via Value()

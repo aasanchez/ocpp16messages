@@ -39,8 +39,14 @@ func FuzzNewIdToken(f *testing.F) {
 			t.Fatalf("String() = %q, want %q", got, input)
 		}
 
-		if token.String() != token.String() {
-			t.Fatal("String() is not deterministic")
+		first := token.String()
+		second := token.String()
+
+		if first != second {
+			t.Fatalf(
+				"String() not deterministic: %q vs %q",
+				first, second,
+			)
 		}
 	})
 }

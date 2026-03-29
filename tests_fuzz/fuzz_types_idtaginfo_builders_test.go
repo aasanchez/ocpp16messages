@@ -58,8 +58,14 @@ func FuzzIdTagInfoWithExpiryDate(f *testing.F) {
 			)
 		}
 
-		if result.String() != result.String() {
-			t.Fatal("String() is not deterministic")
+		first := result.String()
+		second := result.String()
+
+		if first != second {
+			t.Fatalf(
+				"String() not deterministic: %q vs %q",
+				first, second,
+			)
 		}
 	})
 }
