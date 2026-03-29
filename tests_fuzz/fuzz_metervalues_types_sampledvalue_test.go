@@ -14,17 +14,17 @@ func FuzzNewMeterValuesTypeSampledValue(f *testing.F) {
 	f.Add(
 		"100",
 		true,
-		types.SamplePeriodic.String(),
+		types.ReadingContextSamplePeriodic.String(),
 		true,
-		types.Raw.String(),
+		types.ValueFormatRaw.String(),
 		true,
-		types.EnergyActiveImportRegister.String(),
+		types.MeasurandEnergyActiveImportRegister.String(),
 		true,
-		types.L1.String(),
+		types.PhaseL1.String(),
 		true,
-		types.Outlet.String(),
+		types.LocationOutlet.String(),
 		true,
-		types.Wh.String(),
+		types.UnitWh.String(),
 	)
 	f.Add("bad\x01", false, "", false, "", false, "", false, "", false, "", false, "")
 	f.Add(
