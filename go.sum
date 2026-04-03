@@ -1,2 +1,2 @@
-github.com/aasanchez/ocpp16types v0.0.0-20260329175540-bc7b68673be6 h1:LsO8MJYDKhS3JxSEQxjU2N+MsWw67fTtXzv1outkZD8=
-github.com/aasanchez/ocpp16types v0.0.0-20260329175540-bc7b68673be6/go.mod h1:hjkYbxDvF4YNMWg/wwyHKGyaTRORRTFxXitsTllRBRw=
+github.com/aasanchez/ocpp16types v0.1.0 h1:QVImlrXoxuNsbo94wJjEKsMbdG8IheV4xR2w6IsYmPs=
+github.com/aasanchez/ocpp16types v0.1.0/go.mod h1:hjkYbxDvF4YNMWg/wwyHKGyaTRORRTFxXitsTllRBRw=
