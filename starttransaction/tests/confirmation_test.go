@@ -63,7 +63,11 @@ func TestConf_ValidBlocked(t *testing.T) {
 	}
 
 	if conf.IdTagInfo.Status().String() != "Blocked" {
-		t.Errorf(types.ErrorMismatch, "Blocked", conf.IdTagInfo.Status().String())
+		t.Errorf(
+			types.ErrorMismatch,
+			"Blocked",
+			conf.IdTagInfo.Status().String(),
+		)
 	}
 }
 
@@ -81,7 +85,11 @@ func TestConf_ValidExpired(t *testing.T) {
 	}
 
 	if conf.IdTagInfo.Status().String() != "Expired" {
-		t.Errorf(types.ErrorMismatch, "Expired", conf.IdTagInfo.Status().String())
+		t.Errorf(
+			types.ErrorMismatch,
+			"Expired",
+			conf.IdTagInfo.Status().String(),
+		)
 	}
 }
 
@@ -99,7 +107,11 @@ func TestConf_ValidInvalid(t *testing.T) {
 	}
 
 	if conf.IdTagInfo.Status().String() != "Invalid" {
-		t.Errorf(types.ErrorMismatch, "Invalid", conf.IdTagInfo.Status().String())
+		t.Errorf(
+			types.ErrorMismatch,
+			"Invalid",
+			conf.IdTagInfo.Status().String(),
+		)
 	}
 }
 

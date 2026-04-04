@@ -50,14 +50,14 @@ func FuzzNewMeterValue(f *testing.F) {
 			t.Fatalf("Timestamp.String() not RFC3339Nano: %v", parseErr)
 		}
 
-		if len(meterValue.SampledValue) == 0 {
+		if len(meterValue.SampledValue()) == 0 {
 			t.Fatal("SampledValue is empty, want at least one")
 		}
 
-		if meterValue.SampledValue[0].Value.String() != value {
+		if meterValue.SampledValue()[0].Value().String() != value {
 			t.Fatalf(
 				"SampledValue[0].Value = %q, want %q",
-				meterValue.SampledValue[0].Value.String(),
+				meterValue.SampledValue()[0].Value().String(),
 				value,
 			)
 		}
