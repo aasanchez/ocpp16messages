@@ -98,7 +98,7 @@ func BenchmarkParentIdTag_CustomReadPrimitive(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		sinkParentIdTagValue = idTagInfo.ParentIdTag.Value().Value()
+		sinkParentIdTagValue = idTagInfo.ParentIdTag().Value().Value()
 	}
 }
 
