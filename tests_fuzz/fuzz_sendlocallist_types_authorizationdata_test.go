@@ -80,52 +80,52 @@ func FuzzNewAuthorizationData(f *testing.F) {
 			t.Fatal("NewAuthorizationData succeeded with empty IdTag")
 		}
 
-		if authData.IdTag.String() != idTag {
-			t.Fatalf("IdTag = %q, want %q", authData.IdTag.String(), idTag)
+		if authData.IdTag().String() != idTag {
+			t.Fatalf("IdTag = %q, want %q", authData.IdTag().String(), idTag)
 		}
 
 		if !hasIdTagInfo {
-			if authData.IdTagInfo != nil {
+			if authData.IdTagInfo() != nil {
 				t.Fatal("IdTagInfo != nil, want nil")
 			}
 
 			return
 		}
 
-		if authData.IdTagInfo == nil {
+		if authData.IdTagInfo() == nil {
 			t.Fatal("IdTagInfo = nil, want non-nil")
 		}
 
-		if !authData.IdTagInfo.Status.IsValid() {
-			t.Fatalf("Status = %q, want valid", authData.IdTagInfo.Status.String())
+		if !authData.IdTagInfo().Status().IsValid() {
+			t.Fatalf("Status = %q, want valid", authData.IdTagInfo().Status().String())
 		}
 
 		if hasExpiryDate {
-			if authData.IdTagInfo.ExpiryDate == nil {
+			if authData.IdTagInfo().ExpiryDate() == nil {
 				t.Fatal("ExpiryDate = nil, want non-nil")
 			}
-			if authData.IdTagInfo.ExpiryDate.Value().Location() != time.UTC {
+			if authData.IdTagInfo().ExpiryDate().Value().Location() != time.UTC {
 				t.Fatalf(
 					"ExpiryDate location = %v, want UTC",
-					authData.IdTagInfo.ExpiryDate.Value().Location(),
+					authData.IdTagInfo().ExpiryDate().Value().Location(),
 				)
 			}
-		} else if authData.IdTagInfo.ExpiryDate != nil {
+		} else if authData.IdTagInfo().ExpiryDate() != nil {
 			t.Fatal("ExpiryDate != nil, want nil")
 		}
 
 		if hasParentIdTag {
-			if authData.IdTagInfo.ParentIdTag == nil {
+			if authData.IdTagInfo().ParentIdTag() == nil {
 				t.Fatal("ParentIdTag = nil, want non-nil")
 			}
-			if authData.IdTagInfo.ParentIdTag.String() != parentIdTag {
+			if authData.IdTagInfo().ParentIdTag().String() != parentIdTag {
 				t.Fatalf(
 					"ParentIdTag = %q, want %q",
-					authData.IdTagInfo.ParentIdTag.String(),
+					authData.IdTagInfo().ParentIdTag().String(),
 					parentIdTag,
 				)
 			}
-		} else if authData.IdTagInfo.ParentIdTag != nil {
+		} else if authData.IdTagInfo().ParentIdTag() != nil {
 			t.Fatal("ParentIdTag != nil, want nil")
 		}
 	})

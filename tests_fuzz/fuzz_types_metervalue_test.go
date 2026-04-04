@@ -38,14 +38,14 @@ func FuzzNewMeterValue(f *testing.F) {
 			return
 		}
 
-		if meterValue.Timestamp.Value().Location() != time.UTC {
+		if meterValue.Timestamp().Value().Location() != time.UTC {
 			t.Fatalf(
 				"Timestamp location = %v, want UTC",
-				meterValue.Timestamp.Value().Location(),
+				meterValue.Timestamp().Value().Location(),
 			)
 		}
 
-		roundTrip := meterValue.Timestamp.String()
+		roundTrip := meterValue.Timestamp().String()
 		if _, parseErr := time.Parse(time.RFC3339Nano, roundTrip); parseErr != nil {
 			t.Fatalf("Timestamp.String() not RFC3339Nano: %v", parseErr)
 		}

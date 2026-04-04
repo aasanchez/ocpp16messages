@@ -69,29 +69,29 @@ func FuzzStartTransactionConf(f *testing.F) {
 			t.Fatalf("TransactionId = %d, want %d", got, transactionId)
 		}
 
-		if !conf.IdTagInfo.Status.IsValid() {
-			t.Fatalf("Status = %q, want valid", conf.IdTagInfo.Status.String())
+		if !conf.IdTagInfo.Status().IsValid() {
+			t.Fatalf("Status = %q, want valid", conf.IdTagInfo.Status().String())
 		}
 
 		if hasExpiryDate {
-			if conf.IdTagInfo.ExpiryDate == nil {
+			if conf.IdTagInfo.ExpiryDate() == nil {
 				t.Fatal("ExpiryDate = nil, want non-nil")
 			}
-			if conf.IdTagInfo.ExpiryDate.Value().Location() != time.UTC {
+			if conf.IdTagInfo.ExpiryDate().Value().Location() != time.UTC {
 				t.Fatalf(
 					"ExpiryDate location = %v, want UTC",
-					conf.IdTagInfo.ExpiryDate.Value().Location(),
+					conf.IdTagInfo.ExpiryDate().Value().Location(),
 				)
 			}
-		} else if conf.IdTagInfo.ExpiryDate != nil {
+		} else if conf.IdTagInfo.ExpiryDate() != nil {
 			t.Fatal("ExpiryDate != nil, want nil")
 		}
 
 		if hasParentIdTag {
-			if conf.IdTagInfo.ParentIdTag == nil {
+			if conf.IdTagInfo.ParentIdTag() == nil {
 				t.Fatal("ParentIdTag = nil, want non-nil")
 			}
-		} else if conf.IdTagInfo.ParentIdTag != nil {
+		} else if conf.IdTagInfo.ParentIdTag() != nil {
 			t.Fatal("ParentIdTag != nil, want nil")
 		}
 	})

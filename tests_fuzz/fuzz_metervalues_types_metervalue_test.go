@@ -43,10 +43,10 @@ func FuzzNewMeterValuesTypeMeterValue(f *testing.F) {
 			return
 		}
 
-		if meterValue.Timestamp.Value().Location() != time.UTC {
+		if meterValue.Timestamp().Value().Location() != time.UTC {
 			t.Fatalf(
 				"Timestamp location = %v, want UTC",
-				meterValue.Timestamp.Value().Location(),
+				meterValue.Timestamp().Value().Location(),
 			)
 		}
 

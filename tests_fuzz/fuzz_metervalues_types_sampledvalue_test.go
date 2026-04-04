@@ -123,79 +123,79 @@ func FuzzNewMeterValuesTypeSampledValue(f *testing.F) {
 			t.Fatal("NewSampledValue succeeded with empty Value")
 		}
 
-		if sampledValue.Value.String() != value {
-			t.Fatalf("Value = %q, want %q", sampledValue.Value.String(), value)
+		if sampledValue.Value().String() != value {
+			t.Fatalf("Value = %q, want %q", sampledValue.Value().String(), value)
 		}
 
 		if hasContext {
-			if sampledValue.Context == nil {
+			if sampledValue.Context() == nil {
 				t.Fatal("Context = nil, want non-nil")
 			}
-			if !sampledValue.Context.IsValid() {
-				t.Fatalf("Context = %q, want valid", sampledValue.Context.String())
+			if !sampledValue.Context().IsValid() {
+				t.Fatalf("Context = %q, want valid", sampledValue.Context().String())
 			}
-		} else if sampledValue.Context != nil {
+		} else if sampledValue.Context() != nil {
 			t.Fatal("Context != nil, want nil")
 		}
 
 		if hasFormat {
-			if sampledValue.Format == nil {
+			if sampledValue.Format() == nil {
 				t.Fatal("Format = nil, want non-nil")
 			}
-			if !sampledValue.Format.IsValid() {
-				t.Fatalf("Format = %q, want valid", sampledValue.Format.String())
+			if !sampledValue.Format().IsValid() {
+				t.Fatalf("Format = %q, want valid", sampledValue.Format().String())
 			}
-		} else if sampledValue.Format != nil {
+		} else if sampledValue.Format() != nil {
 			t.Fatal("Format != nil, want nil")
 		}
 
 		if hasMeasurand {
-			if sampledValue.Measurand == nil {
+			if sampledValue.Measurand() == nil {
 				t.Fatal("Measurand = nil, want non-nil")
 			}
-			if !sampledValue.Measurand.IsValid() {
+			if !sampledValue.Measurand().IsValid() {
 				t.Fatalf(
 					"Measurand = %q, want valid",
-					sampledValue.Measurand.String(),
+					sampledValue.Measurand().String(),
 				)
 			}
-		} else if sampledValue.Measurand != nil {
+		} else if sampledValue.Measurand() != nil {
 			t.Fatal("Measurand != nil, want nil")
 		}
 
 		if hasPhase {
-			if sampledValue.Phase == nil {
+			if sampledValue.Phase() == nil {
 				t.Fatal("Phase = nil, want non-nil")
 			}
-			if !sampledValue.Phase.IsValid() {
-				t.Fatalf("Phase = %q, want valid", sampledValue.Phase.String())
+			if !sampledValue.Phase().IsValid() {
+				t.Fatalf("Phase = %q, want valid", sampledValue.Phase().String())
 			}
-		} else if sampledValue.Phase != nil {
+		} else if sampledValue.Phase() != nil {
 			t.Fatal("Phase != nil, want nil")
 		}
 
 		if hasLocation {
-			if sampledValue.Location == nil {
+			if sampledValue.Location() == nil {
 				t.Fatal("Location = nil, want non-nil")
 			}
-			if !sampledValue.Location.IsValid() {
+			if !sampledValue.Location().IsValid() {
 				t.Fatalf(
 					"Location = %q, want valid",
-					sampledValue.Location.String(),
+					sampledValue.Location().String(),
 				)
 			}
-		} else if sampledValue.Location != nil {
+		} else if sampledValue.Location() != nil {
 			t.Fatal("Location != nil, want nil")
 		}
 
 		if hasUnit {
-			if sampledValue.Unit == nil {
+			if sampledValue.Unit() == nil {
 				t.Fatal("Unit = nil, want non-nil")
 			}
-			if !sampledValue.Unit.IsValid() {
-				t.Fatalf("Unit = %q, want valid", sampledValue.Unit.String())
+			if !sampledValue.Unit().IsValid() {
+				t.Fatalf("Unit = %q, want valid", sampledValue.Unit().String())
 			}
-		} else if sampledValue.Unit != nil {
+		} else if sampledValue.Unit() != nil {
 			t.Fatal("Unit != nil, want nil")
 		}
 	})

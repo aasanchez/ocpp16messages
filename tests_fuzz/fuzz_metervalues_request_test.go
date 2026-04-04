@@ -94,14 +94,14 @@ func FuzzMeterValuesReq(f *testing.F) {
 			t.Fatal("MeterValue is empty, want at least one")
 		}
 
-		if req.MeterValue[0].Timestamp.Value().Location() != time.UTC {
+		if req.MeterValue[0].Timestamp().Value().Location() != time.UTC {
 			t.Fatalf(
 				"MeterValue[0].Timestamp location = %v, want UTC",
-				req.MeterValue[0].Timestamp.Value().Location(),
+				req.MeterValue[0].Timestamp().Value().Location(),
 			)
 		}
 
-		if len(req.MeterValue[0].SampledValue) == 0 {
+		if len(req.MeterValue[0].SampledValue()) == 0 {
 			t.Fatal("SampledValue is empty, want at least one")
 		}
 	})

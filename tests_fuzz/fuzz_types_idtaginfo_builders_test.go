@@ -34,25 +34,25 @@ func FuzzIdTagInfoWithExpiryDate(f *testing.F) {
 
 		result := info.WithExpiryDate(dt)
 
-		if result.Status != info.Status {
+		if result.Status() != info.Status() {
 			t.Fatalf(
 				"Status changed: got %q, want %q",
-				result.Status, info.Status,
+				result.Status(), info.Status(),
 			)
 		}
 
-		if result.ExpiryDate == nil {
+		if result.ExpiryDate() == nil {
 			t.Fatal("ExpiryDate = nil after WithExpiryDate")
 		}
 
-		if result.ExpiryDate.String() != dt.String() {
+		if result.ExpiryDate().String() != dt.String() {
 			t.Fatalf(
 				"ExpiryDate = %q, want %q",
-				result.ExpiryDate.String(), dt.String(),
+				result.ExpiryDate().String(), dt.String(),
 			)
 		}
 
-		if result.ParentIdTag != nil {
+		if result.ParentIdTag() != nil {
 			t.Fatal(
 				"ParentIdTag != nil after WithExpiryDate only",
 			)
@@ -96,25 +96,25 @@ func FuzzIdTagInfoWithParentIdTag(f *testing.F) {
 		token := types.NewIdToken(ciStr)
 		result := info.WithParentIdTag(token)
 
-		if result.Status != info.Status {
+		if result.Status() != info.Status() {
 			t.Fatalf(
 				"Status changed: got %q, want %q",
-				result.Status, info.Status,
+				result.Status(), info.Status(),
 			)
 		}
 
-		if result.ParentIdTag == nil {
+		if result.ParentIdTag() == nil {
 			t.Fatal("ParentIdTag = nil after WithParentIdTag")
 		}
 
-		if result.ParentIdTag.String() != idTag {
+		if result.ParentIdTag().String() != idTag {
 			t.Fatalf(
 				"ParentIdTag = %q, want %q",
-				result.ParentIdTag.String(), idTag,
+				result.ParentIdTag().String(), idTag,
 			)
 		}
 
-		if result.ExpiryDate != nil {
+		if result.ExpiryDate() != nil {
 			t.Fatal(
 				"ExpiryDate != nil after WithParentIdTag only",
 			)
@@ -158,26 +158,26 @@ func FuzzIdTagInfoWithBothBuilders(f *testing.F) {
 		orderA := info.WithExpiryDate(dt).WithParentIdTag(token)
 		orderB := info.WithParentIdTag(token).WithExpiryDate(dt)
 
-		if orderA.Status != orderB.Status {
+		if orderA.Status() != orderB.Status() {
 			t.Fatal("Status differs between builder orders")
 		}
 
-		if orderA.ExpiryDate == nil || orderB.ExpiryDate == nil {
+		if orderA.ExpiryDate() == nil || orderB.ExpiryDate() == nil {
 			t.Fatal("ExpiryDate = nil in one order")
 		}
 
-		if orderA.ExpiryDate.String() !=
-			orderB.ExpiryDate.String() {
+		if orderA.ExpiryDate().String() !=
+			orderB.ExpiryDate().String() {
 			t.Fatal("ExpiryDate differs between orders")
 		}
 
-		if orderA.ParentIdTag == nil ||
-			orderB.ParentIdTag == nil {
+		if orderA.ParentIdTag() == nil ||
+			orderB.ParentIdTag() == nil {
 			t.Fatal("ParentIdTag = nil in one order")
 		}
 
-		if orderA.ParentIdTag.String() !=
-			orderB.ParentIdTag.String() {
+		if orderA.ParentIdTag().String() !=
+			orderB.ParentIdTag().String() {
 			t.Fatal("ParentIdTag differs between orders")
 		}
 

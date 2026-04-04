@@ -59,42 +59,42 @@ func FuzzAuthorizeConf(f *testing.F) {
 			return
 		}
 
-		if !conf.IdTagInfo.Status.IsValid() {
-			t.Fatalf("Status = %q, want valid", conf.IdTagInfo.Status.String())
+		if !conf.IdTagInfo.Status().IsValid() {
+			t.Fatalf("Status = %q, want valid", conf.IdTagInfo.Status().String())
 		}
-		if conf.IdTagInfo.Status.String() != status {
-			t.Fatalf("Status = %q, want %q", conf.IdTagInfo.Status.String(), status)
+		if conf.IdTagInfo.Status().String() != status {
+			t.Fatalf("Status = %q, want %q", conf.IdTagInfo.Status().String(), status)
 		}
 
 		if hasExpiryDate {
-			if conf.IdTagInfo.ExpiryDate == nil {
+			if conf.IdTagInfo.ExpiryDate() == nil {
 				t.Fatal("ExpiryDate = nil, want non-nil")
 			}
-			if conf.IdTagInfo.ExpiryDate.Value().Location() != time.UTC {
+			if conf.IdTagInfo.ExpiryDate().Value().Location() != time.UTC {
 				t.Fatalf(
 					"ExpiryDate location = %v, want UTC",
-					conf.IdTagInfo.ExpiryDate.Value().Location(),
+					conf.IdTagInfo.ExpiryDate().Value().Location(),
 				)
 			}
-		} else if conf.IdTagInfo.ExpiryDate != nil {
+		} else if conf.IdTagInfo.ExpiryDate() != nil {
 			t.Fatal("ExpiryDate != nil, want nil")
 		}
 
 		if hasParentIdTag {
-			if conf.IdTagInfo.ParentIdTag == nil {
+			if conf.IdTagInfo.ParentIdTag() == nil {
 				t.Fatal("ParentIdTag = nil, want non-nil")
 			}
 			if parentIdTag == "" {
 				t.Fatal("Conf succeeded with empty ParentIdTag")
 			}
-			if conf.IdTagInfo.ParentIdTag.String() != parentIdTag {
+			if conf.IdTagInfo.ParentIdTag().String() != parentIdTag {
 				t.Fatalf(
 					"ParentIdTag = %q, want %q",
-					conf.IdTagInfo.ParentIdTag.String(),
+					conf.IdTagInfo.ParentIdTag().String(),
 					parentIdTag,
 				)
 			}
-		} else if conf.IdTagInfo.ParentIdTag != nil {
+		} else if conf.IdTagInfo.ParentIdTag() != nil {
 			t.Fatal("ParentIdTag != nil, want nil")
 		}
 	})
