@@ -8,24 +8,28 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions: {}
+
 jobs:
   module:
-    name: Module hygiene (ubuntu / go1.26.1)
+    name: Module hygiene
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v6.0.2
+      - name: Checkout repository
+        uses: actions/checkout@v6.0.2
 
-      - uses: actions/setup-go@v6.4.0
+      - name: Set up Go
+        uses: actions/setup-go@v6.4.0
         with:
           go-version: 1.26.1
           cache: false
 
-      - name: go mod verify
-        run: |
-          go mod download
-          go mod verify
+      - name: Download and verify modules
+        run: go mod download && go mod verify
 
-      - name: go mod tidy (must be clean)
+      - name: Check go mod tidy
         run: |
           go mod tidy
           git diff --exit-code -- go.mod go.sum
@@ -33,6 +37,8 @@ jobs:
   test:
     name: Test (${{ matrix.os }} / go${{ matrix.go }})
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
@@ -44,35 +50,39 @@ jobs:
           - 1.25.8
           - 1.26.1
     steps:
-      - uses: actions/checkout@v6.0.2
+      - name: Checkout repository
+        uses: actions/checkout@v6.0.2
 
-      - uses: actions/setup-go@v6.4.0
+      - name: Set up Go
+        uses: actions/setup-go@v6.4.0
         with:
           go-version: ${{ matrix.go }}
           cache: false
 
-      - name: Unit tests
+      - name: Run unit tests
         run: go test -mod=readonly -v ./...
 
   coverage:
-    name: Coverage (ubuntu / go1.26.1)
+    name: Coverage
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     env:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     steps:
-      - uses: actions/checkout@v6.0.2
+      - name: Checkout repository
+        uses: actions/checkout@v6.0.2
 
-      - uses: actions/setup-go@v6.4.0
+      - name: Set up Go
+        uses: actions/setup-go@v6.4.0
         with:
           go-version: 1.26.1
           cache: false
 
-      - run: mkdir -p reports
+      - name: Create reports directory
+        run: mkdir -p reports
 
-      - name: Clean caches
-        run: go clean -cache -testcache -modcache
-
-      - name: Execute tests with coverage
+      - name: Run tests with coverage
         run: |
           go test -mod=readonly \
               -coverpkg=$(go list ./... | grep -v -e /scripts -e /tests -e tests_ | tr '\n' ',' | sed 's/,$//') \
@@ -82,25 +92,26 @@ jobs:
       - name: Coverage summary
         run: go tool cover -func=reports/coverage.out
 
-      - name: Coverage annotation
+      - name: Annotate coverage total
         run: |
           total="$(go tool cover -func=reports/coverage.out | tail -n 1 | awk '{print $NF}')"
           echo "::notice::Total coverage: ${total}"
 
-      - name: Upload artifacts
+      - name: Upload coverage artifacts
+        if: always()
         uses: actions/upload-artifact@v7.0.0
         with:
           name: coverage-artifacts-${{ github.run_number }}
           path: reports
           retention-days: 7
 
-      - name: Codecov token notice
+      - name: Warn if Codecov token is missing
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && env.CODECOV_TOKEN == '' }}
         run: |
           echo "::warning::CODECOV_TOKEN is not set; Codecov uploads are skipped for protected branches."
           echo "::warning::Add CODECOV_TOKEN in GitHub repo secrets to enable Codecov gating."
 
-      - name: Upload to Codecov (token)
+      - name: Upload to Codecov
         if: ${{ env.CODECOV_TOKEN != '' }}
         uses: codecov/codecov-action@v6.0.0
         with:
@@ -109,19 +120,25 @@ jobs:
           token: ${{ env.CODECOV_TOKEN }}
 
   apidiff:
-    name: API diff (ubuntu / go1.26.1)
+    name: API diff
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v6.0.2
+      - name: Checkout repository
+        uses: actions/checkout@v6.0.2
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-go@v6.4.0
+      - name: Set up Go
+        uses: actions/setup-go@v6.4.0
         with:
           go-version: 1.26.1
           cache: false
 
-      - run: mkdir -p reports
+      - name: Create reports directory
+        run: mkdir -p reports
 
       - name: Install apidiff
         run: go install golang.org/x/exp/cmd/apidiff@latest
@@ -130,11 +147,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-
-          if [[ "${GITHUB_EVENT_NAME}" != "pull_request" ]]; then
-            echo "::notice::Not a pull_request event; skipping apidiff."
-            exit 0
-          fi
 
           latest_tag="$(git tag --list 'v[0-9]*' --sort=-version:refname | head -n 1)"
           if [[ -z "${latest_tag}" ]]; then
@@ -159,111 +171,10 @@ jobs:
           echo "::notice::No incompatible public API changes detected."
 
   race:
-    name: Race (ubuntu / go1.26.1)
+    name: Race detector
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6.0.2
-
-      - uses: actions/setup-go@v6.4.0
-        with:
-          go-version: 1.26.1
-          cache: false
-
-      - name: Race suite (opt-in)
-        run: make test-race
-
-  golangci-lint:
-    name: golangci-lint (ubuntu / go1.26.1)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6.0.2
-
-      - uses: actions/setup-go@v6.4.0
-        with:
-          go-version: 1.26.1
-          cache: false
-
-      - run: mkdir -p reports
-
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v9.2.0
-        with:
-          version: v2.11.4
-          args: --config golangci.yml --timeout=5m ./...
-
-      - name: Annotations
-        run: |
-          if [[ -f reports/golangci-lint.txt ]]; then
-            grep -E '^[^:]+:[0-9]+(:[0-9]+)?:' reports/golangci-lint.txt \
-              | bash scripts/annotate-go-diagnostics.sh error || true
-          fi
-
-      - name: Report
-        run: cat reports/golangci-lint.txt || true
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v7.0.0
-        with:
-          name: golangci-lint-artifacts-${{ github.run_number }}
-          include-hidden-files: true
-          path: reports/
-
-  staticcheck:
-    name: staticcheck (ubuntu / go1.26.1)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6.0.2
-
-      - uses: actions/setup-go@v6.4.0
-        with:
-          go-version: 1.26.1
-          cache: false
-
-      - run: mkdir -p reports
-
-      - name: Install staticcheck
-        run: go install honnef.co/go/tools/cmd/staticcheck@latest
-
-      - name: Run staticcheck (annotations)
-        run: |
-          set -o pipefail
-          staticcheck ./... 2>&1 | tee reports/staticcheck.txt | bash scripts/annotate-go-diagnostics.sh error
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v7.0.0
-        with:
-          name: staticcheck-artifacts-${{ github.run_number }}
-          include-hidden-files: true
-          path: reports/
-
-  vet:
-    name: go vet (ubuntu / go1.26.1)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6.0.2
-
-      - uses: actions/setup-go@v6.4.0
-        with:
-          go-version: 1.26.1
-          cache: false
-
-      - run: mkdir -p reports
-
-      - name: go vet (annotations)
-        run: |
-          set -o pipefail
-          go vet ./... 2>&1 | tee reports/vet.txt | bash scripts/annotate-go-diagnostics.sh error
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v7.0.0
-        with:
-          name: govet-artifacts-${{ github.run_number }}
-          include-hidden-files: true
-          path: reports/
-
-  docs:
-    name: Docs smoke (ubuntu / go1.26.1)
-    runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6.0.2
@@ -274,10 +185,137 @@ jobs:
           go-version: 1.26.1
           cache: false
 
-      - name: Package list
+      - name: Run race detector
+        run: make test-race
+
+  golangci-lint:
+    name: golangci-lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6.0.2
+
+      - name: Set up Go
+        uses: actions/setup-go@v6.4.0
+        with:
+          go-version: 1.26.1
+          cache: false
+
+      - name: Create reports directory
+        run: mkdir -p reports
+
+      - name: Run golangci-lint
+        uses: golangci/golangci-lint-action@v9.2.0
+        with:
+          version: v2.11.4
+          args: --config golangci.yml --timeout=5m ./...
+
+      - name: Annotate lint findings
+        if: always()
+        run: |
+          if [[ -f reports/golangci-lint.txt ]]; then
+            grep -E '^[^:]+:[0-9]+(:[0-9]+)?:' reports/golangci-lint.txt \
+              | bash scripts/annotate-go-diagnostics.sh error || true
+          fi
+
+      - name: Print lint report
+        if: always()
+        run: cat reports/golangci-lint.txt || true
+
+      - name: Upload lint artifacts
+        if: always()
+        uses: actions/upload-artifact@v7.0.0
+        with:
+          name: golangci-lint-artifacts-${{ github.run_number }}
+          include-hidden-files: true
+          path: reports/
+
+  staticcheck:
+    name: staticcheck
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6.0.2
+
+      - name: Set up Go
+        uses: actions/setup-go@v6.4.0
+        with:
+          go-version: 1.26.1
+          cache: false
+
+      - name: Create reports directory
+        run: mkdir -p reports
+
+      - name: Install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      - name: Run staticcheck
+        run: |
+          set -o pipefail
+          staticcheck ./... 2>&1 | tee reports/staticcheck.txt | bash scripts/annotate-go-diagnostics.sh error
+
+      - name: Upload staticcheck artifacts
+        if: always()
+        uses: actions/upload-artifact@v7.0.0
+        with:
+          name: staticcheck-artifacts-${{ github.run_number }}
+          include-hidden-files: true
+          path: reports/
+
+  vet:
+    name: go vet
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6.0.2
+
+      - name: Set up Go
+        uses: actions/setup-go@v6.4.0
+        with:
+          go-version: 1.26.1
+          cache: false
+
+      - name: Create reports directory
+        run: mkdir -p reports
+
+      - name: Run go vet
+        run: |
+          set -o pipefail
+          go vet ./... 2>&1 | tee reports/vet.txt | bash scripts/annotate-go-diagnostics.sh error
+
+      - name: Upload vet artifacts
+        if: always()
+        uses: actions/upload-artifact@v7.0.0
+        with:
+          name: govet-artifacts-${{ github.run_number }}
+          include-hidden-files: true
+          path: reports/
+
+  docs:
+    name: Docs smoke
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6.0.2
+
+      - name: Set up Go
+        uses: actions/setup-go@v6.4.0
+        with:
+          go-version: 1.26.1
+          cache: false
+
+      - name: List packages
         run: go list ./...
 
-      - name: Example tests
+      - name: Run example tests
         run: go test -mod=readonly -run '^Example' ./...
 
   dependency-review:
@@ -295,9 +333,10 @@ jobs:
         uses: actions/dependency-review-action@v4.9.0
 
   required:
-    name: Required
-    runs-on: ubuntu-latest
+    name: Required checks
     if: always()
+    runs-on: ubuntu-latest
+    permissions: {}
     needs:
       - module
       - test
@@ -310,5 +349,7 @@ jobs:
       - docs
       - dependency-review
     steps:
-      - name: All required checks passed
-        run: echo "ok"
+      - name: Verify all checks passed
+        run: |
+          results='${{ toJSON(needs.*.result) }}'
+          echo "${results}" | jq -e 'all(. == "success" or . == "skipped")' > /dev/null
