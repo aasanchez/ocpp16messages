@@ -277,10 +277,10 @@ jobs:
           git worktree add "${worktree}" "${latest_tag}" >/dev/null
 
           # Download modules for both old and new versions
-          (cd "${worktree}" && go mod download)
-          go mod download
+          (cd "${worktree}" && GOWORK=off go mod download)
+          GOWORK=off go mod download
 
-          apidiff -incompatible -m "${worktree}" "${GITHUB_WORKSPACE}" \
+          GOWORK=off apidiff -incompatible -m "${worktree}" "${GITHUB_WORKSPACE}" \
             | tee reports/apidiff.txt
 
           if [[ -s reports/apidiff.txt ]]; then
