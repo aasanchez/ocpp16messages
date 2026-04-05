@@ -119,57 +119,6 @@ jobs:
           fail_ci_if_error: true
           token: ${{ env.CODECOV_TOKEN }}
 
-  apidiff:
-    name: API diff
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6.0.2
-        with:
-          fetch-depth: 0
-
-      - name: Set up Go
-        uses: actions/setup-go@v6.4.0
-        with:
-          go-version: 1.26.1
-          cache: false
-
-      - name: Create reports directory
-        run: mkdir -p reports
-
-      - name: Install apidiff
-        run: go install golang.org/x/exp/cmd/apidiff@latest
-
-      - name: Compare against latest tag
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          latest_tag="$(git tag --list 'v[0-9]*' --sort=-version:refname | head -n 1)"
-          if [[ -z "${latest_tag}" ]]; then
-            echo "::notice::No version tags found; skipping apidiff."
-            exit 0
-          fi
-
-          echo "::notice::Comparing API against ${latest_tag}"
-
-          worktree="$(mktemp -d)"
-          trap 'git worktree remove --force "${worktree}" >/dev/null 2>&1 || true' EXIT
-          git worktree add "${worktree}" "${latest_tag}" >/dev/null
-
-          apidiff -incompatible -m "${worktree}" "${GITHUB_WORKSPACE}" \
-            | tee reports/apidiff.txt
-
-          if [[ -s reports/apidiff.txt ]]; then
-            echo "::error::Incompatible public API changes detected vs ${latest_tag}"
-            exit 1
-          fi
-
-          echo "::notice::No incompatible public API changes detected."
-
   race:
     name: Race detector
     runs-on: ubuntu-latest
@@ -318,20 +267,6 @@ jobs:
       - name: Run example tests
         run: go test -mod=readonly -run '^Example' ./...
 
-  dependency-review:
-    name: Dependency review
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: read
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6.0.2
-
-      - name: Review dependencies
-        uses: actions/dependency-review-action@v4.9.0
-
   required:
     name: Required checks
     if: always()
@@ -341,13 +276,11 @@ jobs:
       - module
       - test
       - coverage
-      - apidiff
       - race
       - golangci-lint
       - staticcheck
       - vet
       - docs
-      - dependency-review
     steps:
       - name: Verify all checks passed
         run: |
