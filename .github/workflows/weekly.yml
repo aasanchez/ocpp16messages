@@ -186,6 +186,10 @@ jobs:
           trap 'git worktree remove --force "${worktree}" >/dev/null 2>&1 || true' EXIT
           git worktree add "${worktree}" "${latest_tag}" >/dev/null
 
+          # Download modules for both old and new versions
+          (cd "${worktree}" && go mod download)
+          go mod download
+
           apidiff -incompatible -m "${worktree}" "${GITHUB_WORKSPACE}" \
             | tee reports/apidiff.txt
 
