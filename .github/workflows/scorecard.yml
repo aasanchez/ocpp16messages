@@ -20,12 +20,12 @@ jobs:
       id-token: write
 
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@v6.0.2
         with:
           persist-credentials: false
 
       - name: Run scorecard
-        uses: ossf/scorecard-action@4eaacf0543bb3f2c246792bd56e8cdeffafb205a # v2.4.3
+        uses: ossf/scorecard-action@v2.4.3
         with:
           # Optional: set SCORECARD_TOKEN to enable additional checks (see
           # ossf/scorecard-action docs for fine-grained PAT requirements).
@@ -35,7 +35,7 @@ jobs:
           publish_results: true
 
       - name: Upload SARIF artifact
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: scorecard-results
           path: results.sarif

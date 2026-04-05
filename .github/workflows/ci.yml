@@ -108,13 +108,6 @@ jobs:
           fail_ci_if_error: true
           token: ${{ env.CODECOV_TOKEN }}
 
-      - name: Upload to Codecov (no token)
-        if: ${{ env.CODECOV_TOKEN == '' }}
-        uses: codecov/codecov-action@v6.0.0
-        with:
-          files: reports/coverage.out
-          fail_ci_if_error: false
-
   apidiff:
     name: API diff (ubuntu / go1.26.1)
     runs-on: ubuntu-latest
