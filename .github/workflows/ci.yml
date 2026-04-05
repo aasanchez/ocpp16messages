@@ -13,9 +13,9 @@ jobs:
     name: Module hygiene (ubuntu / go1.26.1)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@v6.0.2
 
-      - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+      - uses: actions/setup-go@v6.4.0
         with:
           go-version: 1.26.1
           cache: false
@@ -44,9 +44,9 @@ jobs:
           - 1.25.8
           - 1.26.1
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@v6.0.2
 
-      - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+      - uses: actions/setup-go@v6.4.0
         with:
           go-version: ${{ matrix.go }}
           cache: false
@@ -60,9 +60,9 @@ jobs:
     env:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@v6.0.2
 
-      - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+      - uses: actions/setup-go@v6.4.0
         with:
           go-version: 1.26.1
           cache: false
@@ -88,7 +88,7 @@ jobs:
           echo "::notice::Total coverage: ${total}"
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: coverage-artifacts-${{ github.run_number }}
           path: reports
@@ -102,7 +102,7 @@ jobs:
 
       - name: Upload to Codecov (token)
         if: ${{ env.CODECOV_TOKEN != '' }}
-        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v5
+        uses: codecov/codecov-action@v6.0.0
         with:
           files: reports/coverage.out
           fail_ci_if_error: true
@@ -110,7 +110,7 @@ jobs:
 
       - name: Upload to Codecov (no token)
         if: ${{ env.CODECOV_TOKEN == '' }}
-        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v5
+        uses: codecov/codecov-action@v6.0.0
         with:
           files: reports/coverage.out
           fail_ci_if_error: false
@@ -119,11 +119,11 @@ jobs:
     name: API diff (ubuntu / go1.26.1)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@v6.0.2
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+      - uses: actions/setup-go@v6.4.0
         with:
           go-version: 1.26.1
           cache: false
@@ -169,9 +169,9 @@ jobs:
     name: Race (ubuntu / go1.26.1)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@v6.0.2
 
-      - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+      - uses: actions/setup-go@v6.4.0
         with:
           go-version: 1.26.1
           cache: false
@@ -183,9 +183,9 @@ jobs:
     name: golangci-lint (ubuntu / go1.26.1)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@v6.0.2
 
-      - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+      - uses: actions/setup-go@v6.4.0
         with:
           go-version: 1.26.1
           cache: false
@@ -193,7 +193,7 @@ jobs:
       - run: mkdir -p reports
 
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@1e7e51e771db61008b38414a730f564565cf7c20 # v9.2.0
+        uses: golangci/golangci-lint-action@v9.2.0
         with:
           version: v2.11.4
           args: --config golangci.yml --timeout=5m ./...
@@ -209,7 +209,7 @@ jobs:
         run: cat reports/golangci-lint.txt || true
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: golangci-lint-artifacts-${{ github.run_number }}
           include-hidden-files: true
@@ -219,9 +219,9 @@ jobs:
     name: staticcheck (ubuntu / go1.26.1)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@v6.0.2
 
-      - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+      - uses: actions/setup-go@v6.4.0
         with:
           go-version: 1.26.1
           cache: false
@@ -237,7 +237,7 @@ jobs:
           staticcheck ./... 2>&1 | tee reports/staticcheck.txt | bash scripts/annotate-go-diagnostics.sh error
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: staticcheck-artifacts-${{ github.run_number }}
           include-hidden-files: true
@@ -247,9 +247,9 @@ jobs:
     name: go vet (ubuntu / go1.26.1)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@v6.0.2
 
-      - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+      - uses: actions/setup-go@v6.4.0
         with:
           go-version: 1.26.1
           cache: false
@@ -262,7 +262,7 @@ jobs:
           go vet ./... 2>&1 | tee reports/vet.txt | bash scripts/annotate-go-diagnostics.sh error
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: govet-artifacts-${{ github.run_number }}
           include-hidden-files: true
@@ -272,9 +272,9 @@ jobs:
     name: Docs smoke (ubuntu / go1.26.1)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@v6.0.2
 
-      - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+      - uses: actions/setup-go@v6.4.0
         with:
           go-version: 1.26.1
           cache: false
