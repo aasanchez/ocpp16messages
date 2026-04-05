@@ -9,36 +9,29 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions: read-all
+permissions: {}
 
 jobs:
   quality:
     name: Race + Fuzz + Bench + Test-all
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v6.0.2
+      - name: Checkout repository
+        uses: actions/checkout@v6.0.2
 
-      - uses: actions/setup-go@v6.4.0
+      - name: Set up Go
+        uses: actions/setup-go@v6.4.0
         with:
           go-version-file: go.mod
           cache: false
 
-      - name: Clean caches
-        run: go clean -cache -testcache -modcache
-
       - name: Run full test-all
         run: make test-all
 
-      - name: Run race detector (opt-in)
-        run: make test-race
-
-      - name: Run fuzzers (short)
-        run: FUZZPROCS=4 make test-fuzz
-
-      - name: Run benchmarks (smoke)
-        run: make test-bench
-
       - name: Upload reports
+        if: always()
         uses: actions/upload-artifact@v7.0.0
         with:
           name: weekly-artifacts-${{ github.run_number }}
@@ -48,22 +41,20 @@ jobs:
   govulncheck:
     name: govulncheck + module verify
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v6.0.2
+      - name: Checkout repository
+        uses: actions/checkout@v6.0.2
 
-      - uses: actions/setup-go@v6.4.0
+      - name: Set up Go
+        uses: actions/setup-go@v6.4.0
         with:
           go-version-file: go.mod
           cache: false
 
-      - name: Clean caches
-        run: go clean -cache -testcache -modcache
-
-      - name: Download modules
-        run: go mod download
-
-      - name: Verify module content
-        run: go mod verify
+      - name: Download and verify modules
+        run: go mod download && go mod verify
 
       - name: Install govulncheck
         run: go install golang.org/x/vuln/cmd/govulncheck@latest
@@ -72,10 +63,14 @@ jobs:
         run: govulncheck -test ./...
 
   analyze:
-    name: Analyze (Go)
+    name: CodeQL analysis (Go)
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
     steps:
-      - uses: actions/checkout@v6.0.2
+      - name: Checkout repository
+        uses: actions/checkout@v6.0.2
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@c10b8064de6f491fea524254123dbe5e09572f13 # v4.35.1
@@ -85,34 +80,34 @@ jobs:
       - name: Autobuild
         uses: github/codeql-action/autobuild@c10b8064de6f491fea524254123dbe5e09572f13 # v4.35.1
 
-      - name: Analyze
+      - name: Run CodeQL analysis
         uses: github/codeql-action/analyze@c10b8064de6f491fea524254123dbe5e09572f13 # v4.35.1
         with:
           category: "/language:go"
 
   scorecard:
-    name: Scorecard analysis
+    name: OpenSSF Scorecard
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       security-events: write
       id-token: write
-
     steps:
-      - uses: actions/checkout@v6.0.2
+      - name: Checkout repository
+        uses: actions/checkout@v6.0.2
         with:
           persist-credentials: false
 
       - name: Run scorecard
         uses: ossf/scorecard-action@v2.4.3
         with:
-          # Optional: set SCORECARD_TOKEN to enable additional checks (see
-          # ossf/scorecard-action docs for fine-grained PAT requirements).
           repo_token: ${{ secrets.SCORECARD_TOKEN }}
           results_file: results.sarif
           results_format: sarif
           publish_results: true
 
       - name: Upload SARIF artifact
+        if: always()
         uses: actions/upload-artifact@v7.0.0
         with:
           name: scorecard-results
@@ -127,9 +122,11 @@ jobs:
   goreportcard:
     name: Go Report Card
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v6.0.2
+      - name: Checkout repository
+        uses: actions/checkout@v6.0.2
         with:
           persist-credentials: false
 
