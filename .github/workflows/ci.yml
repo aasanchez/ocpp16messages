@@ -71,7 +71,7 @@ jobs:
 
       - name: Upload test artifacts
         if: always()
-        uses: actions/upload-artifact@v7.0.0
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: test-artifacts-${{ github.run_number }}
           path: reports
@@ -147,7 +147,7 @@ jobs:
 
       - name: Upload lint artifacts
         if: always()
-        uses: actions/upload-artifact@v7.0.0
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: golangci-lint-artifacts-${{ github.run_number }}
           include-hidden-files: true
@@ -181,7 +181,7 @@ jobs:
 
       - name: Upload staticcheck artifacts
         if: always()
-        uses: actions/upload-artifact@v7.0.0
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: staticcheck-artifacts-${{ github.run_number }}
           include-hidden-files: true
@@ -212,7 +212,7 @@ jobs:
 
       - name: Upload vet artifacts
         if: always()
-        uses: actions/upload-artifact@v7.0.0
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: govet-artifacts-${{ github.run_number }}
           include-hidden-files: true
